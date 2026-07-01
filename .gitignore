@@ -10,6 +10,7 @@ frontend/node_modules/
 frontend/.next/
 frontend/out/
 frontend/next-env.d.ts
+frontend/*.tsbuildinfo
 npm-debug.log*
 
 # Env / local

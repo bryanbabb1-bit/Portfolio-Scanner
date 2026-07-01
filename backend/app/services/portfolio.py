@@ -2,10 +2,16 @@
 from __future__ import annotations
 
 import json
+import os
+import tempfile
+
+import pandas as pd
 
 from ..config import settings
 from ..models.schemas import (
+    Candle,
     PortfolioSummary,
+    PriceHistory,
     StockReport,
 )
 from . import market_data
@@ -15,6 +21,25 @@ from .technical import build_quote, compute_indicators, derive_signals
 def load_portfolio() -> dict:
     with open(settings.PORTFOLIO_FILE) as f:
         return json.load(f)
+
+
+def save_portfolio(cfg: dict) -> dict:
+    """Atomically persist the portfolio config to disk and return it.
+
+    Writes to a temp file in the same directory then os.replace() so a crash
+    mid-write can never leave a half-written portfolio.json behind.
+    """
+    path = settings.PORTFOLIO_FILE
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fd, tmp = tempfile.mkstemp(dir=str(path.parent), suffix=".tmp")
+    try:
+        with os.fdopen(fd, "w") as f:
+            json.dump(cfg, f, indent=2)
+        os.replace(tmp, path)
+    finally:
+        if os.path.exists(tmp):
+            os.remove(tmp)
+    return cfg
 
 
 def _holding_map() -> dict[str, dict]:
@@ -105,3 +130,57 @@ def portfolio_summary() -> tuple[PortfolioSummary, list[StockReport]]:
         by_theme=by_theme,
     )
     return summary, reports
+
+
+def watchlist_reports() -> list[StockReport]:
+    """Report cards for watched (non-held) names, de-duped against holdings."""
+    pf = load_portfolio()
+    held = {h["symbol"].upper() for h in pf.get("holdings", [])}
+    reports: list[StockReport] = []
+    seen: set[str] = set()
+    for item in pf.get("watchlist", []):
+        sym = item["symbol"].upper()
+        if sym in held or sym in seen:
+            continue
+        seen.add(sym)
+        reports.append(build_report(sym, item.get("theme")))
+    return reports
+
+
+# ------------------------------------------------------------------ charting
+_RANGE_POINTS = {"1mo": 22, "3mo": 66, "6mo": 132, "1y": 260}
+
+
+def price_history(symbol: str, range_: str = "6mo") -> PriceHistory:
+    """OHLCV candles + SMA20/50 overlays for charting a single symbol."""
+    md = market_data.get_market_data(symbol)
+    hist = md.history
+    close = hist["Close"]
+    sma20 = close.rolling(20).mean()
+    sma50 = close.rolling(50).mean()
+
+    points = _RANGE_POINTS.get(range_, _RANGE_POINTS["6mo"])
+    tail = hist.tail(points)
+    s20 = sma20.tail(points)
+    s50 = sma50.tail(points)
+
+    candles: list[Candle] = []
+    for idx, row in tail.iterrows():
+        ts = pd.Timestamp(idx)
+        v20 = s20.get(idx)
+        v50 = s50.get(idx)
+        candles.append(
+            Candle(
+                date=ts.strftime("%Y-%m-%d"),
+                open=round(float(row["Open"]), 2),
+                high=round(float(row["High"]), 2),
+                low=round(float(row["Low"]), 2),
+                close=round(float(row["Close"]), 2),
+                volume=float(row["Volume"]),
+                sma20=None if v20 is None or pd.isna(v20) else round(float(v20), 2),
+                sma50=None if v50 is None or pd.isna(v50) else round(float(v50), 2),
+            )
+        )
+    return PriceHistory(
+        symbol=md.symbol, range=range_, source=md.source, candles=candles
+    )

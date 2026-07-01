@@ -106,9 +106,71 @@ export interface PortfolioSummary {
   by_theme: Record<string, number>;
 }
 
+export interface Holding {
+  symbol: string;
+  shares: number;
+  cost_basis: number;
+  theme?: string;
+}
+
+export interface WatchItem {
+  symbol: string;
+  theme?: string;
+}
+
+export interface PortfolioConfig {
+  owner: string;
+  advisor_persona: string;
+  themes: Record<string, string>;
+  holdings: Holding[];
+  watchlist: WatchItem[];
+}
+
+export interface Candle {
+  date: string;
+  open: number;
+  high: number;
+  low: number;
+  close: number;
+  volume: number;
+  sma20?: number;
+  sma50?: number;
+}
+
+export interface PriceHistory {
+  symbol: string;
+  range: string;
+  source: string;
+  candles: Candle[];
+}
+
+export type ChartRange = "1mo" | "3mo" | "6mo" | "1y";
+
 async function get<T>(path: string): Promise<T> {
   const res = await fetch(`${API_BASE}${path}`, { cache: "no-store" });
   if (!res.ok) throw new Error(`${res.status} ${res.statusText} on ${path}`);
+  return res.json();
+}
+
+async function put<T>(path: string, body: unknown): Promise<T> {
+  const res = await fetch(`${API_BASE}${path}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+    cache: "no-store",
+  });
+  if (!res.ok) {
+    let detail = `${res.status} ${res.statusText}`;
+    try {
+      const j = await res.json();
+      if (j?.detail) {
+        detail = Array.isArray(j.detail)
+          ? j.detail.map((d: any) => `${d.loc?.slice(1).join(".")}: ${d.msg}`).join("; ")
+          : j.detail;
+      }
+    } catch {}
+    throw new Error(detail);
+  }
   return res.json();
 }
 
@@ -125,6 +187,12 @@ export const api = {
       `/api/breakouts?min_score=${minScore}&limit=${limit}`
     ),
   stock: (symbol: string) => get<StockReport>(`/api/stock/${symbol}`),
+  history: (symbol: string, range: ChartRange = "6mo") =>
+    get<PriceHistory>(`/api/stock/${symbol}/history?range=${range}`),
+  watchlist: () =>
+    get<{ count: number; source: string; results: StockReport[] }>("/api/watchlist"),
+  config: () => get<PortfolioConfig>("/api/config"),
+  saveConfig: (cfg: PortfolioConfig) => put<PortfolioConfig>("/api/config", cfg),
   adviseStock: (symbol: string, force = false) =>
     get<AdvisorNote>(`/api/advisor/stock/${symbol}?force=${force}`),
   adviseBreakout: (symbol: string, force = false) =>

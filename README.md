@@ -15,8 +15,10 @@ energy, and compute power.**
 
 | Feature | Description |
 |---|---|
-| 📊 **Dashboard** | Portfolio value, day change, unrealized P/L, allocation by theme, and a report card per holding. |
+| 📊 **Dashboard** | Portfolio value, day change, unrealized P/L, allocation by theme, a report card per holding, **plus a Watchlist strip** of the names you're tracking. |
 | 🔎 **Scan Hub** | Holdings **+ watchlist** scanned for signals, ratings, targets and news — sorted by bullish tilt, filterable by theme. |
+| 📈 **Price charts** | Every stock page has an interactive **price chart** (close + SMA20/50 overlays + volume) with 1M/3M/6M/1Y range toggle and hover OHLC readout — pure inline SVG, no charting library. |
+| ⚙️ **Settings editor** | Configure your **holdings, watchlist, themes and advisor persona right in the app** — add/edit/remove rows and Save. Writes are validated and persisted to `portfolio.json`; every view updates. |
 | 🎯 **AI Senior Advisor** | On-demand, per-stock narrative from a "senior Charles Schwab advisor" persona: plain-English take, technical read, recommendation, and risks/invalidation level. |
 | 🚀 **Breakout Radar** | Every name scored 0–100 for breakout readiness (momentum · proximity to 52w high · volume expansion · trend · volatility squeeze), each with an AI bull case incl. entry zone, confirmation level and stop. |
 | 🧠 **Technical engine** | RSI, MACD, SMA/EMA (20/50/200), Bollinger Bands, ATR, 52-week range, volume ratio, trend classification. |
@@ -95,12 +97,19 @@ The **AI advisor** needs Claude credentials inside the container — pick one:
 Prereqs: **Python 3.11+**, **Node 18+**, and the **`claude` CLI** signed in
 (for the AI advisor — optional).
 
+**macOS / Linux / Git Bash:**
 ```bash
 ./run.sh
 ```
 
-That boots the backend on **http://localhost:8000** (API docs at `/docs`) and the
-frontend on **http://localhost:3000**.
+**Windows (PowerShell):**
+```powershell
+powershell -ExecutionPolicy Bypass -File .\run.ps1
+```
+
+Either boots the backend on **http://localhost:8000** (API docs at `/docs`) and
+the frontend on **http://localhost:3000**. `run.sh` auto-detects the venv layout
+(`bin/` on POSIX, `Scripts/` on Windows).
 
 ### Or run each side manually
 
@@ -125,9 +134,14 @@ npm run dev
 
 ## Configuring your portfolio
 
-Edit **`backend/app/data/portfolio.json`** — set your `holdings` (symbol, shares,
-cost basis, theme) and `watchlist`. Everything (dashboard P/L, scan, breakout
-radar, advisor) flows from this file. No rebuild needed; just refresh.
+Two ways:
+
+1. **In the app (recommended)** — open **Settings** in the nav (`/settings`).
+   Add/edit/remove holdings (symbol, shares, cost basis, theme), watchlist names,
+   and themes, then **Save**. Input is validated and written to
+   `portfolio.json`; the dashboard, scans and radar update on refresh.
+2. **By hand** — edit **`backend/app/data/portfolio.json`** directly. Everything
+   (dashboard P/L, scan, breakout radar, advisor) flows from this file.
 
 ---
 
@@ -154,9 +168,12 @@ Set `DATA_MODE` in `backend/.env`:
 | `GET /api/scan?include_watchlist=true` | Full scan feed (holdings + watchlist) |
 | `GET /api/breakouts?min_score=0&limit=20` | Ranked breakout candidates |
 | `GET /api/stock/{symbol}` | Deep report for any symbol |
+| `GET /api/stock/{symbol}/history?range=6mo` | OHLCV candles + SMA20/50 overlays for charting (`range`: 1mo\|3mo\|6mo\|1y) |
+| `GET /api/watchlist` | Report cards for watched (non-held) names |
 | `GET /api/advisor/stock/{symbol}` | AI advisor note for a stock |
 | `GET /api/advisor/breakout/{symbol}` | AI bull case for a breakout candidate |
 | `GET /api/config` | Raw portfolio config |
+| `PUT /api/config` | Save an edited portfolio config (validated, atomic write) |
 
 Interactive docs: **http://localhost:8000/docs**
 
@@ -169,6 +186,7 @@ Interactive docs: **http://localhost:8000/docs**
 - Sector/theme heat map and correlation view.
 - Alerting when a watchlist name crosses its breakout confirmation level.
 - Options flow / IV overlay for breakout timing.
+- Candlestick chart mode + drawable trendlines on the price chart.
 
 ---
 

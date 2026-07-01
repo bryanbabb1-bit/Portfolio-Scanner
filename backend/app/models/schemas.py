@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from typing import Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field, field_validator
 
 
 class Quote(BaseModel):
@@ -109,3 +109,62 @@ class PortfolioSummary(BaseModel):
     positions: int
     source: str
     by_theme: dict[str, float] = {}
+
+
+# --------------------------------------------------------------- config I/O
+class Holding(BaseModel):
+    """A held position. shares/cost_basis drive the P/L math."""
+    symbol: str
+    shares: float = Field(ge=0)
+    cost_basis: float = Field(ge=0)
+    theme: Optional[str] = None
+
+    @field_validator("symbol")
+    @classmethod
+    def _upper_symbol(cls, v: str) -> str:
+        v = (v or "").strip().upper()
+        if not v:
+            raise ValueError("symbol is required")
+        return v
+
+
+class WatchItem(BaseModel):
+    """A name you're watching but don't hold."""
+    symbol: str
+    theme: Optional[str] = None
+
+    @field_validator("symbol")
+    @classmethod
+    def _upper_symbol(cls, v: str) -> str:
+        v = (v or "").strip().upper()
+        if not v:
+            raise ValueError("symbol is required")
+        return v
+
+
+class PortfolioConfig(BaseModel):
+    """The full editable portfolio config persisted to portfolio.json."""
+    owner: str = "You"
+    advisor_persona: str = "senior financial advisor at Charles Schwab"
+    themes: dict[str, str] = {}
+    holdings: list[Holding] = []
+    watchlist: list[WatchItem] = []
+
+
+# ----------------------------------------------------------------- charting
+class Candle(BaseModel):
+    date: str          # ISO date (YYYY-MM-DD)
+    open: float
+    high: float
+    low: float
+    close: float
+    volume: float
+    sma20: Optional[float] = None
+    sma50: Optional[float] = None
+
+
+class PriceHistory(BaseModel):
+    symbol: str
+    range: str          # "1mo" | "3mo" | "6mo" | "1y"
+    source: str         # "live" | "mock"
+    candles: list[Candle] = []

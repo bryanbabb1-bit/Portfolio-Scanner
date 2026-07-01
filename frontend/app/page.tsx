@@ -7,6 +7,7 @@ import { money, pct, signClass } from "../components/format";
 export default function Dashboard() {
   const [summary, setSummary] = useState<PortfolioSummary | null>(null);
   const [holdings, setHoldings] = useState<StockReport[]>([]);
+  const [watchlist, setWatchlist] = useState<StockReport[]>([]);
   const [err, setErr] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -19,6 +20,11 @@ export default function Dashboard() {
       })
       .catch((e) => setErr(e.message))
       .finally(() => setLoading(false));
+    // Watchlist loads independently — a slow/failed watch fetch never blocks holdings.
+    api
+      .watchlist()
+      .then((d) => setWatchlist(d.results))
+      .catch(() => setWatchlist([]));
   }, []);
 
   if (loading) return <div className="loading">Loading portfolio…</div>;
@@ -91,6 +97,19 @@ export default function Dashboard() {
           <StockCard key={r.symbol} r={r} />
         ))}
       </div>
+
+      {watchlist.length > 0 && (
+        <div style={{ marginTop: 32 }}>
+          <div className="section-title">
+            Watchlist <span className="mut" style={{ textTransform: "none", letterSpacing: 0 }}>· names you're tracking</span>
+          </div>
+          <div className="grid grid-cards">
+            {watchlist.map((r) => (
+              <StockCard key={r.symbol} r={r} />
+            ))}
+          </div>
+        </div>
+      )}
     </>
   );
 }
