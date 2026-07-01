@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Nav } from "../components/Nav";
+import { NeuralBackground } from "../components/NeuralBackground";
 
 export const metadata: Metadata = {
   title: "Portfolio Scanner",
@@ -16,6 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <NeuralBackground />
         <Nav />
         <main className="container page">{children}</main>
       </body>

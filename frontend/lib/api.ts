@@ -69,6 +69,7 @@ export interface StockReport {
   market_value?: number;
   unrealized_pl?: number;
   unrealized_pl_pct?: number;
+  spark?: number[];
 }
 
 export interface BreakoutCandidate {
@@ -146,6 +147,18 @@ export interface PriceHistory {
 
 export type ChartRange = "1mo" | "3mo" | "6mo" | "1y";
 
+export interface ValuePoint {
+  date: string;
+  value: number;
+}
+
+export interface PortfolioHistory {
+  range: string;
+  source: string;
+  cost_basis: number;
+  points: ValuePoint[];
+}
+
 async function get<T>(path: string): Promise<T> {
   const res = await fetch(`${API_BASE}${path}`, { cache: "no-store" });
   if (!res.ok) throw new Error(`${res.status} ${res.statusText} on ${path}`);
@@ -189,6 +202,8 @@ export const api = {
   stock: (symbol: string) => get<StockReport>(`/api/stock/${symbol}`),
   history: (symbol: string, range: ChartRange = "6mo") =>
     get<PriceHistory>(`/api/stock/${symbol}/history?range=${range}`),
+  portfolioHistory: (range: ChartRange = "6mo") =>
+    get<PortfolioHistory>(`/api/portfolio/history?range=${range}`),
   watchlist: () =>
     get<{ count: number; source: string; results: StockReport[] }>("/api/watchlist"),
   config: () => get<PortfolioConfig>("/api/config"),

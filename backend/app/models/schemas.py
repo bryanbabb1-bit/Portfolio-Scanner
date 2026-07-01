@@ -74,6 +74,8 @@ class StockReport(BaseModel):
     market_value: Optional[float] = None
     unrealized_pl: Optional[float] = None
     unrealized_pl_pct: Optional[float] = None
+    # Recent close series (~30 pts) for an inline sparkline on cards.
+    spark: list[float] = []
 
 
 class BreakoutCandidate(BaseModel):
@@ -168,3 +170,15 @@ class PriceHistory(BaseModel):
     range: str          # "1mo" | "3mo" | "6mo" | "1y"
     source: str         # "live" | "mock"
     candles: list[Candle] = []
+
+
+class ValuePoint(BaseModel):
+    date: str           # ISO date (YYYY-MM-DD)
+    value: float        # portfolio market value on that day
+
+
+class PortfolioHistory(BaseModel):
+    range: str          # "1mo" | "3mo" | "6mo" | "1y"
+    source: str         # "live" | "mock"
+    cost_basis: float   # flat total cost baseline
+    points: list[ValuePoint] = []

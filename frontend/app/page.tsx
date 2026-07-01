@@ -1,13 +1,46 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { api, PortfolioSummary, StockReport } from "../lib/api";
 import { StockCard } from "../components/StockCard";
+import { PortfolioChart } from "../components/PortfolioChart";
 import { money, pct, signClass } from "../components/format";
+
+type SortKey = "value" | "change" | "return" | "alpha" | "theme";
+
+const SORTS: { key: SortKey; label: string }[] = [
+  { key: "value", label: "Market value" },
+  { key: "change", label: "Day movers" },
+  { key: "return", label: "Unreal. return" },
+  { key: "alpha", label: "A–Z" },
+  { key: "theme", label: "Theme" },
+];
+
+function sortReports(rows: StockReport[], key: SortKey): StockReport[] {
+  const v = (r: StockReport) => r.market_value ?? 0;
+  const arr = [...rows];
+  switch (key) {
+    case "value":
+      return arr.sort((a, b) => v(b) - v(a));
+    case "change":
+      return arr.sort((a, b) => b.quote.change_pct - a.quote.change_pct);
+    case "return":
+      return arr.sort(
+        (a, b) => (b.unrealized_pl_pct ?? -Infinity) - (a.unrealized_pl_pct ?? -Infinity)
+      );
+    case "alpha":
+      return arr.sort((a, b) => a.symbol.localeCompare(b.symbol));
+    case "theme":
+      return arr.sort(
+        (a, b) => (a.theme || "~").localeCompare(b.theme || "~") || v(b) - v(a)
+      );
+  }
+}
 
 export default function Dashboard() {
   const [summary, setSummary] = useState<PortfolioSummary | null>(null);
   const [holdings, setHoldings] = useState<StockReport[]>([]);
   const [watchlist, setWatchlist] = useState<StockReport[]>([]);
+  const [sort, setSort] = useState<SortKey>("value");
   const [err, setErr] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -22,15 +55,12 @@ export default function Dashboard() {
         })
         .catch((e) => setErr(e.message))
         .finally(() => setLoading(false));
-      // Watchlist loads independently — a slow/failed watch fetch never blocks holdings.
       api
         .watchlist()
         .then((d) => setWatchlist(d.results))
         .catch(() => setWatchlist([]));
     };
     load();
-    // Re-fetch whenever the user returns to this tab (e.g. after saving in Settings),
-    // so the summary up top always reflects the latest portfolio.
     const onFocus = () => load();
     window.addEventListener("focus", onFocus);
     document.addEventListener("visibilitychange", onFocus);
@@ -39,6 +69,12 @@ export default function Dashboard() {
       document.removeEventListener("visibilitychange", onFocus);
     };
   }, []);
+
+  const sortedHoldings = useMemo(() => sortReports(holdings, sort), [holdings, sort]);
+  const sortedWatch = useMemo(
+    () => sortReports(watchlist, sort === "return" ? "change" : sort),
+    [watchlist, sort]
+  );
 
   if (loading) return <div className="loading">Loading portfolio…</div>;
   if (err)
@@ -50,74 +86,94 @@ export default function Dashboard() {
     );
   if (!summary) return null;
 
+  const themeEntries = Object.entries(summary.by_theme).sort((a, b) => b[1] - a[1]);
+
   return (
     <>
-      <div className="page-head">
-        <h1>Portfolio Dashboard</h1>
-        <p>
-          {summary.positions} positions · data source:{" "}
-          <span className={summary.source === "mock" ? "" : "pos"}>{summary.source}</span>
-        </p>
+      <div className="hero">
+        <div className="hero-glow" />
+        <div className="hero-main">
+          <span className="eyebrow">
+            <span className="pulse" /> Portfolio · {summary.positions} positions ·{" "}
+            <span className={summary.source === "mock" ? "mut" : "pos"}>{summary.source} data</span>
+          </span>
+          <div className="hero-value">{money(summary.total_market_value)}</div>
+          <div className="hero-sub">
+            <span className={signClass(summary.day_change)}>
+              {summary.day_change >= 0 ? "▲" : "▼"} {money(summary.day_change)} ({pct(summary.day_change_pct)}) today
+            </span>
+            <span className="dot">·</span>
+            <span className={signClass(summary.total_unrealized_pl)}>
+              {money(summary.total_unrealized_pl)} ({pct(summary.total_unrealized_pl_pct)}) all-time
+            </span>
+          </div>
+        </div>
+        <div className="hero-stats">
+          <div className="hstat">
+            <span className="label">Unrealized P/L</span>
+            <span className={`value ${signClass(summary.total_unrealized_pl)}`}>{money(summary.total_unrealized_pl, 0)}</span>
+          </div>
+          <div className="hstat">
+            <span className="label">Cost Basis</span>
+            <span className="value">{money(summary.total_cost, 0)}</span>
+          </div>
+          <div className="hstat">
+            <span className="label">Day Change</span>
+            <span className={`value ${signClass(summary.day_change)}`}>{money(summary.day_change, 0)}</span>
+          </div>
+        </div>
       </div>
 
-      <div className="grid grid-stats" style={{ marginBottom: 28 }}>
-        <div className="card stat">
-          <span className="label">Market Value</span>
-          <span className="value">{money(summary.total_market_value)}</span>
-        </div>
-        <div className="card stat">
-          <span className="label">Day Change</span>
-          <span className={`value ${signClass(summary.day_change)}`}>{money(summary.day_change)}</span>
-          <span className={`sub ${signClass(summary.day_change_pct)}`}>{pct(summary.day_change_pct)}</span>
-        </div>
-        <div className="card stat">
-          <span className="label">Unrealized P/L</span>
-          <span className={`value ${signClass(summary.total_unrealized_pl)}`}>
-            {money(summary.total_unrealized_pl)}
-          </span>
-          <span className={`sub ${signClass(summary.total_unrealized_pl_pct)}`}>
-            {pct(summary.total_unrealized_pl_pct)}
-          </span>
-        </div>
-        <div className="card stat">
-          <span className="label">Cost Basis</span>
-          <span className="value">{money(summary.total_cost)}</span>
-        </div>
-      </div>
+      <PortfolioChart />
 
-      {Object.keys(summary.by_theme).length > 0 && (
+      {themeEntries.length > 0 && (
         <div style={{ marginBottom: 28 }}>
           <div className="section-title">Allocation by Theme</div>
-          <div className="grid grid-stats">
-            {Object.entries(summary.by_theme)
-              .sort((a, b) => b[1] - a[1])
-              .map(([theme, val]) => (
-                <div key={theme} className="card stat">
-                  <span className="label">{theme}</span>
-                  <span className="value" style={{ fontSize: 18 }}>{money(val, 0)}</span>
-                  <span className="sub mut">
-                    {((val / summary.total_market_value) * 100).toFixed(1)}% of book
-                  </span>
+          <div className="alloc-bars">
+            {themeEntries.map(([theme, val]) => {
+              const share = (val / summary.total_market_value) * 100;
+              return (
+                <div key={theme} className="alloc-row">
+                  <span className="alloc-name">{theme}</span>
+                  <div className="alloc-track">
+                    <div className="alloc-fill" style={{ width: `${Math.max(share, 1.5)}%` }} />
+                  </div>
+                  <span className="alloc-val">{money(val, 0)} <span className="mut">· {share.toFixed(1)}%</span></span>
                 </div>
-              ))}
+              );
+            })}
           </div>
         </div>
       )}
 
-      <div className="section-title">Holdings</div>
+      <div className="list-head">
+        <div className="section-title" style={{ margin: 0 }}>Holdings</div>
+        <div className="sort-control">
+          <span className="sort-label">Sort</span>
+          {SORTS.map((s) => (
+            <button
+              key={s.key}
+              className={s.key === sort ? "active" : ""}
+              onClick={() => setSort(s.key)}
+            >
+              {s.label}
+            </button>
+          ))}
+        </div>
+      </div>
       <div className="grid grid-cards">
-        {holdings.map((r) => (
+        {sortedHoldings.map((r) => (
           <StockCard key={r.symbol} r={r} />
         ))}
       </div>
 
-      {watchlist.length > 0 && (
+      {sortedWatch.length > 0 && (
         <div style={{ marginTop: 32 }}>
           <div className="section-title">
             Watchlist <span className="mut" style={{ textTransform: "none", letterSpacing: 0 }}>· names you're tracking</span>
           </div>
           <div className="grid grid-cards">
-            {watchlist.map((r) => (
+            {sortedWatch.map((r) => (
               <StockCard key={r.symbol} r={r} />
             ))}
           </div>

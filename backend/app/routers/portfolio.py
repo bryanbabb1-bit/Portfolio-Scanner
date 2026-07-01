@@ -16,6 +16,15 @@ def get_portfolio():
     return {"summary": summary, "holdings": reports}
 
 
+@router.get("/portfolio/history")
+def get_portfolio_history(range: str = "6mo"):
+    """Portfolio market value over time (+ cost baseline). range: 1mo|3mo|6mo|1y."""
+    try:
+        return pf_service.portfolio_history(range)
+    except Exception as exc:
+        raise HTTPException(status_code=502, detail=f"Could not build history: {exc}")
+
+
 @router.get("/config")
 def get_config():
     """Raw portfolio config (holdings, watchlist, themes)."""

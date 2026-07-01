@@ -10,9 +10,11 @@ import pandas as pd
 from ..config import settings
 from ..models.schemas import (
     Candle,
+    PortfolioHistory,
     PortfolioSummary,
     PriceHistory,
     StockReport,
+    ValuePoint,
 )
 from . import market_data
 from .technical import build_quote, compute_indicators, derive_signals
@@ -70,6 +72,10 @@ def build_report(symbol: str, theme: str | None = None) -> StockReport:
     )
     news = [NewsItem(**n) for n in (md.news or [])[:6]]
 
+    # ~30-point recent close series for an inline card sparkline.
+    closes = md.history["Close"].tail(30)
+    spark = [round(float(c), 2) for c in closes.tolist()]
+
     report = StockReport(
         symbol=md.symbol,
         theme=theme,
@@ -78,6 +84,7 @@ def build_report(symbol: str, theme: str | None = None) -> StockReport:
         analyst=analyst,
         news=news,
         signals=signals,
+        spark=spark,
     )
 
     # Attach position economics if held.
@@ -183,4 +190,46 @@ def price_history(symbol: str, range_: str = "6mo") -> PriceHistory:
         )
     return PriceHistory(
         symbol=md.symbol, range=range_, source=md.source, candles=candles
+    )
+
+
+def portfolio_history(range_: str = "6mo") -> PortfolioHistory:
+    """Aggregate portfolio market value over time.
+
+    For each holding, value = shares * daily close. Series are aligned on a
+    common date index (outer join, forward-filled) then summed, so names with
+    different history lengths still combine cleanly.
+    """
+    pf = load_portfolio()
+    holdings = pf.get("holdings", [])
+    points_n = _RANGE_POINTS.get(range_, _RANGE_POINTS["6mo"])
+
+    value_frame = pd.DataFrame()
+    total_cost = 0.0
+    any_mock = False
+    for h in holdings:
+        sym = h["symbol"].upper()
+        shares = float(h.get("shares", 0) or 0)
+        total_cost += shares * float(h.get("cost_basis", 0) or 0)
+        try:
+            md = market_data.get_market_data(sym)
+        except Exception:
+            continue
+        any_mock = any_mock or md.source == "mock"
+        value_frame[sym] = md.history["Close"] * shares
+
+    points: list[ValuePoint] = []
+    if not value_frame.empty:
+        value_frame = value_frame.sort_index().ffill().fillna(0.0)
+        series = value_frame.sum(axis=1).tail(points_n)
+        for idx, val in series.items():
+            points.append(
+                ValuePoint(date=pd.Timestamp(idx).strftime("%Y-%m-%d"), value=round(float(val), 2))
+            )
+
+    return PortfolioHistory(
+        range=range_,
+        source="mock" if any_mock else "live",
+        cost_basis=round(total_cost, 2),
+        points=points,
     )

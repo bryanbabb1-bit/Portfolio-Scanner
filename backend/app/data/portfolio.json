@@ -65,7 +65,7 @@
     },
     {
       "symbol": "MU",
-      "shares": 5.8979,
+      "shares": 0.58979,
       "cost_basis": 1014.02,
       "theme": "AI"
     },
@@ -115,6 +115,12 @@
       "symbol": "SGOV",
       "shares": 3.74816,
       "cost_basis": 100.43,
+      "theme": "AI"
+    },
+    {
+      "symbol": "NOW",
+      "shares": 5.57501,
+      "cost_basis": 124.44,
       "theme": "AI"
     }
   ],
