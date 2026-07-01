@@ -1,15 +1,23 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
-import { api, PortfolioSummary, StockReport } from "../lib/api";
+import { api, PortfolioInsights, PortfolioSummary, StockReport } from "../lib/api";
 import { StockCard } from "../components/StockCard";
 import { PortfolioChart } from "../components/PortfolioChart";
+import { HoldingsHeatmap } from "../components/HoldingsHeatmap";
+import { AlertsPanel } from "../components/AlertsPanel";
+import { RiskStats } from "../components/RiskStats";
+import { Movers } from "../components/Movers";
+import { PortfolioBrief } from "../components/PortfolioBrief";
 import { SortControl, SortKey, sortReports } from "../components/SortControl";
 import { money, pct, signClass } from "../components/format";
+
+const REFRESH_MS = 60_000;
 
 export default function Dashboard() {
   const [summary, setSummary] = useState<PortfolioSummary | null>(null);
   const [holdings, setHoldings] = useState<StockReport[]>([]);
   const [watchlist, setWatchlist] = useState<StockReport[]>([]);
+  const [insights, setInsights] = useState<PortfolioInsights | null>(null);
   const [sort, setSort] = useState<SortKey>("value");
   const [err, setErr] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -29,12 +37,18 @@ export default function Dashboard() {
         .watchlist()
         .then((d) => setWatchlist(d.results))
         .catch(() => setWatchlist([]));
+      api
+        .insights()
+        .then(setInsights)
+        .catch(() => setInsights(null));
     };
     load();
+    const timer = setInterval(load, REFRESH_MS);
     const onFocus = () => load();
     window.addEventListener("focus", onFocus);
     document.addEventListener("visibilitychange", onFocus);
     return () => {
+      clearInterval(timer);
       window.removeEventListener("focus", onFocus);
       document.removeEventListener("visibilitychange", onFocus);
     };
@@ -94,7 +108,17 @@ export default function Dashboard() {
         </div>
       </div>
 
+      <Movers reports={[...holdings, ...watchlist]} />
+
+      {insights && <AlertsPanel alerts={insights.alerts} />}
+
+      <HoldingsHeatmap holdings={holdings} />
+
       <PortfolioChart />
+
+      {insights && <RiskStats risk={insights.risk} />}
+
+      <PortfolioBrief />
 
       {themeEntries.length > 0 && (
         <div style={{ marginBottom: 28 }}>

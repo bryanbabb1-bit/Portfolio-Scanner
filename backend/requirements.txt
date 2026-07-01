@@ -4,3 +4,4 @@ pydantic>=2.7
 yfinance>=0.2.40
 pandas>=2.2
 numpy>=1.26
+pytest>=8

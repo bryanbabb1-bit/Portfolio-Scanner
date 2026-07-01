@@ -7,7 +7,9 @@ process TTL cache avoids hammering the source during a scan.
 """
 from __future__ import annotations
 
+import threading
 import time
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 
 import pandas as pd
@@ -17,17 +19,20 @@ from . import mock_data
 
 # ------------------------------------------------------------------ cache
 _cache: dict[str, tuple[float, object]] = {}
+_cache_lock = threading.Lock()
 
 
 def _cache_get(key: str):
-    hit = _cache.get(key)
+    with _cache_lock:
+        hit = _cache.get(key)
     if hit and (time.time() - hit[0]) < settings.CACHE_TTL:
         return hit[1]
     return None
 
 
 def _cache_put(key: str, value):
-    _cache[key] = (time.time(), value)
+    with _cache_lock:
+        _cache[key] = (time.time(), value)
     return value
 
 
@@ -123,3 +128,26 @@ def get_market_data(symbol: str) -> MarketData:
         data = _fetch_mock(symbol)
         print(f"[market_data] live fetch failed for {symbol} ({exc!r}); using mock")
         return _cache_put(key, data)
+
+
+def warm_cache(symbols: list[str], max_workers: int = 8) -> None:
+    """Prefetch market data for many symbols concurrently.
+
+    Scans previously fetched 19+ tickers one at a time; warming the cache in
+    parallel makes a full-universe scan bound by the slowest single fetch
+    instead of the sum of all of them. Failures are swallowed here — callers
+    hit them (or the mock fallback) again through get_market_data().
+    """
+    todo = [s for s in dict.fromkeys(sym.upper() for sym in symbols)
+            if _cache_get(f"md:{s}") is None]
+    if len(todo) <= 1:
+        return
+
+    def _one(sym: str) -> None:
+        try:
+            get_market_data(sym)
+        except Exception:
+            pass
+
+    with ThreadPoolExecutor(max_workers=min(max_workers, len(todo))) as pool:
+        list(pool.map(_one, todo))

@@ -374,6 +374,61 @@ select { cursor: pointer; }
 .breakout-card:hover { transform: translateY(-2px); border-color: var(--border-lit); box-shadow: 0 10px 28px rgba(0,0,0,0.4), 0 0 20px rgba(56,189,248,0.16); }
 .breakout-card .sc-sym { font-size: 18px; }
 
+/* ------------------------------------------------------------ movers strip */
+.movers { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: -8px 0 24px; }
+.movers-label { font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin-right: 2px; }
+.movers-sep { width: 1px; height: 18px; background: var(--border); margin: 0 4px; }
+.mover-chip {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 700;
+  border: 1px solid var(--border); border-radius: 20px; padding: 5px 12px;
+  background: rgba(8,12,24,0.5);
+  transition: border-color .15s, transform .15s;
+}
+.mover-chip:hover { transform: translateY(-1px); border-color: var(--border-lit); }
+.mover-chip.up .mv-pct { color: var(--bull); }
+.mover-chip.down .mv-pct { color: var(--bear); }
+
+/* ------------------------------------------------------------ alerts panel */
+.alerts-panel { border-left: 3px solid var(--gold); }
+.alerts-list { display: flex; flex-direction: column; }
+.alert-row {
+  display: grid; grid-template-columns: 22px 62px 170px 1fr; gap: 10px;
+  align-items: center; padding: 8px 6px; border-radius: 8px; font-size: 13px;
+  transition: background .15s;
+}
+.alert-row:hover { background: rgba(56,189,248,0.06); }
+.alert-row + .alert-row { border-top: 1px solid rgba(88,120,180,0.10); }
+.alert-icon { font-size: 11px; font-weight: 800; text-align: center; }
+.alert-icon.critical { color: var(--bear); }
+.alert-icon.warning { color: var(--gold); }
+.alert-icon.opportunity { color: var(--bull); }
+.alert-sym { font-weight: 800; letter-spacing: .02em; }
+.alert-label { font-weight: 600; }
+.alert-row.critical .alert-label { color: var(--bear); }
+.alert-row.warning .alert-label { color: var(--gold); }
+.alert-row.opportunity .alert-label { color: var(--bull); }
+.alert-detail { font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+@media (max-width: 700px) {
+  .alert-row { grid-template-columns: 20px 56px 1fr; }
+  .alert-detail { display: none; }
+}
+
+/* ---------------------------------------------------------------- heatmap */
+.heatmap { width: 100%; height: auto; display: block; border-radius: 10px; }
+.hm-tile { cursor: pointer; }
+.hm-tile rect { transition: opacity .15s; }
+.hm-tile:hover rect { opacity: 0.82; stroke: var(--border-lit); stroke-width: 1.5; }
+.hm-sym { fill: #eef4ff; font-weight: 800; letter-spacing: .02em; pointer-events: none; }
+.hm-pct { fill: rgba(238,244,255,0.85); font-weight: 600; pointer-events: none; }
+
+/* --------------------------------------------------------------- news wire */
+.wire { display: flex; flex-direction: column; gap: 10px; }
+.wire-item { padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }
+.wire-tags { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.wire-title { font-size: 14px; font-weight: 600; line-height: 1.4; }
+a.wire-title:hover { color: var(--accent); }
+
 /* gradient page titles to match the hero */
 .page-head h1 {
   background: linear-gradient(90deg, #fff, #cfe8ff 70%);

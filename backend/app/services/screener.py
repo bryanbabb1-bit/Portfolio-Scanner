@@ -16,7 +16,8 @@ def _clamp(x: float, lo: float = 0.0, hi: float = 100.0) -> float:
     return max(lo, min(hi, x))
 
 
-def breakout_score(ind: Indicators, quote: Quote, df: pd.DataFrame) -> float:
+def breakout_score(ind: Indicators, quote: Quote,
+                   df: pd.DataFrame | None = None) -> float:
     score = 0.0
 
     # Proximity to 52-week high (up to 30 pts) — closer = more coiled.

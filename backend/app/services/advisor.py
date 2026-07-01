@@ -13,7 +13,14 @@ import subprocess
 import time
 
 from ..config import settings
-from ..models.schemas import AdvisorNote, BreakoutCandidate, StockReport
+from ..models.schemas import (
+    AdvisorNote,
+    BreakoutCandidate,
+    PortfolioAlert,
+    PortfolioSummary,
+    RiskMetrics,
+    StockReport,
+)
 
 # advisor cache keyed by symbol+kind
 _cache: dict[str, tuple[float, AdvisorNote]] = {}
@@ -153,6 +160,73 @@ def advise_stock(report: StockReport, force: bool = False) -> AdvisorNote:
     raw = _run_claude(prompt)
     note = _parse_note(report.symbol, "claude", raw) if raw else \
         _fallback_note(report.symbol, facts, report.signals)
+    _cache[key] = (time.time(), note)
+    return note
+
+
+def _facts_from_portfolio(summary: PortfolioSummary, reports: list[StockReport],
+                          risk: RiskMetrics, alerts: list[PortfolioAlert]) -> str:
+    held = sorted(
+        (r for r in reports if r.market_value),
+        key=lambda r: r.market_value or 0,
+        reverse=True,
+    )
+    lines = [
+        f"Portfolio value ${summary.total_market_value:,.0f} across "
+        f"{summary.positions} positions | Day {summary.day_change_pct:+.2f}% | "
+        f"All-time P/L {summary.total_unrealized_pl_pct:+.1f}%",
+        "Theme allocation: " + ", ".join(
+            f"{t} ${v:,.0f}" for t, v in
+            sorted(summary.by_theme.items(), key=lambda x: -x[1])),
+        f"Risk: beta {risk.beta} | annualized vol {risk.volatility_pct}% | "
+        f"Sharpe {risk.sharpe} | max drawdown {risk.max_drawdown_pct}% | "
+        f"largest position {risk.top_symbol} at {risk.top_weight_pct}% "
+        f"(top-5 = {risk.top5_weight_pct}%)",
+        "Positions (symbol, value, day %, unrealized P/L %, RSI, trend):",
+    ]
+    for r in held:
+        lines.append(
+            f"  {r.symbol}: ${r.market_value:,.0f}, {r.quote.change_pct:+.1f}% today, "
+            f"P/L {r.unrealized_pl_pct:+.1f}%, RSI {r.indicators.rsi}, "
+            f"{r.indicators.trend}"
+        )
+    if alerts:
+        lines.append("Active alerts: " + "; ".join(
+            f"{a.symbol} {a.label} ({a.severity})" for a in alerts[:12]))
+    return "\n".join(lines)
+
+
+def advise_portfolio(summary: PortfolioSummary, reports: list[StockReport],
+                     risk: RiskMetrics, alerts: list[PortfolioAlert],
+                     force: bool = False) -> AdvisorNote:
+    """One whole-book narrative: posture, risks, and concrete next actions."""
+    key = "portfolio:brief"
+    if not force:
+        hit = _cache.get(key)
+        if hit and (time.time() - hit[0]) < settings.ADVISOR_CACHE_TTL:
+            return hit[1]
+
+    facts = _facts_from_portfolio(summary, reports, risk, alerts)
+    all_signals = [s for r in reports for s in r.signals]
+    if not settings.ADVISOR_ENABLED:
+        note = _fallback_note("PORTFOLIO", facts, all_signals)
+        _cache[key] = (time.time(), note)
+        return note
+
+    prompt = (
+        f"{_PERSONA}\n\nHere is your client's full portfolio right now:\n\n{facts}\n\n"
+        f"Give your professional whole-portfolio review: overall posture, "
+        f"concentration/risk assessment, and the 2-3 most important concrete "
+        f"actions this week (name specific tickers and levels). "
+        f'Respond with ONLY a JSON object, no markdown, with these string keys: '
+        f'"summary" (2-3 sentence overall take), '
+        f'"technical_read" (portfolio health: risk metrics, allocation, momentum), '
+        f'"recommendation" (the 2-3 concrete actions, tickers and levels), '
+        f'"risks" (the biggest risks to this book and what would signal them).'
+    )
+    raw = _run_claude(prompt)
+    note = _parse_note("PORTFOLIO", "claude", raw) if raw else \
+        _fallback_note("PORTFOLIO", facts, all_signals)
     _cache[key] = (time.time(), note)
     return note
 

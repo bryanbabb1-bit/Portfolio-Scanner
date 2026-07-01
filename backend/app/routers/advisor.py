@@ -4,10 +4,23 @@ from __future__ import annotations
 from fastapi import APIRouter, HTTPException
 
 from ..services import advisor as advisor_service
+from ..services import insights as insights_service
 from ..services import market_data, screener
 from ..services import portfolio as pf_service
 
 router = APIRouter(prefix="/api/advisor", tags=["advisor"])
+
+
+@router.get("/portfolio")
+def advise_portfolio(force: bool = False):
+    """Whole-book senior-advisor brief: posture, risk, concrete actions."""
+    try:
+        summary, reports = pf_service.portfolio_summary()
+        risk = insights_service.compute_risk(reports)
+        alerts = insights_service.build_alerts(reports)
+    except Exception as exc:
+        raise HTTPException(status_code=502, detail=f"Portfolio read failed: {exc}")
+    return advisor_service.advise_portfolio(summary, reports, risk, alerts, force=force)
 
 
 @router.get("/stock/{symbol}")

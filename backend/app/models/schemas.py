@@ -113,6 +113,44 @@ class PortfolioSummary(BaseModel):
     by_theme: dict[str, float] = {}
 
 
+# ------------------------------------------------------------- intelligence
+class PortfolioAlert(BaseModel):
+    """A rule-derived attention item for the dashboard alerts panel."""
+    symbol: str
+    severity: str  # "critical" | "warning" | "opportunity"
+    label: str
+    detail: str
+
+
+class RiskMetrics(BaseModel):
+    beta: Optional[float] = None              # vs SPY, ~6mo daily returns
+    volatility_pct: Optional[float] = None    # annualized stdev of daily returns
+    sharpe: Optional[float] = None            # annualized, 4% risk-free
+    max_drawdown_pct: Optional[float] = None  # worst peak-to-trough, 1y
+    best_day_pct: Optional[float] = None
+    best_day_date: Optional[str] = None
+    worst_day_pct: Optional[float] = None
+    worst_day_date: Optional[str] = None
+    top_symbol: Optional[str] = None          # largest position
+    top_weight_pct: Optional[float] = None
+    top5_weight_pct: Optional[float] = None
+
+
+class PortfolioInsights(BaseModel):
+    source: str  # "live" | "mock"
+    risk: RiskMetrics
+    alerts: list[PortfolioAlert] = []
+
+
+class PortfolioNewsItem(BaseModel):
+    """A news headline tagged with the symbol(s) it came from."""
+    title: str
+    symbols: list[str] = []
+    publisher: Optional[str] = None
+    link: Optional[str] = None
+    published: Optional[str] = None
+
+
 # --------------------------------------------------------------- config I/O
 class Holding(BaseModel):
     """A held position. shares/cost_basis drive the P/L math."""

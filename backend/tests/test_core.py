@@ -1,0 +1,117 @@
+"""Core backend tests — run entirely on deterministic mock data.
+
+    cd backend && .venv/Scripts/python -m pytest tests -q
+"""
+import os
+
+os.environ["DATA_MODE"] = "mock"       # must be set before app imports
+os.environ["ADVISOR_ENABLED"] = "0"    # never shell out to claude in tests
+
+from app.models.schemas import (  # noqa: E402
+    AnalystView, Indicators, Quote, StockReport,
+)
+from app.routers.breakouts import breakouts  # noqa: E402
+from app.routers.insights import get_insights, get_news  # noqa: E402
+from app.routers.scan import scan  # noqa: E402
+from app.services import insights, market_data, screener  # noqa: E402
+from app.services import portfolio as pf_service  # noqa: E402
+from app.services.technical import (  # noqa: E402
+    build_quote, compute_indicators, derive_signals,
+)
+
+
+def _report(**overrides) -> StockReport:
+    """A held report with quiet defaults; tests override what they probe."""
+    base = dict(
+        symbol="TEST",
+        quote=Quote(symbol="TEST", price=100.0, change=1.0, change_pct=1.0,
+                    source="mock"),
+        indicators=Indicators(rsi=50, sma50=95, sma200=90, trend="uptrend",
+                              pct_from_52w_high=-10, volume_ratio=1.0),
+        analyst=AnalystView(),
+        shares=10, cost_basis=90, market_value=1000.0, unrealized_pl_pct=11.1,
+    )
+    base.update(overrides)
+    return StockReport(**base)
+
+
+# ---------------------------------------------------------------- technicals
+def test_indicators_compute_on_mock_history():
+    md = market_data.get_market_data("NVDA")
+    ind = compute_indicators(md.history)
+    assert ind.rsi is not None and 0 <= ind.rsi <= 100
+    assert ind.sma20 and ind.sma50 and ind.sma200
+    assert ind.trend in {"uptrend", "downtrend", "sideways"}
+    quote = build_quote(md, ind)
+    assert quote.price > 0
+    assert derive_signals(quote, ind)  # never empty
+
+
+def test_breakout_score_bounds():
+    for sym in ["NVDA", "MSFT", "PLTR", "ZZZZ"]:
+        md = market_data.get_market_data(sym)
+        cand = screener.evaluate(sym, None, md)
+        assert 0 <= cand.score <= 100
+        assert cand.thesis
+
+
+# ----------------------------------------------------------------- portfolio
+def test_portfolio_summary_math_consistent():
+    summary, reports = pf_service.portfolio_summary()
+    assert summary.positions == len(reports)
+    assert summary.total_market_value == round(
+        sum(r.market_value or 0 for r in reports), 2)
+    assert abs(summary.total_unrealized_pl -
+               (summary.total_market_value - summary.total_cost)) < 0.01
+
+
+def test_scan_and_breakout_endpoints():
+    s = scan(include_watchlist=True)
+    assert s["count"] == len(s["results"]) > 0
+    b = breakouts(min_score=0, limit=5)
+    assert len(b["results"]) <= 5
+    scores = [c.score for c in b["results"]]
+    assert scores == sorted(scores, reverse=True)
+
+
+# ------------------------------------------------------------------ insights
+def test_risk_metrics_sane():
+    _, reports = pf_service.portfolio_summary()
+    risk = insights.compute_risk(reports)
+    assert risk.top_symbol is not None
+    assert 0 < (risk.top_weight_pct or 0) <= 100
+    assert (risk.top5_weight_pct or 0) >= (risk.top_weight_pct or 0)
+    assert (risk.max_drawdown_pct or 0) <= 0
+    assert (risk.volatility_pct or 0) > 0
+    assert risk.best_day_pct is not None and risk.worst_day_pct is not None
+    assert risk.best_day_pct >= risk.worst_day_pct
+
+
+def test_alert_rules_fire():
+    overbought = _report(indicators=Indicators(rsi=80))
+    alerts = insights.build_alerts([overbought])
+    assert any(a.label == "Overbought" for a in alerts)
+
+    crash = _report(quote=Quote(symbol="TEST", price=100, change=-6,
+                                change_pct=-6.0, source="mock"))
+    alerts = insights.build_alerts([crash])
+    assert any(a.severity == "critical" and a.label == "Sharp drop"
+               for a in alerts)
+
+    # 100% weight in one name → concentration warning
+    alerts = insights.build_alerts([_report()])
+    assert any(a.label == "Concentration risk" for a in alerts)
+
+
+def test_alerts_sorted_by_severity():
+    out = get_insights()
+    order = {"critical": 0, "warning": 1, "opportunity": 2}
+    ranks = [order[a.severity] for a in out.alerts]
+    assert ranks == sorted(ranks)
+
+
+def test_news_deduped_and_tagged():
+    out = get_news(limit=50)
+    titles = [n.title for n in out["results"]]
+    assert len(titles) == len(set(titles))
+    assert all(n.symbols for n in out["results"])

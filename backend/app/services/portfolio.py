@@ -108,8 +108,10 @@ def build_report(symbol: str, theme: str | None = None) -> StockReport:
 
 def portfolio_summary() -> tuple[PortfolioSummary, list[StockReport]]:
     pf = load_portfolio()
+    holdings = pf.get("holdings", [])
+    market_data.warm_cache([h["symbol"] for h in holdings])
     reports: list[StockReport] = []
-    for h in pf.get("holdings", []):
+    for h in holdings:
         reports.append(build_report(h["symbol"], h.get("theme")))
 
     total_mv = sum(r.market_value or 0 for r in reports)
@@ -143,6 +145,10 @@ def watchlist_reports() -> list[StockReport]:
     """Report cards for watched (non-held) names, de-duped against holdings."""
     pf = load_portfolio()
     held = {h["symbol"].upper() for h in pf.get("holdings", [])}
+    market_data.warm_cache(
+        [w["symbol"] for w in pf.get("watchlist", [])
+         if w["symbol"].upper() not in held]
+    )
     reports: list[StockReport] = []
     seen: set[str] = set()
     for item in pf.get("watchlist", []):
@@ -203,6 +209,7 @@ def portfolio_history(range_: str = "6mo") -> PortfolioHistory:
     pf = load_portfolio()
     holdings = pf.get("holdings", [])
     points_n = _RANGE_POINTS.get(range_, _RANGE_POINTS["6mo"])
+    market_data.warm_cache([h["symbol"] for h in holdings])
 
     value_frame = pd.DataFrame()
     total_cost = 0.0

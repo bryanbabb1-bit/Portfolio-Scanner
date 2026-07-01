@@ -107,6 +107,41 @@ export interface PortfolioSummary {
   by_theme: Record<string, number>;
 }
 
+export interface PortfolioAlert {
+  symbol: string;
+  severity: "critical" | "warning" | "opportunity";
+  label: string;
+  detail: string;
+}
+
+export interface RiskMetrics {
+  beta?: number;
+  volatility_pct?: number;
+  sharpe?: number;
+  max_drawdown_pct?: number;
+  best_day_pct?: number;
+  best_day_date?: string;
+  worst_day_pct?: number;
+  worst_day_date?: string;
+  top_symbol?: string;
+  top_weight_pct?: number;
+  top5_weight_pct?: number;
+}
+
+export interface PortfolioInsights {
+  source: string;
+  risk: RiskMetrics;
+  alerts: PortfolioAlert[];
+}
+
+export interface PortfolioNewsItem {
+  title: string;
+  symbols: string[];
+  publisher?: string;
+  link?: string;
+  published?: string;
+}
+
 export interface Holding {
   symbol: string;
   shares: number;
@@ -216,4 +251,11 @@ export const api = {
     get<AdvisorNote>(`/api/advisor/stock/${symbol}?force=${force}`),
   adviseBreakout: (symbol: string, force = false) =>
     get<AdvisorNote>(`/api/advisor/breakout/${symbol}?force=${force}`),
+  advisePortfolio: (force = false) =>
+    get<AdvisorNote>(`/api/advisor/portfolio?force=${force}`),
+  insights: () => get<PortfolioInsights>("/api/insights"),
+  news: (limit = 40) =>
+    get<{ count: number; source: string; results: PortfolioNewsItem[] }>(
+      `/api/news?limit=${limit}`
+    ),
 };

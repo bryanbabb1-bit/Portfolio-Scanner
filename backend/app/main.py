@@ -10,13 +10,13 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from .config import settings
-from .routers import advisor, breakouts, portfolio, scan
+from .routers import advisor, breakouts, insights, portfolio, scan
 
 app = FastAPI(
     title="Portfolio Scanner API",
     description="Scan your portfolio for news, trends, ratings, technicals and "
-                "breakouts, with a senior-advisor AI layer.",
-    version="1.0.0",
+                "breakouts, with risk analytics, alerts and a senior-advisor AI layer.",
+    version="2.0.0",
 )
 
 app.add_middleware(
@@ -31,12 +31,14 @@ app.include_router(portfolio.router)
 app.include_router(scan.router)
 app.include_router(breakouts.router)
 app.include_router(advisor.router)
+app.include_router(insights.router)
 
 
 @app.get("/api/health")
 def health():
     return {
         "status": "ok",
+        "version": app.version,
         "data_mode": settings.DATA_MODE,
         "advisor_enabled": settings.ADVISOR_ENABLED,
     }

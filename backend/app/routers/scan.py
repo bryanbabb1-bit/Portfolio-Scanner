@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from fastapi import APIRouter
 
+from ..services import market_data
 from ..services import portfolio as pf_service
 
 router = APIRouter(prefix="/api", tags=["scan"])
@@ -20,6 +21,7 @@ def scan(include_watchlist: bool = True):
     if include_watchlist:
         universe += pf.get("watchlist", [])
 
+    market_data.warm_cache([i["symbol"] for i in universe])
     seen: set[str] = set()
     reports = []
     for item in universe:
@@ -27,7 +29,10 @@ def scan(include_watchlist: bool = True):
         if sym in seen:
             continue
         seen.add(sym)
-        reports.append(pf_service.build_report(sym, item.get("theme")))
+        try:
+            reports.append(pf_service.build_report(sym, item.get("theme")))
+        except Exception as exc:  # one bad ticker must not kill the scan
+            print(f"[scan] skipping {sym}: {exc!r}")
 
     # Sort by strongest bullish tilt so the most actionable float to the top.
     def bull_score(r):
