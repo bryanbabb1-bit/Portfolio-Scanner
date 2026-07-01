@@ -1,0 +1,30 @@
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      DATA_MODE: "${DATA_MODE:-auto}"
+      ADVISOR_ENABLED: "${ADVISOR_ENABLED:-true}"
+      CLAUDE_BIN: "claude"
+      # AI advisor auth (all optional — pick whichever you have):
+      #  - Subscription: the ~/.claude mount below carries your login (Linux/WSL).
+      #  - Token:  run `claude setup-token` and export CLAUDE_CODE_OAUTH_TOKEN.
+      #  - API key: export ANTHROPIC_API_KEY.
+      ANTHROPIC_API_KEY: "${ANTHROPIC_API_KEY:-}"
+      CLAUDE_CODE_OAUTH_TOKEN: "${CLAUDE_CODE_OAUTH_TOKEN:-}"
+    volumes:
+      # Edit backend/app/data/portfolio.json on the host — no rebuild needed.
+      - ./backend/app/data:/app/app/data
+      # Carry your Claude subscription login into the container (advisor).
+      - ${HOME}/.claude:/root/.claude
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        NEXT_PUBLIC_API_BASE: "http://localhost:8000"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend

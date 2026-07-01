@@ -51,7 +51,46 @@ in headless mode) — **no API key required**.
 
 ---
 
-## Quick start
+## Quick start — Docker (recommended)
+
+The easiest path: **no Python or Node install needed**, just Docker.
+
+Prereq: [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+(Mac/Windows) or Docker Engine (Linux).
+
+```bash
+git clone https://github.com/bryanbabb1-bit/portfolio-scanner.git
+cd portfolio-scanner
+git checkout claude/stock-portfolio-hub-m3mj1g
+docker compose up --build
+```
+
+First run builds the images (a few minutes); after that it's seconds. Then open:
+
+- **http://localhost:3000** — the app
+- http://localhost:8000/docs — the API
+
+Stop with `Ctrl+C`, or `docker compose down`. To rebuild after editing code,
+`docker compose up --build` again.
+
+### Enabling the AI advisor in Docker
+
+The core app (dashboard, scan, breakout radar, technicals) works out of the box.
+The **AI advisor** needs Claude credentials inside the container — pick one:
+
+| You have | Do this |
+|---|---|
+| Claude Code CLI logged in on **Linux/WSL** | Nothing — compose mounts your `~/.claude` login automatically. |
+| Claude Code on **macOS/Windows** (login is in the OS keychain, not a file) | Run `claude setup-token`, then `export CLAUDE_CODE_OAUTH_TOKEN=<token>` before `docker compose up`. |
+| An **Anthropic API key** | `export ANTHROPIC_API_KEY=sk-ant-...` before `docker compose up`. |
+| Nothing | Advisor returns a deterministic rule-based note instead (labeled "auto"). |
+
+> On Mac/Windows the subscription login is stored in the OS keychain, which a
+> Linux container can't read — that's why those platforms use the token/key path.
+
+---
+
+## Quick start — without Docker
 
 Prereqs: **Python 3.11+**, **Node 18+**, and the **`claude` CLI** signed in
 (for the AI advisor — optional).
