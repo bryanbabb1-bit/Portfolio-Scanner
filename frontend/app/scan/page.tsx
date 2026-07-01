@@ -1,12 +1,14 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { api, StockReport } from "../../lib/api";
 import { StockCard } from "../../components/StockCard";
+import { SortControl, SortKey, sortReports } from "../../components/SortControl";
 
 export default function ScanHub() {
   const [results, setResults] = useState<StockReport[]>([]);
   const [source, setSource] = useState("");
   const [theme, setTheme] = useState<string>("All");
+  const [sort, setSort] = useState<SortKey>("change");
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState<string | null>(null);
 
@@ -22,7 +24,10 @@ export default function ScanHub() {
   }, []);
 
   const themes = ["All", ...Array.from(new Set(results.map((r) => r.theme).filter(Boolean) as string[]))];
-  const shown = theme === "All" ? results : results.filter((r) => r.theme === theme);
+  const shown = useMemo(() => {
+    const filtered = theme === "All" ? results : results.filter((r) => r.theme === theme);
+    return sortReports(filtered, sort);
+  }, [results, theme, sort]);
 
   return (
     <>
@@ -30,20 +35,19 @@ export default function ScanHub() {
         <h1>Scan Hub</h1>
         <p>
           Holdings + watchlist scanned for price action, technical signals, analyst
-          ratings and news. Sorted by bullish tilt. Source: {source || "…"}
+          ratings and news. Source: <span className={source === "mock" ? "mut" : "pos"}>{source || "…"}</span>
         </p>
       </div>
 
-      <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 20 }}>
-        {themes.map((t) => (
-          <button
-            key={t}
-            className={`btn ${theme === t ? "" : "ghost"}`}
-            onClick={() => setTheme(t)}
-          >
-            {t}
-          </button>
-        ))}
+      <div className="list-head" style={{ alignItems: "flex-start" }}>
+        <div className="filter-chips">
+          {themes.map((t) => (
+            <button key={t} className={theme === t ? "active" : ""} onClick={() => setTheme(t)}>
+              {t}
+            </button>
+          ))}
+        </div>
+        <SortControl sort={sort} setSort={setSort} />
       </div>
 
       {loading && <div className="loading">Scanning universe…</div>}
