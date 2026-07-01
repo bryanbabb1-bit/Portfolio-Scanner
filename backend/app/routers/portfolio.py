@@ -36,6 +36,29 @@ def put_config(cfg: PortfolioConfig):
         raise HTTPException(status_code=500, detail=f"Could not save config: {exc}")
 
 
+@router.get("/quotes")
+def get_quotes(symbols: str = ""):
+    """Lightweight price lookup for a comma-separated list of symbols.
+
+    Powers the live "$ value" column in the Settings editor so a fat-fingered
+    share count is obvious the instant it's typed. Returns last close per symbol.
+    """
+    out: dict[str, dict] = {}
+    for raw in symbols.split(","):
+        sym = raw.strip().upper()
+        if not sym or sym in out:
+            continue
+        try:
+            md = pf_service.market_data.get_market_data(sym)
+            out[sym] = {
+                "price": round(float(md.history["Close"].iloc[-1]), 2),
+                "source": md.source,
+            }
+        except Exception:
+            out[sym] = {"price": None, "source": "error"}
+    return {"quotes": out}
+
+
 @router.get("/watchlist")
 def get_watchlist():
     """Report cards for watched (non-held) names."""

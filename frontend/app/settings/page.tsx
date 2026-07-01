@@ -1,7 +1,10 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { api, Holding, PortfolioConfig, WatchItem } from "../../lib/api";
+import { money } from "../../components/format";
+
+type Quote = { price: number | null; source: string };
 
 const BLANK: PortfolioConfig = {
   owner: "You",
@@ -13,6 +16,7 @@ const BLANK: PortfolioConfig = {
 
 export default function Settings() {
   const [cfg, setCfg] = useState<PortfolioConfig | null>(null);
+  const [quotes, setQuotes] = useState<Record<string, Quote>>({});
   const [err, setErr] = useState<string | null>(null);
   const [msg, setMsg] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
@@ -23,6 +27,34 @@ export default function Settings() {
       .then((c) => setCfg({ ...BLANK, ...c }))
       .catch((e) => setErr(e.message));
   }, []);
+
+  // Live prices for the holdings, so the "$ value" column and total reflect
+  // real market data as you edit. Keyed on the sorted symbol set, debounced so
+  // typing a ticker doesn't fire a request per keystroke.
+  const heldSymbols = (cfg?.holdings ?? [])
+    .map((h) => h.symbol.trim().toUpperCase())
+    .filter(Boolean);
+  const symbolKey = Array.from(new Set(heldSymbols)).sort().join(",");
+  useEffect(() => {
+    if (!symbolKey) return;
+    const syms = symbolKey.split(",");
+    const t = setTimeout(() => {
+      api
+        .quotes(syms)
+        .then((d) => setQuotes((prev) => ({ ...prev, ...d.quotes })))
+        .catch(() => {});
+    }, 500);
+    return () => clearTimeout(t);
+  }, [symbolKey]);
+
+  const bookValue = useMemo(
+    () =>
+      (cfg?.holdings ?? []).reduce((sum, h) => {
+        const p = quotes[h.symbol.trim().toUpperCase()]?.price;
+        return sum + (p != null ? p * (h.shares || 0) : 0);
+      }, 0),
+    [cfg?.holdings, quotes]
+  );
 
   if (err && !cfg) return <div className="err">Could not load config ({err}).</div>;
   if (!cfg) return <div className="loading">Loading config…</div>;
@@ -116,39 +148,59 @@ export default function Settings() {
           <button className="btn ghost" onClick={addHolding}>+ Add holding</button>
         </div>
         <div className="edit-table">
-          <div className="et-row et-head">
-            <span>Symbol</span><span>Shares</span><span>Cost basis</span><span>Theme</span><span />
+          <div className="et-row et-row-h et-head">
+            <span>Symbol</span><span>Shares</span><span>Cost basis</span><span>Price</span><span>$ Value</span><span>Theme</span><span />
           </div>
-          {cfg.holdings.map((h, i) => (
-            <div className="et-row" key={i}>
-              <input
-                className="sym"
-                value={h.symbol}
-                placeholder="TICKER"
-                onChange={(e) => setHolding(i, { symbol: e.target.value.toUpperCase() })}
-              />
-              <input
-                type="number"
-                value={h.shares}
-                min={0}
-                step="any"
-                onChange={(e) => setHolding(i, { shares: parseFloat(e.target.value) || 0 })}
-              />
-              <input
-                type="number"
-                value={h.cost_basis}
-                min={0}
-                step="any"
-                onChange={(e) => setHolding(i, { cost_basis: parseFloat(e.target.value) || 0 })}
-              />
-              <select value={h.theme ?? ""} onChange={(e) => setHolding(i, { theme: e.target.value || undefined })}>
-                <option value="">— none —</option>
-                {themeNames.map((t) => <option key={t} value={t}>{t}</option>)}
-              </select>
-              <button className="icon-btn" title="Remove" onClick={() => delHolding(i)}>✕</button>
-            </div>
-          ))}
+          {cfg.holdings.map((h, i) => {
+            const q = quotes[h.symbol.trim().toUpperCase()];
+            const price = q?.price ?? null;
+            const value = price != null ? price * (h.shares || 0) : null;
+            const share = value != null && bookValue > 0 ? value / bookValue : 0;
+            // Flag a row that alone is >60% of the book — the classic fat-finger.
+            const dominant = share > 0.6;
+            return (
+              <div className={`et-row et-row-h${dominant ? " et-flag" : ""}`} key={i}>
+                <input
+                  className="sym"
+                  value={h.symbol}
+                  placeholder="TICKER"
+                  onChange={(e) => setHolding(i, { symbol: e.target.value.toUpperCase() })}
+                />
+                <input
+                  type="number"
+                  value={h.shares}
+                  min={0}
+                  step="any"
+                  onChange={(e) => setHolding(i, { shares: parseFloat(e.target.value) || 0 })}
+                />
+                <input
+                  type="number"
+                  value={h.cost_basis}
+                  min={0}
+                  step="any"
+                  onChange={(e) => setHolding(i, { cost_basis: parseFloat(e.target.value) || 0 })}
+                />
+                <span className="et-cell mut" title={q?.source === "mock" ? "mock data" : "live"}>
+                  {price != null ? money(price) : "—"}
+                </span>
+                <span className={`et-cell val${dominant ? " neg" : ""}`} title={value != null ? `${(share * 100).toFixed(1)}% of book` : ""}>
+                  {value != null ? money(value, 0) : "—"}
+                </span>
+                <select value={h.theme ?? ""} onChange={(e) => setHolding(i, { theme: e.target.value || undefined })}>
+                  <option value="">— none —</option>
+                  {themeNames.map((t) => <option key={t} value={t}>{t}</option>)}
+                </select>
+                <button className="icon-btn" title="Remove" onClick={() => delHolding(i)}>✕</button>
+              </div>
+            );
+          })}
           {cfg.holdings.length === 0 && <div className="empty">No holdings yet — add one.</div>}
+          {cfg.holdings.length > 0 && (
+            <div className="et-total">
+              <span>Book value (live)</span>
+              <strong>{money(bookValue, 0)}</strong>
+            </div>
+          )}
         </div>
       </div>
 

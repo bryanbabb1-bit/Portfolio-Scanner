@@ -193,6 +193,10 @@ export const api = {
     get<{ count: number; source: string; results: StockReport[] }>("/api/watchlist"),
   config: () => get<PortfolioConfig>("/api/config"),
   saveConfig: (cfg: PortfolioConfig) => put<PortfolioConfig>("/api/config", cfg),
+  quotes: (symbols: string[]) =>
+    get<{ quotes: Record<string, { price: number | null; source: string }> }>(
+      `/api/quotes?symbols=${encodeURIComponent(symbols.join(","))}`
+    ),
   adviseStock: (symbol: string, force = false) =>
     get<AdvisorNote>(`/api/advisor/stock/${symbol}?force=${force}`),
   adviseBreakout: (symbol: string, force = false) =>

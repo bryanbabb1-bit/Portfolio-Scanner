@@ -12,19 +12,32 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api
-      .portfolio()
-      .then((d) => {
-        setSummary(d.summary);
-        setHoldings(d.holdings);
-      })
-      .catch((e) => setErr(e.message))
-      .finally(() => setLoading(false));
-    // Watchlist loads independently — a slow/failed watch fetch never blocks holdings.
-    api
-      .watchlist()
-      .then((d) => setWatchlist(d.results))
-      .catch(() => setWatchlist([]));
+    const load = () => {
+      api
+        .portfolio()
+        .then((d) => {
+          setSummary(d.summary);
+          setHoldings(d.holdings);
+          setErr(null);
+        })
+        .catch((e) => setErr(e.message))
+        .finally(() => setLoading(false));
+      // Watchlist loads independently — a slow/failed watch fetch never blocks holdings.
+      api
+        .watchlist()
+        .then((d) => setWatchlist(d.results))
+        .catch(() => setWatchlist([]));
+    };
+    load();
+    // Re-fetch whenever the user returns to this tab (e.g. after saving in Settings),
+    // so the summary up top always reflects the latest portfolio.
+    const onFocus = () => load();
+    window.addEventListener("focus", onFocus);
+    document.addEventListener("visibilitychange", onFocus);
+    return () => {
+      window.removeEventListener("focus", onFocus);
+      document.removeEventListener("visibilitychange", onFocus);
+    };
   }, []);
 
   if (loading) return <div className="loading">Loading portfolio…</div>;

@@ -197,11 +197,21 @@ select { cursor: pointer; }
 .editor-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
 .edit-table { display: flex; flex-direction: column; gap: 8px; }
 .et-row { display: grid; grid-template-columns: 1.1fr 1fr 1fr 1.4fr 36px; gap: 8px; align-items: center; }
+.et-row-h { grid-template-columns: 1fr .85fr .85fr .8fr .9fr 1.1fr 34px; }
 .et-row-wl { grid-template-columns: 1.1fr 1.4fr 36px; }
 .et-row-theme { grid-template-columns: 1.1fr 3fr 36px; }
 .et-head { font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
 .et-head span { padding-left: 2px; }
 .et-row .sym { font-weight: 700; letter-spacing: .02em; }
+.et-cell { font-size: 13px; padding: 0 2px; text-align: right; }
+.et-cell.val { font-weight: 600; color: var(--text); }
+.et-row.et-flag { outline: 1px solid var(--bear); outline-offset: 2px; border-radius: 8px; }
+.et-total {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 6px; padding: 10px 4px 2px; border-top: 1px solid var(--border);
+  font-size: 13px; color: var(--muted);
+}
+.et-total strong { font-size: 16px; color: var(--text); }
 .icon-btn {
   background: transparent; border: 1px solid var(--border); color: var(--muted);
   border-radius: 7px; height: 34px; cursor: pointer; font-size: 12px;
@@ -210,7 +220,8 @@ select { cursor: pointer; }
 .empty { color: var(--muted); font-size: 13px; padding: 8px 2px; }
 @media (max-width: 640px) {
   .et-row, .et-row-wl, .et-row-theme { grid-template-columns: 1fr 1fr 36px; }
-  .et-head { display: none; }
+  .et-row-h { grid-template-columns: 1fr 1fr 1fr 34px; }
+  .et-row-h .et-cell, .et-head { display: none; }
 }
 
 .save-bar {
