@@ -1,0 +1,35 @@
+{
+  "owner": "You",
+  "advisor_persona": "senior financial advisor at Charles Schwab",
+  "themes": {
+    "AI": "Companies building or monetizing artificial intelligence models and applications",
+    "Tech": "Broad technology leaders and platforms",
+    "AI Infrastructure": "Chips, networking, memory and systems that AI runs on",
+    "Energy": "Power generation and grid — the fuel behind the compute buildout",
+    "Compute Power": "Data centers, cooling, and utilities feeding hyperscale compute"
+  },
+  "holdings": [
+    { "symbol": "NVDA", "shares": 40, "cost_basis": 480.0, "theme": "AI Infrastructure" },
+    { "symbol": "MSFT", "shares": 25, "cost_basis": 330.0, "theme": "AI" },
+    { "symbol": "GOOGL", "shares": 30, "cost_basis": 138.0, "theme": "AI" },
+    { "symbol": "AMD",  "shares": 50, "cost_basis": 110.0, "theme": "AI Infrastructure" },
+    { "symbol": "AVGO", "shares": 12, "cost_basis": 900.0, "theme": "AI Infrastructure" },
+    { "symbol": "VRT",  "shares": 60, "cost_basis": 65.0,  "theme": "Compute Power" },
+    { "symbol": "CEG",  "shares": 20, "cost_basis": 175.0, "theme": "Energy" },
+    { "symbol": "SMCI", "shares": 15, "cost_basis": 40.0,  "theme": "AI Infrastructure" }
+  ],
+  "watchlist": [
+    { "symbol": "PLTR", "theme": "AI" },
+    { "symbol": "TSM",  "theme": "AI Infrastructure" },
+    { "symbol": "MU",   "theme": "AI Infrastructure" },
+    { "symbol": "ARM",  "theme": "AI Infrastructure" },
+    { "symbol": "ANET", "theme": "AI Infrastructure" },
+    { "symbol": "VST",  "theme": "Energy" },
+    { "symbol": "NEE",  "theme": "Energy" },
+    { "symbol": "ETN",  "theme": "Compute Power" },
+    { "symbol": "DLR",  "theme": "Compute Power" },
+    { "symbol": "TSLA", "theme": "Tech" },
+    { "symbol": "AMZN", "theme": "Tech" },
+    { "symbol": "META", "theme": "AI" }
+  ]
+}
