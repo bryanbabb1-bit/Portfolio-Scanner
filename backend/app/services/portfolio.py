@@ -211,7 +211,7 @@ def portfolio_history(range_: str = "6mo") -> PortfolioHistory:
     points_n = _RANGE_POINTS.get(range_, _RANGE_POINTS["6mo"])
     market_data.warm_cache([h["symbol"] for h in holdings])
 
-    value_frame = pd.DataFrame()
+    per_symbol: dict[str, pd.Series] = {}
     total_cost = 0.0
     any_mock = False
     for h in holdings:
@@ -223,11 +223,13 @@ def portfolio_history(range_: str = "6mo") -> PortfolioHistory:
         except Exception:
             continue
         any_mock = any_mock or md.source == "mock"
-        value_frame[sym] = md.history["Close"] * shares
+        per_symbol[sym] = md.history["Close"] * shares
 
     points: list[ValuePoint] = []
-    if not value_frame.empty:
-        value_frame = value_frame.sort_index().ffill().fillna(0.0)
+    if per_symbol:
+        # concat unions the date indexes; column-by-column assignment would
+        # silently truncate everything to the first symbol's calendar.
+        value_frame = pd.concat(per_symbol, axis=1).sort_index().ffill().fillna(0.0)
         series = value_frame.sum(axis=1).tail(points_n)
         for idx, val in series.items():
             points.append(

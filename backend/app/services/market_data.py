@@ -79,13 +79,19 @@ def _fetch_live(symbol: str) -> MarketData:
     try:
         for n in (tkr.news or [])[:6]:
             content = n.get("content", n)
+            published = content.get("pubDate") or n.get("providerPublishTime")
+            # Older yfinance schema gives a raw Unix epoch — normalize to ISO
+            # so sorting and "time ago" rendering work downstream.
+            if isinstance(published, (int, float)):
+                published = time.strftime(
+                    "%Y-%m-%dT%H:%M:%SZ", time.gmtime(published))
             news_items.append({
                 "title": content.get("title") or n.get("title"),
                 "publisher": (content.get("provider", {}) or {}).get("displayName")
                              or n.get("publisher"),
                 "link": (content.get("canonicalUrl", {}) or {}).get("url")
                         or n.get("link"),
-                "published": content.get("pubDate") or n.get("providerPublishTime"),
+                "published": published,
             })
     except Exception:
         pass

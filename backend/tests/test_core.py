@@ -87,6 +87,38 @@ def test_risk_metrics_sane():
     assert risk.best_day_pct >= risk.worst_day_pct
 
 
+def test_value_series_unions_mismatched_calendars(monkeypatch):
+    """Holdings with different trading calendars must be unioned + ffilled,
+    not silently truncated to the first symbol's index."""
+    import pandas as pd
+    from app.services.market_data import MarketData
+
+    base = pd.date_range("2025-01-01", periods=10, freq="B")
+    calendars = {"AAA": base[:-1], "BBB": base[1:]}  # BBB has one later day
+
+    def fake_md(symbol):
+        idx = calendars[symbol.upper()]
+        df = pd.DataFrame(
+            {"Open": 1.0, "High": 1.0, "Low": 1.0, "Close": 1.0, "Volume": 1},
+            index=idx,
+        )
+        return MarketData(symbol.upper(), symbol, df, {}, [], "mock")
+
+    monkeypatch.setattr(insights.market_data, "get_market_data", fake_md)
+    monkeypatch.setattr(insights.pf_service, "load_portfolio", lambda: {
+        "holdings": [
+            {"symbol": "AAA", "shares": 1, "cost_basis": 1},
+            {"symbol": "BBB", "shares": 1, "cost_basis": 1},
+        ]
+    })
+
+    series = insights._portfolio_value_series()
+    # BBB's final day survives even though AAA (first symbol) lacks it,
+    # with AAA forward-filled — so the last value is 2.0.
+    assert series.index.max() == base[-1]
+    assert float(series.iloc[-1]) == 2.0
+
+
 def test_alert_rules_fire():
     overbought = _report(indicators=Indicators(rsi=80))
     alerts = insights.build_alerts([overbought])

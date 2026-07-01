@@ -61,13 +61,17 @@ def get_news(limit: int = 40):
             )
 
     def sort_key(n: PortfolioNewsItem):
+        oldest = pd.Timestamp.min.tz_localize("UTC")
+        if not n.published:
+            return oldest
         try:
+            # Bare-numeric strings are Unix epochs from older cached payloads.
+            if n.published.replace(".", "", 1).isdigit():
+                return pd.to_datetime(float(n.published), unit="s", utc=True)
             ts = pd.to_datetime(n.published, utc=True)
-            if pd.isna(ts):
-                return pd.Timestamp.min.tz_localize("UTC")
-            return ts
+            return oldest if pd.isna(ts) else ts
         except Exception:
-            return pd.Timestamp.min.tz_localize("UTC")
+            return oldest
 
     items = sorted(by_title.values(), key=sort_key, reverse=True)[:limit]
     return {

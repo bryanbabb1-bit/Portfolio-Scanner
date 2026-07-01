@@ -41,7 +41,7 @@ def _daily_close(md) -> pd.Series:
 def _portfolio_value_series() -> pd.Series:
     """Unrounded daily portfolio value: sum of shares * close per holding."""
     pf = pf_service.load_portfolio()
-    frame = pd.DataFrame()
+    per_symbol: dict[str, pd.Series] = {}
     for h in pf.get("holdings", []):
         shares = float(h.get("shares", 0) or 0)
         if shares <= 0:
@@ -50,10 +50,12 @@ def _portfolio_value_series() -> pd.Series:
             md = market_data.get_market_data(h["symbol"])
         except Exception:
             continue
-        frame[h["symbol"].upper()] = _daily_close(md) * shares
-    if frame.empty:
+        per_symbol[h["symbol"].upper()] = _daily_close(md) * shares
+    if not per_symbol:
         return pd.Series(dtype=float)
-    frame = frame.sort_index().ffill()
+    # concat unions the date indexes; column-by-column assignment would silently
+    # truncate everything to the FIRST symbol's calendar.
+    frame = pd.concat(per_symbol, axis=1).sort_index().ffill()
     # Drop leading days where newer listings have no data yet — a NaN->0 there
     # would read as a fake drawdown/spike in the combined series.
     return frame.dropna().sum(axis=1)
