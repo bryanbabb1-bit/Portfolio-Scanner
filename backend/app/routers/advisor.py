@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from fastapi import APIRouter, HTTPException
 
+from ..models.schemas import AskRequest
 from ..services import advisor as advisor_service
 from ..services import insights as insights_service
 from ..services import market_data, screener
@@ -21,6 +22,19 @@ def advise_portfolio(force: bool = False):
     except Exception as exc:
         raise HTTPException(status_code=502, detail=f"Portfolio read failed: {exc}")
     return advisor_service.advise_portfolio(summary, reports, risk, alerts, force=force)
+
+
+@router.post("/ask")
+def ask(req: AskRequest):
+    """Follow-up Q&A on a prior advisor note — resumes the same Claude
+    conversation so the brief and data stay in context."""
+    if req.kind != "portfolio" and not (req.symbol or "").strip():
+        raise HTTPException(status_code=422, detail="symbol required for this kind")
+    try:
+        return advisor_service.ask(
+            req.kind, (req.symbol or "").strip().upper() or None, req.question.strip())
+    except Exception as exc:
+        raise HTTPException(status_code=502, detail=f"Ask failed: {exc}")
 
 
 @router.get("/stock/{symbol}")

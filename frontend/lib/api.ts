@@ -202,9 +202,24 @@ async function get<T>(path: string): Promise<T> {
   return res.json();
 }
 
+export interface AskAnswer {
+  engine: string;
+  answer: string;
+  points: string[];
+  generated_at: string;
+}
+
 async function put<T>(path: string, body: unknown): Promise<T> {
+  return send<T>(path, "PUT", body);
+}
+
+async function post<T>(path: string, body: unknown): Promise<T> {
+  return send<T>(path, "POST", body);
+}
+
+async function send<T>(path: string, method: string, body: unknown): Promise<T> {
   const res = await fetch(`${API_BASE}${path}`, {
-    method: "PUT",
+    method,
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
     cache: "no-store",
@@ -255,6 +270,8 @@ export const api = {
     get<AdvisorNote>(`/api/advisor/breakout/${symbol}?force=${force}`),
   advisePortfolio: (force = false) =>
     get<AdvisorNote>(`/api/advisor/portfolio?force=${force}`),
+  askAdvisor: (kind: "portfolio" | "stock" | "breakout", symbol: string | undefined, question: string) =>
+    post<AskAnswer>("/api/advisor/ask", { kind, symbol, question }),
   insights: () => get<PortfolioInsights>("/api/insights"),
   discover: (minScore = 0, limit = 24) =>
     get<{ count: number; universe: number; source: string; results: BreakoutCandidate[] }>(

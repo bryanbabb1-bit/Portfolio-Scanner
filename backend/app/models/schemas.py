@@ -115,6 +115,21 @@ class PortfolioSummary(BaseModel):
     by_theme: dict[str, float] = {}
 
 
+class AskRequest(BaseModel):
+    """A follow-up question about a prior advisor note."""
+    kind: str  # "portfolio" | "stock" | "breakout"
+    symbol: Optional[str] = None
+    question: str = Field(min_length=1, max_length=2000)
+
+    @field_validator("kind")
+    @classmethod
+    def _valid_kind(cls, v: str) -> str:
+        v = (v or "").strip().lower()
+        if v not in {"portfolio", "stock", "breakout"}:
+            raise ValueError("kind must be portfolio, stock or breakout")
+        return v
+
+
 # ------------------------------------------------------------- intelligence
 class PortfolioAlert(BaseModel):
     """A rule-derived attention item for the dashboard alerts panel."""

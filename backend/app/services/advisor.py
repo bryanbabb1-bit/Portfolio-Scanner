@@ -26,6 +26,9 @@ from ..models.schemas import (
 
 # advisor cache keyed by symbol+kind
 _cache: dict[str, tuple[float, AdvisorNote]] = {}
+# claude CLI session per context key — lets follow-up questions resume the
+# conversation with the full brief already in context
+_sessions: dict[str, str] = {}
 
 _PERSONA = (
     "You are a senior financial advisor at Charles Schwab with 20+ years of "
@@ -73,14 +76,19 @@ def _facts_from_report(r: StockReport) -> str:
     return "\n".join(lines)
 
 
-def _run_claude(prompt: str) -> str | None:
-    """Invoke `claude -p` headless; return the model's text result or None."""
+def _run_claude(prompt: str, resume: str | None = None) -> tuple[str | None, str | None]:
+    """Invoke `claude -p` headless; return (result_text, session_id).
+
+    resume: a prior session id — the CLI reloads that conversation so
+    follow-up questions keep the original brief and data in context."""
     # On Windows the CLI is an npm `claude.CMD` shim — subprocess can't launch
     # it by bare name (WinError 2), so resolve the real path via PATH/PATHEXT.
     # The prompt goes over STDIN, not argv: multi-line args are mangled by the
     # cmd.exe batch layer, which silently truncates at the first newline.
     exe = shutil.which(settings.CLAUDE_BIN) or settings.CLAUDE_BIN
     cmd = [exe, "-p", "--output-format", "json"]
+    if resume:
+        cmd += ["--resume", resume]
     if settings.CLAUDE_MODEL:
         cmd += ["--model", settings.CLAUDE_MODEL]
     try:
@@ -90,17 +98,17 @@ def _run_claude(prompt: str) -> str | None:
         )
     except (FileNotFoundError, subprocess.TimeoutExpired) as exc:
         print(f"[advisor] claude CLI unavailable: {exc!r}")
-        return None
+        return None, None
     if proc.returncode != 0:
         print(f"[advisor] claude CLI rc={proc.returncode}: {proc.stderr[:300]}")
-        return None
+        return None, None
     try:
         payload = json.loads(proc.stdout)
     except json.JSONDecodeError:
-        return proc.stdout.strip() or None
+        return proc.stdout.strip() or None, None
     if payload.get("is_error"):
-        return None
-    return payload.get("result")
+        return None, None
+    return payload.get("result"), payload.get("session_id")
 
 
 def _as_bullets(val) -> list[str]:
@@ -188,9 +196,11 @@ def advise_stock(report: StockReport, force: bool = False) -> AdvisorNote:
         f"watching:\n\n{facts}\n\nAs their advisor, give your professional read. "
         f"{_SCHEMA_HINT}"
     )
-    raw = _run_claude(prompt)
+    raw, sid = _run_claude(prompt)
     note = _parse_note(report.symbol, "claude", raw) if raw else \
         _fallback_note(report.symbol, facts, report.signals)
+    if raw and sid:
+        _sessions[key] = sid
     _cache[key] = (time.time(), note)
     return note
 
@@ -261,9 +271,11 @@ def advise_portfolio(summary: PortfolioSummary, reports: list[StockReport],
         f'Every bullet must be a single self-contained sentence under 30 words. '
         f'No lead-in phrases, no numbering — the UI renders them as a list.'
     )
-    raw = _run_claude(prompt)
+    raw, sid = _run_claude(prompt)
     note = _parse_note("PORTFOLIO", "claude", raw) if raw else \
         _fallback_note("PORTFOLIO", facts, all_signals)
+    if raw and sid:
+        _sessions[key] = sid
     _cache[key] = (time.time(), note)
     return note
 
@@ -294,8 +306,82 @@ def advise_breakout(cand: BreakoutCandidate, force: bool = False) -> AdvisorNote
         f"invalidate it. Be specific about entry zone, the level that confirms the "
         f"breakout, and a stop. {_SCHEMA_HINT}"
     )
-    raw = _run_claude(prompt)
+    raw, sid = _run_claude(prompt)
     note = _parse_note(cand.symbol, "claude", raw) if raw else \
         _fallback_note(cand.symbol, facts, cand.signals)
+    if raw and sid:
+        _sessions[key] = sid
     _cache[key] = (time.time(), note)
     return note
+
+
+# ------------------------------------------------------------------ follow-up
+_ASK_FMT = (
+    'Respond with ONLY a JSON object, no markdown: '
+    '{"answer": string (the direct answer to the question in 1-2 sentences), '
+    '"points": array of 0-4 supporting bullet strings, each a single '
+    'self-contained sentence under 25 words}. No lead-in phrases.'
+)
+
+
+def ask(kind: str, symbol: str | None, question: str) -> dict:
+    """Answer a follow-up question about a prior advisor note.
+
+    Resumes the claude session that produced the note, so the model still has
+    the full brief and data in context. If no session exists (fresh boot,
+    fallback note), the current facts are rebuilt and sent with the question.
+    """
+    stamp = time.strftime("%Y-%m-%d %H:%M:%S")
+    if not settings.ADVISOR_ENABLED:
+        return {"engine": "fallback", "generated_at": stamp, "points": [],
+                "answer": "The AI advisor is disabled (ADVISOR_ENABLED=0), so "
+                          "follow-up questions can't be answered right now."}
+
+    key = "portfolio:brief" if kind == "portfolio" else f"{kind}:{symbol}"
+    raw = sid = None
+    prior = _sessions.get(key)
+    if prior:
+        raw, sid = _run_claude(
+            f"Client follow-up question: {question}\n\n{_ASK_FMT}", resume=prior)
+
+    if raw is None:
+        # No live session — rebuild context and ask cold.
+        from . import insights as insights_service
+        from . import portfolio as pf_service
+        if kind == "portfolio":
+            summary, reports = pf_service.portfolio_summary()
+            facts = _facts_from_portfolio(
+                summary, reports,
+                insights_service.compute_risk(reports),
+                insights_service.build_alerts(reports))
+        else:
+            facts = _facts_from_report(pf_service.build_report(symbol))
+        note = _cache.get(key)
+        prior_note = ""
+        if note:
+            n = note[1]
+            prior_note = ("\n\nYour previous advice to this client:\n"
+                          f"Take: {n.summary}\nActions: " + "; ".join(n.actions) +
+                          "\nRisks: " + "; ".join(n.risks))
+        prompt = (f"{_PERSONA}\n\nThe client's current data:\n\n{facts}{prior_note}"
+                  f"\n\nClient question: {question}\n\n{_ASK_FMT}")
+        raw, sid = _run_claude(prompt)
+
+    if raw is None:
+        return {"engine": "fallback", "generated_at": stamp, "points": [],
+                "answer": "The advisor is unavailable right now (Claude CLI "
+                          "did not respond). Try again in a moment."}
+
+    if sid:
+        _sessions[key] = sid
+    answer, points = raw.strip(), []
+    start, end = raw.find("{"), raw.rfind("}")
+    if start != -1 and end > start:
+        try:
+            obj = json.loads(raw[start : end + 1])
+            answer = str(obj.get("answer", "") or "").strip() or raw.strip()
+            points = _as_bullets(obj.get("points"))
+        except json.JSONDecodeError:
+            pass
+    return {"engine": "claude", "generated_at": stamp,
+            "answer": answer, "points": points}

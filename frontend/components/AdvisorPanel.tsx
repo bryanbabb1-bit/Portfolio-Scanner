@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { AdvisorNote, api } from "../lib/api";
+import { AdvisorChat } from "./AdvisorChat";
 import { BulletList } from "./BulletList";
 
 export function AdvisorPanel({
@@ -92,6 +93,7 @@ export function AdvisorPanel({
           <p className="mut" style={{ fontSize: 11, marginTop: 12 }}>
             {note.persona} · {note.generated_at} · Not personalized investment advice.
           </p>
+          <AdvisorChat kind={mode} symbol={symbol} />
         </>
       )}
     </div>

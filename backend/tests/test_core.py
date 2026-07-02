@@ -157,6 +157,13 @@ def test_discovery_excludes_owned_and_sorts():
     assert all(c.quote.name and c.quote.name != c.symbol for c in out["results"])
 
 
+def test_ask_returns_fallback_when_advisor_disabled():
+    from app.services import advisor
+    out = advisor.ask("portfolio", None, "Should I sell CLSK?")
+    assert out["engine"] == "fallback"
+    assert out["answer"]
+
+
 def test_news_deduped_and_tagged():
     out = get_news(limit=50)
     titles = [n.title for n in out["results"]]
