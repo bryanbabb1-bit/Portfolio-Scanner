@@ -22,17 +22,6 @@
     "ts": 1783014367.2175584
   },
   {
-    "id": "0eafbb790769",
-    "date": "2026-07-02",
-    "symbol": "KLAC",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Added to watchlist from Discovery",
-    "source": "auto",
-    "ts": 1783014367.2335901
-  },
-  {
     "id": "baef4d069530",
     "date": "2026-07-02",
     "symbol": "NVDA",
@@ -42,5 +31,93 @@
     "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
     "source": "pin",
     "ts": 1783015251.3881462
+  },
+  {
+    "id": "e39fed7dc23b",
+    "date": "2026-07-02",
+    "symbol": "WULF",
+    "action": "sell",
+    "shares": 37.41827,
+    "price": 20.93,
+    "note": "",
+    "source": "manual",
+    "ts": 1783017224.3768551
+  },
+  {
+    "id": "248c73ee4a3a",
+    "date": "2026-07-02",
+    "symbol": "META",
+    "action": "sell",
+    "shares": 1.37819,
+    "price": 584.1,
+    "note": "",
+    "source": "manual",
+    "ts": 1783017255.8187077
+  },
+  {
+    "id": "dd75f3ef2e13",
+    "date": "2026-07-02",
+    "symbol": "CIFR",
+    "action": "sell",
+    "shares": 30.12398,
+    "price": 19.75,
+    "note": "",
+    "source": "manual",
+    "ts": 1783017293.2479923
+  },
+  {
+    "id": "7226cedaa436",
+    "date": "2026-07-02",
+    "symbol": "ONDS",
+    "action": "sell",
+    "shares": 28.13887,
+    "price": 7.51,
+    "note": "",
+    "source": "manual",
+    "ts": 1783017325.5429132
+  },
+  {
+    "id": "56b3a9d77671",
+    "date": "2026-07-02",
+    "symbol": "GRAB",
+    "action": "sell",
+    "shares": 118.87483,
+    "price": 3.85,
+    "note": "",
+    "source": "manual",
+    "ts": 1783017365.145621
+  },
+  {
+    "id": "51e7d664dca1",
+    "date": "2026-07-02",
+    "symbol": "NBIS",
+    "action": "sell",
+    "shares": 4.0,
+    "price": 214.0,
+    "note": "",
+    "source": "manual",
+    "ts": 1783017399.8159602
+  },
+  {
+    "id": "e00509385e7a",
+    "date": "2026-07-02",
+    "symbol": "ONDS",
+    "action": "sell",
+    "shares": 27.88104,
+    "price": 8.07,
+    "note": "",
+    "source": "manual",
+    "ts": 1783017444.0653539
+  },
+  {
+    "id": "764dd2c0d94f",
+    "date": "2026-07-02",
+    "symbol": "NVDA",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
+    "source": "pin",
+    "ts": 1783017932.436419
   }
 ]

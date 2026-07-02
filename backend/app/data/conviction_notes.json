@@ -41,6 +41,7 @@
       "Volume is only 0.50x average, so wait for a volume confirmation before adding size."
     ],
     "target": "First target $315.20 (prior 52-week high), with a follow-through objective near $324 (+1x ATR of 8.63 beyond the high) on a confirmed breakout.",
-    "stop": "Exit if price closes below the $293.44 50-day SMA, which would invalidate the uptrend structure."
+    "stop": "Exit if price closes below the $293.44 50-day SMA, which would invalidate the uptrend structure.",
+    "dismissed": false
   }
 }

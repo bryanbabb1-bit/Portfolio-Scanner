@@ -1,49 +1,56 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { ConvictionSignal } from "../lib/api";
+import { api, ConvictionSignal } from "../lib/api";
 import { money } from "./format";
 import { BulletList } from "./BulletList";
 
-const DISMISSED_KEY = "pscan-dismissed-signals";
+const LEGACY_KEY = "pscan-dismissed-signals";
 
-function loadDismissed(): Set<string> {
-  try {
-    return new Set(JSON.parse(localStorage.getItem(DISMISSED_KEY) || "[]"));
-  } catch {
-    return new Set();
-  }
-}
-
-function saveDismissed(ids: Set<string>) {
-  try {
-    localStorage.setItem(DISMISSED_KEY, JSON.stringify(Array.from(ids).slice(-100)));
-  } catch {}
-}
-
-// Full-screen conviction alert: when the engine sees a strong buy or sell
-// setup, this takes over the screen until acknowledged.
-export function SignalSlap({ signals }: { signals: ConvictionSignal[] }) {
-  const [dismissed, setDismissed] = useState<Set<string> | null>(null);
+// Full-screen conviction alert. Dismissal is SERVER-SIDE (per signal id):
+// dismissed signals vanish from the popup and the strip on every device.
+// A new fire — different rule, or the same rule after its cooldown — mints
+// a new id and pops again, so suppressing today never mutes tomorrow.
+export function SignalSlap({
+  signals,
+  onDismissed,
+}: {
+  signals: ConvictionSignal[];
+  onDismissed: (ids: string[]) => void;
+}) {
   const [idx, setIdx] = useState(0);
 
+  // One-time migration: ids dismissed under the old localStorage scheme get
+  // dismissed server-side so they don't re-pop after the upgrade.
   useEffect(() => {
-    setDismissed(loadDismissed());
+    try {
+      const legacy: string[] = JSON.parse(localStorage.getItem(LEGACY_KEY) || "[]");
+      if (legacy.length) {
+        const active = new Set(signals.map((s) => s.id));
+        const toMigrate = legacy.filter((id) => active.has(id));
+        Promise.all(toMigrate.map((id) => api.dismissSignal(id).catch(() => {})))
+          .then(() => {
+            if (toMigrate.length) onDismissed(toMigrate);
+          });
+        localStorage.removeItem(LEGACY_KEY);
+      }
+    } catch {}
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (!dismissed) return null;
-  const pending = signals.filter((s) => !dismissed.has(s.id));
+  const pending = signals.filter((s) => !s.dismissed);
   if (!pending.length) return null;
   const s = pending[Math.min(idx, pending.length - 1)];
   const buy = s.side === "buy";
 
-  function dismiss(all = false) {
-    const next = new Set(dismissed as Set<string>);
-    if (all) pending.forEach((p) => next.add(p.id));
-    else next.add(s.id);
-    setDismissed(next);
-    saveDismissed(next);
+  async function dismiss(all = false) {
+    const ids = all ? pending.map((p) => p.id) : [s.id];
+    onDismissed(ids); // optimistic — hide immediately
     setIdx(0);
+    try {
+      if (all) await api.dismissSignal();
+      else await api.dismissSignal(s.id);
+    } catch {}
   }
 
   return (
@@ -92,7 +99,6 @@ export function SignalSlap({ signals }: { signals: ConvictionSignal[] }) {
             className="btn ghost"
             onClick={async () => {
               try {
-                const { api } = await import("../lib/api");
                 await api.addPin({
                   symbol: s.symbol,
                   source: "signal",

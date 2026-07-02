@@ -81,22 +81,50 @@ export default function Dashboard() {
 
   const themeEntries = Object.entries(summary.by_theme).sort((a, b) => b[1] - a[1]);
 
+  const markDismissed = (ids: string[]) => {
+    const set = new Set(ids);
+    setSignals((cur) => cur.map((s) => (set.has(s.id) ? { ...s, dismissed: true } : s)));
+  };
+  const dismissOne = (id: string) => {
+    markDismissed([id]);
+    api.dismissSignal(id).catch(() => {});
+  };
+  const activeSignals = signals.filter((s) => !s.dismissed);
+
   return (
     <>
-      <SignalSlap signals={signals} />
+      <SignalSlap signals={signals} onDismissed={markDismissed} />
 
-      {signals.length > 0 && (
+      {activeSignals.length > 0 && (
         <div className="card signal-strip" style={{ marginBottom: 24 }}>
-          <div className="section-title" style={{ marginBottom: 8 }}>Conviction Signals · last 48h</div>
-          {signals.map((s) => (
-            <a key={s.id} href={`/stock/${s.symbol}`} className={`signal-row ${s.side}`}>
+          <div className="chart-head" style={{ marginBottom: 8 }}>
+            <div className="section-title" style={{ margin: 0 }}>Conviction Signals · last 48h</div>
+            <button
+              className="btn ghost"
+              onClick={() => {
+                markDismissed(activeSignals.map((s) => s.id));
+                api.dismissSignal().catch(() => {});
+              }}
+            >
+              Clear all
+            </button>
+          </div>
+          {activeSignals.map((s) => (
+            <div key={s.id} className={`signal-row ${s.side}`}>
               <span className={`signal-side ${s.side}`}>{s.side === "buy" ? "BUY" : "SELL"}</span>
-              <span className="alert-sym">{s.symbol}</span>
-              <span className="signal-headline">{s.headline}</span>
+              <a href={`/stock/${s.symbol}`} className="alert-sym">{s.symbol}</a>
+              <a href={`/stock/${s.symbol}`} className="signal-headline">{s.headline}</a>
               <span className="mut" style={{ fontSize: 11, marginLeft: "auto", whiteSpace: "nowrap" }}>
                 {s.generated_at.slice(5, 16)}
               </span>
-            </a>
+              <button
+                className="icon-btn jr-btn"
+                title="Dismiss — a new signal on this stock will pop again"
+                onClick={() => dismissOne(s.id)}
+              >
+                ✕
+              </button>
+            </div>
           ))}
         </div>
       )}

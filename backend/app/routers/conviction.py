@@ -22,3 +22,11 @@ def signals(demo: bool = False):
     if demo:
         results = [conviction.demo_signal()] + results
     return {"count": len(results), "results": results}
+
+
+@router.post("/signals/dismiss")
+def dismiss_signals(id: str | None = None):
+    """Dismiss one signal by id, or every active signal when id is omitted.
+    A new fire (new rule or post-cooldown re-fire) mints a new id and shows
+    again — dismissal never mutes future signals."""
+    return {"dismissed": conviction.dismiss(id)}

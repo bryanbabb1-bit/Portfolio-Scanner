@@ -312,6 +312,26 @@ def test_journal_crud(tmp_path, monkeypatch):
     assert migrated[0]["date"] == "2026-07-02"
 
 
+def test_signal_dismissal(tmp_path, monkeypatch):
+    import json as _json
+    from app.services import conviction
+
+    notes_file = tmp_path / "notes.json"
+    notes_file.write_text(_json.dumps({
+        "AAA:rule:2026-07-02": {"id": "AAA:rule:2026-07-02", "ts": 1.0},
+        "BBB:rule:2026-07-02": {"id": "BBB:rule:2026-07-02", "ts": 2.0},
+    }))
+    monkeypatch.setattr(conviction, "_NOTES_FILE", notes_file)
+
+    assert conviction.dismiss("AAA:rule:2026-07-02") == 1
+    saved = _json.loads(notes_file.read_text())
+    assert saved["AAA:rule:2026-07-02"]["dismissed"] is True
+    assert not saved["BBB:rule:2026-07-02"].get("dismissed")
+    # dismiss-all covers the rest; re-dismissing changes nothing
+    assert conviction.dismiss() == 1
+    assert conviction.dismiss() == 0
+
+
 def test_news_deduped_and_tagged():
     out = get_news(limit=50)
     titles = [n.title for n in out["results"]]

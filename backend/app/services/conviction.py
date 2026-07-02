@@ -208,6 +208,7 @@ def scan() -> list[dict]:
                     "price": quote.price,
                     "theme": theme,
                     "held": held,
+                    "dismissed": False,
                     "generated_at": time.strftime("%Y-%m-%d %H:%M:%S"),
                     "ts": now,
                 })
@@ -223,6 +224,23 @@ def scan() -> list[dict]:
 
     out = sorted(active.values(), key=lambda s: float(s.get("ts", 0)), reverse=True)
     return out
+
+
+def dismiss(sig_id: str | None = None) -> int:
+    """Hide a signal (or all, when sig_id is None) from the popup and strip.
+
+    Dismissal is per signal id — a NEW fire (different rule, or the same rule
+    after its cooldown) mints a new id and pops again."""
+    with _lock:
+        notes = _load(_NOTES_FILE)
+        changed = 0
+        for k, v in notes.items():
+            if (sig_id is None or k == sig_id) and not v.get("dismissed"):
+                v["dismissed"] = True
+                changed += 1
+        if changed:
+            _save(_NOTES_FILE, notes)
+    return changed
 
 
 def demo_signal() -> dict:

@@ -139,6 +139,7 @@ export interface PortfolioInsights {
 export interface ConvictionSignal {
   id: string;
   symbol: string;
+  dismissed?: boolean;
   side: "buy" | "sell";
   rule: string;
   label: string;
@@ -337,6 +338,11 @@ export const api = {
   insights: () => get<PortfolioInsights>("/api/insights"),
   signals: (demo = false) =>
     get<{ count: number; results: ConvictionSignal[] }>(`/api/signals?demo=${demo}`),
+  dismissSignal: (id?: string) =>
+    send<{ dismissed: number }>(
+      `/api/signals/dismiss${id ? `?id=${encodeURIComponent(id)}` : ""}`,
+      "POST"
+    ),
   pins: () => get<{ count: number; results: Pin[] }>("/api/pins"),
   journal: (days = 30) =>
     get<{ count: number; results: JournalEntry[] }>(`/api/journal?days=${days}`),
