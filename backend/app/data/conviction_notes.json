@@ -20,5 +20,27 @@
     ],
     "target": "Next support sits near the November low around $560, roughly 5.5% below current price, before any base can form.",
     "stop": "Invalidate the short-term bounce thesis on a daily close back above the 50-day MA at $605.01."
+  },
+  "AAPL:high-conviction-discovery:2026-07-02": {
+    "symbol": "AAPL",
+    "side": "buy",
+    "rule": "high-conviction-discovery",
+    "label": "New-name setup: breakout readiness in the top tier",
+    "id": "AAPL:high-conviction-discovery:2026-07-02",
+    "price": 307.67,
+    "theme": "Tech",
+    "held": false,
+    "generated_at": "2026-07-02 11:24:12",
+    "ts": 1783009448.5401645,
+    "headline": "AAPL Coiling Under Highs \u2014 Breakout Buy Setup",
+    "what": "Initiate a starter long in AAPL ahead of a breakout above the $315.20 52-week high.",
+    "why": [
+      "Breakout score 74/100 with price up 4.51% today to $307.67, just 2.39% below the 52-week high.",
+      "Trend is confirmed uptrend with price above both the 293.44 SMA50 and 270.32 SMA200.",
+      "RSI at 59.76 leaves room to run before overbought, and MACD is curling higher off -0.9427.",
+      "Volume is only 0.50x average, so wait for a volume confirmation before adding size."
+    ],
+    "target": "First target $315.20 (prior 52-week high), with a follow-through objective near $324 (+1x ATR of 8.63 beyond the high) on a confirmed breakout.",
+    "stop": "Exit if price closes below the $293.44 50-day SMA, which would invalidate the uptrend structure."
   }
 }

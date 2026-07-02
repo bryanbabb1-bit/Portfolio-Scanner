@@ -56,19 +56,34 @@ def _detect(sym: str, ind, quote, held: bool, pl_pct, score: float) -> list[dict
         out.append({"symbol": sym, "side": side, "rule": rule, "label": label})
 
     # ----- BUY -----
-    if (held and ind.rsi is not None and ind.rsi <= 32
-            and ind.sma200 and abs(p / ind.sma200 - 1) <= 0.03
-            and ind.sma50 and ind.sma50 > ind.sma200):
+    # Momentum-style AND dip-style rules: momentum only fires in strong
+    # tapes, so without the dip rules the engine reads as sell-biased in
+    # every correction — exactly when a buyer wants ideas.
+    if (held and ind.rsi is not None and ind.rsi <= 35
+            and ind.sma200 and abs(p / ind.sma200 - 1) <= 0.05
+            and ind.sma50 and ind.sma50 >= ind.sma200 * 0.97):
         add("buy", "oversold-at-support",
-            "Oversold at the 200-day with the long-term uptrend intact")
+            "Oversold at the 200-day with the long-term trend intact")
 
-    if (score >= 78 and ind.pct_from_52w_high is not None
-            and ind.pct_from_52w_high >= -3
+    if (ind.trend == "uptrend" and ind.rsi is not None and ind.rsi <= 38
+            and ind.pct_from_52w_high is not None
+            and -20 <= ind.pct_from_52w_high <= -8
+            and score >= 45):
+        add("buy", "quality-dip",
+            "Uptrend name on sale: oversold in the accumulation zone")
+
+    if (ind.rsi is not None and ind.rsi <= 30 and chg >= 2
             and (ind.volume_ratio or 0) >= 1.5):
+        add("buy", "washed-out-reversal",
+            "Capitulation reversal: deeply oversold and bouncing on volume")
+
+    if (score >= 72 and ind.pct_from_52w_high is not None
+            and ind.pct_from_52w_high >= -5
+            and (ind.volume_ratio or 0) >= 1.3):
         add("buy", "breakout-triggering",
             "Breakout triggering: at highs on expanding volume")
 
-    if not held and score >= 75:
+    if not held and score >= 72:
         add("buy", "high-conviction-discovery",
             "New-name setup: breakout readiness in the top tier")
 

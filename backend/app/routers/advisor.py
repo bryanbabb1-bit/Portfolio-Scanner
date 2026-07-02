@@ -7,6 +7,7 @@ from fastapi import APIRouter, HTTPException
 
 from ..models.schemas import AskRequest
 from ..services import advisor as advisor_service
+from ..services import discovery as discovery_service
 from ..services import insights as insights_service
 from ..services import market_data, screener, themes
 from ..services import portfolio as pf_service
@@ -24,8 +25,15 @@ def advise_portfolio(force: bool = False, deep: bool = False):
     except Exception as exc:
         traceback.print_exc()
         raise HTTPException(status_code=502, detail=f"Portfolio read failed: {exc}")
+    try:
+        # Buy-side context: the advisor should weigh new-name opportunities,
+        # not just prune the existing book.
+        candidates = discovery_service.discover(min_score=0, limit=5)["results"]
+    except Exception:
+        candidates = None
     return advisor_service.advise_portfolio(
-        summary, reports, risk, alerts, force=force, deep=deep)
+        summary, reports, risk, alerts, force=force, deep=deep,
+        candidates=candidates)
 
 
 @router.post("/ask")

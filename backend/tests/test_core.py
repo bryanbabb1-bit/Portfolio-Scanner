@@ -185,8 +185,21 @@ def test_conviction_rules_fire_and_stay_quiet():
     assert any(s["side"] == "sell" and s["rule"] == "blowoff-top" for s in sigs)
 
     # non-held discovery name with top-tier score -> buy
-    sigs = _detect("T", calm, quiet, False, None, 76)
+    sigs = _detect("T", calm, quiet, False, None, 73)
     assert any(s["rule"] == "high-conviction-discovery" for s in sigs)
+
+    # uptrend name pulled back into the accumulation zone -> quality dip buy
+    dip_zone = Indicators(rsi=36, sma50=102, sma200=95, trend="uptrend",
+                          pct_from_52w_high=-12, volume_ratio=1.0)
+    sigs = _detect("T", dip_zone, quiet, False, None, 50)
+    assert any(s["rule"] == "quality-dip" for s in sigs)
+
+    # deeply oversold, bouncing hard on volume -> washed-out reversal buy
+    bounce = Quote(symbol="T", price=70, change=2.1, change_pct=3.1, source="mock")
+    washed = Indicators(rsi=27, sma50=80, sma200=90, trend="downtrend",
+                        pct_from_52w_high=-40, volume_ratio=2.2)
+    sigs = _detect("T", washed, bounce, True, -30.0, 25)
+    assert any(s["rule"] == "washed-out-reversal" for s in sigs)
 
     # held, crashing through a broken trend -> sell
     crash = Quote(symbol="T", price=80, change=-8, change_pct=-9.0, source="mock")

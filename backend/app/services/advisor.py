@@ -254,7 +254,8 @@ def advise_stock(report: StockReport, force: bool = False,
 
 
 def _facts_from_portfolio(summary: PortfolioSummary, reports: list[StockReport],
-                          risk: RiskMetrics, alerts: list[PortfolioAlert]) -> str:
+                          risk: RiskMetrics, alerts: list[PortfolioAlert],
+                          candidates: list | None = None) -> str:
     held = sorted(
         (r for r in reports if r.market_value),
         key=lambda r: r.market_value or 0,
@@ -289,12 +290,20 @@ def _facts_from_portfolio(summary: PortfolioSummary, reports: list[StockReport],
     if alerts:
         lines.append("Active alerts: " + "; ".join(
             f"{a.symbol} {a.label} ({a.severity})" for a in alerts[:12]))
+    if candidates:
+        lines.append(
+            "Top NOT-owned candidates by breakout readiness (from the "
+            "Discovery scan): " + "; ".join(
+                f"{c.symbol} {c.score:.0f}/100 (${c.price}, {c.theme}, "
+                f"RSI {c.indicators.rsi}, {c.indicators.trend})"
+                for c in candidates[:5]))
     return "\n".join(lines)
 
 
 def advise_portfolio(summary: PortfolioSummary, reports: list[StockReport],
                      risk: RiskMetrics, alerts: list[PortfolioAlert],
-                     force: bool = False, deep: bool = False) -> AdvisorNote:
+                     force: bool = False, deep: bool = False,
+                     candidates: list | None = None) -> AdvisorNote:
     """One whole-book narrative: posture, risks, and concrete next actions."""
     key = "portfolio:brief"
     if not force and not deep:
@@ -302,7 +311,7 @@ def advise_portfolio(summary: PortfolioSummary, reports: list[StockReport],
         if hit and (time.time() - hit[0]) < settings.ADVISOR_CACHE_TTL:
             return hit[1]
 
-    facts = _facts_from_portfolio(summary, reports, risk, alerts)
+    facts = _facts_from_portfolio(summary, reports, risk, alerts, candidates)
     all_signals = [s for r in reports for s in r.signals]
     if not settings.ADVISOR_ENABLED:
         note = _fallback_note("PORTFOLIO", facts, all_signals)
@@ -321,7 +330,11 @@ def advise_portfolio(summary: PortfolioSummary, reports: list[StockReport],
         f'per bullet on risk metrics, correlation/concentration, momentum, '
         f'citing the numbers), '
         f'"actions" (array of 3-5 strings: one concrete action per bullet — '
-        f'ticker, what to do, size, and the exact level or trigger), '
+        f'ticker, what to do, size, and the exact level or trigger; balance '
+        f'both sides: include your single best BUYING opportunity right now, '
+        f'either adding to a held name or starting one of the not-owned '
+        f'candidates, and if you genuinely see no buy, say so explicitly and '
+        f'name the level or condition that would change your mind), '
         f'"risks" (array of 2-4 strings: one risk per bullet, each paired with '
         f'the specific tripwire signal to watch). '
         f'Every bullet must be a single self-contained sentence under 30 words. '
