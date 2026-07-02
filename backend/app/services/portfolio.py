@@ -116,6 +116,11 @@ def build_report(symbol: str, theme: str | None = None) -> StockReport:
 def portfolio_summary() -> tuple[PortfolioSummary, list[StockReport]]:
     pf = load_portfolio()
     holdings = pf.get("holdings", [])
+    try:
+        from . import journal
+        journal.snapshot_and_diff(holdings)  # capture trades since last read
+    except Exception as exc:
+        print(f"[portfolio] journal diff failed: {exc!r}")
     market_data.warm_cache([h["symbol"] for h in holdings])
     reports: list[StockReport] = []
     for h in holdings:

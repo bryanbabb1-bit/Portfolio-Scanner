@@ -95,6 +95,13 @@ def _facts_from_report(r: StockReport) -> str:
         )
     if r.signals:
         lines.append("Signals: " + "; ".join(f"{s.label} ({s.kind})" for s in r.signals))
+    from . import journal
+    my_moves = [e for e in journal.list_entries() if e["symbol"] == r.symbol][:5]
+    if my_moves:
+        lines.append("Client's recent actions on this name (acknowledge, don't "
+                     "re-recommend): " + "; ".join(
+                         f"{e['date'][:10]} {e['action']}: {e['detail']}"
+                         for e in my_moves))
     if r.news:
         lines.append("Recent headlines:")
         for n in r.news[:6]:
@@ -297,6 +304,11 @@ def _facts_from_portfolio(summary: PortfolioSummary, reports: list[StockReport],
                 f"{c.symbol} {c.score:.0f}/100 (${c.price}, {c.theme}, "
                 f"RSI {c.indicators.rsi}, {c.indicators.trend})"
                 for c in candidates[:5]))
+    from . import journal
+    history = journal.facts_block()
+    if history:
+        lines.append("")
+        lines.append(history)
     return "\n".join(lines)
 
 
@@ -338,7 +350,14 @@ def advise_portfolio(summary: PortfolioSummary, reports: list[StockReport],
         f'"risks" (array of 2-4 strings: one risk per bullet, each paired with '
         f'the specific tripwire signal to watch). '
         f'Every bullet must be a single self-contained sentence under 30 words. '
-        f'No lead-in phrases, no numbering — the UI renders them as a list.'
+        f'No lead-in phrases, no numbering — the UI renders them as a list. '
+        f'CRITICAL: if a list of actions the client has already taken is '
+        f'provided, open your summary by acknowledging that progress, never '
+        f're-recommend a completed action, quantify progress toward any prior '
+        f'target (e.g. "miner exposure was 41%, now X% — target <25%"), and '
+        f'frame recommendations strictly as the next incremental step. If the '
+        f'client has been de-risking, tell them when they have done ENOUGH '
+        f'rather than defaulting to more cuts.'
     )
     raw, sid = _run_claude(prompt, research=deep)
     note = _parse_note("PORTFOLIO", "claude", raw) if raw else \

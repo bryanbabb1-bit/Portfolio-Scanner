@@ -280,6 +280,17 @@ li.pinnable:hover .pin-btn, .chat-a:hover .pin-btn, .pin-btn.pinned { opacity: 1
 .pin-row .pin-date { font-size: 11px; white-space: nowrap; }
 .pin-row .icon-btn { height: 26px; padding: 0 8px; }
 
+/* action journal */
+.journal-panel { border-left: 3px solid var(--accent); }
+.journal-badge {
+  font-size: 10px; font-weight: 900; letter-spacing: .06em;
+  border-radius: 5px; padding: 2px 7px; flex-shrink: 0; min-width: 44px; text-align: center;
+}
+.journal-badge.sell { color: #2a040a; background: var(--bear); }
+.journal-badge.buy { color: #04110a; background: var(--bull); }
+.journal-badge.warn { color: #241a02; background: var(--gold); }
+.journal-badge.done { color: var(--text); background: rgba(148,163,184,0.22); }
+
 /* dashboard signal strip */
 .signal-strip { border-left: 3px solid var(--accent-2); }
 .signal-row { display: flex; align-items: center; gap: 10px; padding: 8px 6px; border-radius: 8px; font-size: 13px; }

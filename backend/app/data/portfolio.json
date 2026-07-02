@@ -23,12 +23,6 @@
       "theme": null
     },
     {
-      "symbol": "NBIS",
-      "shares": 4.29814,
-      "cost_basis": 242.09,
-      "theme": null
-    },
-    {
       "symbol": "AMD",
       "shares": 1.12082,
       "cost_basis": 498.68,
@@ -42,20 +36,8 @@
     },
     {
       "symbol": "CIFR",
-      "shares": 59.95913,
+      "shares": 29.83515,
       "cost_basis": 23.31,
-      "theme": null
-    },
-    {
-      "symbol": "META",
-      "shares": 1.37819,
-      "cost_basis": 606.63,
-      "theme": null
-    },
-    {
-      "symbol": "WULF",
-      "shares": 37.41827,
-      "cost_basis": 24.82,
       "theme": null
     },
     {
@@ -83,12 +65,6 @@
       "theme": null
     },
     {
-      "symbol": "GRAB",
-      "shares": 118.87483,
-      "cost_basis": 3.47,
-      "theme": null
-    },
-    {
       "symbol": "MELI",
       "shares": 0.25121,
       "cost_basis": 1671.47,
@@ -101,15 +77,9 @@
       "theme": null
     },
     {
-      "symbol": "ONDS",
-      "shares": 28.13887,
-      "cost_basis": 10.91,
-      "theme": null
-    },
-    {
       "symbol": "SGOV",
-      "shares": 17.44801,
-      "cost_basis": 100.43,
+      "shares": 54.40608,
+      "cost_basis": 100.44,
       "theme": null
     }
   ],

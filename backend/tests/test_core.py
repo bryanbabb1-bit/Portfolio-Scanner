@@ -263,6 +263,26 @@ def test_intraday_chart_ranges():
     assert all(p.value > 0 for p in pf_day.points)
 
 
+def test_journal_diff_detects_trades(tmp_path, monkeypatch):
+    from app.services import journal
+
+    monkeypatch.setattr(journal, "_JOURNAL_FILE", tmp_path / "j.json")
+    monkeypatch.setattr(journal, "_SNAPSHOT_FILE", tmp_path / "s.json")
+
+    # first run records the baseline silently
+    assert journal.snapshot_and_diff(
+        [{"symbol": "AAA", "shares": 10}, {"symbol": "BBB", "shares": 5}]) == []
+    # trim AAA, close BBB, open CCC
+    entries = journal.snapshot_and_diff(
+        [{"symbol": "AAA", "shares": 6}, {"symbol": "CCC", "shares": 3}])
+    acts = {(e["symbol"], e["action"]) for e in entries}
+    assert acts == {("AAA", "trimmed"), ("BBB", "sold"), ("CCC", "opened")}
+    # unchanged holdings journal nothing
+    assert journal.snapshot_and_diff(
+        [{"symbol": "AAA", "shares": 6}, {"symbol": "CCC", "shares": 3}]) == []
+    assert "ALREADY TAKEN" in journal.facts_block()
+
+
 def test_news_deduped_and_tagged():
     out = get_news(limit=50)
     titles = [n.title for n in out["results"]]

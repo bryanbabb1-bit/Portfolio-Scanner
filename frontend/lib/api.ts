@@ -164,6 +164,15 @@ export interface Pin {
   done_at?: string | null;
 }
 
+export interface JournalEntry {
+  id: string;
+  symbol?: string | null;
+  action: string;
+  detail: string;
+  source: string;
+  date: string;
+}
+
 export interface PortfolioNewsItem {
   title: string;
   symbols: string[];
@@ -318,6 +327,8 @@ export const api = {
   signals: (demo = false) =>
     get<{ count: number; results: ConvictionSignal[] }>(`/api/signals?demo=${demo}`),
   pins: () => get<{ count: number; results: Pin[] }>("/api/pins"),
+  journal: (days = 30) =>
+    get<{ count: number; results: JournalEntry[] }>(`/api/journal?days=${days}`),
   addPin: (pin: { symbol?: string | null; source: string; text: string; points?: string[] }) =>
     post<Pin>("/api/pins", pin),
   setPinStatus: (id: string, status: "open" | "done") =>

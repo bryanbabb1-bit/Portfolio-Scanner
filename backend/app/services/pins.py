@@ -62,6 +62,7 @@ def add(symbol: str | None, source: str, text: str,
 
 
 def update(pin_id: str, status: str) -> dict | None:
+    updated = None
     with _lock:
         items = _load()
         for p in items:
@@ -70,8 +71,16 @@ def update(pin_id: str, status: str) -> dict | None:
                 p["done_at"] = time.strftime("%Y-%m-%d %H:%M:%S") \
                     if status == "done" else None
                 _save(items)
-                return p
-    return None
+                updated = p
+                break
+    if updated and status == "done":
+        # A completed recommendation is an action taken — journal it so the
+        # advisor stops re-recommending it.
+        from . import journal
+        journal.add_entry(updated.get("symbol"), "completed",
+                          f"Acted on pinned advice: {updated['text']}",
+                          source="pin")
+    return updated
 
 
 def delete(pin_id: str) -> bool:
