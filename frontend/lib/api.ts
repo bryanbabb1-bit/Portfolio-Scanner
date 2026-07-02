@@ -210,7 +210,17 @@ export interface PriceHistory {
   candles: Candle[];
 }
 
-export type ChartRange = "1mo" | "3mo" | "6mo" | "1y";
+export type ChartRange = "1d" | "5d" | "1mo" | "3mo" | "6mo" | "1y";
+
+export const CHART_RANGES: ChartRange[] = ["1d", "5d", "1mo", "3mo", "6mo", "1y"];
+export const RANGE_LABELS: Record<ChartRange, string> = {
+  "1d": "1D",
+  "5d": "1W",
+  "1mo": "1M",
+  "3mo": "3M",
+  "6mo": "6M",
+  "1y": "1Y",
+};
 
 export interface ValuePoint {
   date: string;

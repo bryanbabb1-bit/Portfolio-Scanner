@@ -172,6 +172,52 @@ def get_price_data(symbol: str) -> MarketData:
         return _cache_put(key, data)
 
 
+# ---------------------------------------------------------------- intraday
+_INTRADAY_SPEC = {"1d": ("1d", "5m"), "5d": ("5d", "30m")}
+
+
+def get_intraday(symbol: str, range_: str = "1d") -> tuple[pd.DataFrame, str]:
+    """Intraday OHLCV bars: 5-min for 1d, 30-min for 5d. Returns (df, source)."""
+    period, interval = _INTRADAY_SPEC.get(range_, _INTRADAY_SPEC["1d"])
+    key = f"intra:{symbol.upper()}:{range_}"
+    cached = _cache_get(key)
+    if cached is not None:
+        return cached
+
+    mode = settings.DATA_MODE
+    if mode == "mock":
+        return _cache_put(key, (mock_data.intraday(symbol, range_), "mock"))
+    try:
+        import yfinance as yf
+
+        hist = yf.Ticker(symbol).history(period=period, interval=interval,
+                                         auto_adjust=True)
+        if hist is None or hist.empty:
+            raise RuntimeError(f"no intraday for {symbol}")
+        return _cache_put(key, (hist, "live"))
+    except Exception as exc:
+        if mode == "live":
+            raise
+        print(f"[market_data] intraday failed for {symbol} ({exc!r}); using mock")
+        return _cache_put(key, (mock_data.intraday(symbol, range_), "mock"))
+
+
+def warm_intraday(symbols: list[str], range_: str, max_workers: int = 8) -> None:
+    todo = [s for s in dict.fromkeys(sym.upper() for sym in symbols)
+            if _cache_get(f"intra:{s}:{range_}") is None]
+    if len(todo) <= 1:
+        return
+
+    def _one(sym: str) -> None:
+        try:
+            get_intraday(sym, range_)
+        except Exception:
+            pass
+
+    with ThreadPoolExecutor(max_workers=min(max_workers, len(todo))) as pool:
+        list(pool.map(_one, todo))
+
+
 def warm_cache(symbols: list[str], max_workers: int = 8, light: bool = False) -> None:
     """Prefetch market data for many symbols concurrently.
 

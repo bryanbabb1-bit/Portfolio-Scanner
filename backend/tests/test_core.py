@@ -211,10 +211,10 @@ def test_auto_theme_categorization():
     assert themes.theme_for("ZZZQ") == "Other"
     assert "ZZZQ" not in themes._learned
 
-    # Reports get themes with no manual selection in portfolio.json.
+    # Reports get themes with no manual selection in portfolio.json —
+    # data-independent: holdings change as Bryan trades.
     _, reports = pf_service.portfolio_summary()
-    assert all(r.theme for r in reports)
-    assert {r.symbol: r.theme for r in reports}["CLSK"] == "Compute Power"
+    assert reports and all(r.theme for r in reports)
 
 
 def test_pins_crud(tmp_path, monkeypatch):
@@ -234,6 +234,20 @@ def test_pins_crud(tmp_path, monkeypatch):
     assert pins.delete(p["id"]) is True
     assert pins.delete(p["id"]) is False
     assert pins.list_pins() == []
+
+
+def test_intraday_chart_ranges():
+    # per-stock: 1d = 5-min bars with times; 5d = 30-min bars across 5 days
+    day = pf_service.price_history("NVDA", "1d")
+    assert day.range == "1d" and len(day.candles) >= 30
+    assert ":" in day.candles[0].date  # intraday timestamps, not bare dates
+    week = pf_service.price_history("NVDA", "5d")
+    assert len({c.date[:10] for c in week.candles}) == 5
+
+    # portfolio value intraday aggregates all holdings on a shared clock
+    pf_day = pf_service.portfolio_history("1d")
+    assert len(pf_day.points) >= 30 and ":" in pf_day.points[0].date
+    assert all(p.value > 0 for p in pf_day.points)
 
 
 def test_news_deduped_and_tagged():

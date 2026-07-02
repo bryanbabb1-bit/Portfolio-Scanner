@@ -83,6 +83,42 @@ def history(symbol: str, days: int = 260) -> pd.DataFrame:
     )
 
 
+def intraday(symbol: str, range_: str = "1d") -> pd.DataFrame:
+    """Deterministic intraday OHLCV: 5-min bars for 1d, 30-min bars for 5d."""
+    sym = symbol.upper()
+    daily = history(sym)
+    last_close = float(daily["Close"].iloc[-1])
+    rng = np.random.default_rng(_seed(sym) ^ (0x1D if range_ == "1d" else 0x5D))
+
+    if range_ == "1d":
+        days, per_day, freq, sigma = 1, 78, "5min", 0.0011
+    else:
+        days, per_day, freq, sigma = 5, 13, "30min", 0.0032
+
+    stamps: list[pd.Timestamp] = []
+    for day in pd.DatetimeIndex(daily.index[-days:]):
+        stamps.extend(pd.date_range(
+            day.normalize() + pd.Timedelta(hours=9, minutes=30),
+            periods=per_day, freq=freq))
+    idx = pd.DatetimeIndex(stamps)
+
+    steps = rng.normal(0, sigma, len(idx))
+    log_path = np.cumsum(steps)
+    close = last_close * np.exp(log_path - log_path[-1])  # end at last close
+
+    intrabar = np.abs(rng.normal(0, sigma, len(idx)))
+    open_ = np.concatenate([[close[0]], close[:-1]])
+    high = np.maximum.reduce([close * (1 + intrabar), open_, close])
+    low = np.minimum.reduce([close * (1 - intrabar), open_, close])
+    base_vol = 800_000 + (_seed(sym) % 30) * 40_000
+    volume = (base_vol * (1 + 0.8 * np.abs(rng.normal(0, 1, len(idx))))).astype(np.int64)
+
+    return pd.DataFrame(
+        {"Open": open_, "High": high, "Low": low, "Close": close, "Volume": volume},
+        index=idx,
+    )
+
+
 def analyst(symbol: str, price: float) -> dict:
     """Deterministic analyst consensus consistent with the mock price."""
     rng = np.random.default_rng(_seed(symbol.upper()) ^ 0xABCD)

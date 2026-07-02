@@ -1,9 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
-import { api, Candle, ChartRange, PriceHistory } from "../lib/api";
+import { api, Candle, CHART_RANGES, ChartRange, PriceHistory, RANGE_LABELS } from "../lib/api";
 import { money } from "./format";
-
-const RANGES: ChartRange[] = ["1mo", "3mo", "6mo", "1y"];
 
 // Pure inline-SVG chart — no external charting lib, so it stays self-contained
 // (works under a strict CSP and adds zero npm dependencies).
@@ -91,13 +89,13 @@ export function PriceChart({ symbol }: { symbol: string }) {
       <div className="chart-head">
         <div className="section-title" style={{ margin: 0 }}>Price</div>
         <div className="range-toggle">
-          {RANGES.map((r) => (
+          {CHART_RANGES.map((r) => (
             <button
               key={r}
               className={r === range ? "active" : ""}
               onClick={() => setRange(r)}
             >
-              {r.toUpperCase()}
+              {RANGE_LABELS[r]}
             </button>
           ))}
         </div>
@@ -113,7 +111,7 @@ export function PriceChart({ symbol }: { symbol: string }) {
               {up ? "▲" : "▼"} {Math.abs(chg).toFixed(2)}%
             </span>
             <span className="mut" style={{ fontSize: 12 }}>
-              over {range.toUpperCase()} · {data?.source}
+              over {RANGE_LABELS[range]} · {data?.source}
             </span>
             <span className="chart-legend">
               <i style={{ background: stroke }} /> Close
@@ -206,7 +204,7 @@ export function PriceChart({ symbol }: { symbol: string }) {
                 {"  "}Vol {Intl.NumberFormat("en", { notation: "compact" }).format(candles[hover].volume)}
               </>
             ) : (
-              <>Hover the chart for daily OHLC + volume.</>
+              <>Hover the chart for OHLC + volume per bar.</>
             )}
           </div>
         </>

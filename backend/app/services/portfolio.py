@@ -169,10 +169,39 @@ def watchlist_reports() -> list[StockReport]:
 
 # ------------------------------------------------------------------ charting
 _RANGE_POINTS = {"1mo": 22, "3mo": 66, "6mo": 132, "1y": 260}
+_INTRADAY_RANGES = {"1d", "5d"}
+
+
+def _intraday_price_history(symbol: str, range_: str) -> PriceHistory:
+    df, source = market_data.get_intraday(symbol, range_)
+    close = df["Close"]
+    sma20 = close.rolling(20).mean()
+    sma50 = close.rolling(50).mean()
+    candles: list[Candle] = []
+    for idx, row in df.iterrows():
+        ts = pd.Timestamp(idx)
+        v20, v50 = sma20.get(idx), sma50.get(idx)
+        candles.append(Candle(
+            date=ts.strftime("%Y-%m-%d %H:%M"),
+            open=round(float(row["Open"]), 2),
+            high=round(float(row["High"]), 2),
+            low=round(float(row["Low"]), 2),
+            close=round(float(row["Close"]), 2),
+            volume=float(row["Volume"]),
+            sma20=None if v20 is None or pd.isna(v20) else round(float(v20), 2),
+            sma50=None if v50 is None or pd.isna(v50) else round(float(v50), 2),
+        ))
+    return PriceHistory(symbol=symbol.upper(), range=range_, source=source,
+                        candles=candles)
 
 
 def price_history(symbol: str, range_: str = "6mo") -> PriceHistory:
-    """OHLCV candles + SMA20/50 overlays for charting a single symbol."""
+    """OHLCV candles + SMA20/50 overlays for charting a single symbol.
+
+    Daily bars for 1mo..1y; intraday bars (5-min / 30-min) for 1d / 5d, where
+    the SMAs are computed over intraday bars instead."""
+    if range_ in _INTRADAY_RANGES:
+        return _intraday_price_history(symbol, range_)
     md = market_data.get_market_data(symbol)
     hist = md.history
     close = hist["Close"]
@@ -215,8 +244,13 @@ def portfolio_history(range_: str = "6mo") -> PortfolioHistory:
     """
     pf = load_portfolio()
     holdings = pf.get("holdings", [])
+    intraday = range_ in _INTRADAY_RANGES
     points_n = _RANGE_POINTS.get(range_, _RANGE_POINTS["6mo"])
-    market_data.warm_cache([h["symbol"] for h in holdings])
+    symbols = [h["symbol"] for h in holdings]
+    if intraday:
+        market_data.warm_intraday(symbols, range_)
+    else:
+        market_data.warm_cache(symbols)
 
     per_symbol: dict[str, pd.Series] = {}
     total_cost = 0.0
@@ -226,21 +260,31 @@ def portfolio_history(range_: str = "6mo") -> PortfolioHistory:
         shares = float(h.get("shares", 0) or 0)
         total_cost += shares * float(h.get("cost_basis", 0) or 0)
         try:
-            md = market_data.get_market_data(sym)
+            if intraday:
+                df, source = market_data.get_intraday(sym, range_)
+                closes = df["Close"]
+            else:
+                md = market_data.get_market_data(sym)
+                closes, source = md.history["Close"], md.source
         except Exception:
             continue
-        any_mock = any_mock or md.source == "mock"
-        per_symbol[sym] = md.history["Close"] * shares
+        any_mock = any_mock or source == "mock"
+        per_symbol[sym] = closes * shares
 
     points: list[ValuePoint] = []
     if per_symbol:
         # concat unions the date indexes; column-by-column assignment would
         # silently truncate everything to the first symbol's calendar.
-        value_frame = pd.concat(per_symbol, axis=1).sort_index().ffill().fillna(0.0)
-        series = value_frame.sum(axis=1).tail(points_n)
+        value_frame = pd.concat(per_symbol, axis=1).sort_index().ffill()
+        # Leading bars where a symbol has no data yet would understate the
+        # total — drop them instead of zero-filling.
+        series = value_frame.dropna().sum(axis=1)
+        if not intraday:
+            series = series.tail(points_n)
+        fmt = "%Y-%m-%d %H:%M" if intraday else "%Y-%m-%d"
         for idx, val in series.items():
             points.append(
-                ValuePoint(date=pd.Timestamp(idx).strftime("%Y-%m-%d"), value=round(float(val), 2))
+                ValuePoint(date=pd.Timestamp(idx).strftime(fmt), value=round(float(val), 2))
             )
 
     return PortfolioHistory(

@@ -1,1 +1,24 @@
-{}
+{
+  "META:trend-break:2026-07-02": {
+    "symbol": "META",
+    "side": "sell",
+    "rule": "trend-break",
+    "label": "Trend break: under the 200-day in a death-cross regime and falling",
+    "id": "META:trend-break:2026-07-02",
+    "price": 592.85,
+    "theme": "AI",
+    "held": true,
+    "generated_at": "2026-07-02 08:47:16",
+    "ts": 1783000033.963317,
+    "headline": "META breaks 200-day in death cross \u2014 trim exposure",
+    "what": "Sell or trim the META position now; do not average down into this downtrend.",
+    "why": [
+      "Price $592.85 sits below both the 50-day ($605.01) and 200-day ($645.46) moving averages.",
+      "50/200 death cross confirms a structural downtrend, not just a pullback.",
+      "MACD at -7.53/-11.84 shows accelerating bearish momentum with no bullish cross in sight.",
+      "Down 24.71% from the 52-week high of $787.42 with breakout score just 30/100."
+    ],
+    "target": "Next support sits near the November low around $560, roughly 5.5% below current price, before any base can form.",
+    "stop": "Invalidate the short-term bounce thesis on a daily close back above the 50-day MA at $605.01."
+  }
+}

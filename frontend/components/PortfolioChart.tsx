@@ -1,9 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
-import { api, ChartRange, PortfolioHistory } from "../lib/api";
+import { api, CHART_RANGES, ChartRange, PortfolioHistory, RANGE_LABELS } from "../lib/api";
 import { money } from "./format";
-
-const RANGES: ChartRange[] = ["1mo", "3mo", "6mo", "1y"];
 
 // Portfolio market value over time (area) with a dashed cost-basis baseline.
 // Same dependency-free inline-SVG approach as the per-stock chart.
@@ -72,15 +70,15 @@ export function PortfolioChart() {
             <div className="pf-value">
               {money(last, 0)}{" "}
               <span className={up ? "pos" : "neg"} style={{ fontSize: 13, fontWeight: 700 }}>
-                {up ? "▲" : "▼"} {Math.abs(chg).toFixed(2)}% · {range.toUpperCase()}
+                {up ? "▲" : "▼"} {Math.abs(chg).toFixed(2)}% · {RANGE_LABELS[range]}
               </span>
             </div>
           )}
         </div>
         <div className="range-toggle">
-          {RANGES.map((r) => (
+          {CHART_RANGES.map((r) => (
             <button key={r} className={r === range ? "active" : ""} onClick={() => setRange(r)}>
-              {r.toUpperCase()}
+              {RANGE_LABELS[r]}
             </button>
           ))}
         </div>

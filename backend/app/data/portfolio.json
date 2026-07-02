@@ -5,7 +5,7 @@
     "AI": "Companies building or monetizing artificial intelligence models and applications",
     "Tech": "Broad technology leaders and platforms",
     "AI Infrastructure": "Chips, networking, memory and systems that AI runs on",
-    "Energy": "Power generation and grid — the fuel behind the compute buildout",
+    "Energy": "Power generation and grid \u00e2\u20ac\u201d the fuel behind the compute buildout",
     "Compute Power": "Data centers, cooling, and utilities feeding hyperscale compute",
     "Cash & Income": "Treasury bills and cash-equivalent income holdings"
   },
@@ -13,108 +13,118 @@
     {
       "symbol": "NVDA",
       "shares": 3.02625,
-      "cost_basis": 214.23
+      "cost_basis": 214.23,
+      "theme": null
     },
     {
       "symbol": "MSFT",
       "shares": 2.07465,
-      "cost_basis": 437.51
+      "cost_basis": 437.51,
+      "theme": null
     },
     {
       "symbol": "NBIS",
       "shares": 4.29814,
-      "cost_basis": 242.09
+      "cost_basis": 242.09,
+      "theme": null
     },
     {
       "symbol": "AMD",
       "shares": 1.12082,
-      "cost_basis": 498.68
+      "cost_basis": 498.68,
+      "theme": null
     },
     {
       "symbol": "AVGO",
       "shares": 1.56618,
-      "cost_basis": 432.27
+      "cost_basis": 432.27,
+      "theme": null
     },
     {
       "symbol": "CIFR",
       "shares": 59.95913,
-      "cost_basis": 23.31
+      "cost_basis": 23.31,
+      "theme": null
     },
     {
       "symbol": "META",
       "shares": 1.37819,
-      "cost_basis": 606.63
+      "cost_basis": 606.63,
+      "theme": null
     },
     {
       "symbol": "WULF",
       "shares": 37.41827,
-      "cost_basis": 24.82
+      "cost_basis": 24.82,
+      "theme": null
     },
     {
       "symbol": "IREN",
       "shares": 34.64296,
-      "cost_basis": 61.24
+      "cost_basis": 61.24,
+      "theme": null
     },
     {
       "symbol": "MU",
       "shares": 0.58979,
-      "cost_basis": 1014.02
-    },
-    {
-      "symbol": "CLSK",
-      "shares": 41.27426,
-      "cost_basis": 17.0
+      "cost_basis": 1014.02,
+      "theme": null
     },
     {
       "symbol": "PLTR",
       "shares": 3.43268,
-      "cost_basis": 147.82
+      "cost_basis": 147.82,
+      "theme": null
     },
     {
       "symbol": "AMZN",
       "shares": 2.74262,
-      "cost_basis": 242.46
+      "cost_basis": 242.46,
+      "theme": null
     },
     {
       "symbol": "GRAB",
       "shares": 118.87483,
-      "cost_basis": 3.47
+      "cost_basis": 3.47,
+      "theme": null
     },
     {
       "symbol": "MELI",
       "shares": 0.25121,
-      "cost_basis": 1671.47
+      "cost_basis": 1671.47,
+      "theme": null
     },
     {
       "symbol": "TSM",
       "shares": 0.10934,
-      "cost_basis": 413.39
+      "cost_basis": 413.39,
+      "theme": null
     },
     {
       "symbol": "ONDS",
-      "shares": 56.01991,
-      "cost_basis": 10.91
+      "shares": 28.13887,
+      "cost_basis": 10.91,
+      "theme": null
     },
     {
       "symbol": "SGOV",
-      "shares": 3.74816,
-      "cost_basis": 100.43
-    },
-    {
-      "symbol": "NOW",
-      "shares": 5.57501,
-      "cost_basis": 124.44
+      "shares": 17.44801,
+      "cost_basis": 100.43,
+      "theme": null
     }
   ],
   "watchlist": [
     {
-      "symbol": "LRCX"
+      "symbol": "LRCX",
+      "theme": null
     },
     {
-      "symbol": "GEV"
+      "symbol": "GEV",
+      "theme": null
     },
     {
-      "symbol": "KLAC"
+      "symbol": "KLAC",
+      "theme": null
     }
   ]
 }
