@@ -13,6 +13,7 @@ export function AdvisorPanel({
 }) {
   const [note, setNote] = useState<AdvisorNote | null>(null);
   const [loading, setLoading] = useState(false);
+  const [deep, setDeep] = useState(false);
   const [err, setErr] = useState<string | null>(null);
 
   async function run(force = false) {
@@ -21,8 +22,8 @@ export function AdvisorPanel({
     try {
       const n =
         mode === "breakout"
-          ? await api.adviseBreakout(symbol, force)
-          : await api.adviseStock(symbol, force);
+          ? await api.adviseBreakout(symbol, force, deep)
+          : await api.adviseStock(symbol, force, deep);
       setNote(n);
     } catch (e: any) {
       setErr(e.message || "Advisor failed");
@@ -40,7 +41,11 @@ export function AdvisorPanel({
             {note.engine === "claude" ? "Claude" : "auto"}
           </span>
         )}
-        <div style={{ marginLeft: "auto", display: "flex", gap: 8 }}>
+        <div style={{ marginLeft: "auto", display: "flex", gap: 10, alignItems: "center" }}>
+          <label className="deep-toggle" title="Let the advisor search the web for live news, analyst moves and sentiment (slower)">
+            <input type="checkbox" checked={deep} onChange={(e) => setDeep(e.target.checked)} disabled={loading} />
+            Deep research
+          </label>
           {note && (
             <button className="btn ghost" onClick={() => run(true)} disabled={loading}>
               ↻
@@ -63,7 +68,11 @@ export function AdvisorPanel({
       )}
 
       {loading && !note && (
-        <p className="loading">Consulting the advisor… (headless Claude, ~10-30s)</p>
+        <p className="loading">
+          {deep
+            ? "Researching live news + sentiment, then analyzing… (1-3 min)"
+            : "Consulting the advisor… (headless Claude, ~10-30s)"}
+        </p>
       )}
 
       {note && (
@@ -93,7 +102,7 @@ export function AdvisorPanel({
           <p className="mut" style={{ fontSize: 11, marginTop: 12 }}>
             {note.persona} · {note.generated_at} · Not personalized investment advice.
           </p>
-          <AdvisorChat kind={mode} symbol={symbol} />
+          <AdvisorChat kind={mode} symbol={symbol} deep={deep} />
         </>
       )}
     </div>

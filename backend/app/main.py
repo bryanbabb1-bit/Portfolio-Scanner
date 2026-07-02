@@ -6,8 +6,11 @@ Claude subscription in headless mode.
 """
 from __future__ import annotations
 
-from fastapi import FastAPI
+import traceback
+
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
 from .config import settings
 from .routers import advisor, breakouts, discovery, insights, portfolio, scan
@@ -33,6 +36,18 @@ app.include_router(breakouts.router)
 app.include_router(advisor.router)
 app.include_router(insights.router)
 app.include_router(discovery.router)
+
+
+@app.exception_handler(Exception)
+async def unhandled_exception(request: Request, exc: Exception):
+    """Log every unhandled error with a traceback (surfaced in server.log)
+    and return the reason instead of a bare 500."""
+    print(f"[500] {request.method} {request.url.path}")
+    traceback.print_exception(exc)
+    return JSONResponse(
+        status_code=500,
+        content={"detail": f"{type(exc).__name__}: {exc}"},
+    )
 
 
 @app.get("/api/health")

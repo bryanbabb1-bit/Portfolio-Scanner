@@ -26,9 +26,33 @@ from ..models.schemas import (
 
 # advisor cache keyed by symbol+kind
 _cache: dict[str, tuple[float, AdvisorNote]] = {}
+
 # claude CLI session per context key — lets follow-up questions resume the
-# conversation with the full brief already in context
-_sessions: dict[str, str] = {}
+# conversation with the full brief already in context. Persisted so follow-ups
+# still have context after a backend restart.
+_SESSIONS_FILE = settings.PORTFOLIO_FILE.parent / "advisor_sessions.json"
+
+
+def _load_sessions() -> dict[str, str]:
+    try:
+        with open(_SESSIONS_FILE) as f:
+            data = json.load(f)
+        return data if isinstance(data, dict) else {}
+    except (FileNotFoundError, json.JSONDecodeError):
+        return {}
+
+
+_sessions: dict[str, str] = _load_sessions()
+
+
+def _remember_session(key: str, sid: str) -> None:
+    _sessions[key] = sid
+    try:
+        _SESSIONS_FILE.parent.mkdir(parents=True, exist_ok=True)
+        with open(_SESSIONS_FILE, "w") as f:
+            json.dump(_sessions, f, indent=2)
+    except OSError as exc:
+        print(f"[advisor] could not persist sessions: {exc!r}")
 
 _PERSONA = (
     "You are a senior financial advisor at Charles Schwab with 20+ years of "
@@ -72,15 +96,30 @@ def _facts_from_report(r: StockReport) -> str:
     if r.signals:
         lines.append("Signals: " + "; ".join(f"{s.label} ({s.kind})" for s in r.signals))
     if r.news:
-        lines.append("Recent headlines: " + " | ".join(n.title for n in r.news[:3]))
+        lines.append("Recent headlines:")
+        for n in r.news[:6]:
+            src = f" — {n.publisher}" if n.publisher else ""
+            when = f" ({n.published[:10]})" if n.published else ""
+            lines.append(f"  - {n.title}{src}{when}")
     return "\n".join(lines)
 
 
-def _run_claude(prompt: str, resume: str | None = None) -> tuple[str | None, str | None]:
+_RESEARCH_PREFIX = (
+    "Before answering, use web search (2-4 targeted searches maximum) to check "
+    "the LATEST news, earnings/guidance, analyst rating changes and market "
+    "sentiment for the relevant ticker(s). Fold what you find into your "
+    "bullets and cite dates for anything news-driven.\n\n"
+)
+
+
+def _run_claude(prompt: str, resume: str | None = None,
+                research: bool = False) -> tuple[str | None, str | None]:
     """Invoke `claude -p` headless; return (result_text, session_id).
 
     resume: a prior session id — the CLI reloads that conversation so
-    follow-up questions keep the original brief and data in context."""
+    follow-up questions keep the original brief and data in context.
+    research: allow WebSearch/WebFetch so the advisor can pull live news,
+    analyst moves and sentiment before answering (slower: 1-3 min)."""
     # On Windows the CLI is an npm `claude.CMD` shim — subprocess can't launch
     # it by bare name (WinError 2), so resolve the real path via PATH/PATHEXT.
     # The prompt goes over STDIN, not argv: multi-line args are mangled by the
@@ -89,12 +128,16 @@ def _run_claude(prompt: str, resume: str | None = None) -> tuple[str | None, str
     cmd = [exe, "-p", "--output-format", "json"]
     if resume:
         cmd += ["--resume", resume]
+    if research:
+        cmd += ["--allowedTools", "WebSearch", "WebFetch"]
     if settings.CLAUDE_MODEL:
         cmd += ["--model", settings.CLAUDE_MODEL]
+    timeout = max(settings.ADVISOR_TIMEOUT, 300) if research \
+        else settings.ADVISOR_TIMEOUT
     try:
         proc = subprocess.run(
             cmd, input=prompt, capture_output=True, text=True,
-            encoding="utf-8", errors="replace", timeout=settings.ADVISOR_TIMEOUT,
+            encoding="utf-8", errors="replace", timeout=timeout,
         )
     except (FileNotFoundError, subprocess.TimeoutExpired) as exc:
         print(f"[advisor] claude CLI unavailable: {exc!r}")
@@ -178,9 +221,10 @@ def _fallback_note(symbol: str, facts: str, signals) -> AdvisorNote:
     )
 
 
-def advise_stock(report: StockReport, force: bool = False) -> AdvisorNote:
+def advise_stock(report: StockReport, force: bool = False,
+                 deep: bool = False) -> AdvisorNote:
     key = f"stock:{report.symbol}"
-    if not force:
+    if not force and not deep:
         hit = _cache.get(key)
         if hit and (time.time() - hit[0]) < settings.ADVISOR_CACHE_TTL:
             return hit[1]
@@ -192,15 +236,16 @@ def advise_stock(report: StockReport, force: bool = False) -> AdvisorNote:
         return note
 
     prompt = (
-        f"{_PERSONA}\n\nHere is the current data for a stock a client holds or is "
+        f"{_PERSONA}\n\n{_RESEARCH_PREFIX if deep else ''}"
+        f"Here is the current data for a stock a client holds or is "
         f"watching:\n\n{facts}\n\nAs their advisor, give your professional read. "
         f"{_SCHEMA_HINT}"
     )
-    raw, sid = _run_claude(prompt)
+    raw, sid = _run_claude(prompt, research=deep)
     note = _parse_note(report.symbol, "claude", raw) if raw else \
         _fallback_note(report.symbol, facts, report.signals)
     if raw and sid:
-        _sessions[key] = sid
+        _remember_session(key, sid)
     _cache[key] = (time.time(), note)
     return note
 
@@ -231,6 +276,13 @@ def _facts_from_portfolio(summary: PortfolioSummary, reports: list[StockReport],
             f"P/L {r.unrealized_pl_pct:+.1f}%, RSI {r.indicators.rsi}, "
             f"{r.indicators.trend}"
         )
+    headline_lines = []
+    for r in held[:8]:
+        if r.news:
+            headline_lines.append(f"  {r.symbol}: {r.news[0].title}")
+    if headline_lines:
+        lines.append("Latest headline per top position:")
+        lines.extend(headline_lines)
     if alerts:
         lines.append("Active alerts: " + "; ".join(
             f"{a.symbol} {a.label} ({a.severity})" for a in alerts[:12]))
@@ -239,10 +291,10 @@ def _facts_from_portfolio(summary: PortfolioSummary, reports: list[StockReport],
 
 def advise_portfolio(summary: PortfolioSummary, reports: list[StockReport],
                      risk: RiskMetrics, alerts: list[PortfolioAlert],
-                     force: bool = False) -> AdvisorNote:
+                     force: bool = False, deep: bool = False) -> AdvisorNote:
     """One whole-book narrative: posture, risks, and concrete next actions."""
     key = "portfolio:brief"
-    if not force:
+    if not force and not deep:
         hit = _cache.get(key)
         if hit and (time.time() - hit[0]) < settings.ADVISOR_CACHE_TTL:
             return hit[1]
@@ -255,7 +307,8 @@ def advise_portfolio(summary: PortfolioSummary, reports: list[StockReport],
         return note
 
     prompt = (
-        f"{_PERSONA}\n\nHere is your client's full portfolio right now:\n\n{facts}\n\n"
+        f"{_PERSONA}\n\n{_RESEARCH_PREFIX if deep else ''}"
+        f"Here is your client's full portfolio right now:\n\n{facts}\n\n"
         f"Give your professional whole-portfolio review: overall posture, "
         f"concentration/risk assessment, and the most important concrete "
         f"actions this week (name specific tickers and levels). "
@@ -271,18 +324,19 @@ def advise_portfolio(summary: PortfolioSummary, reports: list[StockReport],
         f'Every bullet must be a single self-contained sentence under 30 words. '
         f'No lead-in phrases, no numbering — the UI renders them as a list.'
     )
-    raw, sid = _run_claude(prompt)
+    raw, sid = _run_claude(prompt, research=deep)
     note = _parse_note("PORTFOLIO", "claude", raw) if raw else \
         _fallback_note("PORTFOLIO", facts, all_signals)
     if raw and sid:
-        _sessions[key] = sid
+        _remember_session(key, sid)
     _cache[key] = (time.time(), note)
     return note
 
 
-def advise_breakout(cand: BreakoutCandidate, force: bool = False) -> AdvisorNote:
+def advise_breakout(cand: BreakoutCandidate, force: bool = False,
+                    deep: bool = False) -> AdvisorNote:
     key = f"breakout:{cand.symbol}"
-    if not force:
+    if not force and not deep:
         hit = _cache.get(key)
         if hit and (time.time() - hit[0]) < settings.ADVISOR_CACHE_TTL:
             return hit[1]
@@ -301,16 +355,17 @@ def advise_breakout(cand: BreakoutCandidate, force: bool = False) -> AdvisorNote
         return note
 
     prompt = (
-        f"{_PERSONA}\n\nThis stock is flagged as a potential breakout candidate:\n\n"
+        f"{_PERSONA}\n\n{_RESEARCH_PREFIX if deep else ''}"
+        f"This stock is flagged as a potential breakout candidate:\n\n"
         f"{facts}\n\nMake the bull case for a near-term breakout AND state what would "
         f"invalidate it. Be specific about entry zone, the level that confirms the "
         f"breakout, and a stop. {_SCHEMA_HINT}"
     )
-    raw, sid = _run_claude(prompt)
+    raw, sid = _run_claude(prompt, research=deep)
     note = _parse_note(cand.symbol, "claude", raw) if raw else \
         _fallback_note(cand.symbol, facts, cand.signals)
     if raw and sid:
-        _sessions[key] = sid
+        _remember_session(key, sid)
     _cache[key] = (time.time(), note)
     return note
 
@@ -324,12 +379,13 @@ _ASK_FMT = (
 )
 
 
-def ask(kind: str, symbol: str | None, question: str) -> dict:
+def ask(kind: str, symbol: str | None, question: str, deep: bool = False) -> dict:
     """Answer a follow-up question about a prior advisor note.
 
     Resumes the claude session that produced the note, so the model still has
     the full brief and data in context. If no session exists (fresh boot,
     fallback note), the current facts are rebuilt and sent with the question.
+    deep=True lets the answer pull live news/sentiment via web search.
     """
     stamp = time.strftime("%Y-%m-%d %H:%M:%S")
     if not settings.ADVISOR_ENABLED:
@@ -338,11 +394,13 @@ def ask(kind: str, symbol: str | None, question: str) -> dict:
                           "follow-up questions can't be answered right now."}
 
     key = "portfolio:brief" if kind == "portfolio" else f"{kind}:{symbol}"
+    research_note = _RESEARCH_PREFIX if deep else ""
     raw = sid = None
     prior = _sessions.get(key)
     if prior:
         raw, sid = _run_claude(
-            f"Client follow-up question: {question}\n\n{_ASK_FMT}", resume=prior)
+            f"{research_note}Client follow-up question: {question}\n\n{_ASK_FMT}",
+            resume=prior, research=deep)
 
     if raw is None:
         # No live session — rebuild context and ask cold.
@@ -363,9 +421,10 @@ def ask(kind: str, symbol: str | None, question: str) -> dict:
             prior_note = ("\n\nYour previous advice to this client:\n"
                           f"Take: {n.summary}\nActions: " + "; ".join(n.actions) +
                           "\nRisks: " + "; ".join(n.risks))
-        prompt = (f"{_PERSONA}\n\nThe client's current data:\n\n{facts}{prior_note}"
+        prompt = (f"{_PERSONA}\n\n{research_note}"
+                  f"The client's current data:\n\n{facts}{prior_note}"
                   f"\n\nClient question: {question}\n\n{_ASK_FMT}")
-        raw, sid = _run_claude(prompt)
+        raw, sid = _run_claude(prompt, research=deep)
 
     if raw is None:
         return {"engine": "fallback", "generated_at": stamp, "points": [],
@@ -373,7 +432,7 @@ def ask(kind: str, symbol: str | None, question: str) -> dict:
                           "did not respond). Try again in a moment."}
 
     if sid:
-        _sessions[key] = sid
+        _remember_session(key, sid)
     answer, points = raw.strip(), []
     start, end = raw.find("{"), raw.rfind("}")
     if start != -1 and end > start:

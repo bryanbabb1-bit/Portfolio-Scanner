@@ -15,9 +15,11 @@ interface QA {
 export function AdvisorChat({
   kind,
   symbol,
+  deep = false,
 }: {
   kind: "portfolio" | "stock" | "breakout";
   symbol?: string;
+  deep?: boolean;
 }) {
   const [thread, setThread] = useState<QA[]>([]);
   const [input, setInput] = useState("");
@@ -30,7 +32,7 @@ export function AdvisorChat({
     setBusy(true);
     setThread((t) => [...t, { q }]);
     try {
-      const a = await api.askAdvisor(kind, symbol, q);
+      const a = await api.askAdvisor(kind, symbol, q, deep);
       setThread((t) => t.map((item, i) => (i === t.length - 1 ? { ...item, a } : item)));
     } catch (e: any) {
       setThread((t) =>
@@ -54,7 +56,9 @@ export function AdvisorChat({
           ) : item.err ? (
             <div className="err">{item.err}</div>
           ) : (
-            <div className="chat-a"><p className="mut">Thinking… (~10-30s)</p></div>
+            <div className="chat-a">
+              <p className="mut">{deep ? "Researching the web + thinking… (1-3 min)" : "Thinking… (~10-30s)"}</p>
+            </div>
           )}
         </div>
       ))}

@@ -1,6 +1,8 @@
 """AI advisor endpoints (headless Claude via the local subscription)."""
 from __future__ import annotations
 
+import traceback
+
 from fastapi import APIRouter, HTTPException
 
 from ..models.schemas import AskRequest
@@ -13,15 +15,17 @@ router = APIRouter(prefix="/api/advisor", tags=["advisor"])
 
 
 @router.get("/portfolio")
-def advise_portfolio(force: bool = False):
-    """Whole-book senior-advisor brief: posture, risk, concrete actions."""
+def advise_portfolio(force: bool = False, deep: bool = False):
+    """Whole-book senior-advisor brief. deep=true adds live web research."""
     try:
         summary, reports = pf_service.portfolio_summary()
         risk = insights_service.compute_risk(reports)
         alerts = insights_service.build_alerts(reports)
     except Exception as exc:
+        traceback.print_exc()
         raise HTTPException(status_code=502, detail=f"Portfolio read failed: {exc}")
-    return advisor_service.advise_portfolio(summary, reports, risk, alerts, force=force)
+    return advisor_service.advise_portfolio(
+        summary, reports, risk, alerts, force=force, deep=deep)
 
 
 @router.post("/ask")
@@ -32,23 +36,26 @@ def ask(req: AskRequest):
         raise HTTPException(status_code=422, detail="symbol required for this kind")
     try:
         return advisor_service.ask(
-            req.kind, (req.symbol or "").strip().upper() or None, req.question.strip())
+            req.kind, (req.symbol or "").strip().upper() or None,
+            req.question.strip(), deep=req.deep)
     except Exception as exc:
+        traceback.print_exc()
         raise HTTPException(status_code=502, detail=f"Ask failed: {exc}")
 
 
 @router.get("/stock/{symbol}")
-def advise_stock(symbol: str, force: bool = False):
-    """Senior-advisor narrative + technical read for one stock."""
+def advise_stock(symbol: str, force: bool = False, deep: bool = False):
+    """Senior-advisor read for one stock. deep=true adds live web research."""
     try:
         report = pf_service.build_report(symbol.upper())
     except Exception as exc:
+        traceback.print_exc()
         raise HTTPException(status_code=502, detail=f"Report failed: {exc}")
-    return advisor_service.advise_stock(report, force=force)
+    return advisor_service.advise_stock(report, force=force, deep=deep)
 
 
 @router.get("/breakout/{symbol}")
-def advise_breakout(symbol: str, force: bool = False):
+def advise_breakout(symbol: str, force: bool = False, deep: bool = False):
     """The bull case (and invalidation) for a breakout candidate."""
     md = market_data.get_market_data(symbol.upper())
     pf = pf_service.load_portfolio()
@@ -58,4 +65,4 @@ def advise_breakout(symbol: str, force: bool = False):
         None,
     )
     cand = screener.evaluate(symbol.upper(), theme, md)
-    return advisor_service.advise_breakout(cand, force=force)
+    return advisor_service.advise_breakout(cand, force=force, deep=deep)

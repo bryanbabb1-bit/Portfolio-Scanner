@@ -9,13 +9,14 @@ import { BulletList } from "./BulletList";
 export function PortfolioBrief() {
   const [note, setNote] = useState<AdvisorNote | null>(null);
   const [loading, setLoading] = useState(false);
+  const [deep, setDeep] = useState(false);
   const [err, setErr] = useState<string | null>(null);
 
   async function run(force = false) {
     setLoading(true);
     setErr(null);
     try {
-      setNote(await api.advisePortfolio(force));
+      setNote(await api.advisePortfolio(force, deep));
     } catch (e: any) {
       setErr(e.message || "Brief failed");
     } finally {
@@ -32,7 +33,11 @@ export function PortfolioBrief() {
             {note.engine === "claude" ? "Claude" : "auto"}
           </span>
         )}
-        <div style={{ marginLeft: "auto", display: "flex", gap: 8 }}>
+        <div style={{ marginLeft: "auto", display: "flex", gap: 10, alignItems: "center" }}>
+          <label className="deep-toggle" title="Let the advisor search the web for live news, analyst moves and sentiment (slower)">
+            <input type="checkbox" checked={deep} onChange={(e) => setDeep(e.target.checked)} disabled={loading} />
+            Deep research
+          </label>
           {note && (
             <button className="btn ghost" onClick={() => run(true)} disabled={loading}>
               ↻
@@ -54,7 +59,11 @@ export function PortfolioBrief() {
       )}
 
       {loading && !note && (
-        <p className="loading">Reviewing the whole portfolio… (headless Claude, ~15-45s)</p>
+        <p className="loading">
+          {deep
+            ? "Researching live news + sentiment across the book, then analyzing… (2-4 min)"
+            : "Reviewing the whole portfolio… (headless Claude, ~15-45s)"}
+        </p>
       )}
 
       {note && (
@@ -84,7 +93,7 @@ export function PortfolioBrief() {
           <p className="mut" style={{ fontSize: 11, marginTop: 12 }}>
             {note.persona} · {note.generated_at} · Not personalized investment advice.
           </p>
-          <AdvisorChat kind="portfolio" />
+          <AdvisorChat kind="portfolio" deep={deep} />
         </>
       )}
     </div>

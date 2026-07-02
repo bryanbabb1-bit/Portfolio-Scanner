@@ -264,14 +264,18 @@ export const api = {
     get<{ quotes: Record<string, { price: number | null; source: string }> }>(
       `/api/quotes?symbols=${encodeURIComponent(symbols.join(","))}`
     ),
-  adviseStock: (symbol: string, force = false) =>
-    get<AdvisorNote>(`/api/advisor/stock/${symbol}?force=${force}`),
-  adviseBreakout: (symbol: string, force = false) =>
-    get<AdvisorNote>(`/api/advisor/breakout/${symbol}?force=${force}`),
-  advisePortfolio: (force = false) =>
-    get<AdvisorNote>(`/api/advisor/portfolio?force=${force}`),
-  askAdvisor: (kind: "portfolio" | "stock" | "breakout", symbol: string | undefined, question: string) =>
-    post<AskAnswer>("/api/advisor/ask", { kind, symbol, question }),
+  adviseStock: (symbol: string, force = false, deep = false) =>
+    get<AdvisorNote>(`/api/advisor/stock/${symbol}?force=${force}&deep=${deep}`),
+  adviseBreakout: (symbol: string, force = false, deep = false) =>
+    get<AdvisorNote>(`/api/advisor/breakout/${symbol}?force=${force}&deep=${deep}`),
+  advisePortfolio: (force = false, deep = false) =>
+    get<AdvisorNote>(`/api/advisor/portfolio?force=${force}&deep=${deep}`),
+  askAdvisor: (
+    kind: "portfolio" | "stock" | "breakout",
+    symbol: string | undefined,
+    question: string,
+    deep = false
+  ) => post<AskAnswer>("/api/advisor/ask", { kind, symbol, question, deep }),
   insights: () => get<PortfolioInsights>("/api/insights"),
   discover: (minScore = 0, limit = 24) =>
     get<{ count: number; universe: number; source: string; results: BreakoutCandidate[] }>(

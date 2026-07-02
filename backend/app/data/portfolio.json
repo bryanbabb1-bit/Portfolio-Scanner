@@ -132,6 +132,10 @@
     {
       "symbol": "GEV",
       "theme": "Energy"
+    },
+    {
+      "symbol": "KLAC",
+      "theme": "AI Infrastructure"
     }
   ]
 }

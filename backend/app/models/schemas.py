@@ -120,6 +120,7 @@ class AskRequest(BaseModel):
     kind: str  # "portfolio" | "stock" | "breakout"
     symbol: Optional[str] = None
     question: str = Field(min_length=1, max_length=2000)
+    deep: bool = False  # allow web research (slower, live news/sentiment)
 
     @field_validator("kind")
     @classmethod
