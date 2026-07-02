@@ -20,6 +20,11 @@ from . import market_data
 from .technical import build_quote, compute_indicators, derive_signals
 
 
+def _auto_theme(symbol: str, manual: str | None) -> str:
+    from . import themes  # local import — themes reaches back to this module
+    return themes.resolve(symbol, manual)
+
+
 def load_portfolio() -> dict:
     with open(settings.PORTFOLIO_FILE) as f:
         return json.load(f)
@@ -103,6 +108,8 @@ def build_report(symbol: str, theme: str | None = None) -> StockReport:
         )
         if not report.theme:
             report.theme = held.get("theme")
+    if not report.theme:
+        report.theme = _auto_theme(md.symbol, None)
     return report
 
 

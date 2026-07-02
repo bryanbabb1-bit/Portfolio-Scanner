@@ -65,7 +65,7 @@ export default function Settings() {
   const setHolding = (i: number, patch: Partial<Holding>) =>
     setCfg({ ...cfg, holdings: cfg.holdings.map((h, k) => (k === i ? { ...h, ...patch } : h)) });
   const addHolding = () =>
-    setCfg({ ...cfg, holdings: [...cfg.holdings, { symbol: "", shares: 0, cost_basis: 0, theme: themeNames[0] }] });
+    setCfg({ ...cfg, holdings: [...cfg.holdings, { symbol: "", shares: 0, cost_basis: 0 }] });
   const delHolding = (i: number) =>
     setCfg({ ...cfg, holdings: cfg.holdings.filter((_, k) => k !== i) });
 
@@ -73,7 +73,7 @@ export default function Settings() {
   const setWatch = (i: number, patch: Partial<WatchItem>) =>
     setCfg({ ...cfg, watchlist: cfg.watchlist.map((w, k) => (k === i ? { ...w, ...patch } : w)) });
   const addWatch = () =>
-    setCfg({ ...cfg, watchlist: [...cfg.watchlist, { symbol: "", theme: themeNames[0] }] });
+    setCfg({ ...cfg, watchlist: [...cfg.watchlist, { symbol: "" }] });
   const delWatch = (i: number) =>
     setCfg({ ...cfg, watchlist: cfg.watchlist.filter((_, k) => k !== i) });
 
@@ -117,7 +117,10 @@ export default function Settings() {
     <>
       <div className="page-head">
         <h1>Settings</h1>
-        <p>Configure your holdings, watchlist and themes. Changes save to the backend and drive every view.</p>
+        <p>
+          Configure your holdings, watchlist and themes. Themes are assigned
+          automatically by ticker — the Theme column is only an override.
+        </p>
       </div>
 
       {msg && <div className="ok-banner">{msg}</div>}
@@ -186,8 +189,12 @@ export default function Settings() {
                 <span className={`et-cell val${dominant ? " neg" : ""}`} title={value != null ? `${(share * 100).toFixed(1)}% of book` : ""}>
                   {value != null ? money(value, 0) : "—"}
                 </span>
-                <select value={h.theme ?? ""} onChange={(e) => setHolding(i, { theme: e.target.value || undefined })}>
-                  <option value="">— none —</option>
+                <select
+                  value={h.theme ?? ""}
+                  title="Themes are assigned automatically by ticker — pick one only to override"
+                  onChange={(e) => setHolding(i, { theme: e.target.value || undefined })}
+                >
+                  <option value="">Auto</option>
                   {themeNames.map((t) => <option key={t} value={t}>{t}</option>)}
                 </select>
                 <button className="icon-btn" title="Remove" onClick={() => delHolding(i)}>✕</button>
@@ -222,8 +229,12 @@ export default function Settings() {
                 placeholder="TICKER"
                 onChange={(e) => setWatch(i, { symbol: e.target.value.toUpperCase() })}
               />
-              <select value={w.theme ?? ""} onChange={(e) => setWatch(i, { theme: e.target.value || undefined })}>
-                <option value="">— none —</option>
+              <select
+                value={w.theme ?? ""}
+                title="Themes are assigned automatically by ticker — pick one only to override"
+                onChange={(e) => setWatch(i, { theme: e.target.value || undefined })}
+              >
+                <option value="">Auto</option>
                 {themeNames.map((t) => <option key={t} value={t}>{t}</option>)}
               </select>
               <button className="icon-btn" title="Remove" onClick={() => delWatch(i)}>✕</button>

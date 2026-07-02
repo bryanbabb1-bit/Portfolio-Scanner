@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from fastapi import APIRouter
 
-from ..services import market_data, screener
+from ..services import market_data, screener, themes
 from ..services import portfolio as pf_service
 
 router = APIRouter(prefix="/api", tags=["breakouts"])
@@ -25,7 +25,8 @@ def breakouts(min_score: float = 0.0, limit: int = 20):
         seen.add(sym)
         try:
             md = market_data.get_market_data(sym)
-            cands.append(screener.evaluate(sym, item.get("theme"), md))
+            cands.append(screener.evaluate(
+                sym, themes.resolve(sym, item.get("theme")), md))
         except Exception as exc:  # one bad ticker must not kill the radar
             print(f"[breakouts] skipping {sym}: {exc!r}")
 

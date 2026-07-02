@@ -197,6 +197,26 @@ def test_conviction_rules_fire_and_stay_quiet():
     assert any(s["rule"] == "sharp-breakdown" for s in sigs)
 
 
+def test_auto_theme_categorization():
+    from app.services import themes
+
+    # Seed map covers held + universe names with zero cost.
+    assert themes.theme_for("NVDA") == "AI Infrastructure"
+    assert themes.theme_for("clsk") == "Compute Power"
+    assert themes.theme_for("SGOV") == "Cash & Income"
+    assert themes.theme_for("GEV") == "Energy"
+    # Manual override always wins.
+    assert themes.resolve("NVDA", "Custom") == "Custom"
+    # Unknown ticker with the advisor disabled falls back without persisting.
+    assert themes.theme_for("ZZZQ") == "Other"
+    assert "ZZZQ" not in themes._learned
+
+    # Reports get themes with no manual selection in portfolio.json.
+    _, reports = pf_service.portfolio_summary()
+    assert all(r.theme for r in reports)
+    assert {r.symbol: r.theme for r in reports}["CLSK"] == "Compute Power"
+
+
 def test_news_deduped_and_tagged():
     out = get_news(limit=50)
     titles = [n.title for n in out["results"]]

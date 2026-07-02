@@ -8,7 +8,7 @@ from fastapi import APIRouter, HTTPException
 from ..models.schemas import AskRequest
 from ..services import advisor as advisor_service
 from ..services import insights as insights_service
-from ..services import market_data, screener
+from ..services import market_data, screener, themes
 from ..services import portfolio as pf_service
 
 router = APIRouter(prefix="/api/advisor", tags=["advisor"])
@@ -59,10 +59,11 @@ def advise_breakout(symbol: str, force: bool = False, deep: bool = False):
     """The bull case (and invalidation) for a breakout candidate."""
     md = market_data.get_market_data(symbol.upper())
     pf = pf_service.load_portfolio()
-    theme = next(
+    manual = next(
         (i.get("theme") for i in pf.get("holdings", []) + pf.get("watchlist", [])
          if i["symbol"].upper() == symbol.upper()),
         None,
     )
-    cand = screener.evaluate(symbol.upper(), theme, md)
+    cand = screener.evaluate(
+        symbol.upper(), themes.resolve(symbol.upper(), manual), md)
     return advisor_service.advise_breakout(cand, force=force, deep=deep)
