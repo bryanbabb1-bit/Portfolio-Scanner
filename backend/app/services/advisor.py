@@ -112,8 +112,8 @@ _RESEARCH_PREFIX = (
 )
 
 
-def _run_claude(prompt: str, resume: str | None = None,
-                research: bool = False) -> tuple[str | None, str | None]:
+def _run_claude(prompt: str, resume: str | None = None, research: bool = False,
+                model: str | None = None) -> tuple[str | None, str | None]:
     """Invoke `claude -p` headless; return (result_text, session_id).
 
     resume: a prior session id — the CLI reloads that conversation so
@@ -130,8 +130,9 @@ def _run_claude(prompt: str, resume: str | None = None,
         cmd += ["--resume", resume]
     if research:
         cmd += ["--allowedTools", "WebSearch", "WebFetch"]
-    if settings.CLAUDE_MODEL:
-        cmd += ["--model", settings.CLAUDE_MODEL]
+    chosen = model if model is not None else settings.CLAUDE_MODEL
+    if chosen:
+        cmd += ["--model", chosen]
     timeout = max(settings.ADVISOR_TIMEOUT, 300) if research \
         else settings.ADVISOR_TIMEOUT
     try:
@@ -241,7 +242,9 @@ def advise_stock(report: StockReport, force: bool = False,
         f"watching:\n\n{facts}\n\nAs their advisor, give your professional read. "
         f"{_SCHEMA_HINT}"
     )
-    raw, sid = _run_claude(prompt, research=deep)
+    raw, sid = _run_claude(
+        prompt, research=deep,
+        model=None if deep else settings.CLAUDE_MODEL_STANDARD)
     note = _parse_note(report.symbol, "claude", raw) if raw else \
         _fallback_note(report.symbol, facts, report.signals)
     if raw and sid:
@@ -361,7 +364,9 @@ def advise_breakout(cand: BreakoutCandidate, force: bool = False,
         f"invalidate it. Be specific about entry zone, the level that confirms the "
         f"breakout, and a stop. {_SCHEMA_HINT}"
     )
-    raw, sid = _run_claude(prompt, research=deep)
+    raw, sid = _run_claude(
+        prompt, research=deep,
+        model=None if deep else settings.CLAUDE_MODEL_STANDARD)
     note = _parse_note(cand.symbol, "claude", raw) if raw else \
         _fallback_note(cand.symbol, facts, cand.signals)
     if raw and sid:
@@ -397,10 +402,11 @@ def ask(kind: str, symbol: str | None, question: str, deep: bool = False) -> dic
     research_note = _RESEARCH_PREFIX if deep else ""
     raw = sid = None
     prior = _sessions.get(key)
+    ask_model = None if deep else settings.CLAUDE_MODEL_STANDARD
     if prior:
         raw, sid = _run_claude(
             f"{research_note}Client follow-up question: {question}\n\n{_ASK_FMT}",
-            resume=prior, research=deep)
+            resume=prior, research=deep, model=ask_model)
 
     if raw is None:
         # No live session — rebuild context and ask cold.
@@ -424,7 +430,7 @@ def ask(kind: str, symbol: str | None, question: str, deep: bool = False) -> dic
         prompt = (f"{_PERSONA}\n\n{research_note}"
                   f"The client's current data:\n\n{facts}{prior_note}"
                   f"\n\nClient question: {question}\n\n{_ASK_FMT}")
-        raw, sid = _run_claude(prompt, research=deep)
+        raw, sid = _run_claude(prompt, research=deep, model=ask_model)
 
     if raw is None:
         return {"engine": "fallback", "generated_at": stamp, "points": [],

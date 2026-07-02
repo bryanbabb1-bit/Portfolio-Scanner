@@ -217,6 +217,56 @@ a { color: inherit; text-decoration: none; }
 .deep-toggle input { width: auto; accent-color: var(--accent); cursor: pointer; }
 .deep-toggle:hover { color: var(--text); }
 
+/* ------------------------------------------------- conviction signal slap */
+.slap-overlay {
+  position: fixed; inset: 0; z-index: 100;
+  display: grid; place-items: center; padding: 20px;
+  background: rgba(2, 4, 10, 0.88);
+  backdrop-filter: blur(8px);
+  animation: slap-fade .25s ease;
+}
+.slap-card {
+  width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto;
+  background: var(--bg-elev); border-radius: 18px; padding: 0 26px 22px;
+  animation: slap-pop .35s cubic-bezier(.2, 1.4, .4, 1);
+}
+.slap-card.buy { border: 2px solid var(--bull); box-shadow: 0 0 60px rgba(52, 211, 153, 0.35), 0 30px 80px rgba(0,0,0,.6); }
+.slap-card.sell { border: 2px solid var(--bear); box-shadow: 0 0 60px rgba(251, 92, 107, 0.35), 0 30px 80px rgba(0,0,0,.6); }
+.slap-banner {
+  margin: 0 -26px 18px; padding: 13px 26px;
+  font-size: 15px; font-weight: 900; letter-spacing: .14em; text-align: center;
+  border-radius: 16px 16px 0 0; color: #04110a;
+  animation: slap-pulse 1.6s ease-in-out infinite;
+}
+.slap-banner.buy { background: linear-gradient(90deg, var(--bull), #7ce8bd); }
+.slap-banner.sell { background: linear-gradient(90deg, var(--bear), #ff9daa); color: #2a040a; }
+.slap-head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.slap-sym { font-size: 38px; font-weight: 900; letter-spacing: .01em; line-height: 1; }
+.slap-price { font-size: 20px; font-weight: 700; color: var(--muted); }
+.slap-count { margin-left: auto; font-size: 11px; color: var(--muted); border: 1px solid var(--border); border-radius: 12px; padding: 2px 9px; }
+.slap-headline { font-size: 19px; font-weight: 700; margin-top: 10px; line-height: 1.35; }
+.slap-sec { margin-top: 14px; }
+.slap-sec h4 { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 5px; }
+.slap-sec p { font-size: 14.5px; }
+.slap-levels { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+.slap-level { background: rgba(8,12,24,0.6); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; font-size: 13px; display: flex; flex-direction: column; gap: 4px; }
+.slap-level .label { font-size: 10px; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); }
+.slap-actions { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+@media (max-width: 640px) { .slap-levels { grid-template-columns: 1fr; } .slap-sym { font-size: 30px; } }
+@keyframes slap-pop { 0% { transform: scale(.85); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+@keyframes slap-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slap-pulse { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.22); } }
+
+/* dashboard signal strip */
+.signal-strip { border-left: 3px solid var(--accent-2); }
+.signal-row { display: flex; align-items: center; gap: 10px; padding: 8px 6px; border-radius: 8px; font-size: 13px; }
+.signal-row:hover { background: rgba(56,189,248,0.06); }
+.signal-row + .signal-row { border-top: 1px solid rgba(88,120,180,0.10); }
+.signal-side { font-size: 10px; font-weight: 900; letter-spacing: .08em; border-radius: 5px; padding: 2px 7px; }
+.signal-side.buy { color: #04110a; background: var(--bull); }
+.signal-side.sell { color: #2a040a; background: var(--bear); }
+.signal-headline { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
 /* --------------------------------------------------------------- misc */
 .btn {
   font-size: 13px; font-weight: 700; color: #06131f;

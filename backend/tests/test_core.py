@@ -164,6 +164,39 @@ def test_ask_returns_fallback_when_advisor_disabled():
     assert out["answer"]
 
 
+def test_conviction_rules_fire_and_stay_quiet():
+    from app.services.conviction import _detect
+
+    quiet = Quote(symbol="T", price=100, change=0.5, change_pct=0.5, source="mock")
+    calm = Indicators(rsi=55, sma50=98, sma200=95, trend="uptrend",
+                      pct_from_52w_high=-10, volume_ratio=1.0)
+    assert _detect("T", calm, quiet, True, 5.0, 50) == []
+
+    # held name oversold right at a rising 200-day -> buy
+    dip = Indicators(rsi=30, sma50=101, sma200=99.5, trend="uptrend",
+                     pct_from_52w_high=-15, volume_ratio=1.1)
+    sigs = _detect("T", dip, quiet, True, -8.0, 40)
+    assert any(s["side"] == "buy" and s["rule"] == "oversold-at-support" for s in sigs)
+
+    # blowoff: extreme RSI + volume spike -> sell
+    hot = Indicators(rsi=83, sma50=101, sma200=95, trend="uptrend",
+                     pct_from_52w_high=-1, volume_ratio=2.5)
+    sigs = _detect("T", hot, quiet, True, 40.0, 60)
+    assert any(s["side"] == "sell" and s["rule"] == "blowoff-top" for s in sigs)
+
+    # non-held discovery name with top-tier score -> buy
+    sigs = _detect("T", calm, quiet, False, None, 76)
+    assert any(s["rule"] == "high-conviction-discovery" for s in sigs)
+
+    # held, crashing through a broken trend -> sell
+    crash = Quote(symbol="T", price=80, change=-8, change_pct=-9.0, source="mock")
+    broken = Indicators(rsi=35, sma50=90, sma200=95, trend="downtrend",
+                        pct_from_52w_high=-30, volume_ratio=2.0)
+    sigs = _detect("T", broken, crash, True, -25.0, 20)
+    assert any(s["rule"] == "trend-break" for s in sigs)
+    assert any(s["rule"] == "sharp-breakdown" for s in sigs)
+
+
 def test_news_deduped_and_tagged():
     out = get_news(limit=50)
     titles = [n.title for n in out["results"]]

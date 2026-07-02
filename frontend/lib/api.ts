@@ -136,6 +136,23 @@ export interface PortfolioInsights {
   alerts: PortfolioAlert[];
 }
 
+export interface ConvictionSignal {
+  id: string;
+  symbol: string;
+  side: "buy" | "sell";
+  rule: string;
+  label: string;
+  headline: string;
+  what: string;
+  why: string[];
+  target: string;
+  stop: string;
+  price: number;
+  theme?: string;
+  held?: boolean;
+  generated_at: string;
+}
+
 export interface PortfolioNewsItem {
   title: string;
   symbols: string[];
@@ -277,6 +294,8 @@ export const api = {
     deep = false
   ) => post<AskAnswer>("/api/advisor/ask", { kind, symbol, question, deep }),
   insights: () => get<PortfolioInsights>("/api/insights"),
+  signals: (demo = false) =>
+    get<{ count: number; results: ConvictionSignal[] }>(`/api/signals?demo=${demo}`),
   discover: (minScore = 0, limit = 24) =>
     get<{ count: number; universe: number; source: string; results: BreakoutCandidate[] }>(
       `/api/discover?min_score=${minScore}&limit=${limit}`

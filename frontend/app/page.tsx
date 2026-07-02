@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
-import { api, PortfolioInsights, PortfolioSummary, StockReport } from "../lib/api";
+import { api, ConvictionSignal, PortfolioInsights, PortfolioSummary, StockReport } from "../lib/api";
+import { SignalSlap } from "../components/SignalSlap";
 import { StockCard } from "../components/StockCard";
 import { PortfolioChart } from "../components/PortfolioChart";
 import { HoldingsHeatmap } from "../components/HoldingsHeatmap";
@@ -18,6 +19,7 @@ export default function Dashboard() {
   const [holdings, setHoldings] = useState<StockReport[]>([]);
   const [watchlist, setWatchlist] = useState<StockReport[]>([]);
   const [insights, setInsights] = useState<PortfolioInsights | null>(null);
+  const [signals, setSignals] = useState<ConvictionSignal[]>([]);
   const [sort, setSort] = useState<SortKey>("value");
   const [err, setErr] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -41,6 +43,11 @@ export default function Dashboard() {
         .insights()
         .then(setInsights)
         .catch(() => setInsights(null));
+      const demo = new URLSearchParams(window.location.search).has("demoSignal");
+      api
+        .signals(demo)
+        .then((d) => setSignals(d.results))
+        .catch(() => {});
     };
     load();
     const timer = setInterval(load, REFRESH_MS);
@@ -74,6 +81,24 @@ export default function Dashboard() {
 
   return (
     <>
+      <SignalSlap signals={signals} />
+
+      {signals.length > 0 && (
+        <div className="card signal-strip" style={{ marginBottom: 24 }}>
+          <div className="section-title" style={{ marginBottom: 8 }}>Conviction Signals · last 48h</div>
+          {signals.map((s) => (
+            <a key={s.id} href={`/stock/${s.symbol}`} className={`signal-row ${s.side}`}>
+              <span className={`signal-side ${s.side}`}>{s.side === "buy" ? "BUY" : "SELL"}</span>
+              <span className="alert-sym">{s.symbol}</span>
+              <span className="signal-headline">{s.headline}</span>
+              <span className="mut" style={{ fontSize: 11, marginLeft: "auto", whiteSpace: "nowrap" }}>
+                {s.generated_at.slice(5, 16)}
+              </span>
+            </a>
+          ))}
+        </div>
+      )}
+
       <div className="hero">
         <div className="hero-glow" />
         <div className="hero-main">

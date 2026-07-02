@@ -34,7 +34,11 @@ class Settings:
     # print mode, using the signed-in Claude subscription (no API key needed).
     ADVISOR_ENABLED: bool = _bool("ADVISOR_ENABLED", True)
     CLAUDE_BIN: str = os.getenv("CLAUDE_BIN", "claude")
-    CLAUDE_MODEL: str = os.getenv("CLAUDE_MODEL", "")  # "" = CLI default
+    # Model tiers for token efficiency: routine notes/asks run on the standard
+    # tier; deep research and the whole-book brief use the CLI's default
+    # (best) model. "" = CLI default.
+    CLAUDE_MODEL: str = os.getenv("CLAUDE_MODEL", "")
+    CLAUDE_MODEL_STANDARD: str = os.getenv("CLAUDE_MODEL_STANDARD", "sonnet")
     ADVISOR_TIMEOUT: int = int(os.getenv("ADVISOR_TIMEOUT", "120"))
     # Cache advisor narratives longer than raw quotes — they are expensive.
     ADVISOR_CACHE_TTL: int = int(os.getenv("ADVISOR_CACHE_TTL", "3600"))
