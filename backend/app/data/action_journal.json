@@ -1,38 +1,46 @@
 [
   {
     "id": "4aac1fa29bad",
+    "date": "2026-07-02",
     "symbol": "CLSK",
-    "action": "sold",
-    "detail": "Closed the position entirely (41.27426 shares) \u2014 advisor-recommended miner consolidation",
+    "action": "sell",
+    "shares": 41.27426,
+    "price": null,
+    "note": "Closed the position entirely - advisor-recommended miner consolidation",
     "source": "auto",
-    "date": "2026-07-02 12:46",
     "ts": 1783014367.2170162
   },
   {
     "id": "e0c39f3995ef",
+    "date": "2026-07-02",
     "symbol": "NOW",
-    "action": "sold",
-    "detail": "Closed the position entirely (5.57501 shares)",
+    "action": "sell",
+    "shares": 5.57501,
+    "price": null,
+    "note": "Closed the position entirely (5.57501 shares)",
     "source": "auto",
-    "date": "2026-07-02 12:46",
     "ts": 1783014367.2175584
   },
   {
     "id": "0eafbb790769",
+    "date": "2026-07-02",
     "symbol": "KLAC",
-    "action": "opened",
-    "detail": "Added to watchlist from Discovery",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Added to watchlist from Discovery",
     "source": "auto",
-    "date": "2026-07-02 12:46",
     "ts": 1783014367.2335901
   },
   {
-    "id": "0bc710603f52",
+    "id": "baef4d069530",
+    "date": "2026-07-02",
     "symbol": "NVDA",
-    "action": "completed",
-    "detail": "Acted on pinned advice: Add near $191 while the 200-day holds.",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
     "source": "pin",
-    "date": "2026-07-02 12:46",
-    "ts": 1783014380.5742028
+    "ts": 1783015251.3881462
   }
 ]

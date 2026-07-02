@@ -135,6 +135,33 @@ class PinUpdate(BaseModel):
         return v
 
 
+class JournalCreate(BaseModel):
+    """A manually recorded move for the action journal."""
+    symbol: Optional[str] = None
+    action: str  # "buy" | "sell" | "note"
+    date: Optional[str] = None       # YYYY-MM-DD; default today
+    shares: Optional[float] = Field(default=None, ge=0)
+    price: Optional[float] = Field(default=None, ge=0)
+    note: str = ""
+
+    @field_validator("action")
+    @classmethod
+    def _valid_action(cls, v: str) -> str:
+        v = (v or "").strip().lower()
+        if v not in {"buy", "sell", "note"}:
+            raise ValueError("action must be buy, sell or note")
+        return v
+
+
+class JournalUpdate(BaseModel):
+    symbol: Optional[str] = None
+    action: Optional[str] = None
+    date: Optional[str] = None
+    shares: Optional[float] = Field(default=None, ge=0)
+    price: Optional[float] = Field(default=None, ge=0)
+    note: Optional[str] = None
+
+
 class AskRequest(BaseModel):
     """A follow-up question about a prior advisor note."""
     kind: str  # "portfolio" | "stock" | "breakout"

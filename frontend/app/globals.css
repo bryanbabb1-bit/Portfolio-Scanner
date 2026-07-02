@@ -282,6 +282,17 @@ li.pinnable:hover .pin-btn, .chat-a:hover .pin-btn, .pin-btn.pinned { opacity: 1
 
 /* action journal */
 .journal-panel { border-left: 3px solid var(--accent); }
+.jr-row { display: flex; align-items: center; gap: 10px; padding: 8px 6px; font-size: 13px; }
+.jr-row + .jr-row, .pins-list .jr-row { border-top: 1px solid rgba(88,120,180,0.10); }
+.jr-row .pin-date { min-width: 46px; }
+.jr-row .jr-qty { font-size: 12px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.jr-row .pin-text { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.jr-btn { height: 26px; padding: 0 8px; flex-shrink: 0; }
+.jr-row.jr-edit { display: grid; grid-template-columns: 130px 84px 92px 90px 90px 1fr auto; gap: 8px; align-items: center; padding: 10px 6px; }
+@media (max-width: 800px) {
+  .jr-row.jr-edit { grid-template-columns: 1fr 1fr; }
+  .jr-row .pin-text { white-space: normal; }
+}
 .journal-badge {
   font-size: 10px; font-weight: 900; letter-spacing: .06em;
   border-radius: 5px; padding: 2px 7px; flex-shrink: 0; min-width: 44px; text-align: center;

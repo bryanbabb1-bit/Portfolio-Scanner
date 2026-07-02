@@ -276,11 +276,40 @@ def test_journal_diff_detects_trades(tmp_path, monkeypatch):
     entries = journal.snapshot_and_diff(
         [{"symbol": "AAA", "shares": 6}, {"symbol": "CCC", "shares": 3}])
     acts = {(e["symbol"], e["action"]) for e in entries}
-    assert acts == {("AAA", "trimmed"), ("BBB", "sold"), ("CCC", "opened")}
+    assert acts == {("AAA", "sell"), ("BBB", "sell"), ("CCC", "buy")}
+    assert all(e["shares"] for e in entries)
     # unchanged holdings journal nothing
     assert journal.snapshot_and_diff(
         [{"symbol": "AAA", "shares": 6}, {"symbol": "CCC", "shares": 3}]) == []
     assert "ALREADY TAKEN" in journal.facts_block()
+
+
+def test_journal_crud(tmp_path, monkeypatch):
+    from app.services import journal
+
+    monkeypatch.setattr(journal, "_JOURNAL_FILE", tmp_path / "j.json")
+    e = journal.add_entry("MU", "buy", "Robinhood fill", shares=0.5,
+                          price=1010.0, date="2026-06-30", source="manual")
+    assert e["action"] == "buy" and e["date"] == "2026-06-30" and e["price"] == 1010.0
+
+    upd = journal.update_entry(e["id"], {"action": "sell", "shares": 0.25,
+                                         "symbol": "mu"})
+    assert upd["action"] == "sell" and upd["shares"] == 0.25 and upd["symbol"] == "MU"
+    assert journal.update_entry("nope", {"note": "x"}) is None
+    assert journal.delete_entry(e["id"]) is True
+    assert journal.delete_entry(e["id"]) is False
+
+    # legacy entries (old free-text actions) migrate to the structured shape
+    import json
+    (tmp_path / "j.json").write_text(json.dumps([
+        {"id": "old1", "symbol": "CLSK", "action": "sold",
+         "detail": "Closed the position entirely", "source": "auto",
+         "date": "2026-07-02 08:00", "ts": 1.0}
+    ]))
+    migrated = journal.list_entries(days=3650)
+    assert migrated[0]["action"] == "sell"
+    assert migrated[0]["note"] == "Closed the position entirely"
+    assert migrated[0]["date"] == "2026-07-02"
 
 
 def test_news_deduped_and_tagged():

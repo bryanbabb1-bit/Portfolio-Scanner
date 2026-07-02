@@ -167,10 +167,21 @@ export interface Pin {
 export interface JournalEntry {
   id: string;
   symbol?: string | null;
-  action: string;
-  detail: string;
-  source: string;
+  action: "buy" | "sell" | "note";
   date: string;
+  shares?: number | null;
+  price?: number | null;
+  note: string;
+  source: string;
+}
+
+export interface JournalDraft {
+  symbol?: string | null;
+  action: "buy" | "sell" | "note";
+  date?: string;
+  shares?: number | null;
+  price?: number | null;
+  note?: string;
 }
 
 export interface PortfolioNewsItem {
@@ -329,6 +340,10 @@ export const api = {
   pins: () => get<{ count: number; results: Pin[] }>("/api/pins"),
   journal: (days = 30) =>
     get<{ count: number; results: JournalEntry[] }>(`/api/journal?days=${days}`),
+  addJournal: (draft: JournalDraft) => post<JournalEntry>("/api/journal", draft),
+  updateJournal: (id: string, draft: Partial<JournalDraft>) =>
+    send<JournalEntry>(`/api/journal/${id}`, "PATCH", draft),
+  deleteJournal: (id: string) => send<{ deleted: string }>(`/api/journal/${id}`, "DELETE"),
   addPin: (pin: { symbol?: string | null; source: string; text: string; points?: string[] }) =>
     post<Pin>("/api/pins", pin),
   setPinStatus: (id: string, status: "open" | "done") =>

@@ -1,13 +1,11 @@
-"""Action journal — a persistent record of what the user has actually done.
+"""Action journal — a persistent, user-editable record of trades and moves.
 
-Without this the advisor is stateless: every brief re-reads the current
-snapshot and re-prescribes from scratch ("cut more") even while the user is
-mid-execution. Entries come from two sources:
-  - auto: diffing the holdings snapshot on every portfolio read, so trades
-    mirrored into Settings (or portfolio.json) are captured with no manual work
-  - pin: a pinned recommendation checked off as done
-The journal is shown on the dashboard and injected into advisor facts so
-guidance acknowledges progress and frames the NEXT step, not a restart.
+Structured entries: date, symbol, action (buy | sell | note), shares, price,
+note, source (auto | manual | pin). Auto entries come from diffing the
+holdings snapshot on every portfolio read; manual entries let the user record
+moves the app didn't see (and edit/delete anything). The journal is shown on
+the dashboard and injected into advisor facts so guidance acknowledges
+progress and frames the NEXT step, not a restart.
 """
 from __future__ import annotations
 
@@ -22,44 +20,102 @@ _JOURNAL_FILE = settings.PORTFOLIO_FILE.parent / "action_journal.json"
 _SNAPSHOT_FILE = settings.PORTFOLIO_FILE.parent / "holdings_snapshot.json"
 _lock = threading.Lock()
 
+VALID_ACTIONS = {"buy", "sell", "note"}
 
-def _load(path, default):
+# Legacy free-text action names -> structured actions (one-time migration).
+_LEGACY_ACTIONS = {"opened": "buy", "added": "buy", "trimmed": "sell",
+                   "sold": "sell", "completed": "note"}
+
+
+def _migrate(e: dict) -> dict:
+    if e.get("action") in VALID_ACTIONS and "note" in e:
+        return e
+    return {
+        "id": e.get("id") or uuid.uuid4().hex[:12],
+        "date": (e.get("date") or "")[:10] or time.strftime("%Y-%m-%d"),
+        "symbol": e.get("symbol"),
+        "action": _LEGACY_ACTIONS.get(e.get("action"), "note"),
+        "shares": e.get("shares"),
+        "price": e.get("price"),
+        "note": e.get("note") or e.get("detail") or "",
+        "source": e.get("source", "auto"),
+        "ts": e.get("ts", time.time()),
+    }
+
+
+def _load() -> list[dict]:
     try:
-        with open(path) as f:
+        with open(_JOURNAL_FILE) as f:
             data = json.load(f)
-        return data if isinstance(data, type(default)) else default
+        return [_migrate(e) for e in data] if isinstance(data, list) else []
     except (FileNotFoundError, json.JSONDecodeError):
-        return default
+        return []
 
 
-def _save(path, data) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with open(path, "w") as f:
-        json.dump(data, f, indent=2)
+def _save(items: list[dict]) -> None:
+    _JOURNAL_FILE.parent.mkdir(parents=True, exist_ok=True)
+    with open(_JOURNAL_FILE, "w") as f:
+        json.dump(items[-300:], f, indent=2)
 
 
-def add_entry(symbol: str | None, action: str, detail: str,
-              source: str = "auto") -> dict:
+def add_entry(symbol: str | None, action: str, note: str,
+              shares: float | None = None, price: float | None = None,
+              date: str | None = None, source: str = "auto") -> dict:
     entry = {
         "id": uuid.uuid4().hex[:12],
-        "symbol": (symbol or "").upper() or None,
-        "action": action,   # sold | trimmed | added | opened | completed
-        "detail": detail,
-        "source": source,   # auto | pin
-        "date": time.strftime("%Y-%m-%d %H:%M"),
+        "date": (date or time.strftime("%Y-%m-%d"))[:10],
+        "symbol": (symbol or "").upper().strip() or None,
+        "action": action if action in VALID_ACTIONS else "note",
+        "shares": shares,
+        "price": price,
+        "note": (note or "").strip(),
+        "source": source,  # auto | manual | pin
         "ts": time.time(),
     }
     with _lock:
-        items = _load(_JOURNAL_FILE, [])
+        items = _load()
         items.append(entry)
-        _save(_JOURNAL_FILE, items[-200:])  # keep the journal bounded
+        _save(items)
     return entry
 
 
+def update_entry(entry_id: str, fields: dict) -> dict | None:
+    allowed = {"date", "symbol", "action", "shares", "price", "note"}
+    with _lock:
+        items = _load()
+        for e in items:
+            if e["id"] == entry_id:
+                for k, v in fields.items():
+                    if k not in allowed or v is None:
+                        continue
+                    if k == "symbol":
+                        v = (str(v).upper().strip() or None)
+                    if k == "action" and v not in VALID_ACTIONS:
+                        continue
+                    if k == "date":
+                        v = str(v)[:10]
+                    e[k] = v
+                _save(items)
+                return e
+    return None
+
+
+def delete_entry(entry_id: str) -> bool:
+    with _lock:
+        items = _load()
+        kept = [e for e in items if e["id"] != entry_id]
+        if len(kept) == len(items):
+            return False
+        _save(kept)
+        return True
+
+
 def list_entries(days: int = 30) -> list[dict]:
-    cutoff = time.time() - days * 86400
-    items = [e for e in _load(_JOURNAL_FILE, []) if e.get("ts", 0) >= cutoff]
-    return sorted(items, key=lambda e: -e.get("ts", 0))
+    cutoff = time.strftime("%Y-%m-%d",
+                           time.localtime(time.time() - days * 86400))
+    items = [e for e in _load() if e.get("date", "") >= cutoff]
+    return sorted(items, key=lambda e: (e.get("date", ""), e.get("ts", 0)),
+                  reverse=True)
 
 
 def snapshot_and_diff(holdings: list[dict]) -> list[dict]:
@@ -70,35 +126,39 @@ def snapshot_and_diff(holdings: list[dict]) -> list[dict]:
     """
     current = {h["symbol"].upper(): float(h.get("shares", 0) or 0)
                for h in holdings if h.get("symbol")}
-    new_entries: list[dict] = []
+    trades: list[tuple] = []
     with _lock:
-        prev = _load(_SNAPSHOT_FILE, {})
-        _save(_SNAPSHOT_FILE, current)
+        try:
+            with open(_SNAPSHOT_FILE) as f:
+                prev = json.load(f)
+            prev = prev if isinstance(prev, dict) else {}
+        except (FileNotFoundError, json.JSONDecodeError):
+            prev = {}
+        _SNAPSHOT_FILE.parent.mkdir(parents=True, exist_ok=True)
+        with open(_SNAPSHOT_FILE, "w") as f:
+            json.dump(current, f, indent=2)
     if not prev:
         return []
-
-    def note(sym, action, detail):
-        new_entries.append((sym, action, detail))
 
     for sym, shares in current.items():
         old = float(prev.get(sym, 0))
         if old == 0 and shares > 0:
-            note(sym, "opened", f"Opened a new position: {shares:g} shares")
+            trades.append((sym, "buy", shares, f"Opened a new position"))
         elif shares > old and old > 0 and (shares - old) / old > 0.005:
-            note(sym, "added", f"Added {shares - old:g} shares "
-                               f"({old:g} -> {shares:g})")
+            trades.append((sym, "buy", round(shares - old, 4),
+                           f"Added shares ({old:g} -> {shares:g})"))
         elif shares < old and old > 0 and (old - shares) / old > 0.005:
-            note(sym, "trimmed", f"Trimmed {old - shares:g} shares "
-                                 f"({old:g} -> {shares:g})")
+            trades.append((sym, "sell", round(old - shares, 4),
+                           f"Trimmed ({old:g} -> {shares:g})"))
     for sym, old in prev.items():
         if old > 0 and current.get(sym, 0) == 0:
-            note(sym, "sold", f"Closed the position entirely ({old:g} shares)")
+            trades.append((sym, "sell", old, "Closed the position entirely"))
 
-    return [add_entry(sym, action, detail, source="auto")
-            for sym, action, detail in new_entries]
+    return [add_entry(sym, action, note, shares=qty, source="auto")
+            for sym, action, qty, note in trades]
 
 
-def facts_block(days: int = 30, limit: int = 15) -> str:
+def facts_block(days: int = 30, limit: int = 20) -> str:
     """Journal formatted for advisor prompts; empty string when no history."""
     entries = list_entries(days)[:limit]
     if not entries:
@@ -106,5 +166,8 @@ def facts_block(days: int = 30, limit: int = 15) -> str:
     lines = [f"Actions the client has ALREADY TAKEN (last {days} days, newest first):"]
     for e in entries:
         sym = e["symbol"] or "PORTFOLIO"
-        lines.append(f"  {e['date'][:10]}: {sym} — {e['action'].upper()}: {e['detail']}")
+        qty = f" {e['shares']:g} shares" if e.get("shares") else ""
+        px = f" @ ${e['price']:g}" if e.get("price") else ""
+        note = f" — {e['note']}" if e.get("note") else ""
+        lines.append(f"  {e['date']}: {e['action'].upper()} {sym}{qty}{px}{note}")
     return "\n".join(lines)

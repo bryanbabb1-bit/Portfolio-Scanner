@@ -77,7 +77,7 @@ def update(pin_id: str, status: str) -> dict | None:
         # A completed recommendation is an action taken — journal it so the
         # advisor stops re-recommending it.
         from . import journal
-        journal.add_entry(updated.get("symbol"), "completed",
+        journal.add_entry(updated.get("symbol"), "note",
                           f"Acted on pinned advice: {updated['text']}",
                           source="pin")
     return updated

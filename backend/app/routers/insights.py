@@ -28,14 +28,6 @@ def get_insights():
         raise HTTPException(status_code=502, detail=f"Insights failed: {exc}")
 
 
-@router.get("/journal")
-def get_journal(days: int = 30):
-    """The action journal: auto-detected trades + completed pinned advice."""
-    from ..services import journal
-    items = journal.list_entries(days)
-    return {"count": len(items), "results": items}
-
-
 @router.get("/news")
 def get_news(limit: int = 40):
     """All recent headlines across holdings + watchlist, deduped and tagged."""
