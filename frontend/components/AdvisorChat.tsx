@@ -24,6 +24,7 @@ export function AdvisorChat({
   const [thread, setThread] = useState<QA[]>([]);
   const [input, setInput] = useState("");
   const [busy, setBusy] = useState(false);
+  const [pinnedIdx, setPinnedIdx] = useState<Set<number>>(new Set());
 
   async function send() {
     const q = input.trim();
@@ -50,7 +51,25 @@ export function AdvisorChat({
           <div className="chat-q">{item.q}</div>
           {item.a ? (
             <div className="chat-a">
-              <p>{item.a.answer}</p>
+              <p>
+                {item.a.answer}{" "}
+                <button
+                  className={`pin-btn${pinnedIdx.has(i) ? " pinned" : ""}`}
+                  title="Pin this answer to your action list"
+                  onClick={async () => {
+                    if (pinnedIdx.has(i)) return;
+                    await api.addPin({
+                      symbol,
+                      source: "ask",
+                      text: item.a!.answer,
+                      points: item.a!.points,
+                    });
+                    setPinnedIdx((prev) => new Set(prev).add(i));
+                  }}
+                >
+                  {pinnedIdx.has(i) ? "✓ Pinned" : "Pin"}
+                </button>
+              </p>
               <BulletList items={item.a.points} kind="insight" />
             </div>
           ) : item.err ? (

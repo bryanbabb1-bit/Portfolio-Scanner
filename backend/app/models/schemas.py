@@ -115,6 +115,26 @@ class PortfolioSummary(BaseModel):
     by_theme: dict[str, float] = {}
 
 
+class PinCreate(BaseModel):
+    """Pin an advisor recommendation to the persistent action list."""
+    symbol: Optional[str] = None
+    source: str = "advisor"  # "brief" | "advisor" | "ask" | "signal"
+    text: str = Field(min_length=1, max_length=1000)
+    points: list[str] = []
+
+
+class PinUpdate(BaseModel):
+    status: str  # "open" | "done"
+
+    @field_validator("status")
+    @classmethod
+    def _valid_status(cls, v: str) -> str:
+        v = (v or "").strip().lower()
+        if v not in {"open", "done"}:
+            raise ValueError("status must be open or done")
+        return v
+
+
 class AskRequest(BaseModel):
     """A follow-up question about a prior advisor note."""
     kind: str  # "portfolio" | "stock" | "breakout"

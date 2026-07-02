@@ -90,7 +90,13 @@ export function AdvisorPanel({
           {note.actions?.length > 0 && (
             <div className="advisor-sec">
               <h4>Actions</h4>
-              <BulletList items={note.actions} kind="action" />
+              <BulletList
+                items={note.actions}
+                kind="action"
+                onPin={(text) =>
+                  api.addPin({ symbol, source: mode === "breakout" ? "breakout" : "advisor", text })
+                }
+              />
             </div>
           )}
           {note.risks?.length > 0 && (

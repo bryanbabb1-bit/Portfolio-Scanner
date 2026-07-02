@@ -88,6 +88,23 @@ export function SignalSlap({ signals }: { signals: ConvictionSignal[] }) {
           <Link href={`/stock/${s.symbol}`} className="btn" onClick={() => dismiss()}>
             Open {s.symbol}
           </Link>
+          <button
+            className="btn ghost"
+            onClick={async () => {
+              try {
+                const { api } = await import("../lib/api");
+                await api.addPin({
+                  symbol: s.symbol,
+                  source: "signal",
+                  text: s.what,
+                  points: [s.target, s.stop].filter(Boolean),
+                });
+              } catch {}
+              dismiss();
+            }}
+          >
+            Pin action
+          </button>
           {pending.length > 1 && idx < pending.length - 1 && (
             <button className="btn ghost" onClick={() => setIdx(idx + 1)}>
               Next signal

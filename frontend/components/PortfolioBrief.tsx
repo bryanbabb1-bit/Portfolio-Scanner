@@ -81,7 +81,11 @@ export function PortfolioBrief() {
           {note.actions?.length > 0 && (
             <div className="advisor-sec">
               <h4>Actions This Week</h4>
-              <BulletList items={note.actions} kind="action" />
+              <BulletList
+                items={note.actions}
+                kind="action"
+                onPin={(text) => api.addPin({ source: "brief", text })}
+              />
             </div>
           )}
           {note.risks?.length > 0 && (

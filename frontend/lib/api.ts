@@ -153,6 +153,17 @@ export interface ConvictionSignal {
   generated_at: string;
 }
 
+export interface Pin {
+  id: string;
+  symbol?: string | null;
+  source: string;
+  text: string;
+  points: string[];
+  status: "open" | "done";
+  created_at: string;
+  done_at?: string | null;
+}
+
 export interface PortfolioNewsItem {
   title: string;
   symbols: string[];
@@ -234,11 +245,11 @@ async function post<T>(path: string, body: unknown): Promise<T> {
   return send<T>(path, "POST", body);
 }
 
-async function send<T>(path: string, method: string, body: unknown): Promise<T> {
+async function send<T>(path: string, method: string, body?: unknown): Promise<T> {
   const res = await fetch(`${API_BASE}${path}`, {
     method,
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
+    headers: body === undefined ? undefined : { "Content-Type": "application/json" },
+    body: body === undefined ? undefined : JSON.stringify(body),
     cache: "no-store",
   });
   if (!res.ok) {
@@ -296,6 +307,12 @@ export const api = {
   insights: () => get<PortfolioInsights>("/api/insights"),
   signals: (demo = false) =>
     get<{ count: number; results: ConvictionSignal[] }>(`/api/signals?demo=${demo}`),
+  pins: () => get<{ count: number; results: Pin[] }>("/api/pins"),
+  addPin: (pin: { symbol?: string | null; source: string; text: string; points?: string[] }) =>
+    post<Pin>("/api/pins", pin),
+  setPinStatus: (id: string, status: "open" | "done") =>
+    send<Pin>(`/api/pins/${id}`, "PATCH", { status }),
+  deletePin: (id: string) => send<{ deleted: string }>(`/api/pins/${id}`, "DELETE"),
   discover: (minScore = 0, limit = 24) =>
     get<{ count: number; universe: number; source: string; results: BreakoutCandidate[] }>(
       `/api/discover?min_score=${minScore}&limit=${limit}`

@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { api, ConvictionSignal, PortfolioInsights, PortfolioSummary, StockReport } from "../lib/api";
 import { SignalSlap } from "../components/SignalSlap";
+import { PinnedActions } from "../components/PinnedActions";
 import { StockCard } from "../components/StockCard";
 import { PortfolioChart } from "../components/PortfolioChart";
 import { HoldingsHeatmap } from "../components/HoldingsHeatmap";
@@ -98,6 +99,8 @@ export default function Dashboard() {
           ))}
         </div>
       )}
+
+      <PinnedActions />
 
       <div className="hero">
         <div className="hero-glow" />

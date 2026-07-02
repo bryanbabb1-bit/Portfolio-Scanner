@@ -257,6 +257,29 @@ a { color: inherit; text-decoration: none; }
 @keyframes slap-fade { from { opacity: 0; } to { opacity: 1; } }
 @keyframes slap-pulse { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.22); } }
 
+/* ------------------------------------------------------------ pinned actions */
+.pin-btn {
+  margin-left: 8px; font-size: 10px; font-weight: 700; letter-spacing: .03em;
+  color: var(--muted); background: transparent;
+  border: 1px solid var(--border); border-radius: 5px; padding: 1px 7px;
+  cursor: pointer; opacity: 0; transition: opacity .15s, color .15s, border-color .15s;
+  vertical-align: 1px;
+}
+li.pinnable:hover .pin-btn, .chat-a:hover .pin-btn, .pin-btn.pinned { opacity: 1; }
+.pin-btn:hover { color: var(--accent); border-color: var(--accent); }
+.pin-btn.pinned { color: var(--bull); border-color: rgba(52,211,153,0.4); cursor: default; }
+@media (hover: none) { .pin-btn { opacity: 1; } }
+
+.pins-panel { border-left: 3px solid var(--bull); }
+.pins-list { display: flex; flex-direction: column; }
+.pin-row { display: flex; align-items: center; gap: 10px; padding: 8px 6px; font-size: 13px; }
+.pin-row + .pin-row { border-top: 1px solid rgba(88,120,180,0.10); }
+.pin-row input[type="checkbox"] { width: auto; accent-color: var(--bull); cursor: pointer; flex-shrink: 0; }
+.pin-row .pin-text { flex: 1; min-width: 0; }
+.pin-row.done .pin-text { color: var(--muted); text-decoration: line-through; }
+.pin-row .pin-date { font-size: 11px; white-space: nowrap; }
+.pin-row .icon-btn { height: 26px; padding: 0 8px; }
+
 /* dashboard signal strip */
 .signal-strip { border-left: 3px solid var(--accent-2); }
 .signal-row { display: flex; align-items: center; gap: 10px; padding: 8px 6px; border-radius: 8px; font-size: 13px; }

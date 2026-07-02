@@ -217,6 +217,25 @@ def test_auto_theme_categorization():
     assert {r.symbol: r.theme for r in reports}["CLSK"] == "Compute Power"
 
 
+def test_pins_crud(tmp_path, monkeypatch):
+    from app.services import pins
+
+    monkeypatch.setattr(pins, "_FILE", tmp_path / "pinned.json")
+    p = pins.add("NVDA", "advisor", "Add near $191 while the 200-day holds.")
+    assert p["status"] == "open" and p["symbol"] == "NVDA"
+    # duplicate pin returns the existing one
+    again = pins.add("NVDA", "advisor", "Add near $191 while the 200-day holds.")
+    assert again["id"] == p["id"]
+    assert len(pins.list_pins()) == 1
+
+    done = pins.update(p["id"], "done")
+    assert done["status"] == "done" and done["done_at"]
+    assert pins.update("nope", "done") is None
+    assert pins.delete(p["id"]) is True
+    assert pins.delete(p["id"]) is False
+    assert pins.list_pins() == []
+
+
 def test_news_deduped_and_tagged():
     out = get_news(limit=50)
     titles = [n.title for n in out["results"]]
