@@ -198,17 +198,6 @@
     "ts": 1783019239.423566
   },
   {
-    "id": "ca3153b6353c",
-    "date": "2026-07-02",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783019678.4082677
-  },
-  {
     "id": "6443fe4df241",
     "date": "2026-07-02",
     "symbol": "MU",
@@ -229,16 +218,5 @@
     "note": "Trimmed (44.8078 -> 43.3143)",
     "source": "auto",
     "ts": 1783020279.9055657
-  },
-  {
-    "id": "38588772fa0d",
-    "date": "2026-07-02",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783020448.2852435
   }
 ]

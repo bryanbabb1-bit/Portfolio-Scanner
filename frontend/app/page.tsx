@@ -129,10 +129,6 @@ export default function Dashboard() {
         </div>
       )}
 
-      <PinnedActions />
-
-      <ActionJournal />
-
       <div className="hero">
         <div className="hero-glow" />
         <div className="hero-main">
@@ -169,11 +165,13 @@ export default function Dashboard() {
 
       <Movers reports={[...holdings, ...watchlist]} />
 
-      {insights && <AlertsPanel alerts={insights.alerts} />}
-
       <HoldingsHeatmap holdings={holdings} />
 
       <PortfolioChart />
+
+      {insights && <AlertsPanel alerts={insights.alerts} />}
+
+      <PinnedActions />
 
       {insights && <RiskStats risk={insights.risk} />}
 
@@ -221,6 +219,10 @@ export default function Dashboard() {
           </div>
         </div>
       )}
+
+      <div style={{ marginTop: 32 }}>
+        <ActionJournal />
+      </div>
     </>
   );
 }

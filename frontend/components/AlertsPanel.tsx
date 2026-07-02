@@ -1,7 +1,9 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PortfolioAlert } from "../lib/api";
+
+const OPEN_KEY = "pscan-alerts-open";
 
 const SEV_META: Record<string, { icon: string; title: string }> = {
   critical: { icon: "▲", title: "Critical" },
@@ -13,7 +15,23 @@ const COLLAPSED_COUNT = 6;
 
 export function AlertsPanel({ alerts }: { alerts: PortfolioAlert[] }) {
   const [expanded, setExpanded] = useState(false);
+  const [open, setOpen] = useState(true);
+  useEffect(() => {
+    try {
+      const v = localStorage.getItem(OPEN_KEY);
+      if (v != null) setOpen(v === "1");
+    } catch {}
+  }, []);
   if (!alerts.length) return null;
+
+  const toggle = () => {
+    setOpen((o) => {
+      try {
+        localStorage.setItem(OPEN_KEY, o ? "0" : "1");
+      } catch {}
+      return !o;
+    });
+  };
 
   const shown = expanded ? alerts : alerts.slice(0, COLLAPSED_COUNT);
   const criticals = alerts.filter((a) => a.severity === "critical").length;
@@ -21,20 +39,21 @@ export function AlertsPanel({ alerts }: { alerts: PortfolioAlert[] }) {
 
   return (
     <div className="card alerts-panel" style={{ marginBottom: 28 }}>
-      <div className="chart-head" style={{ marginBottom: 10 }}>
-        <div className="section-title" style={{ margin: 0 }}>
-          Needs Your Attention{" "}
+      <div className="chart-head" style={{ marginBottom: open ? 10 : 0 }}>
+        <button className="section-title collapse-head" style={{ margin: 0 }} onClick={toggle}>
+          <span className="chev">{open ? "▾" : "▸"}</span> Needs Your Attention{" "}
           <span className="mut" style={{ textTransform: "none", letterSpacing: 0 }}>
             · {criticals} critical · {warnings} warnings ·{" "}
             {alerts.length - criticals - warnings} opportunities
           </span>
-        </div>
-        {alerts.length > COLLAPSED_COUNT && (
+        </button>
+        {open && alerts.length > COLLAPSED_COUNT && (
           <button className="btn ghost" onClick={() => setExpanded(!expanded)}>
             {expanded ? "Show less" : `Show all ${alerts.length}`}
           </button>
         )}
       </div>
+      {open && (
       <div className="alerts-list">
         {shown.map((a, idx) => (
           <Link
@@ -51,6 +70,7 @@ export function AlertsPanel({ alerts }: { alerts: PortfolioAlert[] }) {
           </Link>
         ))}
       </div>
+      )}
     </div>
   );
 }

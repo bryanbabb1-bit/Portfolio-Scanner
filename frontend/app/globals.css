@@ -280,6 +280,15 @@ li.pinnable:hover .pin-btn, .chat-a:hover .pin-btn, .pin-btn.pinned { opacity: 1
 .pin-row .pin-date { font-size: 11px; white-space: nowrap; }
 .pin-row .icon-btn { height: 26px; padding: 0 8px; }
 
+/* collapsible panel headers */
+.collapse-head {
+  background: transparent; border: none; cursor: pointer; text-align: left;
+  font: inherit; font-size: 13px; text-transform: uppercase; letter-spacing: .05em;
+  color: var(--muted); display: inline-flex; align-items: center; gap: 7px; padding: 2px 0;
+}
+.collapse-head:hover { color: var(--text); }
+.collapse-head .chev { color: var(--accent); font-size: 11px; width: 12px; }
+
 /* action journal */
 .journal-panel { border-left: 3px solid var(--accent); }
 .jr-row { display: flex; align-items: center; gap: 10px; padding: 8px 6px; font-size: 13px; }

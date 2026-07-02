@@ -12,6 +12,7 @@ const ACTION_META: Record<string, { label: string; cls: string }> = {
 
 const COLLAPSED = 6;
 const BLANK: JournalDraft = { action: "buy", symbol: "", note: "" };
+const OPEN_KEY = "pscan-journal-open";
 
 // Structured, user-controlled trade log: date · ticker · buy/sell · shares ·
 // price · note. Auto-detected trades land here too; everything is editable.
@@ -19,6 +20,7 @@ const BLANK: JournalDraft = { action: "buy", symbol: "", note: "" };
 export function ActionJournal() {
   const [entries, setEntries] = useState<JournalEntry[]>([]);
   const [expanded, setExpanded] = useState(false);
+  const [open, setOpen] = useState(false); // reference log — collapsed by default
   const [adding, setAdding] = useState(false);
   const [editing, setEditing] = useState<string | null>(null);
   const [draft, setDraft] = useState<JournalDraft>(BLANK);
@@ -27,9 +29,22 @@ export function ActionJournal() {
   const load = () => api.journal(90).then((d) => setEntries(d.results)).catch(() => {});
   useEffect(() => {
     load();
+    try {
+      const v = localStorage.getItem(OPEN_KEY);
+      if (v != null) setOpen(v === "1");
+    } catch {}
     const t = setInterval(load, 60_000);
     return () => clearInterval(t);
   }, []);
+
+  const toggle = () => {
+    setOpen((o) => {
+      try {
+        localStorage.setItem(OPEN_KEY, o ? "0" : "1");
+      } catch {}
+      return !o;
+    });
+  };
 
   const startAdd = () => {
     setDraft({ ...BLANK, date: new Date().toISOString().slice(0, 10) });
@@ -121,23 +136,27 @@ export function ActionJournal() {
 
   return (
     <div className="card journal-panel" style={{ marginBottom: 24 }}>
-      <div className="chart-head" style={{ marginBottom: 8 }}>
-        <div className="section-title" style={{ margin: 0 }}>
-          Action Journal{" "}
+      <div className="chart-head" style={{ marginBottom: open ? 8 : 0 }}>
+        <button className="section-title collapse-head" style={{ margin: 0 }} onClick={toggle}>
+          <span className="chev">{open ? "▾" : "▸"}</span> Action Journal{" "}
           <span className="mut" style={{ textTransform: "none", letterSpacing: 0 }}>
             · {entries.length} moves in 90 days · the advisor sees this
           </span>
-        </div>
-        <div style={{ display: "flex", gap: 8 }}>
-          {entries.length > COLLAPSED && (
-            <button className="btn ghost" onClick={() => setExpanded(!expanded)}>
-              {expanded ? "Show less" : `Show all ${entries.length}`}
-            </button>
-          )}
-          <button className="btn ghost" onClick={startAdd}>+ Add move</button>
-        </div>
+        </button>
+        {open && (
+          <div style={{ display: "flex", gap: 8 }}>
+            {entries.length > COLLAPSED && (
+              <button className="btn ghost" onClick={() => setExpanded(!expanded)}>
+                {expanded ? "Show less" : `Show all ${entries.length}`}
+              </button>
+            )}
+            <button className="btn ghost" onClick={startAdd}>+ Add move</button>
+          </div>
+        )}
       </div>
 
+      {open && (
+        <>
       {err && <div className="err" style={{ marginBottom: 10 }}>{err}</div>}
       {adding && editorRow}
 
@@ -170,6 +189,8 @@ export function ActionJournal() {
           <div className="empty">No moves recorded yet — trades you make are detected automatically, or add one.</div>
         )}
       </div>
+        </>
+      )}
     </div>
   );
 }
