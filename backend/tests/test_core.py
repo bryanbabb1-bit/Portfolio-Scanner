@@ -332,6 +332,41 @@ def test_signal_dismissal(tmp_path, monkeypatch):
     assert conviction.dismiss() == 0
 
 
+def test_advisor_consistency_memory(tmp_path, monkeypatch):
+    from app.models.schemas import AdvisorNote
+    from app.services import advisor
+
+    monkeypatch.setattr(advisor, "_HISTORY_FILE", tmp_path / "hist.json")
+    monkeypatch.setattr(advisor, "_history", {})
+
+    note = AdvisorNote(
+        symbol="PORTFOLIO", persona="p", engine="claude",
+        generated_at="2026-07-02 10:00:00",
+        summary="De-risking is complete.",
+        insights=[], risks=["CRWD gap risk"],
+        actions=["Do not chase CRWD (RSI 71.7) — wait for a pullback toward RSI 60."],
+    )
+    advisor._remember_history("portfolio:brief", note)
+
+    block = advisor._prior_advice_block("portfolio:brief")
+    assert "CONSISTENCY RULE" in block and "Do not chase CRWD" in block
+
+    # a per-stock CRWD note must see the portfolio brief's stance on CRWD
+    stock_block = advisor._prior_advice_block("stock:CRWD", "CRWD")
+    assert "Do not chase CRWD" in stock_block
+
+    # fallback notes are never stored as prior advice
+    fb = AdvisorNote(symbol="X", persona="p", engine="fallback",
+                     generated_at="t", summary="s")
+    advisor._remember_history("stock:X", fb)
+    assert advisor._prior_advice_block("stock:X") == ""
+
+    # capped at the last three notes per context
+    for k in range(5):
+        advisor._remember_history("portfolio:brief", note)
+    assert len(advisor._history["portfolio:brief"]) == 3
+
+
 def test_news_deduped_and_tagged():
     out = get_news(limit=50)
     titles = [n.title for n in out["results"]]

@@ -12,6 +12,7 @@ import json
 import re
 import shutil
 import subprocess
+import threading
 import time
 
 from ..config import settings
@@ -43,6 +44,72 @@ def _load_sessions() -> dict[str, str]:
 
 
 _sessions: dict[str, str] = _load_sessions()
+
+# The advisor's own recent notes, persisted per context key — injected into
+# every new brief so it stays consistent with (or explicitly revises) what it
+# already told the client, instead of re-rolling a fresh opinion each time.
+_HISTORY_FILE = settings.PORTFOLIO_FILE.parent / "advisor_history.json"
+
+
+def _load_history() -> dict[str, list[dict]]:
+    try:
+        with open(_HISTORY_FILE) as f:
+            data = json.load(f)
+        return data if isinstance(data, dict) else {}
+    except (FileNotFoundError, json.JSONDecodeError):
+        return {}
+
+
+_history: dict[str, list[dict]] = _load_history()
+_history_lock = threading.Lock()
+
+
+def _remember_history(key: str, note: AdvisorNote) -> None:
+    if note.engine != "claude":
+        return  # deterministic fallbacks aren't advice worth holding to
+    entry = {
+        "generated_at": note.generated_at,
+        "summary": note.summary,
+        "actions": note.actions,
+        "risks": note.risks,
+    }
+    with _history_lock:
+        lst = _history.setdefault(key, [])
+        lst.append(entry)
+        del lst[:-3]  # keep the last three notes per context
+        try:
+            _HISTORY_FILE.parent.mkdir(parents=True, exist_ok=True)
+            with open(_HISTORY_FILE, "w") as f:
+                json.dump(_history, f, indent=2)
+        except OSError as exc:
+            print(f"[advisor] could not persist history: {exc!r}")
+
+
+def _prior_advice_block(key: str, symbol: str | None = None) -> str:
+    """The advisor's own recent guidance + a hard consistency rule."""
+    lines: list[str] = []
+    for h in _history.get(key, [])[-2:]:
+        lines.append(f"[{h['generated_at']}] Your take then: {h['summary'][:250]}")
+        for a in h.get("actions", [])[:5]:
+            lines.append(f"  - you advised: {a}")
+    # A stock note should also honor what the whole-book brief said about it.
+    if symbol and key != "portfolio:brief":
+        for h in _history.get("portfolio:brief", [])[-1:]:
+            mentions = [x for x in h.get("actions", []) + h.get("risks", [])
+                        if symbol.upper() in x.upper()]
+            for m in mentions[:3]:
+                lines.append(f"  - from your latest portfolio brief: {m}")
+    if not lines:
+        return ""
+    return (
+        "\nYOUR OWN PREVIOUS ADVICE TO THIS CLIENT — you are the same advisor:\n"
+        + "\n".join(lines) +
+        "\nCONSISTENCY RULE: do NOT reverse or contradict a prior stance "
+        "unless a specific fact, price or level has materially changed — and "
+        "if you do change your mind, say so explicitly ('I previously said X; "
+        "I'm revising because Y'). If nothing material changed, hold the same "
+        "line, including levels you told the client to wait for.\n"
+    )
 
 
 def _remember_session(key: str, sid: str) -> None:
@@ -246,7 +313,9 @@ def advise_stock(report: StockReport, force: bool = False,
     prompt = (
         f"{_PERSONA}\n\n{_RESEARCH_PREFIX if deep else ''}"
         f"Here is the current data for a stock a client holds or is "
-        f"watching:\n\n{facts}\n\nAs their advisor, give your professional read. "
+        f"watching:\n\n{facts}\n"
+        f"{_prior_advice_block(key, report.symbol)}"
+        f"\nAs their advisor, give your professional read. "
         f"{_SCHEMA_HINT}"
     )
     raw, sid = _run_claude(
@@ -256,6 +325,7 @@ def advise_stock(report: StockReport, force: bool = False,
         _fallback_note(report.symbol, facts, report.signals)
     if raw and sid:
         _remember_session(key, sid)
+    _remember_history(key, note)
     _cache[key] = (time.time(), note)
     return note
 
@@ -332,7 +402,8 @@ def advise_portfolio(summary: PortfolioSummary, reports: list[StockReport],
 
     prompt = (
         f"{_PERSONA}\n\n{_RESEARCH_PREFIX if deep else ''}"
-        f"Here is your client's full portfolio right now:\n\n{facts}\n\n"
+        f"Here is your client's full portfolio right now:\n\n{facts}\n"
+        f"{_prior_advice_block(key)}\n"
         f"Give your professional whole-portfolio review: overall posture, "
         f"concentration/risk assessment, and the most important concrete "
         f"actions this week (name specific tickers and levels). "
@@ -364,6 +435,7 @@ def advise_portfolio(summary: PortfolioSummary, reports: list[StockReport],
         _fallback_note("PORTFOLIO", facts, all_signals)
     if raw and sid:
         _remember_session(key, sid)
+    _remember_history(key, note)
     _cache[key] = (time.time(), note)
     return note
 
@@ -392,7 +464,9 @@ def advise_breakout(cand: BreakoutCandidate, force: bool = False,
     prompt = (
         f"{_PERSONA}\n\n{_RESEARCH_PREFIX if deep else ''}"
         f"This stock is flagged as a potential breakout candidate:\n\n"
-        f"{facts}\n\nMake the bull case for a near-term breakout AND state what would "
+        f"{facts}\n"
+        f"{_prior_advice_block(key, cand.symbol)}"
+        f"\nMake the bull case for a near-term breakout AND state what would "
         f"invalidate it. Be specific about entry zone, the level that confirms the "
         f"breakout, and a stop. {_SCHEMA_HINT}"
     )
@@ -403,6 +477,7 @@ def advise_breakout(cand: BreakoutCandidate, force: bool = False,
         _fallback_note(cand.symbol, facts, cand.signals)
     if raw and sid:
         _remember_session(key, sid)
+    _remember_history(key, note)
     _cache[key] = (time.time(), note)
     return note
 
@@ -452,16 +527,10 @@ def ask(kind: str, symbol: str | None, question: str, deep: bool = False) -> dic
                 insights_service.build_alerts(reports))
         else:
             facts = _facts_from_report(pf_service.build_report(symbol))
-        note = _cache.get(key)
-        prior_note = ""
-        if note:
-            n = note[1]
-            prior_note = ("\n\nYour previous advice to this client:\n"
-                          f"Take: {n.summary}\nActions: " + "; ".join(n.actions) +
-                          "\nRisks: " + "; ".join(n.risks))
+        prior_note = _prior_advice_block(key, symbol)
         prompt = (f"{_PERSONA}\n\n{research_note}"
-                  f"The client's current data:\n\n{facts}{prior_note}"
-                  f"\n\nClient question: {question}\n\n{_ASK_FMT}")
+                  f"The client's current data:\n\n{facts}\n{prior_note}"
+                  f"\nClient question: {question}\n\n{_ASK_FMT}")
         raw, sid = _run_claude(prompt, research=deep, model=ask_model)
 
     if raw is None:

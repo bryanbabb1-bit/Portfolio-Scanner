@@ -119,5 +119,93 @@
     "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
     "source": "pin",
     "ts": 1783017932.436419
+  },
+  {
+    "id": "a306cacc5da4",
+    "date": "2026-07-02",
+    "symbol": "APPL",
+    "action": "buy",
+    "shares": 1.95109,
+    "price": null,
+    "note": "Opened a new position",
+    "source": "auto",
+    "ts": 1783018356.603898
+  },
+  {
+    "id": "58979f3ad6dc",
+    "date": "2026-07-02",
+    "symbol": "AAPL",
+    "action": "buy",
+    "shares": 1.95109,
+    "price": null,
+    "note": "Opened a new position",
+    "source": "auto",
+    "ts": 1783018412.3507316
+  },
+  {
+    "id": "90b0598920f8",
+    "date": "2026-07-02",
+    "symbol": "APPL",
+    "action": "sell",
+    "shares": 1.95109,
+    "price": null,
+    "note": "Closed the position entirely",
+    "source": "auto",
+    "ts": 1783018412.3826292
+  },
+  {
+    "id": "8fbfc3fd5071",
+    "date": "2026-07-02",
+    "symbol": "NET",
+    "action": "buy",
+    "shares": 1.84754,
+    "price": null,
+    "note": "Opened a new position",
+    "source": "auto",
+    "ts": 1783018827.4026122
+  },
+  {
+    "id": "db54fa561543",
+    "date": "2026-07-02",
+    "symbol": "PLTR",
+    "action": "sell",
+    "shares": 3.43268,
+    "price": null,
+    "note": "Closed the position entirely",
+    "source": "auto",
+    "ts": 1783018827.4381735
+  },
+  {
+    "id": "157a166f1255",
+    "date": "2026-07-02",
+    "symbol": "AMD",
+    "action": "buy",
+    "shares": 0.7143,
+    "price": null,
+    "note": "Added shares (1.12082 -> 1.83514)",
+    "source": "auto",
+    "ts": 1783019239.4199793
+  },
+  {
+    "id": "1bf4ace8e6fc",
+    "date": "2026-07-02",
+    "symbol": "SGOV",
+    "action": "sell",
+    "shares": 9.5983,
+    "price": null,
+    "note": "Trimmed (54.4061 -> 44.8078)",
+    "source": "auto",
+    "ts": 1783019239.423566
+  },
+  {
+    "id": "ca3153b6353c",
+    "date": "2026-07-02",
+    "symbol": "NVDA",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
+    "source": "pin",
+    "ts": 1783019678.4082677
   }
 ]

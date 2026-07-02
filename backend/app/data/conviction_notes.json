@@ -19,7 +19,8 @@
       "Down 24.71% from the 52-week high of $787.42 with breakout score just 30/100."
     ],
     "target": "Next support sits near the November low around $560, roughly 5.5% below current price, before any base can form.",
-    "stop": "Invalidate the short-term bounce thesis on a daily close back above the 50-day MA at $605.01."
+    "stop": "Invalidate the short-term bounce thesis on a daily close back above the 50-day MA at $605.01.",
+    "dismissed": true
   },
   "AAPL:high-conviction-discovery:2026-07-02": {
     "symbol": "AAPL",
@@ -42,6 +43,29 @@
     ],
     "target": "First target $315.20 (prior 52-week high), with a follow-through objective near $324 (+1x ATR of 8.63 beyond the high) on a confirmed breakout.",
     "stop": "Exit if price closes below the $293.44 50-day SMA, which would invalidate the uptrend structure.",
-    "dismissed": false
+    "dismissed": true
+  },
+  "APPL:trend-break:2026-07-02": {
+    "symbol": "APPL",
+    "side": "sell",
+    "rule": "trend-break",
+    "label": "Trend break: under the 200-day in a death-cross regime and falling",
+    "id": "APPL:trend-break:2026-07-02",
+    "price": 100.0,
+    "theme": "Tech",
+    "held": true,
+    "dismissed": true,
+    "generated_at": "2026-07-02 13:52:42",
+    "ts": 1783018356.620153,
+    "headline": "APPL Breaks Down Further \u2014 Exit the Position",
+    "what": "Sell the remaining APPL shares at market; this is a trend-following exit, not a bottom call.",
+    "why": [
+      "Price $100.00 sits below both the 50-day ($112.01) and 200-day ($114.57) in a confirmed death-cross regime.",
+      "Shares are down 4.39% today on 0.95x average volume, showing no capitulation spike or reversal signal.",
+      "RSI 38.83 and MACD -3.558/-3.6075 both point lower with no bullish divergence forming.",
+      "Breakout score is 15/100 and the stock is 25.15% below its 52-week high of $133.60."
+    ],
+    "target": "No near-term upside target is warranted given the downtrend; if re-entering later, wait for a reclaim and hold above the 200-day at $114.57 before considering.",
+    "stop": "This sell thesis is already the stop \u2014 the position should be exited now rather than waiting for a lower trigger, since $100.00 is 12.4% below the 50-day with no support until prior lows."
   }
 }

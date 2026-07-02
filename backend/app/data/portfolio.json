@@ -24,8 +24,8 @@
     },
     {
       "symbol": "AMD",
-      "shares": 1.12082,
-      "cost_basis": 498.68,
+      "shares": 1.83514,
+      "cost_basis": 502.92,
       "theme": null
     },
     {
@@ -53,12 +53,6 @@
       "theme": null
     },
     {
-      "symbol": "PLTR",
-      "shares": 3.43268,
-      "cost_basis": 147.82,
-      "theme": null
-    },
-    {
       "symbol": "AMZN",
       "shares": 2.74262,
       "cost_basis": 242.46,
@@ -78,8 +72,20 @@
     },
     {
       "symbol": "SGOV",
-      "shares": 54.40608,
+      "shares": 44.80781,
       "cost_basis": 100.44,
+      "theme": null
+    },
+    {
+      "symbol": "AAPL",
+      "shares": 1.95109,
+      "cost_basis": 307.74,
+      "theme": null
+    },
+    {
+      "symbol": "NET",
+      "shares": 1.84754,
+      "cost_basis": 243.03,
       "theme": null
     }
   ],

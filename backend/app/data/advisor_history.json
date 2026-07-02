@@ -1,0 +1,38 @@
+{
+  "portfolio:brief": [
+    {
+      "generated_at": "2026-07-02 14:16:15",
+      "summary": "Strong week of execution \u2014 you closed PLTR, NOW, CLSK, WULF, META, ONDS, NBIS and GRAB, trimmed CIFR and SGOV, cutting miner exposure to 16% ($1,933), well inside the <25% consolidation target. The portfolio is now cash-anchored and cleaner; this week is about defending IREN and one selective buy, not more selling.",
+      "actions": [
+        "Best buy: add roughly $150 to MU into today's -6.5% dip, since the uptrend is intact \u2014 cancel if RSI 47.9 breaks below 42.",
+        "Set a hard line on IREN (-36.6% P/L): sell half, about $670, on any close below this week's low; hold otherwise since RSI 30.6 argues against panic-selling.",
+        "Hold CIFR at $588 after your $19.75 trim \u2014 no further sale unless it closes below $17, roughly 13% under that exit price.",
+        "Do not trim SGOV further \u2014 the 37.2% is deliberate dry powder; redeploy only $150-300 per week while the tape prints -2.5% days.",
+        "Skip CRWD and PANW for now at RSI 72.9 and 80.5 \u2014 a CRWD pullback toward $185 would be the entry that changes my mind."
+      ],
+      "risks": [
+        "IREN's deep drawdown can compound \u2014 a second -8% day or RSI closing under 28 triggers the half-exit immediately, no averaging down.",
+        "The semi cluster (AMD, NVDA, MU, AVGO, TSM at 22%) trades as one bet \u2014 NVDA RSI dropping below 35 means pause all semiconductor adds.",
+        "AVGO is -17.1% underwater and sideways at RSI 39.1 \u2014 a close below RSI 35 flags it as the next position to exit.",
+        "MSFT is underwater -10.6% and below its long-term trend \u2014 a failure to reclaim that trend within two weeks makes it a funding source, not a hold."
+      ]
+    },
+    {
+      "generated_at": "2026-07-02 14:16:42",
+      "summary": "Excellent cleanup week \u2014 eight positions closed, miner exposure cut from 41% to 16% ($1,933), well inside the <25% target, so the de-risking phase is DONE; now it's about defending IREN and deploying SGOV cash slowly.",
+      "actions": [
+        "Best buy stands from this morning: add roughly $150 to MU into the -6.5% dip \u2014 RSI is 47.9, above my 42 cancel line, and the uptrend is intact.",
+        "IREN: my hard line is unchanged \u2014 sell half, about $670, only on a close below this week's low; RSI 30.5 still argues against panic-selling here.",
+        "CIFR: hold the $588 position after your $19.75 trim; the only sell trigger remains a close below $17.",
+        "Redeploy SGOV cash at $150-300 per week maximum while the tape prints -2.5% days \u2014 the MU add is this week's tranche, nothing more.",
+        "Still skip CRWD (RSI 72.9) and PANW (RSI 80.5); a CRWD pullback toward $185 remains the entry that changes my mind."
+      ],
+      "risks": [
+        "The correlated miner sleeve is the single biggest threat \u2014 tripwire: IREN closing below this week's low or CIFR closing below $17 executes the pre-set sells, no debate.",
+        "MU add invalidates if RSI 47.9 breaks below 42 or the uptrend fails \u2014 cancel the order rather than average down into a breakdown.",
+        "AVGO (-17.1%) and MSFT (-10.6%) are both underwater with MSFT in a downtrend \u2014 tripwire: MSFT failing to reclaim its long-term trend within two weeks warrants a trim.",
+        "Beta 1.41 on the invested sleeve means a -3% market day hits you ~-4.3% ex-cash \u2014 tripwire: two more -2.5% portfolio days this week pauses all new buying."
+      ]
+    }
+  ]
+}
