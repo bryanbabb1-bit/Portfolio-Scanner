@@ -82,6 +82,7 @@ export interface BreakoutCandidate {
   indicators: Indicators;
   signals: Signal[];
   thesis?: string;
+  thesis_points?: string[];
 }
 
 export interface AdvisorNote {
@@ -90,9 +91,9 @@ export interface AdvisorNote {
   engine: string;
   generated_at: string;
   summary: string;
-  technical_read: string;
-  recommendation: string;
-  risks: string;
+  insights: string[];
+  actions: string[];
+  risks: string[];
   raw?: string;
 }
 

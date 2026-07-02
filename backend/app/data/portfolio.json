@@ -124,5 +124,14 @@
       "theme": "AI"
     }
   ],
-  "watchlist": []
+  "watchlist": [
+    {
+      "symbol": "LRCX",
+      "theme": "AI Infrastructure"
+    },
+    {
+      "symbol": "GEV",
+      "theme": "Energy"
+    }
+  ]
 }

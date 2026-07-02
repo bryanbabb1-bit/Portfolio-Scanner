@@ -64,20 +64,19 @@ def breakout_score(ind: Indicators, quote: Quote,
     return round(_clamp(score), 1)
 
 
-def build_thesis(symbol: str, score: float, ind: Indicators, quote: Quote,
-                 signals: list[Signal]) -> str:
-    bulls = [s.detail for s in signals if s.kind == "bullish"]
-    parts = [f"{symbol} scores {score:.0f}/100 for breakout readiness."]
+def build_thesis_points(symbol: str, score: float, ind: Indicators, quote: Quote,
+                        signals: list[Signal]) -> list[str]:
+    """Short scannable bullets — the UI renders these as a list, never prose."""
+    points: list[str] = []
     if ind.pct_from_52w_high is not None:
-        parts.append(
-            f"Trading {abs(ind.pct_from_52w_high):.1f}% "
-            f"{'below' if ind.pct_from_52w_high < 0 else 'above'} its 52-week high."
+        points.append(
+            f"{abs(ind.pct_from_52w_high):.1f}% "
+            f"{'below' if ind.pct_from_52w_high < 0 else 'above'} the 52-week high"
         )
     if ind.trend:
-        parts.append(f"Structure is a {ind.trend}.")
-    if bulls:
-        parts.append("Supporting: " + "; ".join(bulls[:3]) + ".")
-    return " ".join(parts)
+        points.append(f"Structure: {ind.trend}")
+    points.extend(s.detail for s in signals if s.kind == "bullish")
+    return points[:5]
 
 
 def evaluate(symbol: str, theme, md) -> BreakoutCandidate:
@@ -87,7 +86,7 @@ def evaluate(symbol: str, theme, md) -> BreakoutCandidate:
     quote = build_quote(md, ind)
     signals = derive_signals(quote, ind)
     score = breakout_score(ind, quote, md.history)
-    thesis = build_thesis(symbol, score, ind, quote, signals)
+    points = build_thesis_points(symbol, score, ind, quote, signals)
     return BreakoutCandidate(
         symbol=symbol.upper(),
         theme=theme,
@@ -96,5 +95,6 @@ def evaluate(symbol: str, theme, md) -> BreakoutCandidate:
         quote=quote,
         indicators=ind,
         signals=[s for s in signals if s.kind == "bullish"] or signals,
-        thesis=thesis,
+        thesis=" · ".join(points),
+        thesis_points=points,
     )

@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { AdvisorNote, api } from "../lib/api";
+import { BulletList } from "./BulletList";
 
 // Whole-book AI brief. On-demand (a Claude call takes ~15-45s) and cached
 // server-side for an hour, so "Refresh" is instant until the cache expires.
@@ -61,22 +62,22 @@ export function PortfolioBrief() {
             <h4>Overall Take</h4>
             <p>{note.summary}</p>
           </div>
-          {note.technical_read && (
+          {note.insights?.length > 0 && (
             <div className="advisor-sec">
               <h4>Portfolio Health</h4>
-              <p>{note.technical_read}</p>
+              <BulletList items={note.insights} kind="insight" />
             </div>
           )}
-          {note.recommendation && (
+          {note.actions?.length > 0 && (
             <div className="advisor-sec">
               <h4>Actions This Week</h4>
-              <p>{note.recommendation}</p>
+              <BulletList items={note.actions} kind="action" />
             </div>
           )}
-          {note.risks && (
+          {note.risks?.length > 0 && (
             <div className="advisor-sec">
               <h4>Biggest Risks</h4>
-              <p>{note.risks}</p>
+              <BulletList items={note.risks} kind="risk" />
             </div>
           )}
           <p className="mut" style={{ fontSize: 11, marginTop: 12 }}>

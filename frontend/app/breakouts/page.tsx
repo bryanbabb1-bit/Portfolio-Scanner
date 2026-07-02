@@ -58,7 +58,15 @@ export default function BreakoutRadar() {
                     RSI {num(c.indicators.rsi, 0)} · {pct(c.indicators.pct_from_52w_high, 1)} vs 52w hi
                   </span>
                 </div>
-                <p className="mut" style={{ fontSize: 13, marginTop: 6 }}>{c.thesis}</p>
+                {c.thesis_points?.length ? (
+                  <ul className="bullets insight" style={{ marginTop: 8 }}>
+                    {c.thesis_points.map((t, i) => (
+                      <li key={i}>{t}</li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="mut" style={{ fontSize: 13, marginTop: 6 }}>{c.thesis}</p>
+                )}
                 <div style={{ marginTop: 8 }}>
                   <Signals signals={c.signals} max={5} />
                 </div>

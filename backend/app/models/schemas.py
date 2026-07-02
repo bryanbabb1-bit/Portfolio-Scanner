@@ -86,18 +86,20 @@ class BreakoutCandidate(BaseModel):
     quote: Quote
     indicators: Indicators
     signals: list[Signal] = []
-    thesis: Optional[str] = None  # short deterministic thesis; AI thesis via advisor
+    thesis: Optional[str] = None       # joined fallback for older clients
+    thesis_points: list[str] = []      # bullet form — preferred by the UI
 
 
 class AdvisorNote(BaseModel):
+    """Advisor output is bullet-first: short scannable points, never prose walls."""
     symbol: str
     persona: str
     engine: str  # "claude" | "fallback"
     generated_at: str
-    summary: str
-    technical_read: str
-    recommendation: str
-    risks: str
+    summary: str                # 1-2 sentence overall take
+    insights: list[str] = []    # technical / portfolio-health observations
+    actions: list[str] = []     # concrete recommendations (ticker + level each)
+    risks: list[str] = []       # each risk paired with its confirming signal
     raw: Optional[str] = None
 
 

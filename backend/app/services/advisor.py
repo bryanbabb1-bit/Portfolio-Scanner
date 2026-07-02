@@ -9,6 +9,7 @@ endpoint never hard-fails.
 from __future__ import annotations
 
 import json
+import re
 import shutil
 import subprocess
 import time
@@ -35,11 +36,16 @@ _PERSONA = (
 )
 
 _SCHEMA_HINT = (
-    'Respond with ONLY a JSON object, no markdown, with these string keys: '
-    '"summary" (2-3 sentence plain-English take), '
-    '"technical_read" (what the indicators say, cite RSI/MACD/moving averages/volume), '
-    '"recommendation" (accumulate / hold / trim / avoid, with reasoning and a level to watch), '
-    '"risks" (key risks and invalidation level).'
+    'Respond with ONLY a JSON object, no markdown, with these keys: '
+    '"summary" (string: your take in 1-2 sentences max), '
+    '"insights" (array of 3-6 strings: what the indicators say — one specific '
+    'observation per bullet, citing RSI/MACD/moving averages/volume numbers), '
+    '"actions" (array of 2-4 strings: one concrete action per bullet — '
+    'accumulate/hold/trim/avoid with the ticker and exact level to act at), '
+    '"risks" (array of 2-4 strings: one risk per bullet, each paired with the '
+    'specific signal or level that confirms it). '
+    'Every bullet must be a single self-contained sentence under 25 words. '
+    'No lead-in phrases, no numbering — the UI renders them as a list.'
 )
 
 
@@ -97,18 +103,34 @@ def _run_claude(prompt: str) -> str | None:
     return payload.get("result")
 
 
+def _as_bullets(val) -> list[str]:
+    """Normalize a model field to a bullet list; tolerates prose strings."""
+    if isinstance(val, list):
+        return [str(v).strip() for v in val if str(v).strip()]
+    if not isinstance(val, str) or not val.strip():
+        return []
+    text = val.strip()
+    # Prose fallback: split on newlines or "1) / 2." style enumerations.
+    parts = [p.strip(" -•\t") for p in
+             re.split(r"\n+|\s+\d+[.)]\s+", text) if p.strip(" -•\t")]
+    return parts if len(parts) > 1 else [text]
+
+
 def _parse_note(symbol: str, engine: str, raw: str) -> AdvisorNote:
-    summary = technical = rec = risks = ""
+    summary = ""
+    insights: list[str] = []
+    actions: list[str] = []
+    risks: list[str] = []
     text = raw.strip()
     # Extract JSON object if the model wrapped it in prose/fences.
     start, end = text.find("{"), text.rfind("}")
     if start != -1 and end != -1 and end > start:
         try:
             obj = json.loads(text[start : end + 1])
-            summary = obj.get("summary", "")
-            technical = obj.get("technical_read", "")
-            rec = obj.get("recommendation", "")
-            risks = obj.get("risks", "")
+            summary = str(obj.get("summary", "") or "")
+            insights = _as_bullets(obj.get("insights") or obj.get("technical_read"))
+            actions = _as_bullets(obj.get("actions") or obj.get("recommendation"))
+            risks = _as_bullets(obj.get("risks"))
         except json.JSONDecodeError:
             pass
     if not summary:
@@ -119,8 +141,8 @@ def _parse_note(symbol: str, engine: str, raw: str) -> AdvisorNote:
         engine=engine,
         generated_at=time.strftime("%Y-%m-%d %H:%M:%S"),
         summary=summary,
-        technical_read=technical,
-        recommendation=rec,
+        insights=insights,
+        actions=actions,
         risks=risks,
         raw=raw,
     )
@@ -140,10 +162,10 @@ def _fallback_note(symbol: str, facts: str, signals) -> AdvisorNote:
         summary=(f"Automated read for {symbol}: technical posture looks {tilt} "
                  f"with {len(bulls)} bullish vs {len(bears)} bearish signals. "
                  "(Claude CLI unavailable — deterministic fallback shown.)"),
-        technical_read="; ".join(s.detail for s in signals) or "No strong signals.",
-        recommendation=rec,
-        risks="Automated fallback — verify against live data and position sizing "
-              "before acting. Not personalized investment advice.",
+        insights=[s.detail for s in signals] or ["No strong signals."],
+        actions=[rec],
+        risks=["Automated fallback — verify against live data and position "
+               "sizing before acting. Not personalized investment advice."],
         raw=facts,
     )
 
@@ -225,13 +247,19 @@ def advise_portfolio(summary: PortfolioSummary, reports: list[StockReport],
     prompt = (
         f"{_PERSONA}\n\nHere is your client's full portfolio right now:\n\n{facts}\n\n"
         f"Give your professional whole-portfolio review: overall posture, "
-        f"concentration/risk assessment, and the 2-3 most important concrete "
+        f"concentration/risk assessment, and the most important concrete "
         f"actions this week (name specific tickers and levels). "
-        f'Respond with ONLY a JSON object, no markdown, with these string keys: '
-        f'"summary" (2-3 sentence overall take), '
-        f'"technical_read" (portfolio health: risk metrics, allocation, momentum), '
-        f'"recommendation" (the 2-3 concrete actions, tickers and levels), '
-        f'"risks" (the biggest risks to this book and what would signal them).'
+        f'Respond with ONLY a JSON object, no markdown, with these keys: '
+        f'"summary" (string: overall take in 1-2 sentences max), '
+        f'"insights" (array of 4-7 strings: portfolio health — one observation '
+        f'per bullet on risk metrics, correlation/concentration, momentum, '
+        f'citing the numbers), '
+        f'"actions" (array of 3-5 strings: one concrete action per bullet — '
+        f'ticker, what to do, size, and the exact level or trigger), '
+        f'"risks" (array of 2-4 strings: one risk per bullet, each paired with '
+        f'the specific tripwire signal to watch). '
+        f'Every bullet must be a single self-contained sentence under 30 words. '
+        f'No lead-in phrases, no numbering — the UI renders them as a list.'
     )
     raw = _run_claude(prompt)
     note = _parse_note("PORTFOLIO", "claude", raw) if raw else \
