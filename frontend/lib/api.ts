@@ -329,6 +329,10 @@ export const api = {
     get<AdvisorNote>(`/api/advisor/breakout/${symbol}?force=${force}&deep=${deep}`),
   advisePortfolio: (force = false, deep = false) =>
     get<AdvisorNote>(`/api/advisor/portfolio?force=${force}&deep=${deep}`),
+  lastAdvisorNote: (kind: "portfolio" | "stock" | "breakout", symbol?: string) =>
+    get<AdvisorNote>(
+      `/api/advisor/last?kind=${kind}${symbol ? `&symbol=${symbol}` : ""}`
+    ).catch(() => null as AdvisorNote | null),
   askAdvisor: (
     kind: "portfolio" | "stock" | "breakout",
     symbol: string | undefined,

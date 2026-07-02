@@ -86,7 +86,11 @@ export function AdvisorChat({
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && send()}
-          placeholder='Ask a follow-up — e.g. "Is that exit short-term or long-term guidance?"'
+          placeholder={
+            kind === "portfolio"
+              ? 'Ask or tell the advisor anything — e.g. "I just sold half my IREN and added to MU"'
+              : 'Ask a follow-up — e.g. "Is that exit short-term or long-term guidance?"'
+          }
           disabled={busy}
         />
         <button className="btn" onClick={send} disabled={busy || !input.trim()}>

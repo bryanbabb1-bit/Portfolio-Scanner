@@ -70,6 +70,7 @@ def _remember_history(key: str, note: AdvisorNote) -> None:
     entry = {
         "generated_at": note.generated_at,
         "summary": note.summary,
+        "insights": note.insights,
         "actions": note.actions,
         "risks": note.risks,
     }
@@ -83,6 +84,26 @@ def _remember_history(key: str, note: AdvisorNote) -> None:
                 json.dump(_history, f, indent=2)
         except OSError as exc:
             print(f"[advisor] could not persist history: {exc!r}")
+
+
+def get_last_note(key: str) -> AdvisorNote | None:
+    """The most recent stored note for a context — lets the UI rehydrate a
+    brief after navigation/refresh without a new Claude call."""
+    hist = _history.get(key) or []
+    if not hist:
+        return None
+    h = hist[-1]
+    symbol = "PORTFOLIO" if key == "portfolio:brief" else key.split(":", 1)[-1]
+    return AdvisorNote(
+        symbol=symbol,
+        persona="Senior Schwab Financial Advisor",
+        engine="claude",
+        generated_at=h.get("generated_at", ""),
+        summary=h.get("summary", ""),
+        insights=h.get("insights", []),
+        actions=h.get("actions", []),
+        risks=h.get("risks", []),
+    )
 
 
 def _prior_advice_block(key: str, symbol: str | None = None) -> str:

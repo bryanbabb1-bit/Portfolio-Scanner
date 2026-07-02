@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AdvisorNote, api } from "../lib/api";
 import { AdvisorChat } from "./AdvisorChat";
 import { BulletList } from "./BulletList";
@@ -15,6 +15,13 @@ export function AdvisorPanel({
   const [loading, setLoading] = useState(false);
   const [deep, setDeep] = useState(false);
   const [err, setErr] = useState<string | null>(null);
+
+  // Restore this symbol's last note after navigation — no Claude call.
+  useEffect(() => {
+    api.lastAdvisorNote(mode, symbol).then((n) => {
+      if (n) setNote((cur) => cur ?? n);
+    });
+  }, [symbol, mode]);
 
   async function run(force = false) {
     setLoading(true);
@@ -108,9 +115,11 @@ export function AdvisorPanel({
           <p className="mut" style={{ fontSize: 11, marginTop: 12 }}>
             {note.persona} · {note.generated_at} · Not personalized investment advice.
           </p>
-          <AdvisorChat kind={mode} symbol={symbol} deep={deep} />
         </>
       )}
+
+      {/* Always-open line to the advisor — no note required. */}
+      <AdvisorChat kind={mode} symbol={symbol} deep={deep} />
     </div>
   );
 }

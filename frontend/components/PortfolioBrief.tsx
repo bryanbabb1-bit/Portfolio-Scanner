@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AdvisorNote, api } from "../lib/api";
 import { AdvisorChat } from "./AdvisorChat";
 import { BulletList } from "./BulletList";
@@ -11,6 +11,13 @@ export function PortfolioBrief() {
   const [loading, setLoading] = useState(false);
   const [deep, setDeep] = useState(false);
   const [err, setErr] = useState<string | null>(null);
+
+  // Restore the last brief after navigation/refresh — no Claude call.
+  useEffect(() => {
+    api.lastAdvisorNote("portfolio").then((n) => {
+      if (n) setNote((cur) => cur ?? n);
+    });
+  }, []);
 
   async function run(force = false) {
     setLoading(true);
@@ -54,7 +61,8 @@ export function PortfolioBrief() {
       {!note && !loading && !err && (
         <p className="mut" style={{ fontSize: 14 }}>
           One senior-advisor read across the whole book: posture, concentration,
-          and the 2-3 actions that matter this week.
+          and the 2-3 actions that matter this week — or just talk to the
+          advisor below, no brief required.
         </p>
       )}
 
@@ -97,9 +105,11 @@ export function PortfolioBrief() {
           <p className="mut" style={{ fontSize: 11, marginTop: 12 }}>
             {note.persona} · {note.generated_at} · Not personalized investment advice.
           </p>
-          <AdvisorChat kind="portfolio" deep={deep} />
         </>
       )}
+
+      {/* Always-open line to the advisor — no brief required. */}
+      <AdvisorChat kind="portfolio" deep={deep} />
     </div>
   );
 }

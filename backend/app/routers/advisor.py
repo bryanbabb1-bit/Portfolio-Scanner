@@ -36,6 +36,18 @@ def advise_portfolio(force: bool = False, deep: bool = False):
         candidates=candidates)
 
 
+@router.get("/last")
+def last_note(kind: str = "portfolio", symbol: str | None = None):
+    """The most recent stored advisor note for a context (no Claude call) —
+    used to restore a brief after navigating away."""
+    key = "portfolio:brief" if kind == "portfolio" \
+        else f"{kind}:{(symbol or '').upper()}"
+    note = advisor_service.get_last_note(key)
+    if not note:
+        raise HTTPException(status_code=404, detail="no prior note")
+    return note
+
+
 @router.post("/ask")
 def ask(req: AskRequest):
     """Follow-up Q&A on a prior advisor note — resumes the same Claude

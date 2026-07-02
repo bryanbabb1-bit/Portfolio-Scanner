@@ -33,6 +33,23 @@
         "AVGO (-17.1%) and MSFT (-10.6%) are both underwater with MSFT in a downtrend \u2014 tripwire: MSFT failing to reclaim its long-term trend within two weeks warrants a trim.",
         "Beta 1.41 on the invested sleeve means a -3% market day hits you ~-4.3% ex-cash \u2014 tripwire: two more -2.5% portfolio days this week pauses all new buying."
       ]
+    },
+    {
+      "generated_at": "2026-07-02 14:19:26",
+      "summary": "Strong execution confirmed: eight positions closed and miner/neocloud exposure cut from 41% to 16% ($1,933) \u2014 well inside the <25% target, so de-risking is done; today's -2.68% is the Meta Compute headline, not your positioning.",
+      "actions": [
+        "Best buy unchanged from this morning: add roughly $150 to MU into the -6.5% dip \u2014 RSI 47.9 sits above my 42 cancel line and the June 24 blowout quarter backs it.",
+        "IREN: hold my hard line \u2014 sell half, about $670, only on a daily close below this week's low; RSI 30.6 still argues against panic-selling into the Meta headline.",
+        "CIFR: hold the $588 position after your $19.75 trim; the only sell trigger remains a daily close below $17 \u2014 the Meta Compute story doesn't change that level.",
+        "AMD: no further adds after today's buy \u2014 cut the new shares if AMD closes below $500 given the Northland downgrade and Meta MI450 uncertainty (July 2).",
+        "SGOV: stop redeploying \u2014 the MU add is the last purchase this week; today's NET and AAPL buys already consumed next week's tranche too."
+      ],
+      "risks": [
+        "Meta officially launching Meta Compute with pricing would structurally cap IREN/CIFR recovery and threaten AMD's 6GW deal \u2014 tripwire: a formal Meta announcement, not another anonymous report.",
+        "An IREN daily close below this week's low triggers the pre-committed half-sale of ~$670 \u2014 execute it mechanically, don't renegotiate with yourself in the moment.",
+        "Deployment creep: if SGOV falls below 30% of portfolio while the tape still prints -2.5% days, you've spent your dry powder into a falling market \u2014 pause all buys.",
+        "AMD closing below $500 or a second M Science report of deteriorating GPU deployments invalidates today's add \u2014 that's the signal to cut the fresh shares, not average down."
+      ]
     }
   ]
 }
