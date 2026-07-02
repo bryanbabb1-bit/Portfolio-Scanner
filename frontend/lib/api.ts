@@ -1,6 +1,7 @@
 // Typed client for the Portfolio Scanner backend.
-export const API_BASE =
-  process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000";
+// Default is same-origin: Next rewrites proxy /api/* to FastAPI server-side,
+// so the app works identically on localhost and through a tunnel/PWA install.
+export const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "";
 
 export interface Quote {
   symbol: string;

@@ -1,5 +1,5 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { StockReport } from "../lib/api";
 import { money, pct } from "./format";
@@ -82,6 +82,17 @@ type Mode = "day" | "total";
 export function HoldingsHeatmap({ holdings }: { holdings: StockReport[] }) {
   const router = useRouter();
   const [mode, setMode] = useState<Mode>("day");
+  // On phones a tall portrait canvas keeps tile labels readable.
+  const [compact, setCompact] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 640px)");
+    const update = () => setCompact(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+  const W = compact ? 600 : 1000;
+  const H = compact ? 640 : 380;
 
   const tiles = useMemo(() => {
     const held = holdings
@@ -90,10 +101,10 @@ export function HoldingsHeatmap({ holdings }: { holdings: StockReport[] }) {
     if (!held.length) return [];
     const rects = squarify(
       held.map((r) => r.market_value as number),
-      { x: 0, y: 0, w: 1000, h: 380 }
+      { x: 0, y: 0, w: W, h: H }
     );
     return held.map((r, i) => ({ r, rect: rects[i] }));
-  }, [holdings]);
+  }, [holdings, W, H]);
 
   if (!tiles.length) return null;
 
@@ -115,7 +126,7 @@ export function HoldingsHeatmap({ holdings }: { holdings: StockReport[] }) {
           </button>
         </div>
       </div>
-      <svg className="heatmap" viewBox="0 0 1000 380" preserveAspectRatio="none" role="img">
+      <svg className="heatmap" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" role="img">
         {tiles.map(({ r, rect }) => {
           const metric = mode === "day" ? r.quote.change_pct : r.unrealized_pl_pct ?? 0;
           const cap = mode === "day" ? 4 : 40;

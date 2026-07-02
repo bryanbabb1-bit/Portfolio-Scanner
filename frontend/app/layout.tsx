@@ -1,12 +1,30 @@
 import "./globals.css";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Nav } from "../components/Nav";
 import { NeuralBackground } from "../components/NeuralBackground";
+import { PwaRegister } from "../components/PwaRegister";
 
 export const metadata: Metadata = {
   title: "Portfolio Scanner",
   description:
     "Scan your portfolio for news, trends, ratings and technicals with an AI senior advisor and a live breakout radar.",
+  manifest: "/manifest.webmanifest",
+  icons: {
+    icon: "/icon-192.png",
+    apple: "/apple-touch-icon.png",
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "Scanner",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#05070f",
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({
@@ -17,6 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <PwaRegister />
         <NeuralBackground />
         <Nav />
         <main className="container page">{children}</main>

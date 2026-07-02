@@ -22,6 +22,7 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
+  overflow-x: hidden;
   background:
     radial-gradient(1200px 600px at 15% -10%, rgba(56, 189, 248, 0.10), transparent 60%),
     radial-gradient(1000px 700px at 100% 0%, rgba(124, 108, 255, 0.10), transparent 55%),
@@ -41,8 +42,9 @@ body {
 .neural-bg {
   position: fixed;
   inset: 0;
-  width: 100vw;
-  height: 100vh;
+  /* 100vw would include the scrollbar and force ~16px horizontal overflow */
+  width: 100%;
+  height: 100%;
   z-index: 0;
   pointer-events: none;
   opacity: 0.55;
@@ -337,7 +339,10 @@ select { cursor: pointer; }
   transition: width .5s ease;
 }
 .alloc-val { font-size: 13px; text-align: right; font-variant-numeric: tabular-nums; }
-@media (max-width: 640px) { .alloc-row { grid-template-columns: 96px 1fr 120px; gap: 8px; } }
+@media (max-width: 640px) {
+  .alloc-row { grid-template-columns: 84px 1fr auto; gap: 8px; }
+  .alloc-name, .alloc-val { font-size: 11px; }
+}
 
 /* --------------------------------------------------------- sort control */
 .list-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
@@ -428,6 +433,30 @@ select { cursor: pointer; }
 .wire-tags { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 .wire-title { font-size: 14px; font-weight: 600; line-height: 1.4; }
 a.wire-title:hover { color: var(--accent); }
+
+/* ------------------------------------------------- mobile / PWA standalone */
+.nav { padding-top: env(safe-area-inset-top); }
+main.page { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
+
+@media (max-width: 640px) {
+  .container { padding: 0 14px; }
+  .nav-inner { gap: 14px; height: 56px; }
+  .nav-links {
+    overflow-x: auto; flex: 1; scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .nav-links::-webkit-scrollbar { display: none; }
+  .nav-links a { white-space: nowrap; }
+  .badge-src { display: none; }
+  .hero { padding: 20px 18px; gap: 16px; }
+  .hero-value { font-size: 34px; }
+  .hero-stats { width: 100%; }
+  .hstat { flex: 1; min-width: 92px; padding: 10px 12px; }
+  .hstat .value { font-size: 16px; }
+  .page-head h1 { font-size: 21px; }
+  /* breakout/discovery rows: let the button column wrap under the content */
+  .breakout-card > div:first-child { flex-wrap: wrap; }
+}
 
 /* gradient page titles to match the hero */
 .page-head h1 {
