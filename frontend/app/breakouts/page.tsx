@@ -3,29 +3,9 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { api, BreakoutCandidate } from "../../lib/api";
 import { Signals } from "../../components/Signals";
+import { ScoreRing } from "../../components/ScoreRing";
 import { AdvisorPanel } from "../../components/AdvisorPanel";
 import { money, num, pct } from "../../components/format";
-
-function ScoreRing({ score }: { score: number }) {
-  const hi = score >= 60;
-  const color = hi ? "var(--bull)" : "var(--accent)";
-  return (
-    <div
-      className={`score-ring${hi ? " score-hi" : ""}`}
-      style={{
-        // @ts-ignore custom prop
-        "--v": score,
-        background: `conic-gradient(${color} ${score}%, rgba(120,140,190,0.14) 0)`,
-        boxShadow: `0 0 18px ${hi ? "rgba(52,211,153,0.45)" : "rgba(56,189,248,0.40)"}`,
-      }}
-    >
-      <div className="inner">
-        {score.toFixed(0)}
-        <span className="ring-cap">score</span>
-      </div>
-    </div>
-  );
-}
 
 export default function BreakoutRadar() {
   const [results, setResults] = useState<BreakoutCandidate[]>([]);

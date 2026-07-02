@@ -10,7 +10,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from .config import settings
-from .routers import advisor, breakouts, insights, portfolio, scan
+from .routers import advisor, breakouts, discovery, insights, portfolio, scan
 
 app = FastAPI(
     title="Portfolio Scanner API",
@@ -32,6 +32,7 @@ app.include_router(scan.router)
 app.include_router(breakouts.router)
 app.include_router(advisor.router)
 app.include_router(insights.router)
+app.include_router(discovery.router)
 
 
 @app.get("/api/health")

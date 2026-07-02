@@ -142,6 +142,21 @@ def test_alerts_sorted_by_severity():
     assert ranks == sorted(ranks)
 
 
+def test_discovery_excludes_owned_and_sorts():
+    from app.services import discovery
+
+    out = discovery.discover(min_score=0, limit=100)
+    pf = pf_service.load_portfolio()
+    owned = {i["symbol"].upper()
+             for i in pf.get("holdings", []) + pf.get("watchlist", [])}
+    syms = [c.symbol for c in out["results"]]
+    assert syms and not owned.intersection(syms)
+    scores = [c.score for c in out["results"]]
+    assert scores == sorted(scores, reverse=True)
+    # every candidate carries a company name, not a bare ticker
+    assert all(c.quote.name and c.quote.name != c.symbol for c in out["results"])
+
+
 def test_news_deduped_and_tagged():
     out = get_news(limit=50)
     titles = [n.title for n in out["results"]]

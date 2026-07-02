@@ -115,6 +115,19 @@ def _fetch_mock(symbol: str) -> MarketData:
     )
 
 
+def _fetch_live_prices(symbol: str) -> MarketData:
+    """History-only live fetch — skips get_info/news, which dominate latency.
+
+    Used by the Discovery scanner where ~70 outside tickers only need OHLCV
+    for indicator/score math."""
+    import yfinance as yf
+
+    hist = yf.Ticker(symbol).history(period="1y", auto_adjust=True)
+    if hist is None or hist.empty:
+        raise RuntimeError(f"no history for {symbol}")
+    return MarketData(symbol.upper(), symbol.upper(), hist, {}, [], "live")
+
+
 def get_market_data(symbol: str) -> MarketData:
     key = f"md:{symbol.upper()}"
     cached = _cache_get(key)
@@ -136,22 +149,53 @@ def get_market_data(symbol: str) -> MarketData:
         return _cache_put(key, data)
 
 
-def warm_cache(symbols: list[str], max_workers: int = 8) -> None:
+def get_price_data(symbol: str) -> MarketData:
+    """Like get_market_data but price-history only (no analyst/news)."""
+    full = _cache_get(f"md:{symbol.upper()}")
+    if full is not None:  # a richer report is already cached — reuse it
+        return full
+    key = f"px:{symbol.upper()}"
+    cached = _cache_get(key)
+    if cached is not None:
+        return cached
+
+    mode = settings.DATA_MODE
+    if mode == "mock":
+        return _cache_put(key, _fetch_mock(symbol))
+    try:
+        return _cache_put(key, _fetch_live_prices(symbol))
+    except Exception as exc:
+        if mode == "live":
+            raise
+        data = _fetch_mock(symbol)
+        print(f"[market_data] live price fetch failed for {symbol} ({exc!r}); using mock")
+        return _cache_put(key, data)
+
+
+def warm_cache(symbols: list[str], max_workers: int = 8, light: bool = False) -> None:
     """Prefetch market data for many symbols concurrently.
 
     Scans previously fetched 19+ tickers one at a time; warming the cache in
     parallel makes a full-universe scan bound by the slowest single fetch
     instead of the sum of all of them. Failures are swallowed here — callers
     hit them (or the mock fallback) again through get_market_data().
+    light=True prefetches price history only (Discovery's ~70-ticker sweep).
     """
+    fetch = get_price_data if light else get_market_data
+
+    def _is_cached(s: str) -> bool:
+        if _cache_get(f"md:{s}") is not None:
+            return True
+        return light and _cache_get(f"px:{s}") is not None
+
     todo = [s for s in dict.fromkeys(sym.upper() for sym in symbols)
-            if _cache_get(f"md:{s}") is None]
+            if not _is_cached(s)]
     if len(todo) <= 1:
         return
 
     def _one(sym: str) -> None:
         try:
-            get_market_data(sym)
+            fetch(sym)
         except Exception:
             pass
 

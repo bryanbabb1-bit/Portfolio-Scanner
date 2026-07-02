@@ -9,6 +9,7 @@ endpoint never hard-fails.
 from __future__ import annotations
 
 import json
+import shutil
 import subprocess
 import time
 
@@ -68,16 +69,24 @@ def _facts_from_report(r: StockReport) -> str:
 
 def _run_claude(prompt: str) -> str | None:
     """Invoke `claude -p` headless; return the model's text result or None."""
-    cmd = [settings.CLAUDE_BIN, "-p", prompt, "--output-format", "json"]
+    # On Windows the CLI is an npm `claude.CMD` shim — subprocess can't launch
+    # it by bare name (WinError 2), so resolve the real path via PATH/PATHEXT.
+    # The prompt goes over STDIN, not argv: multi-line args are mangled by the
+    # cmd.exe batch layer, which silently truncates at the first newline.
+    exe = shutil.which(settings.CLAUDE_BIN) or settings.CLAUDE_BIN
+    cmd = [exe, "-p", "--output-format", "json"]
     if settings.CLAUDE_MODEL:
         cmd += ["--model", settings.CLAUDE_MODEL]
     try:
         proc = subprocess.run(
-            cmd, capture_output=True, text=True, timeout=settings.ADVISOR_TIMEOUT
+            cmd, input=prompt, capture_output=True, text=True,
+            encoding="utf-8", errors="replace", timeout=settings.ADVISOR_TIMEOUT,
         )
-    except (FileNotFoundError, subprocess.TimeoutExpired):
+    except (FileNotFoundError, subprocess.TimeoutExpired) as exc:
+        print(f"[advisor] claude CLI unavailable: {exc!r}")
         return None
     if proc.returncode != 0:
+        print(f"[advisor] claude CLI rc={proc.returncode}: {proc.stderr[:300]}")
         return None
     try:
         payload = json.loads(proc.stdout)

@@ -254,6 +254,10 @@ export const api = {
   advisePortfolio: (force = false) =>
     get<AdvisorNote>(`/api/advisor/portfolio?force=${force}`),
   insights: () => get<PortfolioInsights>("/api/insights"),
+  discover: (minScore = 0, limit = 24) =>
+    get<{ count: number; universe: number; source: string; results: BreakoutCandidate[] }>(
+      `/api/discover?min_score=${minScore}&limit=${limit}`
+    ),
   news: (limit = 40) =>
     get<{ count: number; source: string; results: PortfolioNewsItem[] }>(
       `/api/news?limit=${limit}`
