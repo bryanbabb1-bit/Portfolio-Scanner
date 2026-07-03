@@ -185,6 +185,25 @@ export interface JournalDraft {
   note?: string;
 }
 
+export interface StrategyDoc {
+  goals: {
+    target_value?: number | null;
+    horizon?: string | null;
+    monthly_contribution?: number | null;
+    risk_appetite?: string | null;
+    notes?: string | null;
+  };
+  thesis: string;
+  short_term: string[];
+  long_term: string[];
+  allocation_targets: Record<string, number>;
+  guardrails: string[];
+  milestones: string[];
+  approved: boolean;
+  generated_at: string;
+  updated_at?: string;
+}
+
 export interface PortfolioNewsItem {
   title: string;
   symbols: string[];
@@ -334,11 +353,21 @@ export const api = {
       `/api/advisor/last?kind=${kind}${symbol ? `&symbol=${symbol}` : ""}`
     ).catch(() => null as AdvisorNote | null),
   askAdvisor: (
-    kind: "portfolio" | "stock" | "breakout",
+    kind: "portfolio" | "stock" | "breakout" | "strategy",
     symbol: string | undefined,
     question: string,
     deep = false
   ) => post<AskAnswer>("/api/advisor/ask", { kind, symbol, question, deep }),
+  strategy: () => get<StrategyDoc>("/api/strategy").catch(() => null as StrategyDoc | null),
+  generateStrategy: (inputs: {
+    target_value?: number;
+    horizon?: string;
+    monthly_contribution?: number;
+    risk_appetite?: string;
+    notes?: string;
+    deep?: boolean;
+  }) => post<StrategyDoc>("/api/strategy/generate", inputs),
+  saveStrategy: (doc: StrategyDoc) => put<StrategyDoc>("/api/strategy", doc),
   insights: () => get<PortfolioInsights>("/api/insights"),
   signals: (demo = false) =>
     get<{ count: number; results: ConvictionSignal[] }>(`/api/signals?demo=${demo}`),

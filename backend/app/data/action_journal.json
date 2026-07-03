@@ -218,5 +218,16 @@
     "note": "Trimmed (44.8078 -> 43.3143)",
     "source": "auto",
     "ts": 1783020279.9055657
+  },
+  {
+    "id": "e98c0f11af0b",
+    "date": "2026-07-02",
+    "symbol": "NVDA",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
+    "source": "pin",
+    "ts": 1783049935.3394716
   }
 ]

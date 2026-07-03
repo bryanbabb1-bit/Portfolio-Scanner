@@ -421,9 +421,12 @@ def advise_portfolio(summary: PortfolioSummary, reports: list[StockReport],
         _cache[key] = (time.time(), note)
         return note
 
+    from . import strategy as strategy_service
+    strategy_block = strategy_service.facts_block()
     prompt = (
         f"{_PERSONA}\n\n{_RESEARCH_PREFIX if deep else ''}"
         f"Here is your client's full portfolio right now:\n\n{facts}\n"
+        f"{strategy_block}\n"
         f"{_prior_advice_block(key)}\n"
         f"Give your professional whole-portfolio review: overall posture, "
         f"concentration/risk assessment, and the most important concrete "
@@ -526,7 +529,12 @@ def ask(kind: str, symbol: str | None, question: str, deep: bool = False) -> dic
                 "answer": "The AI advisor is disabled (ADVISOR_ENABLED=0), so "
                           "follow-up questions can't be answered right now."}
 
-    key = "portfolio:brief" if kind == "portfolio" else f"{kind}:{symbol}"
+    if kind == "portfolio":
+        key = "portfolio:brief"
+    elif kind == "strategy":
+        key = "strategy:plan"
+    else:
+        key = f"{kind}:{symbol}"
     research_note = _RESEARCH_PREFIX if deep else ""
     raw = sid = None
     prior = _sessions.get(key)
@@ -540,12 +548,21 @@ def ask(kind: str, symbol: str | None, question: str, deep: bool = False) -> dic
         # No live session — rebuild context and ask cold.
         from . import insights as insights_service
         from . import portfolio as pf_service
-        if kind == "portfolio":
+        if kind in ("portfolio", "strategy"):
             summary, reports = pf_service.portfolio_summary()
             facts = _facts_from_portfolio(
                 summary, reports,
                 insights_service.compute_risk(reports),
                 insights_service.build_alerts(reports))
+            if kind == "strategy":
+                from . import strategy as strategy_service
+                block = strategy_service.facts_block()
+                doc = strategy_service.load()
+                if not block and doc:  # draft exists but isn't approved yet
+                    block = ("DRAFT strategy under discussion:\n"
+                             f"Thesis: {doc.get('thesis')}\n"
+                             "Short-term: " + "; ".join(doc.get("short_term", [])[:5]))
+                facts = f"{facts}\n\n{block}" if block else facts
         else:
             facts = _facts_from_report(pf_service.build_report(symbol))
         prior_note = _prior_advice_block(key, symbol)

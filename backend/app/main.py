@@ -15,7 +15,7 @@ from fastapi.responses import JSONResponse
 from .config import settings
 from .routers import (
     advisor, breakouts, conviction, discovery, insights, journal, pins,
-    portfolio, scan,
+    portfolio, scan, strategy,
 )
 
 app = FastAPI(
@@ -42,6 +42,7 @@ app.include_router(discovery.router)
 app.include_router(conviction.router)
 app.include_router(pins.router)
 app.include_router(journal.router)
+app.include_router(strategy.router)
 
 
 @app.exception_handler(Exception)

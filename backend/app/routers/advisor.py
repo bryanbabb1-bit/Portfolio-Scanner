@@ -52,7 +52,7 @@ def last_note(kind: str = "portfolio", symbol: str | None = None):
 def ask(req: AskRequest):
     """Follow-up Q&A on a prior advisor note — resumes the same Claude
     conversation so the brief and data stay in context."""
-    if req.kind != "portfolio" and not (req.symbol or "").strip():
+    if req.kind not in ("portfolio", "strategy") and not (req.symbol or "").strip():
         raise HTTPException(status_code=422, detail="symbol required for this kind")
     try:
         return advisor_service.ask(

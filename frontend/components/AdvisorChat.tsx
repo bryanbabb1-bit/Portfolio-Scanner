@@ -17,7 +17,7 @@ export function AdvisorChat({
   symbol,
   deep = false,
 }: {
-  kind: "portfolio" | "stock" | "breakout";
+  kind: "portfolio" | "stock" | "breakout" | "strategy";
   symbol?: string;
   deep?: boolean;
 }) {
@@ -87,7 +87,9 @@ export function AdvisorChat({
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && send()}
           placeholder={
-            kind === "portfolio"
+            kind === "strategy"
+              ? 'Shape the plan — e.g. "Make it more aggressive" or "What if I add $1,000/month?"'
+              : kind === "portfolio"
               ? 'Ask or tell the advisor anything — e.g. "I just sold half my IREN and added to MU"'
               : 'Ask a follow-up — e.g. "Is that exit short-term or long-term guidance?"'
           }

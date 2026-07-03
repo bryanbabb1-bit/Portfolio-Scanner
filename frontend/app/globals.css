@@ -280,6 +280,20 @@ li.pinnable:hover .pin-btn, .chat-a:hover .pin-btn, .pin-btn.pinned { opacity: 1
 .pin-row .pin-date { font-size: 11px; white-space: nowrap; }
 .pin-row .icon-btn { height: 26px; padding: 0 8px; }
 
+/* ---------------------------------------------------------------- strategy */
+.strat-form { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+@media (max-width: 800px) { .strat-form { grid-template-columns: 1fr 1fr; } }
+.strat-form label, .strat-form label span { display: flex; flex-direction: column; gap: 5px; font-size: 12px; color: var(--muted); }
+.strat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 28px; }
+@media (max-width: 800px) { .strat-grid { grid-template-columns: 1fr; } }
+.strat-active { border-left-color: var(--bull); box-shadow: 0 0 24px rgba(52, 211, 153, 0.12); }
+.strat-target-tick {
+  position: absolute; top: -3px; bottom: -3px; width: 2.5px;
+  background: #fff; border-radius: 2px; box-shadow: 0 0 6px rgba(255,255,255,0.8);
+}
+.strat-alloc { grid-template-columns: 150px 1fr 250px; }
+@media (max-width: 640px) { .strat-alloc { grid-template-columns: 90px 1fr 150px; } }
+
 /* collapsible panel headers */
 .collapse-head {
   background: transparent; border: none; cursor: pointer; text-align: left;

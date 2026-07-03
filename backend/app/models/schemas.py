@@ -164,7 +164,7 @@ class JournalUpdate(BaseModel):
 
 class AskRequest(BaseModel):
     """A follow-up question about a prior advisor note."""
-    kind: str  # "portfolio" | "stock" | "breakout"
+    kind: str  # "portfolio" | "stock" | "breakout" | "strategy"
     symbol: Optional[str] = None
     question: str = Field(min_length=1, max_length=2000)
     deep: bool = False  # allow web research (slower, live news/sentiment)
@@ -173,9 +173,19 @@ class AskRequest(BaseModel):
     @classmethod
     def _valid_kind(cls, v: str) -> str:
         v = (v or "").strip().lower()
-        if v not in {"portfolio", "stock", "breakout"}:
-            raise ValueError("kind must be portfolio, stock or breakout")
+        if v not in {"portfolio", "stock", "breakout", "strategy"}:
+            raise ValueError("kind must be portfolio, stock, breakout or strategy")
         return v
+
+
+class StrategyGenRequest(BaseModel):
+    """Client goals feeding strategy generation."""
+    target_value: Optional[float] = Field(default=None, ge=0)
+    horizon: Optional[str] = None            # e.g. "5 years"
+    monthly_contribution: Optional[float] = Field(default=None, ge=0)
+    risk_appetite: Optional[str] = None      # conservative | balanced | aggressive
+    notes: Optional[str] = Field(default=None, max_length=2000)
+    deep: bool = False
 
 
 # ------------------------------------------------------------- intelligence
