@@ -268,7 +268,7 @@ class PortfolioConfig(BaseModel):
 
 # ----------------------------------------------------------------- charting
 class Candle(BaseModel):
-    date: str          # ISO date (YYYY-MM-DD)
+    date: str          # ISO date (YYYY-MM-DD) or "YYYY-MM-DD HH:MM" intraday
     open: float
     high: float
     low: float
@@ -276,6 +276,7 @@ class Candle(BaseModel):
     volume: float
     sma20: Optional[float] = None
     sma50: Optional[float] = None
+    rsi: Optional[float] = None  # RSI(14) over the same bars, for the RSI pane
 
 
 class PriceHistory(BaseModel):

@@ -1,8 +1,13 @@
 import "./globals.css";
 import type { Metadata, Viewport } from "next";
+import { DM_Sans } from "next/font/google";
 import { Nav } from "../components/Nav";
 import { NeuralBackground } from "../components/NeuralBackground";
 import { PwaRegister } from "../components/PwaRegister";
+
+// Self-hosted at build time — no external font requests at runtime, so the
+// PWA and tunnel keep working offline.
+const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-dm" });
 
 export const metadata: Metadata = {
   title: "Portfolio Scanner",
@@ -33,7 +38,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={dmSans.variable}>
       <body>
         <PwaRegister />
         <NeuralBackground />

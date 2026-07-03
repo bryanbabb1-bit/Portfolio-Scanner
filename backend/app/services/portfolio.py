@@ -178,14 +178,17 @@ _INTRADAY_RANGES = {"1d", "5d"}
 
 
 def _intraday_price_history(symbol: str, range_: str) -> PriceHistory:
+    from .technical import _rsi
+
     df, source = market_data.get_intraday(symbol, range_)
     close = df["Close"]
     sma20 = close.rolling(20).mean()
     sma50 = close.rolling(50).mean()
+    rsi = _rsi(close)
     candles: list[Candle] = []
     for idx, row in df.iterrows():
         ts = pd.Timestamp(idx)
-        v20, v50 = sma20.get(idx), sma50.get(idx)
+        v20, v50, vr = sma20.get(idx), sma50.get(idx), rsi.get(idx)
         candles.append(Candle(
             date=ts.strftime("%Y-%m-%d %H:%M"),
             open=round(float(row["Open"]), 2),
@@ -195,6 +198,7 @@ def _intraday_price_history(symbol: str, range_: str) -> PriceHistory:
             volume=float(row["Volume"]),
             sma20=None if v20 is None or pd.isna(v20) else round(float(v20), 2),
             sma50=None if v50 is None or pd.isna(v50) else round(float(v50), 2),
+            rsi=None if vr is None or pd.isna(vr) else round(float(vr), 1),
         ))
     return PriceHistory(symbol=symbol.upper(), range=range_, source=source,
                         candles=candles)
@@ -207,22 +211,27 @@ def price_history(symbol: str, range_: str = "6mo") -> PriceHistory:
     the SMAs are computed over intraday bars instead."""
     if range_ in _INTRADAY_RANGES:
         return _intraday_price_history(symbol, range_)
+    from .technical import _rsi
+
     md = market_data.get_market_data(symbol)
     hist = md.history
     close = hist["Close"]
     sma20 = close.rolling(20).mean()
     sma50 = close.rolling(50).mean()
+    rsi = _rsi(close)
 
     points = _RANGE_POINTS.get(range_, _RANGE_POINTS["6mo"])
     tail = hist.tail(points)
     s20 = sma20.tail(points)
     s50 = sma50.tail(points)
+    r = rsi.tail(points)
 
     candles: list[Candle] = []
     for idx, row in tail.iterrows():
         ts = pd.Timestamp(idx)
         v20 = s20.get(idx)
         v50 = s50.get(idx)
+        vr = r.get(idx)
         candles.append(
             Candle(
                 date=ts.strftime("%Y-%m-%d"),
@@ -233,6 +242,7 @@ def price_history(symbol: str, range_: str = "6mo") -> PriceHistory:
                 volume=float(row["Volume"]),
                 sma20=None if v20 is None or pd.isna(v20) else round(float(v20), 2),
                 sma50=None if v50 is None or pd.isna(v50) else round(float(v50), 2),
+                rsi=None if vr is None or pd.isna(vr) else round(float(vr), 1),
             )
         )
     return PriceHistory(

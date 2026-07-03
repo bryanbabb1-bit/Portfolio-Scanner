@@ -31,13 +31,15 @@ export function PriceChart({ symbol }: { symbol: string }) {
   const geom = useMemo(() => {
     if (candles.length < 2) return null;
     const W = 720;
-    const H = 300;
     const padL = 52;
     const padR = 12;
     const padT = 12;
     const priceH = 210;
     const volTop = priceH + 24;
-    const volH = H - volTop - 18;
+    const volH = 48;
+    const rsiTop = volTop + volH + 26;
+    const rsiH = 76;
+    const H = rsiTop + rsiH + 16;
 
     const closes = candles.map((c) => c.close);
     const highs = candles.map((c) => c.high);
@@ -56,6 +58,12 @@ export function PriceChart({ symbol }: { symbol: string }) {
     const x = (i: number) => padL + (i / (candles.length - 1)) * innerW;
     const y = (p: number) => padT + (1 - (p - lo) / (hi - lo)) * priceH;
     const vy = (v: number) => volTop + (1 - v / vMax) * volH;
+    const ry = (v: number) => rsiTop + (1 - v / 100) * rsiH;
+
+    const rsiLine = candles
+      .map((c, i) => (c.rsi == null ? null : `${x(i)},${ry(c.rsi)}`))
+      .filter(Boolean)
+      .reduce((acc: string, pt, idx) => acc + (idx === 0 ? "M" : "L") + pt, "");
 
     const line = (key: "close" | "sma20" | "sma50") =>
       candles
@@ -75,7 +83,7 @@ export function PriceChart({ symbol }: { symbol: string }) {
     // ~5 horizontal price gridlines.
     const ticks = Array.from({ length: 5 }, (_, k) => lo + ((hi - lo) * k) / 4);
 
-    return { W, H, padL, padR, padT, priceH, volTop, volH, x, y, vy, line, area, ticks, lo, hi };
+    return { W, H, padL, padR, padT, priceH, volTop, volH, rsiTop, rsiH, x, y, vy, ry, rsiLine, line, area, ticks, lo, hi };
   }, [candles]);
 
   const first = candles[0]?.close;
@@ -83,6 +91,10 @@ export function PriceChart({ symbol }: { symbol: string }) {
   const chg = first != null && last != null ? ((last / first - 1) * 100) : 0;
   const up = chg >= 0;
   const stroke = up ? "var(--bull)" : "var(--bear)";
+
+  const lastRsi = [...candles].reverse().find((c) => c.rsi != null)?.rsi ?? null;
+  const rsiZone =
+    lastRsi == null ? null : lastRsi <= 32 ? "buy" : lastRsi >= 70 ? "sell" : "neutral";
 
   return (
     <div className="card" style={{ marginBottom: 16 }}>
@@ -113,6 +125,12 @@ export function PriceChart({ symbol }: { symbol: string }) {
             <span className="mut" style={{ fontSize: 12 }}>
               over {RANGE_LABELS[range]} · {data?.source}
             </span>
+            {lastRsi != null && (
+              <span className={`rsi-pill ${rsiZone}`}>
+                RSI {lastRsi.toFixed(0)} ·{" "}
+                {rsiZone === "buy" ? "BUY ZONE" : rsiZone === "sell" ? "SELL ZONE" : "neutral"}
+              </span>
+            )}
             <span className="chart-legend">
               <i style={{ background: stroke }} /> Close
               <i style={{ background: "var(--accent)" }} /> SMA20
@@ -177,6 +195,39 @@ export function PriceChart({ symbol }: { symbol: string }) {
             <path d={geom.line("sma20")} fill="none" stroke="var(--accent)" strokeWidth={1.4} opacity={0.9} />
             <path d={geom.line("close")} fill="none" stroke={stroke} strokeWidth={2} />
 
+            {/* ------------- RSI pane: oversold = buy zone, overbought = sell */}
+            <g>
+              <text x={geom.padL} y={geom.rsiTop - 8} fill="var(--muted)" fontSize={10} letterSpacing="0.06em">
+                RSI (14)
+              </text>
+              {/* sell zone band: RSI 70-100 */}
+              <rect x={geom.padL} y={geom.ry(100)} width={geom.W - geom.padL - geom.padR}
+                height={geom.ry(70) - geom.ry(100)} fill="rgba(251, 92, 107, 0.08)" />
+              {/* buy zone band: RSI 0-30 */}
+              <rect x={geom.padL} y={geom.ry(30)} width={geom.W - geom.padL - geom.padR}
+                height={geom.ry(0) - geom.ry(30)} fill="rgba(52, 211, 153, 0.10)" />
+              {[70, 30].map((lvl) => (
+                <g key={lvl}>
+                  <line x1={geom.padL} x2={geom.W - geom.padR} y1={geom.ry(lvl)} y2={geom.ry(lvl)}
+                    stroke={lvl === 30 ? "var(--bull)" : "var(--bear)"} strokeDasharray="4 4"
+                    strokeWidth={0.8} opacity={0.7} />
+                  <text x={8} y={geom.ry(lvl) + 3.5} fill="var(--muted)" fontSize={10}>{lvl}</text>
+                </g>
+              ))}
+              <text x={geom.W - geom.padR - 4} y={geom.ry(15) + 3} fill="var(--bull)" fontSize={9}
+                fontWeight={800} textAnchor="end" letterSpacing="0.08em" opacity={0.85}>
+                BUY ZONE
+              </text>
+              <text x={geom.W - geom.padR - 4} y={geom.ry(85) + 3} fill="var(--bear)" fontSize={9}
+                fontWeight={800} textAnchor="end" letterSpacing="0.08em" opacity={0.85}>
+                SELL ZONE
+              </text>
+              <path d={geom.rsiLine} fill="none" stroke="var(--accent-2)" strokeWidth={1.8} />
+              {hover != null && candles[hover]?.rsi != null && (
+                <circle cx={geom.x(hover)} cy={geom.ry(candles[hover].rsi as number)} r={3} fill="var(--accent-2)" />
+              )}
+            </g>
+
             {/* hover crosshair + marker */}
             {hover != null && candles[hover] && (
               <g>
@@ -184,7 +235,7 @@ export function PriceChart({ symbol }: { symbol: string }) {
                   x1={geom.x(hover)}
                   x2={geom.x(hover)}
                   y1={geom.padT}
-                  y2={geom.padT + geom.priceH}
+                  y2={geom.rsiTop + geom.rsiH}
                   stroke="var(--muted)"
                   strokeDasharray="3 3"
                   strokeWidth={1}
@@ -202,9 +253,21 @@ export function PriceChart({ symbol }: { symbol: string }) {
                 {money(candles[hover].low)} · C{" "}
                 <strong style={{ color: "var(--text)" }}>{money(candles[hover].close)}</strong>
                 {"  "}Vol {Intl.NumberFormat("en", { notation: "compact" }).format(candles[hover].volume)}
+                {candles[hover].rsi != null && (
+                  <>
+                    {"  "}· RSI{" "}
+                    <strong style={{ color: "var(--accent-2)" }}>
+                      {(candles[hover].rsi as number).toFixed(0)}
+                    </strong>
+                  </>
+                )}
               </>
             ) : (
-              <>Hover the chart for OHLC + volume per bar.</>
+              <>
+                Hover for OHLC, volume and RSI per bar. RSI below 30 = oversold
+                (buy zone) · above 70 = overbought (sell zone) · momentum is
+                healthiest 40-65.
+              </>
             )}
           </div>
         </>

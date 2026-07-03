@@ -67,7 +67,10 @@ export function StockCard({ r }: { r: StockReport }) {
       <div className="metrics">
         <div className="metric">
           <span className="m-l">RSI</span>
-          <span className="m-v">{num(i.rsi, 0)}</span>
+          <span className={`m-v${i.rsi != null && i.rsi <= 32 ? " rsi-buy" : i.rsi != null && i.rsi >= 70 ? " rsi-sell" : ""}`}>
+            {num(i.rsi, 0)}
+            {i.rsi != null && i.rsi <= 32 ? " · buy zone" : i.rsi != null && i.rsi >= 70 ? " · sell zone" : ""}
+          </span>
         </div>
         <div className="metric">
           <span className="m-l">Trend</span>

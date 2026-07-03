@@ -77,6 +77,18 @@ def _detect(sym: str, ind, quote, held: bool, pl_pct, score: float) -> list[dict
         add("buy", "washed-out-reversal",
             "Capitulation reversal: deeply oversold and bouncing on volume")
 
+    # RSI buy zone with confirmation — RSI alone catches falling knives, so
+    # the rest of the research must validate: long-term structure not broken,
+    # not crashing today, and a composite score that says the setup has legs.
+    if (not any(s["rule"] == "oversold-at-support" for s in out)
+            and ind.rsi is not None and ind.rsi <= 32
+            and ind.sma50 and ind.sma200
+            and (ind.sma50 >= ind.sma200 * 0.95
+                 or abs(p / ind.sma200 - 1) <= 0.08)
+            and chg > -6 and score >= 35):
+        add("buy", "rsi-buy-zone",
+            "RSI in the buy zone with the broader setup confirming")
+
     if (score >= 72 and ind.pct_from_52w_high is not None
             and ind.pct_from_52w_high >= -5
             and (ind.volume_ratio or 0) >= 1.3):
@@ -91,6 +103,16 @@ def _detect(sym: str, ind, quote, held: bool, pl_pct, score: float) -> list[dict
     if ind.rsi is not None and ind.rsi >= 80 and (ind.volume_ratio or 0) >= 2:
         add("sell", "blowoff-top",
             "Blowoff conditions: extreme RSI on a volume spike")
+
+    # RSI sell zone with confirmation, held names only — take-profit alert
+    # when extended AND either volume or price-at-highs corroborates.
+    if (held and not any(s["rule"] == "blowoff-top" for s in out)
+            and ind.rsi is not None and ind.rsi >= 75
+            and ((ind.volume_ratio or 0) >= 1.3
+                 or (ind.pct_from_52w_high is not None
+                     and ind.pct_from_52w_high >= -3))):
+        add("sell", "rsi-sell-zone",
+            "RSI in the sell zone on a held name — extended, consider taking profits")
 
     if (held and ind.sma200 and ind.sma50 and p < ind.sma200
             and ind.sma50 < ind.sma200 and chg <= -3):
@@ -191,6 +213,10 @@ def scan() -> list[dict]:
             print(f"[conviction] scan data failed: {exc!r}")
 
         for sym, ind, quote, held, pl, score, theme in items:
+            if theme == "Cash & Income":
+                # T-bill/cash funds drift up by design — RSI pins near 100
+                # and every momentum rule misreads them. Never signal cash.
+                continue
             for sig in _detect(sym, ind, quote, held, pl, score):
                 cool_key = f"{sym}:{sig['rule']}"
                 last = fired.get(cool_key)

@@ -188,6 +188,25 @@ def test_conviction_rules_fire_and_stay_quiet():
     sigs = _detect("T", calm, quiet, False, None, 73)
     assert any(s["rule"] == "high-conviction-discovery" for s in sigs)
 
+    # RSI buy zone WITH confirmation (structure intact, not crashing, score
+    # ok) — price 7.5% off the 200-day, so oversold-at-support doesn't claim it
+    rsi_zone = Indicators(rsi=30, sma50=95, sma200=93, trend="sideways",
+                          pct_from_52w_high=-18, volume_ratio=1.0)
+    sigs = _detect("T", rsi_zone, quiet, True, -10.0, 40)
+    assert any(s["rule"] == "rsi-buy-zone" for s in sigs)
+    # ...but NOT when the long-term structure is broken (price far below a
+    # collapsed 200-day — no validation, just a falling knife)
+    broken_struct = Indicators(rsi=30, sma50=90, sma200=140, trend="downtrend",
+                               pct_from_52w_high=-40, volume_ratio=1.0)
+    sigs = _detect("T", broken_struct, quiet, True, -40.0, 40)
+    assert not any(s["rule"] == "rsi-buy-zone" for s in sigs)
+
+    # RSI sell zone on a held name at the highs
+    hot75 = Indicators(rsi=76, sma50=101, sma200=95, trend="uptrend",
+                       pct_from_52w_high=-1, volume_ratio=1.0)
+    sigs = _detect("T", hot75, quiet, True, 30.0, 60)
+    assert any(s["rule"] == "rsi-sell-zone" for s in sigs)
+
     # uptrend name pulled back into the accumulation zone -> quality dip buy
     dip_zone = Indicators(rsi=36, sma50=102, sma200=95, trend="uptrend",
                           pct_from_52w_high=-12, volume_ratio=1.0)

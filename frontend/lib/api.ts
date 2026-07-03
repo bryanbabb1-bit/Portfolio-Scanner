@@ -241,6 +241,7 @@ export interface Candle {
   volume: number;
   sma20?: number;
   sma50?: number;
+  rsi?: number | null;
 }
 
 export interface PriceHistory {
