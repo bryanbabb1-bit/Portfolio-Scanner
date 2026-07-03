@@ -1,0 +1,38 @@
+[
+  {
+    "id": "META:trend-break:2026-07-02",
+    "symbol": "META",
+    "side": "sell",
+    "rule": "trend-break",
+    "price": 592.85,
+    "ts": 1783000033.963317,
+    "date": "2026-07-02"
+  },
+  {
+    "id": "AAPL:high-conviction-discovery:2026-07-02",
+    "symbol": "AAPL",
+    "side": "buy",
+    "rule": "high-conviction-discovery",
+    "price": 307.67,
+    "ts": 1783009448.5401645,
+    "date": "2026-07-02"
+  },
+  {
+    "id": "APPL:trend-break:2026-07-02",
+    "symbol": "APPL",
+    "side": "sell",
+    "rule": "trend-break",
+    "price": 100.0,
+    "ts": 1783018356.620153,
+    "date": "2026-07-02"
+  },
+  {
+    "id": "watch:7db01f56e8b9",
+    "symbol": "CIFR",
+    "side": "sell",
+    "rule": "watchpoint",
+    "price": 20.04,
+    "ts": 1783084513.9160693,
+    "date": "2026-07-03"
+  }
+]

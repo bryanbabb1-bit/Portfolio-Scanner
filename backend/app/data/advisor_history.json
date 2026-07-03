@@ -1,32 +1,6 @@
 {
   "portfolio:brief": [
     {
-      "generated_at": "2026-07-02 23:15:24",
-      "summary": "Strong execution stands: eight positions closed, miner exposure cut from 41% to 16% ($1,943) and SGOV trimming underway \u2014 today's -2.44% is miner noise, so this week is about holding triggers, not more selling.",
-      "insights": [
-        "Miner de-risking is nearly done at 16% versus the 10% strategy cap; the standing CIFR exit-above-$19 rule closes that gap without selling into today's weakness.",
-        "SGOV at 35.8% ($4,350) still cushions the book \u2014 headline beta 1.44 and 26% vol overstate real risk since your largest position is cash-like.",
-        "Top-5 concentration of 67.4% is tolerable only because SGOV is number one; no single equity breaches your 12% guardrail today.",
-        "IREN RSI 30.6 and CIFR RSI 37.3 mark capitulation territory \u2014 today's -10.4% and -12.3% are levels to hold triggers on, not sell into.",
-        "Micron's June 24 blowout quarter drew 23 analyst target hikes by July 2, validating today's MU add despite the -5.5% sympathy dip.",
-        "The real fundamental risk sits in your core four: Northland's July 2 AMD downgrade and Meta MI450 resale reports, not the miner headlines.",
-        "MSFT remains your only downtrend, -10.8% underwater and below long-term trend, while AAPL, AMD, MU, and TSM all hold uptrends."
-      ],
-      "actions": [
-        "Best buy: direct July's $300 contribution into TSM now (RSI 50.2, uptrend) \u2014 new capital per the playbook, not the SGOV tranche already consumed by this week's buys.",
-        "CIFR: exit the full $598 on any bounce above $19, or on a daily close below $17 \u2014 either path restores the 10% miner cap.",
-        "IREN: unchanged hard line \u2014 sell half, about $670, only on a daily close below this week's low; a new low under the -36.6% basis means permanent exit.",
-        "AMD: keep today's added shares but cut them on a daily close below $500, per the July 2 Northland downgrade and Meta MI450 uncertainty.",
-        "AAPL: if today's +4.8% surge confirms as a breakout close, queue the planned $250 add for next week's tranche \u2014 no new SGOV redeployment this week stands."
-      ],
-      "risks": [
-        "Combined miners at 16% still exceed the 10% guardrail; tripwire is CIFR closing below $17 or IREN breaking this week's low \u2014 act within a day.",
-        "Meta reselling AI capacity (Bloomberg, July 2) threatens AMD and NVDA demand assumptions; tripwire is AMD closing below $500 or NVDA losing its 200-day.",
-        "MSFT's persistent downtrend risks compounding the -10.8% loss; a second weekly close below the long-term trend line triggers trimming a third, about $270.",
-        "SGOV redeployment discipline: never let Cash & Income fall below 15% before $20,000 total, and a 15% portfolio drawdown pauses all buying."
-      ]
-    },
-    {
       "generated_at": "2026-07-03 07:26:18",
       "summary": "Yesterday's cleanup stands: eight positions closed, miners cut from 41% to 16% versus the 10% cap, NVDA added near $191 as planned \u2014 today's -2.44% is miner noise, so this week is holding triggers, not new selling.",
       "insights": [
@@ -76,6 +50,31 @@
         "IREN's earnings miss plus falling bitcoin prices could force a new low \u2014 tripwire: any print below the -36.6% cost basis triggers your permanent-exit guardrail.",
         "All-time P/L is -8.4% and a 15% drawdown from the high pauses all buying per your guardrail \u2014 tripwire: portfolio value falling below roughly $11,300.",
         "SGOV's 35.8% weight caps upside against the 13% annualized growth the $25,000 goal requires \u2014 tripwire: a quarter ending with Cash & Income still above 30%."
+      ]
+    },
+    {
+      "generated_at": "2026-07-03 08:53:41",
+      "summary": "Good execution: yesterday's cleanup closed eight positions, cut miners from 41% to 16%, and started the SGOV trim \u2014 now your CIFR watchpoint at $19 has fired, so today is about finishing that standing order, not new decisions.",
+      "insights": [
+        "Miner exposure sits at 16.0% ($1,943) against your 10% cap; executing the triggered CIFR exit alone drops it to roughly 11%.",
+        "Today's -2.44% is concentrated in miners \u2014 IREN -10.4% and CIFR -12.3% \u2014 while seven of your other eleven positions were flat or green.",
+        "SGOV is 35.8% versus the 20% target; you sold 11 shares July 2, so the trim has begun but stays paused until a 5%+ market pullback per plan.",
+        "The core four (NVDA, AMD, TSM, MSFT) total $2,397, only 19.7% of the book against the 45-50% long-term target \u2014 the gap closes via monthly contributions, not forced buys.",
+        "AAPL is the day's standout at +4.8% with RSI 60.3 and the breakout alert live; a close above $317 would confirm the setup you queued $250 for.",
+        "Beta 1.44 and 26% annualized vol remain high for a book that is -8.4% all-time; every dollar rotated from miners to SGOV or the core four lowers both.",
+        "MU fell 5.5% the day after your add, but RSI 48.5 with an intact uptrend reads as normal volatility, not a broken thesis."
+      ],
+      "actions": [
+        "Quick trade: Sell all $598 CIFR today; the $19 exit watchpoint already fired.",
+        "Long game: Buy $300 TSM at market; July's contribution per the playbook.",
+        "Quick trade: Buy $250 AAPL only on daily close above $317.",
+        "Quick trade: Sell half IREN, about $670, on daily close below week's low."
+      ],
+      "risks": [
+        "IREN printing a new low beneath your -36.6% cost basis triggers permanent exit under your guardrail \u2014 today's -10.4% puts that tripwire close.",
+        "AMD closing below $500 means cutting the July 2 added shares while Meta's surplus-compute question stays open into early August.",
+        "MSFT remains below its long-term trend; if the downtrend persists past early August, the position gets a written re-thesis or exit.",
+        "A portfolio drop of 15% from its high pauses all buying and rebuilds Cash & Income to 25% \u2014 you are -8.4% all-time, so track it weekly."
       ]
     }
   ]

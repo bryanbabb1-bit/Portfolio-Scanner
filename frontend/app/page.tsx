@@ -5,6 +5,7 @@ import { SignalSlap } from "../components/SignalSlap";
 import { PinnedActions } from "../components/PinnedActions";
 import { Watchpoints } from "../components/Watchpoints";
 import { WatchdogBar } from "../components/WatchdogBar";
+import { ScorecardPanel } from "../components/ScorecardPanel";
 import { ActionJournal } from "../components/ActionJournal";
 import { StockCard } from "../components/StockCard";
 import { PortfolioChart } from "../components/PortfolioChart";
@@ -241,6 +242,7 @@ export default function Dashboard() {
       )}
 
       <div style={{ marginTop: 32 }}>
+        <ScorecardPanel />
         <ActionJournal />
       </div>
     </>

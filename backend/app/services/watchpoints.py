@@ -53,7 +53,8 @@ def list_watchpoints(include_triggered: bool = True) -> list[dict]:
 
 
 def add(symbol: str, kind: str, level: float, note: str = "",
-        side: str | None = None, source: str = "manual") -> dict:
+        side: str | None = None, source: str = "manual",
+        confirm: str = "touch") -> dict:
     if kind not in KINDS:
         raise ValueError(f"kind must be one of {sorted(KINDS)}")
     sym = symbol.upper().strip()
@@ -72,6 +73,10 @@ def add(symbol: str, kind: str, level: float, note: str = "",
             # buys ring green, sells ring red on the slap
             "side": side if side in ("buy", "sell") else
                     ("buy" if kind in ("price_below", "rsi_below") else "sell"),
+            # touch = fire the moment the level trades; close = only fire in
+            # the last minutes of the session / after hours, so an intraday
+            # wick that recovers doesn't trigger a close-based rule.
+            "confirm": confirm if confirm in ("touch", "close") else "touch",
             "source": source,  # manual | advisor
             "status": "armed",
             "created_at": time.strftime("%Y-%m-%d %H:%M"),
@@ -109,17 +114,36 @@ def already_true(symbol: str, kind: str, level: float,
     return _met({"kind": kind, "level": level}, price, rsi)
 
 
-def check(readings: dict[str, tuple[float | None, float | None]]) -> list[dict]:
+def _in_close_window() -> bool:
+    """True in the final minutes of the US session or when the market is
+    closed — the window where the current price ~is the closing price."""
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+
+    et = datetime.now(ZoneInfo("America/New_York"))
+    if et.weekday() >= 5:
+        return True
+    mins = et.hour * 60 + et.minute
+    return mins >= 15 * 60 + 55 or mins < 9 * 60 + 30
+
+
+def check(readings: dict[str, tuple[float | None, float | None]],
+          close_window: bool | None = None) -> list[dict]:
     """Evaluate armed watchpoints against {SYM: (price, rsi)} readings.
 
     Triggered watchpoints are marked, journaled, and returned as slap-ready
-    signal dicts (rule='watchpoint', zero AI cost)."""
+    signal dicts (rule='watchpoint', zero AI cost). confirm='close'
+    watchpoints only evaluate inside the close window."""
+    if close_window is None:
+        close_window = _in_close_window()
     fired: list[dict] = []
     now = time.time()
     with _lock:
         items = _load()
         for wp in items:
             if wp["status"] != "armed" or wp["symbol"] not in readings:
+                continue
+            if wp.get("confirm") == "close" and not close_window:
                 continue
             price, rsi = readings[wp["symbol"]]
             if not _met(wp, price, rsi):
@@ -167,8 +191,10 @@ _EXTRACT_FMT = (
     'Respond with ONLY a JSON array, no markdown. Each element: '
     '{"symbol": ticker string, "kind": one of "price_below" | "price_above" '
     '| "rsi_below" | "rsi_above", "level": number, "side": "buy" or "sell" '
-    '(what the client should do when it fires), "note": string — the exact '
-    'action to take, quoted or paraphrased from the advice, under 25 words}. '
+    '(what the client should do when it fires), "confirm": "close" if the '
+    'advice specifies a daily/weekly CLOSE beyond the level, else "touch", '
+    '"note": string — the exact action to take, quoted or paraphrased from '
+    "the advice, under 25 words}. "
     "Extract ONLY conditions with a concrete numeric level (resolve phrases "
     "like 'this week's low' to the number if it is stated; skip if not). "
     "Skip anything already true at current prices. Empty array if none."
@@ -214,8 +240,10 @@ def extract_from_advice() -> list[dict]:
             level = float(r["level"])
             if not sym or kind not in KINDS or level <= 0:
                 continue
-            created.append(add(sym, kind, level, note=str(r.get("note", "")),
-                               side=r.get("side"), source="advisor"))
+            created.append(add(
+                sym, kind, level, note=str(r.get("note", "")),
+                side=r.get("side"), source="advisor",
+                confirm="close" if r.get("confirm") == "close" else "touch"))
         except (KeyError, TypeError, ValueError):
             continue
     return created

@@ -216,10 +216,31 @@ export interface Watchpoint {
   level: number;
   note: string;
   side: "buy" | "sell";
+  confirm?: "touch" | "close";
   source: string;
   status: "armed" | "triggered";
   created_at: string;
   triggered_at?: string;
+}
+
+export interface ScorecardRule {
+  rule: string;
+  signals: number;
+  win_rate: number;
+  avg_effective_pct: number;
+  best_pct: number;
+  worst_pct: number;
+}
+
+export interface Scorecard {
+  count: number;
+  overall_win_rate: number | null;
+  overall_avg_pct: number | null;
+  rules: ScorecardRule[];
+  signals: {
+    id: string; symbol: string; side: string; rule: string; date: string;
+    price: number; current: number; effective_pct: number; age_days: number;
+  }[];
 }
 
 export interface PortfolioNewsItem {
@@ -378,8 +399,9 @@ export const api = {
     deep = false
   ) => post<AskAnswer>("/api/advisor/ask", { kind, symbol, question, deep }),
   watchpoints: () => get<{ count: number; results: Watchpoint[] }>("/api/watchpoints"),
-  addWatchpoint: (wp: { symbol: string; kind: Watchpoint["kind"]; level: number; note?: string; side?: "buy" | "sell" }) =>
+  addWatchpoint: (wp: { symbol: string; kind: Watchpoint["kind"]; level: number; note?: string; side?: "buy" | "sell"; confirm?: "touch" | "close" }) =>
     post<Watchpoint>("/api/watchpoints", wp),
+  scorecard: () => get<Scorecard>("/api/scorecard"),
   deleteWatchpoint: (id: string) =>
     send<{ deleted: string }>(`/api/watchpoints/${id}`, "DELETE"),
   extractWatchpoints: () =>

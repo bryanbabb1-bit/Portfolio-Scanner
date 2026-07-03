@@ -45,14 +45,19 @@ def _save(path, data: dict) -> None:
 
 
 # ------------------------------------------------------------------- rules
-def _detect(sym: str, ind, quote, held: bool, pl_pct, score: float) -> list[dict]:
+def _detect(sym: str, ind, quote, held: bool, pl_pct, score: float,
+            earn_days: int | None = None) -> list[dict]:
     """High bar on purpose: a slap that fires weekly is a slap; one that
-    fires hourly is wallpaper."""
+    fires hourly is wallpaper. earn_days gates BUY signals — no new entries
+    into a binary event."""
     out: list[dict] = []
     p = quote.price
     chg = quote.change_pct
+    near_earnings = earn_days is not None and earn_days <= 2
 
     def add(side, rule, label):
+        if side == "buy" and near_earnings:
+            return  # never slap a buy 0-2 days before a report
         out.append({"symbol": sym, "side": side, "rule": rule, "label": label})
 
     # ----- BUY -----
@@ -229,19 +234,19 @@ def scan() -> list[dict]:
                 items.append((r.symbol, r.indicators, r.quote,
                               r.market_value is not None, r.unrealized_pl_pct,
                               screener.breakout_score(r.indicators, r.quote),
-                              r.theme))
+                              r.theme, r.days_to_earnings))
             for c in discovery.discover(min_score=0, limit=200)["results"]:
                 items.append((c.symbol, c.indicators, c.quote, False, None,
-                              c.score, c.theme))
+                              c.score, c.theme, None))
         except Exception as exc:
             print(f"[conviction] scan data failed: {exc!r}")
 
-        for sym, ind, quote, held, pl, score, theme in items:
+        for sym, ind, quote, held, pl, score, theme, earn_days in items:
             if theme == "Cash & Income":
                 # T-bill/cash funds drift up by design — RSI pins near 100
                 # and every momentum rule misreads them. Never signal cash.
                 continue
-            for sig in _detect(sym, ind, quote, held, pl, score):
+            for sig in _detect(sym, ind, quote, held, pl, score, earn_days):
                 cool_key = f"{sym}:{sig['rule']}"
                 last = fired.get(cool_key)
                 if last:
@@ -282,6 +287,14 @@ def scan() -> list[dict]:
                   if now - float(v.get("ts", 0)) < ACTIVE_HOURS * 3600}
         _save(_NOTES_FILE, active)
         _save(_FIRED_FILE, fired)
+
+        # Grade everything later: record fire prices (idempotent).
+        try:
+            from . import scorecard
+            for v in active.values():
+                scorecard.record(v)
+        except Exception as exc:
+            print(f"[conviction] scorecard record failed: {exc!r}")
 
     out = sorted(active.values(), key=lambda s: float(s.get("ts", 0)), reverse=True)
     return out

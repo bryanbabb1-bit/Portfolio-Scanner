@@ -220,6 +220,17 @@ def test_conviction_rules_fire_and_stay_quiet():
     sigs = _detect("T", drift, quiet, True, -12.0, 45)
     assert not any(s["rule"] == "rsi-reclaim" for s in sigs)
 
+    # earnings gate: NO buy slaps 0-2 days before a report; sells still fire
+    dip2 = Indicators(rsi=30, sma50=95, sma200=93, trend="sideways",
+                      pct_from_52w_high=-18, volume_ratio=1.0)
+    assert not any(s["side"] == "buy"
+                   for s in _detect("T", dip2, quiet, True, -10.0, 40, earn_days=1))
+    crash2 = Quote(symbol="T", price=80, change=-8, change_pct=-9.0, source="mock")
+    broken2 = Indicators(rsi=35, sma50=90, sma200=95, trend="downtrend",
+                         pct_from_52w_high=-30, volume_ratio=2.0)
+    assert any(s["side"] == "sell"
+               for s in _detect("T", broken2, crash2, True, -25.0, 20, earn_days=1))
+
     # momentum ignition: already ripping on volume near highs (the SNDK case)
     ripping = Quote(symbol="T", price=100, change=6, change_pct=6.4, source="mock")
     ignite = Indicators(rsi=68, sma50=85, sma200=70, trend="uptrend",
@@ -468,8 +479,34 @@ def test_watchpoints_arm_trigger_journal(tmp_path, monkeypatch):
 
     # rsi_above semantics (the 'reclaim 45' style)
     watchpoints.add("AVGO", "rsi_above", 45, note="Start the position")
-    assert watchpoints.check({"AVGO": (360.0, 44.0)}) == []
-    assert len(watchpoints.check({"AVGO": (365.0, 46.2)})) == 1
+    assert watchpoints.check({"AVGO": (360.0, 44.0)}, close_window=False) == []
+    assert len(watchpoints.check({"AVGO": (365.0, 46.2)}, close_window=False)) == 1
+
+    # confirm='close' only evaluates inside the close window
+    watchpoints.add("CIFR", "price_below", 17, note="Exit fully",
+                    confirm="close")
+    assert watchpoints.check({"CIFR": (16.5, 40.0)}, close_window=False) == []
+    assert len(watchpoints.check({"CIFR": (16.5, 40.0)}, close_window=True)) == 1
+
+
+def test_scorecard_grades_signals(tmp_path, monkeypatch):
+    from app.services import scorecard
+
+    monkeypatch.setattr(scorecard, "_FILE", tmp_path / "hist.json")
+    scorecard.record({"id": "a", "symbol": "AAA", "side": "buy",
+                      "rule": "momentum-ignition", "price": 100.0, "ts": 1.0})
+    scorecard.record({"id": "a", "symbol": "AAA", "side": "buy",
+                      "rule": "momentum-ignition", "price": 100.0, "ts": 1.0})  # dedupe
+    scorecard.record({"id": "b", "symbol": "BBB", "side": "sell",
+                      "rule": "trend-break", "price": 50.0, "ts": 2.0})
+
+    prices = {"AAA": 110.0, "BBB": 45.0}  # buy +10%, sell -10% (both wins)
+    card = scorecard.compute(price_of=lambda s: prices.get(s))
+    assert card["count"] == 2
+    assert card["overall_win_rate"] == 100
+    by_rule = {r["rule"]: r for r in card["rules"]}
+    assert by_rule["momentum-ignition"]["avg_effective_pct"] == 10.0
+    assert by_rule["trend-break"]["avg_effective_pct"] == 10.0  # sign-adjusted
 
 
 def test_news_deduped_and_tagged():

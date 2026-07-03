@@ -143,11 +143,26 @@ def _remember_session(key: str, sid: str) -> None:
         print(f"[advisor] could not persist sessions: {exc!r}")
 
 _PERSONA = (
-    "You are a senior financial advisor at Charles Schwab with 20+ years of "
-    "experience in technical analysis and the technology, AI, semiconductor, "
-    "energy and data-center/compute sectors. You are pragmatic, risk-aware, and "
-    "you never give generic disclaimers-only answers. You cite the specific "
-    "numbers you are given."
+    "You are a senior portfolio advisor with 25 years across Charles Schwab "
+    "and a long/short equity fund: CMT charterholder, CFP, deep in the "
+    "technology, AI, semiconductor, energy and data-center sectors, and a "
+    "student of O'Neil, Minervini, Mark Douglas and Kahneman. The "
+    "non-negotiables of your practice:\n"
+    "- Capital preservation before returns: every entry has a predefined "
+    "invalidation level, and risk per new position is <= 1.5% of the book "
+    "(position size = risk dollars / distance to stop). State the size.\n"
+    "- Cut losers mechanically at their stops; never average down a broken "
+    "thesis; let winners run with trailed stops; never revenge-trade.\n"
+    "- Trade WITH the regime: when the benchmark is above its 200-day, lean "
+    "risk-on; below it, halve size and hold more cash.\n"
+    "- Momentum entries require volume confirmation; mean-reversion entries "
+    "require intact long-term structure. Chasing a name >2 ATR extended is "
+    "forbidden — give the pullback level instead.\n"
+    "- Respect binary events: no new entries within 2 days of earnings; flag "
+    "any holding reporting within a week.\n"
+    "- Expectancy over ego: cite only numbers you were given, never invent "
+    "data, and say 'insufficient data' rather than guess.\n"
+    "- Be direct. Hedging language wastes the client's time."
 )
 
 _SCHEMA_HINT = (
@@ -155,8 +170,9 @@ _SCHEMA_HINT = (
     '"summary" (string: your take in 1-2 sentences max), '
     '"insights" (array of 3-6 strings: what the indicators say — one specific '
     'observation per bullet, citing RSI/MACD/moving averages/volume numbers), '
-    '"actions" (array of 2-4 strings: one concrete action per bullet — '
-    'accumulate/hold/trim/avoid with the ticker and exact level to act at), '
+    '"actions" (array of 2-4 strings: each a terse ORDER of at most 12 words '
+    "— verb, ticker, size, level, stop; e.g. 'Trim half NVDA at $210; stop "
+    "$196.' Rationale belongs in insights, NEVER in actions), "
     '"risks" (array of 2-4 strings: one risk per bullet, each paired with the '
     'specific signal or level that confirms it). '
     'Every bullet must be a single self-contained sentence under 25 words. '
@@ -181,6 +197,9 @@ def _facts_from_report(r: StockReport) -> str:
             f"Position: {r.shares} shares @ ${r.cost_basis} cost, "
             f"unrealized P/L {r.unrealized_pl_pct:+.1f}%"
         )
+    if r.days_to_earnings is not None and r.days_to_earnings <= 14:
+        lines.append(f"EARNINGS in {r.days_to_earnings} day(s) "
+                     f"({r.earnings_date}) — binary-event risk")
     if r.signals:
         lines.append("Signals: " + "; ".join(f"{s.label} ({s.kind})" for s in r.signals))
     from . import journal
@@ -377,10 +396,13 @@ def _facts_from_portfolio(summary: PortfolioSummary, reports: list[StockReport],
         "Positions (symbol, value, day %, unrealized P/L %, RSI, trend):",
     ]
     for r in held:
+        earn = (f", EARNINGS in {r.days_to_earnings}d"
+                if r.days_to_earnings is not None and r.days_to_earnings <= 7
+                else "")
         lines.append(
             f"  {r.symbol}: ${r.market_value:,.0f}, {r.quote.change_pct:+.1f}% today, "
             f"P/L {r.unrealized_pl_pct:+.1f}%, RSI {r.indicators.rsi}, "
-            f"{r.indicators.trend}"
+            f"{r.indicators.trend}{earn}"
         )
     headline_lines = []
     for r in held[:8]:
@@ -450,13 +472,13 @@ def advise_portfolio(summary: PortfolioSummary, reports: list[StockReport],
         f'"insights" (array of 4-7 strings: portfolio health — one observation '
         f'per bullet on risk metrics, correlation/concentration, momentum, '
         f'citing the numbers), '
-        f'"actions" (array of 1-5 strings: one concrete action per bullet — '
-        f'ticker, what to do, size, and the exact level or trigger, each '
-        f'prefixed "Quick trade:" or "Long game:"; in a "watch" week this '
-        f'array may be a single "Hold — no action needed" bullet plus the '
-        f'levels you are watching; when acting, name your best buying '
-        f'opportunity — held add or new candidate — or say explicitly why '
-        f'there is no buy and what would change your mind), '
+        f'"actions" (array of 1-5 strings: each a terse ORDER — prefix '
+        f'"Quick trade:" or "Long game:" then at most 12 more words: verb, '
+        f'ticker, dollar size, level, stop. Example: "Quick trade: Buy $150 '
+        f'MU at $960; stop $905." NO rationale in actions — rationale lives '
+        f'in insights. In a "watch" week the array may be one "Hold — no '
+        f'action" bullet plus the levels being watched; when acting, include '
+        f'your best buy or state the level that would create one), '
         f'"risks" (array of 2-4 strings: one risk per bullet, each paired with '
         f'the specific tripwire signal to watch). '
         f'Every bullet must be a single self-contained sentence under 30 words. '

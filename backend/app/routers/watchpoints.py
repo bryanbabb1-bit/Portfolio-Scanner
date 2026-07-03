@@ -37,7 +37,8 @@ def create_watchpoint(req: WatchpointCreate):
     except Exception:
         pass  # can't fetch a reading — arm it anyway
     return watchpoints.add(req.symbol, req.kind, req.level,
-                           note=req.note, side=req.side, source="manual")
+                           note=req.note, side=req.side, source="manual",
+                           confirm=req.confirm)
 
 
 @router.delete("/{wp_id}")

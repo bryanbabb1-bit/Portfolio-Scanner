@@ -80,6 +80,9 @@ class StockReport(BaseModel):
     unrealized_pl_pct: Optional[float] = None
     # Recent close series (~30 pts) for an inline sparkline on cards.
     spark: list[float] = []
+    # Binary-event awareness
+    earnings_date: Optional[str] = None
+    days_to_earnings: Optional[int] = None
 
 
 class BreakoutCandidate(BaseModel):
@@ -190,6 +193,15 @@ class WatchpointCreate(BaseModel):
     level: float = Field(gt=0)
     note: str = Field(default="", max_length=300)
     side: Optional[str] = None  # buy | sell (slap styling); inferred if omitted
+    confirm: str = "touch"  # "close" = only fire near/after the session close
+
+    @field_validator("confirm")
+    @classmethod
+    def _valid_confirm(cls, v: str) -> str:
+        v = (v or "touch").strip().lower()
+        if v not in {"touch", "close"}:
+            raise ValueError("confirm must be touch or close")
+        return v
 
     @field_validator("kind")
     @classmethod

@@ -24,6 +24,19 @@ def signals(demo: bool = False):
     return {"count": len(results), "results": results}
 
 
+@router.get("/scorecard")
+def scorecard():
+    """How the engine's calls have performed: per-rule win rate and average
+    forward return (sign-adjusted for sells). Advice is only good if it's
+    right — this is the receipts."""
+    from ..services import scorecard as scorecard_service
+    try:
+        return scorecard_service.compute()
+    except Exception as exc:
+        traceback.print_exc()
+        raise HTTPException(status_code=502, detail=f"Scorecard failed: {exc}")
+
+
 @router.post("/signals/dismiss")
 def dismiss_signals(id: str | None = None):
     """Dismiss one signal by id, or every active signal when id is omitted.

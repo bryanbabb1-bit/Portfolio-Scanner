@@ -81,6 +81,15 @@ def build_report(symbol: str, theme: str | None = None) -> StockReport:
     closes = md.history["Close"].tail(30)
     spark = [round(float(c), 2) for c in closes.tolist()]
 
+    days_to_earnings = None
+    if md.earnings_date:
+        try:
+            delta = (pd.Timestamp(md.earnings_date).date()
+                     - pd.Timestamp.now().date()).days
+            days_to_earnings = delta if delta >= 0 else None
+        except (ValueError, TypeError):
+            pass
+
     report = StockReport(
         symbol=md.symbol,
         theme=theme,
@@ -90,6 +99,8 @@ def build_report(symbol: str, theme: str | None = None) -> StockReport:
         news=news,
         signals=signals,
         spark=spark,
+        earnings_date=md.earnings_date,
+        days_to_earnings=days_to_earnings,
     )
 
     # Attach position economics if held.

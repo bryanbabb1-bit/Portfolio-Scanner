@@ -399,12 +399,25 @@ main.page > .slap-overlay { animation: slap-fade .25s ease; }
 /* ------------------------------------------------------------- watchpoints */
 .wp-panel { border-left: 3px solid var(--accent-2); }
 .wp-form {
-  display: grid; grid-template-columns: 100px 150px 100px 1fr auto;
+  display: grid; grid-template-columns: 100px 150px 90px 110px 1fr auto;
   gap: 8px; align-items: center; margin-bottom: 12px;
 }
 @media (max-width: 800px) { .wp-form { grid-template-columns: 1fr 1fr; } }
 .wp-cond { font-size: 12.5px; font-weight: 700; white-space: nowrap; font-variant-numeric: tabular-nums; }
 .pin-row.done .wp-cond { text-decoration: line-through; color: var(--muted); }
+
+/* scorecard */
+.scorecard-panel { border-left: 3px solid var(--gold); }
+.sc-rules { display: flex; flex-direction: column; }
+.sc-row {
+  display: grid; grid-template-columns: 1.6fr .6fr .8fr .8fr 1.2fr;
+  gap: 10px; padding: 7px 6px; font-size: 12.5px; align-items: center;
+  font-variant-numeric: tabular-nums;
+}
+.sc-row + .sc-row { border-top: 1px solid rgba(88,120,180,0.10); }
+.sc-head-row { font-size: 10.5px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+.sc-rule { font-weight: 700; }
+@media (max-width: 640px) { .sc-row { grid-template-columns: 1.4fr .5fr .7fr .7fr; } .sc-row > :last-child { display: none; } }
 
 /* rsi zone pill on charts + cards */
 .rsi-pill {

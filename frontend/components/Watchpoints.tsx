@@ -21,6 +21,7 @@ export function Watchpoints() {
   const [msg, setMsg] = useState<string | null>(null);
   const [draft, setDraft] = useState({
     symbol: "", kind: "price_below" as Watchpoint["kind"], level: "", note: "",
+    confirm: "touch" as "touch" | "close",
   });
 
   const load = () => api.watchpoints().then((d) => setItems(d.results)).catch(() => {});
@@ -38,8 +39,9 @@ export function Watchpoints() {
         kind: draft.kind,
         level: parseFloat(draft.level),
         note: draft.note,
+        confirm: draft.confirm,
       });
-      setDraft({ symbol: "", kind: "price_below", level: "", note: "" });
+      setDraft({ symbol: "", kind: "price_below", level: "", note: "", confirm: "touch" });
       setAdding(false);
       load();
     } catch (e: any) {
@@ -102,6 +104,11 @@ export function Watchpoints() {
           </select>
           <input type="number" min={0} step="any" placeholder="Level"
             value={draft.level} onChange={(e) => setDraft({ ...draft, level: e.target.value })} />
+          <select value={draft.confirm} title="Touch fires the moment the level trades; Close waits for the session close"
+            onChange={(e) => setDraft({ ...draft, confirm: e.target.value as "touch" | "close" })}>
+            <option value="touch">On touch</option>
+            <option value="close">On close</option>
+          </select>
           <input placeholder="What to do when it hits (shown on the alert)"
             value={draft.note} onChange={(e) => setDraft({ ...draft, note: e.target.value })} />
           <button className="btn" onClick={save}
@@ -116,6 +123,7 @@ export function Watchpoints() {
             <Link href={`/stock/${w.symbol}`} className="alert-sym">{w.symbol}</Link>
             <span className="wp-cond">
               {KIND_LABEL[w.kind]}{w.level.toLocaleString()}
+              {w.confirm === "close" && <span className="mut"> close</span>}
             </span>
             <span className="pin-text" title={w.note}>
               {w.status === "triggered" ? `HIT ${w.triggered_at} — ` : ""}

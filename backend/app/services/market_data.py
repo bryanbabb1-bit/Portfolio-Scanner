@@ -44,6 +44,7 @@ class MarketData:
     analyst: dict
     news: list[dict]
     source: str  # "live" | "mock"
+    earnings_date: str | None = None  # next report date (YYYY-MM-DD), if known
 
 
 # --------------------------------------------------------------- yfinance
@@ -99,7 +100,20 @@ def _fetch_live(symbol: str) -> MarketData:
     if not news_items:
         news_items = mock_data.news(symbol)
 
-    return MarketData(symbol.upper(), name, hist, analyst, news_items, "live")
+    # Next earnings date — binary-event risk the advisor must respect.
+    earnings_date = None
+    try:
+        cal = tkr.calendar or {}
+        ed = cal.get("Earnings Date")
+        if isinstance(ed, (list, tuple)) and ed:
+            ed = ed[0]
+        if ed is not None:
+            earnings_date = str(pd.Timestamp(ed).date())
+    except Exception:
+        pass
+
+    return MarketData(symbol.upper(), name, hist, analyst, news_items, "live",
+                      earnings_date=earnings_date)
 
 
 def _fetch_mock(symbol: str) -> MarketData:
