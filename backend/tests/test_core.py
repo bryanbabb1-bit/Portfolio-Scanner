@@ -220,6 +220,20 @@ def test_conviction_rules_fire_and_stay_quiet():
     sigs = _detect("T", drift, quiet, True, -12.0, 45)
     assert not any(s["rule"] == "rsi-reclaim" for s in sigs)
 
+    # momentum ignition: already ripping on volume near highs (the SNDK case)
+    ripping = Quote(symbol="T", price=100, change=6, change_pct=6.4, source="mock")
+    ignite = Indicators(rsi=68, sma50=85, sma200=70, trend="uptrend",
+                        pct_from_52w_high=-2, volume_ratio=2.4,
+                        ret_5d_pct=18.0, ret_20d_pct=42.0)
+    sigs = _detect("T", ignite, ripping, False, None, 65)
+    assert any(s["rule"] == "momentum-ignition" for s in sigs)
+    # a quiet grind up (no volume, modest 5d) stays silent
+    grind = Indicators(rsi=60, sma50=85, sma200=70, trend="uptrend",
+                       pct_from_52w_high=-4, volume_ratio=1.0,
+                       ret_5d_pct=4.0, ret_20d_pct=12.0)
+    assert not any(s["rule"] == "momentum-ignition"
+                   for s in _detect("T", grind, quiet, False, None, 55))
+
     # uptrend name pulled back into the accumulation zone -> quality dip buy
     dip_zone = Indicators(rsi=36, sma50=102, sma200=95, trend="uptrend",
                           pct_from_52w_high=-12, volume_ratio=1.0)

@@ -30,6 +30,11 @@ UNIVERSE: dict[str, list[tuple[str, str]]] = {
         ("HPE", "HP Enterprise"), ("WDC", "Western Digital"), ("STX", "Seagate"),
         ("CRDO", "Credo Technology"), ("ALAB", "Astera Labs"), ("COHR", "Coherent"),
         ("MPWR", "Monolithic Power"), ("ON", "ON Semiconductor"),
+        # momentum-prone memory/optics/AI-hardware complex (the SNDK pattern)
+        ("SNDK", "Sandisk"), ("RMBS", "Rambus"), ("NTAP", "NetApp"),
+        ("SMTC", "Semtech"), ("AAOI", "Applied Optoelectronics"),
+        ("TER", "Teradyne"), ("ONTO", "Onto Innovation"),
+        ("CLS", "Celestica"), ("JBL", "Jabil"),
     ],
     "Compute Power": [
         ("VRT", "Vertiv"), ("CORZ", "Core Scientific"), ("HUT", "Hut 8"),
@@ -38,6 +43,7 @@ UNIVERSE: dict[str, list[tuple[str, str]]] = {
         ("DLR", "Digital Realty"), ("EQIX", "Equinix"), ("GDS", "GDS Holdings"),
     ],
     "Energy": [
+        ("MOD", "Modine Manufacturing"), ("POWL", "Powell Industries"),
         ("VST", "Vistra"), ("CEG", "Constellation Energy"), ("NRG", "NRG Energy"),
         ("TLN", "Talen Energy"), ("OKLO", "Oklo"), ("SMR", "NuScale Power"),
         ("NEE", "NextEra Energy"), ("ETN", "Eaton"), ("PWR", "Quanta Services"),

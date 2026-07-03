@@ -4,6 +4,7 @@ import { api, ConvictionSignal, PortfolioInsights, PortfolioSummary, StockReport
 import { SignalSlap } from "../components/SignalSlap";
 import { PinnedActions } from "../components/PinnedActions";
 import { Watchpoints } from "../components/Watchpoints";
+import { WatchdogBar } from "../components/WatchdogBar";
 import { ActionJournal } from "../components/ActionJournal";
 import { StockCard } from "../components/StockCard";
 import { PortfolioChart } from "../components/PortfolioChart";
@@ -95,6 +96,8 @@ export default function Dashboard() {
   return (
     <>
       <SignalSlap signals={signals} onDismissed={markDismissed} />
+
+      <WatchdogBar signals={signals} insights={insights} />
 
       {activeSignals.length > 0 && (
         <div className="card signal-strip" style={{ marginBottom: 24 }}>

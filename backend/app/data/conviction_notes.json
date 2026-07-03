@@ -67,5 +67,25 @@
     ],
     "target": "No near-term upside target is warranted given the downtrend; if re-entering later, wait for a reclaim and hold above the 200-day at $114.57 before considering.",
     "stop": "This sell thesis is already the stop \u2014 the position should be exited now rather than waiting for a lower trigger, since $100.00 is 12.4% below the 50-day with no support until prior lows."
+  },
+  "watch:7db01f56e8b9": {
+    "id": "watch:7db01f56e8b9",
+    "symbol": "CIFR",
+    "side": "sell",
+    "rule": "watchpoint",
+    "label": "Watchpoint: price \u2265 $19",
+    "headline": "CIFR hit your watchpoint \u2014 price \u2265 $19",
+    "what": "Exit the full $598 CIFR position on any bounce above $19",
+    "why": [
+      "You armed this on 2026-07-03 08:13: price \u2265 $19.",
+      "Current reading: price $20.04."
+    ],
+    "target": "",
+    "stop": "",
+    "price": 20.04,
+    "held": null,
+    "dismissed": true,
+    "generated_at": "2026-07-03 08:15:13",
+    "ts": 1783084513.9160693
   }
 }

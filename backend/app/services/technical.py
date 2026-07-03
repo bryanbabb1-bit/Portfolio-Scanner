@@ -79,10 +79,15 @@ def compute_indicators(df: pd.DataFrame) -> Indicators:
     if _f(vol20.iloc[last]):
         vol_ratio = _f(float(df["Volume"].iloc[last]) / float(vol20.iloc[last]))
 
+    ret_5d = ((price / float(close.iloc[-6]) - 1) * 100) if len(close) > 5 else None
+    ret_20d = ((price / float(close.iloc[-21]) - 1) * 100) if len(close) > 20 else None
+
     return Indicators(
         rsi=_f(rsi.iloc[last]),
         rsi_prev=_f(rsi.iloc[-2]) if len(rsi) > 1 else None,
         rsi_min_10d=_f(rsi.tail(10).min()),
+        ret_5d_pct=_f(ret_5d),
+        ret_20d_pct=_f(ret_20d),
         macd=_f(macd.iloc[last]),
         macd_signal=_f(macd_sig.iloc[last]),
         macd_hist=_f(macd_hist.iloc[last]),

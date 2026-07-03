@@ -22,6 +22,8 @@ class Indicators(BaseModel):
     rsi: Optional[float] = None
     rsi_prev: Optional[float] = None      # RSI one bar ago (cross detection)
     rsi_min_10d: Optional[float] = None   # lowest RSI in the last 10 bars
+    ret_5d_pct: Optional[float] = None    # 5-bar price change % (ignition)
+    ret_20d_pct: Optional[float] = None   # 20-bar price change % (momentum)
     macd: Optional[float] = None
     macd_signal: Optional[float] = None
     macd_hist: Optional[float] = None
@@ -99,6 +101,7 @@ class AdvisorNote(BaseModel):
     engine: str  # "claude" | "fallback"
     generated_at: str
     summary: str                # 1-2 sentence overall take
+    posture: Optional[str] = None  # "act" | "watch" — patience is a position
     insights: list[str] = []    # technical / portfolio-health observations
     actions: list[str] = []     # concrete recommendations (ticker + level each)
     risks: list[str] = []       # each risk paired with its confirming signal

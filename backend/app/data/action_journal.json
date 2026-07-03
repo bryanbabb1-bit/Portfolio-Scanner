@@ -295,5 +295,27 @@
     "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
     "source": "pin",
     "ts": 1783084358.850095
+  },
+  {
+    "id": "f0d54a277bc0",
+    "date": "2026-07-03",
+    "symbol": "CIFR",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Watchpoint triggered (Watchpoint: price \u2265 $19): Exit the full $598 CIFR position on any bounce above $19",
+    "source": "auto",
+    "ts": 1783084513.9399507
+  },
+  {
+    "id": "8e7b65606703",
+    "date": "2026-07-03",
+    "symbol": "NVDA",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
+    "source": "pin",
+    "ts": 1783085316.0033326
   }
 ]

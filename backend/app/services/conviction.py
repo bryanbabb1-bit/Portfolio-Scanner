@@ -112,6 +112,17 @@ def _detect(sym: str, ind, quote, held: bool, pl_pct, score: float) -> list[dict
         add("buy", "high-conviction-discovery",
             "New-name setup: breakout readiness in the top tier")
 
+    # Momentum ignition — the SNDK pattern: a name already RIPPING on real
+    # volume near its highs. Different animal from a coiled breakout; the
+    # engine was blind to explosions in progress.
+    if (ind.ret_5d_pct is not None and ind.ret_5d_pct >= 12
+            and (ind.volume_ratio or 0) >= 1.5
+            and (ind.pct_from_52w_high is None or ind.pct_from_52w_high >= -8
+                 or (ind.ret_20d_pct or 0) >= 25)):
+        add("buy", "momentum-ignition",
+            f"Momentum ignition: +{ind.ret_5d_pct:.0f}% in 5 days on "
+            f"{(ind.volume_ratio or 0):.1f}x volume")
+
     # ----- SELL -----
     if ind.rsi is not None and ind.rsi >= 80 and (ind.volume_ratio or 0) >= 2:
         add("sell", "blowoff-top",

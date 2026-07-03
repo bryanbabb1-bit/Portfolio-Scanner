@@ -43,6 +43,11 @@ export function PortfolioBrief() {
             {note.engine === "claude" ? "Claude" : "auto"}
           </span>
         )}
+        {note?.posture && (
+          <span className={`posture-badge ${note.posture}`}>
+            {note.posture === "watch" ? "🛡 PATIENCE WEEK" : "⚡ ACTION WEEK"}
+          </span>
+        )}
         <div style={{ marginLeft: "auto", display: "flex", gap: 10, alignItems: "center" }}>
           <label className="deep-toggle" title="Let the advisor search the web for live news, analyst moves and sentiment (slower)">
             <input type="checkbox" checked={deep} onChange={(e) => setDeep(e.target.checked)} disabled={loading} />

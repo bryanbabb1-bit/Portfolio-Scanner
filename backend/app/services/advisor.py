@@ -265,6 +265,7 @@ def _as_bullets(val) -> list[str]:
 
 def _parse_note(symbol: str, engine: str, raw: str) -> AdvisorNote:
     summary = ""
+    posture = None
     insights: list[str] = []
     actions: list[str] = []
     risks: list[str] = []
@@ -275,6 +276,8 @@ def _parse_note(symbol: str, engine: str, raw: str) -> AdvisorNote:
         try:
             obj = json.loads(text[start : end + 1])
             summary = str(obj.get("summary", "") or "")
+            p = str(obj.get("posture", "") or "").strip().lower()
+            posture = p if p in ("act", "watch") else None
             insights = _as_bullets(obj.get("insights") or obj.get("technical_read"))
             actions = _as_bullets(obj.get("actions") or obj.get("recommendation"))
             risks = _as_bullets(obj.get("risks"))
@@ -288,6 +291,7 @@ def _parse_note(symbol: str, engine: str, raw: str) -> AdvisorNote:
         engine=engine,
         generated_at=time.strftime("%Y-%m-%d %H:%M:%S"),
         summary=summary,
+        posture=posture,
         insights=insights,
         actions=actions,
         risks=risks,
@@ -428,20 +432,31 @@ def advise_portfolio(summary: PortfolioSummary, reports: list[StockReport],
         f"Here is your client's full portfolio right now:\n\n{facts}\n"
         f"{strategy_block}\n"
         f"{_prior_advice_block(key)}\n"
+        f"You are the client's WATCHDOG advisor, not a salesman. A refreshed "
+        f"brief does NOT owe the client new trades: if the book is positioned "
+        f"correctly, your call is patience — restate the standing levels being "
+        f"watched and say explicitly that no action is needed. Never "
+        f"manufacture a trade to fill the list. When you DO recommend, prefix "
+        f"each action with its horizon: 'Quick trade:' (days-weeks, momentum "
+        f"or level-driven) or 'Long game:' (months+, compounding/position "
+        f"building), so the client knows which clock it runs on.\n\n"
         f"Give your professional whole-portfolio review: overall posture, "
-        f"concentration/risk assessment, and the most important concrete "
-        f"actions this week (name specific tickers and levels). "
+        f"concentration/risk assessment, and what — if anything — to do "
+        f"this week (name specific tickers and levels). "
         f'Respond with ONLY a JSON object, no markdown, with these keys: '
         f'"summary" (string: overall take in 1-2 sentences max), '
+        f'"posture" (string: "act" if this week genuinely calls for trades, '
+        f'"watch" if the right move is patience), '
         f'"insights" (array of 4-7 strings: portfolio health — one observation '
         f'per bullet on risk metrics, correlation/concentration, momentum, '
         f'citing the numbers), '
-        f'"actions" (array of 3-5 strings: one concrete action per bullet — '
-        f'ticker, what to do, size, and the exact level or trigger; balance '
-        f'both sides: include your single best BUYING opportunity right now, '
-        f'either adding to a held name or starting one of the not-owned '
-        f'candidates, and if you genuinely see no buy, say so explicitly and '
-        f'name the level or condition that would change your mind), '
+        f'"actions" (array of 1-5 strings: one concrete action per bullet — '
+        f'ticker, what to do, size, and the exact level or trigger, each '
+        f'prefixed "Quick trade:" or "Long game:"; in a "watch" week this '
+        f'array may be a single "Hold — no action needed" bullet plus the '
+        f'levels you are watching; when acting, name your best buying '
+        f'opportunity — held add or new candidate — or say explicitly why '
+        f'there is no buy and what would change your mind), '
         f'"risks" (array of 2-4 strings: one risk per bullet, each paired with '
         f'the specific tripwire signal to watch). '
         f'Every bullet must be a single self-contained sentence under 30 words. '

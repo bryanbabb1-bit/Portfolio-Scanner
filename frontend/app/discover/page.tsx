@@ -64,6 +64,25 @@ export default function Discover() {
         </p>
       </div>
 
+      {/* names already ripping — the explosion radar */}
+      {(() => {
+        const ripping = [...results]
+          .filter((c) => (c.indicators.ret_20d_pct ?? 0) >= 15)
+          .sort((a, b) => (b.indicators.ret_20d_pct ?? 0) - (a.indicators.ret_20d_pct ?? 0))
+          .slice(0, 5);
+        return ripping.length ? (
+          <div className="ripping-strip">
+            <span className="ripping-label">🔥 Ripping now</span>
+            {ripping.map((c) => (
+              <Link key={c.symbol} href={`/stock/${c.symbol}`} className="ripping-chip">
+                <span className="rc-sym">{c.symbol}</span>
+                <span className="rc-ret">+{(c.indicators.ret_20d_pct ?? 0).toFixed(0)}% / 20d</span>
+              </Link>
+            ))}
+          </div>
+        ) : null;
+      })()}
+
       {themes.length > 2 && (
         <div className="filter-chips" style={{ marginBottom: 18 }}>
           {themes.map((t) => (

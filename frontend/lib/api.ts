@@ -33,6 +33,10 @@ export interface Indicators {
   avg_volume_20?: number;
   volume_ratio?: number;
   trend?: string;
+  rsi_prev?: number;
+  rsi_min_10d?: number;
+  ret_5d_pct?: number;
+  ret_20d_pct?: number;
 }
 
 export interface AnalystView {
@@ -91,6 +95,7 @@ export interface AdvisorNote {
   engine: string;
   generated_at: string;
   summary: string;
+  posture?: "act" | "watch" | null;
   insights: string[];
   actions: string[];
   risks: string[];
