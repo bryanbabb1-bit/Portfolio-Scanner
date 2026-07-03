@@ -89,6 +89,19 @@ def _detect(sym: str, ind, quote, held: bool, pl_pct, score: float) -> list[dict
         add("buy", "rsi-buy-zone",
             "RSI in the buy zone with the broader setup confirming")
 
+    # RSI momentum reclaim — the confirmation-style entry the advisor quotes
+    # ("buy when it reclaims 45"): RSI crossed UP through 45 today after a
+    # genuinely washed-out stretch, with long-term structure intact. This is
+    # the conservative sibling of rsi-buy-zone (which buys the extreme).
+    if (ind.rsi is not None and ind.rsi_prev is not None
+            and ind.rsi >= 45 and ind.rsi_prev < 45
+            and (ind.rsi_min_10d or 100) <= 35
+            and ind.sma50 and ind.sma200
+            and (ind.sma50 >= ind.sma200 * 0.95
+                 or abs(p / ind.sma200 - 1) <= 0.08)):
+        add("buy", "rsi-reclaim",
+            "RSI reclaimed 45 after a washout — momentum turn confirmed")
+
     if (score >= 72 and ind.pct_from_52w_high is not None
             and ind.pct_from_52w_high >= -5
             and (ind.volume_ratio or 0) >= 1.3):

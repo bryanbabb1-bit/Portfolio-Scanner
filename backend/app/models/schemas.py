@@ -20,6 +20,8 @@ class Quote(BaseModel):
 
 class Indicators(BaseModel):
     rsi: Optional[float] = None
+    rsi_prev: Optional[float] = None      # RSI one bar ago (cross detection)
+    rsi_min_10d: Optional[float] = None   # lowest RSI in the last 10 bars
     macd: Optional[float] = None
     macd_signal: Optional[float] = None
     macd_hist: Optional[float] = None

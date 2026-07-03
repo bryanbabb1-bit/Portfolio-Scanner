@@ -207,6 +207,19 @@ def test_conviction_rules_fire_and_stay_quiet():
     sigs = _detect("T", hot75, quiet, True, 30.0, 60)
     assert any(s["rule"] == "rsi-sell-zone" for s in sigs)
 
+    # RSI reclaim: crossed up through 45 after a washout, structure intact
+    reclaim = Indicators(rsi=46, rsi_prev=43, rsi_min_10d=29, sma50=98,
+                         sma200=100, trend="sideways",
+                         pct_from_52w_high=-15, volume_ratio=1.1)
+    sigs = _detect("T", reclaim, quiet, True, -12.0, 45)
+    assert any(s["rule"] == "rsi-reclaim" for s in sigs)
+    # no reclaim signal without the prior washout (RSI never got stretched)
+    drift = Indicators(rsi=46, rsi_prev=43, rsi_min_10d=41, sma50=98,
+                       sma200=100, trend="sideways",
+                       pct_from_52w_high=-15, volume_ratio=1.1)
+    sigs = _detect("T", drift, quiet, True, -12.0, 45)
+    assert not any(s["rule"] == "rsi-reclaim" for s in sigs)
+
     # uptrend name pulled back into the accumulation zone -> quality dip buy
     dip_zone = Indicators(rsi=36, sma50=102, sma200=95, trend="uptrend",
                           pct_from_52w_high=-12, volume_ratio=1.0)
