@@ -1,15 +1,5 @@
 [
   {
-    "id": "48cec7db9505",
-    "symbol": null,
-    "source": "brief",
-    "text": "IREN: sell half, about $670, on a daily close below this week's low; the Q2 revenue miss strengthens the case, and a new low under the -36.6% basis means permanent exit.",
-    "points": [],
-    "status": "open",
-    "created_at": "2026-07-03 07:59:19",
-    "ts": 1783083559.2332048
-  },
-  {
     "id": "fd94f1c0f939",
     "symbol": null,
     "source": "brief",
@@ -18,5 +8,25 @@
     "status": "open",
     "created_at": "2026-07-03 07:59:23",
     "ts": 1783083563.48485
+  },
+  {
+    "id": "eb740a557b94",
+    "symbol": null,
+    "source": "brief",
+    "text": "Quick trade: Buy $250 AAPL only on daily close above $317.",
+    "points": [],
+    "status": "open",
+    "created_at": "2026-07-03 09:16:40",
+    "ts": 1783088200.7891502
+  },
+  {
+    "id": "d02bbaee9039",
+    "symbol": null,
+    "source": "brief",
+    "text": "Quick trade: Sell half IREN, about $670, on daily close below week's low.",
+    "points": [],
+    "status": "open",
+    "created_at": "2026-07-03 09:16:45",
+    "ts": 1783088205.968821
   }
 ]

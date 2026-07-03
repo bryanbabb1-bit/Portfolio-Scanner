@@ -1,32 +1,6 @@
 {
   "portfolio:brief": [
     {
-      "generated_at": "2026-07-03 07:26:18",
-      "summary": "Yesterday's cleanup stands: eight positions closed, miners cut from 41% to 16% versus the 10% cap, NVDA added near $191 as planned \u2014 today's -2.44% is miner noise, so this week is holding triggers, not new selling.",
-      "insights": [
-        "Miner exposure went 41% to 16% ($1,943); the last 6 points above your 10% hard cap resolve through the CIFR exit trigger, not fresh panic selling.",
-        "SGOV at 35.8% still anchors your beta-1.44, 26%-vol book; this week's redeployment tranche is fully spent, so the next SGOV sale waits for a 5%+ market pullback.",
-        "Today's -2.44% is almost entirely IREN -10.4% and CIFR -12.3%; your core four (NVDA, AMD, TSM, MSFT) sit near 19% versus the 45-50% target.",
-        "IREN's -36.6% P/L sits exactly on your permanent-exit basis line with RSI 30.6 deeply oversold \u2014 the next few closes decide it.",
-        "AMD holds its uptrend (RSI 52.3) despite the July 1 Meta MI450 surplus-compute scare that erased $65B from its $580.91 record close.",
-        "AAPL closed $308.63, up 4.8% on July 2 on foldable iPhone and Google Cloud AI news; technicians peg $317 as the confirmed-breakout line.",
-        "Momentum is split: AAPL 60.3 and MELI 61.6 lead, while AVGO at RSI 39.7 remains below your 45 re-entry gate \u2014 no add yet."
-      ],
-      "actions": [
-        "Best buy: direct July's $300 contribution into TSM at market (RSI 50.2, uptrend, +5%) \u2014 new capital per the playbook, building the $47 stub toward $650.",
-        "CIFR: exit the full $598 on any bounce above $19 or a daily close below $17 \u2014 either fill restores the 10% miner cap in one trade.",
-        "IREN: sell half, about $670, on a daily close below this week's low; a new low under the -36.6% basis means permanent exit per your guardrail.",
-        "AAPL: queue the planned $250 add, executing only on a daily close above $317 \u2014 the level that confirms July 2's surge as a real breakout.",
-        "AMD: keep this week's added shares but cut them on a daily close below $500 while the Meta MI450 surplus-compute question stays open."
-      ],
-      "risks": [
-        "Meta reselling surplus AI compute (July 1) undercuts AMD's 6GW MI450 anchor deal \u2014 tripwire: AMD daily close below $500 triggers the trim.",
-        "Miner capitulation risk: IREN printing a new low below the -36.6% basis or CIFR closing under $17 are exit signals, never averaging-down opportunities.",
-        "MSFT is your only downtrend at -10.8% underwater; a second weekly close below the long-term trend triggers the one-third trim, roughly $270.",
-        "Max drawdown already -22.2% on a 1.44-beta book; a 15% fall from the portfolio high pauses all buying and rebuilds Cash & Income to 25%."
-      ]
-    },
-    {
       "generated_at": "2026-07-03 07:28:47",
       "summary": "Yesterday's cleanup holds: eight positions closed, miners cut from 41% to 16% versus the 10% cap, SGOV trimming started \u2014 today's -2.44% is miner noise, so this week is executing standing triggers, not new selling.",
       "insights": [
@@ -75,6 +49,31 @@
         "AMD closing below $500 means cutting the July 2 added shares while Meta's surplus-compute question stays open into early August.",
         "MSFT remains below its long-term trend; if the downtrend persists past early August, the position gets a written re-thesis or exit.",
         "A portfolio drop of 15% from its high pauses all buying and rebuilds Cash & Income to 25% \u2014 you are -8.4% all-time, so track it weekly."
+      ]
+    },
+    {
+      "generated_at": "2026-07-03 09:16:03",
+      "summary": "Good progress: miners cut from 41% to 16%, NVDA adds executed at $191, SGOV trim started \u2014 today is simply finishing the standing CIFR exit and July's TSM contribution.",
+      "insights": [
+        "Miner exposure was 41%, now 16% (IREN $1,345 + CIFR $598); completing the CIFR exit drops it to 11%, essentially restoring the 10% cap.",
+        "IREN fell to $38.82 on July 3, its ninth straight down day and -40% on the month, on AI-cloud execution doubts \u2014 the freeze stays justified.",
+        "AAPL's +4.8% pop came on July 2 foldable iPhone Ultra reports and Morgan Stanley's 250M-shipment path, but RSI 60.3 is momentum, not yet the $317 confirmed close.",
+        "June's 57,000-job miss triggered semiconductor profit-taking after an 80% first-half run, explaining MU -5.5% and today's -2.44% book \u2014 regime noise, not thesis breaks.",
+        "SGOV at 35.8% remains your largest position and dry powder; the July 2 trims were the right start toward the 20% target by mid-2027.",
+        "Beta 1.44 and 26% vol on a top-5 concentration of 67.4% means days like today will recur; the plan's NEE-near-$88 energy sleeve would dampen that.",
+        "MSFT (RSI 49.8, below long-term trend) stays hold-no-add until the early-August reassessment; NET and MELI are behaving and need nothing."
+      ],
+      "actions": [
+        "Quick trade: Sell all $598 CIFR now; $19 watchpoint already fired.",
+        "Long game: Buy $300 TSM at market; July contribution per playbook.",
+        "Quick trade: Buy $250 AAPL only on daily close above $317.",
+        "Quick trade: Sell half IREN, about $670, on daily close below week's low."
+      ],
+      "risks": [
+        "IREN makes a new low below the -36.6% cost basis \u2014 that is the permanent-exit trigger, no re-thesis allowed.",
+        "Weak jobs data fuels Fed-hike bets against semis; a benchmark close below its 200-day halves all new position sizes.",
+        "AMD closes below $500 \u2014 cut the July 2 added shares while Meta's surplus-compute question stays open into early August.",
+        "CIFR fails to hold the bounce; a daily close below $17 forces the exit at worse prices, so act today."
       ]
     }
   ]

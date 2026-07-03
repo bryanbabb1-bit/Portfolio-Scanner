@@ -1,19 +1,5 @@
 [
   {
-    "id": "7db01f56e8b9",
-    "symbol": "CIFR",
-    "kind": "price_above",
-    "level": 19.0,
-    "note": "Exit the full $598 CIFR position on any bounce above $19",
-    "side": "sell",
-    "source": "advisor",
-    "status": "triggered",
-    "created_at": "2026-07-03 08:13",
-    "ts": 1783084438.878161,
-    "triggered_at": "2026-07-03 08:15",
-    "confirm": "touch"
-  },
-  {
     "id": "35550974d49c",
     "symbol": "AAPL",
     "kind": "price_above",
@@ -77,5 +63,18 @@
     "created_at": "2026-07-03 08:13",
     "ts": 1783084438.9855957,
     "confirm": "touch"
+  },
+  {
+    "id": "8f2878aeeefd",
+    "symbol": "PANW",
+    "kind": "rsi_below",
+    "level": 70.0,
+    "note": "No new position until RSI cools below 70 (currently 78.5)",
+    "side": "buy",
+    "confirm": "touch",
+    "source": "advisor",
+    "status": "armed",
+    "created_at": "2026-07-03 09:19",
+    "ts": 1783088348.8090892
   }
 ]

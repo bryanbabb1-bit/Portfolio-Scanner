@@ -2,8 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { api, ConvictionSignal, PortfolioInsights, PortfolioSummary, StockReport } from "../lib/api";
 import { SignalSlap } from "../components/SignalSlap";
-import { PinnedActions } from "../components/PinnedActions";
-import { Watchpoints } from "../components/Watchpoints";
+import { GamePlan } from "../components/GamePlan";
 import { WatchdogBar } from "../components/WatchdogBar";
 import { ScorecardPanel } from "../components/ScorecardPanel";
 import { ActionJournal } from "../components/ActionJournal";
@@ -27,6 +26,7 @@ export default function Dashboard() {
   const [insights, setInsights] = useState<PortfolioInsights | null>(null);
   const [signals, setSignals] = useState<ConvictionSignal[]>([]);
   const [sort, setSort] = useState<SortKey>("value");
+  const [view, setView] = useState<"chart" | "heatmap">("chart");
   const [err, setErr] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -184,15 +184,22 @@ export default function Dashboard() {
 
       <Movers reports={[...holdings, ...watchlist]} />
 
-      <HoldingsHeatmap holdings={holdings} />
-
-      <PortfolioChart />
+      {/* one card, two lenses on the book */}
+      <div className="view-tabs">
+        <div className="range-toggle">
+          <button className={view === "chart" ? "active" : ""} onClick={() => setView("chart")}>
+            Value
+          </button>
+          <button className={view === "heatmap" ? "active" : ""} onClick={() => setView("heatmap")}>
+            Heatmap
+          </button>
+        </div>
+      </div>
+      {view === "chart" ? <PortfolioChart /> : <HoldingsHeatmap holdings={holdings} />}
 
       {insights && <AlertsPanel alerts={insights.alerts} />}
 
-      <Watchpoints />
-
-      <PinnedActions />
+      <GamePlan />
 
       {insights && <RiskStats risk={insights.risk} />}
 
