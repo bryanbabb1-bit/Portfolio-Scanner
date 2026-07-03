@@ -42,7 +42,7 @@ export function AdvisorPanel({
   return (
     <div className="card advisor">
       <div className="advisor-head">
-        <span className="who">🎯 Senior Advisor</span>
+        <span className="who">Senior Advisor</span>
         {note && (
           <span className={`eng ${note.engine === "claude" ? "claude" : ""}`}>
             {note.engine === "claude" ? "Claude" : "auto"}

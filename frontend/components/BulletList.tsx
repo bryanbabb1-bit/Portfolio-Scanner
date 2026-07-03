@@ -36,7 +36,7 @@ export function BulletList({
                 pin(t);
               }}
             >
-              {pinned.has(t) ? "✓ Pinned" : "Pin"}
+              {pinned.has(t) ? "Pinned" : "Pin"}
             </button>
           )}
         </li>

@@ -180,7 +180,7 @@ export function ActionJournal() {
                 {e.price ? ` @ ${money(e.price)}` : ""}
               </span>
               <span className="pin-text" title={`source: ${e.source}`}>{e.note}</span>
-              <button className="icon-btn jr-btn" title="Edit" onClick={() => startEdit(e)}>✎</button>
+              <button className="icon-btn jr-btn" title="Edit" onClick={() => startEdit(e)}>Edit</button>
               <button className="icon-btn jr-btn" title="Delete" onClick={() => remove(e)}>✕</button>
             </div>
           )

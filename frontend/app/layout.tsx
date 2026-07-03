@@ -4,6 +4,7 @@ import { DM_Sans } from "next/font/google";
 import { Nav } from "../components/Nav";
 import { NeuralBackground } from "../components/NeuralBackground";
 import { PwaRegister } from "../components/PwaRegister";
+import { TickerTape } from "../components/TickerTape";
 
 // Self-hosted at build time — no external font requests at runtime, so the
 // PWA and tunnel keep working offline.
@@ -43,6 +44,7 @@ export default function RootLayout({
         <PwaRegister />
         <NeuralBackground />
         <Nav />
+        <TickerTape />
         <main className="container page">{children}</main>
       </body>
     </html>

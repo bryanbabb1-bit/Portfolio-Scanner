@@ -17,6 +17,8 @@
   --gold: #f5b544;
   --glow: 0 0 24px rgba(56, 189, 248, 0.20);
   --tab-nums: "tnum" 1, "lnum" 1;
+  /* ambient mood: set by the dashboard from today's P/L (green/red/cyan) */
+  --mood-rgb: 56, 189, 248;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -280,22 +282,95 @@ li.pinnable:hover .pin-btn, .chat-a:hover .pin-btn, .pin-btn.pinned { opacity: 1
 .pin-row .pin-date { font-size: 11px; white-space: nowrap; }
 .pin-row .icon-btn { height: 26px; padding: 0 8px; }
 
+/* ------------------------------------------------------------- ticker tape */
+.tape {
+  position: relative; z-index: 5; overflow: hidden;
+  border-bottom: 1px solid var(--border);
+  background: rgba(4, 7, 15, 0.85); backdrop-filter: blur(10px);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+}
+.tape-track {
+  display: inline-flex; white-space: nowrap; will-change: transform;
+  animation: tape-scroll linear infinite;
+  padding: 6px 0;
+}
+.tape:hover .tape-track { animation-play-state: paused; }
+@keyframes tape-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.tape-item {
+  display: inline-flex; align-items: baseline; gap: 8px;
+  padding: 2px 22px; font-size: 12px; font-weight: 600;
+  border-radius: 6px; transition: background .2s;
+  font-variant-numeric: tabular-nums;
+}
+.tape-item:hover { background: rgba(56,189,248,0.08); }
+.tape-sym { font-weight: 800; letter-spacing: .04em; color: var(--text); }
+.tape-price { color: var(--muted); }
+.tape-item.flash-up { animation: cell-flash-up 1.2s ease; }
+.tape-item.flash-down { animation: cell-flash-down 1.2s ease; }
+@keyframes cell-flash-up { 0% { background: rgba(52,211,153,0.35); } 100% { background: transparent; } }
+@keyframes cell-flash-down { 0% { background: rgba(251,92,107,0.35); } 100% { background: transparent; } }
+
 /* ------------------------------------------------------------ watchdog bar */
 .watchdog-bar {
-  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-  font-size: 12.5px; font-weight: 600; color: var(--muted);
-  border: 1px solid var(--border); border-radius: 12px;
+  position: relative; overflow: hidden;
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  font-size: 12px; font-weight: 600; color: var(--muted);
+  border: 1px solid rgba(var(--mood-rgb), 0.35); border-radius: 12px;
   background: rgba(8, 12, 24, 0.55); backdrop-filter: blur(8px);
-  padding: 9px 16px; margin-bottom: 20px;
+  padding: 10px 16px; margin-bottom: 20px;
+  box-shadow: 0 0 24px rgba(var(--mood-rgb), 0.10);
+  transition: border-color 1.2s ease, box-shadow 1.2s ease;
 }
-.wd-pulse {
-  width: 8px; height: 8px; border-radius: 50%; background: var(--bull);
-  box-shadow: 0 0 0 0 rgba(52,211,153,.6); animation: pulse 2s infinite;
+/* periodic light sweep across the bar — the watchdog scanning */
+.watchdog-bar::after {
+  content: ""; position: absolute; top: 0; bottom: 0; width: 90px;
+  background: linear-gradient(105deg, transparent, rgba(var(--mood-rgb), 0.14), transparent);
+  animation: wd-scan 6s ease-in-out infinite;
+  pointer-events: none;
 }
-.wd-title { color: var(--text); font-weight: 800; letter-spacing: .02em; }
-.wd-stat.neg { color: var(--bear); }
-.wd-sep { opacity: .5; }
-.wd-sweep { margin-left: auto; font-size: 11px; font-weight: 500; }
+@keyframes wd-scan { 0% { left: -120px; } 55% { left: 110%; } 100% { left: 110%; } }
+.radar {
+  position: relative; width: 20px; height: 20px; border-radius: 50%;
+  border: 1px solid rgba(var(--mood-rgb), 0.55); flex-shrink: 0;
+  background: radial-gradient(circle, rgba(var(--mood-rgb), 0.12), transparent 70%);
+}
+.radar::before {
+  content: ""; position: absolute; inset: 4px; border-radius: 50%;
+  border: 1px solid rgba(var(--mood-rgb), 0.28);
+}
+.radar-sweep {
+  position: absolute; inset: 1px; border-radius: 50%;
+  background: conic-gradient(from 0deg, rgba(var(--mood-rgb), 0.85), transparent 70deg, transparent);
+  animation: radar-spin 3s linear infinite;
+}
+@keyframes radar-spin { to { transform: rotate(360deg); } }
+.wd-title { color: var(--text); font-weight: 900; letter-spacing: .12em; font-size: 11px; }
+.wd-market { font-size: 11px; font-weight: 800; letter-spacing: .06em; }
+.wd-market.open { color: var(--bull); }
+.wd-market.closed { color: var(--muted); }
+.wd-sep { flex: 1; }
+.wd-stat strong { color: var(--text); font-weight: 800; }
+.wd-stat.neg strong, .wd-stat.neg { color: var(--bear); }
+
+/* ambient mood on the hero glow */
+.hero-glow { background: radial-gradient(circle, rgba(var(--mood-rgb), 0.30), transparent 62%) !important; transition: background 1.2s ease; }
+
+/* cinematic entrance: sections rise in, staggered */
+main.page > * { animation: rise .5s cubic-bezier(.2, .8, .3, 1) both; }
+main.page > *:nth-child(1) { animation-delay: .02s; }
+main.page > *:nth-child(2) { animation-delay: .07s; }
+main.page > *:nth-child(3) { animation-delay: .12s; }
+main.page > *:nth-child(4) { animation-delay: .17s; }
+main.page > *:nth-child(5) { animation-delay: .22s; }
+main.page > *:nth-child(6) { animation-delay: .27s; }
+main.page > *:nth-child(7) { animation-delay: .32s; }
+main.page > *:nth-child(n+8) { animation-delay: .36s; }
+main.page > .slap-overlay { animation: slap-fade .25s ease; }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  main.page > *, .tape-track, .radar-sweep, .watchdog-bar::after { animation: none !important; }
+}
 
 /* posture badge on the brief */
 .posture-badge {

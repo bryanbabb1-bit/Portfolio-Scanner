@@ -37,7 +37,7 @@ export function PortfolioBrief() {
   return (
     <div className="card advisor" style={{ marginBottom: 28 }}>
       <div className="advisor-head">
-        <span className="who">🎯 Portfolio Brief</span>
+        <span className="who">Portfolio Brief</span>
         {note && (
           <span className={`eng ${note.engine === "claude" ? "claude" : ""}`}>
             {note.engine === "claude" ? "Claude" : "auto"}
@@ -45,7 +45,7 @@ export function PortfolioBrief() {
         )}
         {note?.posture && (
           <span className={`posture-badge ${note.posture}`}>
-            {note.posture === "watch" ? "🛡 PATIENCE WEEK" : "⚡ ACTION WEEK"}
+            {note.posture === "watch" ? "PATIENCE WEEK" : "ACTION WEEK"}
           </span>
         )}
         <div style={{ marginLeft: "auto", display: "flex", gap: 10, alignItems: "center" }}>

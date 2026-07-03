@@ -15,6 +15,7 @@ import { Movers } from "../components/Movers";
 import { PortfolioBrief } from "../components/PortfolioBrief";
 import { SortControl, SortKey, sortReports } from "../components/SortControl";
 import { money, pct, signClass } from "../components/format";
+import { AnimatedNumber } from "../components/AnimatedNumber";
 
 const REFRESH_MS = 60_000;
 
@@ -70,6 +71,17 @@ export default function Dashboard() {
     () => sortReports(watchlist, sort === "return" ? "change" : sort),
     [watchlist, sort]
   );
+
+  // Ambient mood: the page's glow follows the book — green day, red day.
+  // Must run before any early return (rules of hooks).
+  useEffect(() => {
+    if (!summary) return;
+    const mood =
+      summary.day_change_pct > 0.15 ? "52, 211, 153"
+      : summary.day_change_pct < -0.15 ? "251, 92, 107"
+      : "56, 189, 248";
+    document.documentElement.style.setProperty("--mood-rgb", mood);
+  }, [summary]);
 
   if (loading) return <div className="loading">Loading portfolio…</div>;
   if (err)
@@ -140,7 +152,9 @@ export default function Dashboard() {
             <span className="pulse" /> Portfolio · {summary.positions} positions ·{" "}
             <span className={summary.source === "mock" ? "mut" : "pos"}>{summary.source} data</span>
           </span>
-          <div className="hero-value">{money(summary.total_market_value)}</div>
+          <div className="hero-value">
+            <AnimatedNumber value={summary.total_market_value} format={(n) => money(n)} />
+          </div>
           <div className="hero-sub">
             <span className={signClass(summary.day_change)}>
               {summary.day_change >= 0 ? "▲" : "▼"} {money(summary.day_change)} ({pct(summary.day_change_pct)}) today

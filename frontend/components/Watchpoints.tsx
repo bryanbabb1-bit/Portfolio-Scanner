@@ -78,7 +78,7 @@ export function Watchpoints() {
         <div style={{ display: "flex", gap: 8 }}>
           <button className="btn ghost" onClick={extract} disabled={extracting}
             title="Scan the latest brief + strategy for conditions like 'sell below $X' and arm them">
-            {extracting ? "Scanning advice…" : "⚡ Arm from advice"}
+            {extracting ? "Scanning advice…" : "Arm from advice"}
           </button>
           <button className="btn ghost" onClick={() => setAdding(!adding)}>
             {adding ? "✕" : "+ Add"}

@@ -72,7 +72,7 @@ export default function Discover() {
           .slice(0, 5);
         return ripping.length ? (
           <div className="ripping-strip">
-            <span className="ripping-label">🔥 Ripping now</span>
+            <span className="ripping-label">RIPPING NOW</span>
             {ripping.map((c) => (
               <Link key={c.symbol} href={`/stock/${c.symbol}`} className="ripping-chip">
                 <span className="rc-sym">{c.symbol}</span>
@@ -136,7 +136,7 @@ export default function Discover() {
                   disabled={watched.has(c.symbol) || saving === c.symbol}
                   onClick={() => watch(c)}
                 >
-                  {watched.has(c.symbol) ? "✓ Watching" : saving === c.symbol ? "Saving…" : "+ Watch"}
+                  {watched.has(c.symbol) ? "Watching" : saving === c.symbol ? "Saving…" : "+ Watch"}
                 </button>
                 <button
                   className="btn"

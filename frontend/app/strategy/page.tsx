@@ -147,7 +147,7 @@ export default function Strategy() {
           {/* --------- the plan --------- */}
           <div className={`card advisor ${doc.approved ? "strat-active" : ""}`} style={{ marginBottom: 20 }}>
             <div className="advisor-head">
-              <span className="who">🎯 The Plan</span>
+              <span className="who">The Plan</span>
               <span className={`eng ${doc.approved ? "claude" : ""}`}>
                 {doc.approved ? "ACTIVE" : "DRAFT"}
               </span>

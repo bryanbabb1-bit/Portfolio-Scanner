@@ -67,7 +67,7 @@ export function AdvisorChat({
                     setPinnedIdx((prev) => new Set(prev).add(i));
                   }}
                 >
-                  {pinnedIdx.has(i) ? "✓ Pinned" : "Pin"}
+                  {pinnedIdx.has(i) ? "Pinned" : "Pin"}
                 </button>
               </p>
               <BulletList items={item.a.points} kind="insight" />
