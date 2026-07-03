@@ -1,1 +1,22 @@
-[]
+[
+  {
+    "id": "48cec7db9505",
+    "symbol": null,
+    "source": "brief",
+    "text": "IREN: sell half, about $670, on a daily close below this week's low; the Q2 revenue miss strengthens the case, and a new low under the -36.6% basis means permanent exit.",
+    "points": [],
+    "status": "open",
+    "created_at": "2026-07-03 07:59:19",
+    "ts": 1783083559.2332048
+  },
+  {
+    "id": "fd94f1c0f939",
+    "symbol": null,
+    "source": "brief",
+    "text": "CIFR: exit the full $598 on any bounce above $19 or a daily close below $17 \u2014 either fill restores the 10% miner cap in one trade.",
+    "points": [],
+    "status": "open",
+    "created_at": "2026-07-03 07:59:23",
+    "ts": 1783083563.48485
+  }
+]

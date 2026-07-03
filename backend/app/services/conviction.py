@@ -255,6 +255,17 @@ def scan() -> list[dict]:
                 notes[sig_id] = enriched
                 fired[cool_key] = today
 
+        # Watchpoints ride the same scan: evaluate armed tripwires against
+        # the readings we just gathered (zero AI cost on trigger).
+        try:
+            from . import watchpoints
+            readings = {sym: (quote.price, ind.rsi)
+                        for sym, ind, quote, *_ in items}
+            for sig in watchpoints.check(readings):
+                notes[sig["id"]] = sig
+        except Exception as exc:
+            print(f"[conviction] watchpoint check failed: {exc!r}")
+
         # Keep only the active window; prune the rest from the notes file.
         active = {k: v for k, v in notes.items()
                   if now - float(v.get("ts", 0)) < ACTIVE_HOURS * 3600}

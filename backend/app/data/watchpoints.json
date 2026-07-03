@@ -1,0 +1,86 @@
+[
+  {
+    "id": "7db01f56e8b9",
+    "symbol": "CIFR",
+    "kind": "price_above",
+    "level": 19.0,
+    "note": "Exit the full $598 CIFR position on any bounce above $19",
+    "side": "sell",
+    "source": "advisor",
+    "status": "armed",
+    "created_at": "2026-07-03 08:13",
+    "ts": 1783084438.878161
+  },
+  {
+    "id": "b1990fe5096f",
+    "symbol": "CIFR",
+    "kind": "price_below",
+    "level": 17.0,
+    "note": "Exit the full $598 CIFR position on a daily close below $17",
+    "side": "sell",
+    "source": "advisor",
+    "status": "armed",
+    "created_at": "2026-07-03 08:13",
+    "ts": 1783084438.8998828
+  },
+  {
+    "id": "35550974d49c",
+    "symbol": "AAPL",
+    "kind": "price_above",
+    "level": 317.0,
+    "note": "Execute queued $250 AAPL add only on a confirmed daily close above $317",
+    "side": "buy",
+    "source": "advisor",
+    "status": "armed",
+    "created_at": "2026-07-03 08:13",
+    "ts": 1783084438.9175987
+  },
+  {
+    "id": "9c65528f22a7",
+    "symbol": "AMD",
+    "kind": "price_below",
+    "level": 500.0,
+    "note": "Cut this week's added AMD shares on a daily close below $500",
+    "side": "sell",
+    "source": "advisor",
+    "status": "armed",
+    "created_at": "2026-07-03 08:13",
+    "ts": 1783084438.9314792
+  },
+  {
+    "id": "4264055a71ab",
+    "symbol": "NVDA",
+    "kind": "price_below",
+    "level": 191.0,
+    "note": "Rotate $1,500 of SGOV into NVDA near your pinned $191 level",
+    "side": "buy",
+    "source": "advisor",
+    "status": "armed",
+    "created_at": "2026-07-03 08:13",
+    "ts": 1783084438.9509563
+  },
+  {
+    "id": "ce67112fd323",
+    "symbol": "AVGO",
+    "kind": "rsi_above",
+    "level": 45.0,
+    "note": "Add to AVGO only after RSI recovers above 45 from 39.7",
+    "side": "buy",
+    "source": "advisor",
+    "status": "armed",
+    "created_at": "2026-07-03 08:13",
+    "ts": 1783084438.9689202
+  },
+  {
+    "id": "2ff492a5d118",
+    "symbol": "CRWD",
+    "kind": "rsi_below",
+    "level": 60.0,
+    "note": "Buy CRWD only on a pullback below RSI 60",
+    "side": "buy",
+    "source": "advisor",
+    "status": "armed",
+    "created_at": "2026-07-03 08:13",
+    "ts": 1783084438.9855957
+  }
+]

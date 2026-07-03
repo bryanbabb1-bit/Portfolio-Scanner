@@ -426,6 +426,38 @@ def test_strategy_persistence_and_gating(tmp_path, monkeypatch):
     assert "grow to $50,000" in block and "AI Infrastructure 30%" in block
 
 
+def test_watchpoints_arm_trigger_journal(tmp_path, monkeypatch):
+    from app.services import journal, watchpoints
+
+    monkeypatch.setattr(watchpoints, "_FILE", tmp_path / "wp.json")
+    monkeypatch.setattr(journal, "_JOURNAL_FILE", tmp_path / "j.json")
+
+    wp = watchpoints.add("IREN", "price_below", 38.80,
+                         note="Sell half (~$670) on a close below this week's low")
+    assert wp["status"] == "armed" and wp["side"] == "buy"  # inferred default
+    # identical armed condition dedupes
+    again = watchpoints.add("IREN", "price_below", 38.80)
+    assert again["id"] == wp["id"]
+
+    # above the level: nothing fires
+    assert watchpoints.check({"IREN": (40.0, 45.0)}) == []
+    # at/below the level: fires a slap-ready signal, marks triggered, journals
+    fired = watchpoints.check({"IREN": (38.5, 33.0)})
+    assert len(fired) == 1
+    sig = fired[0]
+    assert sig["rule"] == "watchpoint" and sig["symbol"] == "IREN"
+    assert "Sell half" in sig["what"]
+    assert watchpoints.list_watchpoints()[0]["status"] == "triggered"
+    assert any("Watchpoint triggered" in e["note"] for e in journal.list_entries())
+    # triggered watchpoints never fire twice
+    assert watchpoints.check({"IREN": (30.0, 20.0)}) == []
+
+    # rsi_above semantics (the 'reclaim 45' style)
+    watchpoints.add("AVGO", "rsi_above", 45, note="Start the position")
+    assert watchpoints.check({"AVGO": (360.0, 44.0)}) == []
+    assert len(watchpoints.check({"AVGO": (365.0, 46.2)})) == 1
+
+
 def test_news_deduped_and_tagged():
     out = get_news(limit=50)
     titles = [n.title for n in out["results"]]

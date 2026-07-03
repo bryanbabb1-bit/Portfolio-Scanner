@@ -180,6 +180,31 @@ class AskRequest(BaseModel):
         return v
 
 
+class WatchpointCreate(BaseModel):
+    """A standing price/RSI tripwire that fires a slap alert when met."""
+    symbol: str = Field(min_length=1)
+    kind: str  # price_below | price_above | rsi_below | rsi_above
+    level: float = Field(gt=0)
+    note: str = Field(default="", max_length=300)
+    side: Optional[str] = None  # buy | sell (slap styling); inferred if omitted
+
+    @field_validator("kind")
+    @classmethod
+    def _valid_kind(cls, v: str) -> str:
+        v = (v or "").strip().lower()
+        if v not in {"price_below", "price_above", "rsi_below", "rsi_above"}:
+            raise ValueError("kind must be price_below/price_above/rsi_below/rsi_above")
+        return v
+
+    @field_validator("symbol")
+    @classmethod
+    def _upper(cls, v: str) -> str:
+        v = (v or "").strip().upper()
+        if not v:
+            raise ValueError("symbol required")
+        return v
+
+
 class StrategyGenRequest(BaseModel):
     """Client goals feeding strategy generation."""
     target_value: Optional[float] = Field(default=None, ge=0)

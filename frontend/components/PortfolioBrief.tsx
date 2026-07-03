@@ -24,6 +24,9 @@ export function PortfolioBrief() {
     setErr(null);
     try {
       setNote(await api.advisePortfolio(force, deep));
+      // Arm any 'if price/RSI hits X' conditions from the fresh advice as
+      // watchpoints, silently in the background.
+      api.extractWatchpoints().catch(() => {});
     } catch (e: any) {
       setErr(e.message || "Brief failed");
     } finally {

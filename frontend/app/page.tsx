@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { api, ConvictionSignal, PortfolioInsights, PortfolioSummary, StockReport } from "../lib/api";
 import { SignalSlap } from "../components/SignalSlap";
 import { PinnedActions } from "../components/PinnedActions";
+import { Watchpoints } from "../components/Watchpoints";
 import { ActionJournal } from "../components/ActionJournal";
 import { StockCard } from "../components/StockCard";
 import { PortfolioChart } from "../components/PortfolioChart";
@@ -170,6 +171,8 @@ export default function Dashboard() {
       <PortfolioChart />
 
       {insights && <AlertsPanel alerts={insights.alerts} />}
+
+      <Watchpoints />
 
       <PinnedActions />
 

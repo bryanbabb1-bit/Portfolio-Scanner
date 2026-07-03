@@ -280,6 +280,16 @@ li.pinnable:hover .pin-btn, .chat-a:hover .pin-btn, .pin-btn.pinned { opacity: 1
 .pin-row .pin-date { font-size: 11px; white-space: nowrap; }
 .pin-row .icon-btn { height: 26px; padding: 0 8px; }
 
+/* ------------------------------------------------------------- watchpoints */
+.wp-panel { border-left: 3px solid var(--accent-2); }
+.wp-form {
+  display: grid; grid-template-columns: 100px 150px 100px 1fr auto;
+  gap: 8px; align-items: center; margin-bottom: 12px;
+}
+@media (max-width: 800px) { .wp-form { grid-template-columns: 1fr 1fr; } }
+.wp-cond { font-size: 12.5px; font-weight: 700; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.pin-row.done .wp-cond { text-decoration: line-through; color: var(--muted); }
+
 /* rsi zone pill on charts + cards */
 .rsi-pill {
   font-size: 11px; font-weight: 800; letter-spacing: .04em;

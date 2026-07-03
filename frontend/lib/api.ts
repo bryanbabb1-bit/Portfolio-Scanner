@@ -204,6 +204,19 @@ export interface StrategyDoc {
   updated_at?: string;
 }
 
+export interface Watchpoint {
+  id: string;
+  symbol: string;
+  kind: "price_below" | "price_above" | "rsi_below" | "rsi_above";
+  level: number;
+  note: string;
+  side: "buy" | "sell";
+  source: string;
+  status: "armed" | "triggered";
+  created_at: string;
+  triggered_at?: string;
+}
+
 export interface PortfolioNewsItem {
   title: string;
   symbols: string[];
@@ -359,6 +372,13 @@ export const api = {
     question: string,
     deep = false
   ) => post<AskAnswer>("/api/advisor/ask", { kind, symbol, question, deep }),
+  watchpoints: () => get<{ count: number; results: Watchpoint[] }>("/api/watchpoints"),
+  addWatchpoint: (wp: { symbol: string; kind: Watchpoint["kind"]; level: number; note?: string; side?: "buy" | "sell" }) =>
+    post<Watchpoint>("/api/watchpoints", wp),
+  deleteWatchpoint: (id: string) =>
+    send<{ deleted: string }>(`/api/watchpoints/${id}`, "DELETE"),
+  extractWatchpoints: () =>
+    send<{ created: number; results: Watchpoint[] }>("/api/watchpoints/extract", "POST"),
   strategy: () => get<StrategyDoc>("/api/strategy").catch(() => null as StrategyDoc | null),
   generateStrategy: (inputs: {
     target_value?: number;

@@ -80,16 +80,18 @@ export function SignalSlap({
           <h4>The Why</h4>
           <BulletList items={s.why} kind="insight" />
         </div>
-        <div className="slap-levels">
-          <div className="slap-level">
-            <span className="label">{buy ? "Target" : "Downside risk"}</span>
-            <span>{s.target}</span>
+        {(s.target || s.stop) && (
+          <div className="slap-levels">
+            <div className="slap-level">
+              <span className="label">{buy ? "Target" : "Downside risk"}</span>
+              <span>{s.target}</span>
+            </div>
+            <div className="slap-level">
+              <span className="label">{buy ? "Invalidation / stop" : "What reverses this"}</span>
+              <span>{s.stop}</span>
+            </div>
           </div>
-          <div className="slap-level">
-            <span className="label">{buy ? "Invalidation / stop" : "What reverses this"}</span>
-            <span>{s.stop}</span>
-          </div>
-        </div>
+        )}
 
         <div className="slap-actions">
           <Link href={`/stock/${s.symbol}`} className="btn" onClick={() => dismiss()}>
