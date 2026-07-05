@@ -106,18 +106,34 @@ def send(title: str, body: str, data: dict | None = None,
     return {"sent": len(messages), "response": resp}
 
 
+# iOS can't color the banner, so the TITLE carries the type at a glance:
+# a typographic arrow + the advisor's verdict word (never emoji).
+_ACTION_PREFIX = {
+    "BUY":   "▲ BUY",       # ▲
+    "ADD":   "▲ ADD",       # ▲
+    "TRIM":  "▽ TRIM",      # ▽ (partial sell / take profit)
+    "SELL":  "▼ SELL",      # ▼
+    "AVOID": "▼ AVOID",     # ▼
+    "HOLD":  "▬ HOLD",      # ▬
+}
+
+
 def send_signal(sig: dict) -> None:
-    """Push one fired watchdog signal. Buy = green-light, sell = warning."""
+    """Push one fired watchdog signal, titled by the advisor's verdict."""
     if not tokens():
         return
     side = sig.get("side", "buy")
-    tag = "BUYING OPPORTUNITY" if side == "buy" else "STRONG SELL"
-    title = f"{tag}: {sig.get('symbol', '')}"
+    action = str(sig.get("action") or ("BUY" if side == "buy" else "SELL")).upper()
+    prefix = _ACTION_PREFIX.get(action, ("▲ BUY" if side == "buy" else "▼ SELL"))
+    title = f"{prefix} · {sig.get('symbol', '')}"  # e.g. "▲ BUY · SLBT"
     body = sig.get("headline") or sig.get("what") or "Watchdog signal fired"
+    # Distinct sounds per side give an audible cue even in your pocket (custom
+    # sound files require a rebuild; default until then).
     send(title, body, data={
         "type": "signal",
         "id": sig.get("id"),
         "symbol": sig.get("symbol"),
         "rule": sig.get("rule"),
         "side": side,
+        "action": action,
     })

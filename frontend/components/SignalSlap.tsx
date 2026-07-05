@@ -21,6 +21,9 @@ export function SignalSlap({
   focusId?: string | null;
 }) {
   const [idx, setIdx] = useState(0);
+  // Signals dismissed this session — overrides focusId so "Got it" actually
+  // closes a slap you opened from a notification tap.
+  const [localDismissed, setLocalDismissed] = useState<Set<string>>(new Set());
 
   // One-time migration: ids dismissed under the old localStorage scheme get
   // dismissed server-side so they don't re-pop after the upgrade.
@@ -40,11 +43,11 @@ export function SignalSlap({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // A tapped notification (focusId) surfaces that exact signal first, even if
-  // it was already dismissed — you asked to see it, so show it.
-  let pending = signals.filter((s) => !s.dismissed);
-  if (focusId) {
-    const focused = signals.find((s) => s.id === focusId);
+  // A tapped notification (focusId) surfaces that exact signal first — even if
+  // it was dismissed elsewhere — UNLESS it was dismissed in this view.
+  let pending = signals.filter((s) => !s.dismissed && !localDismissed.has(s.id));
+  if (focusId && !localDismissed.has(focusId)) {
+    const focused = signals.find((s) => s.id === focusId && !localDismissed.has(s.id));
     if (focused) pending = [focused, ...pending.filter((s) => s.id !== focusId)];
   }
   if (!pending.length) return null;
@@ -54,6 +57,11 @@ export function SignalSlap({
 
   async function dismiss(all = false) {
     const ids = all ? pending.map((p) => p.id) : [s.id];
+    setLocalDismissed((prev) => {
+      const n = new Set(prev);
+      ids.forEach((i) => n.add(i));
+      return n;
+    });
     onDismissed(ids); // optimistic — hide immediately
     setIdx(0);
     try {
