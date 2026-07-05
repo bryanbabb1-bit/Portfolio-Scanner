@@ -2,6 +2,7 @@
   "expo": {
     "name": "Portfolio Scanner",
     "slug": "portfolio-scanner",
+    "owner": "true-forecast",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -26,10 +27,17 @@
       "predictiveBackGestureEnabled": false
     },
     "plugins": [
-      ["expo-notifications", { "color": "#38bdf8" }]
+      [
+        "expo-notifications",
+        {
+          "color": "#38bdf8"
+        }
+      ]
     ],
     "extra": {
-      "eas": { "projectId": "" }
+      "eas": {
+        "projectId": "2a912e98-6026-4a7e-9fac-ccc72f96a26d"
+      }
     }
   }
 }
