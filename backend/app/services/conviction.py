@@ -221,12 +221,15 @@ def _enrich(sig: dict, facts: str) -> dict:
     return {**sig, **fallback}
 
 
-def market_open() -> bool:
-    """US regular session, 9:30-16:00 ET, weekdays. Holidays not modeled.
+def market_active() -> bool:
+    """US extended trading window: pre-market 7:00 through after-hours 20:00
+    ET, weekdays. Holidays not modeled.
 
-    The watchdog only detects/pushes while the market is open — an alert on a
-    stale after-hours print isn't actionable. Everything else (dashboard,
-    briefs, advisor) still works any time; only signal scanning pauses."""
+    The biggest runners gap up in pre-market on overnight news and stocks
+    react after earnings post-close, so the watchdog covers the whole
+    tradeable window — it only sleeps overnight (8pm-7am) and on weekends.
+    Dashboard/briefs/advisor still work any time; only signal scanning pauses
+    when nothing is tradeable."""
     from datetime import datetime
     from zoneinfo import ZoneInfo
 
@@ -234,7 +237,11 @@ def market_open() -> bool:
     if et.weekday() >= 5:
         return False
     mins = et.hour * 60 + et.minute
-    return 9 * 60 + 30 <= mins < 16 * 60
+    return 7 * 60 <= mins < 20 * 60
+
+
+# backwards-compat alias
+market_open = market_active
 
 
 # -------------------------------------------------------------------- scan
@@ -246,10 +253,10 @@ def scan() -> list[dict]:
         today = time.strftime("%Y-%m-%d")
         now = time.time()
 
-        # Watchdog sleeps when the market is closed: no detection, no Claude
-        # enrichment, no pushes. Just return the still-active recent signals so
-        # the dashboard/bell keep showing today's slaps.
-        if not market_open():
+        # Watchdog sleeps when nothing is tradeable (overnight/weekends): no
+        # detection, no Claude enrichment, no pushes. Just return the still-
+        # active recent signals so the dashboard/bell keep showing them.
+        if not market_active():
             active = {k: v for k, v in notes.items()
                       if now - float(v.get("ts", 0)) < ACTIVE_HOURS * 3600}
             _save(_NOTES_FILE, active)

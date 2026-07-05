@@ -44,9 +44,19 @@ def _clean_rows(quotes: list[dict]) -> list[dict]:
         if not _CLEAN_TICKER.match(sym):
             continue  # drop foreign listings, warrants (…W), units (…U)
         cap = q.get("marketCap")
-        price = q.get("regularMarketPrice")
         vol = q.get("regularMarketVolume") or q.get("dayVolume")
-        chg = q.get("regularMarketChangePercent")
+        # Use the ACTIVE session's move: a stock gapping +40% pre-market shows
+        # its jump in preMarketChangePercent, not the (stale) regular field.
+        state = q.get("marketState", "REGULAR")
+        if state in ("PRE", "PREPRE") and q.get("preMarketChangePercent") is not None:
+            chg = q.get("preMarketChangePercent")
+            price = q.get("preMarketPrice") or q.get("regularMarketPrice")
+        elif state in ("POST", "POSTPOST", "CLOSED") and q.get("postMarketChangePercent") is not None:
+            chg = q.get("postMarketChangePercent")
+            price = q.get("postMarketPrice") or q.get("regularMarketPrice")
+        else:
+            chg = q.get("regularMarketChangePercent")
+            price = q.get("regularMarketPrice")
         if cap is None or not (_MIN_CAP <= cap <= _MAX_CAP):
             continue
         if price is None or price < _MIN_PRICE:

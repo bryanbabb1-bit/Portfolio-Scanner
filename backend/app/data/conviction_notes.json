@@ -124,28 +124,5 @@
     "dismissed": true,
     "generated_at": "2026-07-05 13:16:24",
     "ts": 1783275384.9346995
-  },
-  "demo-buytest": {
-    "id": "demo-buytest",
-    "symbol": "AMD",
-    "side": "buy",
-    "rule": "oversold-at-support",
-    "action": "BUY",
-    "label": "Oversold at the 200-day",
-    "headline": "AMD buy test -- oversold at rising 200-day",
-    "what": "Add $400 to AMD near $196 while the 200-day holds; stop a close below $188.",
-    "why": [
-      "RSI 31 -- most oversold since the spring low, at support not in free-fall.",
-      "Price holding the rising 200-day; golden-cross regime intact.",
-      "This is a test push to check the BUY sound + title."
-    ],
-    "target": "Reclaim $215 (the 50-day), then $230.",
-    "stop": "Daily close below $188 breaks it.",
-    "theme": "AI Infrastructure",
-    "price": 196.0,
-    "held": true,
-    "dismissed": false,
-    "generated_at": "2026-07-05 16:07:08",
-    "ts": 1783285628.1388621
   }
 }

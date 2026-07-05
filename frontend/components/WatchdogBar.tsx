@@ -3,17 +3,24 @@ import { useEffect, useState } from "react";
 import { api, ConvictionSignal, PortfolioInsights } from "../lib/api";
 
 function marketStatus(now: Date): { open: boolean; label: string } {
-  // US equities, ET. Holidays not modeled — weekday sessions only.
+  // US equities, ET. Watchdog is active across the full tradeable window:
+  // pre-market 7:00, regular 9:30-16:00, after-hours to 20:00. Weekdays only.
   const et = new Date(now.toLocaleString("en-US", { timeZone: "America/New_York" }));
   const day = et.getDay();
   const mins = et.getHours() * 60 + et.getMinutes();
-  const openMin = 9 * 60 + 30;
-  const closeMin = 16 * 60;
-  if (day >= 1 && day <= 5 && mins >= openMin && mins < closeMin) {
-    const left = closeMin - mins;
+  const preOpen = 7 * 60, open = 9 * 60 + 30, close = 16 * 60, postClose = 20 * 60;
+  if (day < 1 || day > 5) return { open: false, label: "MARKET CLOSED · OPENS MON 7:00 ET" };
+  if (mins < preOpen) return { open: false, label: "MARKET CLOSED · PRE-MARKET 7:00 ET" };
+  if (mins < open) return { open: true, label: `PRE-MARKET · OPENS 9:30 ET` };
+  if (mins < close) {
+    const left = close - mins;
     return { open: true, label: `MARKET OPEN · ${Math.floor(left / 60)}H ${left % 60}M TO CLOSE` };
   }
-  return { open: false, label: "MARKET CLOSED · OPENS 9:30 ET" };
+  if (mins < postClose) {
+    const left = postClose - mins;
+    return { open: true, label: `AFTER-HOURS · ${Math.floor(left / 60)}H ${left % 60}M LEFT` };
+  }
+  return { open: false, label: "MARKET CLOSED · OPENS 7:00 ET" };
 }
 
 // The watchdog heartbeat: radar sweep, live market clock, and proof the app
