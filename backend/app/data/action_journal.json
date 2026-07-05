@@ -372,5 +372,38 @@
     "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
     "source": "pin",
     "ts": 1783271628.3498638
+  },
+  {
+    "id": "305ead9c5b7c",
+    "date": "2026-07-05",
+    "symbol": "AMD",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Watchpoint triggered (Watchpoint: price \u2264 $500): Cut this week's added AMD shares on a daily close below $500",
+    "source": "auto",
+    "ts": 1783275384.9376485
+  },
+  {
+    "id": "2a7fdca48fa0",
+    "date": "2026-07-05",
+    "symbol": "NVDA",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Watchpoint triggered (Watchpoint: price \u2264 $191): Rotate $1,500 of SGOV into NVDA near your pinned $191 level",
+    "source": "auto",
+    "ts": 1783275384.940989
+  },
+  {
+    "id": "754c0fd86970",
+    "date": "2026-07-05",
+    "symbol": "AVGO",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Watchpoint triggered (Watchpoint: RSI \u2265 45): Add to AVGO only after RSI recovers above 45 from 39.7",
+    "source": "auto",
+    "ts": 1783275384.96135
   }
 ]

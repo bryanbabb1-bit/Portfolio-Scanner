@@ -20,10 +20,11 @@
     "note": "Cut this week's added AMD shares on a daily close below $500",
     "side": "sell",
     "source": "advisor",
-    "status": "armed",
+    "status": "triggered",
     "created_at": "2026-07-03 08:13",
     "ts": 1783084438.9314792,
-    "confirm": "close"
+    "confirm": "close",
+    "triggered_at": "2026-07-05 13:16"
   },
   {
     "id": "4264055a71ab",
@@ -33,10 +34,11 @@
     "note": "Rotate $1,500 of SGOV into NVDA near your pinned $191 level",
     "side": "buy",
     "source": "advisor",
-    "status": "armed",
+    "status": "triggered",
     "created_at": "2026-07-03 08:13",
     "ts": 1783084438.9509563,
-    "confirm": "touch"
+    "confirm": "touch",
+    "triggered_at": "2026-07-05 13:16"
   },
   {
     "id": "ce67112fd323",
@@ -46,10 +48,11 @@
     "note": "Add to AVGO only after RSI recovers above 45 from 39.7",
     "side": "buy",
     "source": "advisor",
-    "status": "armed",
+    "status": "triggered",
     "created_at": "2026-07-03 08:13",
     "ts": 1783084438.9689202,
-    "confirm": "touch"
+    "confirm": "touch",
+    "triggered_at": "2026-07-05 13:16"
   },
   {
     "id": "2ff492a5d118",

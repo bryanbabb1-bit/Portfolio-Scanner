@@ -61,5 +61,32 @@
     "price": 2.78,
     "ts": 1783269492.3762717,
     "date": "2026-07-05"
+  },
+  {
+    "id": "watch:9c65528f22a7",
+    "symbol": "AMD",
+    "side": "sell",
+    "rule": "watchpoint",
+    "price": 165.0,
+    "ts": 1783275384.9346995,
+    "date": "2026-07-05"
+  },
+  {
+    "id": "watch:4264055a71ab",
+    "symbol": "NVDA",
+    "side": "buy",
+    "rule": "watchpoint",
+    "price": 135.0,
+    "ts": 1783275384.9346995,
+    "date": "2026-07-05"
+  },
+  {
+    "id": "watch:ce67112fd323",
+    "symbol": "AVGO",
+    "side": "buy",
+    "rule": "watchpoint",
+    "price": 175.0,
+    "ts": 1783275384.9346995,
+    "date": "2026-07-05"
   }
 ]

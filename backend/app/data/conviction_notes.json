@@ -64,5 +64,65 @@
     "dismissed": true,
     "generated_at": "2026-07-05 11:38:16",
     "ts": 1783269492.3762717
+  },
+  "watch:9c65528f22a7": {
+    "id": "watch:9c65528f22a7",
+    "symbol": "AMD",
+    "side": "sell",
+    "rule": "watchpoint",
+    "label": "Watchpoint: price \u2264 $500",
+    "headline": "AMD hit your watchpoint \u2014 price \u2264 $500",
+    "what": "Cut this week's added AMD shares on a daily close below $500",
+    "why": [
+      "You armed this on 2026-07-03 08:13: price \u2264 $500.",
+      "Current reading: price $165."
+    ],
+    "target": "",
+    "stop": "",
+    "price": 165.0,
+    "held": null,
+    "dismissed": false,
+    "generated_at": "2026-07-05 13:16:24",
+    "ts": 1783275384.9346995
+  },
+  "watch:4264055a71ab": {
+    "id": "watch:4264055a71ab",
+    "symbol": "NVDA",
+    "side": "buy",
+    "rule": "watchpoint",
+    "label": "Watchpoint: price \u2264 $191",
+    "headline": "NVDA hit your watchpoint \u2014 price \u2264 $191",
+    "what": "Rotate $1,500 of SGOV into NVDA near your pinned $191 level",
+    "why": [
+      "You armed this on 2026-07-03 08:13: price \u2264 $191.",
+      "Current reading: price $135."
+    ],
+    "target": "",
+    "stop": "",
+    "price": 135.0,
+    "held": null,
+    "dismissed": false,
+    "generated_at": "2026-07-05 13:16:24",
+    "ts": 1783275384.9346995
+  },
+  "watch:ce67112fd323": {
+    "id": "watch:ce67112fd323",
+    "symbol": "AVGO",
+    "side": "buy",
+    "rule": "watchpoint",
+    "label": "Watchpoint: RSI \u2265 45",
+    "headline": "AVGO hit your watchpoint \u2014 RSI \u2265 45",
+    "what": "Add to AVGO only after RSI recovers above 45 from 39.7",
+    "why": [
+      "You armed this on 2026-07-03 08:13: RSI \u2265 45.",
+      "Current reading: RSI 51.7046."
+    ],
+    "target": "",
+    "stop": "",
+    "price": 175.0,
+    "held": null,
+    "dismissed": false,
+    "generated_at": "2026-07-05 13:16:24",
+    "ts": 1783275384.9346995
   }
 }
