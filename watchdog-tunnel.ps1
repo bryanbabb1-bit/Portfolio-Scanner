@@ -17,9 +17,13 @@ $name = "watchdog"
 $cfgDir = "$HOME\.cloudflared"
 
 if (-not (Test-Path "$cfgDir\cert.pem")) {
-  Write-Host "No cert.pem found. Run this first (one-time, opens browser):" -ForegroundColor Yellow
-  Write-Host "  & `"$cf`" tunnel login" -ForegroundColor Cyan
-  exit 1
+  Write-Host "First-time setup: opening your browser to authorize Cloudflare." -ForegroundColor Cyan
+  Write-Host "In the browser, pick 'trueforecasting.app' and click Authorize." -ForegroundColor Cyan
+  & $cf tunnel login
+  if (-not (Test-Path "$cfgDir\cert.pem")) {
+    Write-Host "Login didn't complete (no cert.pem). Re-run this script." -ForegroundColor Yellow
+    exit 1
+  }
 }
 
 # Create the tunnel once (idempotent — skips if it already exists).
