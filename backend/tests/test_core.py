@@ -528,6 +528,38 @@ def test_runner_radar_scores_low_float_higher():
         assert by_sym["MGRT"].float_shares < by_sym["VRT"].float_shares
 
 
+def test_runner_clean_rows_and_ignition_bar(monkeypatch):
+    from app.services import runner
+
+    raw = [
+        {"symbol": "GOOD", "shortName": "Good Co", "marketCap": 800e6,
+         "regularMarketPrice": 12.0, "regularMarketVolume": 5e6,
+         "regularMarketChangePercent": 34.0},
+        {"symbol": "2295.HK", "marketCap": 1e9, "regularMarketPrice": 5,
+         "regularMarketVolume": 2e6, "regularMarketChangePercent": 40},  # foreign
+        {"symbol": "SHELL", "marketCap": 200_000, "regularMarketPrice": 0.4,
+         "regularMarketVolume": 9e6, "regularMarketChangePercent": 120},  # nano shell
+        {"symbol": "MEGA", "marketCap": 50e9, "regularMarketPrice": 300,
+         "regularMarketVolume": 8e6, "regularMarketChangePercent": 12},   # too big
+        {"symbol": "THIN", "marketCap": 600e6, "regularMarketPrice": 8,
+         "regularMarketVolume": 200_000, "regularMarketChangePercent": 30},  # low vol
+    ]
+    cleaned = runner._clean_rows(raw)
+    assert [r["symbol"] for r in cleaned] == ["GOOD"]
+
+    # ignition bar: >=25% today, <=$4B cap, >=1M volume
+    monkeypatch.setattr(runner, "live_movers", lambda force=False: [
+        {"symbol": "RUN", "name": "Runner", "change_pct": 42.0,
+         "market_cap": 900e6, "price": 6.0, "volume": 4e6},
+        {"symbol": "SLOW", "name": "Slow", "change_pct": 12.0,
+         "market_cap": 900e6, "price": 6.0, "volume": 4e6},   # not enough move
+        {"symbol": "BIG", "name": "Big", "change_pct": 40.0,
+         "market_cap": 9e9, "price": 6.0, "volume": 4e6},     # too big to run
+    ])
+    hot = runner.igniting_movers()
+    assert [m["symbol"] for m in hot] == ["RUN"]
+
+
 def test_news_deduped_and_tagged():
     out = get_news(limit=50)
     titles = [n.title for n in out["results"]]

@@ -271,6 +271,48 @@ def scan() -> list[dict]:
                 notes[sig_id] = enriched
                 fired[cool_key] = today
 
+        # Runner ignition: whole-market movers that are running NOW. This is
+        # the green light for the explosive-setup hunt — a stock up 25%+ on
+        # real volume at a tradeable size, surfaced the moment it moves.
+        try:
+            from . import runner
+            for m in runner.igniting_movers():
+                sym = m["symbol"]
+                cool_key = f"{sym}:runner-ignition"
+                last = fired.get(cool_key)
+                if last:
+                    try:
+                        days = (time.mktime(time.strptime(today, "%Y-%m-%d")) -
+                                time.mktime(time.strptime(last, "%Y-%m-%d"))) / 86400
+                    except ValueError:
+                        days = COOLDOWN_DAYS
+                    if days < COOLDOWN_DAYS:
+                        continue
+                cap_b = m["market_cap"] / 1e9
+                sig_id = f"{cool_key}:{today}"
+                notes[sig_id] = {
+                    "id": sig_id, "symbol": sym, "side": "buy",
+                    "rule": "runner-ignition",
+                    "label": f"Live runner: +{m['change_pct']:.0f}% today",
+                    "headline": f"{sym} is running — +{m['change_pct']:.0f}% on volume",
+                    "what": (f"{sym} ({m['name']}) up {m['change_pct']:.0f}% today at "
+                             f"a ${cap_b:.1f}B cap. Check float on the Runner Radar "
+                             f"before sizing; lottery-ticket size only."),
+                    "why": [
+                        f"Up {m['change_pct']:.0f}% today on {m['volume']/1e6:.1f}M "
+                        f"shares — real participation, not a quiet drift.",
+                        f"${cap_b:.1f}B market cap — small enough to move fast.",
+                        "Surfaced from a whole-market scan of today's movers, "
+                        "not a fixed watchlist.",
+                    ],
+                    "target": "", "stop": "", "price": m["price"],
+                    "theme": "Runner", "held": False, "dismissed": False,
+                    "generated_at": time.strftime("%Y-%m-%d %H:%M:%S"), "ts": now,
+                }
+                fired[cool_key] = today
+        except Exception as exc:
+            print(f"[conviction] runner ignition failed: {exc!r}")
+
         # Watchpoints ride the same scan: evaluate armed tripwires against
         # the readings we just gathered (zero AI cost on trigger).
         try:

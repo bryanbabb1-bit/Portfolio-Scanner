@@ -1,1 +1,68 @@
-{}
+{
+  "YRD:runner-ignition:2026-07-05": {
+    "id": "YRD:runner-ignition:2026-07-05",
+    "symbol": "YRD",
+    "side": "buy",
+    "rule": "runner-ignition",
+    "label": "Live runner: +60% today",
+    "headline": "YRD is running \u2014 +60% on volume",
+    "what": "YRD (Yiren Digital Ltd.) up 60% today at a $0.1B cap. Check float on the Runner Radar before sizing; lottery-ticket size only.",
+    "why": [
+      "Up 60% today on 55.5M shares \u2014 real participation, not a quiet drift.",
+      "$0.1B market cap \u2014 small enough to move fast.",
+      "Surfaced from a whole-market scan of today's movers, not a fixed watchlist."
+    ],
+    "target": "",
+    "stop": "",
+    "price": 1.44,
+    "theme": "Runner",
+    "held": false,
+    "dismissed": false,
+    "generated_at": "2026-07-05 11:38:16",
+    "ts": 1783269492.3762717
+  },
+  "SLBT:runner-ignition:2026-07-05": {
+    "id": "SLBT:runner-ignition:2026-07-05",
+    "symbol": "SLBT",
+    "side": "buy",
+    "rule": "runner-ignition",
+    "label": "Live runner: +35% today",
+    "headline": "SLBT is running \u2014 +35% on volume",
+    "what": "SLBT (SL Science Holding Limited) up 35% today at a $3.4B cap. Check float on the Runner Radar before sizing; lottery-ticket size only.",
+    "why": [
+      "Up 35% today on 1.1M shares \u2014 real participation, not a quiet drift.",
+      "$3.4B market cap \u2014 small enough to move fast.",
+      "Surfaced from a whole-market scan of today's movers, not a fixed watchlist."
+    ],
+    "target": "",
+    "stop": "",
+    "price": 5.99,
+    "theme": "Runner",
+    "held": false,
+    "dismissed": false,
+    "generated_at": "2026-07-05 11:38:16",
+    "ts": 1783269492.3762717
+  },
+  "USDE:runner-ignition:2026-07-05": {
+    "id": "USDE:runner-ignition:2026-07-05",
+    "symbol": "USDE",
+    "side": "buy",
+    "rule": "runner-ignition",
+    "label": "Live runner: +34% today",
+    "headline": "USDE is running \u2014 +34% on volume",
+    "what": "USDE (StablecoinX Inc.) up 34% today at a $0.1B cap. Check float on the Runner Radar before sizing; lottery-ticket size only.",
+    "why": [
+      "Up 34% today on 49.7M shares \u2014 real participation, not a quiet drift.",
+      "$0.1B market cap \u2014 small enough to move fast.",
+      "Surfaced from a whole-market scan of today's movers, not a fixed watchlist."
+    ],
+    "target": "",
+    "stop": "",
+    "price": 2.78,
+    "theme": "Runner",
+    "held": false,
+    "dismissed": false,
+    "generated_at": "2026-07-05 11:38:16",
+    "ts": 1783269492.3762717
+  }
+}

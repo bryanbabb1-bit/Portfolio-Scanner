@@ -34,5 +34,32 @@
     "price": 20.04,
     "ts": 1783084513.9160693,
     "date": "2026-07-03"
+  },
+  {
+    "id": "YRD:runner-ignition:2026-07-05",
+    "symbol": "YRD",
+    "side": "buy",
+    "rule": "runner-ignition",
+    "price": 1.44,
+    "ts": 1783269492.3762717,
+    "date": "2026-07-05"
+  },
+  {
+    "id": "SLBT:runner-ignition:2026-07-05",
+    "symbol": "SLBT",
+    "side": "buy",
+    "rule": "runner-ignition",
+    "price": 5.99,
+    "ts": 1783269492.3762717,
+    "date": "2026-07-05"
+  },
+  {
+    "id": "USDE:runner-ignition:2026-07-05",
+    "symbol": "USDE",
+    "side": "buy",
+    "rule": "runner-ignition",
+    "price": 2.78,
+    "ts": 1783269492.3762717,
+    "date": "2026-07-05"
   }
 ]

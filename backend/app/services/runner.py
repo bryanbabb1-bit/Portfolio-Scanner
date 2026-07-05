@@ -14,9 +14,109 @@ name that develops the pattern.
 """
 from __future__ import annotations
 
+import re
+import time
+
+from ..config import settings
 from ..models.schemas import RunnerCandidate
 from . import market_data
 from .technical import compute_indicators, build_quote
+
+# --------------------------------------------------------- live market movers
+# Instead of guessing which 30 names WILL run, scan the whole market for the
+# ones that ARE running today and score them. Yahoo's screener returns
+# real-time movers with price/%/cap/volume in one cheap call.
+_MOVERS_CACHE: dict[str, tuple[float, list[dict]]] = {}
+_MOVERS_TTL = 600  # 10 min — movers don't churn faster than that intraday
+_CLEAN_TICKER = re.compile(r"^[A-Z]{1,5}$")  # US common shares, no .HK/.L/warrants
+
+# Runner profile floors/ceilings: real small/mid caps, not shells or megacaps.
+_MIN_CAP = 30_000_000
+_MAX_CAP = 12_000_000_000
+_MIN_VOL = 500_000
+_MIN_PRICE = 1.0
+
+
+def _clean_rows(quotes: list[dict]) -> list[dict]:
+    out: list[dict] = []
+    for q in quotes:
+        sym = (q.get("symbol") or "").upper()
+        if not _CLEAN_TICKER.match(sym):
+            continue  # drop foreign listings, warrants (…W), units (…U)
+        cap = q.get("marketCap")
+        price = q.get("regularMarketPrice")
+        vol = q.get("regularMarketVolume") or q.get("dayVolume")
+        chg = q.get("regularMarketChangePercent")
+        if cap is None or not (_MIN_CAP <= cap <= _MAX_CAP):
+            continue
+        if price is None or price < _MIN_PRICE:
+            continue
+        if vol is None or vol < _MIN_VOL:
+            continue
+        out.append({
+            "symbol": sym,
+            "name": q.get("shortName") or q.get("longName") or sym,
+            "change_pct": round(float(chg), 1) if chg is not None else 0.0,
+            "market_cap": float(cap),
+            "price": float(price),
+            "volume": float(vol),
+        })
+    return out
+
+
+def live_movers(force: bool = False) -> list[dict]:
+    """Whole-market runner candidates that are moving NOW, deduped + filtered.
+
+    Blends a custom small/mid-cap-up-big query with Yahoo's day_gainers,
+    small_cap_gainers and most_actives. Cached 10 min. Empty on any failure
+    (mock mode, blocked egress) — the curated universe still shows."""
+    if settings.DATA_MODE == "mock":
+        return []
+    hit = _MOVERS_CACHE.get("movers")
+    if hit and not force and (time.time() - hit[0]) < _MOVERS_TTL:
+        return hit[1]
+
+    rows: dict[str, dict] = {}
+    try:
+        import yfinance as yf
+        from yfinance import EquityQuery as Q
+
+        custom = Q("and", [
+            Q("gt", ["percentchange", 10]),
+            Q("lt", ["intradaymarketcap", _MAX_CAP]),
+            Q("gt", ["intradaymarketcap", _MIN_CAP]),
+            Q("gt", ["dayvolume", _MIN_VOL]),
+        ])
+        sources = [custom, "day_gainers", "small_cap_gainers", "most_actives"]
+        for src in sources:
+            try:
+                kw = {"count": 50}
+                if not isinstance(src, str):
+                    kw.update(sortField="percentchange", sortAsc=False)
+                res = yf.screen(src, **kw)
+                for r in _clean_rows(res.get("quotes", []) if isinstance(res, dict) else []):
+                    rows.setdefault(r["symbol"], r)
+            except Exception as exc:
+                print(f"[runner] screener {src!r} failed: {exc!r}")
+    except Exception as exc:
+        print(f"[runner] live movers unavailable: {exc!r}")
+
+    result = sorted(rows.values(), key=lambda r: -r["change_pct"])
+    _MOVERS_CACHE["movers"] = (time.time(), result)
+    return result
+
+
+def igniting_movers(limit: int = 3) -> list[dict]:
+    """Top live movers clearing the SLAP bar — high-conviction 'this is
+    running NOW' setups. Cheap: uses the screener payload, no per-ticker
+    fetch. The slap tells the user to check float on the Runner Radar."""
+    bar = [m for m in live_movers()
+           if m["change_pct"] >= 25 and m["market_cap"] <= 4_000_000_000
+           and m["volume"] >= 1_000_000]
+    if len(bar) > limit:
+        print(f"[runner] {len(bar)} movers cleared the ignition bar; "
+              f"slapping top {limit} by %move")
+    return bar[:limit]
 
 # (symbol, name) — genuinely low-float / recent-IPO / high-velocity names.
 # This is the *type* to fish in, not a buy list.
@@ -141,16 +241,28 @@ def evaluate(symbol: str, name: str | None, md, theme: str | None = None) -> Run
 
 def radar(min_score: float = 0.0, limit: int = 40,
           extra: list[str] | None = None) -> dict:
-    """Score the curated runner universe (+ any user-added tickers)."""
-    from . import portfolio as pf_service
+    """Score the live market movers + curated seeds (+ user tickers).
 
-    syms: list[tuple[str, str | None]] = [(s, n) for s, n in UNIVERSE]
-    seen = {s for s, _ in syms}
-    for e in (extra or []):
-        e = e.upper().strip()
-        if e and e not in seen:
-            syms.append((e, None))
-            seen.add(e)
+    The universe is now dynamic: today's actual runners from the whole-market
+    screener, so we score what IS moving instead of guessing what might."""
+    movers = live_movers()
+    live_count = len(movers)
+
+    syms: list[tuple[str, str | None]] = []
+    seen: set[str] = set()
+
+    def push(sym: str, name: str | None):
+        sym = sym.upper().strip()
+        if sym and sym not in seen:
+            syms.append((sym, name))
+            seen.add(sym)
+
+    for m in movers[:45]:          # today's real runners, hottest first
+        push(m["symbol"], m["name"])
+    for s, n in UNIVERSE:          # permanent watch seeds
+        push(s, n)
+    for e in (extra or []):        # user-added tickers
+        push(e, None)
 
     market_data.warm_cache([s for s, _ in syms], max_workers=12)
     cands: list[RunnerCandidate] = []
@@ -163,8 +275,7 @@ def radar(min_score: float = 0.0, limit: int = 40,
 
     cands = [c for c in cands if c.runner_score >= min_score]
     cands.sort(key=lambda c: c.runner_score, reverse=True)
-    source = "mock" if any(
-        market_data.get_market_data(c.symbol).source == "mock"
-        for c in cands[:1]) else "live"
+    source = "mock" if settings.DATA_MODE == "mock" else "live"
     return {"count": len(cands), "universe": len(syms),
-            "source": source, "results": cands[:limit]}
+            "live_movers": live_count, "source": source,
+            "results": cands[:limit]}

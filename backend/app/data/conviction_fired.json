@@ -2,5 +2,8 @@
   "NBIS:sharp-breakdown": "2026-07-02",
   "META:trend-break": "2026-07-02",
   "AAPL:high-conviction-discovery": "2026-07-02",
-  "APPL:trend-break": "2026-07-02"
+  "APPL:trend-break": "2026-07-02",
+  "YRD:runner-ignition": "2026-07-05",
+  "SLBT:runner-ignition": "2026-07-05",
+  "USDE:runner-ignition": "2026-07-05"
 }

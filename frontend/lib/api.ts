@@ -462,8 +462,8 @@ export const api = {
       `/api/discover?min_score=${minScore}&limit=${limit}`
     ),
   runners: (extra: string[] = []) =>
-    get<{ count: number; universe: number; source: string; results: RunnerCandidate[] }>(
-      `/api/runners?limit=40${extra.length ? `&extra=${encodeURIComponent(extra.join(","))}` : ""}`
+    get<{ count: number; universe: number; live_movers: number; source: string; results: RunnerCandidate[] }>(
+      `/api/runners?limit=60${extra.length ? `&extra=${encodeURIComponent(extra.join(","))}` : ""}`
     ),
   news: (limit = 40) =>
     get<{ count: number; source: string; results: PortfolioNewsItem[] }>(

@@ -23,6 +23,7 @@ function compact(n?: number | null): string {
 export default function Runners() {
   const [rows, setRows] = useState<RunnerCandidate[]>([]);
   const [universe, setUniverse] = useState(0);
+  const [liveMovers, setLiveMovers] = useState(0);
   const [source, setSource] = useState("");
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState<string | null>(null);
@@ -36,6 +37,7 @@ export default function Runners() {
       .then((d) => {
         setRows(d.results);
         setUniverse(d.universe);
+        setLiveMovers(d.live_movers ?? 0);
         setSource(d.source);
       })
       .catch((e) => setErr(e.message))
@@ -63,9 +65,11 @@ export default function Runners() {
         <p>
           The anatomy of an explosive mover. MGRT ran 1,000%+ on a ~2M-share
           float — a different animal from a large-cap momentum name. This scans
-          the <em>right type</em> of stock (low float, recent IPO, high velocity)
-          for that DNA. {universe > 0 && `${universe} names.`} Source:{" "}
-          <span className={source === "mock" ? "mut" : "pos"}>{source || "…"}</span>
+          the <em>right type</em> of stock for that DNA.{" "}
+          {liveMovers > 0
+            ? `Scanning ${liveMovers} live market movers + watch seeds (${universe} total) — what's actually running now, not a fixed list.`
+            : universe > 0 && `${universe} names.`}{" "}
+          Source: <span className={source === "mock" ? "mut" : "pos"}>{source || "…"}</span>
         </p>
       </div>
 
