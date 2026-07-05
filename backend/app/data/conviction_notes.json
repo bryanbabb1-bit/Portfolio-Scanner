@@ -17,7 +17,7 @@
     "price": 1.44,
     "theme": "Runner",
     "held": false,
-    "dismissed": false,
+    "dismissed": true,
     "generated_at": "2026-07-05 11:38:16",
     "ts": 1783269492.3762717
   },
@@ -39,7 +39,7 @@
     "price": 5.99,
     "theme": "Runner",
     "held": false,
-    "dismissed": false,
+    "dismissed": true,
     "generated_at": "2026-07-05 11:38:16",
     "ts": 1783269492.3762717
   },
@@ -61,7 +61,7 @@
     "price": 2.78,
     "theme": "Runner",
     "held": false,
-    "dismissed": false,
+    "dismissed": true,
     "generated_at": "2026-07-05 11:38:16",
     "ts": 1783269492.3762717
   }

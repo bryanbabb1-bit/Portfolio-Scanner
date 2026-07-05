@@ -224,6 +224,9 @@ def scan() -> list[dict]:
         notes = _load(_NOTES_FILE)
         today = time.strftime("%Y-%m-%d")
         now = time.time()
+        # Track pre-existing ids so we push ONLY newly-fired signals — one
+        # buzz per new slap, never a re-ping of something already surfaced.
+        known_ids = set(notes.keys())
 
         # Unify holdings + watchlist (full reports) and Discovery (light).
         items: list[tuple] = []
@@ -337,6 +340,19 @@ def scan() -> list[dict]:
                 scorecard.record(v)
         except Exception as exc:
             print(f"[conviction] scorecard record failed: {exc!r}")
+
+        # Push newly-fired signals to registered devices (the slap in your
+        # pocket). Only ids that didn't exist before this scan.
+        new_sigs = [v for k, v in active.items() if k not in known_ids]
+
+    # outside the lock — network call shouldn't hold the scan mutex
+    if new_sigs:
+        try:
+            from . import push
+            for v in new_sigs:
+                push.send_signal(v)
+        except Exception as exc:
+            print(f"[conviction] push failed: {exc!r}")
 
     out = sorted(active.values(), key=lambda s: float(s.get("ts", 0)), reverse=True)
     return out

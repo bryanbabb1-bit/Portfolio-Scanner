@@ -210,6 +210,12 @@ class AskRequest(BaseModel):
         return v
 
 
+class DeviceRegister(BaseModel):
+    """A native-app device registering for push notifications."""
+    token: str = Field(min_length=1)
+    platform: Optional[str] = None  # ios | android
+
+
 class WatchpointCreate(BaseModel):
     """A standing price/RSI tripwire that fires a slap alert when met."""
     symbol: str = Field(min_length=1)

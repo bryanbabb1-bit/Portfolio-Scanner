@@ -4,6 +4,8 @@
 """
 import os
 
+import pytest
+
 os.environ["DATA_MODE"] = "mock"       # must be set before app imports
 os.environ["ADVISOR_ENABLED"] = "0"    # never shell out to claude in tests
 
@@ -558,6 +560,23 @@ def test_runner_clean_rows_and_ignition_bar(monkeypatch):
     ])
     hot = runner.igniting_movers()
     assert [m["symbol"] for m in hot] == ["RUN"]
+
+
+def test_push_token_registration(tmp_path, monkeypatch):
+    from app.services import push
+
+    monkeypatch.setattr(push, "_FILE", tmp_path / "tok.json")
+    with pytest.raises(ValueError):
+        push.register("not-a-real-token")
+    e = push.register("ExponentPushToken[abc123]", "ios")
+    assert e["platform"] == "ios"
+    # idempotent
+    push.register("ExponentPushToken[abc123]")
+    assert push.tokens() == ["ExponentPushToken[abc123]"]
+    # no devices -> send is a no-op, never raises
+    monkeypatch.setattr(push, "_FILE", tmp_path / "empty.json")
+    assert push.send("t", "b")["sent"] == 0
+    assert push.unregister("ExponentPushToken[abc123]") is False
 
 
 def test_news_deduped_and_tagged():
