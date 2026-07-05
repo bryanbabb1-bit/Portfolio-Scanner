@@ -81,7 +81,7 @@
     "stop": "",
     "price": 165.0,
     "held": null,
-    "dismissed": false,
+    "dismissed": true,
     "generated_at": "2026-07-05 13:16:24",
     "ts": 1783275384.9346995
   },
@@ -101,7 +101,7 @@
     "stop": "",
     "price": 135.0,
     "held": null,
-    "dismissed": false,
+    "dismissed": true,
     "generated_at": "2026-07-05 13:16:24",
     "ts": 1783275384.9346995
   },
@@ -121,7 +121,7 @@
     "stop": "",
     "price": 175.0,
     "held": null,
-    "dismissed": false,
+    "dismissed": true,
     "generated_at": "2026-07-05 13:16:24",
     "ts": 1783275384.9346995
   }

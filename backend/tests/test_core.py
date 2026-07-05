@@ -169,7 +169,7 @@ def test_ask_returns_fallback_when_advisor_disabled():
 def test_conviction_rules_fire_and_stay_quiet():
     from app.services.conviction import _detect
 
-    quiet = Quote(symbol="T", price=100, change=0.5, change_pct=0.5, source="mock")
+    quiet = Quote(symbol="T", price=100, change=0.5, change_pct=0.5, source="live")
     calm = Indicators(rsi=55, sma50=98, sma200=95, trend="uptrend",
                       pct_from_52w_high=-10, volume_ratio=1.0)
     assert _detect("T", calm, quiet, True, 5.0, 50) == []
@@ -227,14 +227,14 @@ def test_conviction_rules_fire_and_stay_quiet():
                       pct_from_52w_high=-18, volume_ratio=1.0)
     assert not any(s["side"] == "buy"
                    for s in _detect("T", dip2, quiet, True, -10.0, 40, earn_days=1))
-    crash2 = Quote(symbol="T", price=80, change=-8, change_pct=-9.0, source="mock")
+    crash2 = Quote(symbol="T", price=80, change=-8, change_pct=-9.0, source="live")
     broken2 = Indicators(rsi=35, sma50=90, sma200=95, trend="downtrend",
                          pct_from_52w_high=-30, volume_ratio=2.0)
     assert any(s["side"] == "sell"
                for s in _detect("T", broken2, crash2, True, -25.0, 20, earn_days=1))
 
     # momentum ignition: already ripping on volume near highs (the SNDK case)
-    ripping = Quote(symbol="T", price=100, change=6, change_pct=6.4, source="mock")
+    ripping = Quote(symbol="T", price=100, change=6, change_pct=6.4, source="live")
     ignite = Indicators(rsi=68, sma50=85, sma200=70, trend="uptrend",
                         pct_from_52w_high=-2, volume_ratio=2.4,
                         ret_5d_pct=18.0, ret_20d_pct=42.0)
@@ -254,14 +254,14 @@ def test_conviction_rules_fire_and_stay_quiet():
     assert any(s["rule"] == "quality-dip" for s in sigs)
 
     # deeply oversold, bouncing hard on volume -> washed-out reversal buy
-    bounce = Quote(symbol="T", price=70, change=2.1, change_pct=3.1, source="mock")
+    bounce = Quote(symbol="T", price=70, change=2.1, change_pct=3.1, source="live")
     washed = Indicators(rsi=27, sma50=80, sma200=90, trend="downtrend",
                         pct_from_52w_high=-40, volume_ratio=2.2)
     sigs = _detect("T", washed, bounce, True, -30.0, 25)
     assert any(s["rule"] == "washed-out-reversal" for s in sigs)
 
     # held, crashing through a broken trend -> sell
-    crash = Quote(symbol="T", price=80, change=-8, change_pct=-9.0, source="mock")
+    crash = Quote(symbol="T", price=80, change=-8, change_pct=-9.0, source="live")
     broken = Indicators(rsi=35, sma50=90, sma200=95, trend="downtrend",
                         pct_from_52w_high=-30, volume_ratio=2.0)
     sigs = _detect("T", broken, crash, True, -25.0, 20)

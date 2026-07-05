@@ -51,6 +51,11 @@ def _detect(sym: str, ind, quote, held: bool, pl_pct, score: float,
     fires hourly is wallpaper. earn_days gates BUY signals — no new entries
     into a binary event."""
     out: list[dict] = []
+    # NEVER signal off fallback/mock data — a live fetch failing must not
+    # produce a real slap on a stale price (AMD's mock anchor is $165 while
+    # it trades at $519). Only live quotes can fire a conviction signal.
+    if getattr(quote, "source", "live") == "mock":
+        return out
     p = quote.price
     chg = quote.change_pct
     near_earnings = earn_days is not None and earn_days <= 2
@@ -320,8 +325,11 @@ def scan() -> list[dict]:
         # the readings we just gathered (zero AI cost on trigger).
         try:
             from . import watchpoints
+            # Only live prices trigger watchpoints — a mock fallback price
+            # must never fire a level alert.
             readings = {sym: (quote.price, ind.rsi)
-                        for sym, ind, quote, *_ in items}
+                        for sym, ind, quote, *_ in items
+                        if getattr(quote, "source", "live") != "mock"}
             for sig in watchpoints.check(readings):
                 notes[sig["id"]] = sig
         except Exception as exc:

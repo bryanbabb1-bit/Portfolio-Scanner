@@ -405,5 +405,27 @@
     "note": "Watchpoint triggered (Watchpoint: RSI \u2265 45): Add to AVGO only after RSI recovers above 45 from 39.7",
     "source": "auto",
     "ts": 1783275384.96135
+  },
+  {
+    "id": "590dd5652128",
+    "date": "2026-07-05",
+    "symbol": "NVDA",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
+    "source": "pin",
+    "ts": 1783277009.0941656
+  },
+  {
+    "id": "168addce1a00",
+    "date": "2026-07-05",
+    "symbol": "NVDA",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
+    "source": "pin",
+    "ts": 1783277042.8905919
   }
 ]
