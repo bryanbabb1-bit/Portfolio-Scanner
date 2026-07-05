@@ -81,6 +81,33 @@ a { color: inherit; text-decoration: none; }
 .nav-links a { color: var(--muted); font-size: 14px; font-weight: 500; padding: 6px 2px; }
 .nav-links a:hover, .nav-links a.active { color: var(--text); }
 .nav-links a.active { border-bottom: 2px solid var(--accent); text-shadow: 0 0 12px rgba(56, 189, 248, 0.5); }
+.nav-right { display: flex; align-items: center; gap: 10px; margin-left: auto; }
+.hamburger {
+  display: none; width: 36px; height: 36px; place-items: center;
+  background: transparent; border: 1px solid var(--border); border-radius: 9px;
+  color: var(--muted); cursor: pointer; transition: color .15s, border-color .15s;
+}
+.hamburger:hover { color: var(--text); border-color: var(--border-lit); }
+/* drawer: full-width dropdown under the nav on narrow screens */
+.nav-drawer {
+  display: none; flex-direction: column;
+  border-bottom: 1px solid var(--border);
+  background: rgba(6, 9, 18, 0.96); backdrop-filter: blur(14px);
+  padding: 6px 0;
+}
+.nav-drawer a {
+  padding: 13px 24px; font-size: 15px; font-weight: 600; color: var(--muted);
+  border-left: 3px solid transparent;
+}
+.nav-drawer a:hover { color: var(--text); background: rgba(56,189,248,0.06); }
+.nav-drawer a.active { color: var(--text); border-left-color: var(--accent); background: rgba(56,189,248,0.08); }
+
+/* below this width the inline tabs give way to the hamburger drawer */
+@media (max-width: 980px) {
+  .nav-links.wide { display: none; }
+  .hamburger { display: grid; }
+  .nav-drawer { display: flex; }
+}
 .badge-src {
   margin-left: auto; font-size: 11px; color: var(--muted);
   border: 1px solid var(--border); border-radius: 20px; padding: 3px 10px;
@@ -507,7 +534,7 @@ main.page > .slap-overlay { animation: slap-fade .25s ease; }
 @media (max-width: 640px) { .strat-alloc { grid-template-columns: 90px 1fr 150px; } }
 
 /* ------------------------------------------------------- notification bell */
-.bell-wrap { position: relative; margin-left: auto; }
+.bell-wrap { position: relative; }
 .bell {
   position: relative; display: grid; place-items: center;
   width: 34px; height: 34px; border-radius: 9px;
@@ -839,13 +866,7 @@ main.page { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
 
 @media (max-width: 640px) {
   .container { padding: 0 14px; }
-  .nav-inner { gap: 14px; height: 56px; }
-  .nav-links {
-    overflow-x: auto; flex: 1; scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-  }
-  .nav-links::-webkit-scrollbar { display: none; }
-  .nav-links a { white-space: nowrap; }
+  .nav-inner { gap: 12px; height: 56px; }
   .badge-src { display: none; }
   .hero { padding: 20px 18px; gap: 16px; }
   .hero-value { font-size: 34px; }
