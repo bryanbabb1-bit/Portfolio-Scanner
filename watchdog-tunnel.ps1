@@ -35,22 +35,10 @@ if (-not $existing) {
   & $cf tunnel route dns $name $hostname
 }
 
-# Resolve the tunnel's credentials file (named <UUID>.json in ~/.cloudflared).
-$uuid = (& $cf tunnel list --output json | ConvertFrom-Json |
-  Where-Object { $_.name -eq $name } | Select-Object -First 1).id
-$credFile = "$cfgDir\$uuid.json"
-
-# Write the ingress config each run (cheap, keeps it correct).
-@"
-tunnel: $uuid
-credentials-file: $credFile
-ingress:
-  - hostname: $hostname
-    service: http://localhost:3000
-  - service: http_status:404
-"@ | Set-Content -Encoding utf8 "$cfgDir\config.yml"
-
+# Run the named tunnel with an inline route to the frontend. No config.yml —
+# the DNS CNAME already points $hostname at this tunnel, and --url avoids
+# Windows-path escaping bugs in a config file.
 Write-Host ""
-Write-Host "Backend will be reachable at https://$hostname" -ForegroundColor Green
+Write-Host "Serving https://$hostname  ->  http://localhost:3000" -ForegroundColor Green
 Write-Host "Keep this window open. Ctrl+C to stop." -ForegroundColor DarkGray
-& $cf tunnel run $name
+& $cf tunnel run --url http://localhost:3000 $name
