@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { PortfolioAlert } from "../lib/api";
+import { api, PortfolioAlert } from "../lib/api";
 
 const OPEN_KEY = "pscan-alerts-open";
 
@@ -13,9 +13,12 @@ const SEV_META: Record<string, { icon: string; title: string }> = {
 
 const COLLAPSED_COUNT = 6;
 
-export function AlertsPanel({ alerts }: { alerts: PortfolioAlert[] }) {
+export function AlertsPanel({ alerts: initial }: { alerts: PortfolioAlert[] }) {
+  const [alerts, setAlerts] = useState(initial);
   const [expanded, setExpanded] = useState(false);
   const [open, setOpen] = useState(true);
+
+  useEffect(() => setAlerts(initial), [initial]);
   useEffect(() => {
     try {
       const v = localStorage.getItem(OPEN_KEY);
@@ -33,12 +36,21 @@ export function AlertsPanel({ alerts }: { alerts: PortfolioAlert[] }) {
     });
   };
 
+  function dismiss(a: PortfolioAlert) {
+    setAlerts((cur) => cur.filter((x) => x.id !== a.id));
+    api.dismissAlert(a.id).catch(() => {});
+  }
+  function dismissAll() {
+    setAlerts([]);
+    api.dismissAlert().catch(() => {});
+  }
+
   const shown = expanded ? alerts : alerts.slice(0, COLLAPSED_COUNT);
   const criticals = alerts.filter((a) => a.severity === "critical").length;
   const warnings = alerts.filter((a) => a.severity === "warning").length;
 
   return (
-    <div className="card alerts-panel" style={{ marginBottom: 28 }}>
+    <div className="card alerts-panel" id="needs-attention" style={{ marginBottom: 28 }}>
       <div className="chart-head" style={{ marginBottom: open ? 10 : 0 }}>
         <button className="section-title collapse-head" style={{ margin: 0 }} onClick={toggle}>
           <span className="chev">{open ? "▾" : "▸"}</span> Needs Your Attention{" "}
@@ -47,29 +59,37 @@ export function AlertsPanel({ alerts }: { alerts: PortfolioAlert[] }) {
             {alerts.length - criticals - warnings} opportunities
           </span>
         </button>
-        {open && alerts.length > COLLAPSED_COUNT && (
-          <button className="btn ghost" onClick={() => setExpanded(!expanded)}>
-            {expanded ? "Show less" : `Show all ${alerts.length}`}
-          </button>
+        {open && (
+          <div style={{ display: "flex", gap: 8 }}>
+            {alerts.length > COLLAPSED_COUNT && (
+              <button className="btn ghost" onClick={() => setExpanded(!expanded)}>
+                {expanded ? "Show less" : `Show all ${alerts.length}`}
+              </button>
+            )}
+            <button className="btn ghost" onClick={dismissAll}>Clear all</button>
+          </div>
         )}
       </div>
       {open && (
-      <div className="alerts-list">
-        {shown.map((a, idx) => (
-          <Link
-            key={`${a.symbol}-${a.label}-${idx}`}
-            href={`/stock/${a.symbol}`}
-            className={`alert-row ${a.severity}`}
-          >
-            <span className={`alert-icon ${a.severity}`} title={SEV_META[a.severity]?.title}>
-              {SEV_META[a.severity]?.icon || "•"}
-            </span>
-            <span className="alert-sym">{a.symbol}</span>
-            <span className="alert-label">{a.label}</span>
-            <span className="alert-detail mut">{a.detail}</span>
-          </Link>
-        ))}
-      </div>
+        <div className="alerts-list">
+          {shown.map((a, idx) => (
+            <div key={a.id || `${a.symbol}-${a.label}-${idx}`} className={`alert-row ${a.severity}`}>
+              <span className={`alert-icon ${a.severity}`} title={SEV_META[a.severity]?.title}>
+                {SEV_META[a.severity]?.icon || "•"}
+              </span>
+              <Link href={`/stock/${a.symbol}`} className="alert-sym">{a.symbol}</Link>
+              <Link href={`/stock/${a.symbol}`} className="alert-label">{a.label}</Link>
+              <Link href={`/stock/${a.symbol}`} className="alert-detail mut">{a.detail}</Link>
+              <button
+                className="icon-btn jr-btn alert-x"
+                title="Dismiss (returns tomorrow if still true)"
+                onClick={() => dismiss(a)}
+              >
+                ✕
+              </button>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );

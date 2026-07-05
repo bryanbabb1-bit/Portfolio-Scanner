@@ -46,6 +46,11 @@ export function WatchdogBar({
   const active = signals.filter((s) => !s.dismissed).length;
   const criticals = insights?.alerts.filter((a) => a.severity === "critical").length ?? 0;
 
+  const goto = (id: string) => {
+    const el = document.getElementById(id);
+    el?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   return (
     <div className="watchdog-bar">
       <span className="radar" aria-hidden="true">
@@ -54,15 +59,15 @@ export function WatchdogBar({
       <span className="wd-title">WATCHDOG ACTIVE</span>
       <span className={`wd-market ${clock.open ? "open" : "closed"}`}>{clock.label}</span>
       <span className="wd-sep" />
-      <span className="wd-stat">
+      <button className="wd-stat" onClick={() => goto("game-plan")} title="Jump to your Game Plan">
         <strong>{armed ?? "–"}</strong> tripwires
-      </span>
-      <span className="wd-stat">
+      </button>
+      <button className="wd-stat" onClick={() => goto("signal-strip")} title="Jump to live signals">
         <strong>{active}</strong> live signal{active === 1 ? "" : "s"}
-      </span>
-      <span className={`wd-stat ${criticals ? "neg" : ""}`}>
+      </button>
+      <button className={`wd-stat ${criticals ? "neg" : ""}`} onClick={() => goto("needs-attention")} title="Jump to Needs Your Attention">
         <strong>{criticals}</strong> critical
-      </span>
+      </button>
     </div>
   );
 }

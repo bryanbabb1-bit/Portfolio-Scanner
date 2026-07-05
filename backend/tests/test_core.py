@@ -142,6 +142,23 @@ def test_alerts_sorted_by_severity():
     order = {"critical": 0, "warning": 1, "opportunity": 2}
     ranks = [order[a.severity] for a in out.alerts]
     assert ranks == sorted(ranks)
+    assert all(a.id for a in out.alerts)  # every alert carries a dismissal key
+
+
+def test_alert_dismissal_hides_then_resurfaces(tmp_path, monkeypatch):
+    import time as _t
+    monkeypatch.setattr(insights, "_DISMISS_FILE", tmp_path / "d.json")
+
+    before = get_insights().alerts
+    assert before, "need at least one alert to test dismissal"
+    target = before[0].id
+    insights.dismiss_alert(target)
+    after = get_insights().alerts
+    assert target not in {a.id for a in after}  # hidden now
+    # expired dismissals resurface
+    monkeypatch.setattr(insights, "_DISMISS_TTL", -1)
+    again = get_insights().alerts
+    assert target in {a.id for a in again}
 
 
 def test_discovery_excludes_owned_and_sorts():

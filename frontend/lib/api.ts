@@ -140,6 +140,7 @@ export interface PortfolioAlert {
   severity: "critical" | "warning" | "opportunity";
   label: string;
   detail: string;
+  id?: string;
 }
 
 export interface RiskMetrics {
@@ -438,6 +439,11 @@ export const api = {
   }) => post<StrategyDoc>("/api/strategy/generate", inputs),
   saveStrategy: (doc: StrategyDoc) => put<StrategyDoc>("/api/strategy", doc),
   insights: () => get<PortfolioInsights>("/api/insights"),
+  dismissAlert: (id?: string) =>
+    send<{ dismissed: number }>(
+      `/api/insights/dismiss${id ? `?id=${encodeURIComponent(id)}` : ""}`,
+      "POST"
+    ),
   signals: (demo = false) =>
     get<{ count: number; results: ConvictionSignal[] }>(`/api/signals?demo=${demo}`),
   dismissSignal: (id?: string) =>

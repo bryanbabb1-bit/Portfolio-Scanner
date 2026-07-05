@@ -28,6 +28,13 @@ def get_insights():
         raise HTTPException(status_code=502, detail=f"Insights failed: {exc}")
 
 
+@router.post("/insights/dismiss")
+def dismiss_alert(id: str | None = None):
+    """Dismiss one attention alert by id (symbol:label), or all when omitted.
+    Hidden for 24h; resurfaces if the condition is still true tomorrow."""
+    return {"dismissed": insights_service.dismiss_alert(id)}
+
+
 @router.get("/news")
 def get_news(limit: int = 40):
     """All recent headlines across holdings + watchlist, deduped and tagged."""

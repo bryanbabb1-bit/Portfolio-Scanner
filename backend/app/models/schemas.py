@@ -267,6 +267,7 @@ class PortfolioAlert(BaseModel):
     severity: str  # "critical" | "warning" | "opportunity"
     label: str
     detail: str
+    id: Optional[str] = None  # stable key (symbol:label) for dismissal
 
 
 class RiskMetrics(BaseModel):

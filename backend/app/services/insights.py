@@ -5,6 +5,10 @@ market_data — no extra network calls beyond one SPY benchmark fetch for beta.
 """
 from __future__ import annotations
 
+import json
+import threading
+import time
+
 import numpy as np
 import pandas as pd
 
@@ -21,6 +25,56 @@ RISK_FREE_RATE = 0.04
 BENCHMARK = "SPY"
 
 _SEVERITY_ORDER = {"critical": 0, "warning": 1, "opportunity": 2}
+
+# ------------------------------------------------------- alert dismissal
+# Dismissing an attention alert hides it for a day; if the condition is still
+# true tomorrow it resurfaces (you shouldn't be able to permanently mute a
+# -37% drawdown). Keyed on symbol:label so the same condition stays hidden.
+from ..config import settings as _settings
+_DISMISS_FILE = _settings.PORTFOLIO_FILE.parent / "dismissed_alerts.json"
+_DISMISS_TTL = 24 * 3600
+_dismiss_lock = threading.Lock()
+
+
+def _load_dismissed() -> dict[str, float]:
+    try:
+        with open(_DISMISS_FILE) as f:
+            data = json.load(f)
+        return data if isinstance(data, dict) else {}
+    except (FileNotFoundError, json.JSONDecodeError):
+        return {}
+
+
+def _alert_key(symbol: str, label: str) -> str:
+    return f"{symbol}:{label}"
+
+
+def dismiss_alert(key: str | None = None) -> int:
+    """Hide one alert key (or all currently-active, when key is None)."""
+    now = time.time()
+    with _dismiss_lock:
+        d = _load_dismissed()
+        keys = [key] if key else [_alert_key(a.symbol, a.label)
+                                  for a in build_alerts(_current_reports())]
+        for k in keys:
+            if k:
+                d[k] = now
+        # prune expired
+        d = {k: t for k, t in d.items() if now - t < _DISMISS_TTL}
+        _DISMISS_FILE.parent.mkdir(parents=True, exist_ok=True)
+        with open(_DISMISS_FILE, "w") as f:
+            json.dump(d, f, indent=2)
+    return len(keys)
+
+
+def _active_dismissed() -> set[str]:
+    now = time.time()
+    return {k for k, t in _load_dismissed().items() if now - t < _DISMISS_TTL}
+
+
+def _current_reports() -> list[StockReport]:
+    _, held = pf_service.portfolio_summary()
+    return held + pf_service.watchlist_reports()
 
 
 # ------------------------------------------------------------------ risk math
@@ -188,6 +242,8 @@ def build_alerts(reports: list[StockReport]) -> list[PortfolioAlert]:
             if held_total and r.market_value else None
         )
         alerts.extend(_stock_alerts(r, weight))
+    for a in alerts:
+        a.id = _alert_key(a.symbol, a.label)
     alerts.sort(key=lambda a: (_SEVERITY_ORDER.get(a.severity, 9), a.symbol))
     return alerts
 
@@ -197,8 +253,10 @@ def portfolio_insights(reports: list[StockReport] | None = None) -> PortfolioIns
         _, held = pf_service.portfolio_summary()
         reports = held + pf_service.watchlist_reports()
     source = "mock" if any(r.quote.source == "mock" for r in reports) else "live"
+    dismissed = _active_dismissed()
+    alerts = [a for a in build_alerts(reports) if a.id not in dismissed]
     return PortfolioInsights(
         source=source,
         risk=compute_risk(reports),
-        alerts=build_alerts(reports),
+        alerts=alerts,
     )

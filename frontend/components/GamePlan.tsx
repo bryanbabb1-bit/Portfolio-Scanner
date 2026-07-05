@@ -101,7 +101,7 @@ export function GamePlan() {
   };
 
   return (
-    <div className="card gp-panel" style={{ marginBottom: 28 }}>
+    <div className="card gp-panel" id="game-plan" style={{ marginBottom: 28 }}>
       <div className="chart-head" style={{ marginBottom: open ? 8 : 0 }}>
         <button className="section-title collapse-head" style={{ margin: 0 }} onClick={toggle}>
           <span className="chev">{open ? "▾" : "▸"}</span> Game Plan{" "}

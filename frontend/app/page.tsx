@@ -113,7 +113,7 @@ export default function Dashboard() {
       <WatchdogBar signals={signals} insights={insights} />
 
       {activeSignals.length > 0 && (
-        <div className="card signal-strip" style={{ marginBottom: 24 }}>
+        <div className="card signal-strip" id="signal-strip" style={{ marginBottom: 24 }}>
           <div className="chart-head" style={{ marginBottom: 8 }}>
             <div className="section-title" style={{ margin: 0 }}>Conviction Signals · last 48h</div>
             <button

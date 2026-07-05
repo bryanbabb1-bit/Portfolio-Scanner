@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { NotificationBell } from "./NotificationBell";
 
 const LINKS = [
   { href: "/", label: "Dashboard" },
@@ -31,6 +32,7 @@ export function Nav() {
             );
           })}
         </div>
+        <NotificationBell />
       </div>
     </nav>
   );
