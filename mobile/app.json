@@ -12,7 +12,6 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.bryanbabb.portfolioscanner",
-      "buildNumber": "1",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
