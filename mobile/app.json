@@ -30,7 +30,7 @@
         "expo-notifications",
         {
           "color": "#38bdf8",
-          "sounds": ["./assets/sounds/buy.wav", "./assets/sounds/sell.wav"]
+          "sounds": ["./assets/sounds/buy.wav", "./assets/sounds/sell.wav", "./assets/sounds/runner.wav"]
         }
       ]
     ],

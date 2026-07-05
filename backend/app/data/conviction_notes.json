@@ -125,96 +125,27 @@
     "generated_at": "2026-07-05 13:16:24",
     "ts": 1783275384.9346995
   },
-  "demo-runner-SLBT": {
-    "id": "demo-runner-SLBT",
-    "symbol": "SLBT",
+  "demo-buytest": {
+    "id": "demo-buytest",
+    "symbol": "AMD",
     "side": "buy",
-    "rule": "runner-ignition",
+    "rule": "oversold-at-support",
     "action": "BUY",
-    "label": "Live runner: +38% today",
-    "headline": "SLBT igniting -- +38% on heavy volume",
-    "what": "Lottery-ticket only: buy ~$120 (1% of book) near $10.20; hard stop $8.50.",
+    "label": "Oversold at the 200-day",
+    "headline": "AMD buy test -- oversold at rising 200-day",
+    "what": "Add $400 to AMD near $196 while the 200-day holds; stop a close below $188.",
     "why": [
-      "Up 38% today on 5.2M shares -- real institutional participation, not drift.",
-      "6M-share float, $0.9B cap -- the low-float setup that runs vertically.",
-      "You hold ~35% SGOV cash; fund it there, keep it a speculation sleeve."
+      "RSI 31 -- most oversold since the spring low, at support not in free-fall.",
+      "Price holding the rising 200-day; golden-cross regime intact.",
+      "This is a test push to check the BUY sound + title."
     ],
-    "target": "First target $14 (prior high); trail a stop under each higher-low.",
-    "stop": "A close back below $8.50 says the move failed -- exit, do not average.",
-    "theme": "Runner",
-    "price": 10.2,
-    "held": false,
-    "dismissed": true,
-    "generated_at": "2026-07-05 14:53:13",
-    "ts": 1783282246.670979
-  },
-  "demo-buy-NVDA": {
-    "id": "demo-buy-NVDA",
-    "symbol": "NVDA",
-    "side": "buy",
-    "rule": "rsi-reclaim",
-    "action": "ADD",
-    "label": "RSI reclaimed 45 after washout",
-    "headline": "NVDA momentum turn -- RSI reclaimed 45",
-    "what": "Add $500 to NVDA at market (~$195); stop a daily close below $186.",
-    "why": [
-      "RSI crossed up through 45 after tagging 31 -- the confirmation-style entry you asked for.",
-      "Held the rising 200-day at $191 (your pinned level); golden-cross regime intact.",
-      "Core-four name per your strategy; this is a Long game add, not a trade."
-    ],
-    "target": "Reclaim $210 (the 50-day) then $229, the prior high.",
-    "stop": "Daily close below $186 breaks the trend -- reassess the add.",
+    "target": "Reclaim $215 (the 50-day), then $230.",
+    "stop": "Daily close below $188 breaks it.",
     "theme": "AI Infrastructure",
-    "price": 195.0,
+    "price": 196.0,
     "held": true,
-    "dismissed": true,
-    "generated_at": "2026-07-05 14:53:13",
-    "ts": 1783282246.670979
-  },
-  "demo-sell-IREN": {
-    "id": "demo-sell-IREN",
-    "symbol": "IREN",
-    "side": "sell",
-    "rule": "trend-break",
-    "action": "TRIM",
-    "label": "Broke the 200-day on volume",
-    "headline": "IREN trend break -- execute the half-sale",
-    "what": "Sell half IREN (~17 sh, ~$670) on this close below the week low, per your standing order.",
-    "why": [
-      "Down 10% to $38.82, below SMA20/50/200 -- deeper than the -37% already flagged.",
-      "This is the exact trigger you pre-set; no new facts argue against it.",
-      "Miner cap 10% and no-average-down guardrails still apply to the other half."
-    ],
-    "target": "",
-    "stop": "Exit the remaining half on any new closing low below $38.82 -- permanent per your guardrail.",
-    "theme": "Compute Power",
-    "price": 38.82,
-    "held": true,
-    "dismissed": true,
-    "generated_at": "2026-07-05 14:53:13",
-    "ts": 1783282246.670979
-  },
-  "demo-sell-blowoff": {
-    "id": "demo-sell-blowoff",
-    "symbol": "ANET",
-    "side": "sell",
-    "rule": "blowoff-top",
-    "action": "TRIM",
-    "label": "Blowoff: RSI 82 on a volume spike",
-    "headline": "ANET blowoff -- take some profit",
-    "what": "Trim one-third into strength near $142; let the rest run with a raised stop.",
-    "why": [
-      "RSI 82 on 2.4x volume -- statistically extended, exhaustion risk.",
-      "Up 40%+ in a month; banking partial gains protects the run.",
-      "Not a full exit -- momentum intact, just de-risking the extension."
-    ],
-    "target": "",
-    "stop": "Raise the trailing stop to $128 on the remaining position.",
-    "theme": "AI Infrastructure",
-    "price": 142.0,
-    "held": false,
-    "dismissed": true,
-    "generated_at": "2026-07-05 14:53:13",
-    "ts": 1783282246.670979
+    "dismissed": false,
+    "generated_at": "2026-07-05 16:07:08",
+    "ts": 1783285628.1388621
   }
 }

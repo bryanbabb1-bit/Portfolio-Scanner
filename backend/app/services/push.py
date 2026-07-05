@@ -126,13 +126,18 @@ def send_signal(sig: dict) -> None:
         return
     side = sig.get("side", "buy")
     action = str(sig.get("action") or ("BUY" if side == "buy" else "SELL")).upper()
-    prefix = _ACTION_PREFIX.get(action, ("▲ BUY" if side == "buy" else "▼ SELL"))
-    title = f"{prefix} · {sig.get('symbol', '')}"  # e.g. "▲ BUY · SLBT"
+
+    # A runner ignition is its own beast — time-sensitive, potentially
+    # explosive — so it gets a distinct urgent sound + title, set apart from a
+    # routine (usually longer-term) buy or sell.
+    if sig.get("rule") == "runner-ignition":
+        prefix, sound = "▲▲ RUNNER", "runner.wav"
+    else:
+        prefix = _ACTION_PREFIX.get(action, ("▲ BUY" if side == "buy" else "▼ SELL"))
+        sound = "buy.wav" if action in ("BUY", "ADD") else "sell.wav"
+
+    title = f"{prefix} · {sig.get('symbol', '')}"  # e.g. "▲▲ RUNNER · SLBT"
     body = sig.get("headline") or sig.get("what") or "Watchdog signal fired"
-    # Distinct sounds: a rising chime for buys, a firmer tone for sells — an
-    # audible cue in your pocket. Falls back to the default until the build
-    # with the bundled sounds is installed.
-    sound = "buy.wav" if action in ("BUY", "ADD") else "sell.wav"
     send(title, body, sound=sound, data={
         "type": "signal",
         "id": sig.get("id"),
