@@ -10,7 +10,10 @@
 # runs it every time after. Leave it running (or install as a service) so the
 # phone can always reach the backend while your PC is on.
 
-$ErrorActionPreference = "Stop"
+# Continue (not Stop): cloudflared logs to stderr (e.g. a version-outdated
+# warning), and under Stop that stderr is treated as a fatal error and aborts
+# the script before the tunnel ever runs.
+$ErrorActionPreference = "Continue"
 $cf = "C:\Program Files (x86)\cloudflared\cloudflared.exe"
 $hostname = "watchdog.trueforecasting.app"
 $name = "watchdog"

@@ -40,20 +40,24 @@ Start-Process -WindowStyle Hidden -FilePath "cmd.exe" `
 Write-Host "  frontend -> starting on :3000" -ForegroundColor DarkGray
 
 # --- tunnel (watchdog.trueforecasting.app -> :3000) ---
-# Retire any old quick tunnel, then run the permanent named one in its own
-# window (visible so the first-run browser login is obvious).
+# Retire any old quick tunnel, then run the permanent named one hidden with a
+# log (creates it the first time if needed). Silent so it can auto-start at
+# login without popping a window.
 Get-Process cloudflared -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue
-Start-Process -FilePath "powershell.exe" `
-  -ArgumentList "-ExecutionPolicy", "Bypass", "-NoExit", "-File", "$root\watchdog-tunnel.ps1"
-Write-Host "  tunnel   -> starting watchdog.trueforecasting.app (its own window)" -ForegroundColor DarkGray
+Start-Process -WindowStyle Hidden -FilePath "powershell.exe" `
+  -ArgumentList "-ExecutionPolicy", "Bypass", "-File", "$root\watchdog-tunnel.ps1" `
+  -RedirectStandardOutput "$root\tunnel.log" `
+  -RedirectStandardError "$root\tunnel.err.log"
+Write-Host "  tunnel   -> starting watchdog.trueforecasting.app" -ForegroundColor DarkGray
 
-Start-Sleep -Seconds 9
+Start-Sleep -Seconds 12
 Write-Host ""
 $b = try { (Invoke-WebRequest -UseBasicParsing http://localhost:8000/api/health -TimeoutSec 5).StatusCode } catch { "down" }
 $f = try { (Invoke-WebRequest -UseBasicParsing http://localhost:3000 -TimeoutSec 5).StatusCode } catch { "down" }
-Write-Host "Backend  http://localhost:8000   [$b]" -ForegroundColor Green
-Write-Host "Frontend http://localhost:3000   [$f]" -ForegroundColor Green
-Write-Host "Phone    https://watchdog.trueforecasting.app (via the tunnel window)" -ForegroundColor Green
+$p = try { (Invoke-WebRequest -UseBasicParsing https://watchdog.trueforecasting.app/api/health -TimeoutSec 12).StatusCode } catch { "connecting" }
+Write-Host "Backend  http://localhost:8000              [$b]" -ForegroundColor Green
+Write-Host "Frontend http://localhost:3000              [$f]" -ForegroundColor Green
+Write-Host "Phone    https://watchdog.trueforecasting.app  [$p]" -ForegroundColor Green
 Write-Host ""
-Write-Host "All set. Leave the tunnel window open. You can close THIS window." -ForegroundColor Cyan
+Write-Host "All set. You can close this window." -ForegroundColor Cyan
 Start-Sleep -Seconds 4
