@@ -1,0 +1,35 @@
+{
+  "expo": {
+    "name": "Portfolio Scanner",
+    "slug": "portfolio-scanner",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "portfolioscanner",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#05070f",
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.bryanbabb.portfolioscanner",
+      "buildNumber": "1",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "package": "com.bryanbabb.portfolioscanner",
+      "adaptiveIcon": {
+        "backgroundColor": "#05070f",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "plugins": [
+      ["expo-notifications", { "color": "#38bdf8" }]
+    ],
+    "extra": {
+      "eas": { "projectId": "" }
+    }
+  }
+}

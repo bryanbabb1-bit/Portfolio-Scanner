@@ -23,3 +23,7 @@ npm-debug.log*
 .idea/
 .vscode/
 *.log
+
+# mobile
+mobile/node_modules/
+mobile/.expo/
