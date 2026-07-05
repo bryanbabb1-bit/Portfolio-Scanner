@@ -89,8 +89,10 @@ def _post(messages: list[dict]) -> dict | None:
 
 
 def send(title: str, body: str, data: dict | None = None,
-         to: list[str] | None = None) -> dict:
-    """Fan a push out to every registered device (or an explicit list)."""
+         to: list[str] | None = None, sound: str = "default") -> dict:
+    """Fan a push out to every registered device (or an explicit list).
+
+    sound: 'default', or a bundled custom filename ('buy.wav' / 'sell.wav')."""
     targets = to if to is not None else tokens()
     if not targets:
         return {"sent": 0, "reason": "no registered devices"}
@@ -98,7 +100,7 @@ def send(title: str, body: str, data: dict | None = None,
         "to": tok,
         "title": title,
         "body": body,
-        "sound": "default",
+        "sound": sound,
         "priority": "high",
         "data": data or {},
     } for tok in targets]
@@ -127,9 +129,11 @@ def send_signal(sig: dict) -> None:
     prefix = _ACTION_PREFIX.get(action, ("▲ BUY" if side == "buy" else "▼ SELL"))
     title = f"{prefix} · {sig.get('symbol', '')}"  # e.g. "▲ BUY · SLBT"
     body = sig.get("headline") or sig.get("what") or "Watchdog signal fired"
-    # Distinct sounds per side give an audible cue even in your pocket (custom
-    # sound files require a rebuild; default until then).
-    send(title, body, data={
+    # Distinct sounds: a rising chime for buys, a firmer tone for sells — an
+    # audible cue in your pocket. Falls back to the default until the build
+    # with the bundled sounds is installed.
+    sound = "buy.wav" if action in ("BUY", "ADD") else "sell.wav"
+    send(title, body, sound=sound, data={
         "type": "signal",
         "id": sig.get("id"),
         "symbol": sig.get("symbol"),
