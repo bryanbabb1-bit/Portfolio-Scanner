@@ -52,11 +52,11 @@ export function WatchdogBar({
   };
 
   return (
-    <div className="watchdog-bar">
+    <div className={`watchdog-bar ${clock.open ? "" : "resting"}`}>
       <span className="radar" aria-hidden="true">
         <span className="radar-sweep" />
       </span>
-      <span className="wd-title">WATCHDOG ACTIVE</span>
+      <span className="wd-title">{clock.open ? "WATCHDOG ACTIVE" : "WATCHDOG RESTING"}</span>
       <span className={`wd-market ${clock.open ? "open" : "closed"}`}>{clock.label}</span>
       <span className="wd-sep" />
       <button className="wd-stat" onClick={() => goto("game-plan")} title="Jump to your Game Plan">

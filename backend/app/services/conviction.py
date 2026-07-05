@@ -221,6 +221,22 @@ def _enrich(sig: dict, facts: str) -> dict:
     return {**sig, **fallback}
 
 
+def market_open() -> bool:
+    """US regular session, 9:30-16:00 ET, weekdays. Holidays not modeled.
+
+    The watchdog only detects/pushes while the market is open — an alert on a
+    stale after-hours print isn't actionable. Everything else (dashboard,
+    briefs, advisor) still works any time; only signal scanning pauses."""
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+
+    et = datetime.now(ZoneInfo("America/New_York"))
+    if et.weekday() >= 5:
+        return False
+    mins = et.hour * 60 + et.minute
+    return 9 * 60 + 30 <= mins < 16 * 60
+
+
 # -------------------------------------------------------------------- scan
 def scan() -> list[dict]:
     """Detect, enrich new signals, and return everything active (last 48h)."""
@@ -229,6 +245,16 @@ def scan() -> list[dict]:
         notes = _load(_NOTES_FILE)
         today = time.strftime("%Y-%m-%d")
         now = time.time()
+
+        # Watchdog sleeps when the market is closed: no detection, no Claude
+        # enrichment, no pushes. Just return the still-active recent signals so
+        # the dashboard/bell keep showing today's slaps.
+        if not market_open():
+            active = {k: v for k, v in notes.items()
+                      if now - float(v.get("ts", 0)) < ACTIVE_HOURS * 3600}
+            _save(_NOTES_FILE, active)
+            return sorted(active.values(),
+                          key=lambda s: float(s.get("ts", 0)), reverse=True)
         # Track pre-existing ids so we push ONLY newly-fired signals — one
         # buzz per new slap, never a re-ping of something already surfaced.
         known_ids = set(notes.keys())

@@ -345,6 +345,10 @@ li.pinnable:hover .pin-btn, .chat-a:hover .pin-btn, .pin-btn.pinned { opacity: 1
   animation: radar-spin 3s linear infinite;
 }
 @keyframes radar-spin { to { transform: rotate(360deg); } }
+/* market closed — watchdog resting: slow the sweep, dim it */
+.watchdog-bar.resting { opacity: 0.72; }
+.watchdog-bar.resting .radar-sweep { animation-duration: 9s; opacity: .5; }
+.watchdog-bar.resting::after { display: none; }
 .wd-title { color: var(--text); font-weight: 900; letter-spacing: .12em; font-size: 11px; }
 .wd-market { font-size: 11px; font-weight: 800; letter-spacing: .06em; }
 .wd-market.open { color: var(--bull); }

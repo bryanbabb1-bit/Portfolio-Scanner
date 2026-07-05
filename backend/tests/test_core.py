@@ -388,6 +388,26 @@ def test_journal_crud(tmp_path, monkeypatch):
     assert migrated[0]["date"] == "2026-07-02"
 
 
+def test_watchdog_sleeps_when_market_closed(tmp_path, monkeypatch):
+    import json as _json
+    from app.services import conviction
+
+    notes = tmp_path / "notes.json"
+    now = __import__("time").time()
+    notes.write_text(_json.dumps({
+        "AAA:rule:2026-07-06": {"id": "AAA:rule:2026-07-06", "symbol": "AAA",
+                                "side": "buy", "ts": now},
+    }))
+    monkeypatch.setattr(conviction, "_NOTES_FILE", notes)
+    monkeypatch.setattr(conviction, "market_open", lambda: False)
+    # closed: returns the existing active signal, runs no detection/push
+    fired = {"pushed": False}
+    monkeypatch.setattr(conviction, "_load",
+                        lambda p: _json.loads(notes.read_text()) if str(p) == str(notes) else {})
+    out = conviction.scan()
+    assert [s["symbol"] for s in out] == ["AAA"]
+
+
 def test_signal_dismissal(tmp_path, monkeypatch):
     import json as _json
     from app.services import conviction
