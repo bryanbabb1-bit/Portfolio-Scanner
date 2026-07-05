@@ -1,6 +1,8 @@
-// Minimal service worker: network-first everywhere so market data is never
-// stale; successful same-origin GETs are cached as an offline fallback.
-const CACHE = "pscan-v1";
+// Service worker for the installable PWA. API data is NEVER cached — this is
+// a real-time trading app, a stale /api response (old alerts, mock prices)
+// must never be served. Only static assets and page shells get an offline
+// fallback. Bumping CACHE purges every prior cache on activate.
+const CACHE = "pscan-v2";
 
 self.addEventListener("install", () => self.skipWaiting());
 self.addEventListener("activate", (e) => {
@@ -14,7 +16,18 @@ self.addEventListener("activate", (e) => {
 
 self.addEventListener("fetch", (e) => {
   const req = e.request;
-  if (req.method !== "GET" || new URL(req.url).origin !== self.location.origin) return;
+  if (req.method !== "GET") return;
+  const url = new URL(req.url);
+  if (url.origin !== self.location.origin) return;
+
+  // Never touch the cache for API calls — always live from the network.
+  if (url.pathname.startsWith("/api/")) {
+    e.respondWith(fetch(req));
+    return;
+  }
+
+  // Static assets + page shells: network-first, cache only as an offline
+  // fallback so the app opens without a connection.
   e.respondWith(
     fetch(req)
       .then((res) => {
