@@ -631,3 +631,114 @@ def ask(kind: str, symbol: str | None, question: str, deep: bool = False) -> dic
             pass
     return {"engine": "claude", "generated_at": stamp,
             "answer": answer, "points": points}
+
+
+# ------------------------------------------------- unified recommendation
+# Every notification — signal, runner ignition, or attention alert — gets an
+# advisor recommendation that looks at the client's actual portfolio. The
+# answer may be "Hold, no action", but the ANALYSIS is always done: raw data
+# ("IREN -5%") without a recommended action leads to bad decisions.
+_reco_cache: dict[str, tuple[float, dict]] = {}
+_RECO_TTL = 3600
+
+_RECO_FMT = (
+    'Respond with ONLY a JSON object, no markdown: '
+    '{"action": one word — BUY | ADD | TRIM | SELL | HOLD | AVOID, '
+    '"headline": punchy under-10-word verdict, '
+    '"what": ONE sentence — the exact move (or "Hold — no action" with the '
+    'reason), size and level; under 22 words, '
+    '"why": array of 2-3 bullet strings citing the numbers and the position, '
+    '"target": one sentence — the level/target that matters (or ""), '
+    '"stop": one sentence — the invalidation/stop level (or "")}. '
+    "Ground every number in the data given; never invent figures."
+)
+
+
+def recommend(symbol: str, event: str, kind: str = "alert",
+              force: bool = False) -> dict:
+    """Portfolio-aware recommendation for a notification event.
+
+    kind: 'alert' | 'signal' | 'runner'. Cached 1h per (symbol, event)."""
+    key = f"reco:{kind}:{symbol}:{event}"[:200]
+    if not force:
+        hit = _reco_cache.get(key)
+        if hit and (time.time() - hit[0]) < _RECO_TTL:
+            return hit[1]
+
+    from . import insights as insights_service
+    from . import portfolio as pf_service
+    from . import strategy as strategy_service
+
+    stamp = time.strftime("%Y-%m-%d %H:%M:%S")
+    try:
+        summary, held = pf_service.portfolio_summary()
+    except Exception:
+        summary, held = None, []
+    report = None
+    for r in held:
+        if r.symbol == symbol.upper():
+            report = r
+            break
+    if report is None:
+        try:
+            report = pf_service.build_report(symbol.upper())
+        except Exception:
+            report = None
+
+    # Fallback (no Claude): a safe, generic-but-honest read.
+    def _fallback() -> dict:
+        held_note = (f"You hold {report.shares:g} shares, P/L "
+                     f"{report.unrealized_pl_pct:+.1f}%. " if report and report.shares else "")
+        return {
+            "engine": "fallback", "generated_at": stamp, "action": "HOLD",
+            "headline": f"{symbol}: review before acting",
+            "what": f"{held_note}No automated call — open {symbol} and size any "
+                    f"move to your plan.",
+            "why": [event, "Advisor unavailable — deterministic fallback."],
+            "target": "", "stop": "",
+        }
+
+    if not settings.ADVISOR_ENABLED:
+        _reco_cache[key] = (time.time(), _fallback())
+        return _reco_cache[key][1]
+
+    facts = _facts_from_report(report) if report else f"Symbol {symbol} (not held)."
+    book = f"Book ${summary.total_market_value:,.0f}, cash bucket " \
+           f"${summary.by_theme.get('Cash & Income', 0):,.0f}." if summary else ""
+    strat = strategy_service.facts_block()
+    prior = _prior_advice_block(f"stock:{symbol.upper()}", symbol.upper())
+
+    prompt = (
+        f"{_PERSONA}\n\nA watchdog notification just fired for the client:\n"
+        f"EVENT: {symbol} — {event}\n\n{facts}\n{book}\n{strat}\n{prior}\n"
+        f"As their advisor, say clearly what they should DO about THIS event, "
+        f"considering their position, cash and plan. The answer may be 'Hold — "
+        f"no action' (e.g. normal volatility, thesis intact) — but justify it "
+        f"and give the level that WOULD change it. If action is warranted, give "
+        f"the exact move, size (<=1.5% risk of book) and stop. {_RECO_FMT}"
+    )
+    raw, _ = _run_claude(prompt, model=settings.CLAUDE_MODEL_STANDARD)
+    if not raw:
+        _reco_cache[key] = (time.time(), _fallback())
+        return _reco_cache[key][1]
+
+    out = _fallback()
+    s, e = raw.find("{"), raw.rfind("}")
+    if s != -1 and e > s:
+        try:
+            obj = json.loads(raw[s : e + 1])
+            action = str(obj.get("action") or "HOLD").strip().upper().split()[0]
+            out = {
+                "engine": "claude", "generated_at": stamp,
+                "action": action if action in
+                          {"BUY", "ADD", "TRIM", "SELL", "HOLD", "AVOID"} else "HOLD",
+                "headline": str(obj.get("headline") or f"{symbol}: {event}"),
+                "what": str(obj.get("what") or out["what"]),
+                "why": _as_bullets(obj.get("why")) or [event],
+                "target": str(obj.get("target") or ""),
+                "stop": str(obj.get("stop") or ""),
+            }
+        except json.JSONDecodeError:
+            pass
+    _reco_cache[key] = (time.time(), out)
+    return out

@@ -25,6 +25,7 @@ export default function Dashboard() {
   const [watchlist, setWatchlist] = useState<StockReport[]>([]);
   const [insights, setInsights] = useState<PortfolioInsights | null>(null);
   const [signals, setSignals] = useState<ConvictionSignal[]>([]);
+  const [focusSlap, setFocusSlap] = useState<string | null>(null);
   const [sort, setSort] = useState<SortKey>("value");
   const [view, setView] = useState<"chart" | "heatmap">("chart");
   const [err, setErr] = useState<string | null>(null);
@@ -73,6 +74,12 @@ export default function Dashboard() {
     [watchlist, sort]
   );
 
+  // A tapped push notification lands on /?slap=<id> — surface that slap.
+  useEffect(() => {
+    const id = new URLSearchParams(window.location.search).get("slap");
+    if (id) setFocusSlap(id);
+  }, []);
+
   // Ambient mood: the page's glow follows the book — green day, red day.
   // Must run before any early return (rules of hooks).
   useEffect(() => {
@@ -108,7 +115,7 @@ export default function Dashboard() {
 
   return (
     <>
-      <SignalSlap signals={signals} onDismissed={markDismissed} />
+      <SignalSlap signals={signals} onDismissed={markDismissed} focusId={focusSlap} />
 
       <WatchdogBar signals={signals} insights={insights} />
 

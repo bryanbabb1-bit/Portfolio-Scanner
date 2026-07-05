@@ -5,7 +5,7 @@ import traceback
 
 from fastapi import APIRouter, HTTPException
 
-from ..models.schemas import AskRequest
+from ..models.schemas import AskRequest, RecommendRequest
 from ..services import advisor as advisor_service
 from ..services import discovery as discovery_service
 from ..services import insights as insights_service
@@ -34,6 +34,18 @@ def advise_portfolio(force: bool = False, deep: bool = False):
     return advisor_service.advise_portfolio(
         summary, reports, risk, alerts, force=force, deep=deep,
         candidates=candidates)
+
+
+@router.post("/recommend")
+def recommend(req: RecommendRequest):
+    """What should the client DO about a notification event — portfolio-aware,
+    always ends in a clear action (may be Hold). Cached 1h."""
+    try:
+        return advisor_service.recommend(
+            req.symbol.upper(), req.event.strip(), req.kind)
+    except Exception as exc:
+        traceback.print_exc()
+        raise HTTPException(status_code=502, detail=f"Recommend failed: {exc}")
 
 
 @router.get("/last")

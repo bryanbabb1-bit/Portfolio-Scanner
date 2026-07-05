@@ -250,6 +250,13 @@ class WatchpointCreate(BaseModel):
         return v
 
 
+class RecommendRequest(BaseModel):
+    """Ask the advisor what to do about a notification event."""
+    symbol: str = Field(min_length=1)
+    event: str = Field(min_length=1, max_length=300)
+    kind: str = "alert"  # alert | signal | runner
+
+
 class StrategyGenRequest(BaseModel):
     """Client goals feeding strategy generation."""
     target_value: Optional[float] = Field(default=None, ge=0)

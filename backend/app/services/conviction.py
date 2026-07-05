@@ -324,23 +324,35 @@ def scan() -> list[dict]:
                         continue
                 cap_b = m["market_cap"] / 1e9
                 sig_id = f"{cool_key}:{today}"
+                # Advisor recommendation — portfolio-aware sizing, not a bare
+                # "it's running" ping.
+                event = (f"low-float runner igniting: +{m['change_pct']:.0f}% today "
+                         f"on {m['volume']/1e6:.1f}M shares, ${cap_b:.1f}B cap")
+                try:
+                    from . import advisor
+                    reco = advisor.recommend(sym, event, kind="runner")
+                except Exception as exc:
+                    print(f"[conviction] runner reco failed: {exc!r}")
+                    reco = {}
                 notes[sig_id] = {
                     "id": sig_id, "symbol": sym, "side": "buy",
                     "rule": "runner-ignition",
                     "label": f"Live runner: +{m['change_pct']:.0f}% today",
-                    "headline": f"{sym} is running — +{m['change_pct']:.0f}% on volume",
-                    "what": (f"{sym} ({m['name']}) up {m['change_pct']:.0f}% today at "
-                             f"a ${cap_b:.1f}B cap. Check float on the Runner Radar "
-                             f"before sizing; lottery-ticket size only."),
-                    "why": [
+                    "headline": reco.get("headline")
+                    or f"{sym} is running — +{m['change_pct']:.0f}% on volume",
+                    "what": reco.get("what")
+                    or (f"{sym} ({m['name']}) up {m['change_pct']:.0f}% today at a "
+                        f"${cap_b:.1f}B cap. Check float on the Runner Radar before "
+                        f"sizing; lottery-ticket size only."),
+                    "why": reco.get("why") or [
                         f"Up {m['change_pct']:.0f}% today on {m['volume']/1e6:.1f}M "
-                        f"shares — real participation, not a quiet drift.",
+                        f"shares — real participation.",
                         f"${cap_b:.1f}B market cap — small enough to move fast.",
-                        "Surfaced from a whole-market scan of today's movers, "
-                        "not a fixed watchlist.",
                     ],
-                    "target": "", "stop": "", "price": m["price"],
-                    "theme": "Runner", "held": False, "dismissed": False,
+                    "target": reco.get("target", ""), "stop": reco.get("stop", ""),
+                    "action": reco.get("action", "BUY"),
+                    "price": m["price"], "theme": "Runner", "held": False,
+                    "dismissed": False,
                     "generated_at": time.strftime("%Y-%m-%d %H:%M:%S"), "ts": now,
                 }
                 fired[cool_key] = today

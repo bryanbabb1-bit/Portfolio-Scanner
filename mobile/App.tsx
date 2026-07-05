@@ -46,10 +46,12 @@ export default function App() {
       );
     });
 
-    // Tapped a notification — jump the WebView to that stock.
+    // Tapped a notification — open the full slap for that signal (with the
+    // advisor's recommendation), not a context-free ticker page.
     const tap = Notifications.addNotificationResponseReceivedListener((r) => {
-      const symbol = (r.notification.request.content.data as any)?.symbol;
-      if (symbol) setUri(`${BACKEND_URL}/stock/${symbol}?ts=${Date.now()}`);
+      const d = (r.notification.request.content.data as any) || {};
+      if (d.id) setUri(`${BACKEND_URL}/?slap=${encodeURIComponent(d.id)}&ts=${Date.now()}`);
+      else if (d.symbol) setUri(`${BACKEND_URL}/stock/${d.symbol}?ts=${Date.now()}`);
     });
 
     return () => {

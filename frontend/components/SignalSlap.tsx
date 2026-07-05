@@ -14,9 +14,11 @@ const LEGACY_KEY = "pscan-dismissed-signals";
 export function SignalSlap({
   signals,
   onDismissed,
+  focusId,
 }: {
   signals: ConvictionSignal[];
   onDismissed: (ids: string[]) => void;
+  focusId?: string | null;
 }) {
   const [idx, setIdx] = useState(0);
 
@@ -38,10 +40,17 @@ export function SignalSlap({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const pending = signals.filter((s) => !s.dismissed);
+  // A tapped notification (focusId) surfaces that exact signal first, even if
+  // it was already dismissed — you asked to see it, so show it.
+  let pending = signals.filter((s) => !s.dismissed);
+  if (focusId) {
+    const focused = signals.find((s) => s.id === focusId);
+    if (focused) pending = [focused, ...pending.filter((s) => s.id !== focusId)];
+  }
   if (!pending.length) return null;
   const s = pending[Math.min(idx, pending.length - 1)];
   const buy = s.side === "buy";
+  const action = (s as any).action as string | undefined;
 
   async function dismiss(all = false) {
     const ids = all ? pending.map((p) => p.id) : [s.id];
@@ -73,7 +82,7 @@ export function SignalSlap({
         <div className="slap-headline">{s.headline}</div>
 
         <div className="slap-sec">
-          <h4>The What</h4>
+          <h4>{action ? `Advisor: ${action}` : "The What"}</h4>
           <p>{s.what}</p>
         </div>
         <div className="slap-sec">

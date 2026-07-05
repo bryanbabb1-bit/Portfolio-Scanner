@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { api, PortfolioAlert } from "../lib/api";
+import { RecoSlap } from "./RecoSlap";
 
 const OPEN_KEY = "pscan-alerts-open";
 
@@ -17,6 +18,7 @@ export function AlertsPanel({ alerts: initial }: { alerts: PortfolioAlert[] }) {
   const [alerts, setAlerts] = useState(initial);
   const [expanded, setExpanded] = useState(false);
   const [open, setOpen] = useState(true);
+  const [reco, setReco] = useState<PortfolioAlert | null>(null);
 
   useEffect(() => setAlerts(initial), [initial]);
   useEffect(() => {
@@ -73,23 +75,36 @@ export function AlertsPanel({ alerts: initial }: { alerts: PortfolioAlert[] }) {
       {open && (
         <div className="alerts-list">
           {shown.map((a, idx) => (
-            <div key={a.id || `${a.symbol}-${a.label}-${idx}`} className={`alert-row ${a.severity}`}>
+            <div
+              key={a.id || `${a.symbol}-${a.label}-${idx}`}
+              className={`alert-row clickable ${a.severity}`}
+              onClick={() => setReco(a)}
+              title="What should I do? — ask the advisor"
+            >
               <span className={`alert-icon ${a.severity}`} title={SEV_META[a.severity]?.title}>
                 {SEV_META[a.severity]?.icon || "•"}
               </span>
-              <Link href={`/stock/${a.symbol}`} className="alert-sym">{a.symbol}</Link>
-              <Link href={`/stock/${a.symbol}`} className="alert-label">{a.label}</Link>
-              <Link href={`/stock/${a.symbol}`} className="alert-detail mut">{a.detail}</Link>
+              <span className="alert-sym">{a.symbol}</span>
+              <span className="alert-label">{a.label}</span>
+              <span className="alert-detail mut">{a.detail}</span>
               <button
                 className="icon-btn jr-btn alert-x"
                 title="Dismiss (returns tomorrow if still true)"
-                onClick={() => dismiss(a)}
+                onClick={(e) => { e.stopPropagation(); dismiss(a); }}
               >
                 ✕
               </button>
             </div>
           ))}
         </div>
+      )}
+      {reco && (
+        <RecoSlap
+          symbol={reco.symbol}
+          event={`${reco.label} — ${reco.detail}`}
+          kind="alert"
+          onClose={() => setReco(null)}
+        />
       )}
     </div>
   );

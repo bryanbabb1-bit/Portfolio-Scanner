@@ -349,6 +349,17 @@ export interface AskAnswer {
   generated_at: string;
 }
 
+export interface Recommendation {
+  engine: string;
+  generated_at: string;
+  action: "BUY" | "ADD" | "TRIM" | "SELL" | "HOLD" | "AVOID";
+  headline: string;
+  what: string;
+  why: string[];
+  target: string;
+  stop: string;
+}
+
 async function put<T>(path: string, body: unknown): Promise<T> {
   return send<T>(path, "PUT", body);
 }
@@ -410,6 +421,8 @@ export const api = {
     get<AdvisorNote>(`/api/advisor/breakout/${symbol}?force=${force}&deep=${deep}`),
   advisePortfolio: (force = false, deep = false) =>
     get<AdvisorNote>(`/api/advisor/portfolio?force=${force}&deep=${deep}`),
+  recommend: (symbol: string, event: string, kind = "alert") =>
+    post<Recommendation>("/api/advisor/recommend", { symbol, event, kind }),
   lastAdvisorNote: (kind: "portfolio" | "stock" | "breakout", symbol?: string) =>
     get<AdvisorNote>(
       `/api/advisor/last?kind=${kind}${symbol ? `&symbol=${symbol}` : ""}`
