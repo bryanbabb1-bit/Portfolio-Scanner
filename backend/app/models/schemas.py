@@ -85,6 +85,30 @@ class StockReport(BaseModel):
     days_to_earnings: Optional[int] = None
 
 
+class RunnerCandidate(BaseModel):
+    """A low-float / high-velocity name — the MGRT-type explosive setup."""
+    symbol: str
+    name: Optional[str] = None
+    theme: Optional[str] = None
+    price: float
+    change_pct: float
+    runner_score: float  # 0-100 explosive-setup readiness
+    stage: str  # "coiled" | "igniting" | "extended" | "cooling"
+    # structural DNA
+    float_shares: Optional[float] = None
+    market_cap: Optional[float] = None
+    short_pct_float: Optional[float] = None
+    float_pct: Optional[float] = None
+    recent_ipo: bool = False
+    # velocity
+    volume_ratio: Optional[float] = None
+    ret_5d_pct: Optional[float] = None
+    ret_20d_pct: Optional[float] = None
+    rsi: Optional[float] = None
+    reasons: list[str] = []  # why it scored — the teachable characteristics
+    caution: Optional[str] = None  # the honest risk note
+
+
 class BreakoutCandidate(BaseModel):
     symbol: str
     theme: Optional[str] = None

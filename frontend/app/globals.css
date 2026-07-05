@@ -449,6 +449,32 @@ main.page > .slap-overlay { animation: slap-fade .25s ease; }
 .sc-rule { font-weight: 700; }
 @media (max-width: 640px) { .sc-row { grid-template-columns: 1.4fr .5fr .7fr .7fr; } .sc-row > :last-child { display: none; } }
 
+/* ------------------------------------------------------------ runner radar */
+.runner-anatomy { margin-bottom: 20px; border-left: 3px solid var(--gold); }
+.anatomy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 24px; }
+@media (max-width: 700px) { .anatomy-grid { grid-template-columns: 1fr; } }
+.anatomy-grid > div { display: flex; flex-direction: column; gap: 2px; }
+.an-k { font-size: 12px; font-weight: 800; color: var(--text); letter-spacing: .01em; }
+.an-v { font-size: 12.5px; color: var(--muted); line-height: 1.4; }
+.anatomy-grid .an-warn .an-k { color: var(--bear); }
+.anatomy-grid .an-warn .an-v { color: #e6a3ab; }
+
+.runner-add { display: flex; gap: 10px; align-items: center; margin-bottom: 18px; }
+.runner-add input { max-width: 320px; }
+
+.runner-card { transition: border-color .18s ease, box-shadow .18s ease; }
+.runner-card.igniting { border-color: rgba(52,211,153,0.5); box-shadow: 0 0 22px rgba(52,211,153,0.14); }
+.runner-card.extended { border-color: rgba(245,181,68,0.45); }
+.runner-stats { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 8px; font-size: 12.5px; font-variant-numeric: tabular-nums; }
+.runner-stats .rs-l { font-size: 10px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin-right: 3px; }
+.runner-caution { font-size: 12px; color: #e6a3ab; background: rgba(251,92,107,0.07); border: 1px solid rgba(251,92,107,0.2); border-radius: 8px; padding: 7px 11px; margin-top: 10px; }
+
+.stage-badge { font-size: 10px; font-weight: 900; letter-spacing: .06em; border-radius: 5px; padding: 2px 7px; }
+.stage-badge.igniting { color: #04110a; background: var(--bull); }
+.stage-badge.extended { color: #241a02; background: var(--gold); }
+.stage-badge.coiled { color: var(--accent); background: var(--accent-dim); border: 1px solid rgba(56,189,248,0.3); }
+.stage-badge.cooling { color: var(--muted); background: rgba(148,163,184,0.12); }
+
 /* rsi zone pill on charts + cards */
 .rsi-pill {
   font-size: 11px; font-weight: 800; letter-spacing: .04em;

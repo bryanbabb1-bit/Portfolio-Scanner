@@ -8,6 +8,7 @@ const LINKS = [
   { href: "/scan", label: "Scan Hub" },
   { href: "/breakouts", label: "Breakout Radar" },
   { href: "/discover", label: "Discovery" },
+  { href: "/runners", label: "Runner Radar" },
   { href: "/news", label: "News Wire" },
   { href: "/settings", label: "Settings" },
 ];

@@ -77,6 +77,27 @@ export interface StockReport {
   spark?: number[];
 }
 
+export interface RunnerCandidate {
+  symbol: string;
+  name?: string;
+  theme?: string;
+  price: number;
+  change_pct: number;
+  runner_score: number;
+  stage: "coiled" | "igniting" | "extended" | "cooling";
+  float_shares?: number | null;
+  market_cap?: number | null;
+  short_pct_float?: number | null;
+  float_pct?: number | null;
+  recent_ipo: boolean;
+  volume_ratio?: number | null;
+  ret_5d_pct?: number | null;
+  ret_20d_pct?: number | null;
+  rsi?: number | null;
+  reasons: string[];
+  caution?: string | null;
+}
+
 export interface BreakoutCandidate {
   symbol: string;
   theme?: string;
@@ -439,6 +460,10 @@ export const api = {
   discover: (minScore = 0, limit = 24) =>
     get<{ count: number; universe: number; source: string; results: BreakoutCandidate[] }>(
       `/api/discover?min_score=${minScore}&limit=${limit}`
+    ),
+  runners: (extra: string[] = []) =>
+    get<{ count: number; universe: number; source: string; results: RunnerCandidate[] }>(
+      `/api/runners?limit=40${extra.length ? `&extra=${encodeURIComponent(extra.join(","))}` : ""}`
     ),
   news: (limit = 40) =>
     get<{ count: number; source: string; results: PortfolioNewsItem[] }>(

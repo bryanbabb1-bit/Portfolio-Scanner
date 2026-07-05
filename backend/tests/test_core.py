@@ -509,6 +509,25 @@ def test_scorecard_grades_signals(tmp_path, monkeypatch):
     assert by_rule["trend-break"]["avg_effective_pct"] == 10.0  # sign-adjusted
 
 
+def test_runner_radar_scores_low_float_higher():
+    from app.services import runner
+
+    out = runner.radar(min_score=0, limit=100)
+    assert out["results"] and out["universe"] > 0
+    scores = [c.runner_score for c in out["results"]]
+    assert scores == sorted(scores, reverse=True)
+    # every candidate carries structural DNA and a caution
+    for c in out["results"]:
+        assert 0 <= c.runner_score <= 100
+        assert c.stage in {"coiled", "igniting", "extended", "cooling"}
+        assert c.caution
+    # the seeded low-float runners should outscore a large-cap by structure
+    by_sym = {c.symbol: c for c in out["results"]}
+    if "MGRT" in by_sym and "VRT" in by_sym:
+        assert by_sym["MGRT"].runner_score > by_sym["VRT"].runner_score
+        assert by_sym["MGRT"].float_shares < by_sym["VRT"].float_shares
+
+
 def test_news_deduped_and_tagged():
     out = get_news(limit=50)
     titles = [n.title for n in out["results"]]

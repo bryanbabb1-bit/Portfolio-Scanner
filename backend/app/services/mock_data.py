@@ -119,6 +119,35 @@ def intraday(symbol: str, range_: str = "1d") -> pd.DataFrame:
     )
 
 
+def structure(symbol: str) -> dict:
+    """Deterministic structural DNA (float, market cap, short %) for mock mode.
+
+    A few seeded symbols mimic a low-float runner so the Runner Radar has
+    something to show offline; the rest look like normal mid/large caps.
+    """
+    sym = symbol.upper()
+    rng = np.random.default_rng(_seed(sym) ^ 0xF10A7)
+    runners = {"MGRT", "SNDK", "AAOI", "SOUN", "RGTI", "QBTS"}
+    if sym in runners:
+        shares = float(rng.integers(8_000_000, 40_000_000))
+        float_pct = float(rng.uniform(12, 35))
+        short = float(rng.uniform(0.03, 0.22))
+    else:
+        shares = float(rng.integers(200_000_000, 4_000_000_000))
+        float_pct = float(rng.uniform(78, 98))
+        short = float(rng.uniform(0.005, 0.06))
+    float_shares = shares * float_pct / 100
+    anchor = _PROFILE.get(sym, (100.0, 0.35))[0]
+    return {
+        "float_shares": round(float_shares),
+        "shares_outstanding": round(shares),
+        "market_cap": round(shares * anchor),
+        "short_pct_float": round(short, 4),
+        "float_pct": round(float_pct, 1),
+        "history_days": int(140 if sym in runners else 252),
+    }
+
+
 def analyst(symbol: str, price: float) -> dict:
     """Deterministic analyst consensus consistent with the mock price."""
     rng = np.random.default_rng(_seed(symbol.upper()) ^ 0xABCD)

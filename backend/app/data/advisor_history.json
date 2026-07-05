@@ -1,32 +1,6 @@
 {
   "portfolio:brief": [
     {
-      "generated_at": "2026-07-03 07:28:47",
-      "summary": "Yesterday's cleanup holds: eight positions closed, miners cut from 41% to 16% versus the 10% cap, SGOV trimming started \u2014 today's -2.44% is miner noise, so this week is executing standing triggers, not new selling.",
-      "insights": [
-        "Miner exposure sits at 16% ($1,943 across IREN and CIFR) against your 10% hard cap, so the CIFR exit trigger is the single most important open order.",
-        "IREN's -10.4% day is fundamental, not noise \u2014 its July 2 Q2 report missed, with revenue down 23% quarter-over-quarter and bitcoin mining revenue down 28%, validating the freeze.",
-        "SGOV at 35.8% remains your largest concentration versus the 20% target, but this week's two trims were already deployed \u2014 no further redeployment is due until a 5%+ market pullback.",
-        "The core four (NVDA, AMD, TSM, MSFT) total roughly $2,400 or 20% versus the 45-50% long-term target, which monthly contributions close gradually \u2014 TSM at $47 is the furthest behind.",
-        "Portfolio beta 1.44 and 26% volatility with Sharpe 1.02 means you are being paid for the risk, but the -22.2% max drawdown shows how fast miners can bite.",
-        "AAPL's +4.8% close at $308.63 on July 2-3 foldable-iPhone and Google Cloud AI news is real momentum (RSI 60.3), but it has not yet cleared your $317 breakout level.",
-        "AMD's Meta surplus-compute overhang from the July 1 Bloomberg report already cost it 6.9%, and its August earnings MI450 delivery language is the next binary catalyst."
-      ],
-      "actions": [
-        "Best buy: direct July's $300 contribution into TSM at market today (RSI 50.2, uptrend, +5% P/L) \u2014 the playbook's designated destination, building the $47 stub toward $650.",
-        "CIFR: exit the full $598 on any bounce above $19 or a daily close below $17 \u2014 either fill restores the 10% miner cap in one trade.",
-        "IREN: sell half, about $670, on a daily close below this week's low; the Q2 revenue miss strengthens the case, and a new low under the -36.6% basis means permanent exit.",
-        "AAPL: keep the $250 add queued, executing only on a daily close above $317 \u2014 yesterday's $308.63 close is momentum, not yet the confirmed breakout.",
-        "AMD: hold this week's added shares but cut them on a daily close below $500 while Meta's surplus-compute question stays open into the early-August report."
-      ],
-      "risks": [
-        "Meta reselling surplus AI compute pressures AMD, IREN, and CIFR simultaneously \u2014 tripwire: AMD daily close below $500 or any new Meta capacity headline before August earnings.",
-        "IREN's earnings miss plus falling bitcoin prices could force a new low \u2014 tripwire: any print below the -36.6% cost basis triggers your permanent-exit guardrail.",
-        "All-time P/L is -8.4% and a 15% drawdown from the high pauses all buying per your guardrail \u2014 tripwire: portfolio value falling below roughly $11,300.",
-        "SGOV's 35.8% weight caps upside against the 13% annualized growth the $25,000 goal requires \u2014 tripwire: a quarter ending with Cash & Income still above 30%."
-      ]
-    },
-    {
       "generated_at": "2026-07-03 08:53:41",
       "summary": "Good execution: yesterday's cleanup closed eight positions, cut miners from 41% to 16%, and started the SGOV trim \u2014 now your CIFR watchpoint at $19 has fired, so today is about finishing that standing order, not new decisions.",
       "insights": [
@@ -74,6 +48,31 @@
         "Weak jobs data fuels Fed-hike bets against semis; a benchmark close below its 200-day halves all new position sizes.",
         "AMD closes below $500 \u2014 cut the July 2 added shares while Meta's surplus-compute question stays open into early August.",
         "CIFR fails to hold the bounce; a daily close below $17 forces the exit at worse prices, so act today."
+      ]
+    },
+    {
+      "generated_at": "2026-07-03 10:21:15",
+      "summary": "Good discipline: miners already cut from 41% to 16% and the NVDA $191 adds are done \u2014 today's -2.44% is a sector-wide AI-chip selloff, not a you problem. The only jobs are finishing the standing CIFR exit and July's TSM contribution.",
+      "insights": [
+        "Miner exposure is $1,943 (16.0%) versus the 10% cap; selling CIFR ($598) drops it to 11.1%, and the conditional half-IREN sale would finish the job.",
+        "Today's damage is macro: a July 2026 AI-chip valuation selloff hit the whole sector (MU led a 13% single-session plunge on SK Hynix HBM and hawkish-Fed news).",
+        "Your 1.44 beta and 26% vol explain why a chip-led tape costs you -2.44% in a day; SGOV at 35.8% is the only ballast, so trim it on strength, not weakness.",
+        "TSM is the strongest fundamental story in the book: BofA raised its target to $590 and Apple locked over half of 2nm capacity (reported early July 2026) \u2014 the $300 contribution stands.",
+        "AAPL was your best holding today at +4.8% with RSI 60.3 and the breakout alert live; the $317 close trigger remains the gate, no anticipating it.",
+        "MU fell 5.5% amid the memory-sector scare but sits only -2.6% from cost in an uptrend; no action needed, this is what a normal shakeout looks like.",
+        "NVDA RSI 41.2 and -9.1% from cost is acceptable basis-building near the 200-day; no further adds until the sector selloff finds a floor."
+      ],
+      "actions": [
+        "Quick trade: Sell all $598 CIFR at market today; watchpoint fired.",
+        "Long game: Buy $300 TSM at market; July contribution.",
+        "Quick trade: Buy $250 AAPL only on daily close above $317.",
+        "Quick trade: Sell half IREN, about $670, on daily close below week's low."
+      ],
+      "risks": [
+        "IREN closing below its current -36.6% cost-basis low triggers permanent full exit per your own guardrail \u2014 watch the weekly low first for the half-sale.",
+        "The chip selloff deepening into a regime change: if the benchmark closes below its 200-day, halve all new position sizes and stop deploying SGOV.",
+        "Your activity log shows the NVDA $191 add recorded nine times \u2014 verify the position is one add, not nine, against the 12% single-stock cap.",
+        "A 15% drawdown from portfolio high pauses all buying and rebuilds cash to 25%; you are -8.4% all-time, so roughly 7% more downside trips it."
       ]
     }
   ]

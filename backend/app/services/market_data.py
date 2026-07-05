@@ -45,6 +45,7 @@ class MarketData:
     news: list[dict]
     source: str  # "live" | "mock"
     earnings_date: str | None = None  # next report date (YYYY-MM-DD), if known
+    structure: dict | None = None     # float, market cap, short % — runner DNA
 
 
 # --------------------------------------------------------------- yfinance
@@ -63,6 +64,28 @@ def _fetch_live(symbol: str) -> MarketData:
         info = {}
 
     name = info.get("shortName") or info.get("longName") or symbol.upper()
+
+    # Structural DNA of a runner: a tiny float is the fuel — MGRT ran 1000%+
+    # on a 2M-share float. shares_out lets us derive float % (tight = recent
+    # IPO / insider-heavy), and history length proxies IPO recency.
+    def _numf(*keys):
+        for k in keys:
+            v = info.get(k)
+            if isinstance(v, (int, float)) and v > 0:
+                return float(v)
+        return None
+
+    float_shares = _numf("floatShares")
+    shares_out = _numf("sharesOutstanding", "impliedSharesOutstanding")
+    structure = {
+        "float_shares": float_shares,
+        "shares_outstanding": shares_out,
+        "market_cap": _numf("marketCap"),
+        "short_pct_float": _numf("shortPercentOfFloat"),
+        "float_pct": round(float_shares / shares_out * 100, 1)
+        if float_shares and shares_out else None,
+        "history_days": int(len(hist)),  # < ~250 => less than a year public
+    }
 
     price = float(hist["Close"].iloc[-1])
     analyst = {
@@ -113,7 +136,7 @@ def _fetch_live(symbol: str) -> MarketData:
         pass
 
     return MarketData(symbol.upper(), name, hist, analyst, news_items, "live",
-                      earnings_date=earnings_date)
+                      earnings_date=earnings_date, structure=structure)
 
 
 def _fetch_mock(symbol: str) -> MarketData:
@@ -126,6 +149,7 @@ def _fetch_mock(symbol: str) -> MarketData:
         mock_data.analyst(symbol, price),
         mock_data.news(symbol),
         "mock",
+        structure=mock_data.structure(symbol),
     )
 
 
