@@ -20,6 +20,30 @@ _FILE = settings.PORTFOLIO_FILE.parent / "advisor_stances.json"
 _lock = threading.Lock()
 _VALID = {"BUY", "ADD", "TRIM", "SELL", "HOLD", "AVOID", "WATCH"}
 
+# A call is STICKY: it only changes when something material actually happened.
+# Nothing changes in a 5-minute span, so the call shouldn't either.
+MATERIAL_PCT = 0.04      # a >=4% move since the call = "something changed"
+STABILITY_HOURS = 8      # a call holds through the session absent a trigger
+
+
+def is_stable(symbol: str, current_price=None, *, deep: bool = False) -> bool:
+    """True when the standing call should be HELD, not re-derived — it's recent,
+    fresh research isn't being pulled, and price hasn't moved materially since.
+    False means there's a legitimate reason to reconsider (stale, deep research,
+    or a real move)."""
+    s = get(symbol)
+    if not s:
+        return False          # no call yet — one must be formed
+    if deep:
+        return False          # pulling live research is a real reason to revisit
+    if (time.time() - float(s.get("ts", 0))) / 3600 > STABILITY_HOURS:
+        return False          # gone stale — re-derive
+    anchor = s.get("price")
+    if anchor and current_price:
+        if abs(current_price - anchor) / anchor >= MATERIAL_PCT:
+            return False      # material move — reconsideration allowed
+    return True               # nothing material changed — hold the line
+
 
 def _load() -> dict:
     try:
@@ -76,9 +100,11 @@ def set_stance(symbol: str, action: str | None, *, headline: str = "",
         return d[sym]
 
 
-def block(symbol: str) -> str:
+def block(symbol: str, current_price=None) -> str:
     """Prompt block stating the standing call for one symbol, demanding
-    consistency. Empty string if no prior call exists."""
+    consistency. When current_price is given it spells out the move since the
+    call and, if immaterial, hard-orders the model to keep the call. Empty
+    string if no prior call exists."""
     s = get(symbol)
     if not s:
         return ""
@@ -90,13 +116,29 @@ def block(symbol: str) -> str:
     lvls = (" " + "; ".join(lvl) + ".") if lvl else ""
     at = f" (called when it was ${s['price']})" if s.get("price") else ""
     thesis = s.get("thesis") or s.get("headline") or ""
+
+    move_line = ""
+    if current_price and s.get("price"):
+        mv = (current_price - s["price"]) / s["price"] * 100
+        if abs(mv) < MATERIAL_PCT * 100:
+            move_line = (
+                f"Since that call {s['symbol']} is ${current_price:.2f} "
+                f"({mv:+.1f}%) — IMMATERIAL. Nothing has changed. Return exactly "
+                f"{s['action']}; do NOT flip the call.\n")
+        else:
+            move_line = (
+                f"Since that call {s['symbol']} is ${current_price:.2f} "
+                f"({mv:+.1f}%) — a MATERIAL move; reconsidering the call is "
+                f"warranted if the data supports it.\n")
+
     return (
         f"YOUR STANDING CALL on {s['symbol']} as of {s['as_of']}{at}: "
-        f"{s['action']} — {thesis}.{lvls}\n"
-        f"You already told the client this. Stay CONSISTENT with it. Only change "
-        f"the call if the data has MATERIALLY moved since; if so, open with "
-        f"'Changing my call on {s['symbol']} from {s['action']} to <X>' and give "
-        f"the reason. Never silently contradict your own prior call.\n\n"
+        f"{s['action']} — {thesis}.{lvls}\n{move_line}"
+        f"You already told the client this. Do NOT change the call unless you can "
+        f"cite a SPECIFIC new fact: a >~4% price move, a level break, or fresh "
+        f"news/earnings. A refresh with no new information must return the SAME "
+        f"call. If you do change it, open with 'Changing my call on {s['symbol']} "
+        f"from {s['action']} to <X> because <fact>'. Never silently flip.\n\n"
     )
 
 

@@ -526,5 +526,27 @@
     "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
     "source": "pin",
     "ts": 1783341630.8558693
+  },
+  {
+    "id": "274d4c63da24",
+    "date": "2026-07-06",
+    "symbol": "NVDA",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
+    "source": "pin",
+    "ts": 1783342021.9401932
+  },
+  {
+    "id": "f1a5e74434e3",
+    "date": "2026-07-06",
+    "symbol": "NVDA",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
+    "source": "pin",
+    "ts": 1783342128.3979762
   }
 ]

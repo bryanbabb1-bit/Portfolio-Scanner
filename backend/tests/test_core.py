@@ -634,7 +634,11 @@ def test_stance_ledger_consistency(tmp_path, monkeypatch):
     s = stance.get("NVDA")
     assert s["action"] == "HOLD" and s["symbol"] == "NVDA"
     block = stance.block("NVDA")
-    assert "STANDING CALL on NVDA" in block and "Stay CONSISTENT" in block
+    assert "STANDING CALL on NVDA" in block and "Do NOT change the call" in block
+    # an immaterial move is spelled out and the call is held; a big move isn't
+    held = stance.block("NVDA", 195.5)
+    assert "IMMATERIAL" in held
+    assert stance.is_stable("NVDA", 195.5) and not stance.is_stable("NVDA", 260.0)
     # garbage normalizes to HOLD, prev_action is tracked across changes
     stance.set_stance("NVDA", "not-a-call")
     assert stance.get("NVDA")["action"] == "HOLD"

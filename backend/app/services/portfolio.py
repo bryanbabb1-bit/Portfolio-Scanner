@@ -285,16 +285,28 @@ def portfolio_history(range_: str = "6mo") -> PortfolioHistory:
         sym = h["symbol"].upper()
         shares = float(h.get("shares", 0) or 0)
         total_cost += shares * float(h.get("cost_basis", 0) or 0)
+        live = None
         try:
             if intraday:
                 df, source = market_data.get_intraday(sym, range_)
-                closes = df["Close"]
+                closes = df["Close"].copy()
+                try:
+                    live = market_data.get_market_data(sym).live_price
+                except Exception:
+                    live = None
             else:
                 md = market_data.get_market_data(sym)
-                closes, source = md.history["Close"], md.source
+                closes, source = md.history["Close"].copy(), md.source
+                live = md.live_price
         except Exception:
             continue
         any_mock = any_mock or source == "mock"
+        # Make the FINAL point the live tick (incl. pre/after-hours) so the
+        # chart's latest value matches the live total shown at the top — the
+        # daily-close endpoint drifts in extended hours. .copy() above keeps us
+        # from mutating the cached history.
+        if live and source != "mock" and len(closes):
+            closes.iloc[-1] = float(live)
         per_symbol[sym] = closes * shares
 
     points: list[ValuePoint] = []

@@ -370,11 +370,14 @@ def advise_stock(report: StockReport, force: bool = False,
         return note
 
     from . import stance as stance_service
+    price = getattr(report.quote, "price", None)
+    stable = stance_service.is_stable(report.symbol, price, deep=deep)
+    prior_stance = stance_service.get(report.symbol)
     prompt = (
         f"{_PERSONA}\n\n{_RESEARCH_PREFIX if deep else ''}"
         f"Here is the current data for a stock a client holds or is "
         f"watching:\n\n{facts}\n"
-        f"{stance_service.block(report.symbol)}"
+        f"{stance_service.block(report.symbol, price)}"
         f"{_prior_advice_block(key, report.symbol)}"
         f"\nAs their advisor, give your professional read. "
         f"{_SCHEMA_HINT}"
@@ -386,13 +389,16 @@ def advise_stock(report: StockReport, force: bool = False,
         _fallback_note(report.symbol, facts, report.signals)
     if raw and sid:
         _remember_session(key, sid)
-    # Record this as the standing call so the brief/chat/slaps agree with it.
-    if note.call:
+    # Consistency: if nothing material moved, the call is HELD — pin it to the
+    # standing call and keep the original anchor (don't let a refresh flip it).
+    # Only a real trigger (material move / deep research / stale) lets it change.
+    if stable and prior_stance:
+        note.call = prior_stance["action"]
+    elif note.call:
         try:
             stance_service.set_stance(
                 report.symbol, note.call, headline=note.summary,
-                thesis=note.summary, source="stock-review",
-                price=getattr(report.quote, "price", None))
+                thesis=note.summary, source="stock-review", price=price)
         except Exception:
             pass
     _remember_history(key, note)
@@ -813,7 +819,10 @@ def recommend(symbol: str, event: str, kind: str = "alert",
     book = f"Book ${summary.total_market_value:,.0f}, cash bucket " \
            f"${summary.by_theme.get('Cash & Income', 0):,.0f}." if summary else ""
     strat = strategy_service.facts_block()
-    standing = stance_service.block(symbol.upper())
+    _px = fresh.get("price")
+    _stable = stance_service.is_stable(symbol.upper(), _px)
+    _prior_stance = stance_service.get(symbol.upper())
+    standing = stance_service.block(symbol.upper(), _px)
     prior = _prior_advice_block(f"stock:{symbol.upper()}", symbol.upper())
 
     prompt = (
@@ -847,14 +856,18 @@ def recommend(symbol: str, event: str, kind: str = "alert",
                 "stop": str(obj.get("stop") or ""),
                 **fresh,
             }
-            # This event produced a fresh call — make it the standing one.
-            try:
-                stance_service.set_stance(
-                    symbol.upper(), out["action"], headline=out["headline"],
-                    thesis=out["what"], target=out["target"], stop=out["stop"],
-                    source=f"reco:{kind}", price=fresh.get("price"))
-            except Exception:
-                pass
+            # Hold the call if nothing material moved; otherwise this fresh
+            # call becomes the standing one.
+            if _stable and _prior_stance:
+                out["action"] = _prior_stance["action"]
+            else:
+                try:
+                    stance_service.set_stance(
+                        symbol.upper(), out["action"], headline=out["headline"],
+                        thesis=out["what"], target=out["target"], stop=out["stop"],
+                        source=f"reco:{kind}", price=fresh.get("price"))
+                except Exception:
+                    pass
         except json.JSONDecodeError:
             pass
     _reco_cache[key] = (time.time(), out)
