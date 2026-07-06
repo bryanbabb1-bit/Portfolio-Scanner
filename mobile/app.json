@@ -30,7 +30,11 @@
         "expo-notifications",
         {
           "color": "#38bdf8",
-          "sounds": ["./assets/sounds/buy.wav", "./assets/sounds/sell.wav", "./assets/sounds/runner.wav"]
+          "sounds": [
+            "./assets/sounds/buy.wav",
+            "./assets/sounds/sell.wav",
+            "./assets/sounds/runner.wav"
+          ]
         }
       ]
     ],
@@ -38,6 +42,12 @@
       "eas": {
         "projectId": "2a912e98-6026-4a7e-9fac-ccc72f96a26d"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/2a912e98-6026-4a7e-9fac-ccc72f96a26d"
     }
   }
 }

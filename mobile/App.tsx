@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
   BackHandler,
+  Linking,
   Platform,
   StyleSheet,
   View,
@@ -107,6 +108,25 @@ export default function App() {
           automaticallyAdjustContentInsets={false}
           scrollEnabled                           // inner page still scrolls
           injectedJavaScriptBeforeContentLoaded={LOCK_VIEWPORT}
+          onShouldStartLoadWithRequest={(req) => {
+            const url = req.url || "";
+            // Keep our own app in the WebView; send external links (news
+            // articles) to the system browser so there's always a way back —
+            // no more getting trapped on a page with no X.
+            if (
+              url.startsWith(BACKEND_URL) ||
+              url.startsWith("about:") ||
+              url.startsWith("data:") ||
+              url.startsWith("blob:")
+            ) {
+              return true;
+            }
+            if (/^https?:\/\//i.test(url)) {
+              Linking.openURL(url).catch(() => {});
+              return false;
+            }
+            return true;
+          }}
         />
         {!ready && (
           <View style={styles.loading} pointerEvents="none">

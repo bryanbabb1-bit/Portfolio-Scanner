@@ -84,27 +84,39 @@ def _fetch_live(symbol: str) -> MarketData:
 
     name = info.get("shortName") or info.get("longName") or symbol.upper()
 
-    # LIVE price — the daily-history close lags intraday and ignores extended
-    # hours entirely. fast_info.last_price is the current tick; fall back to
-    # info's regular-market fields, then to the daily close. This is what the
-    # advisor and every quote should reason from.
-    live_price = prev_close = None
-    try:
-        fi = tkr.fast_info
-        live_price = float(getattr(fi, "last_price", None) or fi["lastPrice"])
-    except Exception:
-        pass
-    try:
-        fi = tkr.fast_info
-        prev_close = float(getattr(fi, "previous_close", None) or fi["previousClose"])
-    except Exception:
-        pass
+    # LIVE price — must reflect the session we're ACTUALLY in. fast_info's
+    # last_price / regularMarketPrice are the REGULAR close and miss pre/post-
+    # market moves, which is exactly what drifted the portfolio total. Pick the
+    # price for the current marketState so extended-hours moves flow through.
+    def _pf(*keys):
+        for k in keys:
+            v = info.get(k)
+            if isinstance(v, (int, float)) and v > 0:
+                return float(v)
+        return None
+
+    state = str(info.get("marketState") or "REGULAR").upper()
+    reg = _pf("regularMarketPrice", "currentPrice")
+    prev_close = _pf("regularMarketPreviousClose", "previousClose")
+    if state in ("PRE", "PREPRE"):
+        live_price = _pf("preMarketPrice") or reg
+    elif state in ("POST", "POSTPOST", "CLOSED"):
+        live_price = _pf("postMarketPrice") or reg
+    else:
+        live_price = reg
+    # Last-resort fallbacks so a value always exists (info can come back empty).
     if live_price is None:
-        v = info.get("regularMarketPrice") or info.get("currentPrice")
-        live_price = float(v) if isinstance(v, (int, float)) and v > 0 else None
+        try:
+            fi = tkr.fast_info
+            live_price = float(getattr(fi, "last_price", None) or fi["lastPrice"])
+        except Exception:
+            live_price = None
     if prev_close is None:
-        v = info.get("regularMarketPreviousClose") or info.get("previousClose")
-        prev_close = float(v) if isinstance(v, (int, float)) and v > 0 else None
+        try:
+            fi = tkr.fast_info
+            prev_close = float(getattr(fi, "previous_close", None) or fi["previousClose"])
+        except Exception:
+            prev_close = None
 
     # Structural DNA of a runner: a tiny float is the fuel — MGRT ran 1000%+
     # on a 2M-share float. shares_out lets us derive float % (tight = recent
