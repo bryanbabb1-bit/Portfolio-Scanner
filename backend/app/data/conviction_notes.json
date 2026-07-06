@@ -5,11 +5,11 @@
     "side": "buy",
     "rule": "runner-ignition",
     "label": "Live runner: +60% today",
-    "headline": "YRD is running \u2014 +60% on volume",
+    "headline": "YRD is running — +60% on volume",
     "what": "YRD (Yiren Digital Ltd.) up 60% today at a $0.1B cap. Check float on the Runner Radar before sizing; lottery-ticket size only.",
     "why": [
-      "Up 60% today on 55.5M shares \u2014 real participation, not a quiet drift.",
-      "$0.1B market cap \u2014 small enough to move fast.",
+      "Up 60% today on 55.5M shares — real participation, not a quiet drift.",
+      "$0.1B market cap — small enough to move fast.",
       "Surfaced from a whole-market scan of today's movers, not a fixed watchlist."
     ],
     "target": "",
@@ -27,11 +27,11 @@
     "side": "buy",
     "rule": "runner-ignition",
     "label": "Live runner: +35% today",
-    "headline": "SLBT is running \u2014 +35% on volume",
+    "headline": "SLBT is running — +35% on volume",
     "what": "SLBT (SL Science Holding Limited) up 35% today at a $3.4B cap. Check float on the Runner Radar before sizing; lottery-ticket size only.",
     "why": [
-      "Up 35% today on 1.1M shares \u2014 real participation, not a quiet drift.",
-      "$3.4B market cap \u2014 small enough to move fast.",
+      "Up 35% today on 1.1M shares — real participation, not a quiet drift.",
+      "$3.4B market cap — small enough to move fast.",
       "Surfaced from a whole-market scan of today's movers, not a fixed watchlist."
     ],
     "target": "",
@@ -49,11 +49,11 @@
     "side": "buy",
     "rule": "runner-ignition",
     "label": "Live runner: +34% today",
-    "headline": "USDE is running \u2014 +34% on volume",
+    "headline": "USDE is running — +34% on volume",
     "what": "USDE (StablecoinX Inc.) up 34% today at a $0.1B cap. Check float on the Runner Radar before sizing; lottery-ticket size only.",
     "why": [
-      "Up 34% today on 49.7M shares \u2014 real participation, not a quiet drift.",
-      "$0.1B market cap \u2014 small enough to move fast.",
+      "Up 34% today on 49.7M shares — real participation, not a quiet drift.",
+      "$0.1B market cap — small enough to move fast.",
       "Surfaced from a whole-market scan of today's movers, not a fixed watchlist."
     ],
     "target": "",
@@ -70,11 +70,11 @@
     "symbol": "AMD",
     "side": "sell",
     "rule": "watchpoint",
-    "label": "Watchpoint: price \u2264 $500",
-    "headline": "AMD hit your watchpoint \u2014 price \u2264 $500",
+    "label": "Watchpoint: price ≤ $500",
+    "headline": "AMD hit your watchpoint — price ≤ $500",
     "what": "Cut this week's added AMD shares on a daily close below $500",
     "why": [
-      "You armed this on 2026-07-03 08:13: price \u2264 $500.",
+      "You armed this on 2026-07-03 08:13: price ≤ $500.",
       "Current reading: price $165."
     ],
     "target": "",
@@ -90,11 +90,11 @@
     "symbol": "NVDA",
     "side": "buy",
     "rule": "watchpoint",
-    "label": "Watchpoint: price \u2264 $191",
-    "headline": "NVDA hit your watchpoint \u2014 price \u2264 $191",
+    "label": "Watchpoint: price ≤ $191",
+    "headline": "NVDA hit your watchpoint — price ≤ $191",
     "what": "Rotate $1,500 of SGOV into NVDA near your pinned $191 level",
     "why": [
-      "You armed this on 2026-07-03 08:13: price \u2264 $191.",
+      "You armed this on 2026-07-03 08:13: price ≤ $191.",
       "Current reading: price $135."
     ],
     "target": "",
@@ -110,11 +110,11 @@
     "symbol": "AVGO",
     "side": "buy",
     "rule": "watchpoint",
-    "label": "Watchpoint: RSI \u2265 45",
-    "headline": "AVGO hit your watchpoint \u2014 RSI \u2265 45",
+    "label": "Watchpoint: RSI ≥ 45",
+    "headline": "AVGO hit your watchpoint — RSI ≥ 45",
     "what": "Add to AVGO only after RSI recovers above 45 from 39.7",
     "why": [
-      "You armed this on 2026-07-03 08:13: RSI \u2265 45.",
+      "You armed this on 2026-07-03 08:13: RSI ≥ 45.",
       "Current reading: RSI 51.7046."
     ],
     "target": "",
@@ -137,29 +137,29 @@
     "dismissed": false,
     "generated_at": "2026-07-06 15:13:31",
     "ts": 1783368770.3565428,
-    "headline": "GEV extended \u2014 buy the dip, not the high",
-    "what": "Do not chase GEV at $1155; wait for a pullback into $1095-1105 before entering.",
+    "headline": "GEV Near Highs: Starter Only, Volume Unconfirmed",
+    "what": "Buy a starter position in GEV now in the $1150-1160 zone; do not chase above $1165.",
     "why": [
-      "Price is 2.02 ATR above the 50-day SMA ($1042.20) \u2014 that's beyond the 2-ATR chase limit.",
-      "Volume is only 0.7853x average, so today's breakout lacks confirmation.",
-      "GEV sits 1.93% off its 52-week high ($1174.86) with SMA50>SMA200 and RSI 60.5 \u2014 trend is intact, buy weakness not strength.",
-      "MACD 37.57 over signal 23.83 keeps momentum bullish, supporting entry on the pullback rather than at the top."
+      "Price sits 45% above the 50-day ($1042) and 45% above the 200-day ($796) — golden cross intact.",
+      "MACD 37.56 over signal 23.83 confirms real momentum behind the move.",
+      "Volume is only 0.79x average on today's +3.76% day — no volume confirmation, so size stays starter, not full conviction.",
+      "Price is 1.94% off the 52-week high and ~2 ATR above the 50-day — extended, don't chase above $1165."
     ],
-    "entry": "$1095-1105 pullback zone (do not pay $1155)",
-    "size": "$1,870 (~15% of book) = ~1.7 shares at $1100",
-    "target": "$1250 (+13.6% from $1100 entry)",
-    "stop": "close below $1042 (50-day SMA, uptrend invalidation)"
+    "entry": "$1150-1160",
+    "size": "$1,250 (~10% of book) — starter size, capped because volume isn't confirming this breakout",
+    "target": "$1250 (+8%)",
+    "stop": "close below $1095 (-5.2%)"
   },
   "watch:c4e364e871ce": {
     "id": "watch:c4e364e871ce",
     "symbol": "AVGO",
     "side": "buy",
     "rule": "watchpoint",
-    "label": "Watchpoint: RSI \u2265 45",
-    "headline": "AVGO hit your watchpoint \u2014 RSI \u2265 45",
+    "label": "Watchpoint: RSI ≥ 45",
+    "headline": "AVGO hit your watchpoint — RSI ≥ 45",
     "what": "Buy AVGO only after RSI recovers above 45 from today's 39.7",
     "why": [
-      "You armed this on 2026-07-06 07:28: RSI \u2265 45.",
+      "You armed this on 2026-07-06 07:28: RSI ≥ 45.",
       "Current reading: RSI 45.7446."
     ],
     "target": "",
@@ -176,12 +176,12 @@
     "side": "buy",
     "rule": "runner-ignition",
     "label": "Live runner: +38% today",
-    "headline": "No new fact \u2014 still avoid",
-    "what": "Hold \u2014 no action; SEER is not held, not in plan, and price is -1.8% since the AVOID call, immaterial.",
+    "headline": "No new fact — still avoid",
+    "what": "Hold — no action; SEER is not held, not in plan, and price is -1.8% since the AVOID call, immaterial.",
     "why": [
-      "Price $2.23 vs $2.27 at last call \u2014 a 1.8% move, not the >4% needed to revisit",
-      "Still 5+ ATR extended above SMA20/50 ($1.73/$1.81) at RSI 76.8 \u2014 chasing is forbidden by plan rules",
-      "Trigger to reconsider: pullback into $1.73-$1.81 on confirming volume, sized \u22641% of book with a stop below that pullback low"
+      "Price $2.23 vs $2.27 at last call — a 1.8% move, not the >4% needed to revisit",
+      "Still 5+ ATR extended above SMA20/50 ($1.73/$1.81) at RSI 76.8 — chasing is forbidden by plan rules",
+      "Trigger to reconsider: pullback into $1.73-$1.81 on confirming volume, sized ≤1% of book with a stop below that pullback low"
     ],
     "entry": "",
     "size": "",
@@ -195,42 +195,16 @@
     "generated_at": "2026-07-06 14:05:53",
     "ts": 1783364742.5103347
   },
-  "plan:6a465159fdef:2026-07-06": {
-    "id": "plan:6a465159fdef:2026-07-06",
-    "symbol": "GEV",
-    "side": "buy",
-    "rule": "plan-reeval",
-    "label": "Reconsider staged plan",
-    "headline": "Volume missing, stock now extended",
-    "what": "Price cleared $1188.93 but volume is only 0.15x avg and stock is 2.8 ATR above SMA20 \u2014 chasing, don't buy here.",
-    "why": [
-      "Volume 0.1458x 20d avg, far short of the 1x confirmation the plan required",
-      "Price $1189.17 is 2.79 ATR above SMA20 ($1034.19) \u2014 beyond the 2 ATR chase limit",
-      "At 52w high with 34 analysts' mean target ($1212.33) only 1.95% above \u2014 thin reward for the extension"
-    ],
-    "target": "1145.36 (pullback to \u22642 ATR above SMA20) or a fresh volume-confirmed close >1188.93",
-    "stop": "",
-    "action": "HOLD",
-    "price": 1189.17,
-    "plan_text": "Do not buy the breakout yet; wait for a close above $1188.93 on volume at or above 1x average before entering.",
-    "move_pct": 0.2,
-    "theme": "Plan",
-    "held": true,
-    "dismissed": true,
-    "data_source": "live",
-    "generated_at": "2026-07-06 08:52:02",
-    "ts": 1783345889.3994906
-  },
   "watch:e4b0c1592c81": {
     "id": "watch:e4b0c1592c81",
     "symbol": "CIFR",
     "side": "sell",
     "rule": "watchpoint",
-    "label": "Watchpoint: price \u2265 $19",
-    "headline": "CIFR hit your watchpoint \u2014 price \u2265 $19",
+    "label": "Watchpoint: price ≥ $19",
+    "headline": "CIFR hit your watchpoint — price ≥ $19",
     "what": "Exit CIFR entirely on any bounce above $19; miner thesis already burned you.",
     "why": [
-      "You armed this on 2026-07-06 08:54: price \u2265 $19.",
+      "You armed this on 2026-07-06 08:54: price ≥ $19.",
       "Current reading: price $22.34."
     ],
     "target": "",
@@ -246,11 +220,11 @@
     "symbol": "AVGO",
     "side": "buy",
     "rule": "watchpoint",
-    "label": "Watchpoint: RSI \u2265 45",
-    "headline": "AVGO hit your watchpoint \u2014 RSI \u2265 45",
+    "label": "Watchpoint: RSI ≥ 45",
+    "headline": "AVGO hit your watchpoint — RSI ≥ 45",
     "what": "Buy AVGO only after RSI recovers above 45 (from 39.7).",
     "why": [
-      "You armed this on 2026-07-06 08:54: RSI \u2265 45.",
+      "You armed this on 2026-07-06 08:54: RSI ≥ 45.",
       "Current reading: RSI 46.7689."
     ],
     "target": "",
@@ -273,7 +247,7 @@
     "dismissed": true,
     "generated_at": "2026-07-06 09:27:29",
     "ts": 1783348046.9143484,
-    "headline": "ANET Setup Ready \u2014 Volume Not Yet Confirming",
+    "headline": "ANET Setup Ready — Volume Not Yet Confirming",
     "what": "Hold off chasing today's pop; place a buy-stop at $178 (above the 52-week high) sized to 1.5% risk, triggered only on volume confirmation.",
     "why": [
       "Today's 8.96% move came on just 0.2173x average volume, failing the momentum volume-confirmation rule.",
@@ -290,11 +264,11 @@
     "side": "buy",
     "rule": "runner-ignition",
     "label": "Live runner: +26% today",
-    "headline": "Extended low-float runner \u2014 do not chase",
-    "what": "Hold \u2014 no action; PEW is 3.3 ATR above its 20-day ($2.97 vs $2.463) on an 11.6x volume spike, not a current holding.",
+    "headline": "Extended low-float runner — do not chase",
+    "what": "Hold — no action; PEW is 3.3 ATR above its 20-day ($2.97 vs $2.463) on an 11.6x volume spike, not a current holding.",
     "why": [
-      "+26% today on 11.6x volume with RSI 68.9 and price ~3.3 ATR above SMA20 ($2.463) \u2014 textbook chase-forbidden extension",
-      "Death-cross regime (SMA50 $2.70 < SMA200 $3.36), stock down 82.7% from its $17.24 52w high \u2014 no established uptrend to buy into",
+      "+26% today on 11.6x volume with RSI 68.9 and price ~3.3 ATR above SMA20 ($2.463) — textbook chase-forbidden extension",
+      "Death-cross regime (SMA50 $2.70 < SMA200 $3.36), stock down 82.7% from its $17.24 52w high — no established uptrend to buy into",
       "Not part of the agreed plan's AI/Tech/Infra/Energy buckets; book is $12,555 with $3,851 cash earmarked for NVDA/AAPL/TSM, not a gun-retailer lottery ticket"
     ],
     "target": "If it pulls back to the $2.46 SMA20 (or lower) on shrinking volume, treat only as a lottery-ticket sleeve add capped at 1% of book (~$126).",
@@ -312,11 +286,11 @@
     "symbol": "AVGO",
     "side": "buy",
     "rule": "watchpoint",
-    "label": "Watchpoint: RSI \u2265 45",
-    "headline": "AVGO hit your watchpoint \u2014 RSI \u2265 45",
+    "label": "Watchpoint: RSI ≥ 45",
+    "headline": "AVGO hit your watchpoint — RSI ≥ 45",
     "what": "Buy AVGO only after RSI recovers above 45 from 39.7",
     "why": [
-      "You armed this on 2026-07-06 10:22: RSI \u2265 45.",
+      "You armed this on 2026-07-06 10:22: RSI ≥ 45.",
       "Current reading: RSI 45.02."
     ],
     "target": "",
@@ -333,15 +307,15 @@
     "side": "buy",
     "rule": "runner-ignition",
     "label": "Live runner: +27% today",
-    "headline": "No new fact \u2014 still avoid YDES",
-    "what": "Hold \u2014 no action; not a position, YDES isn't in the client's plan (Cash & Income theme mismatch), and price just drifted -4% to $2.42 with no level reclaim.",
+    "headline": "No new fact — still avoid YDES",
+    "what": "Hold — no action; not a position, YDES isn't in the client's plan (Cash & Income theme mismatch), and price just drifted -4% to $2.42 with no level reclaim.",
     "why": [
       "Prior call was AVOID at $2.52 after breaking the $2.70 SMA20 pullback level; $2.42 is a further breakdown, not a reversal",
       "Death-cross regime intact (price $2.42 well below SMA50 $3.88 and SMA200 $9.59), still -89.5% off 52w high",
-      "YDES isn't part of the agreed strategy or allocation targets \u2014 no capital committed, no risk to manage"
+      "YDES isn't part of the agreed strategy or allocation targets — no capital committed, no risk to manage"
     ],
     "target": "Only reconsider on a stabilizing pullback holding SMA20 ~$2.69 with volume tapering, not this breakdown.",
-    "stop": "N/A \u2014 no position; do not initiate here.",
+    "stop": "N/A — no position; do not initiate here.",
     "action": "AVOID",
     "price": 2.42,
     "theme": "Runner",
@@ -355,11 +329,11 @@
     "symbol": "AVGO",
     "side": "buy",
     "rule": "watchpoint",
-    "label": "Watchpoint: RSI \u2265 45",
-    "headline": "AVGO hit your watchpoint \u2014 RSI \u2265 45",
+    "label": "Watchpoint: RSI ≥ 45",
+    "headline": "AVGO hit your watchpoint — RSI ≥ 45",
     "what": "Buy AVGO only after RSI recovers above 45",
     "why": [
-      "You armed this on 2026-07-06 11:45: RSI \u2265 45.",
+      "You armed this on 2026-07-06 11:45: RSI ≥ 45.",
       "Current reading: RSI 45.3183."
     ],
     "target": "",
@@ -376,15 +350,15 @@
     "side": "buy",
     "rule": "runner-ignition",
     "label": "Live runner: +28% today",
-    "headline": "Not your name \u2014 chasing a 3-ATR microcap spike",
+    "headline": "Not your name — chasing a 3-ATR microcap spike",
     "what": "No entry: WRAP isn't in your book or plan; RSI 69.95 near the 70 cap and price already +26.95%/~3 ATR above prior close today.",
     "why": [
-      "RSI(14) 69.95 is at the 'never open new position above 70' line, and today's move (~$0.38) is roughly 3x the 0.1236 ATR \u2014 textbook extended, low-float (1.7M shares, $0.1B cap) runner",
-      "Price $1.79 is still below SMA50 1.391\u2192 wait, actually below SMA200 1.9507 in a death-cross regime \u2014 long-term trend is broken despite the pop, and this ticker has zero allocation in your plan (not AI/Tech/Infra/Energy/Compute/core-four bucket)",
-      "Book is $12,501 with $4,777 cash already earmarked for NVDA/AAPL/TSM per plan \u2014 no capital budgeted for a speculative microcap add"
+      "RSI(14) 69.95 is at the 'never open new position above 70' line, and today's move (~$0.38) is roughly 3x the 0.1236 ATR — textbook extended, low-float (1.7M shares, $0.1B cap) runner",
+      "Price $1.79 is still below SMA50 1.391→ wait, actually below SMA200 1.9507 in a death-cross regime — long-term trend is broken despite the pop, and this ticker has zero allocation in your plan (not AI/Tech/Infra/Energy/Compute/core-four bucket)",
+      "Book is $12,501 with $4,777 cash already earmarked for NVDA/AAPL/TSM per plan — no capital budgeted for a speculative microcap add"
     ],
     "target": "If still interested, wait for a pullback with volume into the $1.28-1.39 SMA20/50 zone before even lottery-ticket sizing (<=1% book, ~$125).",
-    "stop": "No position taken, so no stop \u2014 invalidation for a future entry would be a fresh low below the 52w low of $1.06.",
+    "stop": "No position taken, so no stop — invalidation for a future entry would be a fresh low below the 52w low of $1.06.",
     "action": "AVOID",
     "price": 1.8,
     "theme": "Runner",
@@ -398,17 +372,17 @@
     "symbol": "NEE",
     "side": "buy",
     "rule": "watchpoint",
-    "label": "Watchpoint: price \u2264 $88",
-    "headline": "Watchpoint hit \u2014 open the NEE starter",
+    "label": "Watchpoint: price ≤ $88",
+    "headline": "Watchpoint hit — open the NEE starter",
     "what": "Buy ~14 sh NEE (~$1,250, 10% Energy target) from the $4,777 cash bucket at $87.56; stop $85.00.",
     "why": [
-      "Your own armed level: price \u2264$88 triggered at $87.56, cash bucket ($4,777) more than covers it",
+      "Your own armed level: price ≤$88 triggered at $87.56, cash bucket ($4,777) more than covers it",
       "Golden-cross regime + MACD bullish intact, price still above SMA200 $85.63 despite sideways trend",
       "14 sh (~$1,250) keeps NEE under the 12% single-name cap and risk (~$36) far under the 1.5%/$188 ceiling",
-      "Your watchpoint: Watchpoint: price \u2264 $88."
+      "Your watchpoint: Watchpoint: price ≤ $88."
     ],
     "target": "Analyst mean target $99.20 (13.3% upside); trims/adds tracked toward 10% Energy weight.",
-    "stop": "Close below SMA200 $85.63 (use $85.00) invalidates the pullback thesis \u2014 exit if it breaks.",
+    "stop": "Close below SMA200 $85.63 (use $85.00) invalidates the pullback thesis — exit if it breaks.",
     "price": 87.56,
     "held": null,
     "dismissed": true,
@@ -421,14 +395,14 @@
     "symbol": "AVGO",
     "side": "buy",
     "rule": "watchpoint",
-    "label": "Watchpoint: RSI \u2265 45",
-    "headline": "No new fact since last call \u2014 stand pat",
-    "what": "Hold \u2014 no action; the $376.60 print is +0.1% since your 13:26 HOLD call, immaterial and add already done.",
+    "label": "Watchpoint: RSI ≥ 45",
+    "headline": "No new fact since last call — stand pat",
+    "what": "Hold — no action; the $376.60 print is +0.1% since your 13:26 HOLD call, immaterial and add already done.",
     "why": [
       "RSI 45.73 confirms the watchpoint but you already noted 'add already done' on this trigger",
-      "Price unchanged (+0.1%) since your prior HOLD at $376.38 \u2014 no new fact to act on",
-      "MACD still bearish (-10.84 vs -9.48) and volume just 0.412x average \u2014 no confirmation for further buying now",
-      "Your watchpoint: Watchpoint: RSI \u2265 45."
+      "Price unchanged (+0.1%) since your prior HOLD at $376.38 — no new fact to act on",
+      "MACD still bearish (-10.84 vs -9.48) and volume just 0.412x average — no confirmation for further buying now",
+      "Your watchpoint: Watchpoint: RSI ≥ 45."
     ],
     "target": "Mean target $523.73 (+39%) remains the thesis target if AI infrastructure demand holds.",
     "stop": "Re-thesis trigger is -25% from cost ($314.73); current -10.3% is well above that line.",
@@ -455,46 +429,20 @@
     "what": "WBX ripped +35% today and +40% over 5 days on 1.8x volume, now ~2.9 ATR above yesterday's close.",
     "why": [
       "RSI at 74.8 is deep overbought, typical of squeeze exhaustion rather than sustainable breakout momentum.",
-      "SMA50 $3.15 is still below SMA200 $3.43 \u2014 underlying trend structure remains bearish despite the spike.",
+      "SMA50 $3.15 is still below SMA200 $3.43 — underlying trend structure remains bearish despite the spike.",
       "Breakout score of only 40/100 signals weak technical quality behind the 1.8x volume move.",
-      "Price is still 22.5% below the 52-week high of $7.19 \u2014 no confirmed trend reversal yet."
+      "Price is still 22.5% below the 52-week high of $7.19 — no confirmed trend reversal yet."
     ],
-    "entry": "No new buy at $5.62 \u2014 too extended; only add on a pullback to $4.60-4.80",
-    "size": "Hold existing shares only; any add capped at 1% of book (~$125) \u2014 insufficient data on current WBX dollar size to size shares exactly",
-    "target": "$6.00-6.20 (round-number resistance) \u2014 trim a third of the position into this strength",
+    "entry": "No new buy at $5.62 — too extended; only add on a pullback to $4.60-4.80",
+    "size": "Hold existing shares only; any add capped at 1% of book (~$125) — insufficient data on current WBX dollar size to size shares exactly",
+    "target": "$6.00-6.20 (round-number resistance) — trim a third of the position into this strength",
     "stop": "Trail stop to close below $4.80 on existing shares (~-1 ATR, locks in most of the spike)"
-  },
-  "plan:531940bace1d:2026-07-06": {
-    "id": "plan:531940bace1d:2026-07-06",
-    "symbol": "GEV",
-    "side": "sell",
-    "rule": "plan-reeval",
-    "label": "Reconsider staged plan",
-    "headline": "Still no \u2014 stick with NEE instead",
-    "what": "No new fact since the AVOID call; volume remains light and entry still lacks confirmation, so skip GEV.",
-    "why": [
-      "Volume still only 0.7853x 20d avg \u2014 no confirmation for the staged entry or breakout add",
-      "Price $1152.73 barely moved (+0.6%) from staged level, no level break above $1174.86",
-      "Energy slot stays earmarked for NEE near $88 per standing call"
-    ],
-    "target": "",
-    "stop": "",
-    "action": "AVOID",
-    "price": 1155.0,
-    "plan_text": "Take a starter position in GEV near $1151.61, adding only on a volume-confirmed breakout above $1174.86.",
-    "move_pct": 0.6,
-    "theme": "Plan",
-    "held": true,
-    "dismissed": true,
-    "data_source": "live",
-    "generated_at": "2026-07-06 15:14:24",
-    "ts": 1783368848.146761
   },
   "WBX:rsi-sell-zone:2026-07-06": {
     "symbol": "WBX",
     "side": "sell",
     "rule": "rsi-sell-zone",
-    "label": "RSI in the sell zone on a held name \u2014 extended, consider taking profits",
+    "label": "RSI in the sell zone on a held name — extended, consider taking profits",
     "id": "WBX:rsi-sell-zone:2026-07-06",
     "price": 5.35,
     "theme": "Energy",
@@ -502,7 +450,7 @@
     "dismissed": true,
     "generated_at": "2026-07-06 15:16:53",
     "ts": 1783369010.3935626,
-    "headline": "WBX overbought spike \u2014 sell into strength now",
+    "headline": "WBX overbought spike — sell into strength now",
     "what": "Trim the WBX position into today's 28.61% spike; RSI 75 sell-zone signal, not a breakout to hold for.",
     "why": [
       "RSI 75.08 is deep in the sell zone after a 28.61% one-day spike.",
@@ -511,7 +459,7 @@
       "Trend is sideways and position is still net -2.4%, so sell the bounce."
     ],
     "entry": "$5.30-5.40 (current spike, sell into it)",
-    "size": "Sell 50-65% of shares now; exact dollar value insufficient data (shares/cost basis not provided) \u2014 do not add here.",
+    "size": "Sell 50-65% of shares now; exact dollar value insufficient data (shares/cost basis not provided) — do not add here.",
     "target": "$6.00-6.20 for the trimmed remainder before 52w high $7.19",
     "stop": "close below $4.80 on remaining shares"
   }

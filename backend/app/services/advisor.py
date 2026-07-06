@@ -830,14 +830,16 @@ def recommend(symbol: str, event: str, kind: str = "alert",
         book = (
             f"CLIENT'S ACTUAL BOOK: ${bv:,.0f} total (the WHOLE portfolio — never "
             f"assume a generic $100k), cash "
-            f"${summary.by_theme.get('Cash & Income', 0):,.0f}. FRACTIONAL SHARES "
-            f"ARE AVAILABLE: size in DOLLARS, any amount, share count may be "
-            f"fractional — do NOT round to whole shares. POSITION SIZE: a NEW or "
-            f"speculative/momentum name = 3-6% of book "
-            f"(${bv * 0.03:,.0f}-${bv * 0.06:,.0f}); a high-conviction CORE "
-            f"holding up to ~10%. ALSO cap loss at ~1.5% of book "
-            f"(${bv * 0.015:,.0f}) if stopped — use whichever dollar figure is "
-            f"SMALLER. NEVER exceed 15% of book in one name.")
+            f"${summary.by_theme.get('Cash & Income', 0):,.0f}. Fractional shares "
+            f"are available: size in DOLLARS (any amount), fractional share count "
+            f"is fine, never round to whole shares. SIZE TO CONVICTION AND RISK — "
+            f"do not default to a timid cap: a tentative or extended/chase setup "
+            f"gets a small starter (a few % of book), but a HIGH-conviction, "
+            f"thesis-backed setup can justify a meaningful position (10-20%+). "
+            f"Recommend the size you genuinely believe is CORRECT and say why. "
+            f"Anchor size to the stop (wider stop = smaller size) so a stop-out is "
+            f"a loss the book can absorb; don't over-concentrate the whole book in "
+            f"one name; never exceed the cash/book available.")
     else:
         book = ""
     strat = strategy_service.facts_block()

@@ -284,15 +284,17 @@ def scan() -> list[dict]:
             if book_val:
                 book_ctx = (
                     f"CLIENT'S ACTUAL BOOK: ${book_val:,.0f} total (the WHOLE "
-                    f"portfolio — never assume a generic $100k). FRACTIONAL "
-                    f"SHARES ARE AVAILABLE: size in DOLLARS, any amount, and let "
-                    f"share count be fractional — do NOT round to whole shares. "
-                    f"POSITION SIZE: a NEW or speculative/momentum name = 3-6% of "
-                    f"book (${book_val * 0.03:,.0f}-${book_val * 0.06:,.0f} here); "
-                    f"only a high-conviction CORE holding reaches ~10%. ALSO cap "
-                    f"loss at ~1.5% of book (${book_val * 0.015:,.0f}) if stopped "
-                    f"— use whichever dollar figure is SMALLER. NEVER exceed 15% "
-                    f"of book in one name.")
+                    f"portfolio — never assume a generic $100k). Fractional shares "
+                    f"are available: size in DOLLARS (any amount), fractional "
+                    f"share count is fine, never round to whole shares. SIZE TO "
+                    f"CONVICTION AND RISK — do not default to a timid cap: a "
+                    f"tentative or extended/chase setup gets a small starter (a "
+                    f"few % of book), but a HIGH-conviction, thesis-backed setup "
+                    f"can justify a meaningful position (10-20%+). Recommend the "
+                    f"size you genuinely believe is CORRECT and say why. Anchor "
+                    f"size to the stop (wider stop = smaller size) so a stop-out "
+                    f"is a loss the book can absorb; don't over-concentrate the "
+                    f"whole book in one name; never exceed the cash/book available.")
             reports = reports + pf_service.watchlist_reports()
             for r in reports:
                 items.append((r.symbol, r.indicators, r.quote,
