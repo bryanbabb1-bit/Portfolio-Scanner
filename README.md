@@ -195,3 +195,9 @@ Interactive docs: **http://localhost:8000/docs**
 This tool is for **research and educational purposes only**. It is **not
 personalized investment advice**. The "advisor" persona is an AI generating
 commentary from technical data. Do your own due diligence.
+
+## Usage
+
+```bash
+python3 main.py
+```
