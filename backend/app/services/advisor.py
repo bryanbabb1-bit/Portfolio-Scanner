@@ -828,12 +828,16 @@ def recommend(symbol: str, event: str, kind: str = "alert",
     if summary:
         bv = summary.total_market_value
         book = (
-            f"CLIENT'S ACTUAL BOOK: ${bv:,.0f} total (WHOLE portfolio — size to "
-            f"THIS, never a generic $100k), cash "
-            f"${summary.by_theme.get('Cash & Income', 0):,.0f}. 1.5% risk = "
-            f"${bv * 0.015:,.0f}; a new position rarely exceeds ~10-15% of book; "
-            f"for a high-priced share use a dollar amount and fractional shares; "
-            f"NEVER size a position bigger than the book.")
+            f"CLIENT'S ACTUAL BOOK: ${bv:,.0f} total (the WHOLE portfolio — never "
+            f"assume a generic $100k), cash "
+            f"${summary.by_theme.get('Cash & Income', 0):,.0f}. FRACTIONAL SHARES "
+            f"ARE AVAILABLE: size in DOLLARS, any amount, share count may be "
+            f"fractional — do NOT round to whole shares. POSITION SIZE: a NEW or "
+            f"speculative/momentum name = 3-6% of book "
+            f"(${bv * 0.03:,.0f}-${bv * 0.06:,.0f}); a high-conviction CORE "
+            f"holding up to ~10%. ALSO cap loss at ~1.5% of book "
+            f"(${bv * 0.015:,.0f}) if stopped — use whichever dollar figure is "
+            f"SMALLER. NEVER exceed 15% of book in one name.")
     else:
         book = ""
     strat = strategy_service.facts_block()

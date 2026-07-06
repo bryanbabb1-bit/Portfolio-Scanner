@@ -448,7 +448,7 @@
     "price": 5.62,
     "theme": "Energy",
     "held": true,
-    "dismissed": false,
+    "dismissed": true,
     "generated_at": "2026-07-06 15:12:51",
     "ts": 1783368770.3565428,
     "headline": "WBX spike is a squeeze, not a buy signal",
@@ -485,9 +485,34 @@
     "move_pct": 0.6,
     "theme": "Plan",
     "held": true,
-    "dismissed": false,
+    "dismissed": true,
     "data_source": "live",
     "generated_at": "2026-07-06 15:14:24",
     "ts": 1783368848.146761
+  },
+  "WBX:rsi-sell-zone:2026-07-06": {
+    "symbol": "WBX",
+    "side": "sell",
+    "rule": "rsi-sell-zone",
+    "label": "RSI in the sell zone on a held name \u2014 extended, consider taking profits",
+    "id": "WBX:rsi-sell-zone:2026-07-06",
+    "price": 5.35,
+    "theme": "Energy",
+    "held": true,
+    "dismissed": true,
+    "generated_at": "2026-07-06 15:16:53",
+    "ts": 1783369010.3935626,
+    "headline": "WBX overbought spike \u2014 sell into strength now",
+    "what": "Trim the WBX position into today's 28.61% spike; RSI 75 sell-zone signal, not a breakout to hold for.",
+    "why": [
+      "RSI 75.08 is deep in the sell zone after a 28.61% one-day spike.",
+      "Breakout score 33/100 shows this pop lacks structure, not a genuine breakout.",
+      "Price is roughly 4 ATR above the 3.1486 SMA50, an unsustainable extension.",
+      "Trend is sideways and position is still net -2.4%, so sell the bounce."
+    ],
+    "entry": "$5.30-5.40 (current spike, sell into it)",
+    "size": "Sell 50-65% of shares now; exact dollar value insufficient data (shares/cost basis not provided) \u2014 do not add here.",
+    "target": "$6.00-6.20 for the trimmed remainder before 52w high $7.19",
+    "stop": "close below $4.80 on remaining shares"
   }
 }

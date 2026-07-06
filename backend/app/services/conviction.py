@@ -283,12 +283,16 @@ def scan() -> list[dict]:
             book_val = summary.total_market_value
             if book_val:
                 book_ctx = (
-                    f"CLIENT'S ACTUAL BOOK: ${book_val:,.0f} total (this is the "
-                    f"WHOLE portfolio — size to THIS, never a generic $100k). "
-                    f"1.5% risk = ${book_val * 0.015:,.0f}. A single new position "
-                    f"should rarely exceed ~10-15% of the book. For a high-priced "
-                    f"share, give a DOLLAR amount and fractional shares; NEVER "
-                    f"recommend a position bigger than the book.")
+                    f"CLIENT'S ACTUAL BOOK: ${book_val:,.0f} total (the WHOLE "
+                    f"portfolio — never assume a generic $100k). FRACTIONAL "
+                    f"SHARES ARE AVAILABLE: size in DOLLARS, any amount, and let "
+                    f"share count be fractional — do NOT round to whole shares. "
+                    f"POSITION SIZE: a NEW or speculative/momentum name = 3-6% of "
+                    f"book (${book_val * 0.03:,.0f}-${book_val * 0.06:,.0f} here); "
+                    f"only a high-conviction CORE holding reaches ~10%. ALSO cap "
+                    f"loss at ~1.5% of book (${book_val * 0.015:,.0f}) if stopped "
+                    f"— use whichever dollar figure is SMALLER. NEVER exceed 15% "
+                    f"of book in one name.")
             reports = reports + pf_service.watchlist_reports()
             for r in reports:
                 items.append((r.symbol, r.indicators, r.quote,

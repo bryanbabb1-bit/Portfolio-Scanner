@@ -232,5 +232,14 @@
     "price": 1155.0,
     "ts": 1783368848.146761,
     "date": "2026-07-06"
+  },
+  {
+    "id": "WBX:rsi-sell-zone:2026-07-06",
+    "symbol": "WBX",
+    "side": "sell",
+    "rule": "rsi-sell-zone",
+    "price": 5.35,
+    "ts": 1783369010.3935626,
+    "date": "2026-07-06"
   }
 ]
