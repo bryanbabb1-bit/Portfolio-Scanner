@@ -51,7 +51,9 @@ def condition_str(wp: dict) -> str:
 
 
 def list_watchpoints(include_triggered: bool = True) -> list[dict]:
-    items = _load()
+    # Dismissed watchpoints are tombstones (kept only to stop the advisor from
+    # re-arming a condition the user deleted) — never shown.
+    items = [w for w in _load() if w.get("status") != "dismissed"]
     if not include_triggered:
         items = [w for w in items if w["status"] == "armed"]
     return sorted(items, key=lambda w: (w["status"] != "armed", -w.get("ts", 0)))
@@ -73,6 +75,19 @@ def add(symbol: str, kind: str, level: float, note: str = "",
                 continue
             # An identical ARMED tripwire is a duplicate — return it.
             if w["status"] == "armed":
+                return w
+            # The user DELETED this exact condition. The advisor's brief must
+            # not resurrect it ("AVGO keeps popping back up"). A manual re-add
+            # revives it deliberately.
+            if w["status"] == "dismissed":
+                if source == "advisor":
+                    return w
+                w["status"] = "armed"
+                w["ts"] = now
+                w.pop("dismissed_ts", None)
+                w.pop("triggered_ts", None)
+                w["triggered_at"] = None
+                _save(items)
                 return w
             # An identical condition that FIRED recently must NOT be re-armed:
             # it would instantly re-fire (the level is still met) and spam the
@@ -104,13 +119,18 @@ def add(symbol: str, kind: str, level: float, note: str = "",
 
 
 def delete(wp_id: str) -> bool:
+    """Dismiss a watchpoint. Kept as a tombstone (status='dismissed') so the
+    advisor's brief can't re-arm the same condition on the next scan — a
+    delete must actually stay deleted."""
     with _lock:
         items = _load()
-        kept = [w for w in items if w["id"] != wp_id]
-        if len(kept) == len(items):
-            return False
-        _save(kept)
-        return True
+        for w in items:
+            if w["id"] == wp_id:
+                w["status"] = "dismissed"
+                w["dismissed_ts"] = time.time()
+                _save(items)
+                return True
+        return False
 
 
 def _met(wp: dict, price: float | None, rsi: float | None) -> bool:

@@ -1,18 +1,1 @@
-[
-  {
-    "id": "6a465159fdef",
-    "symbol": "GEV",
-    "source": "signal",
-    "text": "Do not buy the breakout yet; wait for a close above $1188.93 on volume at or above 1x average before entering.",
-    "points": [
-      "If volume confirms on a subsequent push through $1188.93, first target is the round-number extension near $1250; no target stands without confirmation.",
-      "Setup is invalidated if price closes back below the 50-day SMA at $1042.94, or if no volume confirmation arrives within 2-3 sessions."
-    ],
-    "status": "open",
-    "price_at_pin": 1186.89,
-    "created_at": "2026-07-06 08:46:56",
-    "ts": 1783345616.8791437,
-    "watch_fired_ts": 1783345889.3994906,
-    "watch_fired_price": 1189.17
-  }
-]
+[]

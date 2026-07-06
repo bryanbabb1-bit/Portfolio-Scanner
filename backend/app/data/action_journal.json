@@ -713,5 +713,60 @@
     "note": "Watchpoint triggered (Watchpoint: RSI \u2265 45): buy when rsi reclaims 45",
     "source": "auto",
     "ts": 1783356694.4879262
+  },
+  {
+    "id": "b5718292de5f",
+    "date": "2026-07-06",
+    "symbol": "NEE",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Watchpoint triggered (Watchpoint: price \u2264 $88): Open NEE near $88 when cash frees on a pullback",
+    "source": "auto",
+    "ts": 1783361649.8662398
+  },
+  {
+    "id": "d42185df283c",
+    "date": "2026-07-06",
+    "symbol": "NEE",
+    "action": "buy",
+    "shares": 14.0,
+    "price": null,
+    "note": "Opened a new position",
+    "source": "auto",
+    "ts": 1783361982.2279234
+  },
+  {
+    "id": "be8deb3227c6",
+    "date": "2026-07-06",
+    "symbol": "AVGO",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Watchpoint triggered (Watchpoint: RSI \u2265 45): Buy AVGO once RSI recovers above 45 from 39.7",
+    "source": "auto",
+    "ts": 1783362444.6741476
+  },
+  {
+    "id": "bba115929eb2",
+    "date": "2026-07-06",
+    "symbol": "NVDA",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
+    "source": "pin",
+    "ts": 1783363206.0084043
+  },
+  {
+    "id": "1bd3d25ce312",
+    "date": "2026-07-06",
+    "symbol": "AVGO",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Watchpoint triggered (Watchpoint: RSI \u2265 45): buy when rsi reclaims 45",
+    "source": "auto",
+    "ts": 1783363206.9110093
   }
 ]

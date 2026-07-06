@@ -34,6 +34,26 @@ const LOCK_VIEWPORT = `(function(){
   m.setAttribute('content','width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover');
 })(); true;`;
 
+// Catch clicks on EXTERNAL links (news articles) and hand them to the native
+// layer to open in Safari — otherwise a target="_blank" article navigates the
+// WebView with no way back. Runs on every page; guards against double-binding.
+const LINK_INTERCEPT = `(function(){
+  if (window.__extLinkBound) return;
+  window.__extLinkBound = true;
+  document.addEventListener('click', function(e){
+    var el = e.target;
+    while (el && el.tagName !== 'A') el = el.parentElement;
+    if (!el || !el.href) return;
+    var href = String(el.href);
+    var external = (href.indexOf('http://') === 0 || href.indexOf('https://') === 0)
+                   && href.indexOf('watchdog.trueforecasting.app') === -1;
+    if (external && window.ReactNativeWebView) {
+      e.preventDefault();
+      window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'openExternal', url: href }));
+    }
+  }, true);
+})(); true;`;
+
 // Hybrid v1: the full web app runs in a WebView (already immersive + mobile
 // ready); the native layer adds push registration, a hard haptic buzz when a
 // slap arrives, and deep-linking a tapped notification to the right stock.
@@ -108,6 +128,13 @@ export default function App() {
           automaticallyAdjustContentInsets={false}
           scrollEnabled                           // inner page still scrolls
           injectedJavaScriptBeforeContentLoaded={LOCK_VIEWPORT}
+          injectedJavaScript={LINK_INTERCEPT}
+          onMessage={(e) => {
+            try {
+              const d = JSON.parse(e.nativeEvent.data || "{}");
+              if (d.type === "openExternal" && d.url) Linking.openURL(d.url).catch(() => {});
+            } catch {}
+          }}
           onShouldStartLoadWithRequest={(req) => {
             const url = req.url || "";
             // Keep our own app in the WebView; send external links (news

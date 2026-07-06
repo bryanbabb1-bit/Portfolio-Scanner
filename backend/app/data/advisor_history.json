@@ -1,56 +1,6 @@
 {
   "portfolio:brief": [
     {
-      "generated_at": "2026-07-06 08:53:11",
-      "summary": "Progress is real \u2014 miners trimmed 41%\u219217.5% (today's IREN +14.1%/CIFR +11.4% bounce inflated it), SGOV worked 35.8%\u2192~22.7%, and NVDA/AVGO/TSM adds are executed; the one live job left is finishing the standing CIFR exit, now firmly above the $19 trigger at ~$20.76 (2026-07-06).",
-      "insights": [
-        "Book is efficient but hot: beta 1.7, annualized vol 29.9%, Sharpe 1.21, max drawdown -24.6% \u2014 aggressive risk that matches your mandate, not excess.",
-        "Concentration is the watch item: top-5 = 60.7% and SGOV 24.7%, but SGOV is dry powder, so real single-name risk sits in the AI/semi cluster.",
-        "Miner sleeve IREN+CIFR = 17.5%, above your 10% guardrail; today's bounce (IREN +14.1%, CIFR +11.4%) inflated it, and the pending CIFR sale drops it to ~12%.",
-        "IREN -27.7% breaches your 25% re-thesis guardrail, but the $9.7B Microsoft AI-cloud contract and $3.65B facility are intact and it made no new low today (StocksToTrade, 2026-06-12).",
-        "Momentum leaders are working: AMD +7.9% (RSI 58, P/L +11.1%) and the broad +3.47% tape confirm risk-on; AMD stays a trailed winner, not a trim.",
-        "NVDA adds are done at $191, now $194.44, with earnings Aug 26 clearing your 2-day binary-event rule; nothing to add here (stockanalysis, 2026-07-05).",
-        "July's $300 TSM contribution is already executed (0.66 shares today), so TSM funding is on schedule toward the 10% target \u2014 next tranche is August."
-      ],
-      "actions": [
-        "Quick trade: Sell all CIFR ~$666 at market; $19 trigger hit.",
-        "Quick trade: Buy $250 AAPL only on daily close above $317.",
-        "Quick trade: Hold IREN; exit only on new low below cost.",
-        "Long game: Direct August's $300 into TSM at market."
-      ],
-      "risks": [
-        "IREN is a binary AI-cloud execution bet \u2014 tripwire: daily close below cost basis or prior $38.82 low forces full exit.",
-        "AI/semi concentration with beta 1.7 amplifies a market turn \u2014 tripwire: S&P closes below its 200-day, then halve size and raise cash.",
-        "CIFR's Strong-Buy tape and $30 target may tempt holding \u2014 tripwire: honor the $19 trigger; the miner thesis already burned you, exit stands.",
-        "TSM reports Q2 mid-July \u2014 tripwire: no new TSM adds within 2 days of the earnings date."
-      ]
-    },
-    {
-      "generated_at": "2026-07-06 10:21:33",
-      "summary": "Real progress: CIFR fully exited today, so the miner sleeve is now IREN alone at 12.1% (was 41%), and SGOV is worked down to 22.8% from 35.8% \u2014 the only cleanup left is trimming IREN's thin-float pop back under its 10% satellite cap.",
-      "insights": [
-        "Concentration eased hard: CIFR closed today leaves IREN as the sole miner at 12.1% ($1,515), down from 41% and already inside the <25% target \u2014 no further miner cuts needed.",
-        "SGOV worked from 35.8% to 22.8% ($2,850), just 2.8 points above the 20% target; it stays as dry powder, trimmed only into a 5%+ market pullback.",
-        "IREN's +12.7% today (TeraWulf/Anthropic $19B neocloud lease; IREN itself holds a Microsoft ~$9.7B and Nvidia $3.4B deal) pushed it past both the 10% satellite cap and the 12% single-stock guardrail.",
-        "Book runs hot but is paid for it: beta 1.58, vol 27.1%, top-5 = 64.3%, yet Sharpe 1.16 and tape +2.70% confirm a risk-on regime.",
-        "Semis carry the day: AMD +8.3% (P/L +11.5%, ~159% YTD into the July 22 Advancing AI event, fwd P/E ~75), AVGO +3.6% on the Apple chip deal extended to 2031 (~20% of AVGO sales locked).",
-        "Underwater names are thesis-intact not broken: MSFT -11.9% below trend (RSI 47.6, add nothing till August), NVDA -8.7% (adds done at $191), AVGO -11.0% with RSI recovered to 44.7.",
-        "AAPL RSI 62.8 sits in the 52-week-high zone but has not printed a breakout close \u2014 the $317 trigger is still unfilled."
-      ],
-      "actions": [
-        "Quick trade: Trim IREN ~$265 into the pop; hold ~$1,250 (10%).",
-        "Quick trade: Buy $250 AAPL only on daily close above $317; stop $300.",
-        "Long game: Direct August's $300 into TSM at market.",
-        "Hold all others \u2014 no further miner or SGOV cuts needed."
-      ],
-      "risks": [
-        "IREN thin-float whiplash \u2014 the float that gave +12.7% can give -90% with no bid; tripwire: daily close below the -28.6% cost basis = full exit.",
-        "Semis overextended \u2014 AMD fwd P/E ~75 into the July 22 event; tripwire: distribution day or close below the 50-day means trim, don't add.",
-        "Concentration/beta \u2014 top-5 at 64.3%, beta 1.58; tripwire: portfolio -15% from high pauses all buying and rebuilds cash to 25%.",
-        "MSFT persistent downtrend (-11.9%, below long-term trend); tripwire: no trend reclaim by early August forces written re-thesis or exit."
-      ]
-    },
-    {
       "generated_at": "2026-07-06 11:44:56",
       "summary": "Progress is real: miners cut from 41% to 10.1% (IREN $1,270, CIFR fully exited) and SGOV worked from 35.8% to ~22.7% \u2014 the de-risking plan is essentially executed, so this is a patience week, not a trading one.",
       "insights": [
@@ -73,6 +23,57 @@
         "IREN thin float \u2014 the +14.5% that pops can drop -90% with no bid; tripwire: new low below cost basis = permanent exit.",
         "Regime/beta 1.52 amplifies downside; tripwire: benchmark closing below its 200-day \u2192 halve new size, rebuild cash.",
         "MSFT -12.1% and below trend; tripwire: downtrend persists past early August \u2192 written re-thesis or exit."
+      ]
+    },
+    {
+      "generated_at": "2026-07-06 13:13:27",
+      "summary": "Progress is real and essentially complete: CIFR fully exited and IREN trimmed to $1,259 (10.06%), so miners went from 41% to cap, and SGOV is worked down to 22.8% from 35.8% \u2014 this is a patience week, not a trading one.",
+      "insights": [
+        "Miner sleeve is IREN-only at 10.06% ($1,259 of $12,512), right at the 10% satellite cap \u2014 the de-risk is done, no further cuts owed.",
+        "SGOV is 22.8% ($2,850), down from 35.8%, already inside the 20% long-term target range \u2014 deploy only in $500-750 tranches on 5%+ market pullbacks.",
+        "Concentration is acceptable: largest position SGOV 22.8%, top-5 63.4%, and no single equity exceeds the 12% guardrail.",
+        "Beta 1.52 and annualized vol 25.2% remain elevated for aggressive risk, but Sharpe 1.18 and today's +2.48% show the AI-compute tilt is paying.",
+        "Momentum is broadly green: AMD +7.3% (RSI 57.8, uptrend, P/L +10.5%), AVGO +4.4%, TSM +4.6% \u2014 winners are running, don't touch them.",
+        "IREN's +13.4% pop (RSI 39.6, still -28.1% P/L) is thin-float noise, not a thesis change \u2014 it stays capped, exit only on a new low below cost.",
+        "MSFT -1.3% (RSI 47.6, downtrend, P/L -11.9%) is the one laggard; it holds but earns nothing new until it reclaims its long-term trend."
+      ],
+      "actions": [
+        "Hold \u2014 no action; book is correctly positioned after de-risking is complete.",
+        "Quick trade: Buy $250 AAPL only on daily close above $317; stop $300.",
+        "Quick trade: Trim IREN only if it exceeds 10% cap; else hold.",
+        "Long game: Direct August's $300 into TSM at market.",
+        "Long game: Open NEE near $88 when cash frees on a pullback."
+      ],
+      "risks": [
+        "IREN thin float can round-trip the pop; tripwire is a new low below current cost \u2014 exit permanently there.",
+        "Portfolio beta 1.52 amplifies a market rollover; tripwire is a 15% drawdown from high, which pauses all buying.",
+        "MSFT downtrend persisting; tripwire is no trend reclaim by early August, forcing a re-thesis or exit.",
+        "SGOV RSI 81 is meaningless for cash, but any drop below 15% dry powder before $20K is a guardrail breach to avoid."
+      ]
+    },
+    {
+      "generated_at": "2026-07-06 13:26:36",
+      "summary": "De-risking is essentially complete \u2014 miners cut from 41% to IREN-only 10.05% (at cap), SGOV worked from 35.8% to 22.8%, and today's 14-share NEE buy fills Energy to ~9.8% of its 10% target; this is a patience week.",
+      "insights": [
+        "Regime is risk-on: S&P 500 ~7,365 sits above its 200-day (~6,895) with strong breadth, so leaning into quality AI names remains correct (Investing.com, Jul 2026).",
+        "Concentration is the main risk, not direction: SGOV 22.8% is the largest position and top-5 = 60.6%, but no single equity breaches the 12% guardrail.",
+        "Book beta 1.35 and 22.7% vol with Sharpe 1.23 is aggressive-appropriate given the 2-year $25k goal needing ~13% annualized.",
+        "AMD is your standout winner (+7.5% today, +10.7% P/L, RSI 57.97) with an AI summit Jul 22-23 as a live catalyst \u2014 trail it, don't trim (Motley Fool, Jul 5 2026).",
+        "IREN's +13.5% pop is news-driven: Jefferies initiated Buy $79, Russell 1000 inclusion, and the Nostrum 490MW deal \u2014 but P/L is still -28.1%, so it stays a capped satellite (Timothy Sykes, Jul 6 2026).",
+        "SGOV RSI 81 'overbought' is noise for a T-bill ETF; it is dry powder (~23%) to deploy only into 5%+ market pullbacks, not a sell signal.",
+        "MSFT remains the laggard (-11.7%, RSI 47.9, downtrend) with weak Xbox-segment headlines \u2014 hold, add nothing, reassess in August."
+      ],
+      "actions": [
+        "Hold \u2014 no action; book is de-risked and at allocation targets.",
+        "Quick trade: Buy $250 AAPL on daily close above $317; stop $300.",
+        "Long game: Direct August's $300 into TSM at market.",
+        "Quick trade: Exit IREN only on new low below cost; else hold at cap."
+      ],
+      "risks": [
+        "Concentration: top-5 = 60.6% \u2014 trim only if any single name breaches the 12% cap.",
+        "IREN reversal on thin float: exit permanently on any daily close below its -28.1% cost-basis low.",
+        "AMD event risk: no new adds within 2 days of the Jul 22-23 summit; trail stop under recent swing low.",
+        "Portfolio-level: if total value drops 15% from high, pause buying and rebuild Cash & Income to 25%."
       ]
     }
   ],
@@ -146,6 +147,32 @@
         "MACD stays bearish below signal, risking a deeper slide toward 200-day support.",
         "Unconfirmed earnings date could trigger the binary-event freeze on new NVDA adds.",
         "Five recent adds have concentrated size \u2014 confirm total NVDA weight stays within book risk limits."
+      ]
+    }
+  ],
+  "stock:NEE": [
+    {
+      "generated_at": "2026-07-06 13:16:41",
+      "summary": "Nothing material since my last call \u2014 NEE flat at $87.52, levels intact, so the pullback-buy near $88 with an $85 stop still stands. New wrinkle: a ~$67B all-stock Dominion acquisition and earnings in ~2-3 weeks now sit inside the thesis.",
+      "insights": [
+        "RSI 50.5 is dead neutral \u2014 no momentum edge, this is a mean-reversion structure play, not a breakout.",
+        "MACD -0.06 sits above signal -0.41 with histogram +0.34 turning up \u2014 an early, still-unconfirmed bullish cross.",
+        "Price $87.52 wedged between SMA20 $86.53 and SMA50 $89.28; golden-cross regime intact above SMA200 $85.63.",
+        "Volume 0.29x the 20-day average \u2014 thin, low-conviction tape; the MACD cross lacks the volume to trust yet.",
+        "Down 9.9% from the $97.17 52w high with ATR $1.69 \u2014 not extended, entry near $88 is not chasing.",
+        "Analyst consensus still Buy, mean target ~$99 (13% upside); Morgan Stanley raised to $117 (2026-06-24), Erste cut to Hold (2026-06-25)."
+      ],
+      "actions": [
+        "Buy 14 sh NEE ~$87.52 (~$1,250); stop $85.00.",
+        "Add toward 10% Energy weight only on dips to $86.",
+        "Flag NEE earnings ~July 22-29; no adds inside two days.",
+        "Exit NEE on any close below $85 SMA200."
+      ],
+      "risks": [
+        "~$67B all-stock Dominion deal (announced) adds dilution/integration risk \u2014 a close below $85 invalidates the entry.",
+        "Q2 earnings ~July 22-29 is a binary event against FY guidance $3.92-4.02; do not add within two days.",
+        "0.29x volume means the bullish MACD cross can fail on no participation \u2014 needs volume to confirm.",
+        "Erste downgrade to Hold (2026-06-25) and a rejection at SMA50 $89.28 would cap the move short of target."
       ]
     }
   ]

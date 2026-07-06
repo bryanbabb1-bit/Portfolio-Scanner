@@ -187,5 +187,32 @@
     "price": 375.37,
     "ts": 1783356345.288633,
     "date": "2026-07-06"
+  },
+  {
+    "id": "WRAP:runner-ignition:2026-07-06",
+    "symbol": "WRAP",
+    "side": "buy",
+    "rule": "runner-ignition",
+    "price": 1.8,
+    "ts": 1783359224.1122854,
+    "date": "2026-07-06"
+  },
+  {
+    "id": "watch:f4104fb0627e",
+    "symbol": "NEE",
+    "side": "buy",
+    "rule": "watchpoint",
+    "price": 87.56,
+    "ts": 1783361649.837822,
+    "date": "2026-07-06"
+  },
+  {
+    "id": "watch:d08ba1322a31",
+    "symbol": "AVGO",
+    "side": "buy",
+    "rule": "watchpoint",
+    "price": 376.6,
+    "ts": 1783362444.6724803,
+    "date": "2026-07-06"
   }
 ]

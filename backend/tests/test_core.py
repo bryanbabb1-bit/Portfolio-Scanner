@@ -702,3 +702,19 @@ def test_watchpoint_no_rearm_after_trigger(tmp_path, monkeypatch):
     assert b["id"] == a["id"]
     assert len([w for w in wp.list_watchpoints() if w["symbol"] == "AVGO"]) == 1
     assert wp.check({"AVGO": (375.0, 46.0)}) == []       # and never re-fires
+
+
+def test_watchpoint_dismiss_blocks_advisor_rearm(tmp_path, monkeypatch):
+    """Deleting a game-plan watchpoint must stick — the advisor's brief can't
+    re-arm it ('AVGO keeps popping back up'), but a manual re-add revives it."""
+    from app.services import watchpoints as wp
+    monkeypatch.setattr(wp, "_FILE", tmp_path / "wp.json")
+    a = wp.add("AVGO", "rsi_above", 45.0, source="advisor")
+    assert wp.delete(a["id"]) is True
+    assert wp.list_watchpoints() == []                    # gone from the list
+    b = wp.add("AVGO", "rsi_above", 45.0, source="advisor")  # brief tries again
+    assert b["status"] == "dismissed"                     # suppressed
+    assert wp.list_watchpoints() == []
+    c = wp.add("AVGO", "rsi_above", 45.0, source="manual")   # user re-adds
+    assert c["status"] == "armed"
+    assert len(wp.list_watchpoints()) == 1
