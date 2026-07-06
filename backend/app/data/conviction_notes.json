@@ -131,22 +131,24 @@
     "rule": "high-conviction-discovery",
     "label": "New-name setup: breakout readiness in the top tier",
     "id": "GEV:high-conviction-discovery:2026-07-06",
-    "price": 1151.61,
+    "price": 1155.0,
     "theme": "Energy",
     "held": false,
-    "dismissed": true,
-    "generated_at": "2026-07-06 13:42:45",
-    "ts": 1783363362.3696783,
-    "headline": "GEV Coiling Under 52-Week High",
-    "what": "Take a starter position in GEV near $1151.61, adding only on a volume-confirmed breakout above $1174.86.",
+    "dismissed": false,
+    "generated_at": "2026-07-06 15:13:31",
+    "ts": 1783368770.3565428,
+    "headline": "GEV extended \u2014 buy the dip, not the high",
+    "what": "Do not chase GEV at $1155; wait for a pullback into $1095-1105 before entering.",
     "why": [
-      "Price is 1.98% below the 52-week high of $1174.86, up 3.46% today.",
-      "Uptrend confirmed: price holds above the rising 50-day ($1042.19) and 200-day ($796.38) SMAs.",
-      "MACD is bullish at 37.52 over 23.82 with RSI at 60.47, leaving room before overbought.",
-      "Volume is only 0.59x average, so this breakout lacks confirmation \u2014 size down until volume follows."
+      "Price is 2.02 ATR above the 50-day SMA ($1042.20) \u2014 that's beyond the 2-ATR chase limit.",
+      "Volume is only 0.7853x average, so today's breakout lacks confirmation.",
+      "GEV sits 1.93% off its 52-week high ($1174.86) with SMA50>SMA200 and RSI 60.5 \u2014 trend is intact, buy weakness not strength.",
+      "MACD 37.57 over signal 23.83 keeps momentum bullish, supporting entry on the pullback rather than at the top."
     ],
-    "target": "First target is the 52-week high of $1174.86, with extension toward $1230.73 (+1 ATR) on a confirmed breakout.",
-    "stop": "Invalidated on a close below the 50-day SMA near $1042.19, roughly 2 ATR under current price."
+    "entry": "$1095-1105 pullback zone (do not pay $1155)",
+    "size": "$1,870 (~15% of book) = ~1.7 shares at $1100",
+    "target": "$1250 (+13.6% from $1100 entry)",
+    "stop": "close below $1042 (50-day SMA, uptrend invalidation)"
   },
   "watch:c4e364e871ce": {
     "id": "watch:c4e364e871ce",
@@ -189,7 +191,7 @@
     "price": 2.235,
     "theme": "Runner",
     "held": false,
-    "dismissed": false,
+    "dismissed": true,
     "generated_at": "2026-07-06 14:05:53",
     "ts": 1783364742.5103347
   },
@@ -436,5 +438,56 @@
     "generated_at": "2026-07-06 13:27:24",
     "ts": 1783362444.6724803,
     "action": "HOLD"
+  },
+  "WBX:momentum-ignition:2026-07-06": {
+    "symbol": "WBX",
+    "side": "buy",
+    "rule": "momentum-ignition",
+    "label": "Momentum ignition: +40% in 5 days on 1.8x volume",
+    "id": "WBX:momentum-ignition:2026-07-06",
+    "price": 5.62,
+    "theme": "Energy",
+    "held": true,
+    "dismissed": false,
+    "generated_at": "2026-07-06 15:12:51",
+    "ts": 1783368770.3565428,
+    "headline": "WBX spike is a squeeze, not a buy signal",
+    "what": "WBX ripped +35% today and +40% over 5 days on 1.8x volume, now ~2.9 ATR above yesterday's close.",
+    "why": [
+      "RSI at 74.8 is deep overbought, typical of squeeze exhaustion rather than sustainable breakout momentum.",
+      "SMA50 $3.15 is still below SMA200 $3.43 \u2014 underlying trend structure remains bearish despite the spike.",
+      "Breakout score of only 40/100 signals weak technical quality behind the 1.8x volume move.",
+      "Price is still 22.5% below the 52-week high of $7.19 \u2014 no confirmed trend reversal yet."
+    ],
+    "entry": "No new buy at $5.62 \u2014 too extended; only add on a pullback to $4.60-4.80",
+    "size": "Hold existing shares only; any add capped at 1% of book (~$125) \u2014 insufficient data on current WBX dollar size to size shares exactly",
+    "target": "$6.00-6.20 (round-number resistance) \u2014 trim a third of the position into this strength",
+    "stop": "Trail stop to close below $4.80 on existing shares (~-1 ATR, locks in most of the spike)"
+  },
+  "plan:531940bace1d:2026-07-06": {
+    "id": "plan:531940bace1d:2026-07-06",
+    "symbol": "GEV",
+    "side": "sell",
+    "rule": "plan-reeval",
+    "label": "Reconsider staged plan",
+    "headline": "Still no \u2014 stick with NEE instead",
+    "what": "No new fact since the AVOID call; volume remains light and entry still lacks confirmation, so skip GEV.",
+    "why": [
+      "Volume still only 0.7853x 20d avg \u2014 no confirmation for the staged entry or breakout add",
+      "Price $1152.73 barely moved (+0.6%) from staged level, no level break above $1174.86",
+      "Energy slot stays earmarked for NEE near $88 per standing call"
+    ],
+    "target": "",
+    "stop": "",
+    "action": "AVOID",
+    "price": 1155.0,
+    "plan_text": "Take a starter position in GEV near $1151.61, adding only on a volume-confirmed breakout above $1174.86.",
+    "move_pct": 0.6,
+    "theme": "Plan",
+    "held": true,
+    "dismissed": false,
+    "data_source": "live",
+    "generated_at": "2026-07-06 15:14:24",
+    "ts": 1783368848.146761
   }
 }

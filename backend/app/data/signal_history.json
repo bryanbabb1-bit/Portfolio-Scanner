@@ -214,5 +214,23 @@
     "price": 376.6,
     "ts": 1783362444.6724803,
     "date": "2026-07-06"
+  },
+  {
+    "id": "WBX:momentum-ignition:2026-07-06",
+    "symbol": "WBX",
+    "side": "buy",
+    "rule": "momentum-ignition",
+    "price": 5.6,
+    "ts": 1783366013.7744708,
+    "date": "2026-07-06"
+  },
+  {
+    "id": "plan:531940bace1d:2026-07-06",
+    "symbol": "GEV",
+    "side": "sell",
+    "rule": "plan-reeval",
+    "price": 1155.0,
+    "ts": 1783368848.146761,
+    "date": "2026-07-06"
   }
 ]

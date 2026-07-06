@@ -176,8 +176,9 @@ def _facts(sym: str, ind, quote, held: bool, pl_pct, score: float,
 
 
 # -------------------------------------------------------------- enrichment
-def _enrich(sig: dict, facts: str) -> dict:
-    """One standard-tier Claude call to write the what/why/target."""
+def _enrich(sig: dict, facts: str, book_ctx: str = "") -> dict:
+    """One standard-tier Claude call to write the what/why/target — sized to
+    the client's ACTUAL book (book_ctx), never a generic portfolio."""
     from . import advisor
 
     side_word = "BUYING OPPORTUNITY" if sig["side"] == "buy" else "STRONG SELL SIGNAL"
@@ -195,7 +196,7 @@ def _enrich(sig: dict, facts: str) -> dict:
 
     prompt = (
         f"{advisor._PERSONA}\n\nA high-conviction {side_word} rule just fired "
-        f"for a client:\nRule: {sig['label']}\n\n{facts}\n\n"
+        f"for a client:\nRule: {sig['label']}\n\n{facts}\n\n{book_ctx}\n\n"
         f"Write the alert — DECISIVE and concrete, no dancing. Respond with ONLY "
         f"a JSON object, no markdown: "
         f'{{"headline": punchy alert headline under 10 words, '
@@ -276,8 +277,18 @@ def scan() -> list[dict]:
 
         # Unify holdings + watchlist (full reports) and Discovery (light).
         items: list[tuple] = []
+        book_ctx = ""
         try:
-            _, reports = pf_service.portfolio_summary()
+            summary, reports = pf_service.portfolio_summary()
+            book_val = summary.total_market_value
+            if book_val:
+                book_ctx = (
+                    f"CLIENT'S ACTUAL BOOK: ${book_val:,.0f} total (this is the "
+                    f"WHOLE portfolio — size to THIS, never a generic $100k). "
+                    f"1.5% risk = ${book_val * 0.015:,.0f}. A single new position "
+                    f"should rarely exceed ~10-15% of the book. For a high-priced "
+                    f"share, give a DOLLAR amount and fractional shares; NEVER "
+                    f"recommend a position bigger than the book.")
             reports = reports + pf_service.watchlist_reports()
             for r in reports:
                 items.append((r.symbol, r.indicators, r.quote,
@@ -316,7 +327,7 @@ def scan() -> list[dict]:
                     "generated_at": time.strftime("%Y-%m-%d %H:%M:%S"),
                     "ts": now,
                 })
-                enriched = _enrich(sig, _facts(sym, ind, quote, held, pl, score, theme))
+                enriched = _enrich(sig, _facts(sym, ind, quote, held, pl, score, theme), book_ctx)
                 notes[sig_id] = enriched
                 fired[cool_key] = today
 

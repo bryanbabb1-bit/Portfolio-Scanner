@@ -1,7 +1,7 @@
 {
   "owner": "You",
   "advisor_persona": "senior financial advisor at Charles Schwab",
-  "cash": 699.52,
+  "cash": 500.52,
   "themes": {
     "AI": "Companies building or monetizing artificial intelligence models and applications",
     "Tech": "Broad technology leaders and platforms",
@@ -87,6 +87,12 @@
       "symbol": "NEE",
       "shares": 14.0,
       "cost_basis": 87.63,
+      "theme": null
+    },
+    {
+      "symbol": "WBX",
+      "shares": 36.31386,
+      "cost_basis": 5.48,
       "theme": null
     }
   ],

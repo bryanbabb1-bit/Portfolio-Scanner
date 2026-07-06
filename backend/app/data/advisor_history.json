@@ -1,31 +1,6 @@
 {
   "portfolio:brief": [
     {
-      "generated_at": "2026-07-06 11:44:56",
-      "summary": "Progress is real: miners cut from 41% to 10.1% (IREN $1,270, CIFR fully exited) and SGOV worked from 35.8% to ~22.7% \u2014 the de-risking plan is essentially executed, so this is a patience week, not a trading one.",
-      "insights": [
-        "Beta 1.52 and 25.2% annualized vol are aggressive but earn their keep at Sharpe 1.19; max drawdown -21.2% sits just inside your 15%-from-high guardrail's comfort zone.",
-        "Concentration is the standing issue: SGOV ~22.7% ($2,851) leads and top-5 = 63.4%, but no single stock breaches the 12% cap \u2014 IREN sits right at 10.1%.",
-        "Miner sleeve is now IREN alone at 10.1% ($1,270), at your satellite cap; today's +14.5% is a thin-float pop on RSI 40 sideways, not a trend \u2014 do not confuse the bounce for a base.",
-        "Momentum leaders are healthy and owned: AMD +8% RSI 58 uptrend (+11.2% P/L), MU RSI 50 uptrend, TSM RSI 56 uptrend \u2014 winners you should let run, not trim.",
-        "SGOV RSI 81.8 'overbought' is a cash-ETF artifact, not a sell signal; it remains dry powder for 5%+ pullbacks.",
-        "Two laggards need watching not action: MSFT -12.1% below trend (downtrend, jobs-cut headline) and AVGO -10.6%, though AVGO's RSI recovered above 45 and the Apple deal is a real catalyst.",
-        "Discovery names GEV, CRWD (RSI 75.6), PANW (RSI 80.3) are either extended or blocked by your no-entry-above-RSI-70 rule \u2014 no chase here."
-      ],
-      "actions": [
-        "Hold \u2014 no action; book is correctly positioned after de-risking is complete.",
-        "Quick trade: Buy $250 AAPL only on daily close above $317; stop $300.",
-        "Long game: Direct August's $300 into TSM at market.",
-        "Quick trade: Exit IREN only on new low below cost; else hold at cap."
-      ],
-      "risks": [
-        "Concentration \u2014 SGOV ~23% plus top-5 63.4%; tripwire: any single name closing above 12% forces a trim.",
-        "IREN thin float \u2014 the +14.5% that pops can drop -90% with no bid; tripwire: new low below cost basis = permanent exit.",
-        "Regime/beta 1.52 amplifies downside; tripwire: benchmark closing below its 200-day \u2192 halve new size, rebuild cash.",
-        "MSFT -12.1% and below trend; tripwire: downtrend persists past early August \u2192 written re-thesis or exit."
-      ]
-    },
-    {
       "generated_at": "2026-07-06 13:13:27",
       "summary": "Progress is real and essentially complete: CIFR fully exited and IREN trimmed to $1,259 (10.06%), so miners went from 41% to cap, and SGOV is worked down to 22.8% from 35.8% \u2014 this is a patience week, not a trading one.",
       "insights": [
@@ -74,6 +49,32 @@
         "IREN reversal on thin float: exit permanently on any daily close below its -28.1% cost-basis low.",
         "AMD event risk: no new adds within 2 days of the Jul 22-23 summit; trail stop under recent swing low.",
         "Portfolio-level: if total value drops 15% from high, pause buying and rebuild Cash & Income to 25%."
+      ]
+    },
+    {
+      "generated_at": "2026-07-06 15:10:01",
+      "summary": "Progress is essentially complete \u2014 you fully exited CIFR and trimmed IREN to $1,265 (10.1%), so miner exposure went from 41% to the 10% cap, and SGOV is worked down to 22.8% from 35.8%; the only live trade is trimming WBX into today's +27% dilution-driven pop.",
+      "insights": [
+        "De-risking is done: miners 41%\u219210.1% (IREN $1,265, at cap), SGOV 35.8%\u219222.8%, so no further cuts are needed \u2014 this is a hold-and-collect week.",
+        "Concentration is acceptable \u2014 SGOV 23.7% is cash dry powder, top-5 59.6%, and no operating stock exceeds 12%, satisfying your single-name guardrail.",
+        "WBX popped +27% today into RSI 74.8 after a court-final restructuring (June 25) and \u20ac15.8M dilutive equity raise \u2014 a distressed EV-charger, not a compounder; take the gift (Globe and Mail, Jul 2 2026).",
+        "IREN's +14% is thesis fuel not a rescue: the NVIDIA $3.4B deal and 839% YoY AI revenue support the data-center pivot, but RSI 39.4 and -27.7% P/L keep it a satellite (stockanalysis.com, 2026).",
+        "AVGO (RSI 44.8, -10.9%) and NVDA (RSI 42.0, -8.8%) each gave back ~12-20% over the past month yet hold Buy consensus \u2014 your adds are done, so sit; don't add more (24/7 Wall St, Jul 1 2026).",
+        "Momentum split is healthy: AMD +9.6% (RSI 57, uptrend) and MELI/AAPL green run; the weak sleeve (MSFT -11.5%, downtrend) is correctly frozen until August.",
+        "Beta 1.35 and 22.7% vol with Sharpe 1.19 is appropriate for your aggressive 13%-annualized path to $25K; NEE at ~10% Energy adds lower-beta ballast."
+      ],
+      "actions": [
+        "Quick trade: Trim WBX $100 into pop; stop $4.60.",
+        "Long game: Direct July/August $300 into TSM at market.",
+        "Hold core \u2014 no adds; AVGO/NVDA/NEE builds already complete.",
+        "Quick trade: Buy $250 AAPL only on daily close above $317; stop $300.",
+        "Quick trade: Exit IREN only on new low below cost; else hold at cap."
+      ],
+      "risks": [
+        "WBX thin float can round-trip the +27% pop as fast as it came \u2014 trip: any close back below $4.60 exit the spec stub entirely.",
+        "IREN is your -27.7% loser at the 10% cap \u2014 trip: a new closing low below cost forces permanent exit, no averaging down.",
+        "MSFT downtrend (-11.5%, below 200-day) could deepen \u2014 trip: reassess for exit if still below trend past early August.",
+        "SGOV RSI 81.5 signals a possible rate-cut/duration shift \u2014 trip: only redeploy dry powder into a 5%+ market pullback, in $500-750 tranches."
       ]
     }
   ],
@@ -173,6 +174,32 @@
         "Q2 earnings ~July 22-29 is a binary event against FY guidance $3.92-4.02; do not add within two days.",
         "0.29x volume means the bullish MACD cross can fail on no participation \u2014 needs volume to confirm.",
         "Erste downgrade to Hold (2026-06-25) and a rejection at SMA50 $89.28 would cap the move short of target."
+      ]
+    }
+  ],
+  "stock:WBX": [
+    {
+      "generated_at": "2026-07-06 14:28:36",
+      "summary": "Distressed EV-charging name just diluted via a court-backed restructuring, yet popped +34% into overbought \u2014 take the gift, keep it spec-sized, not core.",
+      "insights": [
+        "RSI 74.97 is deeply overbought and price is above the upper Bollinger \u2014 a stretched, chase-forbidden spike.",
+        "Price $5.60 sits ~5.8x the SMA20 of 3.54 and 1.8x SMA50 3.15 \u2014 vertical, mean-reversion pull toward $3.5-4 likely.",
+        "MACD 0.394 over signal 0.262 (hist +0.132) confirms momentum, but volume 1.76x avg on a +34% day screams blow-off, not accumulation.",
+        "Death-cross regime (SMA50 3.15 < SMA200 3.43) means this is a counter-trend pop, not a trend change.",
+        "Web (Jul 2 2026): court-final restructuring plus ~\u20ac15.8M equity raise = fresh dilution; last analyst rating Hold, $4 target \u2014 below current price.",
+        "Q1 2026 (May 6) revenue \u20ac29.7M with adj. EBITDA still -\u20ac6.0M; Q2 guide -\u20ac5M to -\u20ac3M \u2014 burning cash, negative equity."
+      ],
+      "actions": [
+        "Trim half WBX into $5.60 spike; stop $4.85.",
+        "Cap WBX at 1% of book; no adds.",
+        "Hold remainder on trailed stop $4.85; take profits.",
+        "Flag WBX Q2 report early August; no new entry."
+      ],
+      "risks": [
+        "Blow-off reversal: RSI 74.97 and above-upper-Bollinger extension unwind fast on thin, post-restructuring float.",
+        "Dilution overhang: the ~\u20ac15.8M July equity raise caps upside toward the $4 analyst target.",
+        "Mean-reversion gap: price 5.8x above SMA20 3.54 invites a snap toward $3.5-4.",
+        "Solvency/burn: negative equity and Q2 adj. EBITDA guide of -\u20ac5M to -\u20ac3M keep this a trade, not an investment."
       ]
     }
   ]

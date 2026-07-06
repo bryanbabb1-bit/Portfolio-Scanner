@@ -825,8 +825,17 @@ def recommend(symbol: str, event: str, kind: str = "alert",
 
     from . import stance as stance_service
     facts = _facts_from_report(report) if report else f"Symbol {symbol} (not held)."
-    book = f"Book ${summary.total_market_value:,.0f}, cash bucket " \
-           f"${summary.by_theme.get('Cash & Income', 0):,.0f}." if summary else ""
+    if summary:
+        bv = summary.total_market_value
+        book = (
+            f"CLIENT'S ACTUAL BOOK: ${bv:,.0f} total (WHOLE portfolio — size to "
+            f"THIS, never a generic $100k), cash "
+            f"${summary.by_theme.get('Cash & Income', 0):,.0f}. 1.5% risk = "
+            f"${bv * 0.015:,.0f}; a new position rarely exceeds ~10-15% of book; "
+            f"for a high-priced share use a dollar amount and fractional shares; "
+            f"NEVER size a position bigger than the book.")
+    else:
+        book = ""
     strat = strategy_service.facts_block()
     _px = fresh.get("price")
     _stable = stance_service.is_stable(symbol.upper(), _px)

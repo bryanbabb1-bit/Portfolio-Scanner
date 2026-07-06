@@ -8,9 +8,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 196.44,
-    "as_of": "2026-07-06 13:26:37",
-    "ts": 1783362397.8785477
+    "price": 195.44,
+    "as_of": "2026-07-06 15:10:01",
+    "ts": 1783368601.3537905
   },
   "AAPL": {
     "symbol": "AAPL",
@@ -21,9 +21,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 313.07,
-    "as_of": "2026-07-06 13:26:37",
-    "ts": 1783362397.7647831
+    "price": 312.8,
+    "as_of": "2026-07-06 15:10:01",
+    "ts": 1783368601.3362525
   },
   "SEER": {
     "symbol": "SEER",
@@ -42,14 +42,14 @@
     "symbol": "SGOV",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Dry powder ~23%; deploy only into 5%+ pullbacks",
-    "thesis": "Dry powder ~23%; deploy only into 5%+ pullbacks",
+    "headline": "Dry powder 22.8%; deploy only on 5%+ pullbacks",
+    "thesis": "Dry powder 22.8%; deploy only on 5%+ pullbacks",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 100.44,
-    "as_of": "2026-07-06 13:26:37",
-    "ts": 1783362397.092103
+    "price": 100.45,
+    "as_of": "2026-07-06 15:10:01",
+    "ts": 1783368601.2003932
   },
   "IREN": {
     "symbol": "IREN",
@@ -60,22 +60,22 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 44.05,
-    "as_of": "2026-07-06 13:26:37",
-    "ts": 1783362397.1843078
+    "price": 44.27,
+    "as_of": "2026-07-06 15:10:01",
+    "ts": 1783368601.219786
   },
   "AMD": {
     "symbol": "AMD",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Winner +10.7%; trail stop, don't trim",
-    "thesis": "Winner +10.7%; trail stop, don't trim",
+    "headline": "Winner +9.6%; trail stop, don't trim",
+    "thesis": "Winner +9.6%; trail stop, don't trim",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 556.5,
-    "as_of": "2026-07-06 13:26:37",
-    "ts": 1783362397.319359
+    "price": 551.3,
+    "as_of": "2026-07-06 15:10:01",
+    "ts": 1783368601.2540877
   },
   "MSFT": {
     "symbol": "MSFT",
@@ -86,22 +86,22 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 386.27,
-    "as_of": "2026-07-06 13:26:37",
-    "ts": 1783362397.4250145
+    "price": 387.1,
+    "as_of": "2026-07-06 15:10:01",
+    "ts": 1783368601.2699451
   },
   "AVGO": {
     "symbol": "AVGO",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "RSI recovered above 45; add already done",
-    "thesis": "RSI recovered above 45; add already done",
+    "headline": "Add done; Buy consensus intact, sit tight",
+    "thesis": "Add done; Buy consensus intact, sit tight",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 376.38,
-    "as_of": "2026-07-06 13:26:37",
-    "ts": 1783362397.5161228
+    "price": 373.7,
+    "as_of": "2026-07-06 15:10:01",
+    "ts": 1783368601.2858884
   },
   "CIFR": {
     "symbol": "CIFR",
@@ -120,14 +120,14 @@
     "symbol": "AMZN",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Flat sideways; hyperscaler core, no action",
-    "thesis": "Flat sideways; hyperscaler core, no action",
+    "headline": "Flat hyperscaler core; no action",
+    "thesis": "Flat hyperscaler core; no action",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 244.9,
-    "as_of": "2026-07-06 13:26:37",
-    "ts": 1783362397.7031116
+    "price": 244.37,
+    "as_of": "2026-07-06 15:10:01",
+    "ts": 1783368601.3204257
   },
   "NET": {
     "symbol": "NET",
@@ -138,22 +138,22 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 246.3,
-    "as_of": "2026-07-06 13:26:37",
-    "ts": 1783362397.9623034
+    "price": 250.95,
+    "as_of": "2026-07-06 15:10:01",
+    "ts": 1783368601.3717616
   },
   "MELI": {
     "symbol": "MELI",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Below trend but green P/L; watch",
-    "thesis": "Below trend but green P/L; watch",
+    "headline": "Below trend but green; watch",
+    "thesis": "Below trend but green; watch",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 1807.77,
-    "as_of": "2026-07-06 13:26:38",
-    "ts": 1783362398.0347211
+    "price": 1809.71,
+    "as_of": "2026-07-06 15:10:01",
+    "ts": 1783368601.38982
   },
   "TSM": {
     "symbol": "TSM",
@@ -164,22 +164,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 454.58,
-    "as_of": "2026-07-06 13:26:38",
-    "ts": 1783362398.0934489
-  },
-  "GEV": {
-    "symbol": "GEV",
-    "action": "HOLD",
-    "prev_action": null,
-    "headline": "Volume missing, stock now extended",
-    "thesis": "Price cleared $1188.93 but volume is only 0.15x avg and stock is 2.8 ATR above SMA20 \u2014 chasing, don't buy here.",
-    "target": "1145.36 (pullback to \u22642 ATR above SMA20) or a fresh volume-confirmed close >1188.93",
-    "stop": "",
-    "source": "plan-watch",
-    "price": 1189.17,
-    "as_of": "2026-07-06 08:52:02",
-    "ts": 1783345922.0696917
+    "price": 453.0,
+    "as_of": "2026-07-06 15:10:01",
+    "ts": 1783368601.4061959
   },
   "PEW": {
     "symbol": "PEW",
@@ -223,15 +210,15 @@
   "NEE": {
     "symbol": "NEE",
     "action": "HOLD",
-    "prev_action": "BUY",
-    "headline": "Build complete at ~10% target; revised from BUY",
-    "thesis": "Build complete at ~10% target; revised from BUY",
+    "prev_action": "HOLD",
+    "headline": "Energy build complete near 10% target",
+    "thesis": "Energy build complete near 10% target",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 87.64,
-    "as_of": "2026-07-06 13:26:37",
-    "ts": 1783362397.2411804
+    "price": 87.48,
+    "as_of": "2026-07-06 15:10:01",
+    "ts": 1783368601.236033
   },
   "SMCI": {
     "symbol": "SMCI",
@@ -249,14 +236,40 @@
   "MU": {
     "symbol": "MU",
     "action": "HOLD",
-    "prev_action": null,
-    "headline": "Alert data doesn't match reality \u2014 sit tight",
-    "thesis": "Hold \u2014 no action; alert's RSI 34/50-day dip-buy setup contradicts live RSI 49.8 and price 15.7% above the actual 50-day.",
+    "prev_action": "HOLD",
+    "headline": "Uptrend intact; no action needed",
+    "thesis": "Uptrend intact; no action needed",
     "target": "",
-    "stop": "Trend invalidates on a daily close below the rising 50-day ($862.30)",
-    "source": "reco:signal",
-    "price": 998.39,
-    "as_of": "2026-07-06 14:08:12",
-    "ts": 1783364892.4765387
+    "stop": "",
+    "source": "brief",
+    "price": 987.19,
+    "as_of": "2026-07-06 15:10:01",
+    "ts": 1783368601.301882
+  },
+  "WBX": {
+    "symbol": "WBX",
+    "action": "TRIM",
+    "prev_action": "TRIM",
+    "headline": "Overbought dilution pop; take the gift, keep spec stub",
+    "thesis": "Overbought dilution pop; take the gift, keep spec stub",
+    "target": "",
+    "stop": "",
+    "source": "brief",
+    "price": 5.3,
+    "as_of": "2026-07-06 15:10:01",
+    "ts": 1783368601.421922
+  },
+  "GEV": {
+    "symbol": "GEV",
+    "action": "AVOID",
+    "prev_action": "AVOID",
+    "headline": "Still no \u2014 stick with NEE instead",
+    "thesis": "No new fact since the AVOID call; volume remains light and entry still lacks confirmation, so skip GEV.",
+    "target": "",
+    "stop": "",
+    "source": "plan-watch",
+    "price": 1152.73,
+    "as_of": "2026-07-06 15:14:24",
+    "ts": 1783368864.8437266
   }
 }

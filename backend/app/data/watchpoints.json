@@ -103,8 +103,22 @@
     "side": "sell",
     "confirm": "touch",
     "source": "advisor",
-    "status": "armed",
+    "status": "dismissed",
     "created_at": "2026-07-06 13:27",
-    "ts": 1783362436.3145912
+    "ts": 1783362436.3145912,
+    "dismissed_ts": 1783365483.5962932
+  },
+  {
+    "id": "218b1bfc56df",
+    "symbol": "WBX",
+    "kind": "price_below",
+    "level": 4.6,
+    "note": "Close below $4.60 exits the WBX spec stub entirely",
+    "side": "sell",
+    "confirm": "close",
+    "source": "advisor",
+    "status": "armed",
+    "created_at": "2026-07-06 15:10",
+    "ts": 1783368632.003148
   }
 ]
