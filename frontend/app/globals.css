@@ -683,6 +683,9 @@ main.page > .slap-overlay { animation: slap-fade .25s ease; }
 .bell-item {
   display: grid; grid-template-columns: 38px 52px 1fr 24px; gap: 8px;
   align-items: center; padding: 9px 8px; border-radius: 8px; font-size: 13px;
+  /* rendered as a <button> now — strip native chrome, full width, tappable */
+  width: 100%; text-align: left; background: none; border: none;
+  color: inherit; font-family: inherit; cursor: pointer;
 }
 .bell-item:hover { background: rgba(56,189,248,0.06); }
 .bell-item + .bell-item { border-top: 1px solid rgba(88,120,180,0.10); }

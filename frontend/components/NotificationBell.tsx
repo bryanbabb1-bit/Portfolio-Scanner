@@ -1,13 +1,15 @@
 "use client";
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { api, ConvictionSignal } from "../lib/api";
+import { SignalSlap } from "./SignalSlap";
 
 // In-app notification inbox: a bell in the nav with the active watchdog
 // signals, so you can see your slaps from any page without leaving the app.
 export function NotificationBell() {
   const [signals, setSignals] = useState<ConvictionSignal[]>([]);
   const [open, setOpen] = useState(false);
+  // The signal whose full slap is open (tapped from the inbox).
+  const [opened, setOpened] = useState<ConvictionSignal | null>(null);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -70,21 +72,35 @@ export function NotificationBell() {
           ) : (
             <div className="bell-list">
               {signals.map((s) => (
-                <Link
+                <button
                   key={s.id}
-                  href={`/stock/${s.symbol}`}
+                  type="button"
                   className={`bell-item ${s.side}`}
-                  onClick={() => setOpen(false)}
+                  onClick={() => {
+                    setOpened(s);   // open the full slap for this signal
+                    setOpen(false);
+                  }}
                 >
                   <span className={`signal-side ${s.side}`}>{s.side === "buy" ? "BUY" : "SELL"}</span>
                   <span className="bell-sym">{s.symbol}</span>
                   <span className="bell-headline">{s.headline}</span>
                   <button className="icon-btn jr-btn" title="Dismiss" onClick={(e) => dismiss(s.id, e)}>✕</button>
-                </Link>
+                </button>
               ))}
             </div>
           )}
         </div>
+      )}
+
+      {opened && (
+        <SignalSlap
+          signals={[opened]}
+          focusId={opened.id}
+          onDismissed={(ids) => {
+            setOpened(null);
+            setSignals((cur) => cur.filter((x) => !ids.includes(x.id)));
+          }}
+        />
       )}
     </div>
   );
