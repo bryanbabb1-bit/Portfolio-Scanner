@@ -548,5 +548,60 @@
     "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
     "source": "pin",
     "ts": 1783342128.3979762
+  },
+  {
+    "id": "801e62d578a0",
+    "date": "2026-07-06",
+    "symbol": "AVGO",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Watchpoint triggered (Watchpoint: RSI \u2265 45): Buy AVGO only after RSI recovers above 45 from today's 39.7",
+    "source": "auto",
+    "ts": 1783344817.7848706
+  },
+  {
+    "id": "96333b4d4d10",
+    "date": "2026-07-06",
+    "symbol": "AVGO",
+    "action": "buy",
+    "shares": 0.5237,
+    "price": null,
+    "note": "Added shares (1.56618 -> 2.0899)",
+    "source": "auto",
+    "ts": 1783345193.1336164
+  },
+  {
+    "id": "b44206c3d8b2",
+    "date": "2026-07-06",
+    "symbol": "SGOV",
+    "action": "sell",
+    "shares": 14.9343,
+    "price": null,
+    "note": "Trimmed (43.3143 -> 28.38)",
+    "source": "auto",
+    "ts": 1783345193.1356566
+  },
+  {
+    "id": "0459eb435ff5",
+    "date": "2026-07-06",
+    "symbol": "NVDA",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
+    "source": "pin",
+    "ts": 1783345448.5406318
+  },
+  {
+    "id": "6af9ba639536",
+    "date": "2026-07-06",
+    "symbol": "TSM",
+    "action": "buy",
+    "shares": 0.6578,
+    "price": null,
+    "note": "Added shares (0.10934 -> 0.76713)",
+    "source": "auto",
+    "ts": 1783345500.6943204
   }
 ]

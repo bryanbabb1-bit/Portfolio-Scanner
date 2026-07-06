@@ -132,6 +132,7 @@ export interface PortfolioSummary {
   day_change: number;
   day_change_pct: number;
   positions: number;
+  cash: number;
   source: string;
   by_theme: Record<string, number>;
 }
@@ -289,6 +290,7 @@ export interface WatchItem {
 export interface PortfolioConfig {
   owner: string;
   advisor_persona: string;
+  cash?: number;
   themes: Record<string, string>;
   holdings: Holding[];
   watchlist: WatchItem[];

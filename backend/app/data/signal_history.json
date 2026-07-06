@@ -88,5 +88,32 @@
     "price": 175.0,
     "ts": 1783275384.9346995,
     "date": "2026-07-05"
+  },
+  {
+    "id": "GEV:high-conviction-discovery:2026-07-06",
+    "symbol": "GEV",
+    "side": "buy",
+    "rule": "high-conviction-discovery",
+    "price": 1161.5,
+    "ts": 1783344784.9188316,
+    "date": "2026-07-06"
+  },
+  {
+    "id": "watch:c4e364e871ce",
+    "symbol": "AVGO",
+    "side": "buy",
+    "rule": "watchpoint",
+    "price": 376.63,
+    "ts": 1783344817.7839315,
+    "date": "2026-07-06"
+  },
+  {
+    "id": "SEER:runner-ignition:2026-07-06",
+    "symbol": "SEER",
+    "side": "buy",
+    "rule": "runner-ignition",
+    "price": 2.2699,
+    "ts": 1783345313.1101594,
+    "date": "2026-07-06"
   }
 ]

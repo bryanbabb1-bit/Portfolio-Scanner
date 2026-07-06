@@ -9,6 +9,7 @@ type Quote = { price: number | null; source: string };
 const BLANK: PortfolioConfig = {
   owner: "You",
   advisor_persona: "senior financial advisor at Charles Schwab",
+  cash: 0,
   themes: {},
   holdings: [],
   watchlist: [],
@@ -141,6 +142,18 @@ export default function Settings() {
               onChange={(e) => setCfg({ ...cfg, advisor_persona: e.target.value })}
             />
           </label>
+          <label>
+            <span>Cash / buying power ($)</span>
+            <input
+              type="number"
+              min={0}
+              step="any"
+              value={cfg.cash ?? 0}
+              placeholder="0"
+              title="Uninvested cash — counts toward your total and allocation, never quoted or scanned"
+              onChange={(e) => setCfg({ ...cfg, cash: parseFloat(e.target.value) || 0 })}
+            />
+          </label>
         </div>
       </div>
 
@@ -202,10 +215,12 @@ export default function Settings() {
             );
           })}
           {cfg.holdings.length === 0 && <div className="empty">No holdings yet — add one.</div>}
-          {cfg.holdings.length > 0 && (
+          {(cfg.holdings.length > 0 || (cfg.cash ?? 0) > 0) && (
             <div className="et-total">
-              <span>Book value (live)</span>
-              <strong>{money(bookValue, 0)}</strong>
+              <span>
+                Book value (live){(cfg.cash ?? 0) > 0 ? ` + ${money(cfg.cash ?? 0, 0)} cash` : ""}
+              </span>
+              <strong>{money(bookValue + (cfg.cash ?? 0), 0)}</strong>
             </div>
           )}
         </div>

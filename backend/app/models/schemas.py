@@ -137,13 +137,14 @@ class AdvisorNote(BaseModel):
 
 
 class PortfolioSummary(BaseModel):
-    total_market_value: float
+    total_market_value: float   # positions + cash (matches the broker account value)
     total_cost: float
     total_unrealized_pl: float
     total_unrealized_pl_pct: float
     day_change: float
     day_change_pct: float
     positions: int
+    cash: float = 0.0           # uninvested buying power, included in total above
     source: str
     by_theme: dict[str, float] = {}
 
@@ -342,6 +343,7 @@ class PortfolioConfig(BaseModel):
     """The full editable portfolio config persisted to portfolio.json."""
     owner: str = "You"
     advisor_persona: str = "senior financial advisor at Charles Schwab"
+    cash: float = 0.0    # uninvested buying power — counts toward total & allocation
     themes: dict[str, str] = {}
     holdings: list[Holding] = []
     watchlist: list[WatchItem] = []

@@ -30,8 +30,8 @@
     },
     {
       "symbol": "AVGO",
-      "shares": 1.56618,
-      "cost_basis": 432.27,
+      "shares": 2.0899,
+      "cost_basis": 419.64,
       "theme": null
     },
     {
@@ -66,13 +66,13 @@
     },
     {
       "symbol": "TSM",
-      "shares": 0.10934,
-      "cost_basis": 413.39,
+      "shares": 0.76713,
+      "cost_basis": 449.99,
       "theme": null
     },
     {
       "symbol": "SGOV",
-      "shares": 43.31431,
+      "shares": 28.38003,
       "cost_basis": 100.44,
       "theme": null
     },
@@ -89,18 +89,5 @@
       "theme": null
     }
   ],
-  "watchlist": [
-    {
-      "symbol": "LRCX",
-      "theme": null
-    },
-    {
-      "symbol": "GEV",
-      "theme": null
-    },
-    {
-      "symbol": "KLAC",
-      "theme": null
-    }
-  ]
+  "watchlist": []
 }

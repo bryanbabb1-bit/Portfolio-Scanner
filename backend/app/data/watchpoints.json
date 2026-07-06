@@ -115,8 +115,9 @@
     "side": "buy",
     "confirm": "touch",
     "source": "advisor",
-    "status": "armed",
+    "status": "triggered",
     "created_at": "2026-07-06 07:28",
-    "ts": 1783340902.7727287
+    "ts": 1783340902.7727287,
+    "triggered_at": "2026-07-06 08:33"
   }
 ]

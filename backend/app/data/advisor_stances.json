@@ -11,5 +11,31 @@
     "price": 195.37,
     "as_of": "2026-07-06 07:41:54",
     "ts": 1783341714.657312
+  },
+  "AAPL": {
+    "symbol": "AAPL",
+    "action": "HOLD",
+    "prev_action": null,
+    "headline": "No breakout yet \u2014 wait for $317 close",
+    "thesis": "Hold \u2014 no action; price $309.34 is below your $317 breakout trigger and volume is only 0.05x average, no confirmation.",
+    "target": "Add the planned $250 only on a daily close above $317.",
+    "stop": "Thesis stays intact above the $294.71 20-day SMA; a close back below that invalidates the near-term uptrend.",
+    "source": "reco:alert",
+    "price": 309.34,
+    "as_of": "2026-07-06 08:40:40",
+    "ts": 1783345240.8233304
+  },
+  "SEER": {
+    "symbol": "SEER",
+    "action": "AVOID",
+    "prev_action": null,
+    "headline": "Extended low-float spike \u2014 not your trade",
+    "thesis": "Hold \u2014 no action; SEER isn't held or in your plan; don't chase a 5+ ATR extension at RSI 77.6.",
+    "target": "If you want a lottery-ticket look at all, wait for pullback to SMA20/50 ($1.73-1.81) on confirming volume, sized \u22641% of book.",
+    "stop": "N/A \u2014 no position now; any pullback entry needs a stop below that pullback low given 0.104 ATR.",
+    "source": "reco:runner",
+    "price": 2.27,
+    "as_of": "2026-07-06 08:42:25",
+    "ts": 1783345345.0381696
   }
 }

@@ -137,17 +137,23 @@ def portfolio_summary() -> tuple[PortfolioSummary, list[StockReport]]:
     for h in holdings:
         reports.append(build_report(h["symbol"], h.get("theme")))
 
-    total_mv = sum(r.market_value or 0 for r in reports)
+    # Uninvested cash (buying power) counts toward the account total and the
+    # allocation, but is never quoted/charted/scanned — it's just a number.
+    cash = float(pf.get("cash", 0) or 0)
+    positions_mv = sum(r.market_value or 0 for r in reports)
+    total_mv = positions_mv + cash
     total_cost = sum((r.cost_basis or 0) * (r.shares or 0) for r in reports)
-    total_pl = total_mv - total_cost
+    total_pl = positions_mv - total_cost      # cash has no P/L
     day_change = sum((r.quote.change or 0) * (r.shares or 0) for r in reports)
-    prev_value = total_mv - day_change
+    prev_value = total_mv - day_change        # yesterday's account value (incl. cash)
 
     by_theme: dict[str, float] = {}
     for r in reports:
         by_theme[r.theme or "Other"] = round(
             by_theme.get(r.theme or "Other", 0) + (r.market_value or 0), 2
         )
+    if cash:
+        by_theme["Cash & Income"] = round(by_theme.get("Cash & Income", 0) + cash, 2)
 
     source = "mock" if any(r.quote.source == "mock" for r in reports) else "live"
     summary = PortfolioSummary(
@@ -158,6 +164,7 @@ def portfolio_summary() -> tuple[PortfolioSummary, list[StockReport]]:
         day_change=round(day_change, 2),
         day_change_pct=round((day_change / prev_value * 100) if prev_value else 0, 2),
         positions=len(reports),
+        cash=round(cash, 2),
         source=source,
         by_theme=by_theme,
     )
@@ -270,6 +277,7 @@ def portfolio_history(range_: str = "6mo") -> PortfolioHistory:
     """
     pf = load_portfolio()
     holdings = pf.get("holdings", [])
+    cash = float(pf.get("cash", 0) or 0)
     intraday = range_ in _INTRADAY_RANGES
     points_n = _RANGE_POINTS.get(range_, _RANGE_POINTS["6mo"])
     symbols = [h["symbol"] for h in holdings]
@@ -316,7 +324,9 @@ def portfolio_history(range_: str = "6mo") -> PortfolioHistory:
         value_frame = pd.concat(per_symbol, axis=1).sort_index().ffill()
         # Leading bars where a symbol has no data yet would understate the
         # total — drop them instead of zero-filling.
-        series = value_frame.dropna().sum(axis=1)
+        # Cash is a flat line added to every point so the chart's total (and its
+        # final point) matches the account total shown up top.
+        series = value_frame.dropna().sum(axis=1) + cash
         if not intraday:
             series = series.tail(points_n)
         fmt = "%Y-%m-%d %H:%M" if intraday else "%Y-%m-%d"

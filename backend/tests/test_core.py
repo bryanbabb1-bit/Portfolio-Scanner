@@ -670,3 +670,17 @@ def test_planwatch_baseline_then_holds(tmp_path, monkeypatch):
         {"id": "p2", "status": "open", "symbol": "IREN",
          "text": "Sell IREN near $672", "price_at_pin": 10.0}])
     assert planwatch.check({"IREN": 13.0}) == []
+
+
+def test_cash_counts_toward_total_and_allocation(monkeypatch):
+    """Uninvested cash adds to the account total and the Cash & Income bucket,
+    but is never treated as a position."""
+    from app.services import portfolio as pf
+    real = pf.load_portfolio()
+    monkeypatch.setattr(pf, "load_portfolio", lambda: {**real, "cash": 1000.0})
+    summary, reports = pf.portfolio_summary()
+    positions = sum(r.market_value or 0 for r in reports)
+    assert abs(summary.total_market_value - (positions + 1000.0)) < 0.01
+    assert summary.cash == 1000.0
+    assert summary.positions == len(reports)          # cash is not a position
+    assert summary.by_theme.get("Cash & Income", 0) >= 1000.0

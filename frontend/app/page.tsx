@@ -186,6 +186,12 @@ export default function Dashboard() {
             <span className="label">Day Change</span>
             <span className={`value ${signClass(summary.day_change)}`}>{money(summary.day_change, 0)}</span>
           </div>
+          {summary.cash > 0 && (
+            <div className="hstat">
+              <span className="label">Cash / Buying Power</span>
+              <span className="value">{money(summary.cash, 0)}</span>
+            </div>
+          )}
         </div>
       </div>
 
