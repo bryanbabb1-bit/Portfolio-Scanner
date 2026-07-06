@@ -8,9 +8,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 195.58,
-    "as_of": "2026-07-06 10:21:33",
-    "ts": 1783351293.8861463
+    "price": 196.65,
+    "as_of": "2026-07-06 11:44:56",
+    "ts": 1783356296.2599616
   },
   "AAPL": {
     "symbol": "AAPL",
@@ -21,9 +21,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 313.36,
-    "as_of": "2026-07-06 10:21:33",
-    "ts": 1783351293.8739283
+    "price": 312.73,
+    "as_of": "2026-07-06 11:44:56",
+    "ts": 1783356296.2316062
   },
   "SEER": {
     "symbol": "SEER",
@@ -42,40 +42,40 @@
     "symbol": "SGOV",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Dry powder at 22.8%; trim only into 5%+ pullbacks",
-    "thesis": "Dry powder at 22.8%; trim only into 5%+ pullbacks",
+    "headline": "Dry powder ~23%; trim only into 5%+ pullbacks",
+    "thesis": "Dry powder ~23%; trim only into 5%+ pullbacks",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 100.44,
-    "as_of": "2026-07-06 10:21:33",
-    "ts": 1783351293.7589657
+    "price": 100.45,
+    "as_of": "2026-07-06 11:44:56",
+    "ts": 1783356296.092713
   },
   "IREN": {
     "symbol": "IREN",
-    "action": "TRIM",
-    "prev_action": "HOLD",
-    "headline": "Revising HOLD: trim strength to restore 10% cap",
-    "thesis": "Revising HOLD: trim strength to restore 10% cap",
+    "action": "HOLD",
+    "prev_action": "TRIM",
+    "headline": "At 10.1% cap; exit only on new low",
+    "thesis": "At 10.1% cap; exit only on new low",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 43.74,
-    "as_of": "2026-07-06 10:21:33",
-    "ts": 1783351293.7819946
+    "price": 44.45,
+    "as_of": "2026-07-06 11:44:56",
+    "ts": 1783356296.1146333
   },
   "AMD": {
     "symbol": "AMD",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Winner running; trail stop, don't trim",
-    "thesis": "Winner running; trail stop, don't trim",
+    "headline": "Winner running +11.2%; trail stop, don't trim",
+    "thesis": "Winner running +11.2%; trail stop, don't trim",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 560.78,
-    "as_of": "2026-07-06 10:21:33",
-    "ts": 1783351293.7965498
+    "price": 559.2,
+    "as_of": "2026-07-06 11:44:56",
+    "ts": 1783356296.1329827
   },
   "MSFT": {
     "symbol": "MSFT",
@@ -86,9 +86,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 385.51,
-    "as_of": "2026-07-06 10:21:33",
-    "ts": 1783351293.8096175
+    "price": 384.65,
+    "as_of": "2026-07-06 11:44:56",
+    "ts": 1783356296.1529942
   },
   "AVGO": {
     "symbol": "AVGO",
@@ -99,9 +99,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 373.57,
-    "as_of": "2026-07-06 10:21:33",
-    "ts": 1783351293.8295708
+    "price": 375.11,
+    "as_of": "2026-07-06 11:44:56",
+    "ts": 1783356296.1731281
   },
   "MU": {
     "symbol": "MU",
@@ -112,9 +112,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 996.99,
-    "as_of": "2026-07-06 10:21:33",
-    "ts": 1783351293.8476708
+    "price": 1004.16,
+    "as_of": "2026-07-06 11:44:56",
+    "ts": 1783356296.1915014
   },
   "CIFR": {
     "symbol": "CIFR",
@@ -138,9 +138,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 244.55,
-    "as_of": "2026-07-06 10:21:33",
-    "ts": 1783351293.8600068
+    "price": 244.74,
+    "as_of": "2026-07-06 11:44:56",
+    "ts": 1783356296.2129884
   },
   "NET": {
     "symbol": "NET",
@@ -151,9 +151,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 246.94,
-    "as_of": "2026-07-06 10:21:33",
-    "ts": 1783351293.898026
+    "price": 248.53,
+    "as_of": "2026-07-06 11:44:56",
+    "ts": 1783356296.2833176
   },
   "MELI": {
     "symbol": "MELI",
@@ -164,9 +164,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 1790.36,
-    "as_of": "2026-07-06 10:21:33",
-    "ts": 1783351293.90895
+    "price": 1794.66,
+    "as_of": "2026-07-06 11:44:56",
+    "ts": 1783356296.3079472
   },
   "TSM": {
     "symbol": "TSM",
@@ -177,9 +177,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 453.93,
-    "as_of": "2026-07-06 10:21:33",
-    "ts": 1783351293.9232128
+    "price": 456.37,
+    "as_of": "2026-07-06 11:44:56",
+    "ts": 1783356296.3243072
   },
   "GEV": {
     "symbol": "GEV",
@@ -206,5 +206,18 @@
     "price": 2.97,
     "as_of": "2026-07-06 09:50:56",
     "ts": 1783349456.8038416
+  },
+  "YDES": {
+    "symbol": "YDES",
+    "action": "AVOID",
+    "prev_action": "AVOID",
+    "headline": "Broke through the pullback level \u2014 stay out",
+    "thesis": "Hold \u2014 no action; YDES fell through the $2.70 SMA20 pullback level to $2.52, worse setup than before, no entry.",
+    "target": "Only reconsider on a stabilizing pullback that holds SMA20 ~$2.69 with volume tapering \u2014 not the breakdown through it just seen.",
+    "stop": "N/A \u2014 no position; do not initiate here.",
+    "source": "reco:runner",
+    "price": 2.52,
+    "as_of": "2026-07-06 11:51:15",
+    "ts": 1783356675.2363477
   }
 }

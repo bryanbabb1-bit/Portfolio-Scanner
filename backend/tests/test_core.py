@@ -61,10 +61,12 @@ def test_breakout_score_bounds():
 def test_portfolio_summary_math_consistent():
     summary, reports = pf_service.portfolio_summary()
     assert summary.positions == len(reports)
+    # total = positions + cash (cash counts toward the account value)
     assert summary.total_market_value == round(
-        sum(r.market_value or 0 for r in reports), 2)
+        sum(r.market_value or 0 for r in reports) + summary.cash, 2)
+    # P/L is on the invested positions only — cash has none
     assert abs(summary.total_unrealized_pl -
-               (summary.total_market_value - summary.total_cost)) < 0.01
+               (summary.total_market_value - summary.cash - summary.total_cost)) < 0.01
 
 
 def test_scan_and_breakout_endpoints():
@@ -684,3 +686,19 @@ def test_cash_counts_toward_total_and_allocation(monkeypatch):
     assert summary.cash == 1000.0
     assert summary.positions == len(reports)          # cash is not a position
     assert summary.by_theme.get("Cash & Income", 0) >= 1000.0
+
+
+def test_watchpoint_no_rearm_after_trigger(tmp_path, monkeypatch):
+    """A fired watchpoint must not be re-armed with an identical condition —
+    that caused the same alert to fire every scan ('got it 5 times today')."""
+    from app.services import watchpoints as wp
+    monkeypatch.setattr(wp, "_FILE", tmp_path / "wp.json")
+    a = wp.add("AVGO", "rsi_above", 45.0, note="buy when rsi reclaims 45")
+    fired = wp.check({"AVGO": (375.0, 46.0)})           # crosses -> fires once
+    assert len(fired) == 1
+    assert wp.list_watchpoints()[0]["status"] == "triggered"
+    # re-arming the same (already-true) condition returns the existing one
+    b = wp.add("AVGO", "rsi_above", 45.0, note="buy when rsi reclaims 45")
+    assert b["id"] == a["id"]
+    assert len([w for w in wp.list_watchpoints() if w["symbol"] == "AVGO"]) == 1
+    assert wp.check({"AVGO": (375.0, 46.0)}) == []       # and never re-fires

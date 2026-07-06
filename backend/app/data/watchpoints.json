@@ -27,34 +27,6 @@
     "triggered_at": "2026-07-05 13:16"
   },
   {
-    "id": "4264055a71ab",
-    "symbol": "NVDA",
-    "kind": "price_below",
-    "level": 191.0,
-    "note": "Rotate $1,500 of SGOV into NVDA near your pinned $191 level",
-    "side": "buy",
-    "source": "advisor",
-    "status": "triggered",
-    "created_at": "2026-07-03 08:13",
-    "ts": 1783084438.9509563,
-    "confirm": "touch",
-    "triggered_at": "2026-07-05 13:16"
-  },
-  {
-    "id": "ce67112fd323",
-    "symbol": "AVGO",
-    "kind": "rsi_above",
-    "level": 45.0,
-    "note": "Add to AVGO only after RSI recovers above 45 from 39.7",
-    "side": "buy",
-    "source": "advisor",
-    "status": "triggered",
-    "created_at": "2026-07-03 08:13",
-    "ts": 1783084438.9689202,
-    "confirm": "touch",
-    "triggered_at": "2026-07-05 13:16"
-  },
-  {
     "id": "2ff492a5d118",
     "symbol": "CRWD",
     "kind": "rsi_below",
@@ -94,16 +66,30 @@
     "ts": 1783351328.3863156
   },
   {
-    "id": "58293a560d9e",
-    "symbol": "AVGO",
-    "kind": "rsi_above",
-    "level": 45.0,
-    "note": "Buy AVGO only after RSI recovers above 45 from 39.7",
-    "side": "buy",
+    "id": "48f51cc42888",
+    "symbol": "CIFR",
+    "kind": "price_above",
+    "level": 19.0,
+    "note": "Exit CIFR entirely on any bounce above $19",
+    "side": "sell",
     "confirm": "touch",
     "source": "advisor",
     "status": "armed",
-    "created_at": "2026-07-06 10:22",
-    "ts": 1783351328.402637
+    "created_at": "2026-07-06 11:45",
+    "ts": 1783356324.4179065
+  },
+  {
+    "id": "5442262d8019",
+    "symbol": "AVGO",
+    "kind": "rsi_above",
+    "level": 45.0,
+    "note": "Buy AVGO only after RSI recovers above 45",
+    "side": "buy",
+    "confirm": "touch",
+    "source": "advisor",
+    "status": "triggered",
+    "created_at": "2026-07-06 11:45",
+    "ts": 1783356324.4388359,
+    "triggered_at": "2026-07-06 11:45"
   }
 ]

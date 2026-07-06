@@ -376,6 +376,25 @@ def scan() -> list[dict]:
                         for sym, ind, quote, *_ in items
                         if getattr(quote, "source", "live") != "mock"}
             for sig in watchpoints.check(readings):
+                # A tripwire firing isn't the whole answer — "AVGO hit RSI 45"
+                # is a trigger, not a decision. Run the portfolio-aware advisor
+                # so the slap ends in an actual recommended action (may be HOLD).
+                try:
+                    from . import advisor
+                    event = (f"Your watchpoint fired — {sig['label']}. "
+                             f"Your note: '{sig['what']}'. Reading: "
+                             f"{'; '.join(sig.get('why', []))}")
+                    reco = advisor.recommend(sig["symbol"], event, kind="alert")
+                    if reco:
+                        sig["action"] = reco.get("action", sig.get("action"))
+                        sig["headline"] = reco.get("headline") or sig["headline"]
+                        sig["what"] = reco.get("what") or sig["what"]
+                        sig["why"] = (reco.get("why") or []) + [
+                            f"Your watchpoint: {sig['label']}."]
+                        sig["target"] = reco.get("target", "")
+                        sig["stop"] = reco.get("stop", "")
+                except Exception as exc:
+                    print(f"[conviction] watchpoint reco failed: {exc!r}")
                 notes[sig["id"]] = sig
         except Exception as exc:
             print(f"[conviction] watchpoint check failed: {exc!r}")

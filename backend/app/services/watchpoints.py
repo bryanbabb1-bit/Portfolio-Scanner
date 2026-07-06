@@ -22,6 +22,11 @@ _lock = threading.Lock()
 
 KINDS = {"price_below", "price_above", "rsi_below", "rsi_above"}
 
+# Once a watchpoint fires, the same condition can't be re-armed for this long —
+# otherwise re-extraction from the brief keeps re-arming an already-true level
+# and it re-fires every scan.
+_REARM_COOLDOWN_S = 3 * 86400
+
 
 def _load() -> list[dict]:
     try:
@@ -58,11 +63,22 @@ def add(symbol: str, kind: str, level: float, note: str = "",
     if kind not in KINDS:
         raise ValueError(f"kind must be one of {sorted(KINDS)}")
     sym = symbol.upper().strip()
+    now = time.time()
     with _lock:
         items = _load()
-        for w in items:  # identical armed condition = duplicate, return it
-            if (w["status"] == "armed" and w["symbol"] == sym
-                    and w["kind"] == kind and abs(w["level"] - level) < 1e-9):
+        for w in items:
+            same = (w["symbol"] == sym and w["kind"] == kind
+                    and abs(w["level"] - level) < 1e-9)
+            if not same:
+                continue
+            # An identical ARMED tripwire is a duplicate — return it.
+            if w["status"] == "armed":
+                return w
+            # An identical condition that FIRED recently must NOT be re-armed:
+            # it would instantly re-fire (the level is still met) and spam the
+            # same alert — this is exactly the "got it 5 times today" bug.
+            ref_ts = w.get("triggered_ts") or w.get("ts", 0)
+            if now - ref_ts < _REARM_COOLDOWN_S:
                 return w
         wp = {
             "id": uuid.uuid4().hex[:12],
@@ -150,6 +166,7 @@ def check(readings: dict[str, tuple[float | None, float | None]],
                 continue
             wp["status"] = "triggered"
             wp["triggered_at"] = time.strftime("%Y-%m-%d %H:%M")
+            wp["triggered_ts"] = now
             cond = condition_str(wp)
             reading = (f"price ${price:g}" if wp["kind"].startswith("price")
                        else f"RSI {rsi:g}")

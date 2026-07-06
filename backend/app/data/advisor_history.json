@@ -1,31 +1,6 @@
 {
   "portfolio:brief": [
     {
-      "generated_at": "2026-07-06 08:51:34",
-      "summary": "Progress is real \u2014 miners cut 41%\u219217.6% (today's IREN +13.7%/CIFR +12.6% bounce inflated it), SGOV worked 35.8%\u219222.8%, and NVDA/AVGO/TSM adds are executed; the one live job left is finishing the standing CIFR exit now that $19 triggered.",
-      "insights": [
-        "Book is aggressive-but-coherent: beta 1.69, annualized vol 29.8%, Sharpe 1.21 \u2014 the risk matches your stated appetite and is being paid for.",
-        "Concentration is the watch item: top-5 = 60.7% and SGOV 22.8% is your anchor, while IREN at 12.2% edges just past the 12% single-name guardrail.",
-        "Miners IREN+CIFR = $2,201 (17.6%) still breach the 10% cap; the CIFR sale takes it to ~12.2%, essentially IREN alone \u2014 enough de-risking, don't over-cut.",
-        "Chip complex is ripping, not selling off \u2014 AMD +7.2%, AVGO +5.3%, TSM +4.7%, MU +3.1%; BofA lifted its 2026 semi TAM to $1.3T and Jensen says memory demand outpaces supply for years, tailwinds under your core.",
-        "IREN's +13.7% has a real catalyst: its $3.4B NVIDIA Blackwell AI-cloud deal targets $4.4B run-rate ARR by end-2026 \u2014 supports freezing, not selling, into strength.",
-        "SGOV RSI 81.8 'overbought' alert is noise on a T-bill ETF \u2014 ignore it; SGOV is dry powder, not a momentum trade.",
-        "AMD (+10.4%, RSI 57.8, uptrend) is your only clean winner running \u2014 trail it, don't trim it."
-      ],
-      "actions": [
-        "Quick trade: Sell all CIFR ~$673 at market; $19 trigger hit.",
-        "Quick trade: Buy $250 AAPL only on daily close above $317; stop $300.",
-        "Long game: Direct August's $300 into TSM at market.",
-        "Quick trade: Hold IREN; exit only on daily close below cost basis."
-      ],
-      "risks": [
-        "Beta 1.69 cuts both ways in the July chip tape \u2014 tripwire: S&P 500 loses its 200-day, then halve size and raise cash.",
-        "IREN is a thin-float satellite bet \u2014 tripwire: daily close below your cost basis triggers full permanent exit, no averaging down.",
-        "MSFT (-12%, downtrend, RSI 47) stays broken \u2014 tripwire: still below long-term trend past early August forces a written re-thesis or exit.",
-        "Drawdown guardrail \u2014 tripwire: portfolio -15% from its high pauses all buying and rebuilds Cash & Income to 25%."
-      ]
-    },
-    {
       "generated_at": "2026-07-06 08:53:11",
       "summary": "Progress is real \u2014 miners trimmed 41%\u219217.5% (today's IREN +14.1%/CIFR +11.4% bounce inflated it), SGOV worked 35.8%\u2192~22.7%, and NVDA/AVGO/TSM adds are executed; the one live job left is finishing the standing CIFR exit, now firmly above the $19 trigger at ~$20.76 (2026-07-06).",
       "insights": [
@@ -73,6 +48,31 @@
         "Semis overextended \u2014 AMD fwd P/E ~75 into the July 22 event; tripwire: distribution day or close below the 50-day means trim, don't add.",
         "Concentration/beta \u2014 top-5 at 64.3%, beta 1.58; tripwire: portfolio -15% from high pauses all buying and rebuilds cash to 25%.",
         "MSFT persistent downtrend (-11.9%, below long-term trend); tripwire: no trend reclaim by early August forces written re-thesis or exit."
+      ]
+    },
+    {
+      "generated_at": "2026-07-06 11:44:56",
+      "summary": "Progress is real: miners cut from 41% to 10.1% (IREN $1,270, CIFR fully exited) and SGOV worked from 35.8% to ~22.7% \u2014 the de-risking plan is essentially executed, so this is a patience week, not a trading one.",
+      "insights": [
+        "Beta 1.52 and 25.2% annualized vol are aggressive but earn their keep at Sharpe 1.19; max drawdown -21.2% sits just inside your 15%-from-high guardrail's comfort zone.",
+        "Concentration is the standing issue: SGOV ~22.7% ($2,851) leads and top-5 = 63.4%, but no single stock breaches the 12% cap \u2014 IREN sits right at 10.1%.",
+        "Miner sleeve is now IREN alone at 10.1% ($1,270), at your satellite cap; today's +14.5% is a thin-float pop on RSI 40 sideways, not a trend \u2014 do not confuse the bounce for a base.",
+        "Momentum leaders are healthy and owned: AMD +8% RSI 58 uptrend (+11.2% P/L), MU RSI 50 uptrend, TSM RSI 56 uptrend \u2014 winners you should let run, not trim.",
+        "SGOV RSI 81.8 'overbought' is a cash-ETF artifact, not a sell signal; it remains dry powder for 5%+ pullbacks.",
+        "Two laggards need watching not action: MSFT -12.1% below trend (downtrend, jobs-cut headline) and AVGO -10.6%, though AVGO's RSI recovered above 45 and the Apple deal is a real catalyst.",
+        "Discovery names GEV, CRWD (RSI 75.6), PANW (RSI 80.3) are either extended or blocked by your no-entry-above-RSI-70 rule \u2014 no chase here."
+      ],
+      "actions": [
+        "Hold \u2014 no action; book is correctly positioned after de-risking is complete.",
+        "Quick trade: Buy $250 AAPL only on daily close above $317; stop $300.",
+        "Long game: Direct August's $300 into TSM at market.",
+        "Quick trade: Exit IREN only on new low below cost; else hold at cap."
+      ],
+      "risks": [
+        "Concentration \u2014 SGOV ~23% plus top-5 63.4%; tripwire: any single name closing above 12% forces a trim.",
+        "IREN thin float \u2014 the +14.5% that pops can drop -90% with no bid; tripwire: new low below cost basis = permanent exit.",
+        "Regime/beta 1.52 amplifies downside; tripwire: benchmark closing below its 200-day \u2192 halve new size, rebuild cash.",
+        "MSFT -12.1% and below trend; tripwire: downtrend persists past early August \u2192 written re-thesis or exit."
       ]
     }
   ],

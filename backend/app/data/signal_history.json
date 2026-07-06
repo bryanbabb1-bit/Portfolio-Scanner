@@ -160,5 +160,32 @@
     "price": 2.9699,
     "ts": 1783349399.9551516,
     "date": "2026-07-06"
+  },
+  {
+    "id": "watch:58293a560d9e",
+    "symbol": "AVGO",
+    "side": "buy",
+    "rule": "watchpoint",
+    "price": 374.38,
+    "ts": 1783353055.1023157,
+    "date": "2026-07-06"
+  },
+  {
+    "id": "YDES:runner-ignition:2026-07-06",
+    "symbol": "YDES",
+    "side": "buy",
+    "rule": "runner-ignition",
+    "price": 2.78,
+    "ts": 1783353760.5517607,
+    "date": "2026-07-06"
+  },
+  {
+    "id": "watch:5442262d8019",
+    "symbol": "AVGO",
+    "side": "buy",
+    "rule": "watchpoint",
+    "price": 375.37,
+    "ts": 1783356345.288633,
+    "date": "2026-07-06"
   }
 ]

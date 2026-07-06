@@ -647,5 +647,71 @@
     "note": "Trimmed (34.643 -> 28.5789)",
     "source": "auto",
     "ts": 1783351489.9275923
+  },
+  {
+    "id": "03cb83a37033",
+    "date": "2026-07-06",
+    "symbol": "AVGO",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Watchpoint triggered (Watchpoint: RSI \u2265 45): Buy AVGO only after RSI recovers above 45 from 39.7",
+    "source": "auto",
+    "ts": 1783353055.1048632
+  },
+  {
+    "id": "f9180550cbe7",
+    "date": "2026-07-06",
+    "symbol": "AVGO",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Watchpoint triggered (Watchpoint: RSI \u2265 45): Buy AVGO only after RSI recovers above 45",
+    "source": "auto",
+    "ts": 1783356345.292277
+  },
+  {
+    "id": "daf1199f9e1b",
+    "date": "2026-07-06",
+    "symbol": "NVDA",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
+    "source": "pin",
+    "ts": 1783356631.2969499
+  },
+  {
+    "id": "cea9066547d9",
+    "date": "2026-07-06",
+    "symbol": "AVGO",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Watchpoint triggered (Watchpoint: RSI \u2265 45): buy when rsi reclaims 45",
+    "source": "auto",
+    "ts": 1783356632.1651313
+  },
+  {
+    "id": "06ee309371d0",
+    "date": "2026-07-06",
+    "symbol": "NVDA",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
+    "source": "pin",
+    "ts": 1783356693.6317942
+  },
+  {
+    "id": "db6a787bfbde",
+    "date": "2026-07-06",
+    "symbol": "AVGO",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Watchpoint triggered (Watchpoint: RSI \u2265 45): buy when rsi reclaims 45",
+    "source": "auto",
+    "ts": 1783356694.4879262
   }
 ]
