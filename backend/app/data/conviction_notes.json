@@ -135,20 +135,20 @@
     "theme": "Energy",
     "held": false,
     "dismissed": true,
-    "generated_at": "2026-07-06 16:45:49",
-    "ts": 1783374277.6995006,
-    "headline": "GEV Coiling Under Highs \u2014 Buy the Base",
-    "what": "Buy GEV now at $1152 ahead of a breakout above the $1174.86 52-week high.",
+    "generated_at": "2026-07-06 17:08:27",
+    "ts": 1783375601.341909,
+    "headline": "GEV pressing highs \u2014 light volume caveat",
+    "what": "Buy GEV now as it presses toward a fresh 52-week high inside a confirmed uptrend.",
     "why": [
-      "Price only 1.94% from 52w high $1174.86 with SMA50/200 at 1042/796 confirming uptrend intact",
-      "MACD 37.56/23.83 rising and RSI 60.5 healthy, room to run before overbought",
-      "Volume 0.785x avg means no breakout confirmation yet, so size trimmed and add above $1175 on volume",
-      "Stop below $1090 caps risk near 0.8% of book, wider stop than usual because no confirmed thrust yet"
+      "Price sits 44.8% above a rising 200-day SMA ($796.39), regime is firmly risk-on.",
+      "MACD 37.56 above signal 23.83 confirms bullish momentum thrust.",
+      "Only 1.94% below the 52-week high ($1174.86), not chase-extended past 2 ATR.",
+      "Volume just 0.79x average \u2014 breakout lacks confirmation, so size trimmed until volume proves it."
     ],
-    "entry": "$1145-1155",
-    "size": "$1,880 (~15% of book), 1.63 shares \u2014 trimmed below full risk formula ($3,491/28%) because volume is only 0.785x avg, not yet confirmed",
-    "target": "$1250 (+8.5%)",
-    "stop": "close below $1090"
+    "entry": "$1148-1156",
+    "size": "$1,880 (~15% of book, 1.63 shares)",
+    "target": "$1280 (+11%)",
+    "stop": "close below $1095"
   },
   "watch:c4e364e871ce": {
     "id": "watch:c4e364e871ce",
@@ -423,20 +423,20 @@
     "theme": "Energy",
     "held": true,
     "dismissed": true,
-    "generated_at": "2026-07-06 16:44:40",
-    "ts": 1783374277.6995006,
-    "headline": "WBX Parabolic \u2014 Trim, Don't Chase",
-    "what": "WBX is up 34% today and +42% in 5 days on 1.8x volume, now ~4.8 ATR above its 50-day SMA \u2014 this is a blow-off spike, not a fresh entry.",
+    "generated_at": "2026-07-06 17:06:44",
+    "ts": 1783375601.341909,
+    "headline": "Extended Squeeze, Not a Breakout \u2014 Don't Chase",
+    "what": "WBX ripped +34% today (+42% in 5 days on 1.8x volume) but you already bought into this spike near cost, and it's now ~4.8 ATR above the 50-day.",
     "why": [
-      "+42% in 5 days on only 1.8x average volume is a blow-off, not accumulation \u2014 breakout score is just 33/100.",
-      "Price is 4.8 ATR above the 50-day SMA (5.58 vs 3.1486), far past the 2-ATR chase threshold.",
-      "RSI 75.08 is overbought and trend underneath the spike is still labeled sideways.",
-      "Position is already held at only +1.8% unrealized \u2014 protect that gain, don't add risk into extension."
+      "RSI 75.08 and price ~4.8 ATR above the $3.15 50-day is textbook chase territory, forbidden.",
+      "SMA50 $3.15 is still below SMA200 $3.43 \u2014 the underlying trend is down, this reads as a squeeze.",
+      "Breakout score is only 33/100 despite the +42%/5-day move \u2014 quality doesn't confirm the pop.",
+      "Stock is still -21.8% below its $7.19 52-week high even after today's spike."
     ],
-    "entry": "No new buys. Price is ~4.8 ATR above the 50-day SMA ($5.58 vs $3.1486) \u2014 over double the 2-ATR chase limit, textbook extended.",
-    "size": "Add $0 new capital. Insufficient data on the current WBX position's dollar value to size an exact trim, but cut roughly 1/3-1/2 of existing shares into this spike; do not let this name grow beyond a small slice of the $12,530 book.",
-    "target": "Sell the trim into this bar near $5.58-5.75; let the remainder run toward the 52-week high $7.19 (+29% from here) only with the stop below in place.",
-    "stop": "Trail stop to a close below $5.00 on the untrimmed portion \u2014 protects most of the current +1.8% gain and exits if the spike fails."
+    "entry": "No new buy here; pullback add zone only at $4.60-4.85 on volume",
+    "size": "$0 new capital (0% of book) \u2014 trim 30-40% of the existing position into this strength, don't add",
+    "target": "$6.00-6.20 next resistance for the trim tranche",
+    "stop": "Close below $4.95 on remaining shares"
   },
   "WBX:rsi-sell-zone:2026-07-06": {
     "symbol": "WBX",
@@ -448,20 +448,20 @@
     "theme": "Energy",
     "held": true,
     "dismissed": true,
-    "generated_at": "2026-07-06 16:45:19",
-    "ts": 1783374277.6995006,
-    "headline": "WBX Parabolic, RSI 75 \u2014 Sell Now",
-    "what": "Sell the entire WBX position into today's 34% spike before this reversal.",
+    "generated_at": "2026-07-06 17:07:45",
+    "ts": 1783375601.341909,
+    "headline": "WBX Blow-Off Spike \u2014 Take Profits Now",
+    "what": "WBX ripped +34% intraday into RSI 75 sell-zone extension; sell into this strength before it fades.",
     "why": [
-      "RSI 75.08 is deep in the sell zone on a name that's up 34% in one day.",
-      "Price is ~4.8 ATR above the 50-day SMA (3.1486) \u2014 extreme, unsustainable extension.",
-      "Breakout score is only 33/100 and trend reads sideways, so this pop lacks structural confirmation.",
-      "Position is barely green (+1.8%) despite the spike \u2014 lock the gain before it round-trips."
+      "RSI 75.08 is deep in the overbought sell-zone, a classic short-term exhaustion signal.",
+      "Stock is up 34% in one session on 1.84x average volume, textbook blow-off spike behavior.",
+      "Price sits ~62% above the 200-day SMA of 3.43 while trend was rated sideways, no structure supports holding.",
+      "Unrealized gain is only +1.8%, so today's pop is the first real cushion, lock it before it round-trips."
     ],
-    "entry": "$5.50-5.58 (sell into strength now)",
-    "size": "Full exit \u2014 100% of the held shares; position dollar value not on file so trim by share count, not dollars",
-    "target": "$3.75-4.00 SMA50/200 confluence \u2014 only re-entry level, do not chase here",
-    "stop": "If any shares are held back, close below $5.00 invalidates"
+    "entry": "$5.50-5.60 (sell into the current spike)",
+    "size": "Exit 100% of the held WBX position now \u2014 full trim, not a partial; this is a sell signal, no new capital deployed.",
+    "target": "No further target \u2014 this spike IS the exit; locking the pop before any giveback.",
+    "stop": "If any shares are retained against instructions, close below $4.90 (roughly 2x ATR under today's high)"
   },
   "watch:f20e035fd3ee": {
     "id": "watch:f20e035fd3ee",

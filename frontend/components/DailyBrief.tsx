@@ -38,12 +38,13 @@ export function DailyBrief() {
             </span>
           )}
         </div>
-        <div style={{ display: "flex", gap: 6 }}>
-          <button className="btn ghost" onClick={() => gen("morning")} disabled={busy}>
-            {busy ? "…" : "Morning"}
+        <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+          <span className="mut" style={{ fontSize: 11 }}>Generate</span>
+          <button className="btn ghost" onClick={() => gen("morning")} disabled={busy} title="Generate the morning 'what to watch today' brief now">
+            {busy ? "…" : "Morning brief"}
           </button>
-          <button className="btn ghost" onClick={() => gen("eod")} disabled={busy}>
-            {busy ? "…" : "Close"}
+          <button className="btn ghost" onClick={() => gen("eod")} disabled={busy} title="Generate the end-of-day recap now">
+            {busy ? "…" : "Day recap"}
           </button>
         </div>
       </div>

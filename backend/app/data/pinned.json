@@ -28,5 +28,19 @@
     "price_at_pin": 1153.99,
     "created_at": "2026-07-06 15:48:58",
     "ts": 1783370938.0268621
+  },
+  {
+    "id": "1fb4a56dc534",
+    "symbol": "GEV",
+    "source": "signal",
+    "text": "Buy GEV now as it presses toward a fresh 52-week high inside a confirmed uptrend.",
+    "points": [
+      "$1280 (+11%)",
+      "close below $1095"
+    ],
+    "status": "open",
+    "price_at_pin": 1156.28,
+    "created_at": "2026-07-06 17:13:01",
+    "ts": 1783375981.0168931
   }
 ]

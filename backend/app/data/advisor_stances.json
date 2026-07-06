@@ -8,9 +8,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 195.44,
-    "as_of": "2026-07-06 15:10:01",
-    "ts": 1783368601.3537905
+    "price": 195.45,
+    "as_of": "2026-07-06 17:10:20",
+    "ts": 1783375820.7970543
   },
   "AAPL": {
     "symbol": "AAPL",
@@ -21,9 +21,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 312.8,
-    "as_of": "2026-07-06 15:10:01",
-    "ts": 1783368601.3362525
+    "price": 312.68,
+    "as_of": "2026-07-06 17:10:20",
+    "ts": 1783375820.7749352
   },
   "SEER": {
     "symbol": "SEER",
@@ -42,40 +42,40 @@
     "symbol": "SGOV",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Dry powder 22.8%; deploy only on 5%+ pullbacks",
-    "thesis": "Dry powder 22.8%; deploy only on 5%+ pullbacks",
+    "headline": "Dry powder 23.7%; deploy only on 5%+ pullbacks",
+    "thesis": "Dry powder 23.7%; deploy only on 5%+ pullbacks",
     "target": "",
     "stop": "",
     "source": "brief",
     "price": 100.45,
-    "as_of": "2026-07-06 15:10:01",
-    "ts": 1783368601.2003932
+    "as_of": "2026-07-06 17:10:20",
+    "ts": 1783375820.614118
   },
   "IREN": {
     "symbol": "IREN",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "At 10% cap; exit only on new low",
-    "thesis": "At 10% cap; exit only on new low",
+    "headline": "At 10% cap; don't chase pop, exit new low",
+    "thesis": "At 10% cap; don't chase pop, exit new low",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 44.27,
-    "as_of": "2026-07-06 15:10:01",
-    "ts": 1783368601.219786
+    "price": 44.54,
+    "as_of": "2026-07-06 17:10:20",
+    "ts": 1783375820.639071
   },
   "AMD": {
     "symbol": "AMD",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Winner +9.6%; trail stop, don't trim",
-    "thesis": "Winner +9.6%; trail stop, don't trim",
+    "headline": "Winner +10.1%; trail stop, don't trim",
+    "thesis": "Winner +10.1%; trail stop, don't trim",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 551.3,
-    "as_of": "2026-07-06 15:10:01",
-    "ts": 1783368601.2540877
+    "price": 553.5,
+    "as_of": "2026-07-06 17:10:20",
+    "ts": 1783375820.6788127
   },
   "MSFT": {
     "symbol": "MSFT",
@@ -86,22 +86,22 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 387.1,
-    "as_of": "2026-07-06 15:10:01",
-    "ts": 1783368601.2699451
+    "price": 387.09,
+    "as_of": "2026-07-06 17:10:20",
+    "ts": 1783375820.6954594
   },
   "AVGO": {
     "symbol": "AVGO",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Add done; Buy consensus intact, sit tight",
-    "thesis": "Add done; Buy consensus intact, sit tight",
+    "headline": "Apple deal good; wait RSI reclaim of 45",
+    "thesis": "Apple deal good; wait RSI reclaim of 45",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 373.7,
-    "as_of": "2026-07-06 15:10:01",
-    "ts": 1783368601.2858884
+    "price": 374.1,
+    "as_of": "2026-07-06 17:10:20",
+    "ts": 1783375820.7128427
   },
   "CIFR": {
     "symbol": "CIFR",
@@ -125,9 +125,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 244.37,
-    "as_of": "2026-07-06 15:10:01",
-    "ts": 1783368601.3204257
+    "price": 244.43,
+    "as_of": "2026-07-06 17:10:20",
+    "ts": 1783375820.7503495
   },
   "NET": {
     "symbol": "NET",
@@ -138,9 +138,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 250.95,
-    "as_of": "2026-07-06 15:10:01",
-    "ts": 1783368601.3717616
+    "price": 247.78,
+    "as_of": "2026-07-06 17:10:20",
+    "ts": 1783375820.8185506
   },
   "MELI": {
     "symbol": "MELI",
@@ -151,9 +151,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 1809.71,
-    "as_of": "2026-07-06 15:10:01",
-    "ts": 1783368601.38982
+    "price": 1803.81,
+    "as_of": "2026-07-06 17:10:20",
+    "ts": 1783375820.8378081
   },
   "TSM": {
     "symbol": "TSM",
@@ -164,9 +164,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 453.0,
-    "as_of": "2026-07-06 15:10:01",
-    "ts": 1783368601.4061959
+    "price": 453.4,
+    "as_of": "2026-07-06 17:10:20",
+    "ts": 1783375820.8570533
   },
   "PEW": {
     "symbol": "PEW",
@@ -216,9 +216,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 87.48,
-    "as_of": "2026-07-06 15:10:01",
-    "ts": 1783368601.236033
+    "price": 87.5,
+    "as_of": "2026-07-06 17:10:20",
+    "ts": 1783375820.6620522
   },
   "SMCI": {
     "symbol": "SMCI",
@@ -242,22 +242,22 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 987.19,
-    "as_of": "2026-07-06 15:10:01",
-    "ts": 1783368601.301882
+    "price": 987.73,
+    "as_of": "2026-07-06 17:10:20",
+    "ts": 1783375820.7313485
   },
   "WBX": {
     "symbol": "WBX",
     "action": "TRIM",
     "prev_action": "TRIM",
-    "headline": "Overbought dilution pop; take the gift, keep spec stub",
-    "thesis": "Overbought dilution pop; take the gift, keep spec stub",
+    "headline": "Overbought dilution pop; take gift, keep stub",
+    "thesis": "Overbought dilution pop; take gift, keep stub",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 5.3,
-    "as_of": "2026-07-06 15:10:01",
-    "ts": 1783368601.421922
+    "price": 5.58,
+    "as_of": "2026-07-06 17:10:20",
+    "ts": 1783375820.8842568
   },
   "GEV": {
     "symbol": "GEV",

@@ -119,8 +119,9 @@
     "side": "sell",
     "confirm": "close",
     "source": "advisor",
-    "status": "armed",
+    "status": "dismissed",
     "created_at": "2026-07-06 15:10",
-    "ts": 1783368632.003148
+    "ts": 1783368632.003148,
+    "dismissed_ts": 1783379127.1672451
   }
 ]
