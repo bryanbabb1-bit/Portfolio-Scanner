@@ -477,17 +477,41 @@ def scan() -> list[dict]:
         # pocket). Only ids that didn't exist before this scan.
         new_sigs = [v for k, v in active.items() if k not in known_ids]
 
-    # outside the lock — network call shouldn't hold the scan mutex
+    # outside the lock — network call shouldn't hold the scan mutex.
+    # Only ACTIONS buzz the phone — "hey do this": a concrete BUY/ADD/TRIM/SELL,
+    # or a watchpoint YOU armed hitting (your own action trigger). Analysis,
+    # HOLD, AVOID and "already ran / don't chase" stay silent in the app and
+    # roll into the daily briefs instead. This is the notification-fatigue fix.
     if new_sigs:
         try:
             from . import push
             for v in new_sigs:
-                push.send_signal(v)
+                if _should_push(v):
+                    push.send_signal(v)
         except Exception as exc:
             print(f"[conviction] push failed: {exc!r}")
 
+    # A poll is also the heartbeat for the once-a-day morning brief / EOD recap.
+    try:
+        from . import summary
+        summary.maybe_send_daily()
+    except Exception as exc:
+        print(f"[conviction] daily summary check failed: {exc!r}")
+
     out = sorted(active.values(), key=lambda s: float(s.get("ts", 0)), reverse=True)
     return out
+
+
+_PUSH_ACTIONS = {"BUY", "ADD", "TRIM", "SELL"}
+
+
+def _should_push(sig: dict) -> bool:
+    """A signal earns a phone push only if it's an ACTION. A watchpoint you
+    armed always pushes (it's your own trigger); everything else pushes only
+    when the advisor's call is a concrete move, not HOLD/AVOID/watch."""
+    if sig.get("rule") == "watchpoint":
+        return True
+    return str(sig.get("action") or "").strip().upper() in _PUSH_ACTIONS
 
 
 def dismiss(sig_id: str | None = None) -> int:

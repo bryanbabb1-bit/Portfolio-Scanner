@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { api, ConvictionSignal, PortfolioInsights, PortfolioSummary, StockReport } from "../lib/api";
 import { SignalSlap } from "../components/SignalSlap";
+import { DailyBrief } from "../components/DailyBrief";
 import { GamePlan } from "../components/GamePlan";
 import { WatchdogBar } from "../components/WatchdogBar";
 import { ScorecardPanel } from "../components/ScorecardPanel";
@@ -211,6 +212,8 @@ export default function Dashboard() {
       {view === "chart" ? <PortfolioChart /> : <HoldingsHeatmap holdings={holdings} />}
 
       {insights && <AlertsPanel alerts={insights.alerts} />}
+
+      <DailyBrief />
 
       <GamePlan />
 

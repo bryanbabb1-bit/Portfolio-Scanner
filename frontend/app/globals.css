@@ -63,6 +63,15 @@ body {
   min-height: 100vh;
 }
 
+/* daily brief — morning watch / close recap digest */
+.daily-brief .brief-headline {
+  font-size: 17px; font-weight: 700; line-height: 1.35; margin-top: 4px;
+  color: var(--text);
+}
+.daily-brief .brief-summary {
+  font-size: 14px; color: var(--muted); margin-top: 6px; line-height: 1.5;
+}
+
 /* prominent live price at the top of the chart */
 .chart-price {
   display: flex;

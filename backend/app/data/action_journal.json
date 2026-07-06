@@ -889,5 +889,60 @@
     "note": "Watchpoint triggered (Watchpoint: RSI \u2265 45): buy when rsi reclaims 45",
     "source": "auto",
     "ts": 1783371486.5486503
+  },
+  {
+    "id": "0acc707b40cd",
+    "date": "2026-07-06",
+    "symbol": "NVDA",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Watchpoint triggered (Watchpoint: price \u2264 $191): Rotate $1,500 SGOV into NVDA near pinned level $191",
+    "source": "auto",
+    "ts": 1783372559.705653
+  },
+  {
+    "id": "39cbc5ab1c5c",
+    "date": "2026-07-06",
+    "symbol": "NVDA",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
+    "source": "pin",
+    "ts": 1783374042.5272334
+  },
+  {
+    "id": "d0b7a4fc526d",
+    "date": "2026-07-06",
+    "symbol": "AVGO",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Watchpoint triggered (Watchpoint: RSI \u2265 45): buy when rsi reclaims 45",
+    "source": "auto",
+    "ts": 1783374043.4227173
+  },
+  {
+    "id": "36f474d7e7f8",
+    "date": "2026-07-06",
+    "symbol": "NVDA",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
+    "source": "pin",
+    "ts": 1783374247.381303
+  },
+  {
+    "id": "60bf67cb492d",
+    "date": "2026-07-06",
+    "symbol": "AVGO",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Watchpoint triggered (Watchpoint: RSI \u2265 45): buy when rsi reclaims 45",
+    "source": "auto",
+    "ts": 1783374248.2374463
   }
 ]

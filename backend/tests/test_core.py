@@ -738,3 +738,17 @@ def test_runner_stage_classifies_early_vs_extended():
     assert runner._stage({"change_pct": 9, "rvol": 1.2, "range_pos": 0.7}) is None
     # below the ignition floor
     assert runner._stage({"change_pct": 4, "rvol": 10, "range_pos": 1.0}) is None
+
+
+def test_push_gating_actions_only():
+    """Only concrete actions (or your own armed watchpoint) buzz the phone;
+    HOLD / AVOID / 'don't chase' stay silent in-app."""
+    from app.services.conviction import _should_push
+    assert _should_push({"rule": "watchpoint", "action": "HOLD"})          # your trigger
+    assert _should_push({"rule": "high-conviction-discovery", "action": "BUY"})
+    assert _should_push({"action": "SELL"})
+    assert _should_push({"action": "TRIM"})
+    assert not _should_push({"rule": "runner-ignition", "action": "AVOID"})  # extended
+    assert not _should_push({"action": "HOLD"})
+    assert not _should_push({"action": "WATCH"})
+    assert not _should_push({"action": None})

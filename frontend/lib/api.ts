@@ -402,8 +402,22 @@ async function send<T>(path: string, method: string, body?: unknown): Promise<T>
   return res.json();
 }
 
+export interface DailyBrief {
+  type: "morning" | "eod";
+  date: string;
+  generated_at: string;
+  engine: string;
+  headline: string;
+  summary: string;
+  watch: string[];
+  recap: string[];
+}
+
 export const api = {
   health: () => get<{ status: string; data_mode: string; advisor_enabled: boolean }>("/api/health"),
+  summary: () => get<{ brief: DailyBrief | null }>("/api/summary"),
+  generateBrief: (kind: "morning" | "eod") =>
+    post<DailyBrief>(`/api/summary/generate?kind=${kind}`, {}),
   portfolio: () =>
     get<{ summary: PortfolioSummary; holdings: StockReport[] }>("/api/portfolio"),
   scan: (watchlist = true) =>
