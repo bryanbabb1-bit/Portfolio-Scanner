@@ -588,17 +588,21 @@ def test_runner_clean_rows_and_ignition_bar(monkeypatch):
     cleaned = runner._clean_rows(raw)
     assert [r["symbol"] for r in cleaned] == ["GOOD"]
 
-    # ignition bar: >=25% today, <=$4B cap, >=1M volume
+    # staged ignition: catch EARLY movers on heavy volume first; flag the
+    # already-run name as extended; drop noise + oversized.
     monkeypatch.setattr(runner, "live_movers", lambda force=False: [
-        {"symbol": "RUN", "name": "Runner", "change_pct": 42.0,
-         "market_cap": 900e6, "price": 6.0, "volume": 4e6},
-        {"symbol": "SLOW", "name": "Slow", "change_pct": 12.0,
-         "market_cap": 900e6, "price": 6.0, "volume": 4e6},   # not enough move
-        {"symbol": "BIG", "name": "Big", "change_pct": 40.0,
-         "market_cap": 9e9, "price": 6.0, "volume": 4e6},     # too big to run
+        {"symbol": "EARLY", "name": "Early", "change_pct": 12.0, "market_cap": 900e6,
+         "price": 6.0, "volume": 4e6, "rvol": 6.0, "range_pos": 0.9},   # igniting
+        {"symbol": "TOPPED", "name": "Topped", "change_pct": 42.0, "market_cap": 900e6,
+         "price": 6.0, "volume": 4e6, "rvol": 5.0, "range_pos": 0.8},   # extended
+        {"symbol": "NOISE", "name": "Noise", "change_pct": 9.0, "market_cap": 900e6,
+         "price": 6.0, "volume": 4e6, "rvol": 1.1, "range_pos": 0.7},   # low rvol -> drop
+        {"symbol": "BIG", "name": "Big", "change_pct": 30.0, "market_cap": 9e9,
+         "price": 6.0, "volume": 4e6, "rvol": 8.0, "range_pos": 0.9},   # too big
     ])
     hot = runner.igniting_movers()
-    assert [m["symbol"] for m in hot] == ["RUN"]
+    assert [m["symbol"] for m in hot] == ["EARLY", "TOPPED"]   # igniting before extended
+    assert hot[0]["stage"] == "igniting" and hot[1]["stage"] == "extended"
 
 
 def test_push_token_registration(tmp_path, monkeypatch):
@@ -718,3 +722,19 @@ def test_watchpoint_dismiss_blocks_advisor_rearm(tmp_path, monkeypatch):
     c = wp.add("AVGO", "rsi_above", 45.0, source="manual")   # user re-adds
     assert c["status"] == "armed"
     assert len(wp.list_watchpoints()) == 1
+
+
+def test_runner_stage_classifies_early_vs_extended():
+    """The radar must catch ignition EARLY and flag the exhausted top as
+    'don't chase' — not slap BUY at +34%."""
+    from app.services import runner
+    # up 12% on 5x volume, pinned near the day high -> buyable ignition
+    assert runner._stage({"change_pct": 12, "rvol": 5.0, "range_pos": 0.9}) == "igniting"
+    # up 34% -> the bulk of the move is done, do not chase
+    assert runner._stage({"change_pct": 34, "rvol": 6.0, "range_pos": 0.8}) == "extended"
+    # up 15% but faded to the bottom of the range -> extended
+    assert runner._stage({"change_pct": 15, "rvol": 4.0, "range_pos": 0.2}) == "extended"
+    # a small pop on ordinary volume is noise, not a runner
+    assert runner._stage({"change_pct": 9, "rvol": 1.2, "range_pos": 0.7}) is None
+    # below the ignition floor
+    assert runner._stage({"change_pct": 4, "rvol": 10, "range_pos": 1.0}) is None

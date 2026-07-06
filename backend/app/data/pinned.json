@@ -14,5 +14,19 @@
     "ts": 1783364262.912722,
     "watch_fired_ts": 1783368848.146761,
     "watch_fired_price": 1155.0
+  },
+  {
+    "id": "7a0f460ad7f0",
+    "symbol": "GEV",
+    "source": "signal",
+    "text": "GEV is 1.9% off its 52-week high with bullish MACD and healthy RSI \u2014 buy the continuation now.",
+    "points": [
+      "$1265 (+9.8%)",
+      "close below $1095 (-4.9%)"
+    ],
+    "status": "open",
+    "price_at_pin": 1153.99,
+    "created_at": "2026-07-06 15:48:58",
+    "ts": 1783370938.0268621
   }
 ]

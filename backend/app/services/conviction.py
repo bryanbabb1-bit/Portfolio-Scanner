@@ -337,9 +337,11 @@ def scan() -> list[dict]:
                 notes[sig_id] = enriched
                 fired[cool_key] = today
 
-        # Runner ignition: whole-market movers that are running NOW. This is
-        # the green light for the explosive-setup hunt — a stock up 25%+ on
-        # real volume at a tradeable size, surfaced the moment it moves.
+        # Runner ignition: whole-market movers running NOW, caught EARLY. Each
+        # is staged — 'igniting' (up ~7-25% on heavy volume, near highs, runway
+        # left → a real momentum entry) vs 'extended' (already ran / faded → do
+        # NOT chase, watch for a pullback). The stage drives the advisor's read
+        # so the slap never says BUY on a name that already topped.
         try:
             from . import runner
             for m in runner.igniting_movers():
@@ -355,35 +357,53 @@ def scan() -> list[dict]:
                     if days < COOLDOWN_DAYS:
                         continue
                 cap_b = m["market_cap"] / 1e9
+                stage = m.get("stage", "igniting")
+                rvol = m.get("rvol")
+                rvol_txt = f", {rvol:.0f}x avg volume" if rvol else ""
                 sig_id = f"{cool_key}:{today}"
-                # Advisor recommendation — portfolio-aware sizing, not a bare
-                # "it's running" ping.
-                event = (f"low-float runner igniting: +{m['change_pct']:.0f}% today "
-                         f"on {m['volume']/1e6:.1f}M shares, ${cap_b:.1f}B cap")
+                if stage == "extended":
+                    event = (
+                        f"{sym} has ALREADY RUN +{m['change_pct']:.0f}% today"
+                        f"{rvol_txt} (${cap_b:.1f}B cap) and is extended/fading off "
+                        f"the high — the bulk of the move is likely done. Do NOT "
+                        f"chase the top; only assess a pullback or a volume-backed "
+                        f"continuation entry, else stand aside.")
+                else:
+                    event = (
+                        f"{sym} is IGNITING — up +{m['change_pct']:.0f}% today"
+                        f"{rvol_txt} at a ${cap_b:.1f}B cap, still near the highs "
+                        f"with runway. This is an EARLY momentum entry (lottery-"
+                        f"ticket size); give the exact entry, tiny size and a hard "
+                        f"stop, or say to wait for the first pullback.")
                 try:
                     from . import advisor
                     reco = advisor.recommend(sym, event, kind="runner")
                 except Exception as exc:
                     print(f"[conviction] runner reco failed: {exc!r}")
                     reco = {}
+                default_action = "AVOID" if stage == "extended" else "BUY"
+                stage_tag = ("already ran +" if stage == "extended" else "igniting +")
                 notes[sig_id] = {
-                    "id": sig_id, "symbol": sym, "side": "buy",
-                    "rule": "runner-ignition",
-                    "label": f"Live runner: +{m['change_pct']:.0f}% today",
+                    "id": sig_id, "symbol": sym,
+                    "side": "sell" if stage == "extended" else "buy",
+                    "rule": "runner-ignition", "stage": stage,
+                    "label": f"Live runner: {stage_tag}{m['change_pct']:.0f}% today",
                     "headline": reco.get("headline")
-                    or f"{sym} is running — +{m['change_pct']:.0f}% on volume",
+                    or (f"{sym} already ran +{m['change_pct']:.0f}% — don't chase"
+                        if stage == "extended"
+                        else f"{sym} igniting — +{m['change_pct']:.0f}% on volume"),
                     "what": reco.get("what")
                     or (f"{sym} ({m['name']}) up {m['change_pct']:.0f}% today at a "
                         f"${cap_b:.1f}B cap. Check float on the Runner Radar before "
                         f"sizing; lottery-ticket size only."),
                     "why": reco.get("why") or [
                         f"Up {m['change_pct']:.0f}% today on {m['volume']/1e6:.1f}M "
-                        f"shares — real participation.",
+                        f"shares{rvol_txt} — real participation.",
                         f"${cap_b:.1f}B market cap — small enough to move fast.",
                     ],
                     "entry": reco.get("entry", ""), "size": reco.get("size", ""),
                     "target": reco.get("target", ""), "stop": reco.get("stop", ""),
-                    "action": reco.get("action", "BUY"),
+                    "action": reco.get("action", default_action),
                     "price": m["price"], "theme": "Runner", "held": False,
                     "dismissed": False,
                     "generated_at": time.strftime("%Y-%m-%d %H:%M:%S"), "ts": now,

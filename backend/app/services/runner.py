@@ -27,8 +27,15 @@ from .technical import compute_indicators, build_quote
 # ones that ARE running today and score them. Yahoo's screener returns
 # real-time movers with price/%/cap/volume in one cheap call.
 _MOVERS_CACHE: dict[str, tuple[float, list[dict]]] = {}
-_MOVERS_TTL = 600  # 10 min — movers don't churn faster than that intraday
 _CLEAN_TICKER = re.compile(r"^[A-Z]{1,5}$")  # US common shares, no .HK/.L/warrants
+
+
+def _movers_ttl() -> int:
+    # Catching ignition EARLY means re-scanning fast while the market's live;
+    # off-hours nothing churns so cache long. (Was a flat 10 min — too slow to
+    # catch a runner before it's already extended.)
+    from .market_data import _market_hours
+    return 120 if _market_hours() else 600
 
 # Runner profile floors/ceilings: real small/mid caps, not shells or megacaps.
 _MIN_CAP = 30_000_000
@@ -63,6 +70,16 @@ def _clean_rows(quotes: list[dict]) -> list[dict]:
             continue
         if vol is None or vol < _MIN_VOL:
             continue
+        # Relative volume = the real "something is happening NOW" tell — a fresh
+        # catalyst shows up as volume many times the average, EARLY, before the
+        # full % move. And where price sits in the day's range tells igniting
+        # (near the high) from faded (rolled over off the high).
+        avg = q.get("averageDailyVolume3Month") or q.get("averageDailyVolume10Day")
+        rvol = round(float(vol) / float(avg), 1) if avg else None
+        d_hi, d_lo = q.get("regularMarketDayHigh"), q.get("regularMarketDayLow")
+        range_pos = None
+        if d_hi and d_lo and d_hi > d_lo:
+            range_pos = round((float(price) - float(d_lo)) / (float(d_hi) - float(d_lo)), 2)
         out.append({
             "symbol": sym,
             "name": q.get("shortName") or q.get("longName") or sym,
@@ -70,6 +87,9 @@ def _clean_rows(quotes: list[dict]) -> list[dict]:
             "market_cap": float(cap),
             "price": float(price),
             "volume": float(vol),
+            "avg_vol": float(avg) if avg else None,
+            "rvol": rvol,             # x average daily volume
+            "range_pos": range_pos,   # 1.0 = at day high (strong), 0 = at day low (faded)
         })
     return out
 
@@ -83,7 +103,7 @@ def live_movers(force: bool = False) -> list[dict]:
     if settings.DATA_MODE == "mock":
         return []
     hit = _MOVERS_CACHE.get("movers")
-    if hit and not force and (time.time() - hit[0]) < _MOVERS_TTL:
+    if hit and not force and (time.time() - hit[0]) < _movers_ttl():
         return hit[1]
 
     rows: dict[str, dict] = {}
@@ -92,7 +112,7 @@ def live_movers(force: bool = False) -> list[dict]:
         from yfinance import EquityQuery as Q
 
         custom = Q("and", [
-            Q("gt", ["percentchange", 10]),
+            Q("gt", ["percentchange", 6]),   # catch ignition early, not at +25%
             Q("lt", ["intradaymarketcap", _MAX_CAP]),
             Q("gt", ["intradaymarketcap", _MIN_CAP]),
             Q("gt", ["dayvolume", _MIN_VOL]),
@@ -116,17 +136,59 @@ def live_movers(force: bool = False) -> list[dict]:
     return result
 
 
-def igniting_movers(limit: int = 3) -> list[dict]:
-    """Top live movers clearing the SLAP bar — high-conviction 'this is
-    running NOW' setups. Cheap: uses the screener payload, no per-ticker
-    fetch. The slap tells the user to check float on the Runner Radar."""
-    bar = [m for m in live_movers()
-           if m["change_pct"] >= 25 and m["market_cap"] <= 4_000_000_000
-           and m["volume"] >= 1_000_000]
-    if len(bar) > limit:
-        print(f"[runner] {len(bar)} movers cleared the ignition bar; "
-              f"slapping top {limit} by %move")
-    return bar[:limit]
+# Ignition tuning — catch the START of the move, while there's still runway.
+_IGNITION_MIN = 7      # a real move underway (was 25 = already exhausted)
+_EXTENDED_PCT = 25     # beyond this the bulk of the day's move is usually done
+_RVOL_MIN = 3.0        # unusual volume = a live catalyst, not drift
+_RUNNER_MAX_CAP = 6_000_000_000
+
+
+def _stage(m: dict) -> str | None:
+    """Classify a live mover: 'igniting' (early, buyable with runway) vs
+    'extended' (already ran / faded — do NOT chase). None = not a runner."""
+    chg = m["change_pct"]
+    rvol = m.get("rvol")
+    rp = m.get("range_pos")
+    if chg < _IGNITION_MIN:
+        return None
+    # Demand unusual volume for the EARLY band; a small % pop on normal volume
+    # is noise. (Big % moves pass even if avg-vol data is missing.)
+    if chg < _EXTENDED_PCT and rvol is not None and rvol < _RVOL_MIN:
+        return None
+    faded = rp is not None and rp < 0.4   # rolled well off the day's high
+    if chg >= _EXTENDED_PCT or faded:
+        return "extended"
+    return "igniting"
+
+
+def igniting_movers(limit: int = 4) -> list[dict]:
+    """Live movers worth a slap, EARLY. Returns each tagged with 'stage':
+    'igniting' names (up ~7-25% on heavy volume, still near highs — buyable
+    with runway) are slapped first; 'extended' names (already ran / faded) are
+    surfaced as do-not-chase awareness, not buy signals. Cheap: screener
+    payload only, no per-ticker fetch."""
+    staged: list[dict] = []
+    for m in live_movers():
+        if not (_MIN_CAP <= m["market_cap"] <= _RUNNER_MAX_CAP):
+            continue
+        if m["volume"] < 750_000:
+            continue
+        st = _stage(m)
+        if st:
+            staged.append({**m, "stage": st})
+    # Igniting first, ranked by conviction (relative volume x momentum);
+    # extended only fills remaining slots, ranked by size of move.
+    igniting = sorted(
+        (m for m in staged if m["stage"] == "igniting"),
+        key=lambda m: -((m.get("rvol") or 1.0) * m["change_pct"]))
+    extended = sorted(
+        (m for m in staged if m["stage"] == "extended"),
+        key=lambda m: -m["change_pct"])
+    picks = (igniting + extended)[:limit]
+    if igniting:
+        print(f"[runner] {len(igniting)} igniting + {len(extended)} extended; "
+              f"slapping {len(picks)} (igniting first)")
+    return picks
 
 # (symbol, name) — genuinely low-float / recent-IPO / high-velocity names.
 # This is the *type* to fish in, not a buy list.
