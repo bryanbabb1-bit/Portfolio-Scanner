@@ -107,8 +107,14 @@ def compute_indicators(df: pd.DataFrame) -> Indicators:
 
 def build_quote(md, ind: Indicators) -> Quote:
     close = md.history["Close"]
-    price = float(close.iloc[-1])
-    prev = float(close.iloc[-2]) if len(close) > 1 else price
+    # Prefer the live tick (fast_info) over the daily-bar close, which lags
+    # intraday and misses extended hours. Today's % change is vs the prior
+    # session close. Fall back to daily bars when live fields are absent (mock).
+    live = getattr(md, "live_price", None)
+    prev_close = getattr(md, "prev_close", None)
+    price = float(live) if live else float(close.iloc[-1])
+    prev = float(prev_close) if prev_close else (
+        float(close.iloc[-2]) if len(close) > 1 else price)
     change = price - prev
     return Quote(
         symbol=md.symbol,

@@ -208,12 +208,14 @@ def _facts_from_report(r: StockReport) -> str:
     if r.signals:
         lines.append("Signals: " + "; ".join(f"{s.label} ({s.kind})" for s in r.signals))
     from . import journal
-    my_moves = [e for e in journal.list_entries() if e["symbol"] == r.symbol][:5]
+    my_moves = [e for e in journal.list_entries() if e.get("symbol") == r.symbol][:5]
     if my_moves:
+        def _move(e):
+            date = str(e.get("date", ""))[:10]
+            note = e.get("detail") or e.get("note") or e.get("thesis") or ""
+            return f"{date} {e.get('action', 'note')}: {note}".rstrip(": ")
         lines.append("Client's recent actions on this name (acknowledge, don't "
-                     "re-recommend): " + "; ".join(
-                         f"{e['date'][:10]} {e['action']}: {e['detail']}"
-                         for e in my_moves))
+                     "re-recommend): " + "; ".join(_move(e) for e in my_moves))
     if r.news:
         lines.append("Recent headlines:")
         for n in r.news[:6]:
@@ -557,6 +559,39 @@ _ASK_FMT = (
 )
 
 
+def _live_snapshot(kind: str, symbol: str | None) -> tuple[str, list[dict]]:
+    """A fresh live-price block to prepend to every follow-up. A resumed
+    Claude session still holds the prices from when the brief was built —
+    possibly hours old. This re-states the current tick and orders the model
+    to use it, so the agent can never answer off a stale in-context number.
+    Returns (prompt_block, [price receipts for the UI])."""
+    from . import portfolio as pf_service
+    reports = []
+    try:
+        if kind in ("portfolio", "strategy"):
+            _, held = pf_service.portfolio_summary()
+            reports = held[:12]
+        elif symbol:
+            reports = [pf_service.build_report(symbol.upper())]
+    except Exception:
+        reports = []
+    lines, receipts = [], []
+    for r in reports:
+        q = getattr(r, "quote", None)
+        if not q:
+            continue
+        tag = "" if q.source == "live" else f" [{q.source} data]"
+        lines.append(f"{r.symbol} ${q.price} ({q.change_pct:+.2f}% today){tag}")
+        receipts.append({"symbol": r.symbol, "price": q.price,
+                         "change_pct": q.change_pct, "data_source": q.source})
+    if not lines:
+        return "", []
+    block = ("CURRENT LIVE PRICES (pulled " + time.strftime("%H:%M:%S")
+             + " ET) — use THESE exact numbers; they OVERRIDE any prices from "
+             "earlier in our conversation:\n" + "\n".join(lines) + "\n\n")
+    return block, receipts
+
+
 def ask(kind: str, symbol: str | None, question: str, deep: bool = False) -> dict:
     """Answer a follow-up question about a prior advisor note.
 
@@ -578,12 +613,13 @@ def ask(kind: str, symbol: str | None, question: str, deep: bool = False) -> dic
     else:
         key = f"{kind}:{symbol}"
     research_note = _RESEARCH_PREFIX if deep else ""
+    snapshot, price_receipts = _live_snapshot(kind, symbol)
     raw = sid = None
     prior = _sessions.get(key)
     ask_model = None if deep else settings.CLAUDE_MODEL_STANDARD
     if prior:
         raw, sid = _run_claude(
-            f"{research_note}Client follow-up question: {question}\n\n{_ASK_FMT}",
+            f"{research_note}{snapshot}Client follow-up question: {question}\n\n{_ASK_FMT}",
             resume=prior, research=deep, model=ask_model)
 
     if raw is None:
@@ -608,7 +644,7 @@ def ask(kind: str, symbol: str | None, question: str, deep: bool = False) -> dic
         else:
             facts = _facts_from_report(pf_service.build_report(symbol))
         prior_note = _prior_advice_block(key, symbol)
-        prompt = (f"{_PERSONA}\n\n{research_note}"
+        prompt = (f"{_PERSONA}\n\n{research_note}{snapshot}"
                   f"The client's current data:\n\n{facts}\n{prior_note}"
                   f"\nClient question: {question}\n\n{_ASK_FMT}")
         raw, sid = _run_claude(prompt, research=deep, model=ask_model)
@@ -630,7 +666,8 @@ def ask(kind: str, symbol: str | None, question: str, deep: bool = False) -> dic
         except json.JSONDecodeError:
             pass
     return {"engine": "claude", "generated_at": stamp,
-            "answer": answer, "points": points}
+            "answer": answer, "points": points, "prices": price_receipts,
+            "as_of": stamp}
 
 
 # ------------------------------------------------- unified recommendation
@@ -660,9 +697,13 @@ def recommend(symbol: str, event: str, kind: str = "alert",
 
     kind: 'alert' | 'signal' | 'runner'. Cached 1h per (symbol, event)."""
     key = f"reco:{kind}:{symbol}:{event}"[:200]
+    # A trading advisor can't serve hour-old calls while the market moves.
+    # Tight TTL during market hours; the full hour only when the tape is shut.
+    from .market_data import _market_hours
+    ttl = 120 if _market_hours() else _RECO_TTL
     if not force:
         hit = _reco_cache.get(key)
-        if hit and (time.time() - hit[0]) < _RECO_TTL:
+        if hit and (time.time() - hit[0]) < ttl:
             return hit[1]
 
     from . import insights as insights_service
@@ -685,6 +726,16 @@ def recommend(symbol: str, event: str, kind: str = "alert",
         except Exception:
             report = None
 
+    # Freshness receipt — the exact price/time this call reasoned from, so the
+    # UI can show "as of HH:MM ET · $X · live" and stale data is never silent.
+    q = getattr(report, "quote", None)
+    fresh = {
+        "price": getattr(q, "price", None),
+        "change_pct": getattr(q, "change_pct", None),
+        "data_source": getattr(q, "source", None),
+        "as_of": stamp,
+    } if q else {"as_of": stamp}
+
     # Fallback (no Claude): a safe, generic-but-honest read.
     def _fallback() -> dict:
         held_note = (f"You hold {report.shares:g} shares, P/L "
@@ -695,7 +746,7 @@ def recommend(symbol: str, event: str, kind: str = "alert",
             "what": f"{held_note}No automated call — open {symbol} and size any "
                     f"move to your plan.",
             "why": [event, "Advisor unavailable — deterministic fallback."],
-            "target": "", "stop": "",
+            "target": "", "stop": "", **fresh,
         }
 
     if not settings.ADVISOR_ENABLED:
@@ -737,6 +788,7 @@ def recommend(symbol: str, event: str, kind: str = "alert",
                 "why": _as_bullets(obj.get("why")) or [event],
                 "target": str(obj.get("target") or ""),
                 "stop": str(obj.get("stop") or ""),
+                **fresh,
             }
         except json.JSONDecodeError:
             pass

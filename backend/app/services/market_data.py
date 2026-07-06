@@ -22,10 +22,26 @@ _cache: dict[str, tuple[float, object]] = {}
 _cache_lock = threading.Lock()
 
 
+def _market_hours() -> bool:
+    """US equities extended window (pre-market through after-hours), ET.
+    Duplicated tiny check to avoid a circular import with conviction."""
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+    et = datetime.now(ZoneInfo("America/New_York"))
+    if et.weekday() >= 5:
+        return False
+    mins = et.hour * 60 + et.minute
+    return 7 * 60 <= mins < 20 * 60
+
+
 def _cache_get(key: str):
     with _cache_lock:
         hit = _cache.get(key)
-    if hit and (time.time() - hit[0]) < settings.CACHE_TTL:
+    # During market hours prices move — keep the cache tight (60s) so the
+    # advisor never reasons off a 5-minute-old tick. Off-hours, prices are
+    # static, so the full TTL avoids hammering the source.
+    ttl = min(settings.CACHE_TTL, 60) if _market_hours() else settings.CACHE_TTL
+    if hit and (time.time() - hit[0]) < ttl:
         return hit[1]
     return None
 
@@ -46,6 +62,9 @@ class MarketData:
     source: str  # "live" | "mock"
     earnings_date: str | None = None  # next report date (YYYY-MM-DD), if known
     structure: dict | None = None     # float, market cap, short % — runner DNA
+    live_price: float | None = None   # current tick (fast_info) — beats daily close
+    prev_close: float | None = None   # prior session close, for today's % change
+    as_of: str | None = None          # when this data was pulled (ISO ET)
 
 
 # --------------------------------------------------------------- yfinance
@@ -64,6 +83,28 @@ def _fetch_live(symbol: str) -> MarketData:
         info = {}
 
     name = info.get("shortName") or info.get("longName") or symbol.upper()
+
+    # LIVE price — the daily-history close lags intraday and ignores extended
+    # hours entirely. fast_info.last_price is the current tick; fall back to
+    # info's regular-market fields, then to the daily close. This is what the
+    # advisor and every quote should reason from.
+    live_price = prev_close = None
+    try:
+        fi = tkr.fast_info
+        live_price = float(getattr(fi, "last_price", None) or fi["lastPrice"])
+    except Exception:
+        pass
+    try:
+        fi = tkr.fast_info
+        prev_close = float(getattr(fi, "previous_close", None) or fi["previousClose"])
+    except Exception:
+        pass
+    if live_price is None:
+        v = info.get("regularMarketPrice") or info.get("currentPrice")
+        live_price = float(v) if isinstance(v, (int, float)) and v > 0 else None
+    if prev_close is None:
+        v = info.get("regularMarketPreviousClose") or info.get("previousClose")
+        prev_close = float(v) if isinstance(v, (int, float)) and v > 0 else None
 
     # Structural DNA of a runner: a tiny float is the fuel — MGRT ran 1000%+
     # on a 2M-share float. shares_out lets us derive float % (tight = recent
@@ -136,7 +177,10 @@ def _fetch_live(symbol: str) -> MarketData:
         pass
 
     return MarketData(symbol.upper(), name, hist, analyst, news_items, "live",
-                      earnings_date=earnings_date, structure=structure)
+                      earnings_date=earnings_date, structure=structure,
+                      live_price=round(live_price, 2) if live_price else None,
+                      prev_close=round(prev_close, 4) if prev_close else None,
+                      as_of=time.strftime("%Y-%m-%dT%H:%M:%S"))
 
 
 def _fetch_mock(symbol: str) -> MarketData:
