@@ -1,7 +1,7 @@
 {
   "owner": "You",
   "advisor_persona": "senior financial advisor at Charles Schwab",
-  "cash": 500.52,
+  "cash": 41.62,
   "themes": {
     "AI": "Companies building or monetizing artificial intelligence models and applications",
     "Tech": "Broad technology leaders and platforms",
@@ -67,7 +67,7 @@
     },
     {
       "symbol": "SGOV",
-      "shares": 28.38003,
+      "shares": 21.38003,
       "cost_basis": 100.44,
       "theme": null
     },
@@ -93,6 +93,12 @@
       "symbol": "WBX",
       "shares": 36.31386,
       "cost_basis": 5.48,
+      "theme": null
+    },
+    {
+      "symbol": "GEV",
+      "shares": 1.0,
+      "cost_basis": 1158.99,
       "theme": null
     }
   ],

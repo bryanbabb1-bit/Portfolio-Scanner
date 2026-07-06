@@ -8,12 +8,13 @@
       "First target is the 52-week high of $1174.86, with extension toward $1230.73 (+1 ATR) on a confirmed breakout.",
       "Invalidated on a close below the 50-day SMA near $1042.19, roughly 2 ATR under current price."
     ],
-    "status": "open",
+    "status": "done",
     "price_at_pin": 1147.74,
     "created_at": "2026-07-06 13:57:42",
     "ts": 1783364262.912722,
     "watch_fired_ts": 1783368848.146761,
-    "watch_fired_price": 1155.0
+    "watch_fired_price": 1155.0,
+    "done_at": "2026-07-06 18:06:40"
   },
   {
     "id": "7a0f460ad7f0",
@@ -24,10 +25,11 @@
       "$1265 (+9.8%)",
       "close below $1095 (-4.9%)"
     ],
-    "status": "open",
+    "status": "done",
     "price_at_pin": 1153.99,
     "created_at": "2026-07-06 15:48:58",
-    "ts": 1783370938.0268621
+    "ts": 1783370938.0268621,
+    "done_at": "2026-07-06 18:06:38"
   },
   {
     "id": "1fb4a56dc534",
@@ -38,9 +40,10 @@
       "$1280 (+11%)",
       "close below $1095"
     ],
-    "status": "open",
+    "status": "done",
     "price_at_pin": 1156.28,
     "created_at": "2026-07-06 17:13:01",
-    "ts": 1783375981.0168931
+    "ts": 1783375981.0168931,
+    "done_at": "2026-07-06 18:06:37"
   }
 ]

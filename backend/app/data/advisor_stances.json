@@ -261,15 +261,15 @@
   },
   "GEV": {
     "symbol": "GEV",
-    "action": "AVOID",
+    "action": "HOLD",
     "prev_action": "AVOID",
-    "headline": "Still no \u2014 stick with NEE instead",
-    "thesis": "No new fact since the AVOID call; volume remains light and entry still lacks confirmation, so skip GEV.",
+    "headline": "Position open \u2014 manage, do not add",
+    "thesis": "Full-size 1-share position at ~$1152, no stop; hold and set an invalidation, do not add (Energy over target).",
     "target": "",
     "stop": "",
-    "source": "plan-watch",
-    "price": 1152.73,
-    "as_of": "2026-07-06 15:14:24",
-    "ts": 1783368864.8437266
+    "source": "reconcile",
+    "price": null,
+    "as_of": "2026-07-06 18:20:43",
+    "ts": 1783380043.2887588
   }
 }

@@ -27,19 +27,25 @@ _lock = threading.Lock()
 
 
 def _load(path) -> dict:
-    try:
-        with open(path) as f:
-            data = json.load(f)
-        return data if isinstance(data, dict) else {}
-    except (FileNotFoundError, json.JSONDecodeError):
-        return {}
+    # Always UTF-8; fall back to cp1252 for any legacy file written under the
+    # Windows default so a stray em-dash byte can't corrupt the whole store.
+    for enc in ("utf-8", "cp1252"):
+        try:
+            with open(path, encoding=enc) as f:
+                data = json.load(f)
+            return data if isinstance(data, dict) else {}
+        except FileNotFoundError:
+            return {}
+        except (json.JSONDecodeError, UnicodeDecodeError):
+            continue
+    return {}
 
 
 def _save(path, data: dict) -> None:
     try:
         path.parent.mkdir(parents=True, exist_ok=True)
-        with open(path, "w") as f:
-            json.dump(data, f, indent=2)
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=2, ensure_ascii=False)
     except OSError as exc:
         print(f"[conviction] persist failed: {exc!r}")
 
@@ -176,13 +182,21 @@ def _facts(sym: str, ind, quote, held: bool, pl_pct, score: float,
 
 
 # -------------------------------------------------------------- enrichment
-def _enrich(sig: dict, facts: str, book_ctx: str = "") -> dict:
-    """One standard-tier Claude call to write the what/why/target — sized to
-    the client's ACTUAL book (book_ctx), never a generic portfolio."""
+def _enrich(sig: dict, facts: str, book_ctx: str = "", price=None) -> dict:
+    """The advisor's DEFINITIVE call on a screened setup. The deterministic
+    screen is a LEAD, not an order — the advisor can AGREE or OVERRULE it. It
+    returns an `action`, stays consistent with the standing stance, and writes
+    that stance back. The scan then SUPPRESSES any signal the advisor won't
+    endorse, so a 'buy' screen the advisor reads as AVOID never reaches the
+    client as a buying opportunity (the whole point: one call, no contradiction).
+    """
     from . import advisor
+    from . import stance as stance_service
 
-    side_word = "BUYING OPPORTUNITY" if sig["side"] == "buy" else "STRONG SELL SIGNAL"
+    sym = sig["symbol"]
+    fallback_action = "BUY" if sig["side"] == "buy" else "SELL"
     fallback = {
+        "action": fallback_action,
         "headline": sig["label"],
         "what": ("Start / add to the position on this setup." if sig["side"] == "buy"
                  else "Reduce or exit the position on this signal."),
@@ -194,21 +208,26 @@ def _enrich(sig: dict, facts: str, book_ctx: str = "") -> dict:
     if not settings.ADVISOR_ENABLED:
         return {**sig, **fallback}
 
+    stable = stance_service.is_stable(sym, price)
+    prior = stance_service.get(sym)
+    lead = "potential BUY" if sig["side"] == "buy" else "potential SELL/exit"
     prompt = (
-        f"{advisor._PERSONA}\n\nA high-conviction {side_word} rule just fired "
-        f"for a client:\nRule: {sig['label']}\n\n{facts}\n\n{book_ctx}\n\n"
-        f"Write the alert — DECISIVE and concrete, no dancing. Respond with ONLY "
-        f"a JSON object, no markdown: "
-        f'{{"headline": punchy alert headline under 10 words, '
-        f'"what": ONE sentence — the exact move in plain terms, '
-        f'"entry": exact price or tight zone to act at now (e.g. "$375-378"), '
-        f'"size": how much — a dollar amount AND rough % of book, sized to risk '
-        f'(runners = tiny lottery-ticket size, but STATE the number), '
-        f'"target": concrete profit-target price (e.g. "$410 (+9%)"), '
-        f'"stop": concrete invalidation price (e.g. "close below $362"), '
-        f'"why": array of 2-4 bullet strings citing the numbers}}. '
-        f"NEVER say 'consider' or 'you could' — give the exact entry, dollar "
-        f"size, stop and target. Each bullet one sentence under 22 words."
+        f"{advisor._PERSONA}\n\nA screen flagged {sym} as a {lead} setup "
+        f"(rule: {sig['label']}).\n\n{facts}\n\n{stance_service.block(sym, price)}"
+        f"{book_ctx}\n\n"
+        f"Give your DEFINITIVE call on {sym}. The screen is a LEAD, not an order "
+        f"— AGREE only if you genuinely would act now. If {sym} is extended, "
+        f"unconfirmed, or against your standing call, say HOLD or AVOID; do not "
+        f"rubber-stamp a buy you don't believe in. Respond with ONLY JSON: "
+        f'{{"action": one word BUY|ADD|HOLD|TRIM|SELL|AVOID, '
+        f'"headline": under-10-word verdict, '
+        f'"what": ONE sentence — the exact move, or why to stand down, '
+        f'"entry": exact price/zone to act now (empty if no action now), '
+        f'"size": dollar amount AND % of book, conviction-scaled (empty if none), '
+        f'"target": concrete target price or "", '
+        f'"stop": concrete invalidation price or "", '
+        f'"why": array of 2-4 bullets citing the numbers}}. '
+        f"NEVER say 'consider' or 'you could'. Be decisive."
     )
     raw, _ = advisor._run_claude(prompt, model=settings.CLAUDE_MODEL_STANDARD)
     if not raw:
@@ -217,14 +236,30 @@ def _enrich(sig: dict, facts: str, book_ctx: str = "") -> dict:
     if start != -1 and end > start:
         try:
             obj = json.loads(raw[start : end + 1])
-            return {**sig,
-                    "headline": str(obj.get("headline") or sig["label"]),
-                    "what": str(obj.get("what") or fallback["what"]),
-                    "why": advisor._as_bullets(obj.get("why")) or [sig["label"]],
-                    "entry": str(obj.get("entry") or ""),
-                    "size": str(obj.get("size") or ""),
-                    "target": str(obj.get("target") or ""),
-                    "stop": str(obj.get("stop") or "")}
+            action = str(obj.get("action") or fallback_action).strip().upper().split()[0]
+            if action not in {"BUY", "ADD", "HOLD", "TRIM", "SELL", "AVOID"}:
+                action = fallback_action
+            # Sticky: nothing material moved -> keep the standing call, don't flip.
+            if stable and prior:
+                action = prior["action"]
+            out = {**sig,
+                   "action": action,
+                   "headline": str(obj.get("headline") or sig["label"]),
+                   "what": str(obj.get("what") or fallback["what"]),
+                   "why": advisor._as_bullets(obj.get("why")) or [sig["label"]],
+                   "entry": str(obj.get("entry") or ""),
+                   "size": str(obj.get("size") or ""),
+                   "target": str(obj.get("target") or ""),
+                   "stop": str(obj.get("stop") or "")}
+            if not (stable and prior):
+                try:
+                    stance_service.set_stance(
+                        sym, action, headline=out["headline"], thesis=out["what"],
+                        target=out["target"], stop=out["stop"], source="signal",
+                        price=price)
+                except Exception:
+                    pass
+            return out
         except json.JSONDecodeError:
             pass
     return {**sig, **fallback}
@@ -333,9 +368,20 @@ def scan() -> list[dict]:
                     "generated_at": time.strftime("%Y-%m-%d %H:%M:%S"),
                     "ts": now,
                 })
-                enriched = _enrich(sig, _facts(sym, ind, quote, held, pl, score, theme), book_ctx)
-                notes[sig_id] = enriched
+                enriched = _enrich(sig, _facts(sym, ind, quote, held, pl, score, theme),
+                                   book_ctx, quote.price)
+                # The advisor is the FINAL word. A screen 'buy' it reads as
+                # HOLD/AVOID must NOT reach you as a buying opportunity — that's
+                # the self-contradiction that broke trust. Suppress it (the
+                # standing stance is still recorded, silently), and cooldown so
+                # we don't re-ask every scan.
+                action = str(enriched.get("action") or "").upper()
+                endorses = ((sig["side"] == "buy" and action in ("BUY", "ADD")) or
+                            (sig["side"] == "sell" and action in ("SELL", "TRIM", "AVOID")))
                 fired[cool_key] = today
+                if not endorses:
+                    continue
+                notes[sig_id] = enriched
 
         # Runner ignition: whole-market movers running NOW, caught EARLY. Each
         # is staged — 'igniting' (up ~7-25% on heavy volume, near highs, runway

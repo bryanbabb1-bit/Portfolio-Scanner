@@ -966,5 +966,104 @@
     "note": "Watchpoint triggered (Watchpoint: RSI \u2265 45): buy when rsi reclaims 45",
     "source": "auto",
     "ts": 1783375581.1562376
+  },
+  {
+    "id": "014e0eae1be7",
+    "date": "2026-07-06",
+    "symbol": "GEV",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Acted on pinned advice: Buy GEV now as it presses toward a fresh 52-week high inside a confirmed uptrend.",
+    "source": "pin",
+    "ts": 1783379197.1255188
+  },
+  {
+    "id": "e9a6d66cf230",
+    "date": "2026-07-06",
+    "symbol": "GEV",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Acted on pinned advice: GEV is 1.9% off its 52-week high with bullish MACD and healthy RSI \u2014 buy the continuation now.",
+    "source": "pin",
+    "ts": 1783379198.9387088
+  },
+  {
+    "id": "a7e860b2b90d",
+    "date": "2026-07-06",
+    "symbol": "GEV",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Acted on pinned advice: Take a starter position in GEV near $1151.61, adding only on a volume-confirmed breakout above $1174.86.",
+    "source": "pin",
+    "ts": 1783379200.0246556
+  },
+  {
+    "id": "21b8e302612a",
+    "date": "2026-07-06",
+    "symbol": "GEV",
+    "action": "buy",
+    "shares": 1.0,
+    "price": null,
+    "note": "Opened a new position",
+    "source": "auto",
+    "ts": 1783379262.703121
+  },
+  {
+    "id": "c1893cf4fb93",
+    "date": "2026-07-06",
+    "symbol": "IREN",
+    "action": "sell",
+    "shares": 7.1989,
+    "price": null,
+    "note": "Trimmed (28.5789 -> 21.38)",
+    "source": "auto",
+    "ts": 1783379322.7011502
+  },
+  {
+    "id": "5fb76b138652",
+    "date": "2026-07-06",
+    "symbol": "IREN",
+    "action": "buy",
+    "shares": 7.1989,
+    "price": null,
+    "note": "Added shares (21.38 -> 28.5789)",
+    "source": "auto",
+    "ts": 1783379404.693502
+  },
+  {
+    "id": "08a90ab9efa8",
+    "date": "2026-07-06",
+    "symbol": "SGOV",
+    "action": "sell",
+    "shares": 7.0,
+    "price": null,
+    "note": "Trimmed (28.38 -> 21.38)",
+    "source": "auto",
+    "ts": 1783379404.7438629
+  },
+  {
+    "id": "b1e6e32110b9",
+    "date": "2026-07-06",
+    "symbol": "NVDA",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
+    "source": "pin",
+    "ts": 1783380031.8379655
+  },
+  {
+    "id": "efb9485c3195",
+    "date": "2026-07-06",
+    "symbol": "AVGO",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Watchpoint triggered (Watchpoint: RSI \u2265 45): buy when rsi reclaims 45",
+    "source": "auto",
+    "ts": 1783380032.7332993
   }
 ]
