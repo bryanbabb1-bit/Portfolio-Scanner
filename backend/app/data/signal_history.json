@@ -115,5 +115,32 @@
     "price": 2.2699,
     "ts": 1783345313.1101594,
     "date": "2026-07-06"
+  },
+  {
+    "id": "plan:6a465159fdef:2026-07-06",
+    "symbol": "GEV",
+    "side": "buy",
+    "rule": "plan-reeval",
+    "price": 1189.17,
+    "ts": 1783345889.3994906,
+    "date": "2026-07-06"
+  },
+  {
+    "id": "watch:e4b0c1592c81",
+    "symbol": "CIFR",
+    "side": "sell",
+    "rule": "watchpoint",
+    "price": 22.34,
+    "ts": 1783346070.524917,
+    "date": "2026-07-06"
+  },
+  {
+    "id": "watch:602919cad519",
+    "symbol": "AVGO",
+    "side": "buy",
+    "rule": "watchpoint",
+    "price": 379.81,
+    "ts": 1783346070.524917,
+    "date": "2026-07-06"
   }
 ]

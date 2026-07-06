@@ -603,5 +603,27 @@
     "note": "Added shares (0.10934 -> 0.76713)",
     "source": "auto",
     "ts": 1783345500.6943204
+  },
+  {
+    "id": "cc57aa23a106",
+    "date": "2026-07-06",
+    "symbol": "CIFR",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Watchpoint triggered (Watchpoint: price \u2265 $19): Exit CIFR entirely on any bounce above $19; miner thesis already burned you.",
+    "source": "auto",
+    "ts": 1783346070.5459275
+  },
+  {
+    "id": "a2face874c22",
+    "date": "2026-07-06",
+    "symbol": "AVGO",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Watchpoint triggered (Watchpoint: RSI \u2265 45): Buy AVGO only after RSI recovers above 45 (from 39.7).",
+    "source": "auto",
+    "ts": 1783346070.5499868
   }
 ]

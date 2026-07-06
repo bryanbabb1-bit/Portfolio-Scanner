@@ -1,11 +1,11 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
-import { api, Candle, CHART_RANGES, ChartRange, PriceHistory, RANGE_LABELS } from "../lib/api";
-import { money } from "./format";
+import { api, Candle, CHART_RANGES, ChartRange, PriceHistory, Quote, RANGE_LABELS } from "../lib/api";
+import { money, pct } from "./format";
 
 // Pure inline-SVG chart — no external charting lib, so it stays self-contained
 // (works under a strict CSP and adds zero npm dependencies).
-export function PriceChart({ symbol }: { symbol: string }) {
+export function PriceChart({ symbol, quote }: { symbol: string; quote?: Quote }) {
   const [range, setRange] = useState<ChartRange>("6mo");
   const [data, setData] = useState<PriceHistory | null>(null);
   const [err, setErr] = useState<string | null>(null);
@@ -88,9 +88,19 @@ export function PriceChart({ symbol }: { symbol: string }) {
 
   const first = candles[0]?.close;
   const last = candles[candles.length - 1]?.close;
-  const chg = first != null && last != null ? ((last / first - 1) * 100) : 0;
+  const rangeChg = first != null && last != null ? ((last / first - 1) * 100) : 0;
+  // On the 1D view, "change" must mean vs the PREVIOUS CLOSE (the true day
+  // move) — first-bar-to-last ignores the overnight gap, which is why a stock
+  // that gapped +9% at the open was reading -0.5%. The live quote's change_pct
+  // is the correct day number.
+  const showDay = range === "1d" && quote != null;
+  const chg = showDay ? quote!.change_pct : rangeChg;
+  const chgLabel = range === "1d" ? "today" : `over ${RANGE_LABELS[range]}`;
   const up = chg >= 0;
   const stroke = up ? "var(--bull)" : "var(--bear)";
+
+  // Prominent live price: the current quote, falling back to the last candle.
+  const curPrice = quote?.price ?? last ?? null;
 
   const lastRsi = [...candles].reverse().find((c) => c.rsi != null)?.rsi ?? null;
   const rsiZone =
@@ -99,7 +109,14 @@ export function PriceChart({ symbol }: { symbol: string }) {
   return (
     <div className="card" style={{ marginBottom: 16 }}>
       <div className="chart-head">
-        <div className="section-title" style={{ margin: 0 }}>Price</div>
+        <div className="chart-price">
+          <span className="cp-now">{curPrice != null ? money(curPrice) : "—"}</span>
+          {quote != null && (
+            <span className={`cp-chg ${quote.change_pct >= 0 ? "pos" : "neg"}`}>
+              {quote.change_pct >= 0 ? "▲" : "▼"} {money(Math.abs(quote.change))} ({pct(Math.abs(quote.change_pct))}) today
+            </span>
+          )}
+        </div>
         <div className="range-toggle">
           {CHART_RANGES.map((r) => (
             <button
@@ -123,7 +140,7 @@ export function PriceChart({ symbol }: { symbol: string }) {
               {up ? "▲" : "▼"} {Math.abs(chg).toFixed(2)}%
             </span>
             <span className="mut" style={{ fontSize: 12 }}>
-              over {RANGE_LABELS[range]} · {data?.source}
+              {chgLabel} · {data?.source}
             </span>
             {lastRsi != null && (
               <span className={`rsi-pill ${rsiZone}`}>

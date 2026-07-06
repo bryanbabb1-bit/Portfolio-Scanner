@@ -76,7 +76,7 @@ export default function StockDetail({
         </div>
       )}
 
-      <PriceChart symbol={r.symbol} />
+      <PriceChart symbol={r.symbol} quote={r.quote} />
 
       <div className="detail-grid">
         <div>

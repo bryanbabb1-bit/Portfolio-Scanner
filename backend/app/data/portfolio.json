@@ -1,6 +1,7 @@
 {
   "owner": "You",
   "advisor_persona": "senior financial advisor at Charles Schwab",
+  "cash": 1000.11,
   "themes": {
     "AI": "Companies building or monetizing artificial intelligence models and applications",
     "Tech": "Broad technology leaders and platforms",

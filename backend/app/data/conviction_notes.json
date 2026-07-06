@@ -131,22 +131,21 @@
     "rule": "high-conviction-discovery",
     "label": "New-name setup: breakout readiness in the top tier",
     "id": "GEV:high-conviction-discovery:2026-07-06",
-    "price": 1161.5,
+    "price": 1188.93,
     "theme": "Energy",
     "held": false,
     "dismissed": true,
-    "generated_at": "2026-07-06 08:33:07",
-    "ts": 1783344784.9188316,
-    "headline": "GEV Extended, No Volume \u2014 Wait For Pullback",
-    "what": "Do not chase GEV here; wait for a pullback toward the 50-day near $1042 with volume confirmation before entering.",
+    "generated_at": "2026-07-06 08:45:53",
+    "ts": 1783345550.9449112,
+    "headline": "GEV new high on air - volume no-confirm",
+    "what": "Do not buy the breakout yet; wait for a close above $1188.93 on volume at or above 1x average before entering.",
     "why": [
-      "Volume is just 0.0393x average, meaning today's +4.35% breakout has no participation to confirm it.",
-      "Price is roughly 2.2 ATR above the 50-day SMA (1042.39), an unsafe chase zone despite the 73/100 score.",
-      "GEV is only 1.14% below its 52-week high of $1174.86, leaving poor reward-to-risk for a chase entry.",
-      "RSI 61.2 and MACD 38.31/23.98 confirm the uptrend intact, keeping this on watch rather than abandoned."
+      "Price +6.81% to a new 52-week high at $1188.93, but volume is only 0.1185x average - no confirmation.",
+      "RSI 63.18 and MACD 40.50/24.41 bullish, trend intact, but a breakout without volume is unconfirmed.",
+      "Price sits 14% above its 50-day SMA ($1042.94) and 49% above its 200-day ($796.57), already extended in trend terms."
     ],
-    "target": "Entry target on pullback: $1042-1055 (50-day SMA/2-ATR band) with volume, aiming for an eventual retest of the $1174.86 52-week high.",
-    "stop": "Setup is invalidated if GEV closes below the 50-day SMA at $1042.39, or if a pullback entry fails to reclaim $1161.50 on rising volume."
+    "target": "If volume confirms on a subsequent push through $1188.93, first target is the round-number extension near $1250; no target stands without confirmation.",
+    "stop": "Setup is invalidated if price closes back below the 50-day SMA at $1042.94, or if no volume confirmation arrives within 2-3 sessions."
   },
   "watch:c4e364e871ce": {
     "id": "watch:c4e364e871ce",
@@ -173,22 +172,88 @@
     "symbol": "SEER",
     "side": "buy",
     "rule": "runner-ignition",
-    "label": "Live runner: +40% today",
-    "headline": "Extended low-float spike \u2014 not your trade",
-    "what": "Hold \u2014 no action; SEER isn't held or in your plan; don't chase a 5+ ATR extension at RSI 77.6.",
+    "label": "Live runner: +38% today",
+    "headline": "No change \u2014 still a chase, not a trade",
+    "what": "Hold \u2014 no action; SEER not held, not in plan; -1.3% since AVOID call is immaterial, no thesis change.",
     "why": [
-      "+40% on 16.8M float, 12.5x volume, RSI 77.6 \u2014 classic low-float ignition, not a quality AI compounder your plan targets",
-      "Price $2.27 is ~5 ATR above SMA20 $1.73 (ATR 0.104) with a death-cross regime \u2014 chasing breaks the >2 ATR rule",
-      "No existing position, no allocation bucket for SEER; deployable cash stays earmarked for SGOV\u2192NVDA/AVGO, TSM, AAPL breakout per plan"
+      "Price $2.24 vs $2.27 at last call \u2014 flat, no new level broken or fact changed",
+      "Still 5+ ATR extended with RSI 76.9 overbought and death-cross regime intact",
+      "Not part of allocation plan; capital is earmarked for NVDA/AVGO/TSM rotation"
     ],
-    "target": "If you want a lottery-ticket look at all, wait for pullback to SMA20/50 ($1.73-1.81) on confirming volume, sized \u22641% of book.",
-    "stop": "N/A \u2014 no position now; any pullback entry needs a stop below that pullback low given 0.104 ATR.",
+    "target": "Lottery-ticket look only on pullback to SMA20/50 ($1.73-1.81) with confirming volume, sized \u22641% of book.",
+    "stop": "N/A \u2014 no position; any future pullback entry needs a stop below that pullback low given 0.104 ATR.",
     "action": "AVOID",
-    "price": 2.2699,
+    "price": 2.24,
     "theme": "Runner",
     "held": false,
     "dismissed": true,
-    "generated_at": "2026-07-06 08:42:25",
-    "ts": 1783345313.1101594
+    "generated_at": "2026-07-06 08:46:35",
+    "ts": 1783345550.9449112
+  },
+  "plan:6a465159fdef:2026-07-06": {
+    "id": "plan:6a465159fdef:2026-07-06",
+    "symbol": "GEV",
+    "side": "buy",
+    "rule": "plan-reeval",
+    "label": "Reconsider staged plan",
+    "headline": "Volume missing, stock now extended",
+    "what": "Price cleared $1188.93 but volume is only 0.15x avg and stock is 2.8 ATR above SMA20 \u2014 chasing, don't buy here.",
+    "why": [
+      "Volume 0.1458x 20d avg, far short of the 1x confirmation the plan required",
+      "Price $1189.17 is 2.79 ATR above SMA20 ($1034.19) \u2014 beyond the 2 ATR chase limit",
+      "At 52w high with 34 analysts' mean target ($1212.33) only 1.95% above \u2014 thin reward for the extension"
+    ],
+    "target": "1145.36 (pullback to \u22642 ATR above SMA20) or a fresh volume-confirmed close >1188.93",
+    "stop": "",
+    "action": "HOLD",
+    "price": 1189.17,
+    "plan_text": "Do not buy the breakout yet; wait for a close above $1188.93 on volume at or above 1x average before entering.",
+    "move_pct": 0.2,
+    "theme": "Plan",
+    "held": true,
+    "dismissed": true,
+    "data_source": "live",
+    "generated_at": "2026-07-06 08:52:02",
+    "ts": 1783345889.3994906
+  },
+  "watch:e4b0c1592c81": {
+    "id": "watch:e4b0c1592c81",
+    "symbol": "CIFR",
+    "side": "sell",
+    "rule": "watchpoint",
+    "label": "Watchpoint: price \u2265 $19",
+    "headline": "CIFR hit your watchpoint \u2014 price \u2265 $19",
+    "what": "Exit CIFR entirely on any bounce above $19; miner thesis already burned you.",
+    "why": [
+      "You armed this on 2026-07-06 08:54: price \u2265 $19.",
+      "Current reading: price $22.34."
+    ],
+    "target": "",
+    "stop": "",
+    "price": 22.34,
+    "held": null,
+    "dismissed": true,
+    "generated_at": "2026-07-06 08:54:30",
+    "ts": 1783346070.524917
+  },
+  "watch:602919cad519": {
+    "id": "watch:602919cad519",
+    "symbol": "AVGO",
+    "side": "buy",
+    "rule": "watchpoint",
+    "label": "Watchpoint: RSI \u2265 45",
+    "headline": "AVGO hit your watchpoint \u2014 RSI \u2265 45",
+    "what": "Buy AVGO only after RSI recovers above 45 (from 39.7).",
+    "why": [
+      "You armed this on 2026-07-06 08:54: RSI \u2265 45.",
+      "Current reading: RSI 46.7689."
+    ],
+    "target": "",
+    "stop": "",
+    "price": 379.81,
+    "held": null,
+    "dismissed": true,
+    "generated_at": "2026-07-06 08:54:30",
+    "ts": 1783346070.524917
   }
 }

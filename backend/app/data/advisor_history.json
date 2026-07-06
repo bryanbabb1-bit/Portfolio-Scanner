@@ -1,57 +1,6 @@
 {
   "portfolio:brief": [
     {
-      "generated_at": "2026-07-05 20:45:01",
-      "summary": "Real progress \u2014 miners cut 41%\u219216%, NVDA $191 adds executed, SGOV trim underway; today's -2.44% is the July 2026 macro chip selloff, not a flaw in your book, so stand pat and let standing levels work.",
-      "insights": [
-        "IREN+CIFR now 16% of book ($1,943), down from 41% \u2014 still above your 10% combined guardrail, which the pending CIFR exit closes.",
-        "SGOV at 35.8% anchors a 67.4% top-5; its RSI 81 'overbought' is meaningless for a cash proxy \u2014 ignore that alert.",
-        "Today's damage is macro: Micron -13% sector-wide on SK Hynix HBM slowdown and hawkish Fed under Warsh (July 2026), not company faults in AMD/MU/NVDA.",
-        "IREN -10.4% is a governance hit: $700M RSU grant to co-CEOs, ~5% dilution, no performance conditions (approved June 30) \u2014 sitting exactly on your -36.6% exit line.",
-        "Beta 1.44 and 25.9% vol mean your equity sleeve runs ~2x the tape; the 35.8% SGOV ballast is precisely why today only cost -2.44%.",
-        "NVDA adds at $191 are done; position is $590 at -9.1% and RSI 41 is neutral \u2014 you've deployed enough there, no chasing.",
-        "AAPL +4.8% with RSI 60.3 is the lone opportunity flag and still has room before overbought \u2014 the only setup worth arming."
-      ],
-      "actions": [
-        "Hold \u2014 no reactive trades; today's drop is the sector chip selloff, not your positions.",
-        "Long game: Deploy July's $300 into TSM at market; build the stub.",
-        "Quick trade: Exit full CIFR $598 only on bounce above $19.",
-        "Quick trade: Exit IREN fully on any daily close below cost basis.",
-        "Quick trade: Buy $250 AAPL on daily close above $317."
-      ],
-      "risks": [
-        "IREN dilution could break its floor; tripwire: daily close below your -36.6% cost basis triggers full exit per re-thesis rule.",
-        "Chip selloff may deepen on a hawkish Fed; tripwire: AMD daily close below $500 cuts this week's added shares.",
-        "CIFR runs a debt-funded data center and is leveraged; tripwire: any bounce above $19 exits the full $598 immediately.",
-        "SGOV at 35.8% is opportunity cost if AI names bottom; tripwire: a 5%+ benchmark pullback deploys a $500-750 tranche."
-      ]
-    },
-    {
-      "generated_at": "2026-07-06 07:26:58",
-      "summary": "Real progress logged \u2014 miners cut 41%\u219216.8% ($2,071), NVDA $191 adds executed, SGOV trim underway; today's -0.77% is the July 2026 chip selloff (MU -13% in a session, BofA semi bubble gauge 0.91), not your book. Stand pat and let standing levels work.",
-      "insights": [
-        "Beta 1.44 and vol 25.9% are aggressive but Sharpe 1.02 means risk is being paid; max drawdown -22.2% sits just under your 15%-from-high buying-pause guardrail.",
-        "SGOV 35.2% plus top-5 at 67.5% concentrates the book in one cash proxy; its RSI 81 'overbought' alert is meaningless for a T-bill fund.",
-        "IREN $1,439 + CIFR $632 = 16.8% of book, down from 41% \u2014 strong de-risking, but still above your 10% hard cap, so no adds.",
-        "Momentum is split: AAPL leads (+4.2%, RSI 60.3, uptrend, breakout alert live) while IREN RSI 30.6 and CIFR 37.3 stay broken.",
-        "Macro drives the tape: MU -13% single session, SK Hynix HBM slowdown, hawkish Warsh Fed \u2014 sector selloff, not a flaw in your positions.",
-        "IREN's $9.7B Microsoft AI-cloud deal underwrites its pivot thesis, but price (-32.2%, RSI 30.6) hasn't confirmed \u2014 the freeze stands."
-      ],
-      "actions": [
-        "Hold \u2014 no reactive trades; today's drop is the macro chip selloff, not your book.",
-        "Quick trade: Exit full CIFR ~$632 only on bounce above $19.",
-        "Quick trade: Exit IREN fully on daily close below cost basis.",
-        "Long game: Deploy July's $300 into TSM at market; build the stub.",
-        "Quick trade: Buy $250 AAPL only on daily close above $317."
-      ],
-      "risks": [
-        "AI-bubble selloff deepens \u2014 tripwire: NVDA daily close below its 200-day forces size cut and cash rebuild.",
-        "Miners still 16.8% vs 10% cap \u2014 tripwire: IREN new low below cost triggers permanent exit.",
-        "SGOV 35.2% cash drag undercuts the 13% return needed \u2014 tripwire: deploy only on a 5%+ market pullback.",
-        "Binary earnings risk \u2014 tripwire: flag and freeze any holding reporting within a week; no entries inside two days."
-      ]
-    },
-    {
       "generated_at": "2026-07-06 07:27:56",
       "summary": "Progress is real: miners cut 41%\u219216.9%, NVDA $191 adds done (now $194.44), SGOV trim underway \u2014 the one live job this week is finishing the standing CIFR exit, now triggered above $19.",
       "insights": [
@@ -74,6 +23,56 @@
         "CIFR's analyst upgrades tempt holding a burned miner thesis \u2014 tripwire: any print above $19 (live now) executes the sell.",
         "AI-bubble drawdown given 25.9% vol and 1.44 beta \u2014 tripwire: S&P 500 daily close back below its 200-day (~7,470) halves size and rebuilds cash.",
         "Binary earnings risk \u2014 tripwire: flag and freeze new adds on any core name (NVDA/AMD/MSFT/AAPL) reporting within a week; confirm dates before buying."
+      ]
+    },
+    {
+      "generated_at": "2026-07-06 08:51:34",
+      "summary": "Progress is real \u2014 miners cut 41%\u219217.6% (today's IREN +13.7%/CIFR +12.6% bounce inflated it), SGOV worked 35.8%\u219222.8%, and NVDA/AVGO/TSM adds are executed; the one live job left is finishing the standing CIFR exit now that $19 triggered.",
+      "insights": [
+        "Book is aggressive-but-coherent: beta 1.69, annualized vol 29.8%, Sharpe 1.21 \u2014 the risk matches your stated appetite and is being paid for.",
+        "Concentration is the watch item: top-5 = 60.7% and SGOV 22.8% is your anchor, while IREN at 12.2% edges just past the 12% single-name guardrail.",
+        "Miners IREN+CIFR = $2,201 (17.6%) still breach the 10% cap; the CIFR sale takes it to ~12.2%, essentially IREN alone \u2014 enough de-risking, don't over-cut.",
+        "Chip complex is ripping, not selling off \u2014 AMD +7.2%, AVGO +5.3%, TSM +4.7%, MU +3.1%; BofA lifted its 2026 semi TAM to $1.3T and Jensen says memory demand outpaces supply for years, tailwinds under your core.",
+        "IREN's +13.7% has a real catalyst: its $3.4B NVIDIA Blackwell AI-cloud deal targets $4.4B run-rate ARR by end-2026 \u2014 supports freezing, not selling, into strength.",
+        "SGOV RSI 81.8 'overbought' alert is noise on a T-bill ETF \u2014 ignore it; SGOV is dry powder, not a momentum trade.",
+        "AMD (+10.4%, RSI 57.8, uptrend) is your only clean winner running \u2014 trail it, don't trim it."
+      ],
+      "actions": [
+        "Quick trade: Sell all CIFR ~$673 at market; $19 trigger hit.",
+        "Quick trade: Buy $250 AAPL only on daily close above $317; stop $300.",
+        "Long game: Direct August's $300 into TSM at market.",
+        "Quick trade: Hold IREN; exit only on daily close below cost basis."
+      ],
+      "risks": [
+        "Beta 1.69 cuts both ways in the July chip tape \u2014 tripwire: S&P 500 loses its 200-day, then halve size and raise cash.",
+        "IREN is a thin-float satellite bet \u2014 tripwire: daily close below your cost basis triggers full permanent exit, no averaging down.",
+        "MSFT (-12%, downtrend, RSI 47) stays broken \u2014 tripwire: still below long-term trend past early August forces a written re-thesis or exit.",
+        "Drawdown guardrail \u2014 tripwire: portfolio -15% from its high pauses all buying and rebuilds Cash & Income to 25%."
+      ]
+    },
+    {
+      "generated_at": "2026-07-06 08:53:11",
+      "summary": "Progress is real \u2014 miners trimmed 41%\u219217.5% (today's IREN +14.1%/CIFR +11.4% bounce inflated it), SGOV worked 35.8%\u2192~22.7%, and NVDA/AVGO/TSM adds are executed; the one live job left is finishing the standing CIFR exit, now firmly above the $19 trigger at ~$20.76 (2026-07-06).",
+      "insights": [
+        "Book is efficient but hot: beta 1.7, annualized vol 29.9%, Sharpe 1.21, max drawdown -24.6% \u2014 aggressive risk that matches your mandate, not excess.",
+        "Concentration is the watch item: top-5 = 60.7% and SGOV 24.7%, but SGOV is dry powder, so real single-name risk sits in the AI/semi cluster.",
+        "Miner sleeve IREN+CIFR = 17.5%, above your 10% guardrail; today's bounce (IREN +14.1%, CIFR +11.4%) inflated it, and the pending CIFR sale drops it to ~12%.",
+        "IREN -27.7% breaches your 25% re-thesis guardrail, but the $9.7B Microsoft AI-cloud contract and $3.65B facility are intact and it made no new low today (StocksToTrade, 2026-06-12).",
+        "Momentum leaders are working: AMD +7.9% (RSI 58, P/L +11.1%) and the broad +3.47% tape confirm risk-on; AMD stays a trailed winner, not a trim.",
+        "NVDA adds are done at $191, now $194.44, with earnings Aug 26 clearing your 2-day binary-event rule; nothing to add here (stockanalysis, 2026-07-05).",
+        "July's $300 TSM contribution is already executed (0.66 shares today), so TSM funding is on schedule toward the 10% target \u2014 next tranche is August."
+      ],
+      "actions": [
+        "Quick trade: Sell all CIFR ~$666 at market; $19 trigger hit.",
+        "Quick trade: Buy $250 AAPL only on daily close above $317.",
+        "Quick trade: Hold IREN; exit only on new low below cost.",
+        "Long game: Direct August's $300 into TSM at market."
+      ],
+      "risks": [
+        "IREN is a binary AI-cloud execution bet \u2014 tripwire: daily close below cost basis or prior $38.82 low forces full exit.",
+        "AI/semi concentration with beta 1.7 amplifies a market turn \u2014 tripwire: S&P closes below its 200-day, then halve size and raise cash.",
+        "CIFR's Strong-Buy tape and $30 target may tempt holding \u2014 tripwire: honor the $19 trigger; the miner thesis already burned you, exit stands.",
+        "TSM reports Q2 mid-July \u2014 tripwire: no new TSM adds within 2 days of the earnings date."
       ]
     }
   ],

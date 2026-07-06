@@ -63,6 +63,28 @@ body {
   min-height: 100vh;
 }
 
+/* prominent live price at the top of the chart */
+.chart-price {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.chart-price .cp-now {
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  font-variant-numeric: var(--tab-nums);
+}
+.chart-price .cp-chg {
+  font-size: 15px;
+  font-weight: 700;
+  font-variant-numeric: var(--tab-nums);
+}
+.chart-price .cp-chg.pos { color: var(--bull); }
+.chart-price .cp-chg.neg { color: var(--bear); }
+
 /* standing-call badge — the ONE call shown consistently across every surface */
 .stance-badge {
   display: inline-flex;

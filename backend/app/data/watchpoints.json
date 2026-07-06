@@ -68,32 +68,6 @@
     "confirm": "touch"
   },
   {
-    "id": "8f2878aeeefd",
-    "symbol": "PANW",
-    "kind": "rsi_below",
-    "level": 70.0,
-    "note": "No new position until RSI cools below 70 (currently 78.5)",
-    "side": "buy",
-    "confirm": "touch",
-    "source": "advisor",
-    "status": "armed",
-    "created_at": "2026-07-03 09:19",
-    "ts": 1783088348.8090892
-  },
-  {
-    "id": "ccd6ef70723e",
-    "symbol": "SPX",
-    "kind": "price_below",
-    "level": 7470.0,
-    "note": "S&P 500 close below 200-day (~7,470) halves position size and rebuilds cash",
-    "side": "sell",
-    "confirm": "close",
-    "source": "advisor",
-    "status": "armed",
-    "created_at": "2026-07-06 07:28",
-    "ts": 1783340902.7402403
-  },
-  {
     "id": "f20e035fd3ee",
     "symbol": "NVDA",
     "kind": "price_below",
@@ -107,17 +81,29 @@
     "ts": 1783340902.7583537
   },
   {
-    "id": "c4e364e871ce",
-    "symbol": "AVGO",
-    "kind": "rsi_above",
-    "level": 45.0,
-    "note": "Buy AVGO only after RSI recovers above 45 from today's 39.7",
+    "id": "8fabbdbaf1de",
+    "symbol": "IREN",
+    "kind": "price_below",
+    "level": 38.82,
+    "note": "Exit IREN fully on close below cost basis or prior low $38.82.",
+    "side": "sell",
+    "confirm": "close",
+    "source": "advisor",
+    "status": "armed",
+    "created_at": "2026-07-06 08:54",
+    "ts": 1783346064.0242634
+  },
+  {
+    "id": "335cb80c1cb7",
+    "symbol": "PANW",
+    "kind": "rsi_below",
+    "level": 70.0,
+    "note": "PANW blocked while RSI above 70; reconsider once RSI cools below 70.",
     "side": "buy",
     "confirm": "touch",
     "source": "advisor",
-    "status": "triggered",
-    "created_at": "2026-07-06 07:28",
-    "ts": 1783340902.7727287,
-    "triggered_at": "2026-07-06 08:33"
+    "status": "armed",
+    "created_at": "2026-07-06 08:54",
+    "ts": 1783346064.0720303
   }
 ]
