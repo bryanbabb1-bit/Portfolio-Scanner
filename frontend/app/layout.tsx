@@ -30,6 +30,10 @@ export const viewport: Viewport = {
   themeColor: "#05070f",
   width: "device-width",
   initialScale: 1,
+  // Lock zoom so the app can't pinch/double-tap-zoom like a webpage — it
+  // should feel like a fixed native surface, not a scrollable document.
+  maximumScale: 1,
+  userScalable: false,
   viewportFit: "cover",
 };
 

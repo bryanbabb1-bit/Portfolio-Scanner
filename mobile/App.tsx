@@ -24,6 +24,15 @@ Notifications.setNotificationHandler({
   }),
 });
 
+// Force-lock the viewport before the page paints so iOS can never pinch- or
+// double-tap-zoom the app like a document (belt-and-suspenders to the web
+// app's own viewport meta).
+const LOCK_VIEWPORT = `(function(){
+  var m=document.querySelector('meta[name=viewport]');
+  if(!m){m=document.createElement('meta');m.name='viewport';document.head.appendChild(m);}
+  m.setAttribute('content','width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover');
+})(); true;`;
+
 // Hybrid v1: the full web app runs in a WebView (already immersive + mobile
 // ready); the native layer adds push registration, a hard haptic buzz when a
 // slap arrives, and deep-linking a tapped notification to the right stock.
@@ -89,8 +98,15 @@ export default function App() {
           onNavigationStateChange={onNav}
           allowsBackForwardNavigationGestures
           decelerationRate="normal"
-          pullToRefreshEnabled
           setSupportMultipleWindows={false}
+          // --- make it feel like an app, not a webpage ---
+          bounces={false}                         // iOS: no rubber-band overscroll
+          overScrollMode="never"                  // Android: same
+          pullToRefreshEnabled={false}            // no top bounce; app auto-refreshes
+          contentInsetAdjustmentBehavior="never"  // content doesn't jump under status bar
+          automaticallyAdjustContentInsets={false}
+          scrollEnabled                           // inner page still scrolls
+          injectedJavaScriptBeforeContentLoaded={LOCK_VIEWPORT}
         />
         {!ready && (
           <View style={styles.loading} pointerEvents="none">

@@ -358,6 +358,11 @@ export interface Recommendation {
   why: string[];
   target: string;
   stop: string;
+  // freshness receipt — the exact price/time this call reasoned from
+  price?: number | null;
+  change_pct?: number | null;
+  data_source?: string | null;
+  as_of?: string | null;
 }
 
 async function put<T>(path: string, body: unknown): Promise<T> {

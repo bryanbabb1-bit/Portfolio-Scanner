@@ -59,6 +59,15 @@ export function RecoSlap({
               <span className={`reco-action ${cls}`}>{reco.action}</span>
               <span className="reco-headline">{reco.headline}</span>
             </div>
+            {reco.price != null && (
+              <div className={`reco-freshness ${reco.data_source === "live" ? "live" : "stale"}`}>
+                <span className="dot" aria-hidden="true" />
+                {reco.data_source === "live" ? "LIVE" : (reco.data_source || "data").toUpperCase()}
+                {" · "}${reco.price?.toFixed(2)}
+                {reco.change_pct != null && ` (${reco.change_pct >= 0 ? "+" : ""}${reco.change_pct.toFixed(2)}% today)`}
+                {reco.as_of && ` · as of ${reco.as_of.slice(11, 16)}`}
+              </div>
+            )}
             <div className="slap-sec">
               <h4>What to do</h4>
               <p>{reco.what}</p>
