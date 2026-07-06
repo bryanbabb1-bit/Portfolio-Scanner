@@ -1,7 +1,7 @@
 {
   "owner": "You",
   "advisor_persona": "senior financial advisor at Charles Schwab",
-  "cash": 1000.11,
+  "cash": 1926.34,
   "themes": {
     "AI": "Companies building or monetizing artificial intelligence models and applications",
     "Tech": "Broad technology leaders and platforms",
@@ -36,14 +36,8 @@
       "theme": null
     },
     {
-      "symbol": "CIFR",
-      "shares": 29.83515,
-      "cost_basis": 23.31,
-      "theme": null
-    },
-    {
       "symbol": "IREN",
-      "shares": 34.64296,
+      "shares": 28.57892,
       "cost_basis": 61.24,
       "theme": null
     },

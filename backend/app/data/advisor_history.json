@@ -1,31 +1,6 @@
 {
   "portfolio:brief": [
     {
-      "generated_at": "2026-07-06 07:27:56",
-      "summary": "Progress is real: miners cut 41%\u219216.9%, NVDA $191 adds done (now $194.44), SGOV trim underway \u2014 the one live job this week is finishing the standing CIFR exit, now triggered above $19.",
-      "insights": [
-        "Regime is risk-on: S&P 500 holds above its 200-day (~7,470 per July 2026 data), so your 1.44 beta and aggressive AI tilt stay justified.",
-        "Miners IREN+CIFR = $2,085 = 16.9% of book, down from 41% but still above your 10% guardrail; selling CIFR drops it to ~11.7%.",
-        "SGOV at 35.2% ($4,350) and top-5 at 67.5% is the real concentration; RSI 81 is a meaningless cash-proxy signal, but you're 15 points above the 20% target.",
-        "IREN -31.6%, RSI 30.6, down ~28% in five sessions to its lowest since April despite the $3.4B NVIDIA AI-cloud deal (May 2026) \u2014 thesis intact only above cost basis.",
-        "CIFR fell -7% today to ~$20.76 yet analysts turned bullish (BTIG $35 target, Jun 24) as it repositions to AI landlord \u2014 a broken-miner rally to sell, not chase.",
-        "Core four are mixed: AMD +7% and uptrending is the winner; NVDA -8.8% and MSFT -11.4% sit in downtrends, AVGO RSI 39.7 still below your 45 add trigger.",
-        "AAPL +4.4% today with RSI 60.3 and a breakout-setup alert has room before overbought \u2014 the only fresh long setup in the book."
-      ],
-      "actions": [
-        "Quick trade: Sell all CIFR ~$634 at market; $19 trigger hit.",
-        "Long game: Buy $300 TSM at market; July contribution.",
-        "Quick trade: Buy $250 AAPL only on daily close above $317.",
-        "Quick trade: Exit IREN fully only on new low below cost."
-      ],
-      "risks": [
-        "IREN averaging-down temptation \u2014 tripwire: a daily close at a new low below your -36.6% basis forces full exit, no exceptions.",
-        "CIFR's analyst upgrades tempt holding a burned miner thesis \u2014 tripwire: any print above $19 (live now) executes the sell.",
-        "AI-bubble drawdown given 25.9% vol and 1.44 beta \u2014 tripwire: S&P 500 daily close back below its 200-day (~7,470) halves size and rebuilds cash.",
-        "Binary earnings risk \u2014 tripwire: flag and freeze new adds on any core name (NVDA/AMD/MSFT/AAPL) reporting within a week; confirm dates before buying."
-      ]
-    },
-    {
       "generated_at": "2026-07-06 08:51:34",
       "summary": "Progress is real \u2014 miners cut 41%\u219217.6% (today's IREN +13.7%/CIFR +12.6% bounce inflated it), SGOV worked 35.8%\u219222.8%, and NVDA/AVGO/TSM adds are executed; the one live job left is finishing the standing CIFR exit now that $19 triggered.",
       "insights": [
@@ -74,6 +49,31 @@
         "CIFR's Strong-Buy tape and $30 target may tempt holding \u2014 tripwire: honor the $19 trigger; the miner thesis already burned you, exit stands.",
         "TSM reports Q2 mid-July \u2014 tripwire: no new TSM adds within 2 days of the earnings date."
       ]
+    },
+    {
+      "generated_at": "2026-07-06 10:21:33",
+      "summary": "Real progress: CIFR fully exited today, so the miner sleeve is now IREN alone at 12.1% (was 41%), and SGOV is worked down to 22.8% from 35.8% \u2014 the only cleanup left is trimming IREN's thin-float pop back under its 10% satellite cap.",
+      "insights": [
+        "Concentration eased hard: CIFR closed today leaves IREN as the sole miner at 12.1% ($1,515), down from 41% and already inside the <25% target \u2014 no further miner cuts needed.",
+        "SGOV worked from 35.8% to 22.8% ($2,850), just 2.8 points above the 20% target; it stays as dry powder, trimmed only into a 5%+ market pullback.",
+        "IREN's +12.7% today (TeraWulf/Anthropic $19B neocloud lease; IREN itself holds a Microsoft ~$9.7B and Nvidia $3.4B deal) pushed it past both the 10% satellite cap and the 12% single-stock guardrail.",
+        "Book runs hot but is paid for it: beta 1.58, vol 27.1%, top-5 = 64.3%, yet Sharpe 1.16 and tape +2.70% confirm a risk-on regime.",
+        "Semis carry the day: AMD +8.3% (P/L +11.5%, ~159% YTD into the July 22 Advancing AI event, fwd P/E ~75), AVGO +3.6% on the Apple chip deal extended to 2031 (~20% of AVGO sales locked).",
+        "Underwater names are thesis-intact not broken: MSFT -11.9% below trend (RSI 47.6, add nothing till August), NVDA -8.7% (adds done at $191), AVGO -11.0% with RSI recovered to 44.7.",
+        "AAPL RSI 62.8 sits in the 52-week-high zone but has not printed a breakout close \u2014 the $317 trigger is still unfilled."
+      ],
+      "actions": [
+        "Quick trade: Trim IREN ~$265 into the pop; hold ~$1,250 (10%).",
+        "Quick trade: Buy $250 AAPL only on daily close above $317; stop $300.",
+        "Long game: Direct August's $300 into TSM at market.",
+        "Hold all others \u2014 no further miner or SGOV cuts needed."
+      ],
+      "risks": [
+        "IREN thin-float whiplash \u2014 the float that gave +12.7% can give -90% with no bid; tripwire: daily close below the -28.6% cost basis = full exit.",
+        "Semis overextended \u2014 AMD fwd P/E ~75 into the July 22 event; tripwire: distribution day or close below the 50-day means trim, don't add.",
+        "Concentration/beta \u2014 top-5 at 64.3%, beta 1.58; tripwire: portfolio -15% from high pauses all buying and rebuilds cash to 25%.",
+        "MSFT persistent downtrend (-11.9%, below long-term trend); tripwire: no trend reclaim by early August forces written re-thesis or exit."
+      ]
     }
   ],
   "stock:CIFR": [
@@ -99,6 +99,28 @@
         "Leverage/execution risk \u2014 $2B bond plus AWS capex; any Black Pearl 7/2026 slip pressures the debt story.",
         "Q2 earnings 08/05/2026 is a binary event; flag now though outside the 1-week window.",
         "Bitcoin/crypto correlation and equity dilution can override the contracted-revenue narrative near-term."
+      ]
+    },
+    {
+      "generated_at": "2026-07-06 10:08:52",
+      "summary": "Standing SELL stands \u2014 the $19 trigger already fired and today's -0.4% since my $22.32 flag changes nothing; the miner-thesis whipsaw already cost you once, exit the full position.",
+      "insights": [
+        "Price $22.22 sits 23.85% below the 52w high of $29.18 despite today's +10.88% pop.",
+        "MACD 0.06 is below its signal 0.8307 (hist -0.7707), confirming bearish momentum underneath the bounce.",
+        "Volume is only 0.4104x the 20-day average, so today's rally lacks confirmation.",
+        "RSI(14) at 44.87 is neutral, not oversold, giving no reversal edge to lean on.",
+        "Price is above SMA200 ($17.984) but below SMA20 ($24.6873), leaving trend genuinely sideways.",
+        "Analyst tape is Strong Buy with a $32.625 mean target, but that's not your risk framework here."
+      ],
+      "actions": [
+        "Sell all CIFR shares at market now.",
+        "Do not re-enter CIFR before Aug-5 earnings.",
+        "Cancel any resting buy/add orders on CIFR."
+      ],
+      "risks": [
+        "Chasing this bounce without volume confirmation risks buying into a dead-cat rally.",
+        "Miner-thesis leverage already burned this position once per your prior note.",
+        "Holding through Aug-5 earnings adds binary-event risk you don't need to take."
       ]
     }
   ],

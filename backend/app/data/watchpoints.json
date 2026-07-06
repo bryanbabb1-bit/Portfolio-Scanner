@@ -81,29 +81,29 @@
     "ts": 1783340902.7583537
   },
   {
-    "id": "8fabbdbaf1de",
-    "symbol": "IREN",
+    "id": "2d36fae7f8b0",
+    "symbol": "AAPL",
     "kind": "price_below",
-    "level": 38.82,
-    "note": "Exit IREN fully on close below cost basis or prior low $38.82.",
+    "level": 300.0,
+    "note": "Stop loss on new AAPL buy at $300",
     "side": "sell",
-    "confirm": "close",
+    "confirm": "touch",
     "source": "advisor",
     "status": "armed",
-    "created_at": "2026-07-06 08:54",
-    "ts": 1783346064.0242634
+    "created_at": "2026-07-06 10:22",
+    "ts": 1783351328.3863156
   },
   {
-    "id": "335cb80c1cb7",
-    "symbol": "PANW",
-    "kind": "rsi_below",
-    "level": 70.0,
-    "note": "PANW blocked while RSI above 70; reconsider once RSI cools below 70.",
+    "id": "58293a560d9e",
+    "symbol": "AVGO",
+    "kind": "rsi_above",
+    "level": 45.0,
+    "note": "Buy AVGO only after RSI recovers above 45 from 39.7",
     "side": "buy",
     "confirm": "touch",
     "source": "advisor",
     "status": "armed",
-    "created_at": "2026-07-06 08:54",
-    "ts": 1783346064.0720303
+    "created_at": "2026-07-06 10:22",
+    "ts": 1783351328.402637
   }
 ]

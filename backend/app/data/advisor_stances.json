@@ -8,9 +8,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 195.47,
-    "as_of": "2026-07-06 08:53:12",
-    "ts": 1783345992.028523
+    "price": 195.58,
+    "as_of": "2026-07-06 10:21:33",
+    "ts": 1783351293.8861463
   },
   "AAPL": {
     "symbol": "AAPL",
@@ -21,9 +21,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 308.63,
-    "as_of": "2026-07-06 08:53:12",
-    "ts": 1783345992.0107543
+    "price": 313.36,
+    "as_of": "2026-07-06 10:21:33",
+    "ts": 1783351293.8739283
   },
   "SEER": {
     "symbol": "SEER",
@@ -42,40 +42,40 @@
     "symbol": "SGOV",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Dry powder; trim only into 5%+ pullbacks",
-    "thesis": "Dry powder; trim only into 5%+ pullbacks",
+    "headline": "Dry powder at 22.8%; trim only into 5%+ pullbacks",
+    "thesis": "Dry powder at 22.8%; trim only into 5%+ pullbacks",
     "target": "",
     "stop": "",
     "source": "brief",
     "price": 100.44,
-    "as_of": "2026-07-06 08:53:11",
-    "ts": 1783345991.8640401
+    "as_of": "2026-07-06 10:21:33",
+    "ts": 1783351293.7589657
   },
   "IREN": {
     "symbol": "IREN",
-    "action": "HOLD",
+    "action": "TRIM",
     "prev_action": "HOLD",
-    "headline": "Frozen satellite; exit on new low only",
-    "thesis": "Frozen satellite; exit on new low only",
+    "headline": "Revising HOLD: trim strength to restore 10% cap",
+    "thesis": "Revising HOLD: trim strength to restore 10% cap",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 44.28,
-    "as_of": "2026-07-06 08:53:11",
-    "ts": 1783345991.8814373
+    "price": 43.74,
+    "as_of": "2026-07-06 10:21:33",
+    "ts": 1783351293.7819946
   },
   "AMD": {
     "symbol": "AMD",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Winner running; trail, don't trim",
-    "thesis": "Winner running; trail, don't trim",
+    "headline": "Winner running; trail stop, don't trim",
+    "thesis": "Winner running; trail stop, don't trim",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 558.79,
-    "as_of": "2026-07-06 08:53:11",
-    "ts": 1783345991.898673
+    "price": 560.78,
+    "as_of": "2026-07-06 10:21:33",
+    "ts": 1783351293.7965498
   },
   "MSFT": {
     "symbol": "MSFT",
@@ -86,35 +86,35 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 384.92,
-    "as_of": "2026-07-06 08:53:11",
-    "ts": 1783345991.9184668
+    "price": 385.51,
+    "as_of": "2026-07-06 10:21:33",
+    "ts": 1783351293.8096175
   },
   "AVGO": {
     "symbol": "AVGO",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Add done; RSI recovered above 45",
-    "thesis": "Add done; RSI recovered above 45",
+    "headline": "Apple deal to 2031; RSI recovered, add done",
+    "thesis": "Apple deal to 2031; RSI recovered, add done",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 380.26,
-    "as_of": "2026-07-06 08:53:11",
-    "ts": 1783345991.9365304
+    "price": 373.57,
+    "as_of": "2026-07-06 10:21:33",
+    "ts": 1783351293.8295708
   },
   "MU": {
     "symbol": "MU",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Memory-boom tailwind intact, uptrend",
-    "thesis": "Memory-boom tailwind intact, uptrend",
+    "headline": "Memory-boom tailwind intact, uptrend holding",
+    "thesis": "Memory-boom tailwind intact, uptrend holding",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 1009.51,
-    "as_of": "2026-07-06 08:53:11",
-    "ts": 1783345991.955785
+    "price": 996.99,
+    "as_of": "2026-07-06 10:21:33",
+    "ts": 1783351293.8476708
   },
   "CIFR": {
     "symbol": "CIFR",
@@ -138,9 +138,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 242.01,
-    "as_of": "2026-07-06 08:53:11",
-    "ts": 1783345991.9938557
+    "price": 244.55,
+    "as_of": "2026-07-06 10:21:33",
+    "ts": 1783351293.8600068
   },
   "NET": {
     "symbol": "NET",
@@ -151,9 +151,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 249.48,
-    "as_of": "2026-07-06 08:53:12",
-    "ts": 1783345992.0577118
+    "price": 246.94,
+    "as_of": "2026-07-06 10:21:33",
+    "ts": 1783351293.898026
   },
   "MELI": {
     "symbol": "MELI",
@@ -164,9 +164,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 1778.51,
-    "as_of": "2026-07-06 08:53:12",
-    "ts": 1783345992.0789275
+    "price": 1790.36,
+    "as_of": "2026-07-06 10:21:33",
+    "ts": 1783351293.90895
   },
   "TSM": {
     "symbol": "TSM",
@@ -177,9 +177,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 455.54,
-    "as_of": "2026-07-06 08:53:12",
-    "ts": 1783345992.0955107
+    "price": 453.93,
+    "as_of": "2026-07-06 10:21:33",
+    "ts": 1783351293.9232128
   },
   "GEV": {
     "symbol": "GEV",
@@ -193,5 +193,18 @@
     "price": 1189.17,
     "as_of": "2026-07-06 08:52:02",
     "ts": 1783345922.0696917
+  },
+  "PEW": {
+    "symbol": "PEW",
+    "action": "AVOID",
+    "prev_action": null,
+    "headline": "Extended low-float runner \u2014 do not chase",
+    "thesis": "Hold \u2014 no action; PEW is 3.3 ATR above its 20-day ($2.97 vs $2.463) on an 11.6x volume spike, not a current holding.",
+    "target": "If it pulls back to the $2.46 SMA20 (or lower) on shrinking volume, treat only as a lottery-ticket sleeve add capped at 1% of book (~$126).",
+    "stop": "Any speculative entry invalidated below the $2.28 52-week low; do not enter at all while price sits this extended.",
+    "source": "reco:runner",
+    "price": 2.97,
+    "as_of": "2026-07-06 09:50:56",
+    "ts": 1783349456.8038416
   }
 }

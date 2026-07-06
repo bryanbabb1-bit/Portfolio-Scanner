@@ -255,5 +255,51 @@
     "dismissed": true,
     "generated_at": "2026-07-06 08:54:30",
     "ts": 1783346070.524917
+  },
+  "ANET:high-conviction-discovery:2026-07-06": {
+    "symbol": "ANET",
+    "side": "buy",
+    "rule": "high-conviction-discovery",
+    "label": "New-name setup: breakout readiness in the top tier",
+    "id": "ANET:high-conviction-discovery:2026-07-06",
+    "price": 174.33,
+    "theme": "AI Infrastructure",
+    "held": false,
+    "dismissed": true,
+    "generated_at": "2026-07-06 09:27:29",
+    "ts": 1783348046.9143484,
+    "headline": "ANET Setup Ready \u2014 Volume Not Yet Confirming",
+    "what": "Hold off chasing today's pop; place a buy-stop at $178 (above the 52-week high) sized to 1.5% risk, triggered only on volume confirmation.",
+    "why": [
+      "Today's 8.96% move came on just 0.2173x average volume, failing the momentum volume-confirmation rule.",
+      "Price at $174.33 is only 1.91% below the $177.73 52-week high, so the breakout isn't confirmed yet.",
+      "RSI 57.81 and MACD 2.6236 above signal 2.5217 show bullish momentum without being overbought or extended.",
+      "Price holds well above SMA50 $159.73 and SMA200 $143.28, confirming the primary uptrend intact."
+    ],
+    "target": "First target near $187, roughly one ATR ($9.50) above the $177.73 breakout level once triggered.",
+    "stop": "Invalidated on a close below the 50-day SMA at $159.73, where trend structure breaks down."
+  },
+  "PEW:runner-ignition:2026-07-06": {
+    "id": "PEW:runner-ignition:2026-07-06",
+    "symbol": "PEW",
+    "side": "buy",
+    "rule": "runner-ignition",
+    "label": "Live runner: +26% today",
+    "headline": "Extended low-float runner \u2014 do not chase",
+    "what": "Hold \u2014 no action; PEW is 3.3 ATR above its 20-day ($2.97 vs $2.463) on an 11.6x volume spike, not a current holding.",
+    "why": [
+      "+26% today on 11.6x volume with RSI 68.9 and price ~3.3 ATR above SMA20 ($2.463) \u2014 textbook chase-forbidden extension",
+      "Death-cross regime (SMA50 $2.70 < SMA200 $3.36), stock down 82.7% from its $17.24 52w high \u2014 no established uptrend to buy into",
+      "Not part of the agreed plan's AI/Tech/Infra/Energy buckets; book is $12,555 with $3,851 cash earmarked for NVDA/AAPL/TSM, not a gun-retailer lottery ticket"
+    ],
+    "target": "If it pulls back to the $2.46 SMA20 (or lower) on shrinking volume, treat only as a lottery-ticket sleeve add capped at 1% of book (~$126).",
+    "stop": "Any speculative entry invalidated below the $2.28 52-week low; do not enter at all while price sits this extended.",
+    "action": "AVOID",
+    "price": 2.9699,
+    "theme": "Runner",
+    "held": false,
+    "dismissed": true,
+    "generated_at": "2026-07-06 09:50:56",
+    "ts": 1783349399.9551516
   }
 }

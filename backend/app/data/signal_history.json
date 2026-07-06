@@ -142,5 +142,23 @@
     "price": 379.81,
     "ts": 1783346070.524917,
     "date": "2026-07-06"
+  },
+  {
+    "id": "ANET:high-conviction-discovery:2026-07-06",
+    "symbol": "ANET",
+    "side": "buy",
+    "rule": "high-conviction-discovery",
+    "price": 174.33,
+    "ts": 1783348046.9143484,
+    "date": "2026-07-06"
+  },
+  {
+    "id": "PEW:runner-ignition:2026-07-06",
+    "symbol": "PEW",
+    "side": "buy",
+    "rule": "runner-ignition",
+    "price": 2.9699,
+    "ts": 1783349399.9551516,
+    "date": "2026-07-06"
   }
 ]

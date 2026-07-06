@@ -44,6 +44,7 @@ export function RecoSlap({
       <div className={`slap-card ${buy ? "buy" : cls === "sell" ? "sell" : "hold"}`} onClick={(e) => e.stopPropagation()}>
         <div className={`slap-banner ${buy ? "buy" : cls === "sell" ? "sell" : "hold"}`}>
           ADVISOR RECOMMENDATION
+          <button className="slap-close" onClick={onClose} aria-label="Dismiss">✕</button>
         </div>
         <div className="slap-head">
           <span className="slap-sym">{symbol}</span>

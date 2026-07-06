@@ -625,5 +625,27 @@
     "note": "Watchpoint triggered (Watchpoint: RSI \u2265 45): Buy AVGO only after RSI recovers above 45 (from 39.7).",
     "source": "auto",
     "ts": 1783346070.5499868
+  },
+  {
+    "id": "78577d492b0a",
+    "date": "2026-07-06",
+    "symbol": "CIFR",
+    "action": "sell",
+    "shares": 29.83515,
+    "price": null,
+    "note": "Closed the position entirely",
+    "source": "auto",
+    "ts": 1783350750.2063518
+  },
+  {
+    "id": "73834065a994",
+    "date": "2026-07-06",
+    "symbol": "IREN",
+    "action": "sell",
+    "shares": 6.064,
+    "price": null,
+    "note": "Trimmed (34.643 -> 28.5789)",
+    "source": "auto",
+    "ts": 1783351489.9275923
   }
 ]

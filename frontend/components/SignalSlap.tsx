@@ -75,6 +75,7 @@ export function SignalSlap({
       <div className={`slap-card ${buy ? "buy" : "sell"}`}>
         <div className={`slap-banner ${buy ? "buy" : "sell"}`}>
           {buy ? "BUYING OPPORTUNITY" : "STRONG SELL SIGNAL"}
+          <button className="slap-close" onClick={() => dismiss()} aria-label="Dismiss">✕</button>
         </div>
         <div className="slap-head">
           <span className="slap-sym">{s.symbol}</span>
