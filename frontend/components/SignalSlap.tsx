@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { api, ConvictionSignal } from "../lib/api";
 import { money } from "./format";
+import { AdvisorChat } from "./AdvisorChat";
 import { BulletList } from "./BulletList";
 
 const LEGACY_KEY = "pscan-dismissed-signals";
@@ -98,18 +99,27 @@ export function SignalSlap({
           <h4>The Why</h4>
           <BulletList items={s.why} kind="insight" />
         </div>
-        {(s.target || s.stop) && (
-          <div className="slap-levels">
-            <div className="slap-level">
-              <span className="label">{buy ? "Target" : "Downside risk"}</span>
-              <span>{s.target}</span>
-            </div>
-            <div className="slap-level">
-              <span className="label">{buy ? "Invalidation / stop" : "What reverses this"}</span>
-              <span>{s.stop}</span>
-            </div>
+        {(s.entry || s.size || s.target || s.stop) && (
+          <div className="slap-plan">
+            {s.entry && (
+              <div className="slap-level"><span className="label">Entry</span><span>{s.entry}</span></div>
+            )}
+            {s.size && (
+              <div className="slap-level"><span className="label">Size</span><span>{s.size}</span></div>
+            )}
+            {s.target && (
+              <div className="slap-level"><span className="label">{buy ? "Target" : "Downside risk"}</span><span>{s.target}</span></div>
+            )}
+            {s.stop && (
+              <div className="slap-level"><span className="label">{buy ? "Stop / invalidation" : "What reverses this"}</span><span>{s.stop}</span></div>
+            )}
           </div>
         )}
+
+        <div className="slap-sec">
+          <h4>Ask the advisor</h4>
+          <AdvisorChat kind="stock" symbol={s.symbol} />
+        </div>
 
         <div className="slap-actions">
           <Link href={`/stock/${s.symbol}`} className="btn" onClick={() => dismiss()}>

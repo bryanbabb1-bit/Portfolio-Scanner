@@ -131,22 +131,22 @@
     "rule": "high-conviction-discovery",
     "label": "New-name setup: breakout readiness in the top tier",
     "id": "GEV:high-conviction-discovery:2026-07-06",
-    "price": 1151.66,
+    "price": 1151.61,
     "theme": "Energy",
     "held": false,
     "dismissed": true,
-    "generated_at": "2026-07-06 12:05:45",
-    "ts": 1783357540.02832,
-    "headline": "GEV Near Highs But Volume Unconfirmed \u2014 Don't Chase",
-    "what": "Hold off buying GEV today; enter only on a volume-confirmed breakout above $1174.86, or on a pullback to the $1042.19 50-day SMA, sizing to 1.5% max book risk per distance to stop.",
+    "generated_at": "2026-07-06 13:42:45",
+    "ts": 1783363362.3696783,
+    "headline": "GEV Coiling Under 52-Week High",
+    "what": "Take a starter position in GEV near $1151.61, adding only on a volume-confirmed breakout above $1174.86.",
     "why": [
-      "Volume is only 0.47x average, so this push toward highs lacks the volume confirmation momentum entries require.",
-      "Price sits just 1.97% below the 52-week high of $1174.86, the level to watch for a real breakout.",
-      "Trading roughly 2 ATR ($55.87) above the 50-day SMA of $1042.19, already extended and not a chase point.",
-      "RSI 60.48 and MACD 37.53/23.82 confirm intact uptrend momentum, keeping this on the active watchlist."
+      "Price is 1.98% below the 52-week high of $1174.86, up 3.46% today.",
+      "Uptrend confirmed: price holds above the rising 50-day ($1042.19) and 200-day ($796.38) SMAs.",
+      "MACD is bullish at 37.52 over 23.82 with RSI at 60.47, leaving room before overbought.",
+      "Volume is only 0.59x average, so this breakout lacks confirmation \u2014 size down until volume follows."
     ],
-    "target": "First target is a volume-confirmed clearance of the $1174.86 52-week high; beyond that, insufficient data for a measured-move objective.",
-    "stop": "Invalidate on a close below the $1042.19 50-day SMA, roughly 2 ATR under current price."
+    "target": "First target is the 52-week high of $1174.86, with extension toward $1230.73 (+1 ATR) on a confirmed breakout.",
+    "stop": "Invalidated on a close below the 50-day SMA near $1042.19, roughly 2 ATR under current price."
   },
   "watch:c4e364e871ce": {
     "id": "watch:c4e364e871ce",
@@ -173,23 +173,25 @@
     "symbol": "SEER",
     "side": "buy",
     "rule": "runner-ignition",
-    "label": "Live runner: +39% today",
-    "headline": "Same call: no chase at RSI 77",
-    "what": "Hold \u2014 no action; SEER not held or in plan, price -0.9% since last call, nothing material changed.",
+    "label": "Live runner: +38% today",
+    "headline": "No new fact \u2014 still avoid",
+    "what": "Hold \u2014 no action; SEER is not held, not in plan, and price is -1.8% since the AVOID call, immaterial.",
     "why": [
-      "Price $2.25 vs $2.27 at prior call \u2014 immaterial move, thesis intact",
-      "Still RSI 77.2, 14.2x volume, ~5% from 52w high \u2014 a 5+ ATR extension not to chase",
-      "Not in the plan's allocation targets; book $12,555 needs discipline, not lottery tickets"
+      "Price $2.23 vs $2.27 at last call \u2014 a 1.8% move, not the >4% needed to revisit",
+      "Still 5+ ATR extended above SMA20/50 ($1.73/$1.81) at RSI 76.8 \u2014 chasing is forbidden by plan rules",
+      "Trigger to reconsider: pullback into $1.73-$1.81 on confirming volume, sized \u22641% of book with a stop below that pullback low"
     ],
-    "target": "Only reconsider a lottery-ticket look (\u22641% of book) on pullback to SMA20/50 ($1.73-1.81) with confirming volume.",
-    "stop": "N/A \u2014 no position; any pullback entry needs a stop below that day's low given 0.108 ATR.",
+    "entry": "",
+    "size": "",
+    "target": "",
+    "stop": "",
     "action": "AVOID",
-    "price": 2.2513,
+    "price": 2.235,
     "theme": "Runner",
     "held": false,
-    "dismissed": true,
-    "generated_at": "2026-07-06 11:51:58",
-    "ts": 1783356700.5384808
+    "dismissed": false,
+    "generated_at": "2026-07-06 14:05:53",
+    "ts": 1783364742.5103347
   },
   "plan:6a465159fdef:2026-07-06": {
     "id": "plan:6a465159fdef:2026-07-06",
@@ -328,23 +330,23 @@
     "symbol": "YDES",
     "side": "buy",
     "rule": "runner-ignition",
-    "label": "Live runner: +32% today",
-    "headline": "No new information \u2014 call unchanged",
-    "what": "Hold \u2014 no action; YDES unchanged at $2.52 (0.0% since last call), not a core-four/plan holding.",
+    "label": "Live runner: +27% today",
+    "headline": "No new fact \u2014 still avoid YDES",
+    "what": "Hold \u2014 no action; not a position, YDES isn't in the client's plan (Cash & Income theme mismatch), and price just drifted -4% to $2.42 with no level reclaim.",
     "why": [
-      "Price flat at $2.52 vs prior call, no >4% move or level break to justify a flip",
-      "Not in the client's Cash & Income, AI, Tech, AI Infra, Energy or Compute Power targets \u2014 no thesis to reassess",
-      "Downtrend intact: below SMA20/50/200 ($2.685/$3.878/$9.594), 89% off 52w high; speculative sleeve rule requires a defined setup, not a broken one"
+      "Prior call was AVOID at $2.52 after breaking the $2.70 SMA20 pullback level; $2.42 is a further breakdown, not a reversal",
+      "Death-cross regime intact (price $2.42 well below SMA50 $3.88 and SMA200 $9.59), still -89.5% off 52w high",
+      "YDES isn't part of the agreed strategy or allocation targets \u2014 no capital committed, no risk to manage"
     ],
-    "target": "Only reconsider on a stabilizing pullback holding SMA20 ~$2.69 with volume tapering.",
+    "target": "Only reconsider on a stabilizing pullback holding SMA20 ~$2.69 with volume tapering, not this breakdown.",
     "stop": "N/A \u2014 no position; do not initiate here.",
     "action": "AVOID",
-    "price": 2.5,
+    "price": 2.42,
     "theme": "Runner",
     "held": false,
     "dismissed": true,
-    "generated_at": "2026-07-06 11:52:07",
-    "ts": 1783356700.5384808
+    "generated_at": "2026-07-06 13:41:06",
+    "ts": 1783363242.307373
   },
   "watch:5442262d8019": {
     "id": "watch:5442262d8019",

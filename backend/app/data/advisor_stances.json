@@ -103,19 +103,6 @@
     "as_of": "2026-07-06 13:26:37",
     "ts": 1783362397.5161228
   },
-  "MU": {
-    "symbol": "MU",
-    "action": "HOLD",
-    "prev_action": "HOLD",
-    "headline": "Memory-boom tailwind intact, uptrend holding",
-    "thesis": "Memory-boom tailwind intact, uptrend holding",
-    "target": "",
-    "stop": "",
-    "source": "brief",
-    "price": 992.76,
-    "as_of": "2026-07-06 13:26:37",
-    "ts": 1783362397.5986228
-  },
   "CIFR": {
     "symbol": "CIFR",
     "action": "SELL",
@@ -245,5 +232,31 @@
     "price": 87.64,
     "as_of": "2026-07-06 13:26:37",
     "ts": 1783362397.2411804
+  },
+  "SMCI": {
+    "symbol": "SMCI",
+    "action": "AVOID",
+    "prev_action": null,
+    "headline": "Alert data contradicts itself \u2014 no real breakout",
+    "thesis": "Not held, and don't chase \u2014 volume is 0.32x average, not 3x, price is down not up 28%.",
+    "target": "",
+    "stop": "",
+    "source": "reco:runner",
+    "price": 26.88,
+    "as_of": "2026-07-06 14:06:47",
+    "ts": 1783364807.647839
+  },
+  "MU": {
+    "symbol": "MU",
+    "action": "HOLD",
+    "prev_action": null,
+    "headline": "Alert data doesn't match reality \u2014 sit tight",
+    "thesis": "Hold \u2014 no action; alert's RSI 34/50-day dip-buy setup contradicts live RSI 49.8 and price 15.7% above the actual 50-day.",
+    "target": "",
+    "stop": "Trend invalidates on a daily close below the rising 50-day ($862.30)",
+    "source": "reco:signal",
+    "price": 998.39,
+    "as_of": "2026-07-06 14:08:12",
+    "ts": 1783364892.4765387
   }
 }

@@ -743,12 +743,21 @@ _RECO_FMT = (
     'Respond with ONLY a JSON object, no markdown: '
     '{"action": one word — BUY | ADD | TRIM | SELL | HOLD | AVOID, '
     '"headline": punchy under-10-word verdict, '
-    '"what": ONE sentence — the exact move (or "Hold — no action" with the '
-    'reason), size and level; under 22 words, '
-    '"why": array of 2-3 bullet strings citing the numbers and the position, '
-    '"target": one sentence — the level/target that matters (or ""), '
-    '"stop": one sentence — the invalidation/stop level (or "")}. '
-    "Ground every number in the data given; never invent figures."
+    '"what": ONE sentence — the exact move in plain terms (or "Hold — no action" '
+    'with the reason); under 22 words, '
+    '"entry": the exact price or tight zone to act at now (e.g. "$375-378" or '
+    '"market ~$376"); empty string ONLY if action is HOLD/no-action, '
+    '"size": how much, CONCRETELY — a dollar amount and rough % of book, sized to '
+    'risk (e.g. "$150, ~1.4% of book; ~0.3% book risk to the stop"). A low-float '
+    'runner is a lottery ticket: size it tiny but STATE THE NUMBER. Empty only if '
+    'no action, '
+    '"target": the concrete profit target price (e.g. "$410 (+9%)") or "", '
+    '"stop": the concrete invalidation price (e.g. "daily close below $362") or "", '
+    '"why": array of 2-3 bullet strings citing the numbers and the position}. '
+    "Be DECISIVE — NEVER say 'consider', 'you could', or 'think about'. If you "
+    "recommend action, give the exact entry, dollar size, stop AND target — no "
+    "dancing. If HOLD, name the single trigger that would change it. Ground "
+    "every number in the data given; never invent figures you cannot support."
 )
 
 
@@ -807,7 +816,7 @@ def recommend(symbol: str, event: str, kind: str = "alert",
             "what": f"{held_note}No automated call — open {symbol} and size any "
                     f"move to your plan.",
             "why": [event, "Advisor unavailable — deterministic fallback."],
-            "target": "", "stop": "", **fresh,
+            "entry": "", "size": "", "target": "", "stop": "", **fresh,
         }
 
     if not settings.ADVISOR_ENABLED:
@@ -852,6 +861,8 @@ def recommend(symbol: str, event: str, kind: str = "alert",
                 "headline": str(obj.get("headline") or f"{symbol}: {event}"),
                 "what": str(obj.get("what") or out["what"]),
                 "why": _as_bullets(obj.get("why")) or [event],
+                "entry": str(obj.get("entry") or ""),
+                "size": str(obj.get("size") or ""),
                 "target": str(obj.get("target") or ""),
                 "stop": str(obj.get("stop") or ""),
                 **fresh,

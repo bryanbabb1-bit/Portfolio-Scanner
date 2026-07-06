@@ -175,6 +175,8 @@ export interface ConvictionSignal {
   headline: string;
   what: string;
   why: string[];
+  entry?: string;
+  size?: string;
   target: string;
   stop: string;
   price: number;
@@ -359,6 +361,8 @@ export interface Recommendation {
   headline: string;
   what: string;
   why: string[];
+  entry?: string;
+  size?: string;
   target: string;
   stop: string;
   // freshness receipt — the exact price/time this call reasoned from

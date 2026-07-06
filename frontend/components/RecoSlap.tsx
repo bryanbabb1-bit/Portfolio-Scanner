@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { api, Recommendation } from "../lib/api";
+import { AdvisorChat } from "./AdvisorChat";
 import { BulletList } from "./BulletList";
 
 const ACTION_CLASS: Record<string, string> = {
@@ -79,18 +80,28 @@ export function RecoSlap({
                 <BulletList items={reco.why} kind="insight" />
               </div>
             )}
-            {(reco.target || reco.stop) && (
-              <div className="slap-levels">
-                <div className="slap-level">
-                  <span className="label">Level that matters</span>
-                  <span>{reco.target || "—"}</span>
-                </div>
-                <div className="slap-level">
-                  <span className="label">Invalidation / stop</span>
-                  <span>{reco.stop || "—"}</span>
-                </div>
+            {(reco.entry || reco.size || reco.target || reco.stop) && (
+              <div className="slap-plan">
+                {reco.entry && (
+                  <div className="slap-level"><span className="label">Entry</span><span>{reco.entry}</span></div>
+                )}
+                {reco.size && (
+                  <div className="slap-level"><span className="label">Size</span><span>{reco.size}</span></div>
+                )}
+                {reco.target && (
+                  <div className="slap-level"><span className="label">Target</span><span>{reco.target}</span></div>
+                )}
+                {reco.stop && (
+                  <div className="slap-level"><span className="label">Stop / invalidation</span><span>{reco.stop}</span></div>
+                )}
               </div>
             )}
+
+            <div className="slap-sec">
+              <h4>Ask the advisor</h4>
+              <AdvisorChat kind="stock" symbol={symbol} />
+            </div>
+
             <p className="mut" style={{ fontSize: 11, marginTop: 10 }}>
               {reco.engine === "claude" ? "Senior advisor" : "Automated"} · {reco.generated_at} · Not personalized investment advice.
             </p>

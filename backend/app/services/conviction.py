@@ -183,9 +183,10 @@ def _enrich(sig: dict, facts: str) -> dict:
     side_word = "BUYING OPPORTUNITY" if sig["side"] == "buy" else "STRONG SELL SIGNAL"
     fallback = {
         "headline": sig["label"],
-        "what": ("Consider adding / starting a position." if sig["side"] == "buy"
-                 else "Consider reducing or exiting the position."),
+        "what": ("Start / add to the position on this setup." if sig["side"] == "buy"
+                 else "Reduce or exit the position on this signal."),
         "why": [sig["label"]],
+        "entry": "", "size": "",
         "target": "Set targets from the 52-week high and ATR — advisor unavailable.",
         "stop": "Use the 200-day SMA as the invalidation level.",
     }
@@ -195,13 +196,18 @@ def _enrich(sig: dict, facts: str) -> dict:
     prompt = (
         f"{advisor._PERSONA}\n\nA high-conviction {side_word} rule just fired "
         f"for a client:\nRule: {sig['label']}\n\n{facts}\n\n"
-        f"Write the alert. Respond with ONLY a JSON object, no markdown: "
+        f"Write the alert — DECISIVE and concrete, no dancing. Respond with ONLY "
+        f"a JSON object, no markdown: "
         f'{{"headline": punchy alert headline under 10 words, '
-        f'"what": one sentence — the exact action to take, '
-        f'"why": array of 2-4 bullet strings citing the numbers, '
-        f'"target": one sentence — the price target and its basis, '
-        f'"stop": one sentence — the level that invalidates this}}. '
-        f"Each bullet a single sentence under 22 words."
+        f'"what": ONE sentence — the exact move in plain terms, '
+        f'"entry": exact price or tight zone to act at now (e.g. "$375-378"), '
+        f'"size": how much — a dollar amount AND rough % of book, sized to risk '
+        f'(runners = tiny lottery-ticket size, but STATE the number), '
+        f'"target": concrete profit-target price (e.g. "$410 (+9%)"), '
+        f'"stop": concrete invalidation price (e.g. "close below $362"), '
+        f'"why": array of 2-4 bullet strings citing the numbers}}. '
+        f"NEVER say 'consider' or 'you could' — give the exact entry, dollar "
+        f"size, stop and target. Each bullet one sentence under 22 words."
     )
     raw, _ = advisor._run_claude(prompt, model=settings.CLAUDE_MODEL_STANDARD)
     if not raw:
@@ -214,6 +220,8 @@ def _enrich(sig: dict, facts: str) -> dict:
                     "headline": str(obj.get("headline") or sig["label"]),
                     "what": str(obj.get("what") or fallback["what"]),
                     "why": advisor._as_bullets(obj.get("why")) or [sig["label"]],
+                    "entry": str(obj.get("entry") or ""),
+                    "size": str(obj.get("size") or ""),
                     "target": str(obj.get("target") or ""),
                     "stop": str(obj.get("stop") or "")}
         except json.JSONDecodeError:
@@ -356,6 +364,7 @@ def scan() -> list[dict]:
                         f"shares — real participation.",
                         f"${cap_b:.1f}B market cap — small enough to move fast.",
                     ],
+                    "entry": reco.get("entry", ""), "size": reco.get("size", ""),
                     "target": reco.get("target", ""), "stop": reco.get("stop", ""),
                     "action": reco.get("action", "BUY"),
                     "price": m["price"], "theme": "Runner", "held": False,
@@ -391,6 +400,8 @@ def scan() -> list[dict]:
                         sig["what"] = reco.get("what") or sig["what"]
                         sig["why"] = (reco.get("why") or []) + [
                             f"Your watchpoint: {sig['label']}."]
+                        sig["entry"] = reco.get("entry", "")
+                        sig["size"] = reco.get("size", "")
                         sig["target"] = reco.get("target", "")
                         sig["stop"] = reco.get("stop", "")
                 except Exception as exc:

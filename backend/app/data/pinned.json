@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "id": "531940bace1d",
+    "symbol": "GEV",
+    "source": "signal",
+    "text": "Take a starter position in GEV near $1151.61, adding only on a volume-confirmed breakout above $1174.86.",
+    "points": [
+      "First target is the 52-week high of $1174.86, with extension toward $1230.73 (+1 ATR) on a confirmed breakout.",
+      "Invalidated on a close below the 50-day SMA near $1042.19, roughly 2 ATR under current price."
+    ],
+    "status": "open",
+    "price_at_pin": 1147.74,
+    "created_at": "2026-07-06 13:57:42",
+    "ts": 1783364262.912722
+  }
+]
