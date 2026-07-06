@@ -1,56 +1,6 @@
 {
   "portfolio:brief": [
     {
-      "generated_at": "2026-07-03 09:16:03",
-      "summary": "Good progress: miners cut from 41% to 16%, NVDA adds executed at $191, SGOV trim started \u2014 today is simply finishing the standing CIFR exit and July's TSM contribution.",
-      "insights": [
-        "Miner exposure was 41%, now 16% (IREN $1,345 + CIFR $598); completing the CIFR exit drops it to 11%, essentially restoring the 10% cap.",
-        "IREN fell to $38.82 on July 3, its ninth straight down day and -40% on the month, on AI-cloud execution doubts \u2014 the freeze stays justified.",
-        "AAPL's +4.8% pop came on July 2 foldable iPhone Ultra reports and Morgan Stanley's 250M-shipment path, but RSI 60.3 is momentum, not yet the $317 confirmed close.",
-        "June's 57,000-job miss triggered semiconductor profit-taking after an 80% first-half run, explaining MU -5.5% and today's -2.44% book \u2014 regime noise, not thesis breaks.",
-        "SGOV at 35.8% remains your largest position and dry powder; the July 2 trims were the right start toward the 20% target by mid-2027.",
-        "Beta 1.44 and 26% vol on a top-5 concentration of 67.4% means days like today will recur; the plan's NEE-near-$88 energy sleeve would dampen that.",
-        "MSFT (RSI 49.8, below long-term trend) stays hold-no-add until the early-August reassessment; NET and MELI are behaving and need nothing."
-      ],
-      "actions": [
-        "Quick trade: Sell all $598 CIFR now; $19 watchpoint already fired.",
-        "Long game: Buy $300 TSM at market; July contribution per playbook.",
-        "Quick trade: Buy $250 AAPL only on daily close above $317.",
-        "Quick trade: Sell half IREN, about $670, on daily close below week's low."
-      ],
-      "risks": [
-        "IREN makes a new low below the -36.6% cost basis \u2014 that is the permanent-exit trigger, no re-thesis allowed.",
-        "Weak jobs data fuels Fed-hike bets against semis; a benchmark close below its 200-day halves all new position sizes.",
-        "AMD closes below $500 \u2014 cut the July 2 added shares while Meta's surplus-compute question stays open into early August.",
-        "CIFR fails to hold the bounce; a daily close below $17 forces the exit at worse prices, so act today."
-      ]
-    },
-    {
-      "generated_at": "2026-07-03 10:21:15",
-      "summary": "Good discipline: miners already cut from 41% to 16% and the NVDA $191 adds are done \u2014 today's -2.44% is a sector-wide AI-chip selloff, not a you problem. The only jobs are finishing the standing CIFR exit and July's TSM contribution.",
-      "insights": [
-        "Miner exposure is $1,943 (16.0%) versus the 10% cap; selling CIFR ($598) drops it to 11.1%, and the conditional half-IREN sale would finish the job.",
-        "Today's damage is macro: a July 2026 AI-chip valuation selloff hit the whole sector (MU led a 13% single-session plunge on SK Hynix HBM and hawkish-Fed news).",
-        "Your 1.44 beta and 26% vol explain why a chip-led tape costs you -2.44% in a day; SGOV at 35.8% is the only ballast, so trim it on strength, not weakness.",
-        "TSM is the strongest fundamental story in the book: BofA raised its target to $590 and Apple locked over half of 2nm capacity (reported early July 2026) \u2014 the $300 contribution stands.",
-        "AAPL was your best holding today at +4.8% with RSI 60.3 and the breakout alert live; the $317 close trigger remains the gate, no anticipating it.",
-        "MU fell 5.5% amid the memory-sector scare but sits only -2.6% from cost in an uptrend; no action needed, this is what a normal shakeout looks like.",
-        "NVDA RSI 41.2 and -9.1% from cost is acceptable basis-building near the 200-day; no further adds until the sector selloff finds a floor."
-      ],
-      "actions": [
-        "Quick trade: Sell all $598 CIFR at market today; watchpoint fired.",
-        "Long game: Buy $300 TSM at market; July contribution.",
-        "Quick trade: Buy $250 AAPL only on daily close above $317.",
-        "Quick trade: Sell half IREN, about $670, on daily close below week's low."
-      ],
-      "risks": [
-        "IREN closing below its current -36.6% cost-basis low triggers permanent full exit per your own guardrail \u2014 watch the weekly low first for the half-sale.",
-        "The chip selloff deepening into a regime change: if the benchmark closes below its 200-day, halve all new position sizes and stop deploying SGOV.",
-        "Your activity log shows the NVDA $191 add recorded nine times \u2014 verify the position is one add, not nine, against the 12% single-stock cap.",
-        "A 15% drawdown from portfolio high pauses all buying and rebuilds cash to 25%; you are -8.4% all-time, so roughly 7% more downside trips it."
-      ]
-    },
-    {
       "generated_at": "2026-07-05 20:45:01",
       "summary": "Real progress \u2014 miners cut 41%\u219216%, NVDA $191 adds executed, SGOV trim underway; today's -2.44% is the July 2026 macro chip selloff, not a flaw in your book, so stand pat and let standing levels work.",
       "insights": [
@@ -74,6 +24,107 @@
         "Chip selloff may deepen on a hawkish Fed; tripwire: AMD daily close below $500 cuts this week's added shares.",
         "CIFR runs a debt-funded data center and is leveraged; tripwire: any bounce above $19 exits the full $598 immediately.",
         "SGOV at 35.8% is opportunity cost if AI names bottom; tripwire: a 5%+ benchmark pullback deploys a $500-750 tranche."
+      ]
+    },
+    {
+      "generated_at": "2026-07-06 07:26:58",
+      "summary": "Real progress logged \u2014 miners cut 41%\u219216.8% ($2,071), NVDA $191 adds executed, SGOV trim underway; today's -0.77% is the July 2026 chip selloff (MU -13% in a session, BofA semi bubble gauge 0.91), not your book. Stand pat and let standing levels work.",
+      "insights": [
+        "Beta 1.44 and vol 25.9% are aggressive but Sharpe 1.02 means risk is being paid; max drawdown -22.2% sits just under your 15%-from-high buying-pause guardrail.",
+        "SGOV 35.2% plus top-5 at 67.5% concentrates the book in one cash proxy; its RSI 81 'overbought' alert is meaningless for a T-bill fund.",
+        "IREN $1,439 + CIFR $632 = 16.8% of book, down from 41% \u2014 strong de-risking, but still above your 10% hard cap, so no adds.",
+        "Momentum is split: AAPL leads (+4.2%, RSI 60.3, uptrend, breakout alert live) while IREN RSI 30.6 and CIFR 37.3 stay broken.",
+        "Macro drives the tape: MU -13% single session, SK Hynix HBM slowdown, hawkish Warsh Fed \u2014 sector selloff, not a flaw in your positions.",
+        "IREN's $9.7B Microsoft AI-cloud deal underwrites its pivot thesis, but price (-32.2%, RSI 30.6) hasn't confirmed \u2014 the freeze stands."
+      ],
+      "actions": [
+        "Hold \u2014 no reactive trades; today's drop is the macro chip selloff, not your book.",
+        "Quick trade: Exit full CIFR ~$632 only on bounce above $19.",
+        "Quick trade: Exit IREN fully on daily close below cost basis.",
+        "Long game: Deploy July's $300 into TSM at market; build the stub.",
+        "Quick trade: Buy $250 AAPL only on daily close above $317."
+      ],
+      "risks": [
+        "AI-bubble selloff deepens \u2014 tripwire: NVDA daily close below its 200-day forces size cut and cash rebuild.",
+        "Miners still 16.8% vs 10% cap \u2014 tripwire: IREN new low below cost triggers permanent exit.",
+        "SGOV 35.2% cash drag undercuts the 13% return needed \u2014 tripwire: deploy only on a 5%+ market pullback.",
+        "Binary earnings risk \u2014 tripwire: flag and freeze any holding reporting within a week; no entries inside two days."
+      ]
+    },
+    {
+      "generated_at": "2026-07-06 07:27:56",
+      "summary": "Progress is real: miners cut 41%\u219216.9%, NVDA $191 adds done (now $194.44), SGOV trim underway \u2014 the one live job this week is finishing the standing CIFR exit, now triggered above $19.",
+      "insights": [
+        "Regime is risk-on: S&P 500 holds above its 200-day (~7,470 per July 2026 data), so your 1.44 beta and aggressive AI tilt stay justified.",
+        "Miners IREN+CIFR = $2,085 = 16.9% of book, down from 41% but still above your 10% guardrail; selling CIFR drops it to ~11.7%.",
+        "SGOV at 35.2% ($4,350) and top-5 at 67.5% is the real concentration; RSI 81 is a meaningless cash-proxy signal, but you're 15 points above the 20% target.",
+        "IREN -31.6%, RSI 30.6, down ~28% in five sessions to its lowest since April despite the $3.4B NVIDIA AI-cloud deal (May 2026) \u2014 thesis intact only above cost basis.",
+        "CIFR fell -7% today to ~$20.76 yet analysts turned bullish (BTIG $35 target, Jun 24) as it repositions to AI landlord \u2014 a broken-miner rally to sell, not chase.",
+        "Core four are mixed: AMD +7% and uptrending is the winner; NVDA -8.8% and MSFT -11.4% sit in downtrends, AVGO RSI 39.7 still below your 45 add trigger.",
+        "AAPL +4.4% today with RSI 60.3 and a breakout-setup alert has room before overbought \u2014 the only fresh long setup in the book."
+      ],
+      "actions": [
+        "Quick trade: Sell all CIFR ~$634 at market; $19 trigger hit.",
+        "Long game: Buy $300 TSM at market; July contribution.",
+        "Quick trade: Buy $250 AAPL only on daily close above $317.",
+        "Quick trade: Exit IREN fully only on new low below cost."
+      ],
+      "risks": [
+        "IREN averaging-down temptation \u2014 tripwire: a daily close at a new low below your -36.6% basis forces full exit, no exceptions.",
+        "CIFR's analyst upgrades tempt holding a burned miner thesis \u2014 tripwire: any print above $19 (live now) executes the sell.",
+        "AI-bubble drawdown given 25.9% vol and 1.44 beta \u2014 tripwire: S&P 500 daily close back below its 200-day (~7,470) halves size and rebuilds cash.",
+        "Binary earnings risk \u2014 tripwire: flag and freeze new adds on any core name (NVDA/AMD/MSFT/AAPL) reporting within a week; confirm dates before buying."
+      ]
+    }
+  ],
+  "stock:CIFR": [
+    {
+      "generated_at": "2026-07-06 07:19:04",
+      "summary": "I previously told you to exit the full $598 on any bounce above $19; I'm revising because the April AWS 15-year/300MW ~$5.5B lease (Black Pearl rent starting 8/2026) plus Google/Fluidstack contracts materially de-risk the leveraged thesis that drove that exit \u2014 hold the small core, not the quick-trade exit.",
+      "insights": [
+        "RSI(14) 37.26 is weak but not oversold; room lower before capitulation.",
+        "MACD 0.25 sits below signal 1.02 with hist -0.77 \u2014 bearish momentum still intact.",
+        "Price $21.30 is below SMA20 24.85 and SMA50 22.43 but above SMA200 17.93 \u2014 golden-cross regime, short-term pullback.",
+        "Volume 1.27x on a -6.74% day is mild distribution, not panic selling.",
+        "Price -31% from 52w high $29.18 yet far above the $4.72 low; base intact.",
+        "Strong-buy, $32.63 mean target (53% upside); Rosenblatt raised to $30, Jefferies initiated Buy $32 (2026)."
+      ],
+      "actions": [
+        "Cancel $19 exit order; hold CIFR 30 shares.",
+        "Stop full CIFR position at $17.85.",
+        "Add CIFR only above $22.45 on volume.",
+        "No new entry before Aug-5 earnings."
+      ],
+      "risks": [
+        "Momentum still down \u2014 MACD hist -0.77 and price below SMA50 22.43 threaten a slide to SMA200 17.93.",
+        "Leverage/execution risk \u2014 $2B bond plus AWS capex; any Black Pearl 7/2026 slip pressures the debt story.",
+        "Q2 earnings 08/05/2026 is a binary event; flag now though outside the 1-week window.",
+        "Bitcoin/crypto correlation and equity dilution can override the contracted-revenue narrative near-term."
+      ]
+    }
+  ],
+  "stock:NVDA": [
+    {
+      "generated_at": "2026-07-06 07:41:41",
+      "summary": "Thesis intact while the 200-day holds at $190.82, but momentum has stalled \u2014 MACD bearish and price under the 20/50-day means stand down on further adds after five recent buys.",
+      "insights": [
+        "MACD bearish crossover (-4.0432 vs signal -3.0351, histogram -1.0081) confirms fading short-term momentum.",
+        "Price $195.42 is below the 20-day ($203.49) and 50-day ($209.65) but above the 200-day ($190.82), the level defining the thesis.",
+        "RSI 41.2 is neutral, not oversold \u2014 no washout, no mean-reversion buy signal here.",
+        "Volume is 0.90x the 20-day average, so this pullback lacks confirming volume in either direction.",
+        "Golden-cross regime (50-day above 200-day) stays bullish, consistent with the prior 'add near $191 while 200-day holds' call.",
+        "Position is -8.8% unrealized against a $214.23 average cost, reflecting the blended basis from earlier higher adds."
+      ],
+      "actions": [
+        "Hold NVDA; stop below 200-day near $189.",
+        "No new adds until NVDA reclaims $203 (20-day).",
+        "Confirm NVDA earnings date before any new action."
+      ],
+      "risks": [
+        "200-day support at $190.82 breaks, invalidating the add-thesis and the golden-cross regime.",
+        "MACD stays bearish below signal, risking a deeper slide toward 200-day support.",
+        "Unconfirmed earnings date could trigger the binary-event freeze on new NVDA adds.",
+        "Five recent adds have concentrated size \u2014 confirm total NVDA weight stays within book risk limits."
       ]
     }
   ]

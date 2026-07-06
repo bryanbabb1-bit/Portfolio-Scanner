@@ -43,6 +43,17 @@ export function AdvisorPanel({
     <div className="card advisor">
       <div className="advisor-head">
         <span className="who">Senior Advisor</span>
+        {note?.call && (
+          <span
+            className={`stance-badge ${
+              ["SELL", "TRIM", "AVOID"].includes(note.call) ? "sell"
+                : ["BUY", "ADD"].includes(note.call) ? "buy" : "hold"
+            }`}
+            title="The advisor's standing call on this name — the same call shown across the brief, slaps and chat"
+          >
+            {note.call}
+          </span>
+        )}
         {note && (
           <span className={`eng ${note.engine === "claude" ? "claude" : ""}`}>
             {note.engine === "claude" ? "Claude" : "auto"}

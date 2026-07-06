@@ -172,6 +172,9 @@ _PERSONA = (
 
 _SCHEMA_HINT = (
     'Respond with ONLY a JSON object, no markdown, with these keys: '
+    '"call" (ONE word — your standing stance on this stock: BUY | ADD | HOLD | '
+    'TRIM | SELL | AVOID | WATCH — this is the single call every other screen '
+    'will show, so make it your definitive view), '
     '"summary" (string: your take in 1-2 sentences max), '
     '"insights" (array of 3-6 strings: what the indicators say — one specific '
     'observation per bullet, citing RSI/MACD/moving averages/volume numbers), '
@@ -292,6 +295,7 @@ def _as_bullets(val) -> list[str]:
 def _parse_note(symbol: str, engine: str, raw: str) -> AdvisorNote:
     summary = ""
     posture = None
+    call = None
     insights: list[str] = []
     actions: list[str] = []
     risks: list[str] = []
@@ -304,6 +308,9 @@ def _parse_note(symbol: str, engine: str, raw: str) -> AdvisorNote:
             summary = str(obj.get("summary", "") or "")
             p = str(obj.get("posture", "") or "").strip().lower()
             posture = p if p in ("act", "watch") else None
+            c = str(obj.get("call", "") or "").strip().upper().split()
+            if c and c[0] in {"BUY", "ADD", "HOLD", "TRIM", "SELL", "AVOID", "WATCH"}:
+                call = c[0]
             insights = _as_bullets(obj.get("insights") or obj.get("technical_read"))
             actions = _as_bullets(obj.get("actions") or obj.get("recommendation"))
             risks = _as_bullets(obj.get("risks"))
@@ -318,6 +325,7 @@ def _parse_note(symbol: str, engine: str, raw: str) -> AdvisorNote:
         generated_at=time.strftime("%Y-%m-%d %H:%M:%S"),
         summary=summary,
         posture=posture,
+        call=call,
         insights=insights,
         actions=actions,
         risks=risks,
@@ -361,10 +369,12 @@ def advise_stock(report: StockReport, force: bool = False,
         _cache[key] = (time.time(), note)
         return note
 
+    from . import stance as stance_service
     prompt = (
         f"{_PERSONA}\n\n{_RESEARCH_PREFIX if deep else ''}"
         f"Here is the current data for a stock a client holds or is "
         f"watching:\n\n{facts}\n"
+        f"{stance_service.block(report.symbol)}"
         f"{_prior_advice_block(key, report.symbol)}"
         f"\nAs their advisor, give your professional read. "
         f"{_SCHEMA_HINT}"
@@ -376,6 +386,15 @@ def advise_stock(report: StockReport, force: bool = False,
         _fallback_note(report.symbol, facts, report.signals)
     if raw and sid:
         _remember_session(key, sid)
+    # Record this as the standing call so the brief/chat/slaps agree with it.
+    if note.call:
+        try:
+            stance_service.set_stance(
+                report.symbol, note.call, headline=note.summary,
+                thesis=note.summary, source="stock-review",
+                price=getattr(report.quote, "price", None))
+        except Exception:
+            pass
     _remember_history(key, note)
     _cache[key] = (time.time(), note)
     return note
@@ -455,11 +474,14 @@ def advise_portfolio(summary: PortfolioSummary, reports: list[StockReport],
         return note
 
     from . import strategy as strategy_service
+    from . import stance as stance_service
     strategy_block = strategy_service.facts_block()
+    standing = stance_service.book_block([r.symbol for r in reports])
     prompt = (
         f"{_PERSONA}\n\n{_RESEARCH_PREFIX if deep else ''}"
         f"Here is your client's full portfolio right now:\n\n{facts}\n"
         f"{strategy_block}\n"
+        f"{standing}"
         f"{_prior_advice_block(key)}\n"
         f"You are the client's WATCHDOG advisor, not a salesman. A refreshed "
         f"brief does NOT owe the client new trades: if the book is positioned "
@@ -487,7 +509,12 @@ def advise_portfolio(summary: PortfolioSummary, reports: list[StockReport],
         f'action" bullet plus the levels being watched; when acting, include '
         f'your best buy or state the level that would create one), '
         f'"risks" (array of 2-4 strings: one risk per bullet, each paired with '
-        f'the specific tripwire signal to watch). '
+        f'the specific tripwire signal to watch), '
+        f'"stances" (array of {{"symbol","call","thesis"}} — your DEFINITIVE '
+        f'one-word call on EACH holding: BUY|ADD|HOLD|TRIM|SELL|WATCH, thesis '
+        f'under 10 words. This becomes the single call shown on every screen, so '
+        f'it MUST agree with your actions above; if you list any standing call, '
+        f'keep it unless you are deliberately changing it). '
         f'Every bullet must be a single self-contained sentence under 30 words. '
         f'No lead-in phrases, no numbering — the UI renders them as a list. '
         f'CRITICAL: if a list of actions the client has already taken is '
@@ -503,6 +530,22 @@ def advise_portfolio(summary: PortfolioSummary, reports: list[StockReport],
         _fallback_note("PORTFOLIO", facts, all_signals)
     if raw and sid:
         _remember_session(key, sid)
+    # The brief's per-holding calls become the standing calls, so the single-
+    # stock reviews and slaps agree with what the brief just said.
+    if raw:
+        try:
+            price_by = {r.symbol: getattr(r.quote, "price", None) for r in reports}
+            s, e = raw.find("{"), raw.rfind("}")
+            obj = json.loads(raw[s : e + 1]) if s != -1 and e > s else {}
+            for st in (obj.get("stances") or []):
+                sym = str(st.get("symbol") or "").upper()
+                if sym:
+                    stance_service.set_stance(
+                        sym, st.get("call"), headline=str(st.get("thesis") or ""),
+                        thesis=str(st.get("thesis") or ""), source="brief",
+                        price=price_by.get(sym))
+        except Exception:
+            pass
     _remember_history(key, note)
     _cache[key] = (time.time(), note)
     return note
@@ -614,6 +657,18 @@ def ask(kind: str, symbol: str | None, question: str, deep: bool = False) -> dic
         key = f"{kind}:{symbol}"
     research_note = _RESEARCH_PREFIX if deep else ""
     snapshot, price_receipts = _live_snapshot(kind, symbol)
+    # Carry the standing call(s) so a follow-up can't contradict the last verdict.
+    from . import stance as stance_service
+    if kind in ("portfolio", "strategy"):
+        try:
+            from . import portfolio as _pf
+            _, _held = _pf.portfolio_summary()
+            standing = stance_service.book_block([r.symbol for r in _held])
+        except Exception:
+            standing = ""
+    else:
+        standing = stance_service.block(symbol or "")
+    snapshot = snapshot + standing
     raw = sid = None
     prior = _sessions.get(key)
     ask_model = None if deep else settings.CLAUDE_MODEL_STANDARD
@@ -753,15 +808,17 @@ def recommend(symbol: str, event: str, kind: str = "alert",
         _reco_cache[key] = (time.time(), _fallback())
         return _reco_cache[key][1]
 
+    from . import stance as stance_service
     facts = _facts_from_report(report) if report else f"Symbol {symbol} (not held)."
     book = f"Book ${summary.total_market_value:,.0f}, cash bucket " \
            f"${summary.by_theme.get('Cash & Income', 0):,.0f}." if summary else ""
     strat = strategy_service.facts_block()
+    standing = stance_service.block(symbol.upper())
     prior = _prior_advice_block(f"stock:{symbol.upper()}", symbol.upper())
 
     prompt = (
         f"{_PERSONA}\n\nA watchdog notification just fired for the client:\n"
-        f"EVENT: {symbol} — {event}\n\n{facts}\n{book}\n{strat}\n{prior}\n"
+        f"EVENT: {symbol} — {event}\n\n{facts}\n{book}\n{strat}\n{standing}{prior}\n"
         f"As their advisor, say clearly what they should DO about THIS event, "
         f"considering their position, cash and plan. The answer may be 'Hold — "
         f"no action' (e.g. normal volatility, thesis intact) — but justify it "
@@ -790,7 +847,101 @@ def recommend(symbol: str, event: str, kind: str = "alert",
                 "stop": str(obj.get("stop") or ""),
                 **fresh,
             }
+            # This event produced a fresh call — make it the standing one.
+            try:
+                stance_service.set_stance(
+                    symbol.upper(), out["action"], headline=out["headline"],
+                    thesis=out["what"], target=out["target"], stop=out["stop"],
+                    source=f"reco:{kind}", price=fresh.get("price"))
+            except Exception:
+                pass
         except json.JSONDecodeError:
             pass
     _reco_cache[key] = (time.time(), out)
+    return out
+
+
+def reevaluate_plan(pin: dict, baseline: float, current: float,
+                    move: float) -> dict:
+    """Plan Watch: does a STAGED (not-yet-executed) plan still hold after the
+    market moved? Returns {plan_status: holds|changed, action, headline, what,
+    why[], target, stop} + freshness. The advisor decides — a loss-control SELL
+    becomes wrong if the name is now running (ride it), a dip-buy becomes wrong
+    if price gapped away."""
+    from . import portfolio as pf_service
+    from . import stance as stance_service
+    sym = (pin.get("symbol") or "").upper()
+    stamp = time.strftime("%Y-%m-%d %H:%M:%S")
+
+    def _fallback() -> dict:
+        return {"engine": "fallback", "generated_at": stamp,
+                "plan_status": "holds", "action": "HOLD",
+                "headline": f"{sym}: re-check your staged plan",
+                "what": f"{sym} moved {move:+.1%} since you staged this — open it "
+                        f"and confirm the plan still fits.",
+                "why": [pin.get("text", "")], "target": "", "stop": "",
+                "as_of": stamp}
+
+    if not settings.ADVISOR_ENABLED or not sym:
+        return _fallback()
+
+    try:
+        report = pf_service.build_report(sym)
+        facts = _facts_from_report(report)
+        price = getattr(report.quote, "price", current)
+        src = getattr(report.quote, "source", None)
+    except Exception:
+        facts, price, src = f"Symbol {sym}.", current, None
+
+    prompt = (
+        f"{_PERSONA}\n\n"
+        f"The client STAGED this plan earlier and has NOT executed it yet:\n"
+        f'STAGED PLAN: "{pin.get("text", "")}"\n'
+        f"When staged, {sym} was about ${baseline:.2f}. It is now ${price:.2f} "
+        f"({move:+.1%} since).\n\n{facts}\n{stance_service.block(sym)}\n"
+        f"Decide whether this staged plan STILL HOLDS or has MATERIALLY CHANGED "
+        f"given the move and current data. Be decisive and protect the client: a "
+        f"stop-loss / loss-control SELL becomes the WRONG move if the name is now "
+        f"running — that may be a profit play to RIDE, not an exit; a staged "
+        f"dip-buy becomes wrong if price has gapped away from the entry. "
+        f'Respond with ONLY JSON: {{"plan_status": "holds" | "changed", '
+        f'"action": one word BUY|ADD|TRIM|SELL|HOLD|AVOID, "headline": under-10-'
+        f'word verdict, "what": ONE sentence — the revised move (or why to stick '
+        f'to the plan), under 22 words, "why": array of 2-3 bullets citing the '
+        f'numbers, "target": level or "", "stop": level or ""}}.'
+    )
+    raw, _ = _run_claude(prompt, model=settings.CLAUDE_MODEL_STANDARD)
+    if not raw:
+        return _fallback()
+
+    out = _fallback()
+    s, e = raw.find("{"), raw.rfind("}")
+    if s != -1 and e > s:
+        try:
+            obj = json.loads(raw[s : e + 1])
+            status = str(obj.get("plan_status") or "holds").strip().lower()
+            action = str(obj.get("action") or "HOLD").strip().upper().split()[0]
+            out = {
+                "engine": "claude", "generated_at": stamp,
+                "plan_status": "changed" if status == "changed" else "holds",
+                "action": action if action in
+                          {"BUY", "ADD", "TRIM", "SELL", "HOLD", "AVOID"} else "HOLD",
+                "headline": str(obj.get("headline") or f"{sym}: staged plan review"),
+                "what": str(obj.get("what") or out["what"]),
+                "why": _as_bullets(obj.get("why")) or [pin.get("text", "")],
+                "target": str(obj.get("target") or ""),
+                "stop": str(obj.get("stop") or ""),
+                "price": price, "data_source": src, "as_of": stamp,
+            }
+            # A changed plan sets a fresh standing call on the name.
+            if out["plan_status"] == "changed":
+                try:
+                    stance_service.set_stance(
+                        sym, out["action"], headline=out["headline"],
+                        thesis=out["what"], target=out["target"],
+                        stop=out["stop"], source="plan-watch", price=price)
+                except Exception:
+                    pass
+        except json.JSONDecodeError:
+            pass
     return out

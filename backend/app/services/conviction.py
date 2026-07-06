@@ -380,6 +380,18 @@ def scan() -> list[dict]:
         except Exception as exc:
             print(f"[conviction] watchpoint check failed: {exc!r}")
 
+        # Plan Watch: re-evaluate the client's STAGED plans (open pins) against
+        # the tape — a staged sell that's now running gets a RECONSIDER slap
+        # before it's blindly executed. Advisor decides if the premise changed.
+        try:
+            from . import planwatch
+            price_by = {sym: quote.price for sym, ind, quote, *_ in items
+                        if getattr(quote, "source", "live") != "mock"}
+            for sig in planwatch.check(price_by):
+                notes[sig["id"]] = sig
+        except Exception as exc:
+            print(f"[conviction] plan watch failed: {exc!r}")
+
         # Keep only the active window; prune the rest from the notes file.
         active = {k: v for k, v in notes.items()
                   if now - float(v.get("ts", 0)) < ACTIVE_HOURS * 3600}

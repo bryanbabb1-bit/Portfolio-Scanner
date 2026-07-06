@@ -1,0 +1,15 @@
+{
+  "NVDA": {
+    "symbol": "NVDA",
+    "action": "HOLD",
+    "prev_action": "HOLD",
+    "headline": "Pullback noise \u2014 thesis intact, stand down",
+    "thesis": "Hold \u2014 no action; 200-day at $190.82 holds and this is normal volatility, not a break of stops.",
+    "target": "No new adds until NVDA reclaims $203 (20-day SMA).",
+    "stop": "Stop below the 200-day near $189; a close under that invalidates the thesis.",
+    "source": "reco:alert",
+    "price": 195.37,
+    "as_of": "2026-07-06 07:41:54",
+    "ts": 1783341714.657312
+  }
+}

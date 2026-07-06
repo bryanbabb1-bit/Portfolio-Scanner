@@ -132,6 +132,10 @@ def send_signal(sig: dict) -> None:
     # routine (usually longer-term) buy or sell.
     if sig.get("rule") == "runner-ignition":
         prefix, sound = "▲▲ RUNNER", "runner.wav"
+    elif sig.get("rule") == "plan-reeval":
+        # A staged plan's premise changed — reconsider before you execute it.
+        prefix = "◈ RECONSIDER"
+        sound = "sell.wav" if action in ("SELL", "TRIM", "AVOID") else "buy.wav"
     else:
         prefix = _ACTION_PREFIX.get(action, ("▲ BUY" if side == "buy" else "▼ SELL"))
         sound = "buy.wav" if action in ("BUY", "ADD") else "sell.wav"

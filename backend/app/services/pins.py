@@ -46,19 +46,43 @@ def add(symbol: str | None, source: str, text: str,
         for p in items:
             if p["text"] == text and p.get("symbol") == symbol:
                 return p
+        sym = (symbol or "").upper() or None
+        # Baseline price the moment the plan is staged — Plan Watch compares
+        # against this to know when the premise has moved.
+        base = None
+        if sym:
+            try:
+                from . import portfolio as pf
+                base = round(float(pf.build_report(sym).quote.price), 2)
+            except Exception:
+                base = None
         pin = {
             "id": uuid.uuid4().hex[:12],
-            "symbol": (symbol or "").upper() or None,
+            "symbol": sym,
             "source": source,
             "text": text.strip(),
             "points": [str(x).strip() for x in (points or []) if str(x).strip()],
             "status": "open",
+            "price_at_pin": base,
             "created_at": time.strftime("%Y-%m-%d %H:%M:%S"),
             "ts": time.time(),
         }
         items.append(pin)
         _save(items)
         return pin
+
+
+def patch(pin_id: str, **fields) -> dict | None:
+    """Persist arbitrary fields on a pin (used by Plan Watch for baseline /
+    cooldown state). Never touches text/status here."""
+    with _lock:
+        items = _load()
+        for p in items:
+            if p["id"] == pin_id:
+                p.update(fields)
+                _save(items)
+                return p
+    return None
 
 
 def update(pin_id: str, status: str) -> dict | None:

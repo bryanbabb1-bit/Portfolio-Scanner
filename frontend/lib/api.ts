@@ -117,6 +117,7 @@ export interface AdvisorNote {
   generated_at: string;
   summary: string;
   posture?: "act" | "watch" | null;
+  call?: string | null;   // standing one-word stance: BUY/ADD/HOLD/TRIM/SELL/WATCH
   insights: string[];
   actions: string[];
   risks: string[];

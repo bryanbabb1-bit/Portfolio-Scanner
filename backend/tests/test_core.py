@@ -621,3 +621,48 @@ def test_news_deduped_and_tagged():
     titles = [n.title for n in out["results"]]
     assert len(titles) == len(set(titles))
     assert all(n.symbols for n in out["results"])
+
+
+def test_stance_ledger_consistency(tmp_path, monkeypatch):
+    """The stance ledger is the advisor's memory — one call per symbol that
+    every surface reads and stays consistent with."""
+    from app.services import stance
+    monkeypatch.setattr(stance, "_FILE", tmp_path / "stances.json")
+    assert stance.get("NVDA") is None
+    stance.set_stance("nvda", "hold", headline="steady", thesis="thesis intact",
+                      target="$210", stop="$190", price=195.0)
+    s = stance.get("NVDA")
+    assert s["action"] == "HOLD" and s["symbol"] == "NVDA"
+    block = stance.block("NVDA")
+    assert "STANDING CALL on NVDA" in block and "Stay CONSISTENT" in block
+    # garbage normalizes to HOLD, prev_action is tracked across changes
+    stance.set_stance("NVDA", "not-a-call")
+    assert stance.get("NVDA")["action"] == "HOLD"
+    stance.set_stance("NVDA", "SELL")
+    assert stance.get("NVDA")["prev_action"] == "HOLD"
+    assert "NVDA" in stance.book_block(["NVDA", "AAPL"])
+
+
+def test_planwatch_level_parse():
+    from app.services import planwatch
+    assert planwatch._level_in("Trim IREN near $672 into strength") == 672.0
+    assert planwatch._level_in("no dollar level here") is None
+
+
+def test_planwatch_baseline_then_holds(tmp_path, monkeypatch):
+    """First sighting of a staged plan sets its baseline (no fire); with the
+    advisor off a moved plan re-evaluates to 'holds' and fires nothing."""
+    from app.services import planwatch, pins
+    patched: dict = {}
+    monkeypatch.setattr(pins, "patch", lambda pid, **f: patched.update(f))
+    # no baseline yet -> baseline is set, nothing fires
+    monkeypatch.setattr(pins, "list_pins", lambda: [
+        {"id": "p1", "status": "open", "symbol": "IREN",
+         "text": "Sell IREN as loss control"}])
+    assert planwatch.check({"IREN": 10.0}) == []
+    assert patched.get("price_at_pin") == 10.0
+    # has baseline, big move, advisor disabled -> reevaluate 'holds' -> no signal
+    monkeypatch.setattr(pins, "list_pins", lambda: [
+        {"id": "p2", "status": "open", "symbol": "IREN",
+         "text": "Sell IREN near $672", "price_at_pin": 10.0}])
+    assert planwatch.check({"IREN": 13.0}) == []

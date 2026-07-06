@@ -129,6 +129,7 @@ class AdvisorNote(BaseModel):
     generated_at: str
     summary: str                # 1-2 sentence overall take
     posture: Optional[str] = None  # "act" | "watch" — patience is a position
+    call: Optional[str] = None  # one-word standing stance: BUY/ADD/HOLD/TRIM/SELL/AVOID/WATCH
     insights: list[str] = []    # technical / portfolio-health observations
     actions: list[str] = []     # concrete recommendations (ticker + level each)
     risks: list[str] = []       # each risk paired with its confirming signal
