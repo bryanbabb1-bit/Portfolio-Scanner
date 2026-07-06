@@ -1,19 +1,24 @@
 {
-  "type": "morning",
+  "type": "eod",
   "date": "2026-07-06",
-  "generated_at": "2026-07-06 16:40:55",
+  "generated_at": "2026-07-06 17:04:09",
   "engine": "claude",
-  "headline": "AAPL boxed between stop and add — IREN still wild",
-  "summary": "Book is up 2.97% led by AMD and IREN's outsized day-move, but three names remain underwater and AAPL sits between its two armed triggers — today likely resolves one of them.",
+  "headline": "Broad Rally Lifts Book +2.9%, Miners Lead",
+  "summary": "Strong green day driven by IREN and AMD, but most of that strength is bounce off deep drawdowns rather than confirmed trend — AVGO and MSFT are still double-digit underwater despite today's pop. Discipline held: every low-float runner alert was correctly ignored.",
   "watch": [
-    "AAPL $312.61: wedged between stop $300 (-4.0%) and confirmed-close add $317 (+1.4%) — whichever prints first fires automatically",
-    "IREN +15% today but still -27.1% P/L, RSI 39 — no stop armed on this one, watch for squeeze failure or follow-through",
-    "WBX $5.60 vs $4.60 exit trigger (-17.8% away) — spec stub, let the level do the work, don't anticipate",
-    "AMD +7.1% today, P/L +10.3%, RSI 57 — winner running clean, no armed trim, just track the trail mentally",
-    "MSFT -11.5% P/L / AVGO -10.8% P/L, both RSI mid-40s, no bounce trigger armed — still underwater, no action pending",
-    "PANW gated: no new entry until RSI ≤70 — check where it opens",
-    "CRWD gated: buy only on pullback to RSI ≤60 — currently not eligible",
-    "SGOV RSI 81 is noise — cash-equivalent, ignore overbought reading"
+    "WBX at $5.58 vs. $4.60 stop — spec stub exits fully on any close below that level, watch it into the close.",
+    "AAPL at $312.71 sits between both triggers: $300 stop guards any new buy, queued $250 add only fires on a confirmed daily close ≥$317.",
+    "PANW RSI must print ≤70 before any new position there is allowed.",
+    "CRWD needs an RSI pullback to ≤60 before buying — not there yet.",
+    "GEV base setup is coiling — wait for volume confirmation before entering, don't buy the coil blind.",
+    "ANET setup is ready but volume isn't confirming — no entry until volume shows up."
   ],
-  "recap": []
+  "recap": [
+    "Book +2.90% to $12,525 — best day in a while, broad participation across holdings.",
+    "IREN +14.8% today but still -27.2% P/L with RSI only 39.4 — this is a bounce, not yet a confirmed trend reversal.",
+    "AMD +7.0% pushed P/L to +10.2%, your best performer, RSI 57.4 — healthy, not extended.",
+    "AVGO +3.9% re-hit its RSI≥45 watchpoint four separate times today but remains -10.8% P/L — an underwater winner, not a green light for new risk.",
+    "NEE watchpoint fired BUY — starter entry cleared per plan; MSFT lagged -0.9% and stays the weakest holding at -11.6% P/L.",
+    "GEV and ANET flagged high-conviction; SEER/PEW/YDES/WRAP runner-ignition alerts on extended microcaps were all correctly avoided — no FOMO chasing."
+  ]
 }

@@ -74,3 +74,29 @@ def health():
 @app.get("/")
 def root():
     return {"service": "portfolio-scanner", "docs": "/docs"}
+
+
+# --------------------------------------------------------------- heartbeat
+# The watchdog must not depend on a client being open. This background thread
+# runs the scan itself every ~2 min so action pushes fire and the morning/EOD
+# briefs post on time even when the app is closed. scan() early-returns cheaply
+# when the market is shut, so off-hours this is a near no-op.
+def _heartbeat() -> None:
+    import time as _t
+    from .services import conviction
+    _t.sleep(15)  # let startup settle
+    while True:
+        try:
+            conviction.scan()
+        except Exception as exc:  # never let the loop die
+            print(f"[heartbeat] scan failed: {exc!r}")
+        _t.sleep(120)
+
+
+@app.on_event("startup")
+def _start_heartbeat() -> None:
+    if settings.DATA_MODE == "mock":
+        return  # tests / offline — no autonomous scanning
+    import threading
+    threading.Thread(target=_heartbeat, name="watchdog-heartbeat", daemon=True).start()
+    print("[heartbeat] watchdog heartbeat started (scan every 120s)")
