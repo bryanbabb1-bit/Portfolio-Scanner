@@ -1,50 +1,50 @@
 {
   "goals": {
-    "target_value": 20000.0,
+    "target_value": 20000,
     "horizon": "2 years",
-    "monthly_contribution": 0.0,
+    "monthly_contribution": 0,
     "risk_appetite": "aggressive",
     "notes": "I believe in the AI revolution. I am a novice trader with not much history of success. I\u2019d rather trade on high conviction stocks with strong growth outlooks, with some calibrated risks on stocks that could balloon, that tie into my belief in AI. I would rather not sink additional capital in if I don\u2019t have to. I am okay to rebalance my portfolio to align with my goals. I can add capital if needed, but am already down 2 grand in loses this year. Don\u2019t be afraid to make bold calls based on research and technicals that could find us a diamond in the rough type stock that explodes. "
   },
-  "thesis": "Grow $12,154 to $20,000 in two years (~28%/yr) by rotating overbought SGOV and idle cash into leading AI compounders on weakness, while hard-capping speculative miner IREN at 10% and cutting losers mechanically.",
+  "thesis": "SGOV+cash remains one $2,239 dry-powder pool funding AI leaders on volume-confirmed weakness; AMZN's thesis has repaired (P/L +0.8%, RSI 50.1, sideways, no active alerts) so it reverts to HOLD, while MSFT and IREN remain broken and stay on mechanical stops.",
   "short_term": [
-    "Trim SGOV from 13.5% to ~9% (RSI 82.1, overbought alert); redeploy ~$550 into pullbacks and keep ~$1,000 dry powder for entries.",
-    "No NVDA adds within two days of its Aug 26 2026 earnings; hold the ~$970 lot and reassess after guidance.",
-    "Hard-cap IREN at 10% ($1,215); set a stop ~15% below today given the -34% loss and critical drawdown alert\u2014cut if breached.",
-    "AMD leads momentum (RSI 50.9, uptrend, +130% YTD per Jul 2026); add only on a volume-confirmed bounce, risking \u2264$182.",
-    "AAPL sits in a 52-week-high breakout zone (RSI 62); add on a volume-backed new-high close with a stop under the base.",
-    "Prefer GOOGL near $371 (RSI 56, not extended) over PANW $348 (RSI 73.7, >2 ATR\u2014chase forbidden); risk \u2264$182."
+    "REVERSAL: AMZN is no longer a cut\u2014current data shows +0.8% P/L, RSI 50.1, sideways, zero active alerts, so revert to HOLD, not a stop-out.",
+    "SGOV+cash dry powder stays one $2,239 pool; hold the 16% floor (~$1,943), leaving ~$300 deployable for one buy at a time.",
+    "Today's semi rout (AMD -7.8%, MU -7.1%, TSM -4.6%, Jul 2026) is not a buy signal yet\u2014wait for volume-confirmed reversal before adding.",
+    "AAPL's queued $250 add fires only on a confirmed daily close above $317 (now $312.75); stop at $300, risk ~$180 (1.5%).",
+    "CRWD (RSI 70.7) and PANW (RSI 72.1) are both above the 70 chase-forbidden line; wait for cooldowns before opening either.",
+    "Hold AVGO until RSI reclaims 45 (now 41.9); hold IREN at its 10% cap ($1,158)\u2014exit on any new low given -33.8% P/L."
   ],
   "long_term": [
-    "Build a core of 6-8 AI compounders\u2014NVDA, AVGO, MSFT, AMZN, GOOGL\u2014held through volatility and added to on 200-day tests.",
-    "Trim tail positions (MELI, NET below-trend) to fund leaders; concentrate conviction rather than spreading across 13 thin lots.",
-    "Keep IREN and any low-float speculation as a separate <10% trade sleeve with predefined exits and trailed stops.",
-    "Reinvest SGOV yield and trimmed gains into leaders whenever the S&P holds above its 200-day (~7,470, Jul 2026).",
-    "Target $20,000 by mid-2028 (~28% annualized) via compounding leaders and disciplined risk\u2014no reliance on new outside capital."
+    "Build a 6-8 name AI core\u2014NVDA, AVGO, MSFT, TSM, AAPL, AMZN\u2014adding on weakness only when the S&P holds its 200-day (~7,470).",
+    "Build TSM toward 10% as the foundry supplying every AI chipmaker in the book, insulating against any single name's stumble.",
+    "Recycle SGOV yield and trimmed winners into leaders; concentrate conviction rather than spreading thin across 13 small lots.",
+    "Keep IREN and any low-float speculation a separate <10% trade sleeve with trailed stops, never allowed to become a core holding.",
+    "Target $20,000 by mid-2028 (~28%/yr from $12,141) via compounding AI leaders and disciplined stop-outs\u2014no new capital required."
   ],
   "allocation_targets": {
-    "AI Infrastructure": 30.0,
-    "AI": 24.0,
-    "Tech": 14.0,
-    "Compute Power": 10.0,
-    "Energy": 8.0,
-    "Cash & Income": 14.0
+    "AI Infrastructure": 30,
+    "AI": 22,
+    "Tech": 14,
+    "Compute Power": 10,
+    "Energy": 8,
+    "Cash & Income": 16
   },
   "guardrails": [
-    "Risk \u22641.5% of book (~$182) per new position; size = risk dollars / distance to predefined stop.",
+    "Risk \u22641.5% of book (~$182) per new entry; position size = risk dollars / distance to predefined stop.",
+    "SGOV+cash is one dry-powder pool with a 16% floor (~$1,943); all queued buys must fit inside it together.",
     "IREN/Compute Power hard-capped at 10%; any single non-core position capped at 8% of the book.",
-    "If the S&P 500 loses its 200-day (~7,470), halve new-position size and raise cash toward 20%.",
-    "Cut every position at its stop mechanically; never average down a broken thesis (MSFT -10.3%, IREN -34%).",
-    "No new entries within two days of a holding's earnings; NVDA reports Aug 26 2026\u2014flagged."
+    "If the S&P loses its 200-day (~7,470) or NVDA closes below $190, halve new size and raise cash.",
+    "Cut at stops mechanically; never average down broken theses (MSFT -10.4% downtrend, IREN -33.8% critical drawdown)."
   ],
   "milestones": [
-    "By Aug 26 2026: SGOV trimmed to \u226410%, cash redeployed, portfolio holding \u2265$12,500 pre-NVDA earnings.",
-    "By year-end 2026: book \u2265$14,000 (~15% H2 gain) with top-5 concentration below 50%.",
-    "By mid-2027: \u2265$16,000, and IREN either reclaimed above cost basis or already cut per its stop.",
-    "By mid-2028: reach the $20,000 target (~28% annualized); pause new risk if drawdown exceeds -20%."
+    "By Aug 26 2026 (NVDA earnings): dry-powder floor intact, AAPL/CRWD/PANW tripwires resolved one way or another, book \u2265$12,500.",
+    "By year-end 2026: book \u2265$13,700 with top-5 concentration back under 50% (now 52.8%).",
+    "By mid-2027: \u2265$15,700 and IREN either reclaimed above cost basis or already cut on a new low.",
+    "By mid-2028: reach the $20,000 target (~28%/yr); pause new risk if drawdown exceeds -20% (now -19.2%)."
   ],
-  "approved": false,
-  "generated_at": "2026-07-07 09:09:28",
+  "approved": true,
+  "generated_at": "2026-07-07 10:01:25",
   "engine": "claude",
-  "updated_at": "2026-07-07 09:09:28"
+  "updated_at": "2026-07-07 10:03:57"
 }

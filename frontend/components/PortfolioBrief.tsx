@@ -11,12 +11,22 @@ export function PortfolioBrief() {
   const [loading, setLoading] = useState(false);
   const [deep, setDeep] = useState(false);
   const [err, setErr] = useState<string | null>(null);
+  const [stale, setStale] = useState(false); // brief predates the active strategy
 
-  // Restore the last brief after navigation/refresh — no Claude call.
+  // Restore the last brief; if the strategy was revised AFTER this brief was
+  // written, it's stale — regenerate so the brief reflects the new plan.
   useEffect(() => {
-    api.lastAdvisorNote("portfolio").then((n) => {
-      if (n) setNote((cur) => cur ?? n);
-    });
+    Promise.all([api.lastAdvisorNote("portfolio"), api.strategy().catch(() => null)])
+      .then(([n, strat]) => {
+        if (n) setNote((cur) => cur ?? n);
+        const briefTime = n?.generated_at || "";
+        const stratTime = strat?.updated_at || strat?.generated_at || "";
+        if (strat?.approved && stratTime && (!n || stratTime > briefTime)) {
+          setStale(true);
+          run(false); // cache was cleared on the strategy save → regenerates
+        }
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function run(force = false) {
@@ -24,6 +34,7 @@ export function PortfolioBrief() {
     setErr(null);
     try {
       setNote(await api.advisePortfolio(force, deep));
+      setStale(false);
       // Arm any 'if price/RSI hits X' conditions from the fresh advice as
       // watchpoints, silently in the background.
       api.extractWatchpoints().catch(() => {});

@@ -7,10 +7,11 @@
     "note": "Execute queued $250 AAPL add only on a confirmed daily close above $317",
     "side": "buy",
     "source": "advisor",
-    "status": "armed",
+    "status": "dismissed",
     "created_at": "2026-07-03 08:13",
     "ts": 1783084438.9175987,
-    "confirm": "touch"
+    "confirm": "touch",
+    "dismissed_ts": 1783436661.0950396
   },
   {
     "id": "9c65528f22a7",
@@ -34,10 +35,11 @@
     "note": "Buy CRWD only on a pullback below RSI 60",
     "side": "buy",
     "source": "advisor",
-    "status": "armed",
+    "status": "dismissed",
     "created_at": "2026-07-03 08:13",
     "ts": 1783084438.9855957,
-    "confirm": "touch"
+    "confirm": "touch",
+    "dismissed_ts": 1783436661.7968397
   },
   {
     "id": "f20e035fd3ee",
@@ -48,11 +50,12 @@
     "side": "buy",
     "confirm": "touch",
     "source": "advisor",
-    "status": "triggered",
+    "status": "dismissed",
     "created_at": "2026-07-06 07:28",
     "ts": 1783340902.7583537,
     "triggered_at": "2026-07-06 16:15",
-    "triggered_ts": 1783372559.7028615
+    "triggered_ts": 1783372559.7028615,
+    "dismissed_ts": 1783436660.6400208
   },
   {
     "id": "2d36fae7f8b0",
@@ -63,9 +66,10 @@
     "side": "sell",
     "confirm": "touch",
     "source": "advisor",
-    "status": "armed",
+    "status": "dismissed",
     "created_at": "2026-07-06 10:22",
-    "ts": 1783351328.3863156
+    "ts": 1783351328.3863156,
+    "dismissed_ts": 1783436661.6100247
   },
   {
     "id": "83d8cfedf0a0",
@@ -76,9 +80,10 @@
     "side": "buy",
     "confirm": "touch",
     "source": "advisor",
-    "status": "armed",
+    "status": "dismissed",
     "created_at": "2026-07-06 13:13",
-    "ts": 1783361636.230703
+    "ts": 1783361636.230703,
+    "dismissed_ts": 1783436661.4422758
   },
   {
     "id": "d08ba1322a31",
@@ -133,9 +138,10 @@
     "side": "sell",
     "confirm": "close",
     "source": "advisor",
-    "status": "armed",
+    "status": "dismissed",
     "created_at": "2026-07-07 06:25",
-    "ts": 1783423549.282047
+    "ts": 1783423549.282047,
+    "dismissed_ts": 1783436661.9732165
   },
   {
     "id": "5c850d385882",
@@ -146,8 +152,22 @@
     "side": "sell",
     "confirm": "close",
     "source": "advisor",
-    "status": "armed",
+    "status": "dismissed",
     "created_at": "2026-07-07 08:55",
-    "ts": 1783432507.3265846
+    "ts": 1783432507.3265846,
+    "dismissed_ts": 1783436661.2767868
+  },
+  {
+    "id": "b4d0fc959b40",
+    "symbol": "CRWD",
+    "kind": "rsi_below",
+    "level": 70.0,
+    "note": "CRWD RSI 70.7 above chase-forbidden line; wait for cooldown before opening",
+    "side": "buy",
+    "confirm": "touch",
+    "source": "advisor",
+    "status": "armed",
+    "created_at": "2026-07-07 10:06",
+    "ts": 1783436775.8463135
   }
 ]

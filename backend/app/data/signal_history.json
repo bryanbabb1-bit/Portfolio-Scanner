@@ -286,5 +286,23 @@
     "price": 5.01,
     "ts": 1783433924.520054,
     "date": "2026-07-07"
+  },
+  {
+    "id": "VRXA:runner-ignition:2026-07-07",
+    "symbol": "VRXA",
+    "side": "buy",
+    "rule": "runner-ignition",
+    "price": 2.6958,
+    "ts": 1783435461.0239825,
+    "date": "2026-07-07"
+  },
+  {
+    "id": "TVRD:runner-ignition:2026-07-07",
+    "symbol": "TVRD",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 3.2992,
+    "ts": 1783436347.0518777,
+    "date": "2026-07-07"
   }
 ]

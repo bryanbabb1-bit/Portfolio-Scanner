@@ -33,8 +33,15 @@ def save(doc: dict) -> dict:
     doc["updated_at"] = time.strftime("%Y-%m-%d %H:%M:%S")
     with _lock:
         _FILE.parent.mkdir(parents=True, exist_ok=True)
-        with open(_FILE, "w") as f:
+        with open(_FILE, "w", encoding="utf-8") as f:
             json.dump(doc, f, indent=2)
+    # A new/revised strategy must not leave stale cached advice around — the
+    # brief, reviews and recos should all regenerate against this plan.
+    try:
+        from . import advisor
+        advisor.invalidate_cache()
+    except Exception:
+        pass
     return doc
 
 

@@ -3,14 +3,14 @@
     "symbol": "NVDA",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "$191 add never triggered; hold original lot",
-    "thesis": "$191 add never triggered; hold original lot",
+    "headline": "Above $190; Strong Buy, hold original lot",
+    "thesis": "Above $190; Strong Buy, hold original lot",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 192.06,
-    "as_of": "2026-07-07 08:54:26",
-    "ts": 1783432466.033276
+    "price": 192.6,
+    "as_of": "2026-07-07 10:05:44",
+    "ts": 1783436744.5700448
   },
   "AAPL": {
     "symbol": "AAPL",
@@ -21,9 +21,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 312.03,
-    "as_of": "2026-07-07 08:54:26",
-    "ts": 1783432466.1253412
+    "price": 313.12,
+    "as_of": "2026-07-07 10:05:44",
+    "ts": 1783436744.7025938
   },
   "SEER": {
     "symbol": "SEER",
@@ -42,14 +42,14 @@
     "symbol": "SGOV",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "At 13.5%, hold above 15% dry-powder floor",
-    "thesis": "At 13.5%, hold above 15% dry-powder floor",
+    "headline": "Dry powder above 16% floor; stop trimming",
+    "thesis": "Dry powder above 16% floor; stop trimming",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 100.46,
-    "as_of": "2026-07-07 08:54:25",
-    "ts": 1783432465.9612079
+    "price": 100.45,
+    "as_of": "2026-07-07 10:05:44",
+    "ts": 1783436744.4877865
   },
   "IREN": {
     "symbol": "IREN",
@@ -60,9 +60,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 41.21,
-    "as_of": "2026-07-07 08:54:25",
-    "ts": 1783432465.9982657
+    "price": 40.46,
+    "as_of": "2026-07-07 10:05:44",
+    "ts": 1783436744.5306926
   },
   "AMD": {
     "symbol": "AMD",
@@ -73,9 +73,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 513.46,
-    "as_of": "2026-07-07 08:54:26",
-    "ts": 1783432466.0500033
+    "price": 506.45,
+    "as_of": "2026-07-07 10:05:44",
+    "ts": 1783436744.593783
   },
   "MSFT": {
     "symbol": "MSFT",
@@ -86,22 +86,22 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 392.63,
-    "as_of": "2026-07-07 08:54:26",
-    "ts": 1783432466.0694993
+    "price": 392.99,
+    "as_of": "2026-07-07 10:05:44",
+    "ts": 1783436744.6124394
   },
   "AVGO": {
     "symbol": "AVGO",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Wait RSI reclaim of 45; now 42.7",
-    "thesis": "Wait RSI reclaim of 45; now 42.7",
+    "headline": "Wait RSI reclaim of 45; now 42",
+    "thesis": "Wait RSI reclaim of 45; now 42",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 366.65,
-    "as_of": "2026-07-07 08:54:26",
-    "ts": 1783432466.0158327
+    "price": 364.12,
+    "as_of": "2026-07-07 10:05:44",
+    "ts": 1783436744.5497909
   },
   "CIFR": {
     "symbol": "CIFR",
@@ -120,14 +120,14 @@
     "symbol": "AMZN",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Flat hyperscaler core; no action",
-    "thesis": "Flat hyperscaler core; no action",
+    "headline": "Repaired hyperscaler core; no action",
+    "thesis": "Repaired hyperscaler core; no action",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 247.87,
-    "as_of": "2026-07-07 08:54:26",
-    "ts": 1783432466.112908
+    "price": 244.15,
+    "as_of": "2026-07-07 10:05:44",
+    "ts": 1783436744.673383
   },
   "NET": {
     "symbol": "NET",
@@ -138,9 +138,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 256.25,
-    "as_of": "2026-07-07 08:54:26",
-    "ts": 1783432466.1353803
+    "price": 260.25,
+    "as_of": "2026-07-07 10:05:44",
+    "ts": 1783436744.730443
   },
   "MELI": {
     "symbol": "MELI",
@@ -151,9 +151,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 1802.88,
-    "as_of": "2026-07-07 08:54:26",
-    "ts": 1783432466.151663
+    "price": 1812.97,
+    "as_of": "2026-07-07 10:05:44",
+    "ts": 1783436744.751037
   },
   "TSM": {
     "symbol": "TSM",
@@ -164,9 +164,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 435.77,
-    "as_of": "2026-07-07 08:54:26",
-    "ts": 1783432466.080567
+    "price": 429.77,
+    "as_of": "2026-07-07 10:05:44",
+    "ts": 1783436744.6335964
   },
   "PEW": {
     "symbol": "PEW",
@@ -216,9 +216,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 88.75,
-    "as_of": "2026-07-07 08:54:25",
-    "ts": 1783432465.979784
+    "price": 88.91,
+    "as_of": "2026-07-07 10:05:44",
+    "ts": 1783436744.511087
   },
   "SMCI": {
     "symbol": "SMCI",
@@ -237,14 +237,14 @@
     "symbol": "MU",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Record quarter, uptrend intact despite pullback",
-    "thesis": "Record quarter, uptrend intact despite pullback",
+    "headline": "Record quarter; uptrend intact despite pullback",
+    "thesis": "Record quarter; uptrend intact despite pullback",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 919.7,
-    "as_of": "2026-07-07 08:54:26",
-    "ts": 1783432466.0991044
+    "price": 915.16,
+    "as_of": "2026-07-07 10:05:44",
+    "ts": 1783436744.6528623
   },
   "WBX": {
     "symbol": "WBX",
@@ -310,5 +310,31 @@
     "price": 5.17,
     "as_of": "2026-07-07 09:26:05",
     "ts": 1783434365.2451491
+  },
+  "VRXA": {
+    "symbol": "VRXA",
+    "action": "AVOID",
+    "prev_action": null,
+    "headline": "Dead-cat bounce, not an ignition \u2014 don't chase",
+    "thesis": "Skip the pop; volume, trend and structure all fail momentum criteria, so wait for a pullback with base-building before any entry.",
+    "target": "",
+    "stop": "",
+    "source": "reco:runner",
+    "price": 2.7,
+    "as_of": "2026-07-07 09:44:58",
+    "ts": 1783435498.1936553
+  },
+  "TVRD": {
+    "symbol": "TVRD",
+    "action": "AVOID",
+    "prev_action": "AVOID",
+    "headline": "Still extended and fading \u2014 stand aside",
+    "thesis": "Hold \u2014 no action; TVRD is up 78% on the day and already fading off the high, not a volume-backed continuation entry.",
+    "target": "",
+    "stop": "",
+    "source": "reco:runner",
+    "price": 3.58,
+    "as_of": "2026-07-07 10:11:03",
+    "ts": 1783437063.5192869
   }
 }

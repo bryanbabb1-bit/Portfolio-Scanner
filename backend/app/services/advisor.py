@@ -28,6 +28,17 @@ from ..models.schemas import (
 # advisor cache keyed by symbol+kind
 _cache: dict[str, tuple[float, AdvisorNote]] = {}
 
+
+def invalidate_cache() -> None:
+    """Clear cached advice (briefs, stock reviews, recommendations) so they
+    regenerate against a changed strategy. Called whenever the strategy is
+    saved — without this the brief keeps serving pre-revision recommendations."""
+    _cache.clear()
+    try:
+        _reco_cache.clear()
+    except NameError:
+        pass
+
 # claude CLI session per context key — lets follow-up questions resume the
 # conversation with the full brief already in context. Persisted so follow-ups
 # still have context after a backend restart.
