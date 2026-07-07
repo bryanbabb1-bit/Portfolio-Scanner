@@ -10,8 +10,14 @@ router = APIRouter(prefix="/api", tags=["summary"])
 
 @router.get("/summary")
 def get_summary():
-    """The latest daily brief (morning or close recap), for the dashboard card."""
-    return {"brief": summary_service.latest()}
+    """The latest daily brief (morning or close recap) + its dismissed state."""
+    return summary_service.latest_state()
+
+
+@router.post("/summary/dismiss")
+def dismiss_summary():
+    """Mark the current brief read — hides until the next one posts."""
+    return summary_service.dismiss()
 
 
 @router.post("/summary/generate")

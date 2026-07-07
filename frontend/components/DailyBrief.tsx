@@ -3,20 +3,27 @@ import { useEffect, useState } from "react";
 import { api, DailyBrief as Brief } from "../lib/api";
 import { BulletList } from "./BulletList";
 
-// The pre-market "what to watch today" / end-of-day recap. Fires once each a
-// day on its own and pushes; this card is where you read it.
+// The pre-market "what to watch today" / end-of-day recap. A one-time read:
+// dismiss it when done and it stays hidden until the next brief posts.
 export function DailyBrief() {
   const [brief, setBrief] = useState<Brief | null>(null);
+  const [dismissed, setDismissed] = useState(false);
+  const [expanded, setExpanded] = useState(false); // re-open a dismissed one without un-dismissing
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
-    api.summary().then((d) => setBrief(d.brief)).catch(() => {});
+    api.summary().then((d) => {
+      setBrief(d.brief);
+      setDismissed(d.dismissed);
+    }).catch(() => {});
   }, []);
 
   async function gen(kind: "morning" | "eod") {
     setBusy(true);
     try {
       setBrief(await api.generateBrief(kind));
+      setDismissed(false); // a freshly generated brief is unread
+      setExpanded(false);
     } catch {
       /* ignore */
     } finally {
@@ -24,8 +31,26 @@ export function DailyBrief() {
     }
   }
 
+  async function dismiss() {
+    setDismissed(true);
+    setExpanded(false);
+    api.dismissBrief().catch(() => {});
+  }
+
   const morning = brief?.type === "morning";
   const title = brief ? (morning ? "Morning Brief" : "Close Recap") : "Daily Brief";
+
+  // Dismissed + not re-opened: a slim bar you can reopen, out of the way.
+  if (brief && dismissed && !expanded) {
+    return (
+      <div className="card daily-brief collapsed" id="daily-brief">
+        <span className="mut" style={{ fontSize: 13 }}>
+          {title} read — {brief.headline}
+        </span>
+        <button className="btn ghost" onClick={() => setExpanded(true)}>Show</button>
+      </div>
+    );
+  }
 
   return (
     <div className="card daily-brief" id="daily-brief">
@@ -46,6 +71,9 @@ export function DailyBrief() {
           <button className="btn ghost" onClick={() => gen("eod")} disabled={busy} title="Generate the end-of-day recap now">
             {busy ? "…" : "Day recap"}
           </button>
+          {brief && (
+            <button className="icon-btn jr-btn" title="Dismiss — hides until the next brief" onClick={dismiss}>✕</button>
+          )}
         </div>
       </div>
 
@@ -69,6 +97,9 @@ export function DailyBrief() {
               <BulletList items={brief.watch} kind="action" />
             </div>
           )}
+          <div style={{ marginTop: 14 }}>
+            <button className="btn ghost" onClick={dismiss}>Got it, dismiss</button>
+          </div>
         </>
       )}
     </div>

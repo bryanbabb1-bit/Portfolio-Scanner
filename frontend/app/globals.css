@@ -64,6 +64,10 @@ body {
 }
 
 /* daily brief — morning watch / close recap digest */
+.daily-brief.collapsed {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 12px 16px;
+}
 .daily-brief .brief-headline {
   font-size: 17px; font-weight: 700; line-height: 1.35; margin-top: 4px;
   color: var(--text);

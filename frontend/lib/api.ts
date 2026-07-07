@@ -415,9 +415,10 @@ export interface DailyBrief {
 
 export const api = {
   health: () => get<{ status: string; data_mode: string; advisor_enabled: boolean }>("/api/health"),
-  summary: () => get<{ brief: DailyBrief | null }>("/api/summary"),
+  summary: () => get<{ brief: DailyBrief | null; dismissed: boolean }>("/api/summary"),
   generateBrief: (kind: "morning" | "eod") =>
     post<DailyBrief>(`/api/summary/generate?kind=${kind}`, {}),
+  dismissBrief: () => post<{ dismissed: string | null }>("/api/summary/dismiss", {}),
   portfolio: () =>
     get<{ summary: PortfolioSummary; holdings: StockReport[] }>("/api/portfolio"),
   scan: (watchlist = true) =>

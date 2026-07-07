@@ -1,25 +1,24 @@
 {
   "type": "eod",
   "date": "2026-07-06",
-  "generated_at": "2026-07-06 18:05:13",
+  "generated_at": "2026-07-06 19:03:39",
   "engine": "claude",
-  "headline": "Big green day rides IREN's bounce and AMD's grind",
-  "summary": "The book posted a strong +2.75% day, but the gain is a bounce inside existing drawdowns, not a turn - AMD is the one clean winner, while IREN, AVGO, and MSFT are still deep in the red despite today's strength.",
+  "headline": "Broad rally lifts book +2.68%, IREN roars back",
+  "summary": "A strong risk-on day carried the book higher on AMD and IREN strength, though MSFT keeps dragging and the book stays fully invested with only $42 in cash.",
   "watch": [
-    "WBX at $5.58 vs the $4.60 exit trigger - 17% cushion but a fast microcap, watch for a close through that level to exit the stub entirely",
-    "AAPL at $312.60 sits between both live triggers - $300 stop-loss on a new buy and $317 confirmed close to execute the queued $250 add - no action until it picks a side",
-    "AVGO's RSI at 44.8 is a hair from re-triggering its own watchpoint; confirm broader strength before adding to a position still down -10.8%",
-    "NEE watchpoint (BUY) fired - decide on opening the starter, size it to ≤1.5% book risk with a stop set before entry, not after",
-    "PANW still above RSI 70 and CRWD still above RSI 60 - both entries remain forbidden until pullbacks confirm",
-    "IREN's RSI 39 recovery needs volume confirmation tomorrow before treating today's pop as anything more than an oversold bounce - no averaging down into the -27.3% hole regardless"
+    "AAPL at $312.68: a confirmed daily close ≥$317 triggers the queued $250 add; a break to $300 triggers the stop on any new buy — no position yet, both are entry-side triggers.",
+    "CRWD: still waiting on RSI ≤60 pullback before buying — not there yet.",
+    "PANW: RSI must fall to ≤70 before any new position is opened — do not chase above that level.",
+    "MSFT at -11.8% P/L with no stated stop — needs a hard invalidation level set given the continued weakness.",
+    "IREN: RSI 39.4 leaves room to extend, but confirm volume on any follow-through before adding — position is still -28.6%, do not average down.",
+    "Cash is down to $42 — any new trigger firing (CRWD, PANW, AAPL add) needs a funding decision, not just a signal."
   ],
   "recap": [
-    "Book +2.75% to $12,507, cash $501 sitting idle",
-    "IREN +14.7% today but still -27.3% P/L - a sharp bounce inside a deep hole, RSI 39 climbing out of oversold, not confirmation of a trend change",
-    "AMD +6.5% today, now +9.7% P/L - the only position actually working",
-    "AVGO +3.8% today but still -10.8% P/L; its RSI≥45 watchpoint fired repeatedly and RSI now sits at 44.8, right on that line",
-    "MSFT -0.8%, -11.5% P/L - no bounce participation, the weakest holding today",
-    "NEE watchpoint (BUY) fired even though NEE itself was -0.9% today with neutral RSI 50",
-    "Runner-ignition AVOID signals hit on SEER, PEW, YDES, WRAP - none held, correctly filtered as low-float chases"
+    "Book +2.68% to $12,448; cash at just $42 — essentially fully invested, no dry powder for new entries.",
+    "AMD +6.0% today, extending its lead to +9.2% P/L — the book's clear winner, RSI 57.3 not yet extended.",
+    "IREN +12.6% today but still -28.6% P/L overall — a sharp bounce off oversold (RSI 39.4), not confirmation of a trend reversal.",
+    "GEV +3.5%, now nearly breakeven at -0.6% P/L.",
+    "MSFT -1.1% today, remains the book's biggest laggard at -11.8% P/L with no bounce in sight.",
+    "NEE and SGOV flat/unchanged — no action needed there."
   ]
 }

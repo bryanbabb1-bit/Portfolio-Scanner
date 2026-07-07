@@ -23,11 +23,18 @@ def _et_now() -> datetime:
 
 
 def _load(path, default):
-    try:
-        with open(path) as f:
-            return json.load(f)
-    except (FileNotFoundError, json.JSONDecodeError):
-        return default
+    # UTF-8 to match _save (dashes, ≤, etc.); cp1252 fallback for legacy files.
+    # Reading a UTF-8 file with the Windows default codec is what turned
+    # em-dashes into "â€"" gibberish in the briefs.
+    for enc in ("utf-8", "cp1252"):
+        try:
+            with open(path, encoding=enc) as f:
+                return json.load(f)
+        except FileNotFoundError:
+            return default
+        except (json.JSONDecodeError, UnicodeDecodeError):
+            continue
+    return default
 
 
 def _save(path, data) -> None:
@@ -39,6 +46,31 @@ def _save(path, data) -> None:
 def latest() -> dict | None:
     """The most recent brief, for the dashboard card + notification tap."""
     return _load(_BRIEF_FILE, None)
+
+
+def _brief_id(b: dict) -> str:
+    return f"{b.get('type')}:{b.get('generated_at')}"
+
+
+def latest_state() -> dict:
+    """The latest brief plus whether it's been dismissed. A NEW brief (next
+    morning/close) has a fresh id, so it comes back automatically."""
+    b = latest()
+    if not b:
+        return {"brief": None, "dismissed": False}
+    state = _load(_STATE_FILE, {})
+    return {"brief": b, "dismissed": state.get("dismissed_brief") == _brief_id(b)}
+
+
+def dismiss() -> dict:
+    """Mark the current brief read — it hides until the next one posts."""
+    b = latest()
+    if not b:
+        return {"dismissed": None}
+    state = _load(_STATE_FILE, {})
+    state["dismissed_brief"] = _brief_id(b)
+    _save(_STATE_FILE, state)
+    return {"dismissed": _brief_id(b)}
 
 
 def maybe_send_daily(force_kind: str | None = None) -> dict | None:
