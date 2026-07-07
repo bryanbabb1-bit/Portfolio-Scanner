@@ -1,51 +1,51 @@
 {
   "goals": {
-    "target_value": 20000,
+    "target_value": 25000,
     "horizon": "2 years",
     "monthly_contribution": 0,
     "risk_appetite": "aggressive",
     "notes": "I believe in the AI revolution. I am a novice trader with not much history of success. I\u2019d rather trade on high conviction stocks with strong growth outlooks, with some calibrated risks on stocks that could balloon, that tie into my belief in AI. I would rather not sink additional capital in if I don\u2019t have to. I am okay to rebalance my portfolio to align with my goals. I can add capital if needed, but am already down 2 grand in loses this year. Don\u2019t be afraid to make bold calls based on research and technicals that could find us a diamond in the rough type stock that explodes. "
   },
-  "thesis": "Own high-conviction AI leaders (NVDA, AVGO, TSM, MSFT, GOOGL) as multi-year compounders bought on weakness, funded by a rebuilt 16% cash pool from trimming over-concentrated semis, while keeping speculation (IREN) small, capped and on hard stops.",
+  "thesis": "Own NVDA, AVGO, TSM, MSFT, GOOGL, AMD and MU as multi-year AI compounders bought on weakness, cut IREN on its confirmed stop, and recycle that capital into a strictly capped small-cap satellite sleeve (starting with PATH) to spark asymmetric upside.",
   "short_term": [
-    "Trim ~$1,200 from over-extended AI-Infra overlap (AMD after +2.7%, some MU) to rebuild the 16% cash floor near $1,957 for dry powder.",
-    "Accumulate NVDA near $191 while the 200-day holds \u2014 RSI 43.5 is oversold and this is a core, years-long conviction, not a trade.",
-    "Buy the TSM dip (-4.3% today, RSI 49.5, uptrend) as your quality AI foundry, sizing to ~$183 risk against a defined stop.",
-    "Treat IREN as speculative: no adds on a -35% miner; hold it capped \u22648% and cut only on a volume close below recent lows.",
-    "Don't chase extended names \u2014 NET (RSI 67.6, +8.4% day) and AAPL (52-week-high zone) \u2014 add only on pullbacks toward trend.",
-    "MSFT stays a core hold, not a stop-out; accumulate small on dips toward support despite -11% P/L \u2014 the business thesis is intact."
+    "Cut IREN (P/L -34.9%, critical sharp-drop and drawdown alerts) on its broken stop \u2014 a speculative exit, not a core sell.",
+    "Redeploy the ~$1,139 IREN proceeds: rebuild cash toward the 16% floor (~$1,956) and seed a new small-cap satellite sleeve.",
+    "Start a PATH position (~$11.65, RSI 60.4, sideways) sized ~3% of book (~$367) with a hard stop set before entry.",
+    "Accumulate NVDA near $191 while the 200-day holds (RSI 43.5); DeepSeek's chip is inference-only and years from competing.",
+    "Add AVGO on weakness (-1.4% today, RSI 43.9) now that its watchpoint alert has fired, confirming the dip is buyable.",
+    "Buy the TSM dip (-4.1%, RSI 49.5, uptrend); don't chase NET further here (RSI 67.6, +7.6% today) without a pullback."
   ],
   "long_term": [
-    "Own NVDA, AVGO, TSM, MSFT, GOOGL and AMZN as multi-year compounders; add on weakness and never panic-sell great businesses on price alone.",
-    "With $0 new capital, compound by recycling trims and gains from extended names into core weakness, targeting the ~28% CAGR needed to reach $20,000.",
-    "Keep a small speculative sleeve (\u22648%): IREN plus one optional runner like PATH (~$11.65), with defined size and hard stops for asymmetric upside.",
-    "Diversify AI beyond hardware into software and platforms (MSFT, GOOGL, NET, PANW/CRWD on pullbacks) so the book isn't all correlated semis at beta 1.83.",
-    "Manage concentration as the book grows: keep top-5 under ~45% and no single position above 10% of the portfolio."
+    "Own NVDA, AVGO, TSM, MSFT, GOOGL, AMD, MU and AMZN as multi-year AI compounders; add on weakness, never sell core convictions on price alone.",
+    "Reaching $25,000 in two years from $12,225 needs roughly 43% CAGR, so plan on a standout winner like PATH or an optional capital add.",
+    "Keep the small-cap satellite sleeve (PATH plus future scouted names) capped at 8% of the book, each pick sized near 3% with a defined exit.",
+    "With $0 new capital, recycle gains from extended winners (NET, AAPL, MELI) into core and satellite weakness to keep compounding without new deposits.",
+    "Diversify AI exposure beyond hardware into platforms (MSFT, GOOGL, NET) and scouted names (PANW, CRWD) on pullbacks to soften the book's 1.83 beta."
   ],
   "allocation_targets": {
-    "AI": 20.0,
-    "Tech": 14.0,
-    "AI Infrastructure": 34.0,
-    "Energy": 8.0,
-    "Compute Power": 8.0,
-    "Cash & Income": 16.0
+    "AI": 22,
+    "Tech": 14,
+    "AI Infrastructure": 35,
+    "Energy": 8,
+    "Compute Power": 5,
+    "Cash & Income": 16
   },
   "guardrails": [
-    "Risk \u22641.5% of book (~$183) per new entry; position size = risk dollars \u00f7 distance to your predefined stop.",
-    "Hold a 16% Cash & Income floor (~$1,957) and rebuild it before opening any new speculative position.",
-    "Cap the speculative sleeve at 8% and any single non-core name at 8%; keep no core position above 10%.",
-    "Never average down a broken speculative trade; cut IREN on a volume close below its recent lows.",
-    "If the S&P loses its 200-day or NVDA closes below $190, halve new size and raise cash to the floor."
+    "Risk \u22641.5% of book (~$183) per new core entry; position size = risk dollars \u00f7 distance to your predefined stop.",
+    "Hold a 16% Cash & Income floor (~$1,956) before opening any new speculative or satellite position.",
+    "Cap the speculative/satellite sleeve (PATH and similar) at 8% of the book, each single pick near 3%, and never average down.",
+    "Cut IREN now on its confirmed stop; core convictions (NVDA, AVGO, TSM, MSFT, AMD, MU, GOOGL) are never sold on price alone.",
+    "If the S&P loses its 200-day or NVDA closes below $190, halve new size and raise cash back to the floor."
   ],
   "milestones": [
-    "By 2026-09-30: cash buffer rebuilt to ~$1,957 (16%) with book value holding at or above $13,000.",
-    "By 2027-01-31: portfolio \u2265 $13,850 and IREN resolved \u2014 either recovered above -20% or cut per its stop.",
-    "By 2027-07-07: portfolio \u2265 $15,650 (~28% CAGR pace) with top-5 concentration held under 45%.",
-    "By 2028-01-31: portfolio \u2265 $17,700, each core compounder held 1+ year and still adding on weakness.",
-    "By 2028-07: reach the $20,000 two-year target with the AI core intact and speculation still \u22648%."
+    "By 2026-09-30: cash rebuilt to ~$1,956 (16%) with PATH sized and stopped, book value holding at or above $13,000.",
+    "By 2027-01-31: portfolio \u2265 $14,600 (43% CAGR pace), with PATH either building a real gain or cut on its stop.",
+    "By 2027-07-07: portfolio \u2265 $17,450 with the satellite sleeve still \u22648% and top-5 core concentration under 45%.",
+    "By 2028-01-31: portfolio \u2265 $20,900, each core compounder held 1+ year and still adding on weakness.",
+    "By 2028-07: reach the $25,000 target, likely helped by one satellite name exploding or an optional capital add."
   ],
-  "approved": false,
-  "generated_at": "2026-07-07 16:38:54",
+  "approved": true,
+  "generated_at": "2026-07-07 17:20:50",
   "engine": "claude",
-  "updated_at": "2026-07-07 16:38:54"
+  "updated_at": "2026-07-07 17:21:07"
 }

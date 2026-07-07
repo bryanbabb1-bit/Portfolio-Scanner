@@ -212,6 +212,21 @@ _PERSONA = (
     "data' rather than guess. Be direct and warm — no hedging, no lecturing."
 )
 
+# The client is NOT technical and wants ORDERS, not analysis. Every advisor
+# prompt appends this so the output is short, concrete and jargon-free.
+_PLAIN_STYLE = (
+    "\n\nHOW TO WRITE — CRITICAL: the client is NOT a technical trader and wants "
+    "SHORT, CONCRETE ORDERS, not analysis. NEVER use jargon — no RSI, MACD, ATR, "
+    "moving averages, SMA, 200-day, death-cross, oversold/overbought, "
+    "Bollinger, beta, breakout-readiness, correlation. Translate everything to plain words ('cheap "
+    "here', 'still trending up', 'losing steam', 'near its high') or just give "
+    "the PRICE. Write every action as a plain order a beginner can execute: "
+    "verb + $amount + TICKER + 'at $price' + optional 'stop $price'. "
+    "Examples: 'Buy $200 of GOOGL near $180.' 'Trim $150 of AMD if it hits "
+    "$540.' 'Hold NVDA — do nothing.' Keep every line under ~14 words, no "
+    "rationale stuffed inside the order, no filler."
+)
+
 _SCHEMA_HINT = (
     'Respond with ONLY a JSON object, no markdown, with these keys: '
     '"call" (ONE word — your standing stance on this stock: BUY | ADD | HOLD | '
@@ -290,6 +305,10 @@ def _run_claude(prompt: str, resume: str | None = None, research: bool = False,
     # it by bare name (WinError 2), so resolve the real path via PATH/PATHEXT.
     # The prompt goes over STDIN, not argv: multi-line args are mangled by the
     # cmd.exe batch layer, which silently truncates at the first newline.
+    # Every advisor output must be plain, concrete and jargon-free (client is
+    # not technical) — enforce it globally here so no prompt can forget.
+    if _PLAIN_STYLE not in prompt:
+        prompt = prompt + _PLAIN_STYLE
     exe = shutil.which(settings.CLAUDE_BIN) or settings.CLAUDE_BIN
     cmd = [exe, "-p", "--output-format", "json"]
     if resume:
@@ -552,21 +571,19 @@ def advise_portfolio(summary: PortfolioSummary, reports: list[StockReport],
         f"concentration/risk assessment, and what — if anything — to do "
         f"this week (name specific tickers and levels). "
         f'Respond with ONLY a JSON object, no markdown, with these keys: '
-        f'"summary" (string: overall take in 1-2 sentences max), '
+        f'"summary" (ONE short plain sentence — the single most important thing right now), '
         f'"posture" (string: "act" if this week genuinely calls for trades, '
         f'"watch" if the right move is patience), '
-        f'"insights" (array of 4-7 strings: portfolio health — one observation '
-        f'per bullet on risk metrics, correlation/concentration, momentum, '
-        f'citing the numbers), '
-        f'"actions" (array of 1-5 strings: each a terse ORDER — prefix '
-        f'"Quick trade:" or "Long game:" then at most 12 more words: verb, '
-        f'ticker, dollar size, level, stop. Example: "Quick trade: Buy $150 '
-        f'MU at $960; stop $905." NO rationale in actions — rationale lives '
-        f'in insights. In a "watch" week the array may be one "Hold — no '
-        f'action" bullet plus the levels being watched; when acting, include '
-        f'your best buy or state the level that would create one), '
-        f'"risks" (array of 2-4 strings: one risk per bullet, each paired with '
-        f'the specific tripwire signal to watch), '
+        f'"insights" (array of EXACTLY 2-3 SHORT plain-English facts about the '
+        f'book — e.g. "You are 60% in AI chips." "Cash is thin at 15%." No '
+        f'jargon, no filler), '
+        f'"actions" (array of 1-4 strings: each a plain ORDER a beginner can '
+        f'follow — verb + $amount + TICKER + "at $price" + optional "stop '
+        f'$price", under 14 words, NO rationale. Examples: "Buy $150 MU at '
+        f'$960; stop $905." "Trim $200 AMD if it hits $540." In a quiet week '
+        f'this may be one "Hold — do nothing" line), '
+        f'"risks" (array of EXACTLY 1-2 strings: the single biggest risk in '
+        f'plain words + the price that would confirm it), '
         f'"scout" (array of 2-4 strings — YOUR proactive high-conviction IDEAS, '
         f'this is the client\'s #1 ask: they want YOU to find the stocks, not '
         f'pick for themselves. REQUIRED every brief. Rank by YOUR conviction, '

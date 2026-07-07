@@ -96,18 +96,18 @@ export function PortfolioBrief() {
       {note && (
         <>
           <div className="advisor-sec">
-            <h4>Overall Take</h4>
+            <h4>Bottom line</h4>
             <p>{note.summary}</p>
           </div>
           {note.insights?.length > 0 && (
             <div className="advisor-sec">
-              <h4>Portfolio Health</h4>
+              <h4>Where you stand</h4>
               <BulletList items={note.insights} kind="insight" />
             </div>
           )}
           {note.actions?.length > 0 && (
             <div className="advisor-sec">
-              <h4>Actions This Week</h4>
+              <h4>Do this</h4>
               <BulletList
                 items={note.actions}
                 kind="action"
@@ -117,13 +117,13 @@ export function PortfolioBrief() {
           )}
           {note.risks?.length > 0 && (
             <div className="advisor-sec">
-              <h4>Biggest Risks</h4>
+              <h4>Watch out</h4>
               <BulletList items={note.risks} kind="risk" />
             </div>
           )}
           {(note.scout?.length ?? 0) > 0 && (
             <div className="advisor-sec">
-              <h4>Conviction Ideas · the advisor's best calls</h4>
+              <h4>Ideas to buy</h4>
               <BulletList items={note.scout!} kind="action" />
             </div>
           )}

@@ -4,14 +4,12 @@
   "cash": 710.31,
   "core_convictions": [
     "NVDA",
-    "MSFT",
-    "AMZN",
     "AVGO",
     "AMD",
     "TSM",
-    "MELI",
-    "AAPL",
-    "NET"
+    "NET",
+    "MU",
+    "GOOGL"
   ],
   "themes": {
     "AI": "Companies building or monetizing artificial intelligence models and applications",
