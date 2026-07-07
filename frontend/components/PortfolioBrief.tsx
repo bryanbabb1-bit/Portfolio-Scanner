@@ -123,8 +123,8 @@ export function PortfolioBrief() {
           )}
           {(note.scout?.length ?? 0) > 0 && (
             <div className="advisor-sec">
-              <h4>Growth Radar · names to grow into</h4>
-              <BulletList items={note.scout!} kind="insight" />
+              <h4>Conviction Ideas · the advisor's best calls</h4>
+              <BulletList items={note.scout!} kind="action" />
             </div>
           )}
           <p className="mut" style={{ fontSize: 11, marginTop: 12 }}>

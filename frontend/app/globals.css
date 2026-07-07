@@ -98,6 +98,19 @@ body {
 .chart-price .cp-chg.pos { color: var(--bull); }
 .chart-price .cp-chg.neg { color: var(--bear); }
 
+/* core-conviction toggle chips (Settings) */
+.conv-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.conv-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 12px; border-radius: 999px;
+  border: 1px solid var(--border); background: var(--bg-elev);
+  color: var(--text); font-size: 13px; font-weight: 700; cursor: pointer;
+  font-family: inherit;
+}
+.conv-chip .tick { min-width: 10px; color: var(--bull); font-weight: 900; }
+.conv-chip.on { border-color: rgba(52,211,153,0.5); background: var(--bull-bg); color: var(--bull); }
+.conv-chip .conv-tag { font-size: 10px; color: var(--muted); font-weight: 500; letter-spacing: .04em; }
+
 /* standing-call badge — the ONE call shown consistently across every surface */
 .stance-badge {
   display: inline-flex;

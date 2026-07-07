@@ -1,57 +1,6 @@
 {
   "portfolio:brief": [
     {
-      "generated_at": "2026-07-07 11:45:49",
-      "summary": "You just opened ANET and GOOGL starter lots (Jul 7) \u2014 those are done, don't touch them; with NVDA ~$195 above its $190 tripwire and the S&P ~7,500 holding its 7,470 200-day, the book is positioned right into the DeepSeek/SK-Hynix semi rout and owes no new trades this week.",
-      "insights": [
-        "Regime intact: S&P ~7,500 sits above its 7,470 200-day (Jul 2026), so risk-on stays on \u2014 but beta 1.59 and 25.5% vol mean you take the semi rout amplified.",
-        "Today's rout is a valuation/DeepSeek-chip and SK-Hynix HBM scare (Micron -8.5%, AMD -6.2%, NVDA -3% per Jul 7 reports), not a thesis break \u2014 no volume-confirmed reversal to buy yet.",
-        "Concentration is the real risk: top-5 = 50.7%, and SGOV at 12.9% is your largest 'position' \u2014 the book is 6 semis deep (IREN, AVGO, NVDA, AMD, TSM, MU) all correlated in one selloff.",
-        "IREN -33% at its 10% cap ($1,172) is the book's dead weight; RSI 36.6 and -6.6% today keep it one new low from a mechanical exit.",
-        "Momentum split: NET (+8.1%, RSI 67, breakout) and AAPL (RSI 63, 52w-high zone) lead while your semis bleed \u2014 winners are running, let them.",
-        "SGOV RSI 82 overbought is meaningless \u2014 it's a cash proxy, not a trade; the $2,239 SGOV+cash pool sits above its 16% floor as intended.",
-        "15 lots is too many for a $12k book \u2014 the plan to concentrate into a 6-8 name AI core rather than spread thin still stands."
-      ],
-      "actions": [
-        "Hold \u2014 no action; core is positioned, stops are mechanical into the rout.",
-        "Quick trade: AAPL $250 add fires only on daily close above $317; stop $300.",
-        "Quick trade: No AMD/MU/TSM adds until a volume-confirmed reversal candle.",
-        "Quick trade: Exit IREN on any new low; hold 9.6% cap otherwise.",
-        "Long game: Build TSM toward 10% via monthly contribution only."
-      ],
-      "risks": [
-        "Semi rout deepens \u2014 tripwire: NVDA closes below $190 or S&P loses 7,470, then halve new size and raise cash.",
-        "IREN capitulation \u2014 tripwire: any new closing low exits the full lot, no averaging down a -33% thesis.",
-        "Beta 1.59 / top-5 50.7% concentration \u2014 tripwire: a second broken semi (AVGO failing to reclaim RSI 45) forces a trim, not an add.",
-        "MSFT stays below trend (-9.8%, downtrend) \u2014 tripwire: reassess in August; add nothing until it reclaims its 200-day."
-      ]
-    },
-    {
-      "generated_at": "2026-07-07 15:15:02",
-      "summary": "You fully deployed the dry powder this week \u2014 sold SGOV, opened NTAP/ANET/GOOGL, added TSM/GOOGL \u2014 which dropped cash to 5.8% versus your 16% floor; the one order left is honoring the IREN stop, which just made a fresh low (-34.9%).",
-      "insights": [
-        "Book runs hot: beta 1.83, annualized vol 28.8% into a chip-driven tape; Sharpe 1.42 still pays for the risk but leaves thin cushion.",
-        "Cash floor breached \u2014 SGOV fully sold, Cash & Income now $710 (5.8%) against the agreed 16% floor (~$1,943); you are under-cashed into a volatile regime.",
-        "Concentration elevated: top-5 = 49.5%, largest NEE 10.8%; AI Infrastructure $5,468 = 45% of book versus the 30% target.",
-        "IREN -34.9% P/L and -9.3% today to a fresh low even as analysts raised targets on the $15-21.6B Anthropic Australia tender (Jul 6) \u2014 the stop I pre-set fires.",
-        "Momentum is split: NET (RSI 67.6, +7.6%) and AAPL (RSI 60.7, uptrend) lead green while memory/semis got hit (MU -4.8%, TSM -4.0%, AMD -6.2%) on SK Hynix HBM and DeepSeek inference-chip fears.",
-        "Regime still supportive: S&P ~7,500 holds its 7,470 200-day and NVDA above its $190 tripwire \u2014 no forced de-risk beyond the IREN stop."
-      ],
-      "actions": [
-        "Quick trade: Sell IREN ~$1,139 \u2014 fresh new low fired the pre-set stop.",
-        "Long game: Rebuild SGOV toward ~$1,943 with IREN proceeds to restore the 16% floor.",
-        "Quick trade: AAPL $250 add only on daily close above $317; stop $300.",
-        "Quick trade: No AMD/MU/TSM adds until a volume-confirmed reversal candle.",
-        "Long game: Build TSM toward 10% via monthly contributions only, no chase."
-      ],
-      "risks": [
-        "No dry powder to defend: cash 5.8% vs 16% floor \u2014 tripwire: if S&P loses 7,470 or NVDA closes below $190 you must raise cash, so rebuild now.",
-        "Memory/semi rout deepens (SK Hynix HBM slowdown, DeepSeek inference chip) \u2014 tripwire: MU closes below $900 or AMD breaks its trailed stop.",
-        "AI-Infrastructure overweight at 45% vs 30% \u2014 tripwire: any single infra name gapping down drags the whole book given 49.5% top-5.",
-        "IREN thin float held no bid on good news \u2014 tripwire: already exiting; any bounce is an exit, not a hold."
-      ]
-    },
-    {
       "generated_at": "2026-07-07 16:01:52",
       "summary": "You fully deployed the dry powder this week \u2014 sold SGOV, opened NTAP/ANET/GOOGL, added TSM/GOOGL \u2014 which cut cash to 5.8% versus your 16% floor; the one order still open is the IREN mechanical stop, which just made a fresh low (-34.5%).",
       "insights": [
@@ -75,6 +24,56 @@
         "45% AI-Infrastructure concentration (AVGO/TSM/NVDA/ANET) \u2014 tripwire: two of the three lose trend together, forcing a theme trim.",
         "Cash floor breached at 5.8% leaves no ammo for a volume-confirmed dip \u2014 tripwire: another semi flush you can't fund until IREN clears.",
         "IREN thin-float speculation can gap -20% with no bid \u2014 tripwire: any print below today's low; the stop is already live."
+      ]
+    },
+    {
+      "generated_at": "2026-07-07 17:00:00",
+      "summary": "You fully deployed this week \u2014 sold SGOV, opened NTAP/ANET/GOOGL, added TSM/GOOGL \u2014 cutting cash to 5.8% versus your 16% floor; the only open order left is honoring the IREN stop, now at a fresh -35% low.",
+      "insights": [
+        "Book runs hot: beta 1.83, annualized vol 28.8%, max drawdown -20.4% \u2014 Sharpe 1.42 says you're paid for it, but sizing must respect the swings.",
+        "Concentration is real but acceptable: top-5 = 49.5%, largest NEE at 10.8%; no single-name blowup risk, the risk is thematic.",
+        "AI/semi cluster moved as one today \u2014 TSM -4.3%, AMD -6.8%, MU -6.2%, AVGO -1.5% all hit on the same DeepSeek headline; that's correlation, not five separate problems.",
+        "Cash fell to 5.8% versus your 16% floor after full deployment \u2014 the IREN sale is what rebuilds the buffer, not new selling elsewhere.",
+        "IREN -35% is the only genuinely broken position \u2014 a speculative miner that fired its pre-set stop, not a core thesis crack.",
+        "Core compounders on sale, not broken: AVGO -8.6% and MSFT -10.9% underwater with intact businesses \u2014 accumulation zones, not exits.",
+        "NET is your momentum standout: +7.9% today, RSI 67.6, breakout setup \u2014 winning but extended, don't chase here."
+      ],
+      "actions": [
+        "Quick trade: Sell IREN ~$1,137; fresh low fired the stop.",
+        "Long game: Park IREN proceeds in cash toward ~$1,943 (16% floor).",
+        "Quick trade: AAPL add only on daily close above $317; stop $300.",
+        "Quick trade: No AMD/MU/TSM chase until a volume-confirmed reversal candle."
+      ],
+      "risks": [
+        "Thematic concentration in AI/semi \u2014 tripwire: a second down day where TSM, NVDA, AMD, MU all break their recent lows together.",
+        "Cash below floor at 5.8% leaves no dry powder for a real dip \u2014 tripwire: not restoring toward 16% after IREN clears.",
+        "DeepSeek in-house-chip narrative pressuring NVDA/TSM demand story \u2014 tripwire: a guidance or order-cut headline, not just sentiment.",
+        "NET extended at RSI 67.6 \u2014 tripwire: a high-volume reversal day back below the breakout level signals give-back."
+      ]
+    },
+    {
+      "generated_at": "2026-07-07 17:01:40",
+      "summary": "Solid week \u2014 you fully deployed dry powder (sold SGOV, opened NTAP/ANET/GOOGL, added TSM/GOOGL, acted on the NVDA $191 add), but that cut cash to 5.8% versus your 16% floor, and the IREN mechanical stop is still unhonored at a fresh -35% low.",
+      "insights": [
+        "Beta 1.83 and 28.8% annualized vol run hot, but Sharpe 1.42 and max drawdown -20.4% say you are being paid for the risk \u2014 not reckless.",
+        "Concentration is elevated but defensible: NEE 10.8% is your largest and top-5 is 49.5%, all quality compounders, not one fragile bet.",
+        "The real gap now is dry powder: cash is 5.8% (~$710) versus your 16% floor (~$1,955), so a deeper dip finds you with no ammunition.",
+        "Today's -1.97% is a semis cluster move \u2014 AMD -6.7%, MU -6.1%, TSM -4.3% on the DeepSeek-chip headline \u2014 noise against the thesis, not a business break.",
+        "IREN -35% is your only speculative-sleeve holding and its stop already fired; at $1,138 it is a 9.3% drag with no core thesis to defend.",
+        "Winners are quietly offsetting: NET +8% (RSI 67), MELI +8.4% P/L, AAPL +1.0% and coiling near breakout \u2014 the core is working."
+      ],
+      "actions": [
+        "Quick trade: Sell IREN ~$1,138 at market; stop fired, fresh low.",
+        "Long game: Park IREN proceeds in cash toward $1,955 (16% floor).",
+        "Quick trade: AAPL add only on daily close above $317; stop $300.",
+        "Quick trade: No AMD/MU/TSM chase until volume-confirmed reversal candle.",
+        "Long game: Build TSM toward 10% via contributions only, no chase."
+      ],
+      "risks": [
+        "Semis are a correlated cluster (TSM/NVDA/AVGO/AMD/MU) \u2014 tripwire: TSM daily close below its 200-day flips several names at once.",
+        "Cash at 5.8% leaves no dry powder \u2014 tripwire: another -2% book day with nothing to deploy into weakness.",
+        "DeepSeek in-house-chip narrative pressures Nvidia demand \u2014 tripwire: an actual NVDA data-center guidance cut, not headlines.",
+        "AVGO circuit-board delay could slip AI-system revenue \u2014 tripwire: AVGO reaffirming or cutting its AI ramp on next print."
       ]
     }
   ]

@@ -19,6 +19,7 @@ const BLANK: PortfolioConfig = {
 export default function Settings() {
   const [cfg, setCfg] = useState<PortfolioConfig | null>(null);
   const [quotes, setQuotes] = useState<Record<string, Quote>>({});
+  const [convInput, setConvInput] = useState("");
   const [err, setErr] = useState<string | null>(null);
   const [msg, setMsg] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
@@ -94,6 +95,31 @@ export default function Settings() {
     setCfg({ ...cfg, themes });
   };
 
+  // -------- core convictions (checkbox per symbol) --------
+  const core = (cfg.core_convictions ?? []).map((s) => s.toUpperCase());
+  const isCore = (s: string) => core.includes(s.trim().toUpperCase());
+  const toggleCore = (s: string) => {
+    const S = s.trim().toUpperCase();
+    if (!S) return;
+    setCfg({
+      ...cfg,
+      core_convictions: isCore(S) ? core.filter((x) => x !== S) : [...core, S],
+    });
+  };
+  // Add a conviction you don't own: adds it to the watchlist AND marks it core.
+  const addConviction = () => {
+    const S = convInput.trim().toUpperCase();
+    if (!S) return;
+    const owned = cfg.holdings.some((h) => h.symbol.trim().toUpperCase() === S);
+    const watched = cfg.watchlist.some((w) => w.symbol.trim().toUpperCase() === S);
+    setCfg({
+      ...cfg,
+      watchlist: owned || watched ? cfg.watchlist : [...cfg.watchlist, { symbol: S }],
+      core_convictions: isCore(S) ? core : [...core, S],
+    });
+    setConvInput("");
+  };
+
   const save = async () => {
     setSaving(true);
     setErr(null);
@@ -156,24 +182,6 @@ export default function Settings() {
             />
           </label>
         </div>
-        <label style={{ display: "block", marginTop: 12, fontSize: 12, color: "var(--muted)" }}>
-          <span>Core convictions (comma-separated tickers)</span>
-          <input
-            placeholder="e.g. NVDA, MSFT, AMZN, GOOGL"
-            title="Long-term holds: the advisor accumulates these on weakness and will NEVER tell you to sell them at a loss on a technical break — only if the business thesis breaks."
-            value={(cfg.core_convictions ?? []).join(", ")}
-            onChange={(e) =>
-              setCfg({
-                ...cfg,
-                core_convictions: e.target.value
-                  .split(",")
-                  .map((s) => s.trim().toUpperCase())
-                  .filter(Boolean),
-              })
-            }
-            style={{ marginTop: 5 }}
-          />
-        </label>
       </div>
 
       {/* --------- holdings --------- */}
@@ -243,6 +251,59 @@ export default function Settings() {
             </div>
           )}
         </div>
+      </div>
+
+      {/* --------- core convictions --------- */}
+      <div className="card" style={{ marginBottom: 20 }}>
+        <div className="section-title">Core Convictions</div>
+        <p className="mut" style={{ fontSize: 12.5, marginTop: -4, marginBottom: 12 }}>
+          Tap to mark long-term convictions. The advisor accumulates these on weakness and
+          will <strong>never</strong> tell you to sell them at a loss on a technical break —
+          only if the business thesis actually breaks.
+        </p>
+        {[...heldSymbols, ...cfg.watchlist.map((w) => w.symbol.trim().toUpperCase())].filter(
+          (s, i, a) => s && a.indexOf(s) === i
+        ).length === 0 ? (
+          <div className="empty">Add holdings or watchlist names first, then mark your convictions.</div>
+        ) : (
+          <div className="conv-chips">
+            {Array.from(
+              new Set([
+                ...heldSymbols,
+                ...cfg.watchlist.map((w) => w.symbol.trim().toUpperCase()).filter(Boolean),
+              ])
+            ).map((s) => {
+              const held = heldSymbols.includes(s);
+              return (
+                <button
+                  key={s}
+                  type="button"
+                  className={`conv-chip ${isCore(s) ? "on" : ""}`}
+                  onClick={() => toggleCore(s)}
+                  title={held ? "holding" : "watchlist"}
+                >
+                  <span className="tick">{isCore(s) ? "✓" : ""}</span>
+                  {s}
+                  {!held && <span className="conv-tag">watch</span>}
+                </button>
+              );
+            })}
+          </div>
+        )}
+        <div className="chat-input" style={{ marginTop: 14, maxWidth: 420 }}>
+          <input
+            value={convInput}
+            placeholder="Add a conviction you don't own — e.g. GOOGL"
+            onChange={(e) => setConvInput(e.target.value.toUpperCase())}
+            onKeyDown={(e) => e.key === "Enter" && addConviction()}
+          />
+          <button className="btn" onClick={addConviction} disabled={!convInput.trim()}>
+            Add
+          </button>
+        </div>
+        <p className="mut" style={{ fontSize: 11, marginTop: 6 }}>
+          A name you don't own gets added to your watchlist and marked a conviction.
+        </p>
       </div>
 
       {/* --------- watchlist --------- */}

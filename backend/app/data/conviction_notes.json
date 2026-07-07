@@ -648,5 +648,31 @@
     "size": "",
     "target": "",
     "stop": ""
+  },
+  "NET:breakout-triggering:2026-07-07": {
+    "symbol": "NET",
+    "side": "buy",
+    "rule": "breakout-triggering",
+    "label": "Breakout triggering: at highs on expanding volume",
+    "id": "NET:breakout-triggering:2026-07-07",
+    "price": 267.01,
+    "theme": "AI",
+    "held": true,
+    "dismissed": true,
+    "generated_at": "2026-07-07 16:59:00",
+    "ts": 1783461537.5587726,
+    "action": "ADD",
+    "headline": "Core AI compounder breaking to new highs — add on strength",
+    "what": "Add to the existing NET position now as it clears near its 52-week high on 1.76x volume, confirming continuation of the uptrend.",
+    "why": [
+      "Breakout score 83/100, only 1.4% from the 52w high ($272.66) on 1.76x average volume — real confirmation, not a thin move",
+      "MACD 6.57/3.92 and price above both SMA50 ($227.53) and SMA200 ($208.63) confirm a clean, intact uptrend",
+      "RSI 67.6 is strong but not blown-off (>70), leaving room before this gets stretched",
+      "Already held at +9.9% — this is pyramiding into a working thesis, not chasing a name you don't own"
+    ],
+    "entry": "$266-270",
+    "size": "$800 (~6.5% of book)",
+    "target": "$295",
+    "stop": "$250"
   }
 }

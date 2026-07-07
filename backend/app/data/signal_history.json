@@ -358,5 +358,14 @@
     "price": 368.62,
     "ts": 1783458507.368294,
     "date": "2026-07-07"
+  },
+  {
+    "id": "NET:breakout-triggering:2026-07-07",
+    "symbol": "NET",
+    "side": "buy",
+    "rule": "breakout-triggering",
+    "price": 267.01,
+    "ts": 1783461537.5587726,
+    "date": "2026-07-07"
   }
 ]
