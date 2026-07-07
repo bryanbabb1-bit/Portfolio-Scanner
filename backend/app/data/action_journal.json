@@ -22,17 +22,6 @@
     "ts": 1783014367.2175584
   },
   {
-    "id": "baef4d069530",
-    "date": "2026-07-02",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783015251.3881462
-  },
-  {
     "id": "e39fed7dc23b",
     "date": "2026-07-02",
     "symbol": "WULF",
@@ -108,17 +97,6 @@
     "note": "",
     "source": "manual",
     "ts": 1783017444.0653539
-  },
-  {
-    "id": "764dd2c0d94f",
-    "date": "2026-07-02",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783017932.436419
   },
   {
     "id": "a306cacc5da4",
@@ -220,83 +198,6 @@
     "ts": 1783020279.9055657
   },
   {
-    "id": "e98c0f11af0b",
-    "date": "2026-07-02",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783049935.3394716
-  },
-  {
-    "id": "2ce7edb45d6a",
-    "date": "2026-07-03",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783082679.9394422
-  },
-  {
-    "id": "600c23c462a7",
-    "date": "2026-07-03",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783082724.7124188
-  },
-  {
-    "id": "d09e015cc5b4",
-    "date": "2026-07-03",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783082777.5136611
-  },
-  {
-    "id": "bf6822fbd3c5",
-    "date": "2026-07-03",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783082879.5023675
-  },
-  {
-    "id": "a1729a4b87b0",
-    "date": "2026-07-03",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783083129.5886939
-  },
-  {
-    "id": "493b96c079ac",
-    "date": "2026-07-03",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783084358.850095
-  },
-  {
     "id": "f0d54a277bc0",
     "date": "2026-07-03",
     "symbol": "CIFR",
@@ -306,72 +207,6 @@
     "note": "Watchpoint triggered (Watchpoint: price \u2265 $19): Exit the full $598 CIFR position on any bounce above $19",
     "source": "auto",
     "ts": 1783084513.9399507
-  },
-  {
-    "id": "8e7b65606703",
-    "date": "2026-07-03",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783085316.0033326
-  },
-  {
-    "id": "b954924855d1",
-    "date": "2026-07-03",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783086721.776817
-  },
-  {
-    "id": "ff9c14ac4b35",
-    "date": "2026-07-05",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783268502.895352
-  },
-  {
-    "id": "00c41eb69c91",
-    "date": "2026-07-05",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783269447.3766959
-  },
-  {
-    "id": "04a8e9005d9f",
-    "date": "2026-07-05",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783271609.30387
-  },
-  {
-    "id": "d9bda05c0c76",
-    "date": "2026-07-05",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783271628.3498638
   },
   {
     "id": "305ead9c5b7c",
@@ -385,17 +220,6 @@
     "ts": 1783275384.9376485
   },
   {
-    "id": "2a7fdca48fa0",
-    "date": "2026-07-05",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Watchpoint triggered (Watchpoint: price \u2264 $191): Rotate $1,500 of SGOV into NVDA near your pinned $191 level",
-    "source": "auto",
-    "ts": 1783275384.940989
-  },
-  {
     "id": "754c0fd86970",
     "date": "2026-07-05",
     "symbol": "AVGO",
@@ -405,149 +229,6 @@
     "note": "Watchpoint triggered (Watchpoint: RSI \u2265 45): Add to AVGO only after RSI recovers above 45 from 39.7",
     "source": "auto",
     "ts": 1783275384.96135
-  },
-  {
-    "id": "590dd5652128",
-    "date": "2026-07-05",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783277009.0941656
-  },
-  {
-    "id": "168addce1a00",
-    "date": "2026-07-05",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783277042.8905919
-  },
-  {
-    "id": "e41573cce7d1",
-    "date": "2026-07-05",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783277666.512165
-  },
-  {
-    "id": "e3508d8fa135",
-    "date": "2026-07-05",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783278778.147122
-  },
-  {
-    "id": "2e93fe822783",
-    "date": "2026-07-05",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783280101.170277
-  },
-  {
-    "id": "fa49241cdc39",
-    "date": "2026-07-05",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783286753.0552895
-  },
-  {
-    "id": "f3720a2a5867",
-    "date": "2026-07-05",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783306060.328621
-  },
-  {
-    "id": "cb1418567af4",
-    "date": "2026-07-05",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783306215.1685934
-  },
-  {
-    "id": "d687d7661211",
-    "date": "2026-07-06",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783338071.3608356
-  },
-  {
-    "id": "67f77b66ff5b",
-    "date": "2026-07-06",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783341512.5171216
-  },
-  {
-    "id": "0efedc546f7c",
-    "date": "2026-07-06",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783341630.8558693
-  },
-  {
-    "id": "274d4c63da24",
-    "date": "2026-07-06",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783342021.9401932
-  },
-  {
-    "id": "f1a5e74434e3",
-    "date": "2026-07-06",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783342128.3979762
   },
   {
     "id": "801e62d578a0",
@@ -581,17 +262,6 @@
     "note": "Trimmed (43.3143 -> 28.38)",
     "source": "auto",
     "ts": 1783345193.1356566
-  },
-  {
-    "id": "0459eb435ff5",
-    "date": "2026-07-06",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783345448.5406318
   },
   {
     "id": "6af9ba639536",
@@ -671,17 +341,6 @@
     "ts": 1783356345.292277
   },
   {
-    "id": "daf1199f9e1b",
-    "date": "2026-07-06",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783356631.2969499
-  },
-  {
     "id": "cea9066547d9",
     "date": "2026-07-06",
     "symbol": "AVGO",
@@ -691,17 +350,6 @@
     "note": "Watchpoint triggered (Watchpoint: RSI \u2265 45): buy when rsi reclaims 45",
     "source": "auto",
     "ts": 1783356632.1651313
-  },
-  {
-    "id": "06ee309371d0",
-    "date": "2026-07-06",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783356693.6317942
   },
   {
     "id": "db6a787bfbde",
@@ -748,17 +396,6 @@
     "ts": 1783362444.6741476
   },
   {
-    "id": "bba115929eb2",
-    "date": "2026-07-06",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783363206.0084043
-  },
-  {
     "id": "1bd3d25ce312",
     "date": "2026-07-06",
     "symbol": "AVGO",
@@ -768,17 +405,6 @@
     "note": "Watchpoint triggered (Watchpoint: RSI \u2265 45): buy when rsi reclaims 45",
     "source": "auto",
     "ts": 1783363206.9110093
-  },
-  {
-    "id": "d201593bd7c0",
-    "date": "2026-07-06",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783364712.7246616
   },
   {
     "id": "b6da961c2c5b",
@@ -803,17 +429,6 @@
     "ts": 1783366013.775236
   },
   {
-    "id": "53df0bfab97b",
-    "date": "2026-07-06",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783368749.8702555
-  },
-  {
     "id": "843a214fe331",
     "date": "2026-07-06",
     "symbol": "AVGO",
@@ -823,17 +438,6 @@
     "note": "Watchpoint triggered (Watchpoint: RSI \u2265 45): buy when rsi reclaims 45",
     "source": "auto",
     "ts": 1783368750.7174928
-  },
-  {
-    "id": "9eddb7f84a60",
-    "date": "2026-07-06",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783369956.3565462
   },
   {
     "id": "dd27d4149063",
@@ -847,17 +451,6 @@
     "ts": 1783369957.2374227
   },
   {
-    "id": "c80b493e4e8d",
-    "date": "2026-07-06",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783371413.0913763
-  },
-  {
     "id": "975847d95ac8",
     "date": "2026-07-06",
     "symbol": "AVGO",
@@ -867,17 +460,6 @@
     "note": "Watchpoint triggered (Watchpoint: RSI \u2265 45): buy when rsi reclaims 45",
     "source": "auto",
     "ts": 1783371414.0827107
-  },
-  {
-    "id": "a077054a54d7",
-    "date": "2026-07-06",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783371485.6492777
   },
   {
     "id": "c1f685ae16e1",
@@ -891,28 +473,6 @@
     "ts": 1783371486.5486503
   },
   {
-    "id": "0acc707b40cd",
-    "date": "2026-07-06",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Watchpoint triggered (Watchpoint: price \u2264 $191): Rotate $1,500 SGOV into NVDA near pinned level $191",
-    "source": "auto",
-    "ts": 1783372559.705653
-  },
-  {
-    "id": "39cbc5ab1c5c",
-    "date": "2026-07-06",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783374042.5272334
-  },
-  {
     "id": "d0b7a4fc526d",
     "date": "2026-07-06",
     "symbol": "AVGO",
@@ -924,17 +484,6 @@
     "ts": 1783374043.4227173
   },
   {
-    "id": "36f474d7e7f8",
-    "date": "2026-07-06",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783374247.381303
-  },
-  {
     "id": "60bf67cb492d",
     "date": "2026-07-06",
     "symbol": "AVGO",
@@ -944,17 +493,6 @@
     "note": "Watchpoint triggered (Watchpoint: RSI \u2265 45): buy when rsi reclaims 45",
     "source": "auto",
     "ts": 1783374248.2374463
-  },
-  {
-    "id": "5ac18a3e6ba0",
-    "date": "2026-07-06",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783375580.2791197
   },
   {
     "id": "4337d29441fb",
@@ -1045,17 +583,6 @@
     "ts": 1783379404.7438629
   },
   {
-    "id": "b1e6e32110b9",
-    "date": "2026-07-06",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783380031.8379655
-  },
-  {
     "id": "efb9485c3195",
     "date": "2026-07-06",
     "symbol": "AVGO",
@@ -1065,17 +592,6 @@
     "note": "Watchpoint triggered (Watchpoint: RSI \u2265 45): buy when rsi reclaims 45",
     "source": "auto",
     "ts": 1783380032.7332993
-  },
-  {
-    "id": "7650e463c2ad",
-    "date": "2026-07-06",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783382899.2668068
   },
   {
     "id": "8f4d4fcdc1d3",
@@ -1089,17 +605,6 @@
     "ts": 1783382899.9264898
   },
   {
-    "id": "69a03d2be4d7",
-    "date": "2026-07-06",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783391955.9664948
-  },
-  {
     "id": "de74639dcb7c",
     "date": "2026-07-06",
     "symbol": "AVGO",
@@ -1111,17 +616,6 @@
     "ts": 1783391956.6982203
   },
   {
-    "id": "476294348bf5",
-    "date": "2026-07-06",
-    "symbol": "NVDA",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
-    "source": "pin",
-    "ts": 1783392291.8774793
-  },
-  {
     "id": "90079194f75f",
     "date": "2026-07-06",
     "symbol": "AVGO",
@@ -1131,5 +625,38 @@
     "note": "Watchpoint triggered (Watchpoint: RSI \u2265 45): buy when rsi reclaims 45",
     "source": "auto",
     "ts": 1783392292.5361133
+  },
+  {
+    "id": "83274e48cc47",
+    "date": "2026-07-06",
+    "symbol": "NVDA",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "CORRECTION: the $191 add and the $1,500 SGOV->NVDA rotation were PLANNED but NEVER executed - NVDA never traded down to $191. The only NVDA position is the original ~$214 cost-basis lot.",
+    "source": "manual",
+    "ts": 1783395569.5811899
+  },
+  {
+    "id": "67d92d8c5917",
+    "date": "2026-07-06",
+    "symbol": "NVDA",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
+    "source": "pin",
+    "ts": 1783395589.1011963
+  },
+  {
+    "id": "2bd26d905b1d",
+    "date": "2026-07-06",
+    "symbol": "AVGO",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "ALERT (not executed) \u2014 watchpoint hit Watchpoint: RSI \u2265 45; client still needs to decide/act.",
+    "source": "auto",
+    "ts": 1783395732.7814586
   }
 ]

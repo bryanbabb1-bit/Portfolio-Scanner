@@ -87,19 +87,22 @@ def patch(pin_id: str, **fields) -> dict | None:
 
 def update(pin_id: str, status: str) -> dict | None:
     updated = None
+    newly_done = False
     with _lock:
         items = _load()
         for p in items:
             if p["id"] == pin_id:
+                # Only the open->done TRANSITION is an action taken. Re-marking
+                # an already-done pin must NOT re-journal (that spammed ~45
+                # duplicate 'acted on advice' entries and poisoned the advisor).
+                newly_done = status == "done" and p.get("status") != "done"
                 p["status"] = status
                 p["done_at"] = time.strftime("%Y-%m-%d %H:%M:%S") \
                     if status == "done" else None
                 _save(items)
                 updated = p
                 break
-    if updated and status == "done":
-        # A completed recommendation is an action taken — journal it so the
-        # advisor stops re-recommending it.
+    if updated and newly_done:
         from . import journal
         journal.add_entry(updated.get("symbol"), "note",
                           f"Acted on pinned advice: {updated['text']}",

@@ -620,6 +620,10 @@ def advise_breakout(cand: BreakoutCandidate, force: bool = False,
 
 # ------------------------------------------------------------------ follow-up
 _ASK_FMT = (
+    "You CANNOT change the client's holdings, journal or records from this chat. "
+    "If the client corrects a fact (e.g. 'we never made that trade'), accept it "
+    "for THIS answer and tell them to fix it in the Action Journal — NEVER claim "
+    "you 'updated your memory' or 'logged it', because you did not. "
     'Respond with ONLY a JSON object, no markdown: '
     '{"answer": string (the direct answer to the question in 1-2 sentences), '
     '"points": array of 0-4 supporting bullet strings, each a single '

@@ -215,9 +215,11 @@ def check(readings: dict[str, tuple[float | None, float | None]],
     for sig in fired:
         try:
             from . import journal
+            # An ALERT, not an executed trade — worded so the advisor never
+            # reads a fired tripwire as an action the client actually took.
             journal.add_entry(sig["symbol"], "note",
-                              f"Watchpoint triggered ({sig['label']}): "
-                              f"{sig['what']}", source="auto")
+                              f"ALERT (not executed) — watchpoint hit {sig['label']}; "
+                              f"client still needs to decide/act.", source="auto")
         except Exception as exc:
             print(f"[watchpoints] journal failed: {exc!r}")
     return fired

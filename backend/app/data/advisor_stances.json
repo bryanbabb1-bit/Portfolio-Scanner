@@ -3,14 +3,14 @@
     "symbol": "NVDA",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Adds done near $191; thesis intact",
-    "thesis": "Adds done near $191; thesis intact",
+    "headline": "Hold; the $191 add never triggered (NVDA never reached it)",
+    "thesis": "NVDA held from ~$214 cost; the planned $191 add did NOT execute. Hold, no action; reassess only on a real pullback or breakout.",
     "target": "",
     "stop": "",
-    "source": "brief",
-    "price": 195.45,
-    "as_of": "2026-07-06 17:10:20",
-    "ts": 1783375820.7970543
+    "source": "reconcile",
+    "price": 194.7,
+    "as_of": "2026-07-06 22:39:29",
+    "ts": 1783395569.5975273
   },
   "AAPL": {
     "symbol": "AAPL",

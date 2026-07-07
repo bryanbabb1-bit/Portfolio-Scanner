@@ -74,6 +74,14 @@ def add_entry(symbol: str | None, action: str, note: str,
     }
     with _lock:
         items = _load()
+        # Dedup: an identical note for the same symbol from an automated source
+        # is a duplicate, not a second event — never spam the ledger.
+        if source in ("pin", "auto") and entry["note"]:
+            for e in items:
+                if (e.get("symbol") == entry["symbol"]
+                        and e.get("note") == entry["note"]
+                        and e.get("source") == source):
+                    return e
         items.append(entry)
         _save(items)
     return entry
