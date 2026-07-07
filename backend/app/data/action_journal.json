@@ -1,83 +1,6 @@
 [
   {
-    "id": "27473f0745ab",
-    "date": "2026-07-07",
-    "symbol": "GOOGL",
-    "action": "buy",
-    "shares": 0.8118,
-    "price": null,
-    "note": "Opened a new position",
-    "source": "auto",
-    "ts": 1783442661.593215
-  },
-  {
-    "id": "e5a132ac2764",
-    "date": "2026-07-07",
-    "symbol": "ANET",
-    "action": "buy",
-    "shares": 0.89158,
-    "price": null,
-    "note": "Opened a new position",
-    "source": "auto",
-    "ts": 1783442661.598581
-  },
-  {
-    "id": "a786512a1984",
-    "date": "2026-07-07",
-    "symbol": "CRWD",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "ALERT (not executed) \u2014 watchpoint hit Watchpoint: RSI \u2264 70; client still needs to decide/act.",
-    "source": "auto",
-    "ts": 1783451466.4786978
-  },
-  {
-    "id": "46b9040c8d07",
-    "date": "2026-07-07",
-    "symbol": "TSM",
-    "action": "buy",
-    "shares": 1.0,
-    "price": null,
-    "note": "Added shares (1.76713 -> 2.76713)",
-    "source": "auto",
-    "ts": 1783455122.0808113
-  },
-  {
-    "id": "3a564d16397a",
-    "date": "2026-07-07",
-    "symbol": "GOOGL",
-    "action": "buy",
-    "shares": 1.0,
-    "price": null,
-    "note": "Added shares (0.8118 -> 1.8118)",
-    "source": "auto",
-    "ts": 1783455122.083643
-  },
-  {
-    "id": "db29ab0b899c",
-    "date": "2026-07-07",
-    "symbol": "NTAP",
-    "action": "buy",
-    "shares": 2.0,
-    "price": null,
-    "note": "Opened a new position",
-    "source": "auto",
-    "ts": 1783455122.097446
-  },
-  {
-    "id": "e1b694e1cda5",
-    "date": "2026-07-07",
-    "symbol": "SGOV",
-    "action": "sell",
-    "shares": 15.40691,
-    "price": null,
-    "note": "Closed the position entirely",
-    "source": "auto",
-    "ts": 1783455150.1086621
-  },
-  {
-    "id": "6f0458eb294f",
+    "id": "c0fbf20b6841",
     "date": "2026-07-07",
     "symbol": "NVDA",
     "action": "note",
@@ -85,10 +8,10 @@
     "price": null,
     "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
     "source": "pin",
-    "ts": 1783459560.1110883
+    "ts": 1783466222.0153484
   },
   {
-    "id": "bd19c0391dc5",
+    "id": "6291f47c7fbc",
     "date": "2026-07-07",
     "symbol": "AVGO",
     "action": "note",
@@ -96,6 +19,6 @@
     "price": null,
     "note": "ALERT (not executed) \u2014 watchpoint hit Watchpoint: RSI \u2265 45; client still needs to decide/act.",
     "source": "auto",
-    "ts": 1783459560.9768276
+    "ts": 1783466222.818296
   }
 ]

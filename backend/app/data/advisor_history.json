@@ -1,71 +1,22 @@
 {
   "portfolio:brief": [
     {
-      "generated_at": "2026-07-07 17:01:40",
-      "summary": "Solid week \u2014 you fully deployed dry powder (sold SGOV, opened NTAP/ANET/GOOGL, added TSM/GOOGL, acted on the NVDA $191 add), but that cut cash to 5.8% versus your 16% floor, and the IREN mechanical stop is still unhonored at a fresh -35% low.",
+      "generated_at": "2026-07-07 18:14:16",
+      "summary": "Trim IREN into its Anthropic-deal pop to rebuild your thin cash, then let the AI core keep compounding.",
       "insights": [
-        "Beta 1.83 and 28.8% annualized vol run hot, but Sharpe 1.42 and max drawdown -20.4% say you are being paid for the risk \u2014 not reckless.",
-        "Concentration is elevated but defensible: NEE 10.8% is your largest and top-5 is 49.5%, all quality compounders, not one fragile bet.",
-        "The real gap now is dry powder: cash is 5.8% (~$710) versus your 16% floor (~$1,955), so a deeper dip finds you with no ammunition.",
-        "Today's -1.97% is a semis cluster move \u2014 AMD -6.7%, MU -6.1%, TSM -4.3% on the DeepSeek-chip headline \u2014 noise against the thesis, not a business break.",
-        "IREN -35% is your only speculative-sleeve holding and its stop already fired; at $1,138 it is a 9.3% drag with no core thesis to defend.",
-        "Winners are quietly offsetting: NET +8% (RSI 67), MELI +8.4% P/L, AAPL +1.0% and coiling near breakout \u2014 the core is working."
+        "Roughly 60% of your money sits in AI chips and the gear that powers them.",
+        "Cash is very thin \u2014 under 6% of the book versus your 16% goal.",
+        "IREN is down 35% and remains your single riskiest holding."
       ],
       "actions": [
-        "Quick trade: Sell IREN ~$1,138 at market; stop fired, fresh low.",
-        "Long game: Park IREN proceeds in cash toward $1,955 (16% floor).",
-        "Quick trade: AAPL add only on daily close above $317; stop $300.",
-        "Quick trade: No AMD/MU/TSM chase until volume-confirmed reversal candle.",
-        "Long game: Build TSM toward 10% via contributions only, no chase."
+        "Trim $400 IREN near $41; move proceeds to cash.",
+        "Buy $150 NVDA near $191 using the trim cash.",
+        "Add $150 AVGO on any further dip below here.",
+        "Hold everything else \u2014 do nothing."
       ],
       "risks": [
-        "Semis are a correlated cluster (TSM/NVDA/AVGO/AMD/MU) \u2014 tripwire: TSM daily close below its 200-day flips several names at once.",
-        "Cash at 5.8% leaves no dry powder \u2014 tripwire: another -2% book day with nothing to deploy into weakness.",
-        "DeepSeek in-house-chip narrative pressures Nvidia demand \u2014 tripwire: an actual NVDA data-center guidance cut, not headlines.",
-        "AVGO circuit-board delay could slip AI-system revenue \u2014 tripwire: AVGO reaffirming or cutting its AI ramp on next print."
-      ]
-    },
-    {
-      "generated_at": "2026-07-07 17:22:00",
-      "summary": "You've done the hard work \u2014 sold SGOV, opened NTAP/ANET/GOOGL, added TSM/GOOGL, acted on the NVDA $191 add \u2014 so the only unfinished order is the IREN stop, still sitting at a fresh -35% low with cash at just 5.8% versus your 16% floor.",
-      "insights": [
-        "Book is fully deployed with cash at 5.8% (~$710) versus your 16% floor (~$1,956) \u2014 the IREN sale is what rebuilds it, no other selling needed.",
-        "IREN is your last speculative miner at $1,142 (9.3% of book), P/L -34.8%, three critical alerts, RSI 35.5 and -9% today \u2014 the stop is fired and this is a mechanical exit, not a core sell.",
-        "Concentration is elevated but acceptable for aggressive: top-5 = 49.5%, largest NEE 10.8%, beta 1.83 and vol 28.8%, but Sharpe 1.42 says you're paid for the risk.",
-        "Core AI complex sold off together today (TSM -4.2%, AMD -6.3%, MU -6.1%, AVGO -1.3%) on the DeepSeek chip and Nvidia-2028 headlines \u2014 correlated noise, not thesis breaks, and RSIs in the 43-49 zone are accumulation territory.",
-        "Your winners are extended and doing the diversifying: NET +8% today RSI 67.6 (P/L +10%), MELI RSI 65.7 (P/L +8.3%), AAPL RSI 60.7 in the 52-week-high zone \u2014 these are recycle sources, not adds here.",
-        "Momentum split is healthy: uptrends in TSM, AMD, MU, AAPL, NET, NTAP, ANET; only MSFT is in a real downtrend but it's a -11% core compounder on sale, not broken."
-      ],
-      "actions": [
-        "Quick trade: Sell IREN ~$1,142 at market; stop fired, fresh low.",
-        "Long game: Park IREN proceeds in cash toward $1,956 floor first.",
-        "Quick trade: AAPL add only on daily close above $317; stop $300.",
-        "Long game: After cash floor, seed PATH ~$367 (3%) with defined stop."
-      ],
-      "risks": [
-        "DeepSeek/custom-silicon narrative pressuring NVDA and TSM \u2014 tripwire: NVDA daily close below $190 halves new size and raises cash.",
-        "Cash at 5.8% leaves no dry powder for a deeper dip \u2014 tripwire: don't open PATH or any satellite until cash is back above the 16% floor.",
-        "Beta 1.83 means a market roll-over hits you ~2x \u2014 tripwire: S&P losing its 200-day triggers the halve-size, raise-cash guardrail.",
-        "IREN left unsold keeps a broken -35% speculative name compounding losses \u2014 tripwire: any further leg down widens the drawdown you already agreed to stop."
-      ]
-    },
-    {
-      "generated_at": "2026-07-07 17:28:47",
-      "summary": "Big week done \u2014 you deployed dry powder (sold SGOV, opened NTAP/ANET/GOOGL, added TSM/GOOGL, acted on the NVDA add), so the ONLY unfinished order is the IREN stop, still at a fresh -35% low while cash sits at 5.8% versus your 16% floor.",
-      "insights": [
-        "IREN is your only broken position, down 35% and still unsold.",
-        "Cash is thin at 5.8%, well under your 16% target.",
-        "AI chips and infrastructure are over half the book \u2014 beta is hot at 1.83."
-      ],
-      "actions": [
-        "Sell all IREN at market near $743.",
-        "Park IREN cash; rebuild toward $1,956 cash floor.",
-        "Hold NVDA, AVGO, TSM \u2014 do nothing more this week.",
-        "Buy AAPL only on a close above $317; stop $300."
-      ],
-      "risks": [
-        "Chip selloff deepens if NVDA closes below $190 \u2014 halve new buys and raise cash.",
-        "IREN keeps bleeding if held below $700 \u2014 the stop already fired."
+        "AI-chip jitters (DeepSeek's own chip, Nvidia's 2028 system delay) could pressure the whole book \u2014 NVDA closing under $190 confirms it.",
+        "IREN's Anthropic bid is speculation, not a signed deal; a 'no' could drop it hard from $41."
       ]
     }
   ]

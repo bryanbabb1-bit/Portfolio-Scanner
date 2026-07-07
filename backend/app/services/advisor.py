@@ -705,9 +705,13 @@ _ASK_FMT = (
     "for THIS answer and tell them to fix it in the Action Journal — NEVER claim "
     "you 'updated your memory' or 'logged it', because you did not. "
     'Respond with ONLY a JSON object, no markdown: '
-    '{"answer": string (the direct answer to the question in 1-2 sentences), '
-    '"points": array of 0-4 supporting bullet strings, each a single '
-    'self-contained sentence under 25 words}. No lead-in phrases.'
+    '{"answer": string — LEAD WITH THE CONCRETE CALL in plain words, one line: '
+    'a buy ("Buy $200 NVDA near $185"), a sell/trim ("Trim $150 AMD if it hits '
+    '$540"), a hold ("Hold — do nothing"), or a watch ("Watch $180; add there"). '
+    'Be decisive, take a side, no hedging, '
+    '"points": array of 0-4 bullets — the specifics (size, entry, stop, target) '
+    'and the ONE reason, each a plain sentence under 22 words, no jargon}. '
+    'No lead-in phrases.'
 )
 
 

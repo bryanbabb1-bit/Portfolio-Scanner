@@ -185,5 +185,18 @@
     "status": "armed",
     "created_at": "2026-07-07 15:15",
     "ts": 1783455336.7724614
+  },
+  {
+    "id": "6b396e479f2b",
+    "symbol": "IREN",
+    "kind": "price_below",
+    "level": 38.0,
+    "note": "IREN drops below $38 \u2014 trade is broken, sell the small remaining stake.",
+    "side": "sell",
+    "confirm": "touch",
+    "source": "advisor",
+    "status": "armed",
+    "created_at": "2026-07-07 18:12",
+    "ts": 1783465961.663561
   }
 ]
