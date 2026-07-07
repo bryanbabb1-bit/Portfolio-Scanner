@@ -579,14 +579,21 @@ def advise_breakout(cand: BreakoutCandidate, force: bool = False,
         _cache[key] = (time.time(), note)
         return note
 
+    from . import stance as stance_service
+    stable = stance_service.is_stable(cand.symbol, cand.price)
+    prior_stance = stance_service.get(cand.symbol)
     prompt = (
         f"{_PERSONA}\n\n{_RESEARCH_PREFIX if deep else ''}"
-        f"This stock is flagged as a potential breakout candidate:\n\n"
+        f"A breakout screen flagged {cand.symbol} — a LEAD, not an order:\n\n"
         f"{facts}\n"
+        f"{_book_context()}"
+        f"{stance_service.block(cand.symbol, cand.price)}"
         f"{_prior_advice_block(key, cand.symbol)}"
-        f"\nMake the bull case for a near-term breakout AND state what would "
-        f"invalidate it. Be specific about entry zone, the level that confirms the "
-        f"breakout, and a stop. {_SCHEMA_HINT}"
+        f"\nGive your DEFINITIVE read — do NOT force a bull case. Agree only if "
+        f"you would genuinely act now; if it is extended, unconfirmed, or against "
+        f"your standing call, say HOLD or AVOID. If constructive, give the entry "
+        f"zone, the level that confirms the breakout, a stop, and a size vs the "
+        f"book. {_SCHEMA_HINT}"
     )
     raw, sid = _run_claude(
         prompt, research=deep,
@@ -595,6 +602,17 @@ def advise_breakout(cand: BreakoutCandidate, force: bool = False,
         _fallback_note(cand.symbol, facts, cand.signals)
     if raw and sid:
         _remember_session(key, sid)
+    # Consistency: hold the standing call if nothing material moved; otherwise
+    # this becomes the standing call so the radar can't contradict the book.
+    if stable and prior_stance:
+        note.call = prior_stance["action"]
+    elif note.call:
+        try:
+            stance_service.set_stance(
+                cand.symbol, note.call, headline=note.summary, thesis=note.summary,
+                source="breakout", price=cand.price)
+        except Exception:
+            pass
     _remember_history(key, note)
     _cache[key] = (time.time(), note)
     return note
@@ -711,11 +729,11 @@ def ask(kind: str, symbol: str | None, question: str, deep: bool = False) -> dic
         except Exception:
             standing = ""
     else:
-        # A single-stock chat STILL needs the whole book — cash, SGOV, weights —
-        # so "rotate $1500 into NVDA?" is answered with the cash impact, not a
-        # request for data we already have.
-        standing = stance_service.block(symbol or "") + _book_context()
-    snapshot = snapshot + standing
+        standing = stance_service.block(symbol or "")
+    # EVERY chat turn — resume or cold, stock or portfolio — carries the whole
+    # book (cash, holdings, weights). The resume path used to send only prices +
+    # standing calls, so a resumed portfolio chat asked for cash it already had.
+    snapshot = snapshot + standing + _book_context()
     raw = sid = None
     prior = _sessions.get(key)
     ask_model = None if deep else settings.CLAUDE_MODEL_STANDARD
@@ -987,7 +1005,7 @@ def reevaluate_plan(pin: dict, baseline: float, current: float,
         f"The client STAGED this plan earlier and has NOT executed it yet:\n"
         f'STAGED PLAN: "{pin.get("text", "")}"\n'
         f"When staged, {sym} was about ${baseline:.2f}. It is now ${price:.2f} "
-        f"({move:+.1%} since).\n\n{facts}\n{stance_service.block(sym)}\n"
+        f"({move:+.1%} since).\n\n{facts}\n{_book_context()}{stance_service.block(sym)}\n"
         f"Decide whether this staged plan STILL HOLDS or has MATERIALLY CHANGED "
         f"given the move and current data. Be decisive and protect the client: a "
         f"stop-loss / loss-control SELL becomes the WRONG move if the name is now "

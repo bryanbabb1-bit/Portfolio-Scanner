@@ -202,5 +202,29 @@
         "Solvency/burn: negative equity and Q2 adj. EBITDA guide of -\u20ac5M to -\u20ac3M keep this a trade, not an investment."
       ]
     }
+  ],
+  "breakout:GEV": [
+    {
+      "generated_at": "2026-07-06 21:46:08",
+      "summary": "Same read as before: GEV is a healthy uptrend near its 52-week high but breaking out on below-average volume, and Energy is already over target \u2014 hold the existing share, don't add.",
+      "insights": [
+        "RSI 60.5 shows healthy momentum, not yet extended into overbought territory.",
+        "MACD 37.56 above signal 23.83 confirms upside momentum is intact.",
+        "50-day above 200-day day keeps the long-term uptrend structure valid.",
+        "Price is 1.94% from the 52-week high, sitting right in the breakout zone.",
+        "Volume is 0.79x average \u2014 breakout lacks the volume confirmation this regime requires.",
+        "Energy is 21% of book ($2,574) versus core themes half that size, already the largest sleeve."
+      ],
+      "actions": [
+        "Hold the 1-share GEV position at ~$1152; no new buys.",
+        "Set mental invalidation at $1090 (50-day proxy); exit if broken.",
+        "Do not add on this breakout attempt until volume confirms above 1.0x avg."
+      ],
+      "risks": [
+        "Breakout could fail without volume, since 0.79x avg avg is below the confirmation threshold.",
+        "Energy sleeve concentration risk since GEV plus NEE is already 21% of the book.",
+        "No stop currently set on the existing share, leaving the position exposed if $1090 breaks."
+      ]
+    }
   ]
 }
