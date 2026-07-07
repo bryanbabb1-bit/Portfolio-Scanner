@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { api, ConvictionSignal, PortfolioInsights, PortfolioSummary, StockReport } from "../lib/api";
 import { SignalSlap } from "../components/SignalSlap";
 import { DailyBrief } from "../components/DailyBrief";
+import { PositionHealth } from "../components/PositionHealth";
 import { GamePlan } from "../components/GamePlan";
 import { WatchdogBar } from "../components/WatchdogBar";
 import { ScorecardPanel } from "../components/ScorecardPanel";
@@ -197,6 +198,8 @@ export default function Dashboard() {
       </div>
 
       <Movers reports={[...holdings, ...watchlist]} />
+
+      <PositionHealth holdings={holdings} />
 
       {/* one card, two lenses on the book */}
       <div className="view-tabs">

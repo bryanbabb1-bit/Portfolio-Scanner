@@ -98,6 +98,39 @@ body {
 .chart-price .cp-chg.pos { color: var(--bull); }
 .chart-price .cp-chg.neg { color: var(--bear); }
 
+/* position health — glanceable per-holding status */
+.ph-list { display: flex; flex-direction: column; gap: 2px; }
+.ph-row {
+  display: grid;
+  grid-template-columns: 58px minmax(150px, 1fr) 74px 2fr;
+  align-items: center; gap: 10px;
+  padding: 9px 10px; border-radius: 9px;
+  border-left: 3px solid var(--border);
+  font-size: 13px; color: var(--text);
+}
+.ph-row:hover { background: rgba(56,189,248,0.05); }
+.ph-row.healthy { border-left-color: var(--bull); }
+.ph-row.cheap { border-left-color: var(--accent); }
+.ph-row.extended { border-left-color: var(--gold); }
+.ph-row.weak { border-left-color: var(--bear); }
+.ph-row.steady { border-left-color: var(--muted); }
+.ph-sym { font-weight: 800; }
+.ph-pos { color: var(--muted); font-variant-numeric: var(--tab-nums); white-space: nowrap; }
+.ph-badge {
+  justify-self: start; font-size: 10px; font-weight: 800; letter-spacing: .05em;
+  padding: 2px 8px; border-radius: 999px; text-transform: uppercase;
+}
+.ph-badge.healthy { color: var(--bull); background: var(--bull-bg); }
+.ph-badge.cheap { color: var(--accent); background: var(--accent-dim); }
+.ph-badge.extended { color: var(--gold); background: rgba(245,181,68,0.14); }
+.ph-badge.weak { color: var(--bear); background: var(--bear-bg); }
+.ph-badge.steady { color: var(--muted); background: rgba(148,163,184,0.12); }
+.ph-note { color: var(--muted); }
+@media (max-width: 720px) {
+  .ph-row { grid-template-columns: 48px 1fr auto; row-gap: 4px; }
+  .ph-note { grid-column: 1 / -1; font-size: 12.5px; }
+}
+
 /* core-conviction toggle chips (Settings) */
 .conv-chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .conv-chip {
