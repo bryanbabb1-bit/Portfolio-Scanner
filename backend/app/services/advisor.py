@@ -664,6 +664,56 @@ def _live_snapshot(kind: str, symbol: str | None) -> tuple[str, list[dict]]:
     return block, receipts
 
 
+def _parse_dollar(text: str):
+    import re
+    best = 0.0
+    for m in re.finditer(r"\$\s*([\d,]+(?:\.\d+)?)", text or ""):
+        try:
+            best = max(best, float(m.group(1).replace(",", "")))
+        except ValueError:
+            continue
+    return best or None
+
+
+def _pending_commitments() -> str:
+    """Open pins + armed tripwires with their dollar amounts. These COMPETE for
+    the same cash — feeding them in is what stops the advisor recommending a set
+    of buys that TOGETHER breach the floor even though each looks fine alone."""
+    from . import pins as pins_svc, watchpoints as wp_svc
+    rows, total_buy = [], 0.0
+    _buyish = ("buy", "add", "rotate", "into", "start")
+    try:
+        for p in pins_svc.list_pins():
+            if p.get("status") != "open":
+                continue
+            txt = p.get("text", "")
+            amt = _parse_dollar(txt)
+            rows.append(f"PIN [{p.get('symbol') or '-'}]: {txt}"
+                        + (f" (~${amt:,.0f})" if amt else ""))
+            if amt and any(w in txt.lower() for w in _buyish):
+                total_buy += amt
+    except Exception:
+        pass
+    try:
+        for w in wp_svc.list_watchpoints(include_triggered=False):
+            note = w.get("note", "")
+            amt = _parse_dollar(note)
+            rows.append(f"TRIPWIRE [{w['symbol']} {wp_svc.condition_str(w)}]: {note}"
+                        + (f" (~${amt:,.0f})" if amt else ""))
+            if amt and (w.get("side") == "buy"
+                        or any(x in note.lower() for x in _buyish)):
+                total_buy += amt
+    except Exception:
+        pass
+    if not rows:
+        return ""
+    head = ("QUEUED ACTIONS you have already pinned/armed (they draw on the SAME "
+            "cash — these buys compete with each other")
+    if total_buy:
+        head += f"; pending BUY commitments total ~${total_buy:,.0f}"
+    return head + "):\n" + "\n".join("  - " + r for r in rows)
+
+
 def _book_context(summary=None, reports=None) -> str:
     """The client's WHOLE portfolio in one block — cash, holdings, allocation —
     so a single-stock chat/review can still reason about cash impact and
@@ -693,11 +743,27 @@ def _book_context(summary=None, reports=None) -> str:
         lines.append("By theme: " + ", ".join(
             f"{k} ${v:,.0f}" for k, v in
             sorted(summary.by_theme.items(), key=lambda x: -x[1])[:6]))
+    # The hard guardrails the advisor keeps citing MUST be in context — and so
+    # must anything already queued that would breach them.
+    try:
+        from . import strategy as _strat
+        doc = _strat.load()
+        if doc and doc.get("approved") and doc.get("guardrails"):
+            lines.append("HARD GUARDRAILS (do not violate): "
+                         + " | ".join(doc["guardrails"]))
+    except Exception:
+        pass
+    pend = _pending_commitments()
+    if pend:
+        lines.append(pend)
     lines.append(
-        "For ANY buy/rotation question, compute the CASH IMPACT (what does cash "
-        "drop to? does it breach a sensible floor?) and the ALLOCATION impact "
-        "using these numbers. One coherent answer — do not both endorse a buy "
-        "and warn it drains cash without reconciling the two into a sized call.")
+        "CRITICAL: account for the QUEUED actions above — they draw on the SAME "
+        "cash/SGOV. NEVER recommend or endorse buys that TOGETHER with what is "
+        "already pinned/armed breach a guardrail (esp. the SGOV/cash floor). If "
+        "the queued plan already cannot all be funded within the floor, SAY SO "
+        "and PRIORITIZE: which fires first, which to cut or resize. Do not cite a "
+        "floor while blessing trades that break it — reconcile into ONE coherent, "
+        "funded plan.")
     return "\n".join(lines) + "\n\n"
 
 

@@ -1,24 +1,19 @@
 {
-  "type": "eod",
-  "date": "2026-07-06",
-  "generated_at": "2026-07-06 21:23:39",
+  "type": "morning",
+  "date": "2026-07-07",
+  "generated_at": "2026-07-07 07:21:58",
   "engine": "claude",
-  "headline": "Book +2.62%, IREN and AMD Do the Lifting",
-  "summary": "A strong up day driven almost entirely by IREN's +12.6% squeeze and AMD's +6.0% run, with GEV chipping in — but IREN is still down 28.6% and MSFT down 11.7%, so today's bounce doesn't change the underlying damage in those two.",
+  "headline": "AAPL trigger 1.5 away; SPX 200-day is the tripwire",
+  "summary": "Book +2.17% on an AMD grind and a sharp IREN bounce, but nothing here is a green light to add — today's real decision points are the AAPL $317 add trigger and SPX holding its 200-day at ~7,470.",
   "watch": [
-    "ANET high-conviction setup is ready but volume isn't confirming — do not enter until volume confirms, per the rule",
-    "AAPL dual triggers: stop at $300 (-12.7% away) and queued $250 add at $317 close (+4.3% away) — no man's land, just wait",
-    "CRWD: still waiting on RSI ≤60 pullback before buying",
-    "PANW: RSI still above 70 — no new position until it cools",
-    "CIFR hit its $19 watchpoint — decide if this becomes a tracked name or stays on the shelf",
-    "IREN and MSFT remain the book's two open wounds (-28.6% and -11.7%) — no stop levels on file for either, worth setting one rather than letting them drift"
+    "SPX ≤ $7,470 loses the 200-day — halves new-position size and raises cash bar, book-wide",
+    "AAPL ≥ $317 (now 315.5, +1.5) triggers the queued $250 add on a confirmed close — not intraday",
+    "AAPL ≤ $300 (now 315.5, -15.5) is the hard stop on that add if it goes the other way",
+    "CRWD: no entry until RSI ≤ 60 — currently blocked, don't chase",
+    "PANW: no entry above RSI 70 — wait for it to cool before sizing in",
+    "IREN +11.9% today but still -29.1% P/L, RSI 39.4 — that's a bounce in a broken name, not a signal to add; let the stop do its job if one's armed",
+    "SGOV RSI 81 is noise — it's the cash sleeve, not a trade",
+    "GEV/MSFT/NEE: no armed triggers today, no action — hold as is"
   ],
-  "recap": [
-    "Book $12,441, +2.62% today; cash sits at just $42",
-    "IREN +12.6% today but still -28.6% P/L overall — a bounce, not a repair",
-    "AMD +6.0% today, now the book's best performer at +9.2% P/L, RSI 57 (room left before overbought)",
-    "GEV +3.4%, MSFT -1.1% (worst P/L at -11.7%), NEE -0.9%, SGOV flat as expected",
-    "NEE watchpoint fired BUY — starter entry now cleared to open",
-    "AVGO RSI≥45 watchpoint fired repeatedly (4x) — no new fact, just noise, no action needed"
-  ]
+  "recap": []
 }

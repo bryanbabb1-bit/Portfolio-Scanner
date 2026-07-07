@@ -463,5 +463,31 @@
     "action": "HOLD",
     "entry": "",
     "size": ""
+  },
+  "WBX:rsi-sell-zone:2026-07-07": {
+    "symbol": "WBX",
+    "side": "sell",
+    "rule": "rsi-sell-zone",
+    "label": "RSI in the sell zone on a held name — extended, consider taking profits",
+    "id": "WBX:rsi-sell-zone:2026-07-07",
+    "price": 5.54,
+    "theme": "Energy",
+    "held": true,
+    "dismissed": false,
+    "generated_at": "2026-07-07 07:32:35",
+    "ts": 1783427538.9143553,
+    "action": "TRIM",
+    "headline": "Still TRIM — take the gift, keep a stub",
+    "what": "No new fact since the $5.45 call (+1.7%, immaterial): sell roughly half the WBX position into this RSI 75 spike and let the rest run with a trailed stop.",
+    "why": [
+      "RSI 75.08 is deep in the sell zone on a name already +33% today — classic overbought pop to sell into, not chase",
+      "Breakout score only 34/100 — price is running far ahead of underlying technical confirmation",
+      "Still -21.8% below the $7.19 52-week high and trend reads sideways — this is a relief spike, not a confirmed trend change",
+      "Volume 1.89x avg confirms the move is real, which is exactly why it's sellable liquidity — take the gift on the trim, don't overstay"
+    ],
+    "entry": "$5.54 (current print, sell into strength)",
+    "size": "Trim ~50% of existing WBX shares now; insufficient data on exact position dollars to size precisely — do not add",
+    "target": "$7.19 (52w high) for the remaining stub",
+    "stop": "$4.50 trail on the stub (~2xATR below spot)"
   }
 }

@@ -583,50 +583,6 @@
     "ts": 1783379404.7438629
   },
   {
-    "id": "efb9485c3195",
-    "date": "2026-07-06",
-    "symbol": "AVGO",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Watchpoint triggered (Watchpoint: RSI \u2265 45): buy when rsi reclaims 45",
-    "source": "auto",
-    "ts": 1783380032.7332993
-  },
-  {
-    "id": "8f4d4fcdc1d3",
-    "date": "2026-07-06",
-    "symbol": "AVGO",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Watchpoint triggered (Watchpoint: RSI \u2265 45): buy when rsi reclaims 45",
-    "source": "auto",
-    "ts": 1783382899.9264898
-  },
-  {
-    "id": "de74639dcb7c",
-    "date": "2026-07-06",
-    "symbol": "AVGO",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Watchpoint triggered (Watchpoint: RSI \u2265 45): buy when rsi reclaims 45",
-    "source": "auto",
-    "ts": 1783391956.6982203
-  },
-  {
-    "id": "90079194f75f",
-    "date": "2026-07-06",
-    "symbol": "AVGO",
-    "action": "note",
-    "shares": null,
-    "price": null,
-    "note": "Watchpoint triggered (Watchpoint: RSI \u2265 45): buy when rsi reclaims 45",
-    "source": "auto",
-    "ts": 1783392292.5361133
-  },
-  {
     "id": "83274e48cc47",
     "date": "2026-07-06",
     "symbol": "NVDA",
@@ -649,14 +605,14 @@
     "ts": 1783395589.1011963
   },
   {
-    "id": "2bd26d905b1d",
-    "date": "2026-07-06",
+    "id": "937c00e9b8c7",
+    "date": "2026-07-07",
     "symbol": "AVGO",
     "action": "note",
     "shares": null,
     "price": null,
     "note": "ALERT (not executed) \u2014 watchpoint hit Watchpoint: RSI \u2265 45; client still needs to decide/act.",
     "source": "auto",
-    "ts": 1783395732.7814586
+    "ts": 1783427518.4899428
   }
 ]

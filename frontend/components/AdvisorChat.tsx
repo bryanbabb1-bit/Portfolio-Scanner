@@ -82,10 +82,22 @@ export function AdvisorChat({
         </div>
       ))}
       <div className="chat-input">
-        <input
+        <textarea
           value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && send()}
+          rows={2}
+          onChange={(e) => {
+            setInput(e.target.value);
+            // auto-grow so you can see everything you've typed
+            e.target.style.height = "auto";
+            e.target.style.height = Math.min(e.target.scrollHeight, 160) + "px";
+          }}
+          onKeyDown={(e) => {
+            // Enter sends; Shift+Enter adds a newline
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              send();
+            }
+          }}
           placeholder={
             kind === "strategy"
               ? 'Shape the plan — e.g. "Make it more aggressive" or "What if I add $1,000/month?"'
