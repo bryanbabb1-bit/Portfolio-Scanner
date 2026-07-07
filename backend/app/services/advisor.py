@@ -327,6 +327,7 @@ def _parse_note(symbol: str, engine: str, raw: str) -> AdvisorNote:
     insights: list[str] = []
     actions: list[str] = []
     risks: list[str] = []
+    scout: list[str] = []
     text = raw.strip()
     # Extract JSON object if the model wrapped it in prose/fences.
     start, end = text.find("{"), text.rfind("}")
@@ -342,6 +343,7 @@ def _parse_note(symbol: str, engine: str, raw: str) -> AdvisorNote:
             insights = _as_bullets(obj.get("insights") or obj.get("technical_read"))
             actions = _as_bullets(obj.get("actions") or obj.get("recommendation"))
             risks = _as_bullets(obj.get("risks"))
+            scout = _as_bullets(obj.get("scout") or obj.get("growth_targets"))
         except json.JSONDecodeError:
             pass
     if not summary:
@@ -357,6 +359,7 @@ def _parse_note(symbol: str, engine: str, raw: str) -> AdvisorNote:
         insights=insights,
         actions=actions,
         risks=risks,
+        scout=scout,
         raw=raw,
     )
 
@@ -477,11 +480,12 @@ def _facts_from_portfolio(summary: PortfolioSummary, reports: list[StockReport],
             f"{a.symbol} {a.label} ({a.severity})" for a in alerts[:12]))
     if candidates:
         lines.append(
-            "Top NOT-owned candidates by breakout readiness (from the "
-            "Discovery scan): " + "; ".join(
+            "NOT-owned candidates from the Discovery scan (a STARTING list for "
+            "your 'scout' — also use your own knowledge of strategy-fit leaders "
+            "the client doesn't own): " + "; ".join(
                 f"{c.symbol} {c.score:.0f}/100 (${c.price}, {c.theme}, "
                 f"RSI {c.indicators.rsi}, {c.indicators.trend})"
-                for c in candidates[:5]))
+                for c in candidates[:8]))
     from . import journal
     history = journal.facts_block()
     if history:
@@ -519,9 +523,13 @@ def advise_portfolio(summary: PortfolioSummary, reports: list[StockReport],
         f"{standing}"
         f"{_prior_advice_block(key)}\n"
         f"You are the client's WATCHDOG advisor, not a salesman. A refreshed "
-        f"brief does NOT owe the client new trades: if the book is positioned "
-        f"correctly, your call is patience — restate the standing levels being "
-        f"watched and say explicitly that no action is needed. Never "
+        f"brief does NOT owe the client new trades TODAY: if the book is "
+        f"positioned correctly, your call is patience on existing positions. But "
+        f"patience is NOT silence on growth — you are a GROWTH advisor tied to "
+        f"the strategy, so you must ALWAYS scout NOT-owned names that fit the "
+        f"plan and would compound the book toward the goal (the candidate list is "
+        f"a start; also use your own knowledge of strategy-fit leaders, e.g. "
+        f"large-cap AI names the client doesn't hold). Never "
         f"manufacture a trade to fill the list. When you DO recommend, prefix "
         f"each action with its horizon: 'Quick trade:' (days-weeks, momentum "
         f"or level-driven) or 'Long game:' (months+, compounding/position "
@@ -545,6 +553,12 @@ def advise_portfolio(summary: PortfolioSummary, reports: list[StockReport],
         f'your best buy or state the level that would create one), '
         f'"risks" (array of 2-4 strings: one risk per bullet, each paired with '
         f'the specific tripwire signal to watch), '
+        f'"scout" (array of 2-3 strings — REQUIRED even in a patience week: '
+        f'NOT-owned stocks that fit the strategy and would grow the book toward '
+        f'the goal. Each: TICKER, one-line why it fits the plan, and the exact '
+        f'trigger/level to buy + funding source. Draw from the candidate list '
+        f'AND your own knowledge of strategy-fit leaders the client does not own. '
+        f'This is the accumulation radar, not a trade to force now), '
         f'"stances" (array of {{"symbol","call","thesis"}} — your DEFINITIVE '
         f'one-word call on EACH holding: BUY|ADD|HOLD|TRIM|SELL|WATCH, thesis '
         f'under 10 words. This becomes the single call shown on every screen, so '

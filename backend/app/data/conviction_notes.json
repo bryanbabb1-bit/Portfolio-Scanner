@@ -496,25 +496,25 @@
     "side": "sell",
     "rule": "runner-ignition",
     "stage": "extended",
-    "label": "Live runner: already ran +42% today",
-    "headline": "Same call: extended, no chase",
-    "what": "Hold — no action; SKIN not held, +1.9% since the $1.05 call is immaterial, setup unchanged.",
+    "label": "Live runner: already ran +46% today",
+    "headline": "Still extended, still not held — stand aside",
+    "what": "Hold — no action; SKIN not held, +4.8% since the call doesn't fix the extended/fading setup or add a real level.",
     "why": [
-      "Still 42x volume and +41.7% on the day but fading off the high — bulk of the move is done",
-      "RSI 80.3 overbought, death-cross regime (SMA20 0.69 < SMA200 1.19) — no thesis, pure momentum extension",
-      "Trigger to revisit: volume-backed pullback to $0.85-0.90 (prior resistance/SMA cluster) or a fresh catalyst — not present now"
+      "RSI 81.2 and 48x volume on a +45.71% day with price fading off the high — the bulk of the move is spent, not a fresh breakout",
+      "Below its 200-day (SMA200 $1.19 vs price $1.10, death-cross regime) and -58% from 52w high — no long-term structure to justify mean-reversion entry",
+      "This is a lottery-ticket microcap ($0.1B cap); chasing 2+ ATR extended is forbidden by plan — would need a volume-backed pullback to the $0.72-0.80 prior-base zone before any starter size is considered"
     ],
     "entry": "",
     "size": "",
     "target": "",
     "stop": "",
     "action": "AVOID",
-    "price": 1.07,
+    "price": 1.1009,
     "theme": "Runner",
     "held": false,
     "dismissed": false,
-    "generated_at": "2026-07-07 10:15:49",
-    "ts": 1783437331.1591268
+    "generated_at": "2026-07-07 10:41:18",
+    "ts": 1783438838.7850063
   },
   "CLRO:runner-ignition:2026-07-07": {
     "id": "CLRO:runner-ignition:2026-07-07",
@@ -545,28 +545,28 @@
   "JLHL:runner-ignition:2026-07-07": {
     "id": "JLHL:runner-ignition:2026-07-07",
     "symbol": "JLHL",
-    "side": "sell",
+    "side": "buy",
     "rule": "runner-ignition",
-    "stage": "extended",
-    "label": "Live runner: already ran +41% today",
-    "headline": "Still no chase — fade risk, not a base",
-    "what": "Hold — no action; +40% pop is already fading with bearish MACD and no volume-backed reversal signal yet.",
+    "stage": "igniting",
+    "label": "Live runner: igniting +22% today",
+    "headline": "Same call: still no volume-backed reversal",
+    "what": "Hold — no action; JLHL is down 13% since the $5.17 call despite today's bounce, MACD still bearish.",
     "why": [
-      "Since the $4.86 AVOID call JLHL is +6.4% intraday to $5.17, but that's just continuation of the same +41% extended move flagged, not a new fact — MACD stays bearish (-4.46 vs -2.05 signal) and price sits far below SMA20/50 (20.56/20.57), confirming the underlying trend is broken, not reversing",
-      "No position held, no earnings/news catalyst in the headlines (latest is stale from 2026-05-29), and RSI 36 with the stock -88.5% off its 52w high says this is a low-float dead-cat bounce, not a base to buy",
-      "Trigger to revisit: a volume-confirmed higher high above today's range on continued >4x volume, or a pullback that holds above $4.50 on volume drying up — until either prints, stand aside"
+      "Price is now $4.50, down -13% since the AVOID call at $5.17 — the move since then is bearish, not a bullish trigger",
+      "MACD still bearish (-4.51 vs signal -2.06, hist -2.45), RSI 35.4 shows no confirmed reversal, trend still sideways",
+      "JLHL isn't a current holding or core name — a low-float microcap chase here breaks the no-chase rule without a volume-confirmed higher-low; wait for a confirmed reversal candle on volume before any lottery-ticket entry"
     ],
     "entry": "",
     "size": "",
     "target": "",
     "stop": "",
     "action": "AVOID",
-    "price": 5.195,
+    "price": 4.495,
     "theme": "Runner",
     "held": false,
     "dismissed": true,
-    "generated_at": "2026-07-07 09:26:05",
-    "ts": 1783434316.8630512
+    "generated_at": "2026-07-07 10:24:38",
+    "ts": 1783437844.7480052
   },
   "VRXA:runner-ignition:2026-07-07": {
     "id": "VRXA:runner-ignition:2026-07-07",
@@ -574,25 +574,25 @@
     "side": "buy",
     "rule": "runner-ignition",
     "stage": "igniting",
-    "label": "Live runner: igniting +18% today",
-    "headline": "No new fact — still a fail on structure",
-    "what": "Hold — no action; -3.7% since the call is noise, price still under all moving averages in a death-cross downtrend.",
+    "label": "Live runner: igniting +24% today",
+    "headline": "No change—0.4% move, thesis intact",
+    "what": "Hold — no action; still avoid VRXA, this is not a pullback entry or a fresh breakout confirmation.",
     "why": [
-      "Trend still fails: price $2.60 vs SMA20/50/200 of $7.99/$9.97/$10.63 — no structure to buy",
-      "RSI 36.8 and MACD -2.77 under signal confirm no momentum reversal yet, just a bounce off a -89.5% 52w drawdown",
-      "Not in the book and not part of the AI core/speculation sleeve plan — wait for base-building pullback before any entry"
+      "Price only +0.4% since the AVOID call ($2.70→$2.71)—immaterial, no new fact to act on",
+      "Structure still fails: below all SMAs (20/50/200 = 7.995/9.9673/10.6305), death-cross regime, MACD bearish",
+      "Trigger to revisit: a volume-confirmed pullback that holds above $2.20-2.30 with base-building, or a fresh reclaim of the 20-day (~$8) — neither has happened"
     ],
     "entry": "",
     "size": "",
     "target": "",
     "stop": "",
     "action": "AVOID",
-    "price": 2.595,
+    "price": 2.7099,
     "theme": "Runner",
     "held": false,
     "dismissed": false,
-    "generated_at": "2026-07-07 10:10:52",
-    "ts": 1783437038.7439167
+    "generated_at": "2026-07-07 10:40:52",
+    "ts": 1783438838.7850063
   },
   "TVRD:runner-ignition:2026-07-07": {
     "id": "TVRD:runner-ignition:2026-07-07",
@@ -600,24 +600,50 @@
     "side": "sell",
     "rule": "runner-ignition",
     "stage": "extended",
-    "label": "Live runner: already ran +77% today",
-    "headline": "Same call: extended, fading, not a chase",
-    "what": "Hold — no action; TVRD is -0.8% since the call, no new fact changes the thesis.",
+    "label": "Live runner: already ran +63% today",
+    "headline": "Same call: fade risk, not a chase",
+    "what": "Hold — no action; TVRD is a non-portfolio biotech microcap runner already down 8.9% off my prior AVOID call, still no volume-confirmed reversal.",
     "why": [
-      "No position held, no new fact: still +76.6% today at 16x volume, fading off the high",
-      "RSI 65.3 and above upper Bollinger with a death-cross regime (SMA20/50 well below SMA200 at 6.77) — this is a fade, not a base",
-      "Trigger to revisit: a volume-confirmed pullback holding above $3.00-3.10 with volume rolling back toward 20d avg, or a fresh catalyst/news — absent that, stand aside"
+      "No new fact overrides prior AVOID: price is down 8.9% since the $3.58 call, not up — this is continued fade, not a fresh breakout to chase",
+      "TVRD isn't in the client's book and isn't part of the AI-core/dry-powder plan; RSI 62 and MACD still bearish (-0.23 vs -0.30) with a death-cross regime (SMA20 2.43 < SMA50 3.08 < SMA200 6.77)",
+      "Trigger to revisit: a volume-confirmed reversal candle reclaiming $3.58 (the prior call level) on continued elevated volume, or a clean pullback holding above $2.43 (SMA20) with volume confirmation"
     ],
     "entry": "",
     "size": "",
     "target": "",
     "stop": "",
     "action": "AVOID",
-    "price": 3.55,
+    "price": 3.2694,
     "theme": "Runner",
     "held": false,
     "dismissed": false,
-    "generated_at": "2026-07-07 10:15:39",
-    "ts": 1783437331.1591268
+    "generated_at": "2026-07-07 10:41:08",
+    "ts": 1783438838.7850063
+  },
+  "PEW:runner-ignition:2026-07-07": {
+    "id": "PEW:runner-ignition:2026-07-07",
+    "symbol": "PEW",
+    "side": "buy",
+    "rule": "runner-ignition",
+    "stage": "igniting",
+    "label": "Live runner: igniting +10% today",
+    "headline": "Same call: +2% is noise, not news",
+    "what": "Hold — no action; +2% since the $3.06 standing call is immaterial, no new fact changes AVOID.",
+    "why": [
+      "Since standing call PEW moved $3.06→$3.12 (+2.0%), well below the >4% bar for a fresh call",
+      "Death-cross regime intact (price $3.12 under SMA200 $3.3497), RSI 72.6 overbought, -81.9% off 52w high — no thesis-backed reversal, just a bounce",
+      "Sub-$0.3B microcap runner has zero fit in an AI-core/dry-powder plan with only ~$300 deployable; not worth the lottery-ticket slot today"
+    ],
+    "entry": "",
+    "size": "",
+    "target": "",
+    "stop": "",
+    "action": "AVOID",
+    "price": 3.12,
+    "theme": "Runner",
+    "held": false,
+    "dismissed": false,
+    "generated_at": "2026-07-07 10:41:00",
+    "ts": 1783438838.7850063
   }
 }

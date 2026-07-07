@@ -304,5 +304,14 @@
     "price": 3.2992,
     "ts": 1783436347.0518777,
     "date": "2026-07-07"
+  },
+  {
+    "id": "PEW:runner-ignition:2026-07-07",
+    "symbol": "PEW",
+    "side": "buy",
+    "rule": "runner-ignition",
+    "price": 3.06,
+    "ts": 1783437714.148411,
+    "date": "2026-07-07"
   }
 ]

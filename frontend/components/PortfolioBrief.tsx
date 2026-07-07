@@ -121,6 +121,12 @@ export function PortfolioBrief() {
               <BulletList items={note.risks} kind="risk" />
             </div>
           )}
+          {(note.scout?.length ?? 0) > 0 && (
+            <div className="advisor-sec">
+              <h4>Growth Radar · names to grow into</h4>
+              <BulletList items={note.scout!} kind="insight" />
+            </div>
+          )}
           <p className="mut" style={{ fontSize: 11, marginTop: 12 }}>
             {note.persona} · {note.generated_at} · Not personalized investment advice.
           </p>

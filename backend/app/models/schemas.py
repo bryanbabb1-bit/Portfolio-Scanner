@@ -133,6 +133,7 @@ class AdvisorNote(BaseModel):
     insights: list[str] = []    # technical / portfolio-health observations
     actions: list[str] = []     # concrete recommendations (ticker + level each)
     risks: list[str] = []       # each risk paired with its confirming signal
+    scout: list[str] = []       # not-owned strategy-fit growth names to accumulate toward
     raw: Optional[str] = None
 
 

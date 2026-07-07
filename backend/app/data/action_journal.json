@@ -1,1 +1,24 @@
-[]
+[
+  {
+    "id": "714c0462dc18",
+    "date": "2026-07-07",
+    "symbol": "NVDA",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
+    "source": "pin",
+    "ts": 1783438822.317609
+  },
+  {
+    "id": "947a48548c4d",
+    "date": "2026-07-07",
+    "symbol": "AVGO",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "ALERT (not executed) \u2014 watchpoint hit Watchpoint: RSI \u2265 45; client still needs to decide/act.",
+    "source": "auto",
+    "ts": 1783438823.1535401
+  }
+]

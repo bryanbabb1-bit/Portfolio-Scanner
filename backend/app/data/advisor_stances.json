@@ -3,14 +3,14 @@
     "symbol": "NVDA",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Core AI leader; hold above $190.",
-    "thesis": "Core AI leader; hold above $190.",
+    "headline": "Core AI leader; add executed, hold above $190.",
+    "thesis": "Core AI leader; add executed, hold above $190.",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 192.95,
-    "as_of": "2026-07-07 10:16:12",
-    "ts": 1783437372.5323234
+    "price": 193.03,
+    "as_of": "2026-07-07 10:42:37",
+    "ts": 1783438957.065595
   },
   "AAPL": {
     "symbol": "AAPL",
@@ -21,9 +21,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 313.25,
-    "as_of": "2026-07-07 10:16:12",
-    "ts": 1783437372.5991628
+    "price": 314.21,
+    "as_of": "2026-07-07 10:42:37",
+    "ts": 1783438957.2155185
   },
   "SEER": {
     "symbol": "SEER",
@@ -48,8 +48,8 @@
     "stop": "",
     "source": "brief",
     "price": 100.45,
-    "as_of": "2026-07-07 10:16:12",
-    "ts": 1783437372.6700265
+    "as_of": "2026-07-07 10:42:37",
+    "ts": 1783438957.1986203
   },
   "IREN": {
     "symbol": "IREN",
@@ -60,9 +60,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 40.56,
-    "as_of": "2026-07-07 10:16:12",
-    "ts": 1783437372.4967313
+    "price": 40.19,
+    "as_of": "2026-07-07 10:42:37",
+    "ts": 1783438957.115489
   },
   "AMD": {
     "symbol": "AMD",
@@ -73,9 +73,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 508.5,
-    "as_of": "2026-07-07 10:16:12",
-    "ts": 1783437372.5147002
+    "price": 510.36,
+    "as_of": "2026-07-07 10:42:37",
+    "ts": 1783438957.089974
   },
   "MSFT": {
     "symbol": "MSFT",
@@ -86,9 +86,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 391.99,
-    "as_of": "2026-07-07 10:16:12",
-    "ts": 1783437372.5436609
+    "price": 393.17,
+    "as_of": "2026-07-07 10:42:37",
+    "ts": 1783438957.0820262
   },
   "AVGO": {
     "symbol": "AVGO",
@@ -99,9 +99,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 364.16,
-    "as_of": "2026-07-07 10:16:12",
-    "ts": 1783437372.4802024
+    "price": 364.66,
+    "as_of": "2026-07-07 10:42:37",
+    "ts": 1783438957.1052716
   },
   "CIFR": {
     "symbol": "CIFR",
@@ -125,9 +125,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 243.66,
-    "as_of": "2026-07-07 10:16:12",
-    "ts": 1783437372.5918963
+    "price": 243.15,
+    "as_of": "2026-07-07 10:42:37",
+    "ts": 1783438957.1478348
   },
   "NET": {
     "symbol": "NET",
@@ -138,9 +138,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 260.4,
-    "as_of": "2026-07-07 10:16:12",
-    "ts": 1783437372.6164618
+    "price": 261.21,
+    "as_of": "2026-07-07 10:42:37",
+    "ts": 1783438957.232385
   },
   "MELI": {
     "symbol": "MELI",
@@ -151,9 +151,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 1814.09,
-    "as_of": "2026-07-07 10:16:12",
-    "ts": 1783437372.634869
+    "price": 1812.41,
+    "as_of": "2026-07-07 10:42:37",
+    "ts": 1783438957.1643624
   },
   "TSM": {
     "symbol": "TSM",
@@ -164,22 +164,22 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 430.39,
-    "as_of": "2026-07-07 10:16:12",
-    "ts": 1783437372.5590425
+    "price": 428.81,
+    "as_of": "2026-07-07 10:42:37",
+    "ts": 1783438957.1811278
   },
   "PEW": {
     "symbol": "PEW",
     "action": "AVOID",
-    "prev_action": null,
-    "headline": "Extended low-float runner \u2014 do not chase",
-    "thesis": "Hold \u2014 no action; PEW is 3.3 ATR above its 20-day ($2.97 vs $2.463) on an 11.6x volume spike, not a current holding.",
-    "target": "If it pulls back to the $2.46 SMA20 (or lower) on shrinking volume, treat only as a lottery-ticket sleeve add capped at 1% of book (~$126).",
-    "stop": "Any speculative entry invalidated below the $2.28 52-week low; do not enter at all while price sits this extended.",
+    "prev_action": "AVOID",
+    "headline": "Still extended, still avoid \u2014 no new fact",
+    "thesis": "Hold \u2014 no action; +3% since standing call is noise, not a new development",
+    "target": "",
+    "stop": "",
     "source": "reco:runner",
-    "price": 2.97,
-    "as_of": "2026-07-06 09:50:56",
-    "ts": 1783349456.8038416
+    "price": 3.06,
+    "as_of": "2026-07-07 10:22:04",
+    "ts": 1783437724.7178013
   },
   "YDES": {
     "symbol": "YDES",
@@ -216,9 +216,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 88.85,
-    "as_of": "2026-07-07 10:16:12",
-    "ts": 1783437372.6536558
+    "price": 88.23,
+    "as_of": "2026-07-07 10:42:37",
+    "ts": 1783438957.2507787
   },
   "SMCI": {
     "symbol": "SMCI",
@@ -242,9 +242,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 921.36,
-    "as_of": "2026-07-07 10:16:12",
-    "ts": 1783437372.5757315
+    "price": 904.26,
+    "as_of": "2026-07-07 10:42:37",
+    "ts": 1783438957.1316643
   },
   "WBX": {
     "symbol": "WBX",
@@ -276,14 +276,14 @@
     "symbol": "SKIN",
     "action": "AVOID",
     "prev_action": "AVOID",
-    "headline": "Still no chase \u2014 extended and fading",
-    "thesis": "Hold \u2014 no action; SKIN isn't held, +5% since the call doesn't change the extended/fading setup.",
+    "headline": "Still extended, still not held \u2014 stand aside",
+    "thesis": "Hold \u2014 no action; SKIN not held, +4.8% since the call doesn't fix the extended/fading setup or add a real level.",
     "target": "",
     "stop": "",
     "source": "reco:runner",
-    "price": 1.05,
-    "as_of": "2026-07-07 09:26:13",
-    "ts": 1783434373.2474318
+    "price": 1.1,
+    "as_of": "2026-07-07 10:41:18",
+    "ts": 1783438878.1214237
   },
   "CLRO": {
     "symbol": "CLRO",
@@ -302,14 +302,14 @@
     "symbol": "JLHL",
     "action": "AVOID",
     "prev_action": "AVOID",
-    "headline": "Still no chase \u2014 fade risk, not a base",
-    "thesis": "Hold \u2014 no action; +40% pop is already fading with bearish MACD and no volume-backed reversal signal yet.",
+    "headline": "Same call: still no volume-backed reversal",
+    "thesis": "Hold \u2014 no action; JLHL is down 13% since the $5.17 call despite today's bounce, MACD still bearish.",
     "target": "",
     "stop": "",
     "source": "reco:runner",
-    "price": 5.17,
-    "as_of": "2026-07-07 09:26:05",
-    "ts": 1783434365.2451491
+    "price": 4.5,
+    "as_of": "2026-07-07 10:24:38",
+    "ts": 1783437878.7076783
   },
   "VRXA": {
     "symbol": "VRXA",
@@ -328,13 +328,13 @@
     "symbol": "TVRD",
     "action": "AVOID",
     "prev_action": "AVOID",
-    "headline": "Still extended and fading \u2014 stand aside",
-    "thesis": "Hold \u2014 no action; TVRD is up 78% on the day and already fading off the high, not a volume-backed continuation entry.",
+    "headline": "Same call: fade risk, not a chase",
+    "thesis": "Hold \u2014 no action; TVRD is a non-portfolio biotech microcap runner already down 8.9% off my prior AVOID call, still no volume-confirmed reversal.",
     "target": "",
     "stop": "",
     "source": "reco:runner",
-    "price": 3.58,
-    "as_of": "2026-07-07 10:11:03",
-    "ts": 1783437063.5192869
+    "price": 3.26,
+    "as_of": "2026-07-07 10:41:08",
+    "ts": 1783438868.7168224
   }
 }

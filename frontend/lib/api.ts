@@ -121,6 +121,7 @@ export interface AdvisorNote {
   insights: string[];
   actions: string[];
   risks: string[];
+  scout?: string[];
   raw?: string;
 }
 

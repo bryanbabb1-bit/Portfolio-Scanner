@@ -28,7 +28,7 @@ def advise_portfolio(force: bool = False, deep: bool = False):
     try:
         # Buy-side context: the advisor should weigh new-name opportunities,
         # not just prune the existing book.
-        candidates = discovery_service.discover(min_score=0, limit=5)["results"]
+        candidates = discovery_service.discover(min_score=0, limit=8)["results"]
     except Exception:
         candidates = None
     return advisor_service.advise_portfolio(
