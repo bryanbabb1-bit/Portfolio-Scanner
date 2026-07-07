@@ -294,6 +294,7 @@ export interface PortfolioConfig {
   owner: string;
   advisor_persona: string;
   cash?: number;
+  core_convictions?: string[];
   themes: Record<string, string>;
   holdings: Holding[];
   watchlist: WatchItem[];

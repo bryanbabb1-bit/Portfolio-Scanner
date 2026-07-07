@@ -345,6 +345,9 @@ class PortfolioConfig(BaseModel):
     owner: str = "You"
     advisor_persona: str = "senior financial advisor at Charles Schwab"
     cash: float = 0.0    # uninvested buying power — counts toward total & allocation
+    # symbols the client holds as long-term CONVICTIONS: accumulate on weakness,
+    # never told to sell at a loss on a technical break (only if thesis breaks)
+    core_convictions: list[str] = []
     themes: dict[str, str] = {}
     holdings: list[Holding] = []
     watchlist: list[WatchItem] = []

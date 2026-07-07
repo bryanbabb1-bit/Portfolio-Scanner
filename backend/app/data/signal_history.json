@@ -313,5 +313,50 @@
     "price": 3.06,
     "ts": 1783437714.148411,
     "date": "2026-07-07"
+  },
+  {
+    "id": "ILLR:runner-ignition:2026-07-07",
+    "symbol": "ILLR",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 2.69,
+    "ts": 1783442957.0234451,
+    "date": "2026-07-07"
+  },
+  {
+    "id": "PYXS:runner-ignition:2026-07-07",
+    "symbol": "PYXS",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 3.0799,
+    "ts": 1783445694.0516245,
+    "date": "2026-07-07"
+  },
+  {
+    "id": "watch:b4d0fc959b40",
+    "symbol": "CRWD",
+    "side": "buy",
+    "rule": "watchpoint",
+    "price": 195.72,
+    "ts": 1783451466.4741848,
+    "date": "2026-07-07"
+  },
+  {
+    "id": "VERA:runner-ignition:2026-07-07",
+    "symbol": "VERA",
+    "side": "buy",
+    "rule": "runner-ignition",
+    "price": 43.2,
+    "ts": 1783452472.8261395,
+    "date": "2026-07-07"
+  },
+  {
+    "id": "MSFT:trend-break:2026-07-07",
+    "symbol": "MSFT",
+    "side": "sell",
+    "rule": "trend-break",
+    "price": 368.62,
+    "ts": 1783458507.368294,
+    "date": "2026-07-07"
   }
 ]

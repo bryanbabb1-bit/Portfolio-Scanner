@@ -10,6 +10,7 @@ const BLANK: PortfolioConfig = {
   owner: "You",
   advisor_persona: "senior financial advisor at Charles Schwab",
   cash: 0,
+  core_convictions: [],
   themes: {},
   holdings: [],
   watchlist: [],
@@ -155,6 +156,24 @@ export default function Settings() {
             />
           </label>
         </div>
+        <label style={{ display: "block", marginTop: 12, fontSize: 12, color: "var(--muted)" }}>
+          <span>Core convictions (comma-separated tickers)</span>
+          <input
+            placeholder="e.g. NVDA, MSFT, AMZN, GOOGL"
+            title="Long-term holds: the advisor accumulates these on weakness and will NEVER tell you to sell them at a loss on a technical break — only if the business thesis breaks."
+            value={(cfg.core_convictions ?? []).join(", ")}
+            onChange={(e) =>
+              setCfg({
+                ...cfg,
+                core_convictions: e.target.value
+                  .split(",")
+                  .map((s) => s.trim().toUpperCase())
+                  .filter(Boolean),
+              })
+            }
+            style={{ marginTop: 5 }}
+          />
+        </label>
       </div>
 
       {/* --------- holdings --------- */}

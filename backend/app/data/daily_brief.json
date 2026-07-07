@@ -1,19 +1,24 @@
 {
-  "type": "morning",
+  "type": "eod",
   "date": "2026-07-07",
-  "generated_at": "2026-07-07 07:21:58",
+  "generated_at": "2026-07-07 15:00:16",
   "engine": "claude",
-  "headline": "AAPL trigger 1.5 away; SPX 200-day is the tripwire",
-  "summary": "Book +2.17% on an AMD grind and a sharp IREN bounce, but nothing here is a green light to add — today's real decision points are the AAPL $317 add trigger and SPX holding its 200-day at ~7,470.",
+  "headline": "Semis slam the book -1.6%; IREN keeps bleeding",
+  "summary": "A rough, broad-based red day — AMD's 6.7% single-day give-back and IREN's continued collapse did the damage, while the two defensive/utility names (NEE, SGOV) barely moved. No new risk was added despite a wild speculative runner tape elsewhere.",
   "watch": [
-    "SPX ≤ $7,470 loses the 200-day — halves new-position size and raises cash bar, book-wide",
-    "AAPL ≥ $317 (now 315.5, +1.5) triggers the queued $250 add on a confirmed close — not intraday",
-    "AAPL ≤ $300 (now 315.5, -15.5) is the hard stop on that add if it goes the other way",
-    "CRWD: no entry until RSI ≤ 60 — currently blocked, don't chase",
-    "PANW: no entry above RSI 70 — wait for it to cool before sizing in",
-    "IREN +11.9% today but still -29.1% P/L, RSI 39.4 — that's a bounce in a broken name, not a signal to add; let the stop do its job if one's armed",
-    "SGOV RSI 81 is noise — it's the cash sleeve, not a trade",
-    "GEV/MSFT/NEE: no armed triggers today, no action — hold as is"
+    "IREN: RSI 35.7, down 8.9% today on a name already -34.7% — watch for a capitulation flush; no invalidation level in the data, so treat any bounce as unconfirmed",
+    "AMD: -6.7% single-day drop after being the book's best winner — confirm tomorrow whether this is a shakeout or a trend change before treating the RSI 50.9 as neutral",
+    "AVGO: -8.2% P/L, RSI 43.7 — semis were weak across the board today (AMD, IREN); watch for follow-through weakness here too",
+    "WBX: TRIM signal is live — execute the partial if not done yet, don't let the gift go stale",
+    "SGOV RSI 82.2 is noise, not a signal — it's a cash-proxy ETF, ignore the overbought read",
+    "Runner tape stays hot (CRNX +99%, CLRO +95%, SKIN +46%, VRXA +38%, BATL +28%, PYXS +25%) — all off-book and extended; no chase, wait for a defined pullback level before considering any"
   ],
-  "recap": []
+  "recap": [
+    "Book -1.60% to $12,200, cash $242 — no green day to hide behind",
+    "IREN -8.9% today, now -34.7% P/L — the single worst holding, still no floor",
+    "AMD -6.7% today but still +2.4% P/L overall — a real give-back on a former winner",
+    "AVGO -1.0% today, -8.2% P/L, RSI 43.7 — no bounce yet, sitting underwater",
+    "Only NVDA (+0.7%) and NEE (+1.2%) held up; not enough to offset AMD/IREN",
+    "WBX fired TRIM (rsi-sell-zone) — take the gift, keep a stub; 9 runner-ignition AVOIDs fired on speculative names (SKIN, CLRO, JLHL, VRXA, TVRD, PEW, ILLR, PYXS, VERA), none held, correctly stood aside"
+  ]
 }

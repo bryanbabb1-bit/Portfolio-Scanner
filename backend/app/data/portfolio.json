@@ -1,7 +1,18 @@
 {
   "owner": "You",
   "advisor_persona": "senior financial advisor at Charles Schwab",
-  "cash": 691.66,
+  "cash": 710.31,
+  "core_convictions": [
+    "NVDA",
+    "MSFT",
+    "AMZN",
+    "AVGO",
+    "AMD",
+    "TSM",
+    "MELI",
+    "AAPL",
+    "NET"
+  ],
   "themes": {
     "AI": "Companies building or monetizing artificial intelligence models and applications",
     "Tech": "Broad technology leaders and platforms",
@@ -61,14 +72,8 @@
     },
     {
       "symbol": "TSM",
-      "shares": 1.76713,
-      "cost_basis": 443.06,
-      "theme": null
-    },
-    {
-      "symbol": "SGOV",
-      "shares": 15.40691,
-      "cost_basis": 100.44,
+      "shares": 2.76713,
+      "cost_basis": 440.79,
       "theme": null
     },
     {
@@ -87,6 +92,24 @@
       "symbol": "NEE",
       "shares": 14.0,
       "cost_basis": 87.63,
+      "theme": null
+    },
+    {
+      "symbol": "GOOGL",
+      "shares": 1.8118,
+      "cost_basis": 369.6,
+      "theme": null
+    },
+    {
+      "symbol": "ANET",
+      "shares": 0.89158,
+      "cost_basis": 168.24,
+      "theme": null
+    },
+    {
+      "symbol": "NTAP",
+      "shares": 2.0,
+      "cost_basis": 167.48,
       "theme": null
     }
   ],
