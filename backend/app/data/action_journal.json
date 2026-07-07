@@ -1087,5 +1087,27 @@
     "note": "Watchpoint triggered (Watchpoint: RSI \u2265 45): buy when rsi reclaims 45",
     "source": "auto",
     "ts": 1783382899.9264898
+  },
+  {
+    "id": "69a03d2be4d7",
+    "date": "2026-07-06",
+    "symbol": "NVDA",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Acted on pinned advice: Add near $191 while the 200-day holds.",
+    "source": "pin",
+    "ts": 1783391955.9664948
+  },
+  {
+    "id": "de74639dcb7c",
+    "date": "2026-07-06",
+    "symbol": "AVGO",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "note": "Watchpoint triggered (Watchpoint: RSI \u2265 45): buy when rsi reclaims 45",
+    "source": "auto",
+    "ts": 1783391956.6982203
   }
 ]

@@ -377,6 +377,7 @@ def advise_stock(report: StockReport, force: bool = False,
         f"{_PERSONA}\n\n{_RESEARCH_PREFIX if deep else ''}"
         f"Here is the current data for a stock a client holds or is "
         f"watching:\n\n{facts}\n"
+        f"{_book_context()}"
         f"{stance_service.block(report.symbol, price)}"
         f"{_prior_advice_block(key, report.symbol)}"
         f"\nAs their advisor, give your professional read. "
@@ -641,6 +642,43 @@ def _live_snapshot(kind: str, symbol: str | None) -> tuple[str, list[dict]]:
     return block, receipts
 
 
+def _book_context(summary=None, reports=None) -> str:
+    """The client's WHOLE portfolio in one block — cash, holdings, allocation —
+    so a single-stock chat/review can still reason about cash impact and
+    allocation. The advisor HAS this; it must never ask the client for it."""
+    from . import portfolio as pf_service
+    if summary is None:
+        try:
+            summary, reports = pf_service.portfolio_summary()
+        except Exception:
+            return ""
+    if not summary:
+        return ""
+    tv = summary.total_market_value or 0
+    cash_pct = (summary.cash / tv * 100) if tv else 0
+    lines = [
+        "CLIENT'S FULL PORTFOLIO (you already HAVE this — never ask them for "
+        "cash or holdings):",
+        f"Total book ${tv:,.0f}. CASH ${summary.cash:,.0f} ({cash_pct:.0f}% of book).",
+    ]
+    held = sorted((r for r in (reports or []) if r.market_value),
+                  key=lambda r: r.market_value or 0, reverse=True)
+    if held:
+        lines.append("Holdings: " + ", ".join(
+            f"{r.symbol} ${r.market_value:,.0f} ({(r.market_value / tv * 100):.0f}%)"
+            for r in held[:14]))
+    if summary.by_theme:
+        lines.append("By theme: " + ", ".join(
+            f"{k} ${v:,.0f}" for k, v in
+            sorted(summary.by_theme.items(), key=lambda x: -x[1])[:6]))
+    lines.append(
+        "For ANY buy/rotation question, compute the CASH IMPACT (what does cash "
+        "drop to? does it breach a sensible floor?) and the ALLOCATION impact "
+        "using these numbers. One coherent answer — do not both endorse a buy "
+        "and warn it drains cash without reconciling the two into a sized call.")
+    return "\n".join(lines) + "\n\n"
+
+
 def ask(kind: str, symbol: str | None, question: str, deep: bool = False) -> dict:
     """Answer a follow-up question about a prior advisor note.
 
@@ -673,14 +711,26 @@ def ask(kind: str, symbol: str | None, question: str, deep: bool = False) -> dic
         except Exception:
             standing = ""
     else:
-        standing = stance_service.block(symbol or "")
+        # A single-stock chat STILL needs the whole book — cash, SGOV, weights —
+        # so "rotate $1500 into NVDA?" is answered with the cash impact, not a
+        # request for data we already have.
+        standing = stance_service.block(symbol or "") + _book_context()
     snapshot = snapshot + standing
     raw = sid = None
     prior = _sessions.get(key)
     ask_model = None if deep else settings.CLAUDE_MODEL_STANDARD
     if prior:
+        # A resumed thread can drift from its own earlier answers. Anchor every
+        # turn to the authoritative current state and forbid contradicting it —
+        # if an earlier answer in this chat conflicts, THIS wins.
+        anchor = (
+            "AUTHORITATIVE CURRENT STATE — this OVERRIDES anything said earlier "
+            "in this conversation. If a prior answer here conflicts with the "
+            "standing call or prices below, that earlier answer was wrong; align "
+            "to THIS and, if it changes your prior reply, say so in one line.\n\n"
+            f"{snapshot}")
         raw, sid = _run_claude(
-            f"{research_note}{snapshot}Client follow-up question: {question}\n\n{_ASK_FMT}",
+            f"{research_note}{anchor}Client follow-up question: {question}\n\n{_ASK_FMT}",
             resume=prior, research=deep, model=ask_model)
 
     if raw is None:
