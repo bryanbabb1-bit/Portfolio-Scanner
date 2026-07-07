@@ -156,7 +156,7 @@ export function ActionJournal() {
                 className="btn ghost"
                 title="Wipe the ledger — start fresh for a new strategy (advisor looks forward, not back)"
                 onClick={async () => {
-                  if (!confirm("Wipe the entire action journal? The advisor will look forward from a clean slate — this can't be undone.")) return;
+                  if (!confirm("Start fresh? This wipes the action journal AND resets the advisor's backward memory (past briefs + chat threads) so a new strategy carries nothing forward. Can't be undone.")) return;
                   try { await api.clearJournal(); } finally { load(); }
                 }}
               >

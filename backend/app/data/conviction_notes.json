@@ -496,25 +496,25 @@
     "side": "sell",
     "rule": "runner-ignition",
     "stage": "extended",
-    "label": "Live runner: already ran +39% today",
-    "headline": "No chase — extended runner, stand aside",
-    "what": "Hold — no action; SKIN isn't held and -1% since the call doesn't change the extended/fading setup.",
+    "label": "Live runner: already ran +42% today",
+    "headline": "Same call: extended, no chase",
+    "what": "Hold — no action; SKIN not held, +1.9% since the $1.05 call is immaterial, setup unchanged.",
     "why": [
-      "+37.77% today on 13.2x volume with RSI 79.2 — the move is done, not starting, and a death-cross regime (price 0.6898/0.722/1.1854 SMA) argues against chasing",
-      "SKIN isn't held and isn't part of the AI core/allocation plan; the $2,239 dry-powder pool stays reserved for AAPL's queued add and AI-leader weakness, not a speculative microcap spike",
-      "Trigger to revisit: a volume-confirmed pullback into the $0.72-0.80 prior-resistance-turned-support zone with RSI back under 60 — that's a continuation setup, not this print"
+      "Still 42x volume and +41.7% on the day but fading off the high — bulk of the move is done",
+      "RSI 80.3 overbought, death-cross regime (SMA20 0.69 < SMA200 1.19) — no thesis, pure momentum extension",
+      "Trigger to revisit: volume-backed pullback to $0.85-0.90 (prior resistance/SMA cluster) or a fresh catalyst — not present now"
     ],
     "entry": "",
     "size": "",
     "target": "",
     "stop": "",
     "action": "AVOID",
-    "price": 1.0489,
+    "price": 1.07,
     "theme": "Runner",
     "held": false,
     "dismissed": false,
-    "generated_at": "2026-07-07 10:11:11",
-    "ts": 1783437038.7439167
+    "generated_at": "2026-07-07 10:15:49",
+    "ts": 1783437331.1591268
   },
   "CLRO:runner-ignition:2026-07-07": {
     "id": "CLRO:runner-ignition:2026-07-07",
@@ -600,24 +600,24 @@
     "side": "sell",
     "rule": "runner-ignition",
     "stage": "extended",
-    "label": "Live runner: already ran +78% today",
-    "headline": "Still extended and fading — stand aside",
-    "what": "Hold — no action; TVRD is up 78% on the day and already fading off the high, not a volume-backed continuation entry.",
+    "label": "Live runner: already ran +77% today",
+    "headline": "Same call: extended, fading, not a chase",
+    "what": "Hold — no action; TVRD is -0.8% since the call, no new fact changes the thesis.",
     "why": [
-      "Price $3.58 is still ~2 ATR (0.3846) above SMA20 $2.4439 and below the 6.77 SMA200 death-cross — structurally broken regardless of today's spike",
-      "Move is decelerating: MACD histogram only 0.0928 and momentum stalling off the high, exactly the 'fading' pattern the alert flagged, not a fresh breakout",
-      "No news or level break since the $3.29 call this morning — the +8.8% intraday move is continuation of the same extended spike, not a new fact; this is a lottery-ticket microcap ($0.0B cap, 168x volume) with no predefined risk structure to size against"
+      "No position held, no new fact: still +76.6% today at 16x volume, fading off the high",
+      "RSI 65.3 and above upper Bollinger with a death-cross regime (SMA20/50 well below SMA200 at 6.77) — this is a fade, not a base",
+      "Trigger to revisit: a volume-confirmed pullback holding above $3.00-3.10 with volume rolling back toward 20d avg, or a fresh catalyst/news — absent that, stand aside"
     ],
     "entry": "",
     "size": "",
     "target": "",
     "stop": "",
     "action": "AVOID",
-    "price": 3.57,
+    "price": 3.55,
     "theme": "Runner",
     "held": false,
     "dismissed": false,
-    "generated_at": "2026-07-07 10:11:03",
-    "ts": 1783437038.7439167
+    "generated_at": "2026-07-07 10:15:39",
+    "ts": 1783437331.1591268
   }
 }

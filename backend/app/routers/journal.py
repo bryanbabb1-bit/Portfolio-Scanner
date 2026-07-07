@@ -18,8 +18,15 @@ def list_journal(days: int = 30):
 
 @router.post("/clear")
 def clear_journal():
-    """Wipe the ledger — 'start fresh' for a new strategy (look forward)."""
-    return {"cleared": journal_service.clear()}
+    """Start fresh for a new strategy: wipe the ledger AND reset the advisor's
+    backward memory (brief history + resumed chats) so no stale claim survives."""
+    n = journal_service.clear()
+    try:
+        from ..services import advisor
+        advisor.reset_memory()
+    except Exception:
+        pass
+    return {"cleared": n}
 
 
 @router.post("")

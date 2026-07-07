@@ -39,6 +39,23 @@ def invalidate_cache() -> None:
     except NameError:
         pass
 
+
+def reset_memory() -> None:
+    """Full 'look forward, not back' reset: clear the advisor's BACKWARD memory
+    — the brief/stock history summaries and resumed chat sessions — plus cached
+    advice, so a fresh strategy carries no stale claims (e.g. a phantom 'you
+    acted on the $191 add'). Does NOT touch stances or the strategy itself."""
+    invalidate_cache()
+    _history.clear()
+    _sessions.clear()
+    import json as _json
+    for f in (_HISTORY_FILE, _SESSIONS_FILE):
+        try:
+            with open(f, "w", encoding="utf-8") as fh:
+                _json.dump({}, fh)
+        except Exception:
+            pass
+
 # claude CLI session per context key — lets follow-up questions resume the
 # conversation with the full brief already in context. Persisted so follow-ups
 # still have context after a backend restart.
