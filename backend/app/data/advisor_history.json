@@ -1,31 +1,6 @@
 {
   "portfolio:brief": [
     {
-      "generated_at": "2026-07-06 13:26:36",
-      "summary": "De-risking is essentially complete \u2014 miners cut from 41% to IREN-only 10.05% (at cap), SGOV worked from 35.8% to 22.8%, and today's 14-share NEE buy fills Energy to ~9.8% of its 10% target; this is a patience week.",
-      "insights": [
-        "Regime is risk-on: S&P 500 ~7,365 sits above its 200-day (~6,895) with strong breadth, so leaning into quality AI names remains correct (Investing.com, Jul 2026).",
-        "Concentration is the main risk, not direction: SGOV 22.8% is the largest position and top-5 = 60.6%, but no single equity breaches the 12% guardrail.",
-        "Book beta 1.35 and 22.7% vol with Sharpe 1.23 is aggressive-appropriate given the 2-year $25k goal needing ~13% annualized.",
-        "AMD is your standout winner (+7.5% today, +10.7% P/L, RSI 57.97) with an AI summit Jul 22-23 as a live catalyst \u2014 trail it, don't trim (Motley Fool, Jul 5 2026).",
-        "IREN's +13.5% pop is news-driven: Jefferies initiated Buy $79, Russell 1000 inclusion, and the Nostrum 490MW deal \u2014 but P/L is still -28.1%, so it stays a capped satellite (Timothy Sykes, Jul 6 2026).",
-        "SGOV RSI 81 'overbought' is noise for a T-bill ETF; it is dry powder (~23%) to deploy only into 5%+ market pullbacks, not a sell signal.",
-        "MSFT remains the laggard (-11.7%, RSI 47.9, downtrend) with weak Xbox-segment headlines \u2014 hold, add nothing, reassess in August."
-      ],
-      "actions": [
-        "Hold \u2014 no action; book is de-risked and at allocation targets.",
-        "Quick trade: Buy $250 AAPL on daily close above $317; stop $300.",
-        "Long game: Direct August's $300 into TSM at market.",
-        "Quick trade: Exit IREN only on new low below cost; else hold at cap."
-      ],
-      "risks": [
-        "Concentration: top-5 = 60.6% \u2014 trim only if any single name breaches the 12% cap.",
-        "IREN reversal on thin float: exit permanently on any daily close below its -28.1% cost-basis low.",
-        "AMD event risk: no new adds within 2 days of the Jul 22-23 summit; trail stop under recent swing low.",
-        "Portfolio-level: if total value drops 15% from high, pause buying and rebuild Cash & Income to 25%."
-      ]
-    },
-    {
       "generated_at": "2026-07-06 15:10:01",
       "summary": "Progress is essentially complete \u2014 you fully exited CIFR and trimmed IREN to $1,265 (10.1%), so miner exposure went from 41% to the 10% cap, and SGOV is worked down to 22.8% from 35.8%; the only live trade is trimming WBX into today's +27% dilution-driven pop.",
       "insights": [
@@ -75,6 +50,32 @@
         "Beta 1.35 amplifies an AI-trade reversal like June's Broadcom-led selloff \u2014 tripwire: benchmark loses its 200-day, halve new size and raise cash.",
         "WBX thin float plus fresh dilution can round-trip fast \u2014 tripwire: any close below $4.60 exits the spec stub entirely.",
         "AI/semi correlation clusters most of your book \u2014 tripwire: a second cautious chip-guide print like AVGO's June cut means trim beta, not add."
+      ]
+    },
+    {
+      "generated_at": "2026-07-07 06:25:19",
+      "summary": "You've done the work \u2014 miner exposure went 41% \u2192 IREN-only ~10% (at cap) and SGOV 35.8% \u2192 17.4% (now near your 15% floor, so stop trimming); this is a patience week, with only the unexecuted WBX trim and standing AAPL/AVGO levels still live.",
+      "insights": [
+        "Regime is risk-on: S&P 500 has held above its 200-day since April 8, 2026 and sits ~1.7% off record highs, so normal position sizing is justified.",
+        "Risk profile is aggressive but paid: beta 1.48, vol 24.5%, Sharpe 1.34, max drawdown -16.1% \u2014 the Sharpe says you're being compensated for the beta.",
+        "SGOV is down to 17.4% from 35.8%, now near your 15% guardrail floor \u2014 deploy no further from cash until total value clears $20,000.",
+        "Miner exposure cut from 41% to IREN-only 10% at cap; the guardrail is satisfied and no further miner cuts are owed.",
+        "Concentration is acceptable: top-5 at 54.5% but SGOV (cash proxy) is the only >12% line; no operating stock breaches the 12% rule.",
+        "Momentum extremes: WBX RSI 75 (+31% on a dilutive \u20ac15.8M raise, July 2) and SGOV RSI 81 are overbought; IREN popped +11.6% on Anthropic's $12\u201315B Australian tender shortlist but is still -29% underwater.",
+        "GEV reports Q2 July 22 (record $163B backlog, Bernstein Outperform) \u2014 outside your no-entry window but do not add into the print."
+      ],
+      "actions": [
+        "Quick trade: Trim WBX ~$100 into +31% dilution pop; stop $4.60.",
+        "Quick trade: Buy $250 AAPL only on daily close above $317; stop $300.",
+        "Quick trade: Add AVGO only on RSI close >=45 (now 44.8).",
+        "Long game: Direct July/August $300 into TSM at market.",
+        "Hold everything else \u2014 de-risking is done; no other action needed."
+      ],
+      "risks": [
+        "IREN is at its 10% satellite cap and -29% underwater; tripwire: new closing low below cost basis forces a permanent exit.",
+        "Regime flip: S&P losing its 200-day (currently ~7,470) halves new-position size and raises cash.",
+        "WBX pop is restructuring-driven dilution, not fundamentals; tripwire: close below $4.60 exits the stub.",
+        "Drawdown guardrail is live at max DD -16.1%; tripwire: portfolio 15% off its high pauses all buying and rebuilds cash to 25%."
       ]
     }
   ],

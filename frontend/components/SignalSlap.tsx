@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { api, ConvictionSignal } from "../lib/api";
 import { money } from "./format";
 import { AdvisorChat } from "./AdvisorChat";
@@ -25,6 +26,9 @@ export function SignalSlap({
   // Signals dismissed this session — overrides focusId so "Got it" actually
   // closes a slap you opened from a notification tap.
   const [localDismissed, setLocalDismissed] = useState<Set<string>>(new Set());
+  // Render into <body> so the nav's backdrop-filter can't trap this overlay.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   // One-time migration: ids dismissed under the old localStorage scheme get
   // dismissed server-side so they don't re-pop after the upgrade.
@@ -51,7 +55,7 @@ export function SignalSlap({
     const focused = signals.find((s) => s.id === focusId && !localDismissed.has(s.id));
     if (focused) pending = [focused, ...pending.filter((s) => s.id !== focusId)];
   }
-  if (!pending.length) return null;
+  if (!mounted || !pending.length) return null;
   const s = pending[Math.min(idx, pending.length - 1)];
   const buy = s.side === "buy";
   const action = (s as any).action as string | undefined;
@@ -71,7 +75,7 @@ export function SignalSlap({
     } catch {}
   }
 
-  return (
+  return createPortal(
     <div className="slap-overlay" role="alertdialog" aria-label="Conviction signal">
       <div className={`slap-card ${buy ? "buy" : "sell"}`}>
         <div className={`slap-banner ${buy ? "buy" : "sell"}`}>
@@ -159,6 +163,7 @@ export function SignalSlap({
           Rule: {s.label} · {s.generated_at} · Not personalized investment advice.
         </p>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

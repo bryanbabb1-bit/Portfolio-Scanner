@@ -3,14 +3,14 @@
     "symbol": "NVDA",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Hold; the $191 add never triggered (NVDA never reached it)",
-    "thesis": "NVDA held from ~$214 cost; the planned $191 add did NOT execute. Hold, no action; reassess only on a real pullback or breakout.",
+    "headline": "$191 add never triggered; hold original lot",
+    "thesis": "$191 add never triggered; hold original lot",
     "target": "",
     "stop": "",
-    "source": "reconcile",
-    "price": 194.7,
-    "as_of": "2026-07-06 22:39:29",
-    "ts": 1783395569.5975273
+    "source": "brief",
+    "price": 191.07,
+    "as_of": "2026-07-07 06:25:19",
+    "ts": 1783423519.873695
   },
   "AAPL": {
     "symbol": "AAPL",
@@ -21,9 +21,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 312.68,
-    "as_of": "2026-07-06 17:10:20",
-    "ts": 1783375820.7749352
+    "price": 314.79,
+    "as_of": "2026-07-07 06:25:19",
+    "ts": 1783423519.85552
   },
   "SEER": {
     "symbol": "SEER",
@@ -42,40 +42,40 @@
     "symbol": "SGOV",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Dry powder 23.7%; deploy only on 5%+ pullbacks",
-    "thesis": "Dry powder 23.7%; deploy only on 5%+ pullbacks",
+    "headline": "Dry powder near 17%; hold above 15% floor",
+    "thesis": "Dry powder near 17%; hold above 15% floor",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 100.45,
-    "as_of": "2026-07-06 17:10:20",
-    "ts": 1783375820.614118
+    "price": 100.46,
+    "as_of": "2026-07-07 06:25:19",
+    "ts": 1783423519.7086656
   },
   "IREN": {
     "symbol": "IREN",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "At 10% cap; don't chase pop, exit new low",
-    "thesis": "At 10% cap; don't chase pop, exit new low",
+    "headline": "At 10% cap; don't chase, exit new low",
+    "thesis": "At 10% cap; don't chase, exit new low",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 44.54,
-    "as_of": "2026-07-06 17:10:20",
-    "ts": 1783375820.639071
+    "price": 43.31,
+    "as_of": "2026-07-07 06:25:19",
+    "ts": 1783423519.7232141
   },
   "AMD": {
     "symbol": "AMD",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Winner +10.1%; trail stop, don't trim",
-    "thesis": "Winner +10.1%; trail stop, don't trim",
+    "headline": "Winner +5%; trail stop, don't trim",
+    "thesis": "Winner +5%; trail stop, don't trim",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 553.5,
-    "as_of": "2026-07-06 17:10:20",
-    "ts": 1783375820.6788127
+    "price": 528.5,
+    "as_of": "2026-07-07 06:25:19",
+    "ts": 1783423519.7672865
   },
   "MSFT": {
     "symbol": "MSFT",
@@ -86,9 +86,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 387.09,
-    "as_of": "2026-07-06 17:10:20",
-    "ts": 1783375820.6954594
+    "price": 392.85,
+    "as_of": "2026-07-07 06:25:19",
+    "ts": 1783423519.7845743
   },
   "AVGO": {
     "symbol": "AVGO",
@@ -99,9 +99,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 374.1,
-    "as_of": "2026-07-06 17:10:20",
-    "ts": 1783375820.7128427
+    "price": 362.08,
+    "as_of": "2026-07-07 06:25:19",
+    "ts": 1783423519.807098
   },
   "CIFR": {
     "symbol": "CIFR",
@@ -125,9 +125,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 244.43,
-    "as_of": "2026-07-06 17:10:20",
-    "ts": 1783375820.7503495
+    "price": 246.6,
+    "as_of": "2026-07-07 06:25:19",
+    "ts": 1783423519.8359385
   },
   "NET": {
     "symbol": "NET",
@@ -138,9 +138,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 247.78,
-    "as_of": "2026-07-06 17:10:20",
-    "ts": 1783375820.8185506
+    "price": 256.33,
+    "as_of": "2026-07-07 06:25:19",
+    "ts": 1783423519.8932488
   },
   "MELI": {
     "symbol": "MELI",
@@ -151,22 +151,22 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 1803.81,
-    "as_of": "2026-07-06 17:10:20",
-    "ts": 1783375820.8378081
+    "price": 1825.0,
+    "as_of": "2026-07-07 06:25:19",
+    "ts": 1783423519.9101005
   },
   "TSM": {
     "symbol": "TSM",
     "action": "ADD",
     "prev_action": "ADD",
-    "headline": "Build via monthly contributions toward 10%",
-    "thesis": "Build via monthly contributions toward 10%",
+    "headline": "Build toward 10% via monthly contributions",
+    "thesis": "Build toward 10% via monthly contributions",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 453.4,
-    "as_of": "2026-07-06 17:10:20",
-    "ts": 1783375820.8570533
+    "price": 441.5,
+    "as_of": "2026-07-07 06:25:19",
+    "ts": 1783423519.9268572
   },
   "PEW": {
     "symbol": "PEW",
@@ -211,14 +211,14 @@
     "symbol": "NEE",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Energy build complete near 10% target",
-    "thesis": "Energy build complete near 10% target",
+    "headline": "Energy build complete near target",
+    "thesis": "Energy build complete near target",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 87.5,
-    "as_of": "2026-07-06 17:10:20",
-    "ts": 1783375820.6620522
+    "price": 87.99,
+    "as_of": "2026-07-07 06:25:19",
+    "ts": 1783423519.739639
   },
   "SMCI": {
     "symbol": "SMCI",
@@ -237,14 +237,14 @@
     "symbol": "MU",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Uptrend intact; no action needed",
-    "thesis": "Uptrend intact; no action needed",
+    "headline": "Uptrend intact despite -4.5% day; no action",
+    "thesis": "Uptrend intact despite -4.5% day; no action",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 987.73,
-    "as_of": "2026-07-06 17:10:20",
-    "ts": 1783375820.7313485
+    "price": 931.5,
+    "as_of": "2026-07-07 06:25:19",
+    "ts": 1783423519.82181
   },
   "WBX": {
     "symbol": "WBX",
@@ -255,21 +255,21 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 5.58,
-    "as_of": "2026-07-06 17:10:20",
-    "ts": 1783375820.8842568
+    "price": 5.45,
+    "as_of": "2026-07-07 06:25:19",
+    "ts": 1783423519.9399157
   },
   "GEV": {
     "symbol": "GEV",
     "action": "HOLD",
-    "prev_action": "AVOID",
-    "headline": "Position open \u2014 manage, do not add",
-    "thesis": "Full-size 1-share position at ~$1152, no stop; hold and set an invalidation, do not add (Energy over target).",
+    "prev_action": "HOLD",
+    "headline": "Manage position; no add into July 22 earnings",
+    "thesis": "Manage position; no add into July 22 earnings",
     "target": "",
     "stop": "",
-    "source": "reconcile",
-    "price": null,
-    "as_of": "2026-07-06 18:20:43",
-    "ts": 1783380043.2887588
+    "source": "brief",
+    "price": 1122.55,
+    "as_of": "2026-07-07 06:25:19",
+    "ts": 1783423519.755633
   }
 }

@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { api, Recommendation } from "../lib/api";
 import { AdvisorChat } from "./AdvisorChat";
 import { BulletList } from "./BulletList";
@@ -25,6 +26,9 @@ export function RecoSlap({
 }) {
   const [reco, setReco] = useState<Recommendation | null>(null);
   const [err, setErr] = useState<string | null>(null);
+  // Render into <body> so no card's backdrop-filter can trap this overlay.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     let live = true;
@@ -40,7 +44,8 @@ export function RecoSlap({
   const cls = reco ? ACTION_CLASS[reco.action] || "hold" : "hold";
   const buy = cls === "buy";
 
-  return (
+  if (!mounted) return null;
+  return createPortal(
     <div className="slap-overlay" role="alertdialog" onClick={onClose}>
       <div className={`slap-card ${buy ? "buy" : cls === "sell" ? "sell" : "hold"}`} onClick={(e) => e.stopPropagation()}>
         <div className={`slap-banner ${buy ? "buy" : cls === "sell" ? "sell" : "hold"}`}>
@@ -113,6 +118,7 @@ export function RecoSlap({
           <button className="btn ghost" onClick={onClose}>Got it</button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
