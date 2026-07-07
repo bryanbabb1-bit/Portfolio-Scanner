@@ -473,7 +473,7 @@
     "price": 5.54,
     "theme": "Energy",
     "held": true,
-    "dismissed": false,
+    "dismissed": true,
     "generated_at": "2026-07-07 07:32:35",
     "ts": 1783427538.9143553,
     "action": "TRIM",
@@ -489,5 +489,31 @@
     "size": "Trim ~50% of existing WBX shares now; insufficient data on exact position dollars to size precisely — do not add",
     "target": "$7.19 (52w high) for the remaining stub",
     "stop": "$4.50 trail on the stub (~2xATR below spot)"
+  },
+  "SKIN:runner-ignition:2026-07-07": {
+    "id": "SKIN:runner-ignition:2026-07-07",
+    "symbol": "SKIN",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "stage": "extended",
+    "label": "Live runner: already ran +33% today",
+    "headline": "Extended reversal risk — don't chase, stand aside",
+    "what": "Hold — no action; SKIN isn't held and is off-thesis, too extended to chase after a 32% pop.",
+    "why": [
+      "RSI 78 overbought and price is ~3.8 ATR above SMA20 ($1.00 vs $0.6882, ATR $0.083) — textbook >2 ATR chase, forbidden by plan",
+      "Death-cross regime intact: price $1.00 still 15.6% below SMA200 $1.1853; today's pop is a bounce inside a longer downtrend, not a reversal yet",
+      "Not in the client's allocation (AI/AI Infra/Energy/Compute Power/core four) — no thesis to fund it; reassess only on a pullback to the $0.72-0.73 SMA50 zone holding on volume, or a base above $1.00 with continued volume, and size any entry as a lottery ticket (<=1% of book, ~$120)"
+    ],
+    "entry": "",
+    "size": "",
+    "target": "",
+    "stop": "",
+    "action": "AVOID",
+    "price": 1.005,
+    "theme": "Runner",
+    "held": false,
+    "dismissed": true,
+    "generated_at": "2026-07-07 08:46:37",
+    "ts": 1783431956.8824668
   }
 }

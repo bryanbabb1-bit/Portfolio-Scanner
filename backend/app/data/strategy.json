@@ -33,8 +33,8 @@
   },
   "guardrails": [
     "Combined IREN plus CIFR never exceeds 10% of portfolio value, and you never average down into any miner that is underwater.",
-    "No single stock above 12% of the portfolio, and SGOV never drops below 15% until total value passes $20,000.",
-    "If the portfolio falls 15% from its high, pause all buying and rebuild Cash & Income to 25% before re-entering.",
+    "No single stock above 12% of the portfolio, and combined dry powder (cash + SGOV) never drops below 15% until total value passes $20,000.",
+    "If the portfolio falls 15% from its high, pause all buying and rebuild dry powder (cash + SGOV) to 25% before re-entering.",
     "Never open a new position with RSI above 70 \u2014 that rule currently blocks CRWD and PANW until they cool off.",
     "Any position down 25% from cost triggers a written re-thesis or full exit within one week; IREN is the live test case."
   ],
@@ -48,5 +48,5 @@
   "approved": true,
   "generated_at": "2026-07-02 23:10:15",
   "engine": "claude",
-  "updated_at": "2026-07-02 23:12:52"
+  "updated_at": "2026-07-07 08:51:05"
 }

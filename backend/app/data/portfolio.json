@@ -1,7 +1,7 @@
 {
   "owner": "You",
   "advisor_persona": "senior financial advisor at Charles Schwab",
-  "cash": 41.62,
+  "cash": 691.66,
   "themes": {
     "AI": "Companies building or monetizing artificial intelligence models and applications",
     "Tech": "Broad technology leaders and platforms",
@@ -13,8 +13,8 @@
   "holdings": [
     {
       "symbol": "NVDA",
-      "shares": 3.02625,
-      "cost_basis": 214.23,
+      "shares": 5.02625,
+      "cost_basis": 205.38,
       "theme": null
     },
     {
@@ -31,8 +31,8 @@
     },
     {
       "symbol": "AVGO",
-      "shares": 2.0899,
-      "cost_basis": 419.64,
+      "shares": 3.0899,
+      "cost_basis": 402.92,
       "theme": null
     },
     {
@@ -61,13 +61,13 @@
     },
     {
       "symbol": "TSM",
-      "shares": 0.76713,
-      "cost_basis": 449.99,
+      "shares": 1.76713,
+      "cost_basis": 443.06,
       "theme": null
     },
     {
       "symbol": "SGOV",
-      "shares": 21.38003,
+      "shares": 15.40691,
       "cost_basis": 100.44,
       "theme": null
     },
@@ -87,18 +87,6 @@
       "symbol": "NEE",
       "shares": 14.0,
       "cost_basis": 87.63,
-      "theme": null
-    },
-    {
-      "symbol": "WBX",
-      "shares": 36.31386,
-      "cost_basis": 5.48,
-      "theme": null
-    },
-    {
-      "symbol": "GEV",
-      "shares": 1.0,
-      "cost_basis": 1158.99,
       "theme": null
     }
   ],

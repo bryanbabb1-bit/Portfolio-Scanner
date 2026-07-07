@@ -8,9 +8,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 191.07,
-    "as_of": "2026-07-07 06:25:19",
-    "ts": 1783423519.873695
+    "price": 192.69,
+    "as_of": "2026-07-07 07:43:29",
+    "ts": 1783428209.9384277
   },
   "AAPL": {
     "symbol": "AAPL",
@@ -21,9 +21,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 314.79,
-    "as_of": "2026-07-07 06:25:19",
-    "ts": 1783423519.85552
+    "price": 314.83,
+    "as_of": "2026-07-07 07:43:29",
+    "ts": 1783428209.9220834
   },
   "SEER": {
     "symbol": "SEER",
@@ -42,40 +42,40 @@
     "symbol": "SGOV",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Dry powder near 17%; hold above 15% floor",
-    "thesis": "Dry powder near 17%; hold above 15% floor",
+    "headline": "At 17.4%, hold above 15% floor",
+    "thesis": "At 17.4%, hold above 15% floor",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 100.46,
-    "as_of": "2026-07-07 06:25:19",
-    "ts": 1783423519.7086656
+    "price": 100.45,
+    "as_of": "2026-07-07 07:43:29",
+    "ts": 1783428209.7945209
   },
   "IREN": {
     "symbol": "IREN",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "At 10% cap; don't chase, exit new low",
-    "thesis": "At 10% cap; don't chase, exit new low",
+    "headline": "At 10% cap; re-thesis or exit new low",
+    "thesis": "At 10% cap; re-thesis or exit new low",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 43.31,
-    "as_of": "2026-07-07 06:25:19",
-    "ts": 1783423519.7232141
+    "price": 43.36,
+    "as_of": "2026-07-07 07:43:29",
+    "ts": 1783428209.8144922
   },
   "AMD": {
     "symbol": "AMD",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Winner +5%; trail stop, don't trim",
-    "thesis": "Winner +5%; trail stop, don't trim",
+    "headline": "Winner +5.6%; trail stop, don't trim",
+    "thesis": "Winner +5.6%; trail stop, don't trim",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 528.5,
-    "as_of": "2026-07-07 06:25:19",
-    "ts": 1783423519.7672865
+    "price": 531.0,
+    "as_of": "2026-07-07 07:43:29",
+    "ts": 1783428209.8506167
   },
   "MSFT": {
     "symbol": "MSFT",
@@ -86,22 +86,22 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 392.85,
-    "as_of": "2026-07-07 06:25:19",
-    "ts": 1783423519.7845743
+    "price": 391.57,
+    "as_of": "2026-07-07 07:43:29",
+    "ts": 1783428209.8656917
   },
   "AVGO": {
     "symbol": "AVGO",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Apple deal good; wait RSI reclaim of 45",
-    "thesis": "Apple deal good; wait RSI reclaim of 45",
+    "headline": "Wait RSI reclaim of 45; now 44.8",
+    "thesis": "Wait RSI reclaim of 45; now 44.8",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 362.08,
-    "as_of": "2026-07-07 06:25:19",
-    "ts": 1783423519.807098
+    "price": 365.84,
+    "as_of": "2026-07-07 07:43:29",
+    "ts": 1783428209.8803988
   },
   "CIFR": {
     "symbol": "CIFR",
@@ -125,9 +125,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 246.6,
-    "as_of": "2026-07-07 06:25:19",
-    "ts": 1783423519.8359385
+    "price": 245.75,
+    "as_of": "2026-07-07 07:43:29",
+    "ts": 1783428209.913504
   },
   "NET": {
     "symbol": "NET",
@@ -138,9 +138,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 256.33,
-    "as_of": "2026-07-07 06:25:19",
-    "ts": 1783423519.8932488
+    "price": 256.0,
+    "as_of": "2026-07-07 07:43:29",
+    "ts": 1783428209.9463184
   },
   "MELI": {
     "symbol": "MELI",
@@ -151,9 +151,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 1825.0,
-    "as_of": "2026-07-07 06:25:19",
-    "ts": 1783423519.9101005
+    "price": 1823.03,
+    "as_of": "2026-07-07 07:43:29",
+    "ts": 1783428209.9611342
   },
   "TSM": {
     "symbol": "TSM",
@@ -164,9 +164,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 441.5,
-    "as_of": "2026-07-07 06:25:19",
-    "ts": 1783423519.9268572
+    "price": 443.65,
+    "as_of": "2026-07-07 07:43:29",
+    "ts": 1783428209.9758499
   },
   "PEW": {
     "symbol": "PEW",
@@ -216,9 +216,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 87.99,
-    "as_of": "2026-07-07 06:25:19",
-    "ts": 1783423519.739639
+    "price": 87.63,
+    "as_of": "2026-07-07 07:43:29",
+    "ts": 1783428209.827453
   },
   "SMCI": {
     "symbol": "SMCI",
@@ -237,14 +237,14 @@
     "symbol": "MU",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Uptrend intact despite -4.5% day; no action",
-    "thesis": "Uptrend intact despite -4.5% day; no action",
+    "headline": "Uptrend intact despite -3.3% day",
+    "thesis": "Uptrend intact despite -3.3% day",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 931.5,
-    "as_of": "2026-07-07 06:25:19",
-    "ts": 1783423519.82181
+    "price": 943.54,
+    "as_of": "2026-07-07 07:43:29",
+    "ts": 1783428209.8959708
   },
   "WBX": {
     "symbol": "WBX",
@@ -255,9 +255,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 5.45,
-    "as_of": "2026-07-07 06:25:19",
-    "ts": 1783423519.9399157
+    "price": 5.54,
+    "as_of": "2026-07-07 07:43:29",
+    "ts": 1783428209.9862328
   },
   "GEV": {
     "symbol": "GEV",
@@ -268,8 +268,21 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 1122.55,
-    "as_of": "2026-07-07 06:25:19",
-    "ts": 1783423519.755633
+    "price": 1123.0,
+    "as_of": "2026-07-07 07:43:29",
+    "ts": 1783428209.8420422
+  },
+  "SKIN": {
+    "symbol": "SKIN",
+    "action": "AVOID",
+    "prev_action": null,
+    "headline": "Extended reversal risk \u2014 don't chase, stand aside",
+    "thesis": "Hold \u2014 no action; SKIN isn't held and is off-thesis, too extended to chase after a 32% pop.",
+    "target": "",
+    "stop": "",
+    "source": "reco:runner",
+    "price": 1.0,
+    "as_of": "2026-07-07 08:46:37",
+    "ts": 1783431997.6309521
   }
 }

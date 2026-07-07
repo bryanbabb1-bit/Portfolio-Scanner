@@ -727,11 +727,20 @@ def _book_context(summary=None, reports=None) -> str:
     if not summary:
         return ""
     tv = summary.total_market_value or 0
-    cash_pct = (summary.cash / tv * 100) if tv else 0
+    # Cash and SGOV are the SAME thing — equivalent deployable dry powder. The
+    # "Cash & Income" bucket already sums raw cash + SGOV, so use it as ONE pool.
+    dry = summary.by_theme.get("Cash & Income", summary.cash) if summary.by_theme else summary.cash
+    dry_pct = (dry / tv * 100) if tv else 0
+    sgov = max(dry - summary.cash, 0)
     lines = [
         "CLIENT'S FULL PORTFOLIO (you already HAVE this — never ask them for "
         "cash or holdings):",
-        f"Total book ${tv:,.0f}. CASH ${summary.cash:,.0f} ({cash_pct:.0f}% of book).",
+        f"Total book ${tv:,.0f}. DRY POWDER = ${dry:,.0f} ({dry_pct:.0f}% of "
+        f"book) — this is cash + SGOV treated as ONE deployable pool (they are "
+        f"EQUIVALENT; do not treat SGOV as untouchable vs cash). Of it, "
+        f"${summary.cash:,.0f} is idle cash and ${sgov:,.0f} is SGOV that can be "
+        f"sold to fund a buy. Any cash/SGOV floor applies to this COMBINED dry "
+        f"powder, not to cash alone.",
     ]
     held = sorted((r for r in (reports or []) if r.market_value),
                   key=lambda r: r.market_value or 0, reverse=True)

@@ -259,5 +259,14 @@
     "price": 5.54,
     "ts": 1783427538.9143553,
     "date": "2026-07-07"
+  },
+  {
+    "id": "SKIN:runner-ignition:2026-07-07",
+    "symbol": "SKIN",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 1.005,
+    "ts": 1783431956.8824668,
+    "date": "2026-07-07"
   }
 ]

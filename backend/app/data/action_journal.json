@@ -614,5 +614,71 @@
     "note": "ALERT (not executed) \u2014 watchpoint hit Watchpoint: RSI \u2265 45; client still needs to decide/act.",
     "source": "auto",
     "ts": 1783427518.4899428
+  },
+  {
+    "id": "b639870b4f88",
+    "date": "2026-07-07",
+    "symbol": "NVDA",
+    "action": "buy",
+    "shares": 2.0,
+    "price": null,
+    "note": "Added shares (3.02625 -> 5.02625)",
+    "source": "auto",
+    "ts": 1783431764.5701444
+  },
+  {
+    "id": "6256847e20bb",
+    "date": "2026-07-07",
+    "symbol": "AVGO",
+    "action": "buy",
+    "shares": 1.0,
+    "price": null,
+    "note": "Added shares (2.0899 -> 3.0899)",
+    "source": "auto",
+    "ts": 1783431764.5751274
+  },
+  {
+    "id": "249d84906c1a",
+    "date": "2026-07-07",
+    "symbol": "TSM",
+    "action": "buy",
+    "shares": 1.0,
+    "price": null,
+    "note": "Added shares (0.76713 -> 1.76713)",
+    "source": "auto",
+    "ts": 1783431764.6065545
+  },
+  {
+    "id": "1834cfd8cc51",
+    "date": "2026-07-07",
+    "symbol": "SGOV",
+    "action": "sell",
+    "shares": 5.9731,
+    "price": null,
+    "note": "Trimmed (21.38 -> 15.4069)",
+    "source": "auto",
+    "ts": 1783431764.6200619
+  },
+  {
+    "id": "5b46f0ce3111",
+    "date": "2026-07-07",
+    "symbol": "GEV",
+    "action": "sell",
+    "shares": 1.0,
+    "price": null,
+    "note": "Closed the position entirely",
+    "source": "auto",
+    "ts": 1783431764.634809
+  },
+  {
+    "id": "4903fc8e127e",
+    "date": "2026-07-07",
+    "symbol": "WBX",
+    "action": "sell",
+    "shares": 36.31386,
+    "price": null,
+    "note": "Closed the position entirely",
+    "source": "auto",
+    "ts": 1783431824.4495122
   }
 ]
