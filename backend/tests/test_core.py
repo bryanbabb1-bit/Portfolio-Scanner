@@ -514,7 +514,8 @@ def test_watchpoints_arm_trigger_journal(tmp_path, monkeypatch):
     assert sig["rule"] == "watchpoint" and sig["symbol"] == "IREN"
     assert "Sell half" in sig["what"]
     assert watchpoints.list_watchpoints()[0]["status"] == "triggered"
-    assert any("Watchpoint triggered" in e["note"] for e in journal.list_entries())
+    # journaled as an ALERT (not an executed trade) so the advisor can't misread it
+    assert any("ALERT (not executed)" in e["note"] for e in journal.list_entries())
     # triggered watchpoints never fire twice
     assert watchpoints.check({"IREN": (30.0, 20.0)}) == []
 
