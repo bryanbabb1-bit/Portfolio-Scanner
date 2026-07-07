@@ -136,5 +136,18 @@
     "status": "armed",
     "created_at": "2026-07-07 06:25",
     "ts": 1783423549.282047
+  },
+  {
+    "id": "5c850d385882",
+    "symbol": "NVDA",
+    "kind": "price_below",
+    "level": 190.0,
+    "note": "NVDA closes below $190: halve new size, beta 1.59 amplifies drawdowns",
+    "side": "sell",
+    "confirm": "close",
+    "source": "advisor",
+    "status": "armed",
+    "created_at": "2026-07-07 08:55",
+    "ts": 1783432507.3265846
   }
 ]

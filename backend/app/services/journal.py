@@ -118,6 +118,24 @@ def delete_entry(entry_id: str) -> bool:
         return True
 
 
+def clear() -> int:
+    """Wipe the whole ledger — 'start fresh' when deploying a new strategy so
+    the advisor looks forward, not back. Re-baselines the holdings snapshot to
+    current so no phantom trades are auto-detected on the next read."""
+    with _lock:
+        n = len(_load())
+        _save([])
+        try:
+            from . import portfolio as pf_service
+            holdings = pf_service.load_portfolio().get("holdings", [])
+            snap = {h["symbol"].upper(): float(h.get("shares", 0) or 0) for h in holdings}
+            with open(_SNAPSHOT_FILE, "w", encoding="utf-8") as f:
+                json.dump(snap, f, indent=2)
+        except Exception:
+            pass
+    return n
+
+
 def list_entries(days: int = 30) -> list[dict]:
     cutoff = time.strftime("%Y-%m-%d",
                            time.localtime(time.time() - days * 86400))

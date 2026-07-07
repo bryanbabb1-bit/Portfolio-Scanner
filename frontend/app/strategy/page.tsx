@@ -222,10 +222,17 @@ export default function Strategy() {
           <div className="card advisor" style={{ marginBottom: 20 }}>
             <div className="advisor-head">
               <span className="who">Talk it through</span>
-              <span className="mut" style={{ fontSize: 12 }}>
-                iterate on the plan, then hit Revise strategy to redraft
-              </span>
+              <div style={{ marginLeft: "auto" }}>
+                <button className="btn" onClick={generate} disabled={loading}>
+                  {loading ? "Revising…" : "Apply chat → revise plan"}
+                </button>
+              </div>
             </div>
+            <p className="mut" style={{ fontSize: 12.5, marginBottom: 10 }}>
+              Discuss changes below, then hit <strong>Apply chat → revise plan</strong> — it
+              redrafts the plan above using this conversation. Review the new DRAFT, then
+              <strong> Approve &amp; activate</strong> to make it live.
+            </p>
             <AdvisorChat kind="strategy" deep={deep} />
           </div>
         </>

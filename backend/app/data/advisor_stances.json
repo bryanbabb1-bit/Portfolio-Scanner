@@ -8,9 +8,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 192.69,
-    "as_of": "2026-07-07 07:43:29",
-    "ts": 1783428209.9384277
+    "price": 192.06,
+    "as_of": "2026-07-07 08:54:26",
+    "ts": 1783432466.033276
   },
   "AAPL": {
     "symbol": "AAPL",
@@ -21,9 +21,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 314.83,
-    "as_of": "2026-07-07 07:43:29",
-    "ts": 1783428209.9220834
+    "price": 312.03,
+    "as_of": "2026-07-07 08:54:26",
+    "ts": 1783432466.1253412
   },
   "SEER": {
     "symbol": "SEER",
@@ -42,40 +42,40 @@
     "symbol": "SGOV",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "At 17.4%, hold above 15% floor",
-    "thesis": "At 17.4%, hold above 15% floor",
+    "headline": "At 13.5%, hold above 15% dry-powder floor",
+    "thesis": "At 13.5%, hold above 15% dry-powder floor",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 100.45,
-    "as_of": "2026-07-07 07:43:29",
-    "ts": 1783428209.7945209
+    "price": 100.46,
+    "as_of": "2026-07-07 08:54:25",
+    "ts": 1783432465.9612079
   },
   "IREN": {
     "symbol": "IREN",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "At 10% cap; re-thesis or exit new low",
-    "thesis": "At 10% cap; re-thesis or exit new low",
+    "headline": "At 10% cap; exit on new low",
+    "thesis": "At 10% cap; exit on new low",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 43.36,
-    "as_of": "2026-07-07 07:43:29",
-    "ts": 1783428209.8144922
+    "price": 41.21,
+    "as_of": "2026-07-07 08:54:25",
+    "ts": 1783432465.9982657
   },
   "AMD": {
     "symbol": "AMD",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Winner +5.6%; trail stop, don't trim",
-    "thesis": "Winner +5.6%; trail stop, don't trim",
+    "headline": "Winner; trail stop through semi weakness",
+    "thesis": "Winner; trail stop through semi weakness",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 531.0,
-    "as_of": "2026-07-07 07:43:29",
-    "ts": 1783428209.8506167
+    "price": 513.46,
+    "as_of": "2026-07-07 08:54:26",
+    "ts": 1783432466.0500033
   },
   "MSFT": {
     "symbol": "MSFT",
@@ -86,22 +86,22 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 391.57,
-    "as_of": "2026-07-07 07:43:29",
-    "ts": 1783428209.8656917
+    "price": 392.63,
+    "as_of": "2026-07-07 08:54:26",
+    "ts": 1783432466.0694993
   },
   "AVGO": {
     "symbol": "AVGO",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Wait RSI reclaim of 45; now 44.8",
-    "thesis": "Wait RSI reclaim of 45; now 44.8",
+    "headline": "Wait RSI reclaim of 45; now 42.7",
+    "thesis": "Wait RSI reclaim of 45; now 42.7",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 365.84,
-    "as_of": "2026-07-07 07:43:29",
-    "ts": 1783428209.8803988
+    "price": 366.65,
+    "as_of": "2026-07-07 08:54:26",
+    "ts": 1783432466.0158327
   },
   "CIFR": {
     "symbol": "CIFR",
@@ -125,9 +125,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 245.75,
-    "as_of": "2026-07-07 07:43:29",
-    "ts": 1783428209.913504
+    "price": 247.87,
+    "as_of": "2026-07-07 08:54:26",
+    "ts": 1783432466.112908
   },
   "NET": {
     "symbol": "NET",
@@ -138,22 +138,22 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 256.0,
-    "as_of": "2026-07-07 07:43:29",
-    "ts": 1783428209.9463184
+    "price": 256.25,
+    "as_of": "2026-07-07 08:54:26",
+    "ts": 1783432466.1353803
   },
   "MELI": {
     "symbol": "MELI",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Below trend but green; watch",
-    "thesis": "Below trend but green; watch",
+    "headline": "Green satellite below trend; watch",
+    "thesis": "Green satellite below trend; watch",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 1823.03,
-    "as_of": "2026-07-07 07:43:29",
-    "ts": 1783428209.9611342
+    "price": 1802.88,
+    "as_of": "2026-07-07 08:54:26",
+    "ts": 1783432466.151663
   },
   "TSM": {
     "symbol": "TSM",
@@ -164,9 +164,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 443.65,
-    "as_of": "2026-07-07 07:43:29",
-    "ts": 1783428209.9758499
+    "price": 435.77,
+    "as_of": "2026-07-07 08:54:26",
+    "ts": 1783432466.080567
   },
   "PEW": {
     "symbol": "PEW",
@@ -211,14 +211,14 @@
     "symbol": "NEE",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Energy build complete near target",
-    "thesis": "Energy build complete near target",
+    "headline": "Energy build complete near 10% target",
+    "thesis": "Energy build complete near 10% target",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 87.63,
-    "as_of": "2026-07-07 07:43:29",
-    "ts": 1783428209.827453
+    "price": 88.75,
+    "as_of": "2026-07-07 08:54:25",
+    "ts": 1783432465.979784
   },
   "SMCI": {
     "symbol": "SMCI",
@@ -237,14 +237,14 @@
     "symbol": "MU",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Uptrend intact despite -3.3% day",
-    "thesis": "Uptrend intact despite -3.3% day",
+    "headline": "Record quarter, uptrend intact despite pullback",
+    "thesis": "Record quarter, uptrend intact despite pullback",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 943.54,
-    "as_of": "2026-07-07 07:43:29",
-    "ts": 1783428209.8959708
+    "price": 919.7,
+    "as_of": "2026-07-07 08:54:26",
+    "ts": 1783432466.0991044
   },
   "WBX": {
     "symbol": "WBX",
@@ -275,14 +275,40 @@
   "SKIN": {
     "symbol": "SKIN",
     "action": "AVOID",
-    "prev_action": null,
-    "headline": "Extended reversal risk \u2014 don't chase, stand aside",
-    "thesis": "Hold \u2014 no action; SKIN isn't held and is off-thesis, too extended to chase after a 32% pop.",
+    "prev_action": "AVOID",
+    "headline": "Still no chase \u2014 extended and fading",
+    "thesis": "Hold \u2014 no action; SKIN isn't held, +5% since the call doesn't change the extended/fading setup.",
     "target": "",
     "stop": "",
     "source": "reco:runner",
-    "price": 1.0,
-    "as_of": "2026-07-07 08:46:37",
-    "ts": 1783431997.6309521
+    "price": 1.05,
+    "as_of": "2026-07-07 09:26:13",
+    "ts": 1783434373.2474318
+  },
+  "CLRO": {
+    "symbol": "CLRO",
+    "action": "AVOID",
+    "prev_action": "AVOID",
+    "headline": "Still exhausted \u2014 no chase, no position",
+    "thesis": "Hold \u2014 no action; RSI 91 and price still capped at the 52-week high with no pullback offered.",
+    "target": "",
+    "stop": "",
+    "source": "reco:runner",
+    "price": 11.95,
+    "as_of": "2026-07-07 09:25:32",
+    "ts": 1783434332.2734737
+  },
+  "JLHL": {
+    "symbol": "JLHL",
+    "action": "AVOID",
+    "prev_action": "AVOID",
+    "headline": "Still no chase \u2014 fade risk, not a base",
+    "thesis": "Hold \u2014 no action; +40% pop is already fading with bearish MACD and no volume-backed reversal signal yet.",
+    "target": "",
+    "stop": "",
+    "source": "reco:runner",
+    "price": 5.17,
+    "as_of": "2026-07-07 09:26:05",
+    "ts": 1783434365.2451491
   }
 }

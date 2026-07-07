@@ -151,6 +151,18 @@ export function ActionJournal() {
               </button>
             )}
             <button className="btn ghost" onClick={startAdd}>+ Add move</button>
+            {entries.length > 0 && (
+              <button
+                className="btn ghost"
+                title="Wipe the ledger — start fresh for a new strategy (advisor looks forward, not back)"
+                onClick={async () => {
+                  if (!confirm("Wipe the entire action journal? The advisor will look forward from a clean slate — this can't be undone.")) return;
+                  try { await api.clearJournal(); } finally { load(); }
+                }}
+              >
+                Clear all
+              </button>
+            )}
           </div>
         )}
       </div>

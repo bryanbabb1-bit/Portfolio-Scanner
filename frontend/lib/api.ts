@@ -498,6 +498,7 @@ export const api = {
   updateJournal: (id: string, draft: Partial<JournalDraft>) =>
     send<JournalEntry>(`/api/journal/${id}`, "PATCH", draft),
   deleteJournal: (id: string) => send<{ deleted: string }>(`/api/journal/${id}`, "DELETE"),
+  clearJournal: () => post<{ cleared: number }>("/api/journal/clear", {}),
   addPin: (pin: { symbol?: string | null; source: string; text: string; points?: string[] }) =>
     post<Pin>("/api/pins", pin),
   setPinStatus: (id: string, status: "open" | "done") =>

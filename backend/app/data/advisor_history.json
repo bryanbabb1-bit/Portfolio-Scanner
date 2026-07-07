@@ -1,32 +1,6 @@
 {
   "portfolio:brief": [
     {
-      "generated_at": "2026-07-06 17:10:20",
-      "summary": "Your de-risking is essentially done: miner exposure went from 41% to IREN-only ~10% (at cap), SGOV worked from 35.8% to 23.7%, and Energy/AVGO/NVDA builds are complete \u2014 this is a patience week, not a trading one.",
-      "insights": [
-        "Book is at target: miners 10% cap, SGOV 23.7% nearing 20% goal, Energy ~9.8% via the NEE build \u2014 nothing structurally needs fixing this week.",
-        "Beta 1.35, vol 22.7%, Sharpe 1.19 \u2014 aggressive but efficient; regime is risk-on with semis green (AMD +6.9%, TSM +4.4%, MU +1.2%).",
-        "SGOV 23.7% largest, top-5 59.6% \u2014 concentration is fine because the biggest slice is cash dry powder, not directional risk.",
-        "IREN's +14.7% is Anthropic-Australia tender speculation (shortlisted, ~$15-21.6B, decision ~6 weeks out per AFR July 5), not a signed deal \u2014 still -27.3% and RSI 39, so it's sentiment, not a thesis repair.",
-        "WBX +34.1% on NYSE compliance approval and \u20ac15.8M restructuring raise (July 2-6); RSI 75 overbought \u2014 a dilution-driven spec pop to harvest, not a trend.",
-        "AVGO +3.8% on the new Apple multi-year silicon deal, but RSI 44.8 is still under your 45 add-trigger \u2014 no reclaim, no buy yet.",
-        "AAPL RSI 62 in the 52w-high zone with a breakout alert live but no confirmed close above $317 \u2014 the setup is armed, not triggered."
-      ],
-      "actions": [
-        "Quick trade: Trim WBX $100 into pop; stop $4.60.",
-        "Quick trade: Add AVGO only on RSI close \u226545; else hold.",
-        "Quick trade: Buy $250 AAPL on daily close above $317; stop $300.",
-        "Long game: Direct July/August $300 into TSM at market.",
-        "Quick trade: Hold IREN at cap; don't chase; exit on new low."
-      ],
-      "risks": [
-        "IREN pop unwinds if Anthropic awards elsewhere \u2014 tripwire: any new low below your -27.3% cost basis is a mechanical full exit.",
-        "Beta 1.35 amplifies an AI-trade reversal like June's Broadcom-led selloff \u2014 tripwire: benchmark loses its 200-day, halve new size and raise cash.",
-        "WBX thin float plus fresh dilution can round-trip fast \u2014 tripwire: any close below $4.60 exits the spec stub entirely.",
-        "AI/semi correlation clusters most of your book \u2014 tripwire: a second cautious chip-guide print like AVGO's June cut means trim beta, not add."
-      ]
-    },
-    {
       "generated_at": "2026-07-07 06:25:19",
       "summary": "You've done the work \u2014 miner exposure went 41% \u2192 IREN-only ~10% (at cap) and SGOV 35.8% \u2192 17.4% (now near your 15% floor, so stop trimming); this is a patience week, with only the unexecuted WBX trim and standing AAPL/AVGO levels still live.",
       "insights": [
@@ -76,6 +50,32 @@
         "Max drawdown -16.1% near the 15% pause line; tripwire: value 15% off high halts buys, rebuild cash to 25%.",
         "Junk leading today (WBX, IREN); tripwire: core NVDA/MU/MSFT failing to confirm signals a fragile, fadeable breadth.",
         "Beta 1.48 amplifies any regime break; tripwire: benchmark losing its 200-day means halve new size, raise cash."
+      ]
+    },
+    {
+      "generated_at": "2026-07-07 08:54:25",
+      "summary": "Progress banked: you closed WBX and GEV today and trimmed SGOV to 13.5% \u2014 miner exposure went 41% \u2192 IREN-only 9.7% (at cap) and dry powder sits at ~18.4%, just above your 15% floor; de-risking is finished, so this is a patience week, not a trade week.",
+      "insights": [
+        "Book is deliberately aggressive and matches your stated appetite: beta 1.59, annualized vol 25.8%, top-5 at 52.8% \u2014 but no single equity dominates; largest true risk names (IREN, AVGO) sit near 9-10%.",
+        "Dry powder (cash + SGOV) is ~18.4%, only 3 points above your 15% floor \u2014 stop trimming SGOV (13.5%); further adds must come from the $300 monthly, not more cuts.",
+        "Miners are IREN-only at 9.7%, right at your 10% cap; Freedom Capital upgraded IREN to Buy on July 6 with a $58 target (~49% upside), supporting the satellite hold despite -32.7% P/L.",
+        "Today's -1.69% is a semi-led wobble \u2014 AMD -7%, MU -6.6%, TSM -3.6%, IREN -6.2% \u2014 echoing June's AVGO soft-AI-guidance selloff that erased $1.3T; RSIs 37-51 are soft, not capitulation.",
+        "MU printed a record fiscal-Q3 (rev $41.5B, EPS $24.67, guiding ~$50B next quarter per June 24 report) yet sits -22% off highs; uptrend intact, so hold through the noise.",
+        "AAPL is your only clean long setup: RSI 61.9 with 52w-high-zone and breakout alerts firing, still room before overbought \u2014 but no confirmed daily close above $317 yet.",
+        "AVGO's RSI slipped to 42.7 from 44.8 last brief \u2014 your \u226545 add trigger moved further away, not closer, so the wait is correct."
+      ],
+      "actions": [
+        "Hold \u2014 de-risking is done; no cash-funded action needed this week.",
+        "Quick trade: Buy $250 AAPL only on daily close above $317; stop $300.",
+        "Quick trade: Add AVGO only on RSI close \u226545; now 42.7.",
+        "Long game: Direct July and August $300 into TSM at market.",
+        "Quick trade: Exit IREN on new low below cost; else hold."
+      ],
+      "risks": [
+        "Chip-cycle unwind deepens: if AMD loses its uptrend or NVDA closes below $190, halve new size \u2014 beta 1.59 amplifies every drawdown.",
+        "IREN is a thin miner satellite: tripwire is a new low below your -32.7% cost basis \u2014 exit permanently, no averaging down.",
+        "Dry powder floor: cash + SGOV at 18.4% \u2014 do not let it fall below 15% before the monthly contribution lands.",
+        "MSFT is below long-term trend and -10.3%: reassess the position if the downtrend persists past early August."
       ]
     }
   ],

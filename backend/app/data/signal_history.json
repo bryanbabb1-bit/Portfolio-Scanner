@@ -268,5 +268,23 @@
     "price": 1.005,
     "ts": 1783431956.8824668,
     "date": "2026-07-07"
+  },
+  {
+    "id": "CLRO:runner-ignition:2026-07-07",
+    "symbol": "CLRO",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 11.42,
+    "ts": 1783433784.5379698,
+    "date": "2026-07-07"
+  },
+  {
+    "id": "JLHL:runner-ignition:2026-07-07",
+    "symbol": "JLHL",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 5.01,
+    "ts": 1783433924.520054,
+    "date": "2026-07-07"
   }
 ]

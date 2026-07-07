@@ -1,52 +1,50 @@
 {
   "goals": {
-    "target_value": 25000,
+    "target_value": 20000.0,
     "horizon": "2 years",
-    "monthly_contribution": 300,
+    "monthly_contribution": 0.0,
     "risk_appetite": "aggressive",
-    "notes": "I like the AI/compute theme long term. Keep me honest on risk - I over-concentrated in miners once already."
+    "notes": "I believe in the AI revolution. I am a novice trader with not much history of success. I\u2019d rather trade on high conviction stocks with strong growth outlooks, with some calibrated risks on stocks that could balloon, that tie into my belief in AI. I would rather not sink additional capital in if I don\u2019t have to. I am okay to rebalance my portfolio to align with my goals. I can add capital if needed, but am already down 2 grand in loses this year. Don\u2019t be afraid to make bold calls based on research and technicals that could find us a diamond in the rough type stock that explodes. "
   },
-  "thesis": "Your $300/month contributes $7,200 by mid-2028, so hitting $25,000 needs roughly 13% annualized growth \u2014 rotate SGOV's 35.8% into quality AI compounders on weakness while hard-capping miners at 10%.",
+  "thesis": "Grow $12,154 to $20,000 in two years (~28%/yr) by rotating overbought SGOV and idle cash into leading AI compounders on weakness, while hard-capping speculative miner IREN at 10% and cutting losers mechanically.",
   "short_term": [
-    "Rotate $1,500 of SGOV into NVDA near $191 (your pinned level) and AVGO only after its RSI recovers above 45 from today's 39.7.",
-    "Freeze IREN (RSI 30.6, down 36.6%) and CIFR \u2014 no adds; exit CIFR entirely on any bounce above $19 since the miner thesis already burned you.",
-    "Add $250 to AAPL only on a confirmed breakout close, since the setup alert fired and RSI 60.3 still has room before overbought.",
-    "Do not chase CRWD (RSI 71.9) or PANW (RSI 78.5); set alerts and buy CRWD only on a pullback below RSI 60.",
-    "Hold MSFT but add nothing while it sits below its long-term trend; reassess the position if the downtrend persists past early August.",
-    "Direct July and August's $300 contributions into TSM, building the $47 stub toward $650 while it holds its uptrend."
+    "Trim SGOV from 13.5% to ~9% (RSI 82.1, overbought alert); redeploy ~$550 into pullbacks and keep ~$1,000 dry powder for entries.",
+    "No NVDA adds within two days of its Aug 26 2026 earnings; hold the ~$970 lot and reassess after guidance.",
+    "Hard-cap IREN at 10% ($1,215); set a stop ~15% below today given the -34% loss and critical drawdown alert\u2014cut if breached.",
+    "AMD leads momentum (RSI 50.9, uptrend, +130% YTD per Jul 2026); add only on a volume-confirmed bounce, risking \u2264$182.",
+    "AAPL sits in a 52-week-high breakout zone (RSI 62); add on a volume-backed new-high close with a stop under the base.",
+    "Prefer GOOGL near $371 (RSI 56, not extended) over PANW $348 (RSI 73.7, >2 ATR\u2014chase forbidden); risk \u2264$182."
   ],
   "long_term": [
-    "Make NVDA, AMD, TSM, and MSFT your core four at 45-50% combined, splitting the $300 monthly contribution across whichever trades below its 50-day.",
-    "Build TSM to roughly 10% ($1,800+) by mid-2027 \u2014 leading-edge foundry is the chokepoint every AI name in your book depends on.",
-    "Open NEE near $88 and build Energy to 10%, capturing data-center power demand with lower volatility than your 1.44 portfolio beta.",
-    "Work SGOV down from 35.8% to 20% by mid-2027, deploying in $500-750 tranches only on 5%+ market pullbacks.",
-    "Treat IREN as a 10%-max satellite bet on its AI data-center pivot; exit permanently if it makes a new low below the current -36.6% cost basis.",
-    "Checkpoint the math every quarter: $12,143 plus contributions compounding at 13% reaches $25,000 by July 2028 without ever needing a moonshot."
+    "Build a core of 6-8 AI compounders\u2014NVDA, AVGO, MSFT, AMZN, GOOGL\u2014held through volatility and added to on 200-day tests.",
+    "Trim tail positions (MELI, NET below-trend) to fund leaders; concentrate conviction rather than spreading across 13 thin lots.",
+    "Keep IREN and any low-float speculation as a separate <10% trade sleeve with predefined exits and trailed stops.",
+    "Reinvest SGOV yield and trimmed gains into leaders whenever the S&P holds above its 200-day (~7,470, Jul 2026).",
+    "Target $20,000 by mid-2028 (~28% annualized) via compounding leaders and disciplined risk\u2014no reliance on new outside capital."
   ],
   "allocation_targets": {
-    "AI": 20,
-    "Tech": 15,
-    "AI Infrastructure": 25,
-    "Energy": 10,
-    "Compute Power": 10,
-    "Cash & Income": 20
+    "AI Infrastructure": 30.0,
+    "AI": 24.0,
+    "Tech": 14.0,
+    "Compute Power": 10.0,
+    "Energy": 8.0,
+    "Cash & Income": 14.0
   },
   "guardrails": [
-    "Combined IREN plus CIFR never exceeds 10% of portfolio value, and you never average down into any miner that is underwater.",
-    "No single stock above 12% of the portfolio, and combined dry powder (cash + SGOV) never drops below 15% until total value passes $20,000.",
-    "If the portfolio falls 15% from its high, pause all buying and rebuild dry powder (cash + SGOV) to 25% before re-entering.",
-    "Never open a new position with RSI above 70 \u2014 that rule currently blocks CRWD and PANW until they cool off.",
-    "Any position down 25% from cost triggers a written re-thesis or full exit within one week; IREN is the live test case."
+    "Risk \u22641.5% of book (~$182) per new position; size = risk dollars / distance to predefined stop.",
+    "IREN/Compute Power hard-capped at 10%; any single non-core position capped at 8% of the book.",
+    "If the S&P 500 loses its 200-day (~7,470), halve new-position size and raise cash toward 20%.",
+    "Cut every position at its stop mechanically; never average down a broken thesis (MSFT -10.3%, IREN -34%).",
+    "No new entries within two days of a holding's earnings; NVDA reports Aug 26 2026\u2014flagged."
   ],
   "milestones": [
-    "By September 30, 2026: SGOV under 25%, miners under 10%, and portfolio value at or above $13,200.",
-    "By January 2027: portfolio at or above $14,800 with the core four (NVDA, AMD, TSM, MSFT) at 40%+ combined.",
-    "By July 2027 (midpoint): portfolio at or above $17,500 and Energy sleeve established near 10%.",
-    "By January 2028: portfolio at or above $21,000; if below, extend the timeline rather than adding leverage or miner risk.",
-    "By July 2028: $25,000 target hit with max drawdown held tighter than the current -22.2%."
+    "By Aug 26 2026: SGOV trimmed to \u226410%, cash redeployed, portfolio holding \u2265$12,500 pre-NVDA earnings.",
+    "By year-end 2026: book \u2265$14,000 (~15% H2 gain) with top-5 concentration below 50%.",
+    "By mid-2027: \u2265$16,000, and IREN either reclaimed above cost basis or already cut per its stop.",
+    "By mid-2028: reach the $20,000 target (~28% annualized); pause new risk if drawdown exceeds -20%."
   ],
-  "approved": true,
-  "generated_at": "2026-07-02 23:10:15",
+  "approved": false,
+  "generated_at": "2026-07-07 09:09:28",
   "engine": "claude",
-  "updated_at": "2026-07-07 08:51:05"
+  "updated_at": "2026-07-07 09:09:28"
 }

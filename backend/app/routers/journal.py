@@ -16,6 +16,12 @@ def list_journal(days: int = 30):
     return {"count": len(items), "results": items}
 
 
+@router.post("/clear")
+def clear_journal():
+    """Wipe the ledger — 'start fresh' for a new strategy (look forward)."""
+    return {"cleared": journal_service.clear()}
+
+
 @router.post("")
 def create_entry(req: JournalCreate):
     if req.action in ("buy", "sell") and not (req.symbol or "").strip():

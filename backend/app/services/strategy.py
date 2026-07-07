@@ -103,10 +103,19 @@ def generate(inputs: dict, deep: bool = False) -> dict:
     goals = "\n".join(g_lines) or "No explicit goals given — infer sensible ones."
 
     prior = load()
+    # If a strategy chat is in progress, RESUME it so the revision incorporates
+    # everything discussed there — that conversation is the whole point of
+    # 'iterate then revise'. Falls back to a fresh draft when there's no chat.
+    prior_sid = advisor._sessions.get("strategy:plan") if prior else None
     prior_block = ""
     if prior and prior.get("thesis"):
-        prior_block = (f"\nThe current strategy (you are revising it):\n"
-                       f"Thesis: {prior['thesis']}\n")
+        prior_block = (
+            f"\nThe current ACTIVE strategy you are REVISING:\n"
+            f"Thesis: {prior['thesis']}\n"
+            f"Guardrails: {' | '.join(prior.get('guardrails', []))}\n"
+            f"Allocation targets: {prior.get('allocation_targets', {})}\n"
+            f"Incorporate everything discussed in our conversation into this "
+            f"revision; keep what still holds, change what we agreed to change.\n")
 
     prompt = (
         f"{advisor._PERSONA}\n\n"
@@ -132,7 +141,7 @@ def generate(inputs: dict, deep: bool = False) -> dict:
         f'condition and rough date to know the plan is on track)}}. '
         f"Every bullet a single self-contained sentence under 28 words."
     )
-    raw, sid = advisor._run_claude(prompt, research=deep)
+    raw, sid = advisor._run_claude(prompt, resume=prior_sid, research=deep)
     if not raw:
         raise RuntimeError("The advisor did not respond — try again.")
     start, end = raw.find("{"), raw.rfind("}")
