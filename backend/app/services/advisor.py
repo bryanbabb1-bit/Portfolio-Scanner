@@ -549,12 +549,46 @@ def advise_portfolio(summary: PortfolioSummary, reports: list[StockReport],
     from . import stance as stance_service
     strategy_block = strategy_service.facts_block()
     standing = stance_service.book_block([r.symbol for r in reports])
+
+    # Capital discipline: every buy the advisor lists — the "actions" and the
+    # "scout" ideas — draws from ONE deployable pool (dry powder above the
+    # floor), so it must size and prioritize them together, not in a vacuum.
+    book = summary.total_market_value or 1
+    dry = summary.by_theme.get("Cash & Income", summary.cash or 0)
+    floor_pct = 15.0
+    _sdoc = strategy_service.load()
+    if _sdoc:
+        for _k, _v in (_sdoc.get("allocation_targets") or {}).items():
+            if "cash" in _k.lower():
+                try:
+                    floor_pct = float(_v)
+                except (TypeError, ValueError):
+                    pass
+                break
+    floor_amt = book * floor_pct / 100
+    deployable = max(0.0, dry - floor_amt)
+    capital_block = (
+        f"\nCAPITAL YOU CAN DEPLOY THIS WEEK: about ${deployable:,.0f} "
+        f"(dry powder ${dry:,.0f} minus your {floor_pct:.0f}% floor "
+        f"${floor_amt:,.0f}).\n"
+        f"CAPITAL DISCIPLINE (critical): the buys in 'actions' and the ideas in "
+        f"'scout' are NOT independent — they ALL draw from that same "
+        f"${deployable:,.0f}. Size and rank every buy so the TOTAL you tell the "
+        f"client to buy fits within it. If your ideas add up to more than is "
+        f"available, SAY SO and PRIORITIZE — which single buy comes first, which "
+        f"waits for a trim or new cash — instead of listing buys that can't all "
+        f"be funded. Size each scout idea against what's left AFTER the 'actions' "
+        f"buys, never in isolation. If little or nothing is deployable, frame the "
+        f"ideas as 'buy when a trim frees cash', not 'buy now'.\n"
+    )
+
     prompt = (
         f"{_PERSONA}\n\n{_RESEARCH_PREFIX if deep else ''}"
         f"Here is your client's full portfolio right now:\n\n{facts}\n"
         f"{strategy_block}\n"
         f"{standing}"
         f"{_prior_advice_block(key)}\n"
+        f"{capital_block}\n"
         f"You are the client's WATCHDOG advisor, not a salesman. A refreshed "
         f"brief does NOT owe the client new trades TODAY: if the book is "
         f"positioned correctly, your call is patience on existing positions. But "
