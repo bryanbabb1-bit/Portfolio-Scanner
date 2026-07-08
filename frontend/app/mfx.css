@@ -94,6 +94,8 @@
 .pg-label.ready::before { background: var(--bull); }
 .pg-label.wait { color: var(--muted); }
 .pg-label.wait::before { background: var(--muted); }
+.pg-label.guard { color: var(--gold); }
+.pg-label.guard::before { background: var(--gold); }
 .pg-empty {
   font-size: 12.5px; color: var(--muted); padding: 10px 12px;
   border: 1px dashed var(--border); border-radius: 10px;
@@ -111,6 +113,7 @@
 .plan-move .signal-side.buy { color: var(--bull); background: var(--bull-bg); }
 .plan-move .signal-side.sell { color: var(--bear); background: var(--bear-bg); }
 .plan-move .signal-side.hold { color: var(--muted); background: rgba(255,255,255,0.05); }
+.plan-move .signal-side.stop { color: var(--gold); background: rgba(245, 181, 68, 0.14); }
 .plan-move .pm-body { flex: 1; min-width: 0; }
 .plan-move .pm-order { font-size: 14px; line-height: 1.4; color: var(--text); }
 .plan-move .pm-sym { font-weight: 800; margin-right: 6px; color: var(--text); }

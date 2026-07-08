@@ -221,33 +221,49 @@ def build_plan() -> dict:
         grouped[key] = keep
     moves = list(grouped.values())
 
-    sells = [m for m in moves if m["side"] == "sell"]
-    funders = [m["symbol"] for m in sells if m["symbol"]]
     queued_buys = round(sum(m["amount"] or 0 for m in moves if m["side"] == "buy"))
     below_floor = cash < floor
 
-    ready, waiting = [], []
+    # A funder is a real cash-RAISING sell (a trim into strength / "move to
+    # cash") — never a protective stop, which only fires on a drop and doesn't
+    # free discretionary cash. A buy is never funded by a sale of its OWN name.
+    funders = [m["symbol"] for m in moves
+               if m["side"] == "sell" and m["symbol"] and not _is_stop(m)]
+    funder_ready = {m["symbol"] for m in moves
+                    if m["side"] == "sell" and not _is_stop(m)
+                    and (m.get("gate") is None or m["gate"]["met"])}
+
+    guards, ready, waiting = [], [], []
     for m in moves:
         gate = m.get("gate")
         price_ready = (gate is None) or gate["met"]
         m["funded_by"] = None
-        reason = None
+        m["stop"] = _is_stop(m)
 
+        # protective stops are standing risk guards, not to-dos or funders
+        if m["stop"]:
+            m["status"] = "guard"
+            m["wait_reason"] = _stop_reason(m, gate)
+            guards.append(m)
+            continue
+
+        reason = None
         if m["side"] == "buy":
             text_funded = any(k in m["text"].lower() for k in _FUND_WORDS)
-            needs_sale = (below_floor or text_funded) and bool(funders)
-            if needs_sale:
-                m["funded_by"] = funders[0]
-            sale_ready = not needs_sale or any(
-                (s.get("gate") is None or s["gate"]["met"]) for s in sells
-                if s["symbol"] == m["funded_by"])
+            funder = next((f for f in funders if f != m["symbol"]), None)
+            needs_sale = below_floor or text_funded
+            if needs_sale and funder:
+                m["funded_by"] = funder
+            sale_ready = (m["funded_by"] in funder_ready) if m["funded_by"] else not needs_sale
             if not price_ready:
                 reason = _price_reason(m, gate)
-                if needs_sale and not sale_ready:
+                if m["funded_by"] and not sale_ready:
                     reason += f" Then fund it from the {m['funded_by']} trim."
             elif needs_sale and not sale_ready:
-                reason = f"Funded by the {m['funded_by']} trim — do it once that frees cash."
-        else:  # sell / trim / hold
+                reason = (f"Funded by the {m['funded_by']} trim — do it once that frees cash."
+                          if m["funded_by"]
+                          else "Cash is below your floor — raise cash before adding.")
+        else:  # trim / sell into strength / hold
             if not price_ready:
                 reason = _price_reason(m, gate)
 
@@ -270,8 +286,28 @@ def build_plan() -> dict:
         "funders": funders,
         "ready": ready,
         "waiting": waiting,
+        "guards": guards,
         "count": len(moves),
     }
+
+
+def _is_stop(m: dict) -> bool:
+    """A protective stop, not a cash-raising trim: 'stop' in the wording, or a
+    sell that only triggers on a DROP."""
+    if m["side"] != "sell":
+        return False
+    if "stop" in m["text"].lower():
+        return True
+    g = m.get("gate")
+    return bool(g and g.get("direction") == "fall")
+
+
+def _stop_reason(m: dict, gate: dict | None) -> str:
+    sym = m["symbol"] or "the position"
+    if gate:
+        return (f"Protective stop — only sells {sym} if it drops to ${gate['level']:g} "
+                f"({abs(gate['distance_pct']):g}% away); it won't touch your position otherwise.")
+    return f"Protective stop on {sym}."
 
 
 def _price_reason(m: dict, gate: dict | None) -> str:

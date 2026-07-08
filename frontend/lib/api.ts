@@ -433,8 +433,9 @@ export interface PlanMove {
   amount?: number | null;
   gate?: PlanGate | null;
   funded_by?: string | null;
-  status: "ready" | "waiting";
+  status: "ready" | "waiting" | "guard";
   wait_reason?: string | null;
+  stop?: boolean;
   pin_id?: string;
   wp_id?: string;
 }
@@ -450,6 +451,7 @@ export interface GamePlanData {
   funders: string[];
   ready: PlanMove[];
   waiting: PlanMove[];
+  guards: PlanMove[];
   count: number;
 }
 

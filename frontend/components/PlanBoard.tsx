@@ -23,6 +23,7 @@ export function PlanBoard() {
       ...d,
       ready: d.ready.filter((x) => x.id !== m.id),
       waiting: d.waiting.filter((x) => x.id !== m.id),
+      guards: d.guards.filter((x) => x.id !== m.id),
     });
     try {
       if (m.source === "pin" && m.pin_id) await api.deletePin(m.pin_id);
@@ -30,12 +31,12 @@ export function PlanBoard() {
     } catch { load(); }
   };
 
-  const chip = (side: PlanMove["side"]) =>
-    side === "buy" ? "BUY" : side === "sell" ? "SELL" : "HOLD";
+  const chip = (m: PlanMove) =>
+    m.stop ? "STOP" : m.side === "buy" ? "BUY" : m.side === "sell" ? "SELL" : "HOLD";
 
   const Row = ({ m }: { m: PlanMove }) => (
-    <div className={`plan-move ${m.side}`}>
-      <span className={`signal-side ${m.side}`}>{chip(m.side)}</span>
+    <div className={`plan-move ${m.stop ? "stop" : m.side}`}>
+      <span className={`signal-side ${m.stop ? "stop" : m.side}`}>{chip(m)}</span>
       <div className="pm-body">
         <div className="pm-order">
           {m.symbol && <Link href={`/stock/${m.symbol}`} className="pm-sym">{m.symbol}</Link>}
@@ -96,6 +97,14 @@ export function PlanBoard() {
             <div className="plan-group">
               <div className="pg-label wait">Waiting on…</div>
               {data.waiting.map((m) => <Row key={m.id} m={m} />)}
+            </div>
+          )}
+
+          {/* protective stops — standing risk guards, not to-dos */}
+          {data.guards.length > 0 && (
+            <div className="plan-group">
+              <div className="pg-label guard">Protective stops</div>
+              {data.guards.map((m) => <Row key={m.id} m={m} />)}
             </div>
           )}
 

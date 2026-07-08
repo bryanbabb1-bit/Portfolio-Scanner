@@ -68,6 +68,17 @@ def test_floor_from_strategy_or_default():
     assert plan._floor(None, 10_000) == (1500, 15.0)
 
 
+def test_stop_is_not_a_funder():
+    # a protective stop (sell on a drop / "stop loss") is a guard, never a
+    # cash-raising trim, so it must not fund other buys
+    stop = {"side": "sell", "text": "Sell NVDA if it drops to $185 (stop loss)",
+            "symbol": "NVDA", "gate": {"direction": "fall", "met": False}}
+    trim = {"side": "sell", "text": "Trim $400 IREN; move proceeds to cash",
+            "symbol": "IREN", "gate": {"direction": "rise", "met": False}}
+    assert plan._is_stop(stop) is True
+    assert plan._is_stop(trim) is False
+
+
 def test_build_plan_shape():
     p = plan.build_plan()
     for key in ("dry_powder", "floor", "below_floor", "queued_buys",
