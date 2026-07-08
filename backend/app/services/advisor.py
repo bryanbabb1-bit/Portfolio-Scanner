@@ -277,8 +277,8 @@ def _facts_from_report(r: StockReport) -> str:
         lines.append("Client's recent actions on this name (acknowledge, don't "
                      "re-recommend): " + "; ".join(_move(e) for e in my_moves))
     if r.news:
-        lines.append("Recent headlines:")
-        for n in r.news[:6]:
+        lines.append("Recent headlines (Yahoo + Google News):")
+        for n in r.news[:8]:
             src = f" — {n.publisher}" if n.publisher else ""
             when = f" ({n.published[:10]})" if n.published else ""
             lines.append(f"  - {n.title}{src}{when}")
@@ -290,6 +290,20 @@ _RESEARCH_PREFIX = (
     "the LATEST news, earnings/guidance, analyst rating changes and market "
     "sentiment for the relevant ticker(s). Fold what you find into your "
     "bullets and cite dates for anything news-driven.\n\n"
+)
+
+# Never tell the client to trim into a catalyst it hasn't accounted for. The
+# headlines are now in the facts (Yahoo + Google News), so the advisor must
+# actually read them before calling a trim on a strong/rising name.
+_NEWS_TRIM_RULE = (
+    "NEWS-AWARE TRIMS (important): before recommending the client TRIM or SELL a "
+    "name that is UP and/or near its highs, read the recent headlines above. If "
+    "the move has a fresh catalyst (a partnership/deal, product, guidance raise, "
+    "analyst upgrade), do NOT recommend trimming on 'extended' or 'at its high' "
+    "alone — a real catalyst can extend the run; weigh it explicitly, and if you "
+    "still trim, say why the catalyst doesn't change it. If a large recent move "
+    "has NO obvious reason in the headlines, say you'd verify the latest news "
+    "before trimming rather than assuming it is only technical. "
 )
 
 
@@ -437,19 +451,22 @@ def advise_stock(report: StockReport, force: bool = False,
     price = getattr(report.quote, "price", None)
     stable = stance_service.is_stable(report.symbol, price, deep=deep)
     prior_stance = stance_service.get(report.symbol)
+    # A big move usually has a catalyst — pull live news even if deep wasn't asked.
+    _chg = getattr(report.quote, "change_pct", None)
+    use_web = deep or (_chg is not None and abs(_chg) >= 6)
     prompt = (
-        f"{_PERSONA}\n\n{_RESEARCH_PREFIX if deep else ''}"
+        f"{_PERSONA}\n\n{_RESEARCH_PREFIX if use_web else ''}"
         f"Here is the current data for a stock a client holds or is "
         f"watching:\n\n{facts}\n"
         f"{_book_context()}"
         f"{stance_service.block(report.symbol, price)}"
         f"{_prior_advice_block(key, report.symbol)}"
-        f"\nAs their advisor, give your professional read. "
+        f"\nAs their advisor, give your professional read. {_NEWS_TRIM_RULE}"
         f"{_SCHEMA_HINT}"
     )
     raw, sid = _run_claude(
-        prompt, research=deep,
-        model=None if deep else settings.CLAUDE_MODEL_STANDARD)
+        prompt, research=use_web,
+        model=None if use_web else settings.CLAUDE_MODEL_STANDARD)
     note = _parse_note(report.symbol, "claude", raw) if raw else \
         _fallback_note(report.symbol, facts, report.signals)
     if raw and sid:
@@ -604,6 +621,7 @@ def advise_portfolio(summary: PortfolioSummary, reports: list[StockReport],
         f"Give your professional whole-portfolio review: overall posture, "
         f"concentration/risk assessment, and what — if anything — to do "
         f"this week (name specific tickers and levels). "
+        f"{_NEWS_TRIM_RULE}"
         f'Respond with ONLY a JSON object, no markdown, with these keys: '
         f'"summary" (ONE short plain sentence — the single most important thing right now), '
         f'"posture" (string: "act" if this week genuinely calls for trades, '
@@ -920,6 +938,14 @@ def ask(kind: str, symbol: str | None, question: str, deep: bool = False) -> dic
                 "answer": "The AI advisor is disabled (ADVISOR_ENABLED=0), so "
                           "follow-up questions can't be answered right now."}
 
+    # If the client is asking about news/a catalyst, always go check the web —
+    # they shouldn't have to toggle "deep research" to get a current answer.
+    if not deep and re.search(
+            r"\b(news|announce\w*|headline|catalyst|deal|partner\w*|acqui\w*|"
+            r"merger|report(ed|s)?|rumou?r|upgrade|downgrade|guidance)\b",
+            question, re.I):
+        deep = True
+
     if kind == "portfolio":
         key = "portfolio:brief"
     elif kind == "strategy":
@@ -1130,16 +1156,23 @@ def recommend(symbol: str, event: str, kind: str = "alert",
     standing = stance_service.block(symbol.upper(), _px)
     prior = _prior_advice_block(f"stock:{symbol.upper()}", symbol.upper())
 
+    # A big recent move usually means a catalyst — verify it live (web) so a
+    # trim/add is never recommended blind to the news that's driving it.
+    _chg = fresh.get("change_pct")
+    big_move = _chg is not None and abs(_chg) >= 6
     prompt = (
+        f"{_RESEARCH_PREFIX if big_move else ''}"
         f"{_PERSONA}\n\nA watchdog notification just fired for the client:\n"
         f"EVENT: {symbol} — {event}\n\n{facts}\n{book}\n{strat}\n{standing}{prior}\n"
         f"As their advisor, say clearly what they should DO about THIS event, "
         f"considering their position, cash and plan. The answer may be 'Hold — "
         f"no action' (e.g. normal volatility, thesis intact) — but justify it "
         f"and give the level that WOULD change it. If action is warranted, give "
-        f"the exact move, size (<=1.5% risk of book) and stop. {_RECO_FMT}"
+        f"the exact move, size (<=1.5% risk of book) and stop. {_NEWS_TRIM_RULE}{_RECO_FMT}"
     )
-    raw, _ = _run_claude(prompt, model=settings.CLAUDE_MODEL_STANDARD)
+    raw, _ = _run_claude(
+        prompt, research=big_move,
+        model=None if big_move else settings.CLAUDE_MODEL_STANDARD)
     if not raw:
         _reco_cache[key] = (time.time(), _fallback())
         return _reco_cache[key][1]

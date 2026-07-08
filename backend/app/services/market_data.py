@@ -9,8 +9,12 @@ from __future__ import annotations
 
 import threading
 import time
+import urllib.parse
+import urllib.request
+import xml.etree.ElementTree as ET
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
+from email.utils import parsedate_to_datetime
 
 import pandas as pd
 
@@ -20,6 +24,78 @@ from . import mock_data
 # ------------------------------------------------------------------ cache
 _cache: dict[str, tuple[float, object]] = {}
 _cache_lock = threading.Lock()
+
+# Google News RSS enrichment — a second, broader headline source so the
+# advisor isn't blind to same-day catalysts Yahoo's thin feed misses. Cached
+# per ticker (news moves slower than price) to avoid re-fetching every scan.
+_news_cache: dict[str, tuple[float, list[dict]]] = {}
+_NEWS_TTL = 600
+
+_NAME_SUFFIXES = (
+    ", Inc.", " Inc.", ", Inc", " Inc", " Corporation", " Corp.", " Corp",
+    ", Ltd.", " Ltd.", " Ltd", " Holdings", " Company", " Co.", " plc",
+    " N.V.", " S.A.", ", L.L.C.", " LLC", " Limited",
+)
+
+
+def _clean_company(name: str | None) -> str:
+    n = (name or "").strip()
+    changed = True
+    while changed:
+        changed = False
+        for suf in _NAME_SUFFIXES:
+            if n.endswith(suf):
+                n = n[: -len(suf)].strip()
+                changed = True
+    return n.strip().strip(",")
+
+
+def _google_news(company: str | None, ticker: str, limit: int = 8) -> list[dict]:
+    """Recent headlines from Google News RSS (free, no key). Falls back to []
+    on any error so a news outage never breaks a quote."""
+    hit = _news_cache.get(ticker)
+    if hit and time.time() - hit[0] < _NEWS_TTL:
+        return hit[1]
+    name = _clean_company(company)
+    query = f'"{name}" stock' if name else f"{ticker} stock"
+    url = "https://news.google.com/rss/search?" + urllib.parse.urlencode(
+        {"q": query, "hl": "en-US", "gl": "US", "ceid": "US:en"})
+    items: list[dict] = []
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=5) as resp:
+            root = ET.fromstring(resp.read())
+        for it in root.findall(".//item")[:limit]:
+            title = (it.findtext("title") or "").strip()
+            if not title:
+                continue
+            src = (it.findtext("source") or "Google News").strip()
+            # Google appends " - Source" to titles; drop it to avoid clutter.
+            if src and src != "Google News" and title.endswith(f" - {src}"):
+                title = title[: -(len(src) + 3)].strip()
+            published = None
+            try:
+                published = parsedate_to_datetime(
+                    it.findtext("pubDate")).strftime("%Y-%m-%dT%H:%M:%SZ")
+            except Exception:
+                published = None
+            items.append({"title": title, "publisher": src,
+                          "link": it.findtext("link"), "published": published})
+    except Exception:
+        items = []
+    _news_cache[ticker] = (time.time(), items)
+    return items
+
+
+def _merge_news(primary: list[dict], extra: list[dict], limit: int = 8) -> list[dict]:
+    """Merge two headline lists, de-dupe by title, newest first."""
+    merged: dict[str, dict] = {}
+    for n in extra + primary:  # extra (Google) first so it wins ties
+        t = (n.get("title") or "").strip().lower()[:90]
+        if t and t not in merged:
+            merged[t] = n
+    return sorted(merged.values(),
+                  key=lambda n: n.get("published") or "", reverse=True)[:limit]
 
 
 def _market_hours() -> bool:
@@ -173,6 +249,8 @@ def _fetch_live(symbol: str) -> MarketData:
     except Exception:
         pass
     news_items = [n for n in news_items if n.get("title")]
+    # Enrich Yahoo's thin feed with Google News so same-day catalysts show up.
+    news_items = _merge_news(news_items, _google_news(name, symbol), limit=8)
     if not news_items:
         news_items = mock_data.news(symbol)
 

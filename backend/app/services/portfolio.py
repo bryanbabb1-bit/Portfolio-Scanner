@@ -75,7 +75,7 @@ def build_report(symbol: str, theme: str | None = None) -> StockReport:
         num_analysts=a.get("num_analysts"),
         upside_pct=upside,
     )
-    news = [NewsItem(**n) for n in (md.news or [])[:6]]
+    news = [NewsItem(**n) for n in (md.news or [])[:8]]
 
     # ~30-point recent close series for an inline card sparkline.
     closes = md.history["Close"].tail(30)
