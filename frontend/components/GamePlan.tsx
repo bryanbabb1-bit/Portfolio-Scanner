@@ -172,6 +172,10 @@ export function GamePlan() {
             </div>
           )}
 
+          <div className="gp-hint mut" style={{ fontSize: 11.5, lineHeight: 1.5, marginBottom: 8 }}>
+            Reminders &amp; triggers only — clearing one won&apos;t log a trade. Your journal fills from the changes you make in Settings.
+          </div>
+
           <div className="pins-list">
             {/* recent hits — act on these */}
             {hits.map((w) => (
@@ -212,22 +216,18 @@ export function GamePlan() {
               );
             })}
 
-            {/* unconditional to-dos */}
+            {/* pinned reminders — clearing one does NOT log a trade; the
+                journal fills only from real portfolio edits in Settings */}
             {todos.map((p) => (
               <div key={p.id} className="pin-row">
-                <input type="checkbox" checked={false} title="Mark done (journals it)"
-                  onChange={async () => {
-                    setPins((c) => c.filter((x) => x.id !== p.id));
-                    try { await api.setPinStatus(p.id, "done"); } catch { load(); }
-                  }} />
                 {p.symbol ? (
                   <Link href={`/stock/${p.symbol}`} className="alert-sym">{p.symbol}</Link>
                 ) : (
-                  <span className="alert-sym mut">BOOK</span>
+                  <span className="alert-sym mut">PORTFOLIO</span>
                 )}
                 <span className="pin-text" title={p.points.join("\n")}>{p.text}</span>
                 <span className="mut pin-date">{p.created_at.slice(5, 10)}</span>
-                <button className="icon-btn jr-btn" title="Remove" onClick={async () => {
+                <button className="icon-btn jr-btn" title="Clear this reminder (does not record a trade)" onClick={async () => {
                   setPins((c) => c.filter((x) => x.id !== p.id));
                   try { await api.deletePin(p.id); } catch { load(); }
                 }}>✕</button>
