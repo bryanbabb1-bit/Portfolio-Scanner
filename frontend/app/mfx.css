@@ -26,8 +26,9 @@
   color: var(--muted); display: flex; align-items: center; gap: 8px; margin-bottom: 8px;
 }
 .mfx-head .val {
-  font-size: 46px; font-weight: 700; letter-spacing: -0.02em; line-height: 1;
+  font-size: 46px; font-weight: 700; letter-spacing: -0.01em; line-height: 1;
   font-variant-numeric: tabular-nums; margin-bottom: 10px;
+  text-shadow: 0 0 24px rgba(77, 141, 255, 0.22);
 }
 .mfx-head .deltas { display: flex; flex-wrap: wrap; gap: 8px; }
 .mfx-chip {
@@ -132,6 +133,30 @@
 }
 .plan-move .pm-reason { color: var(--muted); }
 .plan-move .pm-go { color: var(--bull); font-weight: 600; }
+
+/* ---- probability lattice (track record) --------------------------------- */
+.lattice .lat-sub { font-size: 12.5px; color: var(--muted); margin-bottom: 14px; line-height: 1.5; }
+.lattice .lat-body { display: grid; grid-template-columns: 180px 1fr; gap: 20px; align-items: stretch; }
+@media (max-width: 620px) { .lattice .lat-body { grid-template-columns: 1fr; } }
+.lat-stats { display: flex; flex-direction: column; gap: 13px; }
+.lat-stats .ls { display: flex; flex-direction: column; gap: 2px; }
+.lat-stats .ls .k { font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+.lat-stats .ls .v { font-size: 24px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.lat-stats .ls .v.pos { color: var(--bull); }
+.lat-stats .ls .v.neg { color: var(--bear); }
+.lat-tag { margin-top: auto; font-size: 11.5px; color: var(--muted); line-height: 1.5; border-top: 1px solid var(--border); padding-top: 11px; }
+.lat-canvas-wrap { position: relative; min-height: 250px; }
+.lat-canvas-wrap canvas { display: block; width: 100%; }
+.lat-note { position: absolute; top: 2px; right: 5px; font-size: 10px; color: var(--muted); font-family: ui-monospace, monospace; letter-spacing: 0.04em; }
+
+/* ---- terminal status line ----------------------------------------------- */
+.mfx-status {
+  flex-basis: 100%; order: -1; display: flex; align-items: center; gap: 8px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px; letter-spacing: 0.09em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 12px;
+}
+.mfx-status .on { width: 6px; height: 6px; border-radius: 50%; background: var(--bull); box-shadow: 0 0 8px var(--bull); }
 
 /* ---- footer nav --------------------------------------------------------- */
 .mfx-foot {

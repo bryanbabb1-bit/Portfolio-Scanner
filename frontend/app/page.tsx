@@ -20,7 +20,7 @@ import { RiskStats } from "../components/RiskStats";
 import { PositionHealth } from "../components/PositionHealth";
 import { PortfolioBrief } from "../components/PortfolioBrief";
 import { DailyBrief } from "../components/DailyBrief";
-import { ScorecardPanel } from "../components/ScorecardPanel";
+import { ProbabilityLattice } from "../components/ProbabilityLattice";
 import { ActionJournal } from "../components/ActionJournal";
 import { StockCard } from "../components/StockCard";
 import { SortControl, SortKey, sortReports } from "../components/SortControl";
@@ -174,31 +174,35 @@ export default function Dashboard() {
         {sortedHoldings.map((r) => <StockCard key={r.symbol} r={r} />)}
       </div>
 
-      {/* allocation + scorecard */}
-      <div className="mfx-grid two" style={{ marginTop: 24 }}>
-        {themeEntries.length > 0 && (
-          <div className="card">
-            <div className="section-title" style={{ marginBottom: 14 }}>Allocation by theme</div>
-            <div className="alloc-bars">
-              {themeEntries.map(([theme, v]) => {
-                const share = (v / summary.total_market_value) * 100;
-                return (
-                  <div key={theme} className="alloc-row">
-                    <span className="alloc-name">{theme}</span>
-                    <div className="alloc-track"><div className="alloc-fill" style={{ width: `${Math.max(share, 1.5)}%` }} /></div>
-                    <span className="alloc-val">{money(v, 0)} <span className="mut">· {share.toFixed(1)}%</span></span>
-                  </div>
-                );
-              })}
-            </div>
+      {/* track record — the probability lattice */}
+      <div className="mfx-label" style={{ marginTop: 24 }}>Track record</div>
+      <ProbabilityLattice />
+
+      {/* allocation */}
+      {themeEntries.length > 0 && (
+        <div className="card" style={{ marginTop: 18 }}>
+          <div className="section-title" style={{ marginBottom: 14 }}>Allocation by theme</div>
+          <div className="alloc-bars">
+            {themeEntries.map(([theme, v]) => {
+              const share = (v / summary.total_market_value) * 100;
+              return (
+                <div key={theme} className="alloc-row">
+                  <span className="alloc-name">{theme}</span>
+                  <div className="alloc-track"><div className="alloc-fill" style={{ width: `${Math.max(share, 1.5)}%` }} /></div>
+                  <span className="alloc-val">{money(v, 0)} <span className="mut">· {share.toFixed(1)}%</span></span>
+                </div>
+              );
+            })}
           </div>
-        )}
-        <ScorecardPanel />
-      </div>
+        </div>
+      )}
 
       <div style={{ marginTop: 18 }}><ActionJournal /></div>
 
       <div className="mfx-foot">
+        <div className="mfx-status">
+          <span className="on" /> Watchdog online · advisor Claude · {summary.positions} positions · {summary.source} data
+        </div>
         <Link href="/classic">Classic dashboard</Link>
         <Link href="/strategy">Strategy</Link>
         <Link href="/runners">Runner Radar</Link>
