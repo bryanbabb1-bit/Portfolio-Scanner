@@ -6,6 +6,13 @@ import { money } from "../../components/format";
 
 type Quote = { price: number | null; source: string };
 
+// Let a numeric field sit empty while you retype it instead of snapping to 0.
+// Empty is held as NaN in state (shown blank) and coerced to 0 on save.
+const numDisplay = (x: number | null | undefined) =>
+  x == null || Number.isNaN(x) ? "" : x;
+const parseNum = (raw: string) => (raw === "" ? NaN : parseFloat(raw));
+const num0 = (x: number | null | undefined) => (x == null || Number.isNaN(x) ? 0 : x);
+
 const BLANK: PortfolioConfig = {
   owner: "You",
   advisor_persona: "senior financial advisor at Charles Schwab",
@@ -127,7 +134,10 @@ export default function Settings() {
     // Drop fully-empty rows so a blank trailing row doesn't fail validation.
     const clean: PortfolioConfig = {
       ...cfg,
-      holdings: cfg.holdings.filter((h) => h.symbol.trim()),
+      cash: num0(cfg.cash),
+      holdings: cfg.holdings
+        .filter((h) => h.symbol.trim())
+        .map((h) => ({ ...h, shares: num0(h.shares), cost_basis: num0(h.cost_basis) })),
       watchlist: cfg.watchlist.filter((w) => w.symbol.trim()),
     };
     try {
@@ -175,10 +185,10 @@ export default function Settings() {
               type="number"
               min={0}
               step="any"
-              value={cfg.cash ?? 0}
+              value={numDisplay(cfg.cash)}
               placeholder="0"
               title="Uninvested cash — counts toward your total and allocation, never quoted or scanned"
-              onChange={(e) => setCfg({ ...cfg, cash: parseFloat(e.target.value) || 0 })}
+              onChange={(e) => setCfg({ ...cfg, cash: parseNum(e.target.value) })}
             />
           </label>
         </div>
@@ -211,17 +221,17 @@ export default function Settings() {
                 />
                 <input
                   type="number"
-                  value={h.shares}
+                  value={numDisplay(h.shares)}
                   min={0}
                   step="any"
-                  onChange={(e) => setHolding(i, { shares: parseFloat(e.target.value) || 0 })}
+                  onChange={(e) => setHolding(i, { shares: parseNum(e.target.value) })}
                 />
                 <input
                   type="number"
-                  value={h.cost_basis}
+                  value={numDisplay(h.cost_basis)}
                   min={0}
                   step="any"
-                  onChange={(e) => setHolding(i, { cost_basis: parseFloat(e.target.value) || 0 })}
+                  onChange={(e) => setHolding(i, { cost_basis: parseNum(e.target.value) })}
                 />
                 <span className="et-cell mut" title={q?.source === "mock" ? "mock data" : "live"}>
                   {price != null ? money(price) : "—"}
