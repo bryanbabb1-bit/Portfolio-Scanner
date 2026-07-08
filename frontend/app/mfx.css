@@ -149,6 +149,42 @@
 .lat-canvas-wrap canvas { display: block; width: 100%; }
 .lat-note { position: absolute; top: 2px; right: 5px; font-size: 10px; color: var(--muted); font-family: ui-monospace, monospace; letter-spacing: 0.04em; }
 
+/* ---- daily attribution (what moved you today) --------------------------- */
+.attrib .attrib-net { font-size: 16px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.attrib .attrib-net.pos { color: var(--bull); }
+.attrib .attrib-net.neg { color: var(--bear); }
+.attrib-rows { display: flex; flex-direction: column; gap: 7px; }
+.attrib-row { display: grid; grid-template-columns: 52px 1fr 74px 52px; align-items: center; gap: 10px; text-decoration: none; color: inherit; padding: 2px 0; }
+.attrib-row .ar-sym { font-weight: 700; font-size: 13px; }
+.ar-track { height: 8px; border-radius: 999px; background: rgba(255, 255, 255, 0.05); overflow: hidden; }
+.ar-bar { height: 100%; border-radius: 999px; }
+.ar-bar.pos { background: var(--bull); }
+.ar-bar.neg { background: var(--bear); }
+.ar-amt { text-align: right; font-size: 13px; font-variant-numeric: tabular-nums; }
+.ar-amt.pos { color: var(--bull); }
+.ar-amt.neg { color: var(--bear); }
+.ar-pct { text-align: right; font-size: 12px; font-variant-numeric: tabular-nums; }
+
+/* ---- earnings runway ---------------------------------------------------- */
+.earn-strip { display: flex; flex-wrap: wrap; gap: 8px; }
+.earn-chip { display: inline-flex; align-items: center; gap: 7px; padding: 6px 11px; border-radius: 10px; border: 1px solid var(--border); background: rgba(255, 255, 255, 0.03); text-decoration: none; color: var(--text); font-size: 13px; }
+.earn-chip .ec-sym { font-weight: 700; }
+.earn-chip .ec-days { color: var(--muted); font-size: 12px; }
+.earn-chip.soon { border-color: rgba(245, 181, 68, 0.5); background: rgba(245, 181, 68, 0.1); }
+.earn-chip .ec-flag { color: var(--gold); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.04em; }
+
+/* ---- relationship graph ------------------------------------------------- */
+.graph .graph-avg { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.graph .graph-sub { font-size: 12.5px; color: var(--text); margin-bottom: 8px; line-height: 1.5; }
+.graph-canvas-wrap { position: relative; min-height: 330px; }
+.graph-canvas-wrap canvas { display: block; width: 100%; }
+
+/* ---- goal trajectory ---------------------------------------------------- */
+.goal .goal-proj { margin-top: 8px; font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+.goal .goal-proj b { color: var(--text); }
+.goal .goal-proj .ahead { color: var(--bull); }
+.goal .goal-proj .behind { color: var(--gold); }
+
 /* ---- terminal status line ----------------------------------------------- */
 .mfx-status {
   flex-basis: 100%; order: -1; display: flex; align-items: center; gap: 8px;

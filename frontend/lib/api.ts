@@ -75,6 +75,8 @@ export interface StockReport {
   unrealized_pl?: number;
   unrealized_pl_pct?: number;
   spark?: number[];
+  earnings_date?: string | null;
+  days_to_earnings?: number | null;
 }
 
 export interface RunnerCandidate {
@@ -455,8 +457,19 @@ export interface GamePlanData {
   count: number;
 }
 
+export interface GraphNode { symbol: string; theme: string; weight: number; }
+export interface GraphEdge { a: string; b: string; corr: number; }
+export interface GraphData {
+  nodes: GraphNode[];
+  edges: GraphEdge[];
+  avg_corr: number | null;
+  source: string;
+  pairs: number;
+}
+
 export const api = {
   plan: () => get<GamePlanData>("/api/plan"),
+  graph: () => get<GraphData>("/api/graph"),
   health: () => get<{ status: string; data_mode: string; advisor_enabled: boolean }>("/api/health"),
   summary: () => get<{ brief: DailyBrief | null; dismissed: boolean }>("/api/summary"),
   generateBrief: (kind: "morning" | "eod") =>

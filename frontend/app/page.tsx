@@ -5,11 +5,15 @@ import "./mfx.css";
 import {
   api,
   ConvictionSignal,
+  PortfolioHistory,
   PortfolioInsights,
   PortfolioSummary,
   StockReport,
   StrategyDoc,
 } from "../lib/api";
+import { DailyAttribution } from "../components/DailyAttribution";
+import { EarningsRunway } from "../components/EarningsRunway";
+import { RelationshipGraph } from "../components/RelationshipGraph";
 import { WatchdogBar } from "../components/WatchdogBar";
 import { SignalSlap } from "../components/SignalSlap";
 import { PortfolioChart } from "../components/PortfolioChart";
@@ -36,6 +40,7 @@ export default function Dashboard() {
   const [insights, setInsights] = useState<PortfolioInsights | null>(null);
   const [signals, setSignals] = useState<ConvictionSignal[]>([]);
   const [strategy, setStrategy] = useState<StrategyDoc | null>(null);
+  const [hist, setHist] = useState<PortfolioHistory | null>(null);
   const [focusSlap, setFocusSlap] = useState<string | null>(null);
   const [sort, setSort] = useState<SortKey>("value");
   const [view, setView] = useState<"chart" | "heatmap">("chart");
@@ -49,6 +54,7 @@ export default function Dashboard() {
       const demo = new URLSearchParams(window.location.search).has("demoSignal");
       api.signals(demo).then((d) => setSignals(d.results)).catch(() => {});
       api.strategy().then((s) => s && setStrategy(s)).catch(() => {});
+      api.portfolioHistory("6mo").then(setHist).catch(() => {});
     };
     load();
     const t = setInterval(load, 60_000);
@@ -84,6 +90,36 @@ export default function Dashboard() {
   const val = summary.total_market_value;
   const progress = Math.max(0, Math.min(100, (val / target) * 100));
   const gap = Math.max(0, target - val);
+
+  // goal trajectory: annualized growth from the 6-month history + monthly
+  // contributions, simulated forward to the target.
+  const projMonths = (() => {
+    if (val >= target) return 0;
+    let g = 0.08; // fallback annual growth if history is unavailable
+    if (hist && hist.points.length > 5) {
+      const first = hist.points[0].value;
+      const last = hist.points[hist.points.length - 1].value;
+      if (first > 0) {
+        const ann = Math.pow(last / first, 1 / 0.5) - 1; // 6-month window annualized
+        if (isFinite(ann)) g = Math.max(-0.3, Math.min(0.6, ann));
+      }
+    }
+    let cur = val, m = 0;
+    while (cur < target && m < 600) { cur = cur * (1 + g / 12) + monthly; m++; }
+    return m >= 600 ? null : m;
+  })();
+  const horizonM = (() => {
+    const h = strategy?.goals?.horizon;
+    const mt = h?.match(/(\d+)\s*(year|yr|month|mo)/i);
+    return mt ? (/year|yr/i.test(mt[2]) ? +mt[1] * 12 : +mt[1]) : null;
+  })();
+  const projDate = (() => {
+    if (projMonths == null) return null;
+    const d = new Date();
+    d.setMonth(d.getMonth() + projMonths);
+    return d.toLocaleDateString("en-US", { month: "short", year: "numeric" });
+  })();
+
   const themeEntries = Object.entries(summary.by_theme).sort((a, b) => b[1] - a[1]);
 
   const markDismissed = (ids: string[]) => {
@@ -145,11 +181,25 @@ export default function Dashboard() {
             </div>
             <div className="pace">
               {strategy?.goals?.horizon ? <>Horizon <b>{strategy.goals.horizon}</b>{strategy.goals.risk_appetite ? <> · <b>{strategy.goals.risk_appetite}</b> risk</> : null}{monthly > 0 ? <> · adding <b>{money(monthly, 0)}/mo</b></> : null}.</> : "Set a target on the Strategy page to track the climb."}
+              {val < target && (
+                <div className="goal-proj">
+                  {projMonths == null ? (
+                    <>At the current pace you don&apos;t reach {money(target, 0)} yet — it needs more growth or contributions.</>
+                  ) : (
+                    <>On this pace: <b>{money(target, 0)} by {projDate}</b> (~{projMonths} mo)
+                    {horizonM != null && projMonths <= horizonM ? <> · <span className="ahead">{horizonM - projMonths} mo ahead</span> of your goal.</>
+                     : horizonM != null ? <> · <span className="behind">{projMonths - horizonM} mo behind</span> your goal.</> : <>.</>}</>
+                  )}
+                </div>
+              )}
             </div>
           </div>
           {insights && <RiskStats risk={insights.risk} />}
+          <DailyAttribution holdings={holdings} dayChange={summary.day_change} />
         </div>
       </div>
+
+      <EarningsRunway holdings={holdings} />
 
       {/* row 2 — what to do */}
       <div className="mfx-label">What to do</div>
@@ -177,6 +227,8 @@ export default function Dashboard() {
       {/* track record — the probability lattice */}
       <div className="mfx-label" style={{ marginTop: 24 }}>Track record</div>
       <ProbabilityLattice />
+
+      <div style={{ marginTop: 18 }}><RelationshipGraph /></div>
 
       {/* allocation */}
       {themeEntries.length > 0 && (
