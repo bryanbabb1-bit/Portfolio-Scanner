@@ -42,9 +42,18 @@ def add(symbol: str | None, source: str, text: str,
         points: list[str] | None = None) -> dict:
     with _lock:
         items = _load()
-        # Same text pinned twice is a double-click, not a second reminder.
+        # Same text pinned twice is a double-click, not a second reminder —
+        # but if the earlier copy was completed/cleared, re-pinning means the
+        # user wants it back as an active reminder, so revive it instead of
+        # silently swallowing the pin.
         for p in items:
             if p["text"] == text and p.get("symbol") == symbol:
+                if p.get("status") != "open":
+                    p["status"] = "open"
+                    p["done_at"] = None
+                    p["created_at"] = time.strftime("%Y-%m-%d %H:%M:%S")
+                    p["ts"] = time.time()
+                    _save(items)
                 return p
         sym = (symbol or "").upper() or None
         # Baseline price the moment the plan is staged — Plan Watch compares
