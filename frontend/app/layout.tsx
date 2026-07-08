@@ -2,7 +2,6 @@ import "./globals.css";
 import type { Metadata, Viewport } from "next";
 import { DM_Sans } from "next/font/google";
 import { Nav } from "../components/Nav";
-import { NeuralBackground } from "../components/NeuralBackground";
 import { PwaRegister } from "../components/PwaRegister";
 import { TickerTape } from "../components/TickerTape";
 
@@ -27,7 +26,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#05070f",
+  themeColor: "#090b11",
   width: "device-width",
   initialScale: 1,
   // Lock zoom so the app can't pinch/double-tap-zoom like a webpage — it
@@ -46,7 +45,6 @@ export default function RootLayout({
     <html lang="en" className={dmSans.variable}>
       <body>
         <PwaRegister />
-        <NeuralBackground />
         <Nav />
         <TickerTape />
         <main className="container page">{children}</main>

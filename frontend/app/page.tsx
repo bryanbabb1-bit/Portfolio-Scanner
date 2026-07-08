@@ -1,32 +1,41 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
-import { api, ConvictionSignal, PortfolioInsights, PortfolioSummary, StockReport } from "../lib/api";
-import { SignalSlap } from "../components/SignalSlap";
-import { DailyBrief } from "../components/DailyBrief";
-import { PositionHealth } from "../components/PositionHealth";
-import { GamePlan } from "../components/GamePlan";
+import Link from "next/link";
+import "./mfx.css";
+import {
+  api,
+  ConvictionSignal,
+  PortfolioInsights,
+  PortfolioSummary,
+  StockReport,
+  StrategyDoc,
+} from "../lib/api";
 import { WatchdogBar } from "../components/WatchdogBar";
+import { SignalSlap } from "../components/SignalSlap";
+import { PortfolioChart } from "../components/PortfolioChart";
+import { HoldingsHeatmap } from "../components/HoldingsHeatmap";
+import { GamePlan } from "../components/GamePlan";
+import { AlertsPanel } from "../components/AlertsPanel";
+import { RiskStats } from "../components/RiskStats";
+import { PositionHealth } from "../components/PositionHealth";
+import { PortfolioBrief } from "../components/PortfolioBrief";
+import { DailyBrief } from "../components/DailyBrief";
 import { ScorecardPanel } from "../components/ScorecardPanel";
 import { ActionJournal } from "../components/ActionJournal";
 import { StockCard } from "../components/StockCard";
-import { PortfolioChart } from "../components/PortfolioChart";
-import { HoldingsHeatmap } from "../components/HoldingsHeatmap";
-import { AlertsPanel } from "../components/AlertsPanel";
-import { RiskStats } from "../components/RiskStats";
-import { Movers } from "../components/Movers";
-import { PortfolioBrief } from "../components/PortfolioBrief";
 import { SortControl, SortKey, sortReports } from "../components/SortControl";
-import { money, pct, signClass } from "../components/format";
-import { AnimatedNumber } from "../components/AnimatedNumber";
+import { money, pct } from "../components/format";
 
-const REFRESH_MS = 60_000;
+/* Modern-finance home: the real dashboard components, arranged in a smarter
+   multi-column layout. Theme is global (globals.css). Old dashboard kept at
+   /classic. */
 
 export default function Dashboard() {
   const [summary, setSummary] = useState<PortfolioSummary | null>(null);
   const [holdings, setHoldings] = useState<StockReport[]>([]);
-  const [watchlist, setWatchlist] = useState<StockReport[]>([]);
   const [insights, setInsights] = useState<PortfolioInsights | null>(null);
   const [signals, setSignals] = useState<ConvictionSignal[]>([]);
+  const [strategy, setStrategy] = useState<StrategyDoc | null>(null);
   const [focusSlap, setFocusSlap] = useState<string | null>(null);
   const [sort, setSort] = useState<SortKey>("value");
   const [view, setView] = useState<"chart" | "heatmap">("chart");
@@ -35,46 +44,23 @@ export default function Dashboard() {
 
   useEffect(() => {
     const load = () => {
-      api
-        .portfolio()
-        .then((d) => {
-          setSummary(d.summary);
-          setHoldings(d.holdings);
-          setErr(null);
-        })
-        .catch((e) => setErr(e.message))
-        .finally(() => setLoading(false));
-      api
-        .watchlist()
-        .then((d) => setWatchlist(d.results))
-        .catch(() => setWatchlist([]));
-      api
-        .insights()
-        .then(setInsights)
-        .catch(() => setInsights(null));
+      api.portfolio().then((d) => { setSummary(d.summary); setHoldings(d.holdings); setErr(null); }).catch((e) => setErr(e.message)).finally(() => setLoading(false));
+      api.insights().then(setInsights).catch(() => setInsights(null));
       const demo = new URLSearchParams(window.location.search).has("demoSignal");
-      api
-        .signals(demo)
-        .then((d) => setSignals(d.results))
-        .catch(() => {});
+      api.signals(demo).then((d) => setSignals(d.results)).catch(() => {});
+      api.strategy().then((s) => s && setStrategy(s)).catch(() => {});
     };
     load();
-    const timer = setInterval(load, REFRESH_MS);
+    const t = setInterval(load, 60_000);
     const onFocus = () => load();
     window.addEventListener("focus", onFocus);
     document.addEventListener("visibilitychange", onFocus);
     return () => {
-      clearInterval(timer);
+      clearInterval(t);
       window.removeEventListener("focus", onFocus);
       document.removeEventListener("visibilitychange", onFocus);
     };
   }, []);
-
-  const sortedHoldings = useMemo(() => sortReports(holdings, sort), [holdings, sort]);
-  const sortedWatch = useMemo(
-    () => sortReports(watchlist, sort === "return" ? "change" : sort),
-    [watchlist, sort]
-  );
 
   // A tapped push notification lands on /?slap=<id> — surface that slap.
   useEffect(() => {
@@ -82,38 +68,28 @@ export default function Dashboard() {
     if (id) setFocusSlap(id);
   }, []);
 
-  // Ambient mood: the page's glow follows the book — green day, red day.
-  // Must run before any early return (rules of hooks).
-  useEffect(() => {
-    if (!summary) return;
-    const mood =
-      summary.day_change_pct > 0.15 ? "52, 211, 153"
-      : summary.day_change_pct < -0.15 ? "251, 92, 107"
-      : "56, 189, 248";
-    document.documentElement.style.setProperty("--mood-rgb", mood);
-  }, [summary]);
+  const sortedHoldings = useMemo(() => sortReports(holdings, sort), [holdings, sort]);
 
   if (loading) return <div className="loading">Loading portfolio…</div>;
   if (err)
     return (
       <div className="err">
-        Could not reach the backend ({err}). Start it with{" "}
-        <code>uvicorn app.main:app --reload</code> in <code>backend/</code>.
+        Could not reach the backend ({err}). Start it with <code>uvicorn app.main:app --reload</code> in <code>backend/</code>.
       </div>
     );
   if (!summary) return null;
 
+  const target = strategy?.goals?.target_value ?? 25000;
+  const monthly = strategy?.goals?.monthly_contribution ?? 0;
+  const val = summary.total_market_value;
+  const progress = Math.max(0, Math.min(100, (val / target) * 100));
+  const gap = Math.max(0, target - val);
   const themeEntries = Object.entries(summary.by_theme).sort((a, b) => b[1] - a[1]);
 
   const markDismissed = (ids: string[]) => {
     const set = new Set(ids);
     setSignals((cur) => cur.map((s) => (set.has(s.id) ? { ...s, dismissed: true } : s)));
   };
-  const dismissOne = (id: string) => {
-    markDismissed([id]);
-    api.dismissSignal(id).catch(() => {});
-  };
-  const activeSignals = signals.filter((s) => !s.dismissed);
 
   return (
     <>
@@ -121,155 +97,115 @@ export default function Dashboard() {
 
       <WatchdogBar signals={signals} insights={insights} />
 
-      {activeSignals.length > 0 && (
-        <div className="card signal-strip" id="signal-strip" style={{ marginBottom: 24 }}>
-          <div className="chart-head" style={{ marginBottom: 8 }}>
-            <div className="section-title" style={{ margin: 0 }}>Conviction Signals · last 48h</div>
-            <button
-              className="btn ghost"
-              onClick={() => {
-                markDismissed(activeSignals.map((s) => s.id));
-                api.dismissSignal().catch(() => {});
-              }}
-            >
-              Clear all
-            </button>
-          </div>
-          {activeSignals.map((s) => (
-            <div key={s.id} className={`signal-row ${s.side}`}>
-              <span className={`signal-side ${s.side}`}>{s.side === "buy" ? "BUY" : "SELL"}</span>
-              <a href={`/stock/${s.symbol}`} className="alert-sym">{s.symbol}</a>
-              <a href={`/stock/${s.symbol}`} className="signal-headline">{s.headline}</a>
-              <span className="mut" style={{ fontSize: 11, marginLeft: "auto", whiteSpace: "nowrap" }}>
-                {s.generated_at.slice(5, 16)}
-              </span>
-              <button
-                className="icon-btn jr-btn"
-                title="Dismiss — a new signal on this stock will pop again"
-                onClick={() => dismissOne(s.id)}
-              >
-                ✕
-              </button>
-            </div>
-          ))}
-        </div>
-      )}
-
-      <div className="hero">
-        <div className="hero-glow" />
-        <div className="hero-main">
-          <span className="eyebrow">
-            <span className="pulse" /> Portfolio · {summary.positions} positions ·{" "}
-            <span className={summary.source === "mock" ? "mut" : "pos"}>{summary.source} data</span>
-          </span>
-          <div className="hero-value">
-            <AnimatedNumber value={summary.total_market_value} format={(n) => money(n)} />
-          </div>
-          <div className="hero-sub">
-            <span className={signClass(summary.day_change)}>
-              {summary.day_change >= 0 ? "▲" : "▼"} {money(summary.day_change)} ({pct(summary.day_change_pct)}) today
+      {/* account header */}
+      <header className="mfx-head">
+        <div className="lead">
+          <div className="eyebrow"><span className="pulse" /> Portfolio · {summary.positions} positions · {summary.source} data</div>
+          <div className="val">{money(summary.total_market_value)}</div>
+          <div className="deltas">
+            <span className={`mfx-chip ${summary.day_change >= 0 ? "up" : "down"}`}>
+              <span className="k">Today</span>{money(summary.day_change, 0)} ({pct(summary.day_change_pct)})
             </span>
-            <span className="dot">·</span>
-            <span className={signClass(summary.total_unrealized_pl)}>
-              {money(summary.total_unrealized_pl)} ({pct(summary.total_unrealized_pl_pct)}) all-time
+            <span className={`mfx-chip ${summary.total_unrealized_pl >= 0 ? "up" : "down"}`}>
+              <span className="k">All-time</span>{money(summary.total_unrealized_pl, 0)} ({pct(summary.total_unrealized_pl_pct)})
             </span>
           </div>
         </div>
-        <div className="hero-stats">
-          <div className="hstat">
-            <span className="label">Unrealized P/L</span>
-            <span className={`value ${signClass(summary.total_unrealized_pl)}`}>{money(summary.total_unrealized_pl, 0)}</span>
-          </div>
-          <div className="hstat">
-            <span className="label">Cost Basis</span>
-            <span className="value">{money(summary.total_cost, 0)}</span>
-          </div>
-          <div className="hstat">
-            <span className="label">Day Change</span>
-            <span className={`value ${signClass(summary.day_change)}`}>{money(summary.day_change, 0)}</span>
-          </div>
-          {summary.cash > 0 && (
-            <div className="hstat">
-              <span className="label">Cash / Buying Power</span>
-              <span className="value">{money(summary.cash, 0)}</span>
+        <div className="quickstats">
+          <div className="qs"><div className="l">Cost basis</div><div className="v">{money(summary.total_cost, 0)}</div></div>
+          <div className="qs"><div className="l">Dry powder</div><div className="v">{money(summary.cash, 0)}</div></div>
+          <div className="qs"><div className="l">Positions</div><div className="v">{summary.positions}</div></div>
+        </div>
+      </header>
+
+      {/* row 1 — chart (main) + goal & risk (rail) */}
+      <div className="mfx-grid split">
+        <div className="mfx-col">
+          <div className="view-tabs">
+            <div className="range-toggle">
+              <button className={view === "chart" ? "active" : ""} onClick={() => setView("chart")}>Value</button>
+              <button className={view === "heatmap" ? "active" : ""} onClick={() => setView("heatmap")}>Heatmap</button>
             </div>
-          )}
-        </div>
-      </div>
-
-      <Movers reports={[...holdings, ...watchlist]} />
-
-      <PositionHealth holdings={holdings} />
-
-      {/* one card, two lenses on the book */}
-      <div className="view-tabs">
-        <div className="range-toggle">
-          <button className={view === "chart" ? "active" : ""} onClick={() => setView("chart")}>
-            Value
-          </button>
-          <button className={view === "heatmap" ? "active" : ""} onClick={() => setView("heatmap")}>
-            Heatmap
-          </button>
-        </div>
-      </div>
-      {view === "chart" ? <PortfolioChart /> : <HoldingsHeatmap holdings={holdings} />}
-
-      {insights && <AlertsPanel alerts={insights.alerts} />}
-
-      <DailyBrief />
-
-      <GamePlan />
-
-      {insights && <RiskStats risk={insights.risk} />}
-
-      <PortfolioBrief />
-
-      {themeEntries.length > 0 && (
-        <div style={{ marginBottom: 28 }}>
-          <div className="section-title">Allocation by Theme</div>
-          <div className="alloc-bars">
-            {themeEntries.map(([theme, val]) => {
-              const share = (val / summary.total_market_value) * 100;
-              return (
-                <div key={theme} className="alloc-row">
-                  <span className="alloc-name">{theme}</span>
-                  <div className="alloc-track">
-                    <div className="alloc-fill" style={{ width: `${Math.max(share, 1.5)}%` }} />
-                  </div>
-                  <span className="alloc-val">{money(val, 0)} <span className="mut">· {share.toFixed(1)}%</span></span>
-                </div>
-              );
-            })}
           </div>
+          {view === "chart" ? <PortfolioChart /> : <HoldingsHeatmap holdings={holdings} />}
         </div>
-      )}
+        <div className="mfx-col">
+          <div className="card goal">
+            <div className="goal-top">
+              <span className="t">Goal progress</span>
+              <span className="pctto">{progress.toFixed(0)}% there</span>
+            </div>
+            <div className="track">
+              <div className="fill" style={{ width: `${progress}%` }} />
+              {[0.25, 0.5, 0.75].map((m) => <div key={m} className="tick" style={{ left: `${m * 100}%` }} />)}
+            </div>
+            <div className="goal-foot">
+              <span><b>{money(val, 0)}</b> today</span>
+              <span><b>{money(gap, 0)}</b> to go · <span className="g">{money(target, 0)} goal</span></span>
+            </div>
+            <div className="pace">
+              {strategy?.goals?.horizon ? <>Horizon <b>{strategy.goals.horizon}</b>{strategy.goals.risk_appetite ? <> · <b>{strategy.goals.risk_appetite}</b> risk</> : null}{monthly > 0 ? <> · adding <b>{money(monthly, 0)}/mo</b></> : null}.</> : "Set a target on the Strategy page to track the climb."}
+            </div>
+          </div>
+          {insights && <RiskStats risk={insights.risk} />}
+        </div>
+      </div>
 
+      {/* row 2 — what to do */}
+      <div className="mfx-label">What to do</div>
+      <div className="mfx-grid two">
+        <GamePlan />
+        {insights && insights.alerts.length > 0 ? <AlertsPanel alerts={insights.alerts} /> : <DailyBrief />}
+      </div>
+
+      {/* row 3 — the read */}
+      <div className="mfx-label">The read</div>
+      <div className="mfx-grid two">
+        <PortfolioBrief />
+        <PositionHealth holdings={holdings} />
+      </div>
+
+      {/* holdings */}
       <div className="list-head">
         <div className="section-title" style={{ margin: 0 }}>Holdings</div>
         <SortControl sort={sort} setSort={setSort} />
       </div>
       <div className="grid grid-cards">
-        {sortedHoldings.map((r) => (
-          <StockCard key={r.symbol} r={r} />
-        ))}
+        {sortedHoldings.map((r) => <StockCard key={r.symbol} r={r} />)}
       </div>
 
-      {sortedWatch.length > 0 && (
-        <div style={{ marginTop: 32 }}>
-          <div className="section-title">
-            Watchlist <span className="mut" style={{ textTransform: "none", letterSpacing: 0 }}>· names you're tracking</span>
+      {/* allocation + scorecard */}
+      <div className="mfx-grid two" style={{ marginTop: 24 }}>
+        {themeEntries.length > 0 && (
+          <div className="card">
+            <div className="section-title" style={{ marginBottom: 14 }}>Allocation by theme</div>
+            <div className="alloc-bars">
+              {themeEntries.map(([theme, v]) => {
+                const share = (v / summary.total_market_value) * 100;
+                return (
+                  <div key={theme} className="alloc-row">
+                    <span className="alloc-name">{theme}</span>
+                    <div className="alloc-track"><div className="alloc-fill" style={{ width: `${Math.max(share, 1.5)}%` }} /></div>
+                    <span className="alloc-val">{money(v, 0)} <span className="mut">· {share.toFixed(1)}%</span></span>
+                  </div>
+                );
+              })}
+            </div>
           </div>
-          <div className="grid grid-cards">
-            {sortedWatch.map((r) => (
-              <StockCard key={r.symbol} r={r} />
-            ))}
-          </div>
-        </div>
-      )}
-
-      <div style={{ marginTop: 32 }}>
+        )}
         <ScorecardPanel />
-        <ActionJournal />
+      </div>
+
+      <div style={{ marginTop: 18 }}><ActionJournal /></div>
+
+      <div className="mfx-foot">
+        <Link href="/classic">Classic dashboard</Link>
+        <Link href="/strategy">Strategy</Link>
+        <Link href="/runners">Runner Radar</Link>
+        <Link href="/discover">Discovery</Link>
+        <Link href="/news">News</Link>
+        <Link href="/settings">Settings</Link>
+        <span className="note">Portfolio Scanner</span>
       </div>
     </>
   );

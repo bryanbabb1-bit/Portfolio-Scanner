@@ -1,0 +1,83 @@
+/* Dashboard layout for the modern-finance home. Theme tokens + card/button
+   styling live globally in globals.css now; this file only holds the
+   multi-column grid, account header, goal card, and footer. */
+
+/* Position Health can land in a half-width column here — force its compact
+   (stacked-note) row layout so the status badge never overlaps the price. */
+.mfx-grid .ph-row { grid-template-columns: 48px 1fr auto; row-gap: 4px; }
+.mfx-grid .ph-note { grid-column: 1 / -1; font-size: 12.5px; padding-left: 2px; }
+
+/* ---- responsive grid ---------------------------------------------------- */
+.mfx-grid { display: grid; gap: 18px; margin-bottom: 18px; align-items: start; }
+.mfx-grid.split { grid-template-columns: 1.68fr 1fr; }
+.mfx-grid.two { grid-template-columns: 1fr 1fr; }
+.mfx-col { display: grid; gap: 18px; align-items: start; }
+@media (max-width: 940px) {
+  .mfx-grid.split, .mfx-grid.two { grid-template-columns: 1fr; }
+}
+
+/* ---- account header ----------------------------------------------------- */
+.mfx-head {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 24px; flex-wrap: wrap; padding: 2px 0 22px;
+}
+.mfx-head .eyebrow {
+  font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase;
+  color: var(--muted); display: flex; align-items: center; gap: 8px; margin-bottom: 8px;
+}
+.mfx-head .val {
+  font-size: 46px; font-weight: 700; letter-spacing: -0.02em; line-height: 1;
+  font-variant-numeric: tabular-nums; margin-bottom: 10px;
+}
+.mfx-head .deltas { display: flex; flex-wrap: wrap; gap: 8px; }
+.mfx-chip {
+  font-size: 13px; font-variant-numeric: tabular-nums; padding: 5px 11px;
+  border-radius: 999px; border: 1px solid var(--border); color: var(--text);
+  background: rgba(255, 255, 255, 0.03);
+}
+.mfx-chip.up { color: var(--bull); background: var(--bull-bg); border-color: transparent; }
+.mfx-chip.down { color: var(--bear); background: var(--bear-bg); border-color: transparent; }
+.mfx-chip .k { color: var(--muted); margin-right: 6px; }
+
+.mfx-head .quickstats { display: grid; grid-template-columns: repeat(3, auto); gap: 10px 26px; }
+.mfx-head .qs { text-align: right; }
+.mfx-head .qs .l {
+  font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em;
+  color: var(--muted); margin-bottom: 3px;
+}
+.mfx-head .qs .v { font-size: 17px; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* ---- section label above a grid row ------------------------------------- */
+.mfx-label {
+  font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--muted); margin: 8px 2px 10px; font-weight: 600;
+}
+
+/* ---- goal / progress card ----------------------------------------------- */
+.goal .goal-top { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; }
+.goal .goal-top .t { font-size: 15px; font-weight: 700; }
+.goal .goal-top .pctto { font-size: 14px; color: var(--accent); font-weight: 700; font-variant-numeric: tabular-nums; }
+.goal .track { position: relative; height: 12px; border-radius: 999px; background: rgba(255, 255, 255, 0.06); overflow: hidden; }
+.goal .fill { position: absolute; inset: 0 auto 0 0; border-radius: 999px; background: linear-gradient(90deg, #3b74e6, var(--accent)); }
+.goal .tick { position: absolute; top: -3px; bottom: -3px; width: 2px; background: rgba(255, 255, 255, 0.14); }
+.goal .goal-foot { display: flex; justify-content: space-between; margin-top: 12px; font-size: 12.5px; color: var(--muted); }
+.goal .goal-foot b { color: var(--text); font-weight: 700; font-variant-numeric: tabular-nums; }
+.goal .goal-foot .g { color: var(--accent); }
+.goal .pace { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+.goal .pace b { color: var(--text); }
+
+/* ---- footer nav --------------------------------------------------------- */
+.mfx-foot {
+  margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border);
+  display: flex; flex-wrap: wrap; gap: 8px 22px; align-items: center;
+}
+.mfx-foot a { color: var(--muted); text-decoration: none; font-size: 13px; }
+.mfx-foot a:hover { color: var(--accent); }
+.mfx-foot .note { margin-left: auto; color: var(--muted); font-size: 12px; opacity: 0.7; }
+
+@media (max-width: 560px) {
+  .mfx-head .val { font-size: 38px; }
+  .mfx-head { gap: 16px; }
+  .mfx-head .quickstats { grid-template-columns: repeat(3, 1fr); width: 100%; }
+  .mfx-head .qs { text-align: left; }
+}

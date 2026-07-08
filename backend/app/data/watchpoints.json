@@ -182,9 +182,10 @@
     "side": "sell",
     "confirm": "close",
     "source": "advisor",
-    "status": "armed",
+    "status": "dismissed",
     "created_at": "2026-07-07 15:15",
-    "ts": 1783455336.7724614
+    "ts": 1783455336.7724614,
+    "dismissed_ts": 1783470526.4167452
   },
   {
     "id": "6b396e479f2b",
@@ -195,8 +196,9 @@
     "side": "sell",
     "confirm": "touch",
     "source": "advisor",
-    "status": "armed",
+    "status": "dismissed",
     "created_at": "2026-07-07 18:12",
-    "ts": 1783465961.663561
+    "ts": 1783465961.663561,
+    "dismissed_ts": 1783470532.1483083
   }
 ]
