@@ -66,6 +66,70 @@
 .goal .pace { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 12.5px; color: var(--muted); line-height: 1.5; }
 .goal .pace b { color: var(--text); }
 
+/* ---- sequenced plan (Do this) ------------------------------------------- */
+.plan-fund {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+}
+.plan-fund .pf-top { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px; }
+.plan-fund .pf-top b { font-variant-numeric: tabular-nums; }
+.plan-fund .pf-floor { color: var(--muted); }
+.plan-fund .pf-bar { height: 7px; border-radius: 999px; background: rgba(255, 255, 255, 0.07); overflow: hidden; }
+.plan-fund .pf-fill { height: 100%; border-radius: 999px; background: var(--accent); }
+.plan-fund .pf-fill.low { background: linear-gradient(90deg, var(--gold), var(--bear)); }
+.plan-fund .pf-note { font-size: 12px; color: var(--muted); line-height: 1.5; margin-top: 9px; }
+.plan-fund .pf-note b { color: var(--text); }
+
+.plan-group { margin-bottom: 14px; }
+.plan-group:last-child { margin-bottom: 0; }
+.pg-label {
+  font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase;
+  font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 7px;
+}
+.pg-label::before { content: ""; width: 7px; height: 7px; border-radius: 50%; }
+.pg-label.ready { color: var(--bull); }
+.pg-label.ready::before { background: var(--bull); }
+.pg-label.wait { color: var(--muted); }
+.pg-label.wait::before { background: var(--muted); }
+.pg-empty {
+  font-size: 12.5px; color: var(--muted); padding: 10px 12px;
+  border: 1px dashed var(--border); border-radius: 10px;
+}
+
+.plan-move {
+  display: flex; align-items: flex-start; gap: 11px;
+  padding: 11px 4px; border-bottom: 1px solid var(--border);
+}
+.plan-move:last-child { border-bottom: 0; }
+.plan-move .signal-side {
+  font-size: 10.5px; font-weight: 800; letter-spacing: 0.04em;
+  padding: 3px 7px; border-radius: 6px; margin-top: 1px; min-width: 42px; text-align: center;
+}
+.plan-move .signal-side.buy { color: var(--bull); background: var(--bull-bg); }
+.plan-move .signal-side.sell { color: var(--bear); background: var(--bear-bg); }
+.plan-move .signal-side.hold { color: var(--muted); background: rgba(255,255,255,0.05); }
+.plan-move .pm-body { flex: 1; min-width: 0; }
+.plan-move .pm-order { font-size: 14px; line-height: 1.4; color: var(--text); }
+.plan-move .pm-sym { font-weight: 800; margin-right: 6px; color: var(--text); }
+.plan-move .pm-meta {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin-top: 5px;
+  font-size: 12px; color: var(--muted);
+}
+.plan-move .gp-dist {
+  color: var(--gold); font-variant-numeric: tabular-nums;
+  background: rgba(245, 181, 68, 0.12); padding: 1px 7px; border-radius: 999px;
+}
+.plan-move .gp-dist.hot { color: #14130d; background: var(--gold); font-weight: 700; }
+.plan-move .pm-fund {
+  color: var(--accent); background: var(--accent-dim);
+  padding: 1px 7px; border-radius: 999px; font-size: 11.5px;
+}
+.plan-move .pm-reason { color: var(--muted); }
+.plan-move .pm-go { color: var(--bull); font-weight: 600; }
+
 /* ---- footer nav --------------------------------------------------------- */
 .mfx-foot {
   margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border);

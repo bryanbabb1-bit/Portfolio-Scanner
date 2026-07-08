@@ -14,7 +14,7 @@ import { WatchdogBar } from "../components/WatchdogBar";
 import { SignalSlap } from "../components/SignalSlap";
 import { PortfolioChart } from "../components/PortfolioChart";
 import { HoldingsHeatmap } from "../components/HoldingsHeatmap";
-import { GamePlan } from "../components/GamePlan";
+import { PlanBoard } from "../components/PlanBoard";
 import { AlertsPanel } from "../components/AlertsPanel";
 import { RiskStats } from "../components/RiskStats";
 import { PositionHealth } from "../components/PositionHealth";
@@ -154,7 +154,7 @@ export default function Dashboard() {
       {/* row 2 — what to do */}
       <div className="mfx-label">What to do</div>
       <div className="mfx-grid two">
-        <GamePlan />
+        <PlanBoard />
         {insights && insights.alerts.length > 0 ? <AlertsPanel alerts={insights.alerts} /> : <DailyBrief />}
       </div>
 

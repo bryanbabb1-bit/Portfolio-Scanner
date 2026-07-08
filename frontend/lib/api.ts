@@ -415,7 +415,46 @@ export interface DailyBrief {
   recap: string[];
 }
 
+export interface PlanGate {
+  level: number;
+  current: number;
+  distance_pct: number;
+  direction: "rise" | "fall";
+  met: boolean;
+  rsi?: boolean;
+}
+
+export interface PlanMove {
+  id: string;
+  source: "trigger" | "pin" | "signal";
+  symbol?: string | null;
+  side: "buy" | "sell" | "hold";
+  text: string;
+  amount?: number | null;
+  gate?: PlanGate | null;
+  funded_by?: string | null;
+  status: "ready" | "waiting";
+  wait_reason?: string | null;
+  pin_id?: string;
+  wp_id?: string;
+}
+
+export interface GamePlanData {
+  dry_powder: number;
+  floor: number;
+  floor_pct: number;
+  below_floor: boolean;
+  deployable: number;
+  queued_buys: number;
+  funded_by_sale: boolean;
+  funders: string[];
+  ready: PlanMove[];
+  waiting: PlanMove[];
+  count: number;
+}
+
 export const api = {
+  plan: () => get<GamePlanData>("/api/plan"),
   health: () => get<{ status: string; data_mode: string; advisor_enabled: boolean }>("/api/health"),
   summary: () => get<{ brief: DailyBrief | null; dismissed: boolean }>("/api/summary"),
   generateBrief: (kind: "morning" | "eod") =>
