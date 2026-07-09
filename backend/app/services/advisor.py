@@ -830,26 +830,47 @@ def _pending_commitments() -> str:
     from . import pins as pins_svc, watchpoints as wp_svc
     rows, total_buy = [], 0.0
     _buyish = ("buy", "add", "rotate", "into", "start")
+
+    def _tkr(txt: str, sym) -> str | None:
+        if sym:
+            return str(sym).upper()
+        m = re.search(r"\b([A-Z]{2,5})\b", txt or "")
+        return m.group(1) if m else None
+
+    # Collapse duplicate same-ticker/same-side commitments so the advisor doesn't
+    # report "duplicate NVDA buys" when the dashboard (which dedupes) shows one.
+    seen: set = set()
     try:
-        for p in pins_svc.list_pins():
+        for p in pins_svc.list_pins():  # open first, newest first
             if p.get("status") != "open":
                 continue
             txt = p.get("text", "")
+            is_buy = any(w in txt.lower() for w in _buyish)
+            tkr = _tkr(txt, p.get("symbol"))
+            key = (tkr, is_buy)
+            if tkr and key in seen:
+                continue
+            if tkr:
+                seen.add(key)
             amt = _parse_dollar(txt)
-            rows.append(f"PIN [{p.get('symbol') or '-'}]: {txt}"
+            rows.append(f"PIN [{tkr or '-'}]: {txt}"
                         + (f" (~${amt:,.0f})" if amt else ""))
-            if amt and any(w in txt.lower() for w in _buyish):
+            if amt and is_buy:
                 total_buy += amt
     except Exception:
         pass
     try:
         for w in wp_svc.list_watchpoints(include_triggered=False):
             note = w.get("note", "")
+            is_buy = w.get("side") == "buy" or any(x in note.lower() for x in _buyish)
+            key = (str(w["symbol"]).upper(), is_buy)
+            if key in seen:
+                continue
+            seen.add(key)
             amt = _parse_dollar(note)
             rows.append(f"TRIPWIRE [{w['symbol']} {wp_svc.condition_str(w)}]: {note}"
                         + (f" (~${amt:,.0f})" if amt else ""))
-            if amt and (w.get("side") == "buy"
-                        or any(x in note.lower() for x in _buyish)):
+            if amt and is_buy:
                 total_buy += amt
     except Exception:
         pass
