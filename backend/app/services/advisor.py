@@ -224,7 +224,13 @@ _PLAIN_STYLE = (
     "verb + $amount + TICKER + 'at $price' + optional 'stop $price'. "
     "Examples: 'Buy $200 of GOOGL near $180.' 'Trim $150 of AMD if it hits "
     "$540.' 'Hold NVDA — do nothing.' Keep every line under ~14 words, no "
-    "rationale stuffed inside the order, no filler."
+    "rationale stuffed inside the order, no filler. "
+    "PRICES MUST BE REAL: every $price you cite has to be the stock's LIVE price "
+    "shown in the data, or a specific level you can point to in the data — NEVER "
+    "invent or guess one. If a trade is to be done NOW (e.g. trimming to raise "
+    "cash), write 'near $<live price>' or 'at market', never a made-up limit. "
+    "Sanity-check every price against the live price: an order priced far from "
+    "where the stock actually trades is wrong — fix it."
 )
 
 _SCHEMA_HINT = (
@@ -584,19 +590,31 @@ def advise_portfolio(summary: PortfolioSummary, reports: list[StockReport],
                 break
     floor_amt = book * floor_pct / 100
     deployable = max(0.0, dry - floor_amt)
+    if deployable < 100:
+        _cap_special = (
+            "SPECIAL CASE — you have ~$0 to deploy right now (cash is at or below "
+            "the floor). Do NOT issue buy-now orders in actions OR scout. The "
+            "scout ideas must be a RANKED WATCHLIST, each framed as \"would buy X "
+            "near $Y (~$Z) WHEN a trim or new cash frees it up\", with the funding "
+            "gate explicit and the ONE you'd fund first on top. The only real "
+            "actions this week are the trim(s) that rebuild cash, and Hold."
+        )
+    else:
+        _cap_special = (
+            "Size each scout idea against what is left AFTER the actions buys, and "
+            "never list more sized buy-now ideas than the deployable cash can fund "
+            "at once — the rest are watchlist \"buy when cash frees\" items."
+        )
     capital_block = (
         f"\nCAPITAL YOU CAN DEPLOY THIS WEEK: about ${deployable:,.0f} "
         f"(dry powder ${dry:,.0f} minus your {floor_pct:.0f}% floor "
         f"${floor_amt:,.0f}).\n"
-        f"CAPITAL DISCIPLINE (critical): the buys in 'actions' and the ideas in "
-        f"'scout' are NOT independent — they ALL draw from that same "
-        f"${deployable:,.0f}. Size and rank every buy so the TOTAL you tell the "
-        f"client to buy fits within it. If your ideas add up to more than is "
-        f"available, SAY SO and PRIORITIZE — which single buy comes first, which "
-        f"waits for a trim or new cash — instead of listing buys that can't all "
-        f"be funded. Size each scout idea against what's left AFTER the 'actions' "
-        f"buys, never in isolation. If little or nothing is deployable, frame the "
-        f"ideas as 'buy when a trim frees cash', not 'buy now'.\n"
+        f"CAPITAL DISCIPLINE (critical, applies to BOTH 'actions' AND 'scout'): "
+        f"every buy you name draws from that same ${deployable:,.0f}. Size and "
+        f"rank them so the TOTAL you tell the client to buy fits within it. If "
+        f"your ideas add up to more than is available, SAY SO and PRIORITIZE — "
+        f"which buy comes first, which waits — instead of listing buys that can't "
+        f"all be funded. {_cap_special}\n"
     )
 
     prompt = (
