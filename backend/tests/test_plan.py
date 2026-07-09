@@ -82,7 +82,7 @@ def test_stop_is_not_a_funder():
 def test_build_plan_shape():
     p = plan.build_plan()
     for key in ("dry_powder", "queued_buys", "fits", "leftover", "over_by",
-                "ready", "waiting", "guards", "funders", "count"):
+                "ready", "waiting", "guards", "ideas", "funders", "count"):
         assert key in p
     assert isinstance(p["ready"], list) and isinstance(p["waiting"], list)
     # every move is bucketed with a status

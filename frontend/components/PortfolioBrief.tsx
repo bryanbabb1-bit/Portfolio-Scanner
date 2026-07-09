@@ -124,7 +124,9 @@ export function PortfolioBrief() {
           {(note.scout?.length ?? 0) > 0 && (
             <div className="advisor-sec">
               <h4>Ideas to buy</h4>
-              <BulletList items={note.scout!} kind="action" />
+              <p className="mut" style={{ fontSize: 12.5, lineHeight: 1.5 }}>
+                Your conviction &amp; speculative ideas are now in the <b>Do this</b> board above — pin one to act on it.
+              </p>
             </div>
           )}
           <p className="mut" style={{ fontSize: 11, marginTop: 12 }}>

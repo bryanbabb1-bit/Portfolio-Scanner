@@ -449,6 +449,17 @@ export interface PlanMove {
   wp_id?: string;
 }
 
+export interface PlanIdea {
+  id: string;
+  symbol: string;
+  tag: "high" | "spec" | "idea";
+  text: string;
+  order: string;
+  size?: string | null;
+  entry?: string | null;
+  target?: string | null;
+}
+
 export interface GamePlanData {
   dry_powder: number;
   queued_buys: number;
@@ -460,6 +471,7 @@ export interface GamePlanData {
   ready: PlanMove[];
   waiting: PlanMove[];
   guards: PlanMove[];
+  ideas: PlanIdea[];
   count: number;
 }
 

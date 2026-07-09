@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { api, GamePlanData, PlanMove } from "../lib/api";
+import { api, GamePlanData, PlanIdea, PlanMove } from "../lib/api";
 import { money } from "./format";
 
 // THE SEQUENCED PLAN — every staged move reconciled into ready-now vs
@@ -28,6 +28,15 @@ export function PlanBoard() {
     try {
       if (m.source === "pin" && m.pin_id) await api.deletePin(m.pin_id);
       else if (m.source === "trigger" && m.wp_id) await api.deleteWatchpoint(m.wp_id);
+    } catch { load(); }
+  };
+
+  const pinIdea = async (idea: PlanIdea) => {
+    // optimistic: drop it from the ideas list; it reappears as a staged move
+    setData((d) => d && { ...d, ideas: d.ideas.filter((x) => x.id !== idea.id) });
+    try {
+      await api.addPin({ symbol: idea.symbol, source: "idea", text: idea.order });
+      load();
     } catch { load(); }
   };
 
@@ -104,15 +113,31 @@ export function PlanBoard() {
             </div>
           )}
 
-          {/* protective stops — standing risk guards, not to-dos */}
-          {data.guards.length > 0 && (
+          {/* the advisor's fresh ideas — pin one to add it to your plan above */}
+          {data.ideas.length > 0 && (
             <div className="plan-group">
-              <div className="pg-label guard">Protective stops</div>
-              {data.guards.map((m) => <Row key={m.id} m={m} />)}
+              <div className="pg-label idea">Ideas to act on · the advisor's best calls</div>
+              {data.ideas.map((idea) => (
+                <div key={idea.id} className="plan-move idea">
+                  <span className={`signal-side ideatag ${idea.tag}`}>{idea.tag === "spec" ? "SPEC" : "CONV"}</span>
+                  <div className="pm-body">
+                    <div className="pm-order">
+                      <Link href={`/stock/${idea.symbol}`} className="pm-sym">{idea.symbol}</Link>
+                      {idea.order}
+                    </div>
+                    <div className="pm-meta">
+                      {idea.size && <span className="idea-chip">{idea.size}</span>}
+                      {idea.entry && <span className="idea-chip">entry {idea.entry}</span>}
+                      {idea.target && <span className="idea-chip up">target {idea.target}</span>}
+                    </div>
+                  </div>
+                  <button className="idea-pin" title="Add to your plan" onClick={() => pinIdea(idea)}>+ Plan</button>
+                </div>
+              ))}
             </div>
           )}
 
-          {data.count === 0 && (
+          {data.count === 0 && data.ideas.length === 0 && (
             <div className="pg-empty">No moves staged. Pin advice from a brief or arm a trigger to build your plan.</div>
           )}
         </>

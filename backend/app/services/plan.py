@@ -72,6 +72,56 @@ def _parse_level(text: str) -> float | None:
     return _num(m.group(1)) if m else None
 
 
+_TAG_RE = re.compile(r"(?i)\b(high[\s-]*conviction|speculative[\s-]*upside|conviction|speculative|upside)\b")
+_ENTRY_RE = re.compile(r"(?:near|at|to|dip to|dip toward|toward|around|below)\s+\$?([\d,]+(?:\.\d{1,2})?)", re.I)
+_TARGET_RE = re.compile(r"target\s+\$?([\d,]+(?:\.\d{1,2})?)", re.I)
+_SIZE_RE = re.compile(r"(?:buy|add|commit(?:ting)?|stake|put|deploy|start)\s+(?:a\s+)?\$?([\d,]+(?:\.\d{1,2})?)", re.I)
+
+
+def _brief_ideas(existing: set[str]) -> list[dict]:
+    """The advisor's conviction/speculative buy ideas from the latest brief,
+    parsed into pinnable rows. Ideas whose ticker is already a staged move are
+    dropped so pinning one just moves it up, never duplicates it."""
+    try:
+        from . import advisor
+        hist = advisor._history.get("portfolio:brief", [])
+        scout = hist[-1].get("scout", []) if hist else []
+    except Exception:
+        scout = []
+    out: list[dict] = []
+    for s in scout:
+        if not s or not s.strip():
+            continue
+        low = s.lower()
+        tag = "spec" if "speculative" in low else ("high" if "high conviction" in low else "idea")
+        body = _TAG_RE.sub(" ", s)  # strip HIGH CONVICTION / SPECULATIVE so it isn't read as the ticker
+        m = re.search(r"\b([A-Z]{2,5})\b", body)
+        sym = m.group(1) if m else None
+        if not sym or sym in existing:
+            continue
+        existing.add(sym)
+        sm = _SIZE_RE.search(s)
+        amt = _num(sm.group(1)) if sm else _parse_amount(s)
+        em = _ENTRY_RE.search(s)
+        entry = _num(em.group(1)) if em else None
+        tm = _TARGET_RE.search(s)
+        target = _num(tm.group(1)) if tm else None
+        if amt:
+            order = f"Buy ${amt:,.0f} of {sym}" + (f" near ${entry:g}" if entry else "")
+        elif entry:
+            order = f"Buy {sym} near ${entry:g}"
+        else:
+            order = f"Buy {sym}"
+        out.append({
+            "id": f"idea:{sym}", "symbol": sym, "tag": tag, "text": s.strip(),
+            "order": order,
+            "size": f"${amt:,.0f}" if amt else None,
+            "entry": f"${entry:g}" if entry else None,
+            "target": f"${target:g}" if target else None,
+        })
+    return out
+
+
 def _price_gate(side: str, text: str, level: float | None,
                 current: float | None) -> dict | None:
     """Where does the price need to be, and is it there yet?"""
@@ -281,6 +331,11 @@ def build_plan() -> dict:
     ready.sort(key=lambda m: (order.get(m["side"], 3), abs((m.get("gate") or {}).get("distance_pct", 0))))
     waiting.sort(key=lambda m: (order.get(m["side"], 3), abs((m.get("gate") or {}).get("distance_pct", 999))))
 
+    # The advisor's fresh buy ideas, minus any ticker already staged as a move,
+    # so they live inside "Do this" as pinnable rows instead of a separate list.
+    staged = {m["symbol"] for m in moves if m.get("symbol")}
+    ideas = _brief_ideas(staged)
+
     return {
         "dry_powder": dry,
         "queued_buys": queued_buys,
@@ -292,6 +347,7 @@ def build_plan() -> dict:
         "ready": ready,
         "waiting": waiting,
         "guards": guards,
+        "ideas": ideas,
         "count": len(moves),
     }
 

@@ -101,6 +101,7 @@ def _remember_history(key: str, note: AdvisorNote) -> None:
         "insights": note.insights,
         "actions": note.actions,
         "risks": note.risks,
+        "scout": note.scout,
     }
     with _history_lock:
         lst = _history.setdefault(key, [])
