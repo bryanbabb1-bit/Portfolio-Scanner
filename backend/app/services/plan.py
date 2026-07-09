@@ -16,10 +16,47 @@ live tape on every refresh.
 """
 from __future__ import annotations
 
+import json
 import re
+import time
 
+from ..config import settings
 from . import conviction, pins as pins_svc, portfolio as pf
 from . import strategy as strat_svc, watchpoints as wp_svc
+
+# Ideas the client dismissed ("not doing that one") — hidden from the board for
+# a while so they don't nag, but a fresh strong pitch can resurface after.
+_DISMISS_FILE = settings.PORTFOLIO_FILE.parent / "dismissed_ideas.json"
+_DISMISS_TTL = 14 * 86400
+
+
+def _dismissed_ideas() -> set[str]:
+    try:
+        with open(_DISMISS_FILE) as f:
+            data = json.load(f)
+        now = time.time()
+        return {s for s, ts in data.items() if now - float(ts) < _DISMISS_TTL}
+    except (FileNotFoundError, json.JSONDecodeError, TypeError, ValueError):
+        return set()
+
+
+def dismiss_idea(symbol: str) -> None:
+    sym = (symbol or "").upper().strip()
+    if not sym:
+        return
+    try:
+        with open(_DISMISS_FILE) as f:
+            data = json.load(f)
+        if not isinstance(data, dict):
+            data = {}
+    except (FileNotFoundError, json.JSONDecodeError):
+        data = {}
+    now = time.time()
+    data[sym] = now
+    data = {s: t for s, t in data.items() if now - float(t) < _DISMISS_TTL}
+    _DISMISS_FILE.parent.mkdir(parents=True, exist_ok=True)
+    with open(_DISMISS_FILE, "w") as f:
+        json.dump(data, f, indent=2)
 
 _LEVEL_RE = re.compile(
     r"(?:near|at|above|below|over|under|to|reaches?|hits?|past)\s+\$?([\d,]+(?:\.\d{1,2})?)",
@@ -88,6 +125,7 @@ def _brief_ideas(existing: set[str]) -> list[dict]:
         scout = hist[-1].get("scout", []) if hist else []
     except Exception:
         scout = []
+    dismissed = _dismissed_ideas()
     out: list[dict] = []
     for s in scout:
         if not s or not s.strip():
@@ -97,7 +135,7 @@ def _brief_ideas(existing: set[str]) -> list[dict]:
         body = _TAG_RE.sub(" ", s)  # strip HIGH CONVICTION / SPECULATIVE so it isn't read as the ticker
         m = re.search(r"\b([A-Z]{2,5})\b", body)
         sym = m.group(1) if m else None
-        if not sym or sym in existing:
+        if not sym or sym in existing or sym in dismissed:
             continue
         existing.add(sym)
         sm = _SIZE_RE.search(s)

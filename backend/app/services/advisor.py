@@ -142,6 +142,8 @@ def _prior_advice_block(key: str, symbol: str | None = None) -> str:
         lines.append(f"[{h['generated_at']}] Your take then: {h['summary'][:250]}")
         for a in h.get("actions", [])[:5]:
             lines.append(f"  - you advised: {a}")
+        for sc in h.get("scout", [])[:4]:
+            lines.append(f"  - you pitched idea: {sc[:170]}")
     # A stock note should also honor what the whole-book brief said about it.
     if symbol and key != "portfolio:brief":
         for h in _history.get("portfolio:brief", [])[-1:]:
@@ -158,7 +160,14 @@ def _prior_advice_block(key: str, symbol: str | None = None) -> str:
         "unless a specific fact, price or level has materially changed — and "
         "if you do change your mind, say so explicitly ('I previously said X; "
         "I'm revising because Y'). If nothing material changed, hold the same "
-        "line, including levels you told the client to wait for.\n"
+        "line, including levels you told the client to wait for. "
+        "THIS APPLIES TO YOUR IDEAS TOO: keep championing the SAME top conviction "
+        "pick from brief to brief — if last time you said name X was the better "
+        "buy (e.g. VRT over PANW), it stays your #1 unless a real fact changed; if "
+        "you promote a different name to the top, you MUST say 'I'm changing my "
+        "top idea from X to Y because...' and give the reason. Never silently swap "
+        "which name you're recommending, and never recommend the weaker of two "
+        "names you just called second-best.\n"
     )
 
 
@@ -766,9 +775,14 @@ def advise_breakout(cand: BreakoutCandidate, force: bool = False,
 # ------------------------------------------------------------------ follow-up
 _ASK_FMT = (
     "You CANNOT change the client's holdings, journal or records from this chat. "
-    "If the client corrects a fact (e.g. 'we never made that trade'), accept it "
-    "for THIS answer and tell them to fix it in the Action Journal — NEVER claim "
-    "you 'updated your memory' or 'logged it', because you did not. "
+    "If the client corrects a fact about a TRADE they made (e.g. 'we never made "
+    "that trade'), accept it for THIS answer and point them to the Action Journal "
+    "to fix it — NEVER claim you 'updated your memory' or 'logged it'. But for "
+    "questions about IDEAS, not-owned names, or which pick is better (e.g. 'why "
+    "PANW not VRT?'), just ANSWER with your reasoning and give the decisive call — "
+    "do NOT deflect to fixing a journal; there is nothing there to fix. If you "
+    "previously called one name the better buy, recommend THAT one, or explain "
+    "what changed. "
     'Respond with ONLY a JSON object, no markdown: '
     '{"answer": string — LEAD WITH THE CONCRETE CALL in plain words, one line: '
     'a buy ("Buy $200 NVDA near $185"), a sell/trim ("Trim $150 AMD if it hits '

@@ -17,3 +17,10 @@ def game_plan():
     except Exception as exc:
         traceback.print_exc()
         raise HTTPException(status_code=502, detail=f"Plan build failed: {exc}")
+
+
+@router.post("/plan/idea/dismiss")
+def dismiss_idea(symbol: str):
+    """Hide an advisor idea the client isn't going to act on."""
+    plan_service.dismiss_idea(symbol)
+    return {"dismissed": symbol.upper()}

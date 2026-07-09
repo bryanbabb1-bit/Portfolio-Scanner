@@ -487,6 +487,8 @@ export interface GraphData {
 
 export const api = {
   plan: () => get<GamePlanData>("/api/plan"),
+  dismissIdea: (symbol: string) =>
+    post<{ dismissed: string }>(`/api/plan/idea/dismiss?symbol=${encodeURIComponent(symbol)}`, {}),
   graph: () => get<GraphData>("/api/graph"),
   health: () => get<{ status: string; data_mode: string; advisor_enabled: boolean }>("/api/health"),
   summary: () => get<{ brief: DailyBrief | null; dismissed: boolean }>("/api/summary"),

@@ -40,6 +40,11 @@ export function PlanBoard() {
     } catch { load(); }
   };
 
+  const dismissIdea = async (idea: PlanIdea) => {
+    setData((d) => d && { ...d, ideas: d.ideas.filter((x) => x.id !== idea.id) });
+    try { await api.dismissIdea(idea.symbol); } catch { load(); }
+  };
+
   const chip = (m: PlanMove) =>
     m.stop ? "STOP" : m.side === "buy" ? "BUY" : m.side === "sell" ? "SELL" : "HOLD";
 
@@ -132,6 +137,7 @@ export function PlanBoard() {
                     </div>
                   </div>
                   <button className="idea-pin" title="Add to your plan" onClick={() => pinIdea(idea)}>+ Plan</button>
+                  <button className="icon-btn jr-btn" title="Not doing this one — dismiss" onClick={() => dismissIdea(idea)}>✕</button>
                 </div>
               ))}
             </div>
