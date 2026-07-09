@@ -148,6 +148,9 @@ class PortfolioSummary(BaseModel):
     cash: float = 0.0           # uninvested buying power, included in total above
     source: str
     by_theme: dict[str, float] = {}
+    realized_pl: float = 0.0    # booked gains/losses from closed & trimmed positions
+    total_return: float = 0.0   # realized + unrealized — the real "how am I doing"
+    total_return_pct: float = 0.0
 
 
 class PinCreate(BaseModel):
@@ -178,6 +181,8 @@ class JournalCreate(BaseModel):
     shares: Optional[float] = Field(default=None, ge=0)
     price: Optional[float] = Field(default=None, ge=0)
     note: str = ""
+    cost_basis: Optional[float] = Field(default=None, ge=0)
+    realized_pl: Optional[float] = None  # booked $ gain/loss on a sell
 
     @field_validator("action")
     @classmethod
@@ -195,6 +200,8 @@ class JournalUpdate(BaseModel):
     shares: Optional[float] = Field(default=None, ge=0)
     price: Optional[float] = Field(default=None, ge=0)
     note: Optional[str] = None
+    cost_basis: Optional[float] = Field(default=None, ge=0)
+    realized_pl: Optional[float] = None
 
 
 class AskRequest(BaseModel):

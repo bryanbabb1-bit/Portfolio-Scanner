@@ -143,7 +143,15 @@ export default function Dashboard() {
               <span className="k">Today</span>{money(summary.day_change, 0)} ({pct(summary.day_change_pct)})
             </span>
             <span className={`mfx-chip ${summary.total_unrealized_pl >= 0 ? "up" : "down"}`}>
-              <span className="k">All-time</span>{money(summary.total_unrealized_pl, 0)} ({pct(summary.total_unrealized_pl_pct)})
+              <span className="k">Unrealized</span>{money(summary.total_unrealized_pl, 0)} ({pct(summary.total_unrealized_pl_pct)})
+            </span>
+            {summary.realized_pl !== 0 && (
+              <span className={`mfx-chip ${summary.realized_pl >= 0 ? "up" : "down"}`}>
+                <span className="k">Realized</span>{money(summary.realized_pl, 0)}
+              </span>
+            )}
+            <span className={`mfx-chip total ${summary.total_return >= 0 ? "up" : "down"}`}>
+              <span className="k">Total return</span>{money(summary.total_return, 0)} ({pct(summary.total_return_pct)})
             </span>
           </div>
         </div>

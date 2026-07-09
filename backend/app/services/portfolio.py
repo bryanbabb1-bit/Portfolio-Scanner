@@ -155,6 +155,15 @@ def portfolio_summary() -> tuple[PortfolioSummary, list[StockReport]]:
     if cash:
         by_theme["Cash & Income"] = round(by_theme.get("Cash & Income", 0) + cash, 2)
 
+    # Realized P/L — booked gains/losses from positions already closed/trimmed.
+    realized = 0.0
+    try:
+        from . import journal
+        realized = journal.realized_total()
+    except Exception:
+        realized = 0.0
+    total_return = total_pl + realized  # unrealized + realized = real "how I'm doing"
+
     source = "mock" if any(r.quote.source == "mock" for r in reports) else "live"
     summary = PortfolioSummary(
         total_market_value=round(total_mv, 2),
@@ -167,6 +176,9 @@ def portfolio_summary() -> tuple[PortfolioSummary, list[StockReport]]:
         cash=round(cash, 2),
         source=source,
         by_theme=by_theme,
+        realized_pl=round(realized, 2),
+        total_return=round(total_return, 2),
+        total_return_pct=round((total_return / total_cost * 100) if total_cost else 0, 2),
     )
     return summary, reports
 

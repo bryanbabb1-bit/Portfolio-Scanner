@@ -138,6 +138,9 @@ export interface PortfolioSummary {
   cash: number;
   source: string;
   by_theme: Record<string, number>;
+  realized_pl: number;
+  total_return: number;
+  total_return_pct: number;
 }
 
 export interface PortfolioAlert {
@@ -208,6 +211,8 @@ export interface JournalEntry {
   price?: number | null;
   note: string;
   source: string;
+  cost_basis?: number | null;
+  realized_pl?: number | null;
 }
 
 export interface JournalDraft {
@@ -217,6 +222,8 @@ export interface JournalDraft {
   shares?: number | null;
   price?: number | null;
   note?: string;
+  cost_basis?: number | null;
+  realized_pl?: number | null;
 }
 
 export interface StrategyDoc {

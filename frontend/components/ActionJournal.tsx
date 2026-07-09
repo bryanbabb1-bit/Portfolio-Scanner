@@ -123,6 +123,14 @@ export function ActionJournal() {
         onChange={(e) => setDraft({ ...draft, price: e.target.value === "" ? null : parseFloat(e.target.value) })}
       />
       <input
+        type="number"
+        placeholder="Realized $"
+        step="any"
+        title="Booked gain/loss on a sell (negative for a loss). Use this to log a past exit like IREN. Auto-computed when shares, price and cost basis are all set."
+        value={draft.realized_pl ?? ""}
+        onChange={(e) => setDraft({ ...draft, realized_pl: e.target.value === "" ? null : parseFloat(e.target.value) })}
+      />
+      <input
         placeholder="Note (optional)"
         value={draft.note ?? ""}
         onChange={(e) => setDraft({ ...draft, note: e.target.value })}
@@ -190,6 +198,11 @@ export function ActionJournal() {
               <span className="jr-qty mut">
                 {e.shares ? `${e.shares.toLocaleString(undefined, { maximumFractionDigits: 4 })} sh` : ""}
                 {e.price ? ` @ ${money(e.price)}` : ""}
+                {e.realized_pl != null && e.realized_pl !== 0 && (
+                  <span className={e.realized_pl >= 0 ? "pos" : "neg"} style={{ marginLeft: 8, fontWeight: 700 }}>
+                    {e.realized_pl >= 0 ? "+" : ""}{money(e.realized_pl, 0)}
+                  </span>
+                )}
               </span>
               <span className="pin-text" title={`source: ${e.source}`}>{e.note}</span>
               <button className="icon-btn jr-btn" title="Edit" onClick={() => startEdit(e)}>Edit</button>

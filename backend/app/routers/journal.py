@@ -35,7 +35,8 @@ def create_entry(req: JournalCreate):
         raise HTTPException(status_code=422, detail="symbol required for buy/sell")
     return journal_service.add_entry(
         req.symbol, req.action, req.note, shares=req.shares,
-        price=req.price, date=req.date, source="manual")
+        price=req.price, date=req.date, source="manual",
+        cost_basis=req.cost_basis, realized_pl=req.realized_pl)
 
 
 @router.patch("/{entry_id}")

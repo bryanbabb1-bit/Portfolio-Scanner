@@ -771,7 +771,7 @@ main.page > .slap-overlay { animation: slap-fade .25s ease; }
 .jr-row .jr-qty { font-size: 12px; white-space: nowrap; font-variant-numeric: tabular-nums; }
 .jr-row .pin-text { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .jr-btn { height: 26px; padding: 0 8px; flex-shrink: 0; }
-.jr-row.jr-edit { display: grid; grid-template-columns: 130px 84px 92px 90px 90px 1fr auto; gap: 8px; align-items: center; padding: 10px 6px; }
+.jr-row.jr-edit { display: grid; grid-template-columns: 130px 84px 88px 84px 84px 96px 1fr auto; gap: 8px; align-items: center; padding: 10px 6px; }
 @media (max-width: 800px) {
   .jr-row.jr-edit { grid-template-columns: 1fr 1fr; }
   .jr-row .pin-text { white-space: normal; }

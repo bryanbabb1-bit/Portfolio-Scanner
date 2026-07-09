@@ -39,6 +39,9 @@
 .mfx-chip.up { color: var(--bull); background: var(--bull-bg); border-color: transparent; }
 .mfx-chip.down { color: var(--bear); background: var(--bear-bg); border-color: transparent; }
 .mfx-chip .k { color: var(--muted); margin-right: 6px; }
+/* Total return = realized + unrealized: the real "how am I doing" number */
+.mfx-chip.total { font-weight: 700; box-shadow: inset 0 0 0 1px currentColor; }
+.mfx-chip.total .k { color: inherit; opacity: 0.75; }
 
 .mfx-head .quickstats { display: grid; grid-template-columns: repeat(3, auto); gap: 10px 26px; }
 .mfx-head .qs { text-align: right; }
