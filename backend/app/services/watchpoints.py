@@ -271,6 +271,9 @@ def extract_from_advice() -> list[dict]:
     except json.JSONDecodeError:
         return []
 
+    from . import market_data
+    from .technical import compute_indicators
+
     created: list[dict] = []
     for r in rows if isinstance(rows, list) else []:
         try:
@@ -279,6 +282,18 @@ def extract_from_advice() -> list[dict]:
             level = float(r["level"])
             if not sym or kind not in KINDS or level <= 0:
                 continue
+            # Never arm a condition that is ALREADY TRUE at the current reading
+            # (e.g. a garbled "trim NET if it rises above $17" while NET is $270)
+            # — it would "fire" on every scan forever. The manual-add route
+            # rejects these; the extractor must too.
+            try:
+                md = market_data.get_price_data(sym)
+                price = float(md.history["Close"].iloc[-1])
+                rsi = compute_indicators(md.history).rsi
+                if already_true(sym, kind, level, price, rsi):
+                    continue
+            except Exception:
+                pass  # can't fetch a reading — arm it and let the scan judge
             created.append(add(
                 sym, kind, level, note=str(r.get("note", "")),
                 side=r.get("side"), source="advisor",
