@@ -67,20 +67,24 @@ export function PlanBoard() {
 
       {data && (
         <>
-          {/* funding meter — the constraint that gates everything */}
+          {/* capital meter — risk capital available to put to work */}
           <div className="plan-fund">
             <div className="pf-top">
-              <span>Dry powder <b>{money(data.dry_powder, 0)}</b></span>
-              <span className="pf-floor">{data.floor_pct.toFixed(0)}% floor · {money(data.floor, 0)}</span>
+              <span>Dry powder to deploy <b>{money(data.dry_powder, 0)}</b></span>
+              {data.queued_buys > 0 && <span className="pf-floor">{money(data.queued_buys, 0)} queued</span>}
             </div>
-            <div className="pf-bar">
-              <div className={`pf-fill${data.below_floor ? " low" : ""}`}
-                   style={{ width: `${Math.min(100, (data.dry_powder / Math.max(data.floor, 1)) * 100)}%` }} />
-            </div>
+            {data.queued_buys > 0 && (
+              <div className="pf-bar">
+                <div className={`pf-fill${!data.fits ? " low" : ""}`}
+                     style={{ width: `${Math.min(100, data.dry_powder > 0 ? (data.queued_buys / data.dry_powder) * 100 : 100)}%` }} />
+              </div>
+            )}
             <div className="pf-note">
-              {data.below_floor
-                ? <>Cash is below your floor, so {money(data.queued_buys, 0)} of queued buys must come from a sale{data.funders[0] ? <> — the <b>{data.funders[0]} trim</b></> : ""}, not idle cash.</>
-                : <>{money(data.deployable, 0)} deployable above your floor.</>}
+              {data.queued_buys === 0
+                ? <>{money(data.dry_powder, 0)} of risk capital ready to put to work.</>
+                : data.fits
+                  ? <><b>{money(data.dry_powder, 0)}</b> to deploy · {money(data.queued_buys, 0)} queued · {money(data.leftover, 0)} left after.</>
+                  : <>Queued buys ({money(data.queued_buys, 0)}) top your {money(data.dry_powder, 0)} cash by <b>{money(data.over_by, 0)}</b> — prioritize{data.funders[0] ? <>, or the <b>{data.funders[0]} trim</b> funds the rest</> : ""}.</>}
             </div>
           </div>
 

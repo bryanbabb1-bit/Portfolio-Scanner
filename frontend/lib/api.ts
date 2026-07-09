@@ -451,11 +451,10 @@ export interface PlanMove {
 
 export interface GamePlanData {
   dry_powder: number;
-  floor: number;
-  floor_pct: number;
-  below_floor: boolean;
-  deployable: number;
   queued_buys: number;
+  fits: boolean;
+  leftover: number;
+  over_by: number;
   funded_by_sale: boolean;
   funders: string[];
   ready: PlanMove[];

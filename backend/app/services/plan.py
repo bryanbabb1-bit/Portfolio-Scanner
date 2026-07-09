@@ -141,10 +141,10 @@ def build_plan() -> dict:
     rsi_map = {r.symbol: (r.indicators.rsi if r.indicators else None) for r in reports}
     known = set(price_map)
     book = summary.total_market_value
-    cash = summary.cash
-    strategy = strat_svc.load()
-    floor, floor_pct = _floor(strategy, book)
-    deployable = round(max(0.0, cash - floor))
+    # Cash here is RISK CAPITAL to deploy (reserves are held elsewhere), so the
+    # pool is the whole dry powder — cash + SGOV — not "cash above a floor".
+    dry = round(summary.by_theme.get("Cash & Income", summary.cash)
+                if summary.by_theme else summary.cash)
 
     raw: list[dict] = []
 
@@ -222,7 +222,8 @@ def build_plan() -> dict:
     moves = list(grouped.values())
 
     queued_buys = round(sum(m["amount"] or 0 for m in moves if m["side"] == "buy"))
-    below_floor = cash < floor
+    # The only funding constraint now: don't commit more than the cash on hand.
+    over_committed = queued_buys > dry
 
     # A funder is a real cash-RAISING sell (a trim into strength / "move to
     # cash") — never a protective stop, which only fires on a drop and doesn't
@@ -249,9 +250,12 @@ def build_plan() -> dict:
 
         reason = None
         if m["side"] == "buy":
+            # Cash is risk capital to deploy: a buy only waits on a sale if it
+            # SAID to use trim cash, or the queued buys together exceed the cash
+            # on hand (then a trim / prioritization funds the rest). No floor.
             text_funded = any(k in m["text"].lower() for k in _FUND_WORDS)
             funder = next((f for f in funders if f != m["symbol"]), None)
-            needs_sale = below_floor or text_funded
+            needs_sale = text_funded or over_committed
             if needs_sale and funder:
                 m["funded_by"] = funder
             sale_ready = (m["funded_by"] in funder_ready) if m["funded_by"] else not needs_sale
@@ -260,9 +264,11 @@ def build_plan() -> dict:
                 if m["funded_by"] and not sale_ready:
                     reason += f" Then fund it from the {m['funded_by']} trim."
             elif needs_sale and not sale_ready:
-                reason = (f"Funded by the {m['funded_by']} trim — do it once that frees cash."
-                          if m["funded_by"]
-                          else "Cash is below your floor — raise cash before adding.")
+                if m["funded_by"]:
+                    reason = f"Funded by the {m['funded_by']} trim — do it once that frees cash."
+                elif over_committed:
+                    reason = (f"Queued buys (${queued_buys:,.0f}) top your ${dry:,.0f} cash "
+                              f"— prioritize, or a trim funds the rest.")
         else:  # trim / sell into strength / hold
             if not price_ready:
                 reason = _price_reason(m, gate)
@@ -276,12 +282,11 @@ def build_plan() -> dict:
     waiting.sort(key=lambda m: (order.get(m["side"], 3), abs((m.get("gate") or {}).get("distance_pct", 999))))
 
     return {
-        "dry_powder": round(cash),
-        "floor": floor,
-        "floor_pct": floor_pct,
-        "below_floor": below_floor,
-        "deployable": deployable,
+        "dry_powder": dry,
         "queued_buys": queued_buys,
+        "fits": queued_buys <= dry,
+        "leftover": round(max(0, dry - queued_buys)),
+        "over_by": round(max(0, queued_buys - dry)),
         "funded_by_sale": any(m.get("funded_by") for m in moves),
         "funders": funders,
         "ready": ready,
