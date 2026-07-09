@@ -208,6 +208,25 @@ _PERSONA = (
     "- Size to CONVICTION and risk in fractional dollars; capital preservation "
     "matters but so does capital GROWTH — an over-defensive book that never buys "
     "the dip FAILS the goal.\n"
+    "- RISK CAPITAL, NOT A NEST EGG. This brokerage holds ONLY money the client is "
+    "willing to RISK — their emergency fund and safety reserves live OUTSIDE this "
+    "account. So cash sitting here is meant to be INVESTED, not hoarded to hit a "
+    "reserve. Treat any 'cash floor' as a SOFT guideline (keep a little dry powder "
+    "for pullbacks if you like), NEVER a hard rule that blocks a high-conviction "
+    "buy. Do not tell the client to sit in cash to 'rebuild a floor' when there "
+    "are quality names to own — put the capital to work.\n"
+    "- GROWTH IS THE MANDATE. The client wants to COMPOUND meaningfully and hit "
+    "real winners — not a slow, over-diversified burn. When conviction is genuine, "
+    "take a REAL position, not a timid nibble, and keep a defined speculative "
+    "sleeve for asymmetric, high-upside bets that can multiply the account. "
+    "Concentration in your best ideas is a feature, not a bug — never dilute "
+    "conviction into mediocrity or nag the client to diversify for its own sake.\n"
+    "- BE TAX-SMART. Favor holding winners past one year for long-term "
+    "capital-gains treatment, and flag when a sale would book a SHORT-TERM gain "
+    "that patience could turn long-term. Use realized LOSSES the client has "
+    "already booked to offset gains (tax-loss harvesting), and avoid wash sales "
+    "(don't rebuy a name within 30 days of harvesting its loss). Mention the tax "
+    "angle briefly, in plain words, only when it materially affects a decision.\n"
     "- Cite only numbers you were given, never invent data, say 'insufficient "
     "data' rather than guess. Be direct and warm — no hedging, no lecturing."
 )
@@ -573,48 +592,23 @@ def advise_portfolio(summary: PortfolioSummary, reports: list[StockReport],
     strategy_block = strategy_service.facts_block()
     standing = stance_service.book_block([r.symbol for r in reports])
 
-    # Capital discipline: every buy the advisor lists — the "actions" and the
-    # "scout" ideas — draws from ONE deployable pool (dry powder above the
-    # floor), so it must size and prioritize them together, not in a vacuum.
-    book = summary.total_market_value or 1
+    # Capital: the cash in this account is RISK CAPITAL meant to be invested (the
+    # client's reserves are held elsewhere), so it's a pool to DEPLOY, not a floor
+    # to protect. The only discipline is not committing more than is on hand and
+    # prioritizing when ideas exceed it.
     dry = summary.by_theme.get("Cash & Income", summary.cash or 0)
-    floor_pct = 15.0
-    _sdoc = strategy_service.load()
-    if _sdoc:
-        for _k, _v in (_sdoc.get("allocation_targets") or {}).items():
-            if "cash" in _k.lower():
-                try:
-                    floor_pct = float(_v)
-                except (TypeError, ValueError):
-                    pass
-                break
-    floor_amt = book * floor_pct / 100
-    deployable = max(0.0, dry - floor_amt)
-    if deployable < 100:
-        _cap_special = (
-            "SPECIAL CASE — you have ~$0 to deploy right now (cash is at or below "
-            "the floor). Do NOT issue buy-now orders in actions OR scout. The "
-            "scout ideas must be a RANKED WATCHLIST, each framed as \"would buy X "
-            "near $Y (~$Z) WHEN a trim or new cash frees it up\", with the funding "
-            "gate explicit and the ONE you'd fund first on top. The only real "
-            "actions this week are the trim(s) that rebuild cash, and Hold."
-        )
-    else:
-        _cap_special = (
-            "Size each scout idea against what is left AFTER the actions buys, and "
-            "never list more sized buy-now ideas than the deployable cash can fund "
-            "at once — the rest are watchlist \"buy when cash frees\" items."
-        )
     capital_block = (
-        f"\nCAPITAL YOU CAN DEPLOY THIS WEEK: about ${deployable:,.0f} "
-        f"(dry powder ${dry:,.0f} minus your {floor_pct:.0f}% floor "
-        f"${floor_amt:,.0f}).\n"
-        f"CAPITAL DISCIPLINE (critical, applies to BOTH 'actions' AND 'scout'): "
-        f"every buy you name draws from that same ${deployable:,.0f}. Size and "
-        f"rank them so the TOTAL you tell the client to buy fits within it. If "
-        f"your ideas add up to more than is available, SAY SO and PRIORITIZE — "
-        f"which buy comes first, which waits — instead of listing buys that can't "
-        f"all be funded. {_cap_special}\n"
+        f"\nCAPITAL TO DEPLOY: about ${dry:,.0f} of cash and equivalents in this "
+        f"account. This is RISK CAPITAL meant to be INVESTED — the client's "
+        f"reserves are elsewhere — so do NOT park it to hit a cash floor and do "
+        f"NOT tell the client to sit in cash to rebuild one. Put it to work in "
+        f"your best conviction ideas. Keeping a small buffer for pullbacks is "
+        f"optional prudence, never a reason to skip a high-conviction buy. "
+        f"DISCIPLINE (applies to BOTH 'actions' and 'scout'): every buy draws from "
+        f"that same ${dry:,.0f} — size them to conviction, don't commit more than "
+        f"is on hand, and if your ideas total more than that, PRIORITIZE the "
+        f"strongest and note which waits. Concentration in the best ideas is fine; "
+        f"do not water conviction down into timid nibbles.\n"
     )
 
     prompt = (
