@@ -191,6 +191,19 @@ export default function Settings() {
               onChange={(e) => setCfg({ ...cfg, cash: parseNum(e.target.value) })}
             />
           </label>
+          <label className="cfg-toggle">
+            <input
+              type="checkbox"
+              checked={cfg.quiet_unowned_low_cash ?? true}
+              onChange={(e) => setCfg({ ...cfg, quiet_unowned_low_cash: e.target.checked })}
+            />
+            <span>
+              Quiet mode when low on cash
+              <span className="mut" style={{ display: "block", fontSize: 12, textTransform: "none", letterSpacing: 0, fontWeight: 400 }}>
+                When dry powder runs out, stop alerting on runners and buy signals for stocks you don&apos;t own — only watch names you hold. Saves advisor usage on things you can&apos;t act on.
+              </span>
+            </span>
+          </label>
         </div>
       </div>
 

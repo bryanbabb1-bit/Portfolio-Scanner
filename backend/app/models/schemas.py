@@ -355,6 +355,10 @@ class PortfolioConfig(BaseModel):
     # symbols the client holds as long-term CONVICTIONS: accumulate on weakness,
     # never told to sell at a loss on a technical break (only if thesis breaks)
     core_convictions: list[str] = []
+    # When dry powder is low, stop alerting/enriching runners + not-owned buys
+    # (nothing to act on there) and only watch names you actually hold. Saves
+    # Claude usage when there's no cash to deploy.
+    quiet_unowned_low_cash: bool = True
     themes: dict[str, str] = {}
     holdings: list[Holding] = []
     watchlist: list[WatchItem] = []

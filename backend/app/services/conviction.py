@@ -10,6 +10,7 @@ setup from re-slapping every day.
 from __future__ import annotations
 
 import json
+import re
 import threading
 import time
 
@@ -20,6 +21,7 @@ from . import portfolio as pf_service
 
 COOLDOWN_DAYS = 3
 ACTIVE_HOURS = 48  # signals stay on the dashboard this long
+_LOW_CASH_MIN = 250  # below this dry powder, "no cash to open a new position"
 
 _FIRED_FILE = settings.PORTFOLIO_FILE.parent / "conviction_fired.json"
 _NOTES_FILE = settings.PORTFOLIO_FILE.parent / "conviction_notes.json"
@@ -313,9 +315,33 @@ def scan() -> list[dict]:
         # Unify holdings + watchlist (full reports) and Discovery (light).
         items: list[tuple] = []
         book_ctx = ""
+        low_cash = False  # no dry powder → skip not-owned + runner checks/enrichment
         try:
             summary, reports = pf_service.portfolio_summary()
             book_val = summary.total_market_value
+            dry = (summary.by_theme.get("Cash & Income", summary.cash)
+                   if summary.by_theme else summary.cash)
+            try:
+                quiet = pf_service.load_portfolio().get("quiet_unowned_low_cash", True)
+            except Exception:
+                quiet = True
+            # Effective dry powder = cash MINUS what's already queued to buy, so
+            # committing cash to pins counts as spent even before it's executed.
+            queued = 0.0
+            try:
+                from . import pins as pins_svc
+                for p in pins_svc.list_pins():
+                    if p.get("status") == "open" and re.match(r"^\W*(buy|add)\b", p.get("text", "").lower()):
+                        mm = re.search(r"\$\s*([\d,]+(?:\.\d+)?)", p.get("text", ""))
+                        if mm:
+                            queued += float(mm.group(1).replace(",", ""))
+            except Exception:
+                queued = 0.0
+            effective_dry = max(0.0, dry - queued)
+            # "effectively no cash to open a new position" — can't buy anything
+            # meaningful, so runners/watchlist/discovery alerts are just noise +
+            # wasted Claude spend. Owned names still get watched (sell/trim/add).
+            low_cash = bool(quiet) and effective_dry < _LOW_CASH_MIN
             if book_val:
                 book_ctx = (
                     f"CLIENT'S ACTUAL BOOK: ${book_val:,.0f} total (the WHOLE "
@@ -346,6 +372,10 @@ def scan() -> list[dict]:
             if theme == "Cash & Income":
                 # T-bill/cash funds drift up by design — RSI pins near 100
                 # and every momentum rule misreads them. Never signal cash.
+                continue
+            if low_cash and not held:
+                # No dry powder — a buy alert on a name you don't own is nothing
+                # you can act on. Skip it (and its Claude enrichment) entirely.
                 continue
             for sig in _detect(sym, ind, quote, held, pl, score, earn_days):
                 cool_key = f"{sym}:{sig['rule']}"
@@ -390,7 +420,7 @@ def scan() -> list[dict]:
         # so the slap never says BUY on a name that already topped.
         try:
             from . import runner
-            for m in runner.igniting_movers():
+            for m in ([] if low_cash else runner.igniting_movers()):
                 sym = m["symbol"]
                 cool_key = f"{sym}:runner-ignition"
                 last = fired.get(cool_key)
