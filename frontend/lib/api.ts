@@ -486,8 +486,53 @@ export interface GraphData {
   pairs: number;
 }
 
+export interface OptionsTrade {
+  symbol: string;
+  side: string;
+  expiration: string;
+  dte: number;
+  strike: number;
+  premium: number;
+  cost_per_contract: number;
+  breakeven: number;
+  delta: number;
+  iv_pct: number;
+  open_interest: number;
+  volume: number;
+  spread_pct: number | null;
+  spot: number;
+  target?: number;
+  value_at_target?: number;
+  profit_at_target?: number;
+  return_at_target_x?: number | null;
+}
+
+export interface OptionsAdvice {
+  engine: string;
+  generated_at: string;
+  thesis: string;
+  contract: string;
+  sizing: string;
+  risk: string;
+}
+
+export interface OptionsIdea {
+  symbol: string;
+  spot: number;
+  side: string;
+  stance?: string | null;
+  held?: boolean;
+  target: number;
+  trade: OptionsTrade | null;
+  advice?: OptionsAdvice | null;
+}
+
 export const api = {
   plan: () => get<GamePlanData>("/api/plan"),
+  optionsIdea: (symbol: string, side?: string) =>
+    get<OptionsIdea>(`/api/options/${symbol}${side ? `?side=${side}` : ""}`),
+  optionsThesis: (symbol: string, side?: string) =>
+    get<OptionsIdea>(`/api/options/${symbol}/thesis${side ? `?side=${side}` : ""}`),
   dismissIdea: (symbol: string) =>
     post<{ dismissed: string }>(`/api/plan/idea/dismiss?symbol=${encodeURIComponent(symbol)}`, {}),
   graph: () => get<GraphData>("/api/graph"),

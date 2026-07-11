@@ -838,6 +838,93 @@ def _parse_dollar(text: str):
     return best or None
 
 
+_OPT_NOTE = (
+    "OPTIONS RULES: recommend ONLY defined-risk LONG options — buy a call "
+    "(bullish) or a put (bearish). The MAX LOSS is the premium paid, period; "
+    "never suggest selling naked options, spreads the client didn't ask for, or "
+    "anything with undefined risk. This is a leveraged, high-conviction bet on a "
+    "name and thesis you already believe in — size it SMALL (options can expire "
+    "worthless: treat the whole premium as money you can lose). Match the "
+    "expiration to how long the thesis needs to play out, and be honest that the "
+    "trade goes to ZERO if the move doesn't happen by expiry."
+)
+
+
+def advise_option(symbol: str, trade: dict, side: str, target: float | None,
+                  force: bool = False) -> dict:
+    """Frame a suggested defined-risk options trade as a conviction play:
+    thesis, why this contract, sizing, and the honest downside."""
+    sym = symbol.upper()
+    stamp = time.strftime("%Y-%m-%d %H:%M:%S")
+    key = f"option:{sym}:{side}"
+    if not force:
+        hit = _reco_cache.get(key)
+        if hit and (time.time() - hit[0]) < _RECO_TTL:
+            return hit[1]
+
+    def _fallback() -> dict:
+        return {"engine": "fallback", "generated_at": stamp,
+                "thesis": f"A {side} on {sym} caps your risk at the ${trade.get('cost_per_contract', 0):,} premium.",
+                "contract": "", "sizing": "Size it small — you can lose the whole premium.",
+                "risk": "If the move doesn't happen by expiry, the option expires worthless (total loss of premium)."}
+
+    if not settings.ADVISOR_ENABLED or not trade:
+        out = _fallback()
+        _reco_cache[key] = (time.time(), out)
+        return out
+
+    report = None
+    try:
+        report = pf_service.build_report(sym)
+        facts = _facts_from_report(report)
+    except Exception:
+        facts = f"Symbol {sym}."
+    from . import stance as stance_service
+    _spot = report.quote.price if report else None
+    tdesc = (
+        f"SUGGESTED DEFINED-RISK TRADE (already screened for liquidity): BUY the "
+        f"{trade['symbol']} {trade['expiration']} ${trade['strike']:g} {side} at "
+        f"~${trade['premium']:g} (delta {trade['delta']}, {trade['dte']} days out, "
+        f"IV {trade['iv_pct']}%). Cost = MAX RISK ${trade['cost_per_contract']:,} "
+        f"per contract. Breakeven ${trade['breakeven']:g}."
+    )
+    if trade.get("value_at_target"):
+        tdesc += (f" If {sym} reaches ${target:g} by expiry the contract is worth "
+                  f"~${trade['value_at_target']:,} (~{trade['return_at_target_x']}x the premium).")
+
+    prompt = (
+        f"{_PERSONA}\n\n{_OPT_NOTE}\n\nThe client wants a high-conviction, "
+        f"defined-risk OPTIONS play on {sym}.\n\n{facts}\n{_book_context()}"
+        f"{stance_service.block(sym, _spot)}\n"
+        f"{tdesc}\n\n"
+        f"Assess whether this is a trade you'd back for the client and frame it. "
+        f'Respond with ONLY a JSON object: {{"thesis": string — one plain sentence '
+        f'on why {sym} and why now (the directional bet), "contract": string — one '
+        f'sentence on why THIS strike/expiry fits the thesis and timeframe, '
+        f'"sizing": string — how many contracts or how much to risk given the book '
+        f'(remember premium is the max loss; keep it small), "risk": string — the '
+        f"honest downside in plain words}}. Under 22 words each, no jargon. {_PLAIN_STYLE}"
+    )
+    raw, _ = _run_claude(prompt, model=settings.CLAUDE_MODEL_STANDARD)
+    out = _fallback()
+    if raw:
+        s, e = raw.find("{"), raw.rfind("}")
+        if s != -1 and e > s:
+            try:
+                obj = json.loads(raw[s:e + 1])
+                out = {
+                    "engine": "claude", "generated_at": stamp,
+                    "thesis": str(obj.get("thesis") or out["thesis"]),
+                    "contract": str(obj.get("contract") or ""),
+                    "sizing": str(obj.get("sizing") or out["sizing"]),
+                    "risk": str(obj.get("risk") or out["risk"]),
+                }
+            except json.JSONDecodeError:
+                pass
+    _reco_cache[key] = (time.time(), out)
+    return out
+
+
 def _pending_commitments() -> str:
     """Open pins + armed tripwires with their dollar amounts. These COMPETE for
     the same cash — feeding them in is what stops the advisor recommending a set

@@ -3,6 +3,7 @@ import { use, useEffect, useState } from "react";
 import Link from "next/link";
 import { api, StockReport } from "../../../lib/api";
 import { AdvisorPanel } from "../../../components/AdvisorPanel";
+import { OptionsPlay } from "../../../components/OptionsPlay";
 import { PriceChart } from "../../../components/PriceChart";
 import { Signals } from "../../../components/Signals";
 import { compact, money, num, pct, signClass } from "../../../components/format";
@@ -77,6 +78,8 @@ export default function StockDetail({
       )}
 
       <PriceChart symbol={r.symbol} quote={r.quote} />
+
+      <OptionsPlay symbol={r.symbol} />
 
       <div className="detail-grid">
         <div>
