@@ -1,7 +1,7 @@
 {
   "owner": "You",
   "advisor_persona": "senior financial advisor at Charles Schwab",
-  "cash": 710.31,
+  "cash": 6.6,
   "core_convictions": [
     "NVDA",
     "AVGO",
@@ -11,6 +11,7 @@
     "MU",
     "GOOGL"
   ],
+  "quiet_unowned_low_cash": true,
   "themes": {
     "AI": "Companies building or monetizing artificial intelligence models and applications",
     "Tech": "Broad technology leaders and platforms",
@@ -22,14 +23,14 @@
   "holdings": [
     {
       "symbol": "NVDA",
-      "shares": 5.02625,
-      "cost_basis": 205.38,
+      "shares": 7.98497,
+      "cost_basis": 202.42,
       "theme": null
     },
     {
       "symbol": "MSFT",
-      "shares": 2.07465,
-      "cost_basis": 437.51,
+      "shares": 3.93284,
+      "cost_basis": 408.78,
       "theme": null
     },
     {
@@ -45,12 +46,6 @@
       "theme": null
     },
     {
-      "symbol": "IREN",
-      "shares": 28.57892,
-      "cost_basis": 61.24,
-      "theme": null
-    },
-    {
       "symbol": "MU",
       "shares": 0.74719,
       "cost_basis": 1001.95,
@@ -60,12 +55,6 @@
       "symbol": "AMZN",
       "shares": 2.74262,
       "cost_basis": 242.46,
-      "theme": null
-    },
-    {
-      "symbol": "MELI",
-      "shares": 0.25121,
-      "cost_basis": 1671.47,
       "theme": null
     },
     {
@@ -108,6 +97,24 @@
       "symbol": "NTAP",
       "shares": 2.0,
       "cost_basis": 167.48,
+      "theme": null
+    },
+    {
+      "symbol": "CRWD",
+      "shares": 1.95702,
+      "cost_basis": 189.06,
+      "theme": null
+    },
+    {
+      "symbol": "PATH",
+      "shares": 32.72888,
+      "cost_basis": 11.31,
+      "theme": null
+    },
+    {
+      "symbol": "VRT",
+      "shares": 0.93975,
+      "cost_basis": 335.2,
       "theme": null
     }
   ],

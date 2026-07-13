@@ -359,34 +359,64 @@ def _run_claude(prompt: str, resume: str | None = None, research: bool = False,
     if _PLAIN_STYLE not in prompt:
         prompt = prompt + _PLAIN_STYLE
     exe = shutil.which(settings.CLAUDE_BIN) or settings.CLAUDE_BIN
-    cmd = [exe, "-p", "--output-format", "json"]
-    if resume:
-        cmd += ["--resume", resume]
-    if research:
-        cmd += ["--allowedTools", "WebSearch", "WebFetch"]
-    chosen = model if model is not None else settings.CLAUDE_MODEL
-    if chosen:
-        cmd += ["--model", chosen]
     timeout = max(settings.ADVISOR_TIMEOUT, 300) if research \
         else settings.ADVISOR_TIMEOUT
-    try:
-        proc = subprocess.run(
-            cmd, input=prompt, capture_output=True, text=True,
-            encoding="utf-8", errors="replace", timeout=timeout,
-        )
-    except (FileNotFoundError, subprocess.TimeoutExpired) as exc:
-        print(f"[advisor] claude CLI unavailable: {exc!r}")
-        return None, None
-    if proc.returncode != 0:
-        print(f"[advisor] claude CLI rc={proc.returncode}: {proc.stderr[:300]}")
-        return None, None
-    try:
-        payload = json.loads(proc.stdout)
-    except json.JSONDecodeError:
-        return proc.stdout.strip() or None, None
-    if payload.get("is_error"):
-        return None, None
-    return payload.get("result"), payload.get("session_id")
+
+    def _attempt(model_name: str) -> tuple[str | None, str | None] | None:
+        """Run the CLI once. Return (result, session_id) on success, or None on
+        any failure (spawn error, timeout, non-zero exit, or in-band is_error).
+        Failures log stdout too — a rate-limited `claude -p` exits rc=1 with an
+        EMPTY stderr and the reason (if any) on stdout, so stderr alone told us
+        nothing about why the brief kept falling back."""
+        tag = model_name or "default"
+        cmd = [exe, "-p", "--output-format", "json"]
+        if resume:
+            cmd += ["--resume", resume]
+        if research:
+            cmd += ["--allowedTools", "WebSearch", "WebFetch"]
+        if model_name:
+            cmd += ["--model", model_name]
+        try:
+            proc = subprocess.run(
+                cmd, input=prompt, capture_output=True, text=True,
+                encoding="utf-8", errors="replace", timeout=timeout,
+            )
+        except FileNotFoundError as exc:
+            print(f"[advisor] claude CLI not found: {exc!r}")
+            return None
+        except subprocess.TimeoutExpired:
+            print(f"[advisor] claude CLI timeout after {timeout}s (model={tag})")
+            return None
+        if proc.returncode != 0:
+            print(f"[advisor] claude CLI rc={proc.returncode} (model={tag}) "
+                  f"stderr={proc.stderr[:200]!r} stdout={proc.stdout[:200]!r}")
+            return None
+        try:
+            payload = json.loads(proc.stdout)
+        except json.JSONDecodeError:
+            text = proc.stdout.strip()
+            return (text, None) if text else None
+        if payload.get("is_error"):
+            print(f"[advisor] claude is_error (model={tag}): "
+                  f"{str(payload.get('result'))[:200]!r}")
+            return None
+        return payload.get("result"), payload.get("session_id")
+
+    chosen = model if model is not None else settings.CLAUDE_MODEL
+    result = _attempt(chosen)
+    if result is not None:
+        return result
+    # Primary attempt failed. The brief runs on the default (best) model, which
+    # hits intermittent usage windows where Sonnet is still available — retry
+    # once on the standard model before surrendering to the deterministic
+    # narrative. Skip if the standard model is what we just tried.
+    fallback = settings.CLAUDE_MODEL_STANDARD
+    if fallback and (chosen or "") != fallback:
+        print(f"[advisor] retrying with fallback model={fallback}")
+        result = _attempt(fallback)
+        if result is not None:
+            return result
+    return None, None
 
 
 def _as_bullets(val) -> list[str]:

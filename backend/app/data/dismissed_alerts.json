@@ -1,17 +1,11 @@
 {
-  "IREN:Deep drawdown": 1783464023.0106764,
-  "GEV:52w-high zone": 1783382560.8190997,
-  "GEV:Breakout setup": 1783382600.9657073,
-  "MU:Sharp drop": 1783424195.393249,
-  "NET:Big up day": 1783424218.453724,
-  "NVDA:Position underwater": 1783424220.052357,
-  "AMD:Sharp drop": 1783457927.0273273,
-  "IREN:Sharp drop": 1783457927.680452,
-  "NET:52w-high zone": 1783457953.812737,
-  "NET:Breakout setup": 1783457954.744353,
-  "MELI:Below long-term trend": 1783464023.7426221,
-  "MSFT:Position underwater": 1783464024.421622,
-  "MSFT:Below long-term trend": 1783464025.0520897,
-  "AAPL:52w-high zone": 1783464026.0334644,
-  "AAPL:Breakout setup": 1783464026.5679677
+  "AAPL:Breakout setup": 1783945290.5494199,
+  "ANET:52w-high zone": 1783945291.4091873,
+  "ANET:Breakout setup": 1783945292.1773443,
+  "NET:Breakout setup": 1783945293.1040418,
+  "AAPL:52w-high zone": 1783945293.797008,
+  "PATH:Below long-term trend": 1783945294.4869027,
+  "MSFT:Below long-term trend": 1783945295.0814428,
+  "MU:Sharp drop": 1783945295.6841533,
+  "CRWD:Sharp drop": 1783945296.2812243
 }

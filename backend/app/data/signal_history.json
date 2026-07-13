@@ -367,5 +367,257 @@
     "price": 267.01,
     "ts": 1783461537.5587726,
     "date": "2026-07-07"
+  },
+  {
+    "id": "BATL:runner-ignition:2026-07-08",
+    "symbol": "BATL",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 2.3099,
+    "ts": 1783508421.6718087,
+    "date": "2026-07-08"
+  },
+  {
+    "id": "watch:b8dd1cb4ebb8",
+    "symbol": "NVDA",
+    "side": "buy",
+    "rule": "watchpoint",
+    "price": 193.79,
+    "ts": 1783508451.8771982,
+    "date": "2026-07-08"
+  },
+  {
+    "id": "VRXA:runner-ignition:2026-07-08",
+    "symbol": "VRXA",
+    "side": "buy",
+    "rule": "runner-ignition",
+    "price": 3.29,
+    "ts": 1783510042.9206433,
+    "date": "2026-07-08"
+  },
+  {
+    "id": "CLRO:runner-ignition:2026-07-08",
+    "symbol": "CLRO",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 13.84,
+    "ts": 1783517414.629958,
+    "date": "2026-07-08"
+  },
+  {
+    "id": "TC:runner-ignition:2026-07-08",
+    "symbol": "TC",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 2.68,
+    "ts": 1783517747.4796555,
+    "date": "2026-07-08"
+  },
+  {
+    "id": "watch:de700e5dbbb9",
+    "symbol": "NVDA",
+    "side": "buy",
+    "rule": "watchpoint",
+    "price": 197.48,
+    "ts": 1783519125.6573267,
+    "date": "2026-07-08"
+  },
+  {
+    "id": "ELTX:runner-ignition:2026-07-08",
+    "symbol": "ELTX",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 3.5,
+    "ts": 1783523346.0072007,
+    "date": "2026-07-08"
+  },
+  {
+    "id": "TVRD:runner-ignition:2026-07-08",
+    "symbol": "TVRD",
+    "side": "buy",
+    "rule": "runner-ignition",
+    "price": 3.7601,
+    "ts": 1783524997.8177388,
+    "date": "2026-07-08"
+  },
+  {
+    "id": "RGC:runner-ignition:2026-07-08",
+    "symbol": "RGC",
+    "side": "buy",
+    "rule": "runner-ignition",
+    "price": 7.2765,
+    "ts": 1783526262.0953798,
+    "date": "2026-07-08"
+  },
+  {
+    "id": "watch:c1c53f8b561c",
+    "symbol": "NET",
+    "side": "sell",
+    "rule": "watchpoint",
+    "price": 264.33,
+    "ts": 1783527080.2470748,
+    "date": "2026-07-08"
+  },
+  {
+    "id": "PENG:runner-ignition:2026-07-08",
+    "symbol": "PENG",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 78.5893,
+    "ts": 1783529504.717153,
+    "date": "2026-07-08"
+  },
+  {
+    "id": "SRXH:runner-ignition:2026-07-08",
+    "symbol": "SRXH",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 2.1,
+    "ts": 1783537694.4760175,
+    "date": "2026-07-08"
+  },
+  {
+    "id": "KC:runner-ignition:2026-07-08",
+    "symbol": "KC",
+    "side": "buy",
+    "rule": "runner-ignition",
+    "price": 10.515,
+    "ts": 1783540565.3464534,
+    "date": "2026-07-08"
+  },
+  {
+    "id": "watch:b647b9247463",
+    "symbol": "MSFT",
+    "side": "sell",
+    "rule": "watchpoint",
+    "price": 383.42,
+    "ts": 1783553788.307634,
+    "date": "2026-07-08"
+  },
+  {
+    "id": "RGC:runner-ignition:2026-07-09",
+    "symbol": "RGC",
+    "side": "buy",
+    "rule": "runner-ignition",
+    "price": 7.05,
+    "ts": 1783595307.0294294,
+    "date": "2026-07-09"
+  },
+  {
+    "id": "watch:0c8da4691d4a",
+    "symbol": "PATH",
+    "side": "sell",
+    "rule": "watchpoint",
+    "price": 11.18,
+    "ts": 1783599312.3500786,
+    "date": "2026-07-09"
+  },
+  {
+    "id": "JLHL:runner-ignition:2026-07-09",
+    "symbol": "JLHL",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 3.89,
+    "ts": 1783603984.6947236,
+    "date": "2026-07-09"
+  },
+  {
+    "id": "WRAP:runner-ignition:2026-07-09",
+    "symbol": "WRAP",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 2.0801,
+    "ts": 1783604275.0734875,
+    "date": "2026-07-09"
+  },
+  {
+    "id": "SDOT:runner-ignition:2026-07-09",
+    "symbol": "SDOT",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 30.795,
+    "ts": 1783604692.8636,
+    "date": "2026-07-09"
+  },
+  {
+    "id": "FBRX:runner-ignition:2026-07-09",
+    "symbol": "FBRX",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 29.195,
+    "ts": 1783605223.124831,
+    "date": "2026-07-09"
+  },
+  {
+    "id": "LASR:runner-ignition:2026-07-09",
+    "symbol": "LASR",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 73.76,
+    "ts": 1783606772.9218476,
+    "date": "2026-07-09"
+  },
+  {
+    "id": "TRAX:runner-ignition:2026-07-09",
+    "symbol": "TRAX",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 28.91,
+    "ts": 1783607587.4762242,
+    "date": "2026-07-09"
+  },
+  {
+    "id": "SRXH:runner-ignition:2026-07-09",
+    "symbol": "SRXH",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 2.7,
+    "ts": 1783613591.552243,
+    "date": "2026-07-09"
+  },
+  {
+    "id": "PERF:runner-ignition:2026-07-10",
+    "symbol": "PERF",
+    "side": "buy",
+    "rule": "runner-ignition",
+    "price": 1.9213,
+    "ts": 1783691024.6715586,
+    "date": "2026-07-10"
+  },
+  {
+    "id": "WDFC:runner-ignition:2026-07-10",
+    "symbol": "WDFC",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 268.35,
+    "ts": 1783701128.9962435,
+    "date": "2026-07-10"
+  },
+  {
+    "id": "SNAL:runner-ignition:2026-07-10",
+    "symbol": "SNAL",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 5.19,
+    "ts": 1783702275.800428,
+    "date": "2026-07-10"
+  },
+  {
+    "id": "PLBL:runner-ignition:2026-07-10",
+    "symbol": "PLBL",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 8.54,
+    "ts": 1783705635.7155154,
+    "date": "2026-07-10"
+  },
+  {
+    "id": "AARD:runner-ignition:2026-07-10",
+    "symbol": "AARD",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 7.09,
+    "ts": 1783710958.3126373,
+    "date": "2026-07-10"
   }
 ]

@@ -32,10 +32,10 @@
   },
   "guardrails": [
     "Risk \u22641.5% of book (~$183) per new core entry; position size = risk dollars \u00f7 distance to your predefined stop.",
-    "Hold a 16% Cash & Income floor (~$1,956) before opening any new speculative or satellite position.",
+    "Cash in this account is RISK CAPITAL to deploy (reserves are held elsewhere): keep a small dry-powder buffer for pullbacks as a GUIDELINE, never a hard floor that blocks a high-conviction buy.",
     "Cap the speculative/satellite sleeve (PATH and similar) at 8% of the book, each single pick near 3%, and never average down.",
     "Cut IREN now on its confirmed stop; core convictions (NVDA, AVGO, TSM, MSFT, AMD, MU, GOOGL) are never sold on price alone.",
-    "If the S&P loses its 200-day or NVDA closes below $190, halve new size and raise cash back to the floor."
+    "If the S&P breaks its 200-day or NVDA closes below $190, slow new buying and hold a bit more dry powder - a caution, not a forced cash-raise."
   ],
   "milestones": [
     "By 2026-09-30: cash rebuilt to ~$1,956 (16%) with PATH sized and stopped, book value holding at or above $13,000.",
@@ -47,5 +47,5 @@
   "approved": true,
   "generated_at": "2026-07-07 17:20:50",
   "engine": "claude",
-  "updated_at": "2026-07-07 17:21:07"
+  "updated_at": "2026-07-08 21:31:55"
 }

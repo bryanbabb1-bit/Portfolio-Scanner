@@ -47,17 +47,25 @@
     "done_at": "2026-07-06 18:06:37"
   },
   {
-    "id": "dc9ff5e1e81d",
-    "symbol": "NET",
-    "source": "signal",
-    "text": "Add to the existing NET position now as it clears near its 52-week high on 1.76x volume, confirming continuation of the uptrend.",
-    "points": [
-      "$295",
-      "$250"
-    ],
+    "id": "d2de98c354dd",
+    "symbol": null,
+    "source": "brief",
+    "text": "Sell PATH only if it closes under $11.26.",
+    "points": [],
     "status": "open",
-    "price_at_pin": 267.01,
-    "created_at": "2026-07-07 16:59:54",
-    "ts": 1783461594.6785157
+    "price_at_pin": null,
+    "created_at": "2026-07-09 17:18:56",
+    "ts": 1783635536.7417254
+  },
+  {
+    "id": "885cd28236d2",
+    "symbol": null,
+    "source": "brief",
+    "text": "Sell PATH only if it closes below $11.26.",
+    "points": [],
+    "status": "open",
+    "price_at_pin": null,
+    "created_at": "2026-07-10 14:45:08",
+    "ts": 1783712708.294636
   }
 ]

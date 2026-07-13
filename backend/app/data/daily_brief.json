@@ -1,24 +1,18 @@
 {
-  "type": "eod",
-  "date": "2026-07-07",
-  "generated_at": "2026-07-07 15:00:16",
+  "type": "morning",
+  "date": "2026-07-13",
+  "generated_at": "2026-07-13 07:15:31",
   "engine": "claude",
-  "headline": "Semis slam the book -1.6%; IREN keeps bleeding",
-  "summary": "A rough, broad-based red day — AMD's 6.7% single-day give-back and IREN's continued collapse did the damage, while the two defensive/utility names (NEE, SGOV) barely moved. No new risk was added despite a wild speculative runner tape elsewhere.",
+  "headline": "TSM earnings in 3 days — that's the big one",
+  "summary": "Quiet red morning, nothing broken. NVDA's the strongest name today; TSM earnings this week is the one to have on your radar.",
   "watch": [
-    "IREN: RSI 35.7, down 8.9% today on a name already -34.7% — watch for a capitulation flush; no invalidation level in the data, so treat any bounce as unconfirmed",
-    "AMD: -6.7% single-day drop after being the book's best winner — confirm tomorrow whether this is a shakeout or a trend change before treating the RSI 50.9 as neutral",
-    "AVGO: -8.2% P/L, RSI 43.7 — semis were weak across the board today (AMD, IREN); watch for follow-through weakness here too",
-    "WBX: TRIM signal is live — execute the partial if not done yet, don't let the gift go stale",
-    "SGOV RSI 82.2 is noise, not a signal — it's a cash-proxy ETF, ignore the overbought read",
-    "Runner tape stays hot (CRNX +99%, CLRO +95%, SKIN +46%, VRXA +38%, BATL +28%, PYXS +25%) — all off-book and extended; no chase, wait for a defined pullback level before considering any"
+    "PATH: stop at $10.30, only $1.43 below current $11.73 — will sell itself if hit.",
+    "TSM reports earnings in 3 days — expect it to move either way, don't panic on the swing.",
+    "NVDA leading today, up 2.7% to $208.31 — hold, let it run.",
+    "AVGO soft today, down 1.8% to $393.87 — normal noise, hold.",
+    "AMD sitting on a solid +8.3% gain at $544.57 — hold, no action needed.",
+    "MSFT flat-ish, +0.8% today to $387.44 — hold.",
+    "Only $7 cash on hand — nothing to deploy today even if a name looks cheap."
   ],
-  "recap": [
-    "Book -1.60% to $12,200, cash $242 — no green day to hide behind",
-    "IREN -8.9% today, now -34.7% P/L — the single worst holding, still no floor",
-    "AMD -6.7% today but still +2.4% P/L overall — a real give-back on a former winner",
-    "AVGO -1.0% today, -8.2% P/L, RSI 43.7 — no bounce yet, sitting underwater",
-    "Only NVDA (+0.7%) and NEE (+1.2%) held up; not enough to offset AMD/IREN",
-    "WBX fired TRIM (rsi-sell-zone) — take the gift, keep a stub; 9 runner-ignition AVOIDs fired on speculative names (SKIN, CLRO, JLHL, VRXA, TVRD, PEW, ILLR, PYXS, VERA), none held, correctly stood aside"
-  ]
+  "recap": []
 }

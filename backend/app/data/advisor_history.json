@@ -1,23 +1,124 @@
 {
   "portfolio:brief": [
     {
-      "generated_at": "2026-07-07 18:14:16",
-      "summary": "Trim IREN into its Anthropic-deal pop to rebuild your thin cash, then let the AI core keep compounding.",
+      "generated_at": "2026-07-13 07:22:35",
+      "summary": "You've fully cut IREN and redeployed into MSFT, NVDA, VRT, PATH and CRWD \u2014 with $7 left, this is a patience week, not new trades.",
       "insights": [
-        "Roughly 60% of your money sits in AI chips and the gear that powers them.",
-        "Cash is very thin \u2014 under 6% of the book versus your 16% goal.",
-        "IREN is down 35% and remains your single riskiest holding."
+        "About 76% of your book is in AI chips and AI infrastructure \u2014 one theme moves it.",
+        "Cash is basically empty at $7, so there's no dry powder for this dip.",
+        "Your five biggest names are 55% of the book, led by NVDA at 13%."
       ],
       "actions": [
-        "Trim $400 IREN near $41; move proceeds to cash.",
-        "Buy $150 NVDA near $191 using the trim cash.",
-        "Add $150 AVGO on any further dip below here.",
-        "Hold everything else \u2014 do nothing."
+        "Hold \u2014 do nothing; only $7 cash to deploy.",
+        "Hold TSM through its July 16 earnings.",
+        "Hold CRWD near $193 \u2014 it's just a 4-for-1 split, not a loss.",
+        "Hold MU \u2014 the memory drop is sentiment, not a broken story."
       ],
       "risks": [
-        "AI-chip jitters (DeepSeek's own chip, Nvidia's 2028 system delay) could pressure the whole book \u2014 NVDA closing under $190 confirms it.",
-        "IREN's Anthropic bid is speculation, not a signed deal; a 'no' could drop it hard from $41."
+        "AI-chip mood swing is dragging the whole book; a close below $190 on NVDA (now ~$208) means slow new buying.",
+        "Micron's memory slump could deepen \u2014 another leg down under recent lows would test the dip-buy thesis, not break it yet."
+      ],
+      "scout": [
+        "HIGH CONVICTION PANW $326 \u2014 raised full-year guidance, next-gen security booming, targets lifted to $425; buy $300 under $315, target $420 \u2014 still your first free dollars when cash arrives.",
+        "HIGH CONVICTION GEV $1,092 \u2014 AI data centers can't run without its turbines and its order book is at a record; buy $300 under $1,000, target $1,208.",
+        "SPECULATIVE UPSIDE TEM $57 \u2014 AI trained on real hospital patient data is a moat rivals can't rebuild; buy $125 near $57, stop $46, target $100."
       ]
+    },
+    {
+      "generated_at": "2026-07-13 08:50:38",
+      "summary": "You've fully cut IREN and redeployed into MSFT, NVDA, VRT, PATH and CRWD \u2014 with $7 left, this is a patience week, not new trades.",
+      "insights": [
+        "Your AI chip and infrastructure names are over half the book, led by NVDA at 13%.",
+        "Cash is basically empty at $7, so no real firepower until a winner is trimmed.",
+        "Top five positions are 55% of the book \u2014 concentrated, by design, in your best ideas."
+      ],
+      "actions": [
+        "Hold \u2014 do nothing; only $7 cash to deploy.",
+        "Hold TSM through its earnings on July 16.",
+        "Hold CRWD near $193 \u2014 the drop is just a 4-for-1 split.",
+        "Hold MU \u2014 the memory selloff is sentiment, not a broken story."
+      ],
+      "risks": [
+        "Memory sentiment is ugly after SK Hynix's weak outlook; another leg down in MU below $155 would confirm real demand worry, not just noise.",
+        "So much of the book rides on AI chips together \u2014 if NVDA closes under $190, slow any new buying and hold a little dry powder."
+      ],
+      "scout": [
+        "HIGH CONVICTION PANW $321 \u2014 raised full-year guidance and next-gen security booming; targets lifted to $425; buy $300 under $315, target $420 \u2014 still your first free dollars when a winner is trimmed.",
+        "HIGH CONVICTION GEV $1,092 \u2014 AI data centers can't run without its turbines and its order book is at a record; buy $300 under $1,000, target $1,208.",
+        "SPECULATIVE UPSIDE TEM $57 \u2014 AI trained on real hospital patient data is a moat rivals can't rebuild; buy $125 near $57, stop $46, target $100."
+      ]
+    },
+    {
+      "generated_at": "2026-07-13 08:54:44",
+      "summary": "You've finished cutting IREN and redeployed into MSFT, NVDA, VRT, PATH and CRWD \u2014 with $7 left, this is a patience week, hold everything.",
+      "insights": [
+        "Nearly half your money sits in AI chips \u2014 NVDA, AVGO, TSM, AMD and MU.",
+        "Cash is basically zero at $7, so you're fully invested with no dry powder.",
+        "Your top five names are 55% of the book \u2014 concentrated by design, but tightly."
+      ],
+      "actions": [
+        "Hold \u2014 do nothing; only $7 cash to deploy.",
+        "Hold TSM through its July 16 earnings.",
+        "Hold MU near market \u2014 the memory drop is sentiment, not a broken story.",
+        "Hold CRWD near $193 \u2014 that drop was a 4-for-1 split, not a loss."
+      ],
+      "risks": [
+        "A weak TSM earnings report July 16 could drag your whole chip sleeve down together.",
+        "Broad market wobble on the Iran headlines \u2014 slow any new buying if NVDA closes under $190."
+      ],
+      "scout": [
+        "HIGH CONVICTION PANW $321 \u2014 raised full-year guidance and next-gen security demand is booming; targets lifted toward $425; buy $300 under $315, target $420 \u2014 still your first free dollars.",
+        "HIGH CONVICTION GEV $1,060 \u2014 AI data centers can't run without its turbines and its order book is at a record; buy $300 under $1,000, target $1,208.",
+        "SPECULATIVE UPSIDE TEM $57 \u2014 AI trained on real hospital patient data is a moat rivals can't rebuild; buy $125 near $57, stop $46, target $100."
+      ]
+    }
+  ],
+  "stock:MSFT": [
+    {
+      "generated_at": "2026-07-09 08:22:42",
+      "summary": "MSFT is down near a one-year low on broad software-sector weakness, not company news \u2014 Azure's growth story is intact and this is a buying opportunity, not a reason to worry.",
+      "insights": [
+        "Price is $375, about 29% below its 52-week high of $538 \u2014 deep discount territory.",
+        "You're down 14% from your $437 average cost \u2014 a paper dip, not a broken thesis.",
+        "Momentum is turning less negative, but the medium-term trend is still soft.",
+        "Volume today is only about half the normal pace \u2014 this is a quiet drift, not panic selling.",
+        "Analysts still see about 49% upside, with an average target near $560.",
+        "Software stocks broadly fell today per the Journal \u2014 this looks sector-wide, not MSFT-specific."
+      ],
+      "actions": [
+        "Buy $700 of MSFT near $375 \u2014 your watchpoint below $430 already hit.",
+        "Hold your current shares \u2014 do not sell on this dip."
+      ],
+      "risks": [
+        "Stock remains in a downtrend below its longer-term averages \u2014 could stay choppy a while.",
+        "A break below the 52-week low of $352.83 would open more downside.",
+        "Broad software-sector selling today could persist if it's tied to rate or spending fears."
+      ],
+      "scout": []
+    },
+    {
+      "generated_at": "2026-07-10 07:39:49",
+      "summary": "Nothing has changed since my call this morning \u2014 you bought near the low yesterday and MSFT is flat at $387.50. Azure is still compounding ~40% and earnings land July 29; sit tight and let it work.",
+      "insights": [
+        "Price $387.50 is flat (+0.1%) since my HOLD call \u2014 no new information to act on.",
+        "You added shares on 2026-07-09, doubling to 3.93 shares; that was the buy, and it was a good one.",
+        "Selling pressure is easing: the stock is off its $352.83 low and above the $381 short-term average.",
+        "Trading volume is light (0.64x normal) \u2014 this drift lower is apathy, not institutions dumping.",
+        "55 analysts rate it strong buy with an average target of $560; Bernstein $641, Morgan Stanley $650 (July 2026).",
+        "Azure grew ~40% last quarter and demand is outrunning supply; fiscal Q4 results hit July 29."
+      ],
+      "actions": [
+        "Hold MSFT \u2014 do nothing.",
+        "Add $150 of MSFT only under $360.",
+        "Keep PATH sell pinned under $11.26."
+      ],
+      "risks": [
+        "Only $7 of dry powder \u2014 you cannot fund a new buy until PATH or another sale frees cash.",
+        "July 29 earnings: guidance below ~13% revenue growth would pressure the stock hard.",
+        "AI infrastructure spending is squeezing margins; watch for any Azure capacity or profit-delay commentary.",
+        "The stock is 28.6% off its $538.66 high \u2014 a break under $352.83 would say the market doubts the AI payback."
+      ],
+      "scout": []
     }
   ]
 }
