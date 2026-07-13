@@ -237,6 +237,21 @@ _PERSONA = (
     "already booked to offset gains (tax-loss harvesting), and avoid wash sales "
     "(don't rebuy a name within 30 days of harvesting its loss). Mention the tax "
     "angle briefly, in plain words, only when it materially affects a decision.\n"
+    "- PATIENCE IS THE STRATEGY, NOT A HOLDING PATTERN. Compounding rewards TIME "
+    "IN the market, not timing it — the costliest mistake a good investor makes "
+    "is interrupting a working thesis out of impatience or a craving to 'do "
+    "something'. When the business thesis is intact and nothing material has "
+    "changed, HOLDING is the correct, ACTIVE, disciplined move — say so with "
+    "CONVICTION and warmth, never neutral silence or a shrug. Reframe 'do "
+    "nothing' as what it truly is: staying the course while your winners "
+    "compound. Actively reassure the client that a quiet week is the plan "
+    "WORKING, not a problem to fix, and that their discipline THROUGH past "
+    "drawdowns is exactly what pays them. But reassurance must be EARNED and "
+    "SPECIFIC — anchor it to the intact thesis, the levels holding, the progress "
+    "toward the goal, and their own track record; never an empty 'stay calm' "
+    "platitude. And NEVER soothe the client into holding a name whose thesis is "
+    "genuinely breaking: your honest alerts are what make your patience "
+    "credible. Confidence to hold + honesty to warn — that is the whole job.\n"
     "- Cite only numbers you were given, never invent data, say 'insufficient "
     "data' rather than guess. Be direct and warm — no hedging, no lecturing."
 )
@@ -740,6 +755,97 @@ def advise_portfolio(summary: PortfolioSummary, reports: list[StockReport],
     _remember_history(key, note)
     _cache[key] = (time.time(), note)
     return note
+
+
+def advise_stay_course(read: dict, summary, reports, risk) -> dict:
+    """Narrate the Stay-the-Course read in the advisor's warm long-game voice.
+
+    `read` is the deterministic staycourse.read() output (posture + grounded
+    facts). One standard-tier Claude call phrases the reassurance; if Claude is
+    unavailable the deterministic reasons stand as-is. Cached by posture so a
+    flip between hold/act regenerates immediately. This NEVER suppresses an
+    alert — it only frames the quiet, when impatience does its damage."""
+    posture = read.get("posture", "hold")
+    key = f"portfolio:staycourse:{posture}"
+    hit = _cache.get(key)
+    if hit and (time.time() - hit[0]) < settings.ADVISOR_CACHE_TTL:
+        return hit[1]
+
+    stamp = time.strftime("%Y-%m-%d %H:%M:%S")
+    base = {"posture": posture, "headline": read["headline"],
+            "reasons": read["reasons"], "closer": read["closer"],
+            "metrics": read.get("metrics", {}), "generated_at": stamp}
+
+    if not settings.ADVISOR_ENABLED:
+        return {**base, "engine": "deterministic"}
+
+    facts = _facts_from_portfolio(summary, reports, risk, [])
+    m = read.get("metrics", {})
+    if posture == "hold":
+        task = (
+            "This is a QUIET week: nothing in the client's plan needs action and "
+            "no warning has fired. Your job is to give the client EARNED "
+            "permission to hold — warm, confident reassurance grounded ONLY in "
+            "the facts above (holdings still trending up, progress to the goal, a "
+            "position they held from its low back up, gains already booked). "
+            "Reframe holding as the active, disciplined, winning move — never a "
+            "shrug. Remind them a quiet week is the plan working and their "
+            "patience through past drawdowns is what pays them. Do NOT invent a "
+            "trade or manufacture urgency. Do NOT use jargon.")
+    else:
+        flagged = m.get("flagged") or []
+        moves = m.get("ready_moves") or []
+        specifics = ""
+        if flagged:
+            specifics += ("\nThe ONLY alert(s) that fired (name the RIGHT ones, "
+                          "do NOT invent or guess a different ticker): "
+                          + "; ".join(flagged) + ".")
+        if moves:
+            specifics += ("\nThe plan move(s) ready to act on: "
+                          + "; ".join(moves) + ".")
+        task = (
+            f"This week the client has {m.get('ready_count', 0)} ready move(s) in "
+            f"their plan and {m.get('critical_count', 0)} alert(s).{specifics} "
+            "Briefly point them to the plan/alert for those, then reassure them "
+            "the REST of the book stays put and compounds. Confident and calm, "
+            "not alarmed. Cite ONLY the tickers named above for what needs "
+            "action — never guess which name has an alert. No jargon.")
+
+    prompt = (
+        f"{_PERSONA}\n\n"
+        f"Here is your client's full portfolio right now:\n\n{facts}\n\n"
+        f"{task}\n\n"
+        f'Respond with ONLY a JSON object, no markdown, with keys: '
+        f'"headline" (ONE short warm sentence — the reassurance in plain words), '
+        f'"reasons" (array of 3-5 short plain-English bullets, each a SPECIFIC '
+        f'fact from the data that justifies staying the course — cite the real '
+        f'numbers, no jargon, under 24 words each), '
+        f'"closer" (ONE encouraging plain sentence about the long game). '
+        f'Warm and human, never a lecture, never empty "stay calm" filler.'
+        f"{_PLAIN_STYLE}"
+    )
+    raw, _ = _run_claude(prompt, model=settings.CLAUDE_MODEL_STANDARD)
+    out = {**base, "engine": "claude"}
+    if raw:
+        try:
+            s, e = raw.find("{"), raw.rfind("}")
+            obj = json.loads(raw[s : e + 1]) if s != -1 and e > s else {}
+            headline = str(obj.get("headline") or "").strip()
+            reasons = _as_bullets(obj.get("reasons"))
+            closer = str(obj.get("closer") or "").strip()
+            if headline:
+                out["headline"] = headline
+            if reasons:
+                out["reasons"] = reasons
+            if closer:
+                out["closer"] = closer
+        except (ValueError, TypeError):
+            out = {**base, "engine": "deterministic"}
+    else:
+        out = {**base, "engine": "deterministic"}
+
+    _cache[key] = (time.time(), out)
+    return out
 
 
 def advise_breakout(cand: BreakoutCandidate, force: bool = False,

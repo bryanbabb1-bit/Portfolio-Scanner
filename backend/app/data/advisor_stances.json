@@ -8,9 +8,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 386.79,
-    "as_of": "2026-07-13 08:54:44",
-    "ts": 1783950884.332964
+    "price": 392.65,
+    "as_of": "2026-07-13 11:56:31",
+    "ts": 1783961791.2581496
   },
   "NET": {
     "symbol": "NET",
@@ -21,9 +21,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 265.18,
-    "as_of": "2026-07-13 08:54:44",
-    "ts": 1783950884.4636056
+    "price": 271.5,
+    "as_of": "2026-07-13 11:56:31",
+    "ts": 1783961791.4318125
   },
   "NEE": {
     "symbol": "NEE",
@@ -34,9 +34,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 88.66,
-    "as_of": "2026-07-13 08:54:44",
-    "ts": 1783950884.3481202
+    "price": 88.36,
+    "as_of": "2026-07-13 11:56:31",
+    "ts": 1783961791.2748456
   },
   "TSM": {
     "symbol": "TSM",
@@ -47,9 +47,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 427.16,
-    "as_of": "2026-07-13 08:54:44",
-    "ts": 1783950884.3771124
+    "price": 425.23,
+    "as_of": "2026-07-13 11:56:31",
+    "ts": 1783961791.3115659
   },
   "AVGO": {
     "symbol": "AVGO",
@@ -60,9 +60,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 387.51,
-    "as_of": "2026-07-13 08:54:44",
-    "ts": 1783950884.3623497
+    "price": 386.82,
+    "as_of": "2026-07-13 11:56:31",
+    "ts": 1783961791.2959025
   },
   "IREN": {
     "symbol": "IREN",
@@ -81,14 +81,14 @@
     "symbol": "NVDA",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Core compounder; let it work.",
-    "thesis": "Core compounder; let it work.",
+    "headline": "Core AI compounder; let it work.",
+    "thesis": "Core AI compounder; let it work.",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 207.42,
-    "as_of": "2026-07-13 08:54:44",
-    "ts": 1783950884.3107374
+    "price": 204.68,
+    "as_of": "2026-07-13 11:56:31",
+    "ts": 1783961791.244047
   },
   "AMD": {
     "symbol": "AMD",
@@ -99,22 +99,22 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 531.08,
-    "as_of": "2026-07-13 08:54:44",
-    "ts": 1783950884.3969276
+    "price": 536.41,
+    "as_of": "2026-07-13 11:56:31",
+    "ts": 1783961791.3264928
   },
   "MU": {
     "symbol": "MU",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Memory selloff is sentiment; hold, no chase.",
-    "thesis": "Memory selloff is sentiment; hold, no chase.",
+    "headline": "Raised guidance on surging memory; sentiment dip.",
+    "thesis": "Raised guidance on surging memory; sentiment dip.",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 915.21,
-    "as_of": "2026-07-13 08:54:44",
-    "ts": 1783950884.4094772
+    "price": 930.92,
+    "as_of": "2026-07-13 11:56:31",
+    "ts": 1783961791.345862
   },
   "AMZN": {
     "symbol": "AMZN",
@@ -125,9 +125,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 246.43,
-    "as_of": "2026-07-13 08:54:44",
-    "ts": 1783950884.422741
+    "price": 247.52,
+    "as_of": "2026-07-13 11:56:31",
+    "ts": 1783961791.369674
   },
   "GOOGL": {
     "symbol": "GOOGL",
@@ -138,9 +138,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 356.04,
-    "as_of": "2026-07-13 08:54:44",
-    "ts": 1783950884.4366453
+    "price": 355.15,
+    "as_of": "2026-07-13 11:56:31",
+    "ts": 1783961791.392583
   },
   "AAPL": {
     "symbol": "AAPL",
@@ -151,9 +151,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 321.53,
-    "as_of": "2026-07-13 08:54:44",
-    "ts": 1783950884.447757
+    "price": 316.23,
+    "as_of": "2026-07-13 11:56:31",
+    "ts": 1783961791.411537
   },
   "MELI": {
     "symbol": "MELI",
@@ -177,9 +177,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 162.27,
-    "as_of": "2026-07-13 08:54:44",
-    "ts": 1783950884.5135486
+    "price": 163.09,
+    "as_of": "2026-07-13 11:56:31",
+    "ts": 1783961791.493248
   },
   "ANET": {
     "symbol": "ANET",
@@ -190,9 +190,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 184.75,
-    "as_of": "2026-07-13 08:54:44",
-    "ts": 1783950884.5505993
+    "price": 182.44,
+    "as_of": "2026-07-13 11:56:31",
+    "ts": 1783961791.528192
   },
   "BATL": {
     "symbol": "BATL",
@@ -268,22 +268,22 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 11.74,
-    "as_of": "2026-07-13 08:54:44",
-    "ts": 1783950884.479246
+    "price": 11.9,
+    "as_of": "2026-07-13 11:56:31",
+    "ts": 1783961791.4562404
   },
   "CRWD": {
     "symbol": "CRWD",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Drop is a 4-for-1 split, not a loss.",
-    "thesis": "Drop is a 4-for-1 split, not a loss.",
+    "headline": "Drop was a 4-for-1 split, not a loss.",
+    "thesis": "Drop was a 4-for-1 split, not a loss.",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 184.43,
-    "as_of": "2026-07-13 08:54:44",
-    "ts": 1783950884.4946983
+    "price": 188.38,
+    "as_of": "2026-07-13 11:56:31",
+    "ts": 1783961791.4762685
   },
   "ELTX": {
     "symbol": "ELTX",
@@ -411,9 +411,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 310.4,
-    "as_of": "2026-07-13 08:54:44",
-    "ts": 1783950884.5314739
+    "price": 304.54,
+    "as_of": "2026-07-13 11:56:31",
+    "ts": 1783961791.512961
   },
   "SDOT": {
     "symbol": "SDOT",

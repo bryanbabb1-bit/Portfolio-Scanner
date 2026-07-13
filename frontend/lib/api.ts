@@ -112,6 +112,28 @@ export interface BreakoutCandidate {
   thesis_points?: string[];
 }
 
+export interface StayCourse {
+  posture: "hold" | "act";
+  headline: string;
+  reasons: string[];
+  closer: string;
+  engine: string;
+  generated_at: string;
+  metrics: {
+    value: number;
+    day_pct: number;
+    total_return_pct: number;
+    unrealized_pct: number;
+    above_trend: number;
+    holdings: number;
+    realized: number;
+    ready_count: number;
+    critical_count: number;
+    resilience?: { symbol: string; low: number; price: number; gain_pct: number } | null;
+    goal?: { target: number; progress_pct: number; remaining: number; horizon: string };
+  };
+}
+
 export interface AdvisorNote {
   symbol: string;
   persona: string;
@@ -570,6 +592,8 @@ export const api = {
     get<AdvisorNote>(`/api/advisor/breakout/${symbol}?force=${force}&deep=${deep}`),
   advisePortfolio: (force = false, deep = false) =>
     get<AdvisorNote>(`/api/advisor/portfolio?force=${force}&deep=${deep}`),
+  stayTheCourse: () =>
+    get<StayCourse>(`/api/advisor/stay-the-course`).catch(() => null as StayCourse | null),
   recommend: (symbol: string, event: string, kind = "alert") =>
     post<Recommendation>("/api/advisor/recommend", { symbol, event, kind }),
   lastAdvisorNote: (kind: "portfolio" | "stock" | "breakout", symbol?: string) =>

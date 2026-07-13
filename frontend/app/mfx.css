@@ -227,3 +227,28 @@
   .mfx-head .quickstats { grid-template-columns: repeat(3, 1fr); width: 100%; }
   .mfx-head .qs { text-align: left; }
 }
+
+/* Stay the Course — grounded hold-or-act reassurance panel */
+.stc { margin: 18px 0; border: 1px solid var(--border); position: relative; overflow: hidden; }
+.stc.hold { border-left: 3px solid var(--bull); }
+.stc.act { border-left: 3px solid var(--accent); }
+.stc.stc-load { color: var(--muted); font-size: 14px; }
+.stc-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+.stc-tag {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 999px;
+}
+.stc.hold .stc-tag { color: var(--bull); background: var(--bull-bg); }
+.stc.act .stc-tag { color: var(--accent); background: var(--accent-dim); }
+.stc-goal { font-size: 12px; color: var(--muted); font-variant-numeric: var(--tab-nums); white-space: nowrap; }
+.stc-headline { font-size: 19px; line-height: 1.35; font-weight: 650; color: var(--text); margin-bottom: 14px; }
+.stc-reasons { list-style: none; margin: 0 0 12px; padding: 0; display: flex; flex-direction: column; gap: 9px; }
+.stc-reasons li { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; line-height: 1.5; color: var(--text); }
+.stc-dot { flex: none; width: 6px; height: 6px; border-radius: 50%; margin-top: 8px; }
+.stc.hold .stc-dot { background: var(--bull); }
+.stc.act .stc-dot { background: var(--accent); }
+.stc-closer { font-size: 14.5px; line-height: 1.5; color: var(--text); font-style: italic; padding: 11px 0 3px; border-top: 1px solid var(--border); }
+.stc-foot { font-size: 12px; color: var(--muted); margin-top: 10px; }
+@media (max-width: 600px) {
+  .stc-headline { font-size: 17px; }
+}

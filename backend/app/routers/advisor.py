@@ -36,6 +36,22 @@ def advise_portfolio(force: bool = False, deep: bool = False):
         candidates=candidates)
 
 
+@router.get("/stay-the-course")
+def stay_the_course():
+    """Grounded 'hold the course' read for the long game — reassurance when the
+    book is steady, a pointer to the plan when it's not. Alerts are untouched."""
+    from ..services import staycourse as staycourse_service
+    try:
+        summary, reports = pf_service.portfolio_summary()
+        risk = insights_service.compute_risk(reports)
+        alerts = insights_service.build_alerts(reports)
+    except Exception as exc:
+        traceback.print_exc()
+        raise HTTPException(status_code=502, detail=f"Portfolio read failed: {exc}")
+    read = staycourse_service.read(summary, reports, risk, alerts)
+    return advisor_service.advise_stay_course(read, summary, reports, risk)
+
+
 @router.post("/recommend")
 def recommend(req: RecommendRequest):
     """What should the client DO about a notification event — portfolio-aware,

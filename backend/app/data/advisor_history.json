@@ -1,30 +1,6 @@
 {
   "portfolio:brief": [
     {
-      "generated_at": "2026-07-13 07:22:35",
-      "summary": "You've fully cut IREN and redeployed into MSFT, NVDA, VRT, PATH and CRWD \u2014 with $7 left, this is a patience week, not new trades.",
-      "insights": [
-        "About 76% of your book is in AI chips and AI infrastructure \u2014 one theme moves it.",
-        "Cash is basically empty at $7, so there's no dry powder for this dip.",
-        "Your five biggest names are 55% of the book, led by NVDA at 13%."
-      ],
-      "actions": [
-        "Hold \u2014 do nothing; only $7 cash to deploy.",
-        "Hold TSM through its July 16 earnings.",
-        "Hold CRWD near $193 \u2014 it's just a 4-for-1 split, not a loss.",
-        "Hold MU \u2014 the memory drop is sentiment, not a broken story."
-      ],
-      "risks": [
-        "AI-chip mood swing is dragging the whole book; a close below $190 on NVDA (now ~$208) means slow new buying.",
-        "Micron's memory slump could deepen \u2014 another leg down under recent lows would test the dip-buy thesis, not break it yet."
-      ],
-      "scout": [
-        "HIGH CONVICTION PANW $326 \u2014 raised full-year guidance, next-gen security booming, targets lifted to $425; buy $300 under $315, target $420 \u2014 still your first free dollars when cash arrives.",
-        "HIGH CONVICTION GEV $1,092 \u2014 AI data centers can't run without its turbines and its order book is at a record; buy $300 under $1,000, target $1,208.",
-        "SPECULATIVE UPSIDE TEM $57 \u2014 AI trained on real hospital patient data is a moat rivals can't rebuild; buy $125 near $57, stop $46, target $100."
-      ]
-    },
-    {
       "generated_at": "2026-07-13 08:50:38",
       "summary": "You've fully cut IREN and redeployed into MSFT, NVDA, VRT, PATH and CRWD \u2014 with $7 left, this is a patience week, not new trades.",
       "insights": [
@@ -70,6 +46,29 @@
         "HIGH CONVICTION PANW $321 \u2014 raised full-year guidance and next-gen security demand is booming; targets lifted toward $425; buy $300 under $315, target $420 \u2014 still your first free dollars.",
         "HIGH CONVICTION GEV $1,060 \u2014 AI data centers can't run without its turbines and its order book is at a record; buy $300 under $1,000, target $1,208.",
         "SPECULATIVE UPSIDE TEM $57 \u2014 AI trained on real hospital patient data is a moat rivals can't rebuild; buy $125 near $57, stop $46, target $100."
+      ]
+    },
+    {
+      "generated_at": "2026-07-13 11:56:31",
+      "summary": "IREN is fully cut and redeployed into MSFT, NVDA, VRT, PATH and CRWD \u2014 with $7 cash this is a patience week, and Micron just raised guidance which strengthens your hold.",
+      "insights": [
+        "Over half your money sits in AI chips \u2014 NVDA, AVGO, TSM, AMD and MU together.",
+        "Cash is basically empty at $7, so you have no dry powder for a dip right now.",
+        "Your top five names are 55% of the account \u2014 concentrated on purpose, but leaves little cushion."
+      ],
+      "actions": [
+        "Hold everything \u2014 only $7 cash to deploy.",
+        "Hold TSM through its July 16 earnings.",
+        "Hold MU near $960 \u2014 it just raised its outlook."
+      ],
+      "risks": [
+        "A chip-sector pullback is the main risk; if NVDA closes below $190, slow any new buying.",
+        "TSM reports July 16 \u2014 a weak outlook could pressure the whole chip sleeve near-term."
+      ],
+      "scout": [
+        "HIGH CONVICTION PANW $329 \u2014 raised full-year guidance and next-gen security revenue up 60%; Needham target $425; buy $300 under $315, target $420.",
+        "HIGH CONVICTION GEV $1,077 \u2014 record $163B backlog and turbines the AI grid can't run without; buy $300 under $1,000, target $1,208.",
+        "SPECULATIVE UPSIDE TEM $57 \u2014 AI trained on real hospital data is a moat rivals can't rebuild; buy $125 near $57, stop $46, target $100."
       ]
     }
   ],

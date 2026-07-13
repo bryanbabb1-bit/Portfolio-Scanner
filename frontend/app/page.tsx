@@ -19,6 +19,7 @@ import { SignalSlap } from "../components/SignalSlap";
 import { PortfolioChart } from "../components/PortfolioChart";
 import { HoldingsHeatmap } from "../components/HoldingsHeatmap";
 import { PlanBoard } from "../components/PlanBoard";
+import { StayTheCourse } from "../components/StayTheCourse";
 import { AlertsPanel } from "../components/AlertsPanel";
 import { RiskStats } from "../components/RiskStats";
 import { PositionHealth } from "../components/PositionHealth";
@@ -161,6 +162,9 @@ export default function Dashboard() {
           <div className="qs"><div className="l">Positions</div><div className="v">{summary.positions}</div></div>
         </div>
       </header>
+
+      {/* the long game — earned permission to hold (or a nudge to act) */}
+      <StayTheCourse />
 
       {/* row 1 — chart (main) + goal & risk (rail) */}
       <div className="mfx-grid split">
