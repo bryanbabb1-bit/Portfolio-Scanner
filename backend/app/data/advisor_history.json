@@ -1,30 +1,6 @@
 {
   "portfolio:brief": [
     {
-      "generated_at": "2026-07-13 08:50:38",
-      "summary": "You've fully cut IREN and redeployed into MSFT, NVDA, VRT, PATH and CRWD \u2014 with $7 left, this is a patience week, not new trades.",
-      "insights": [
-        "Your AI chip and infrastructure names are over half the book, led by NVDA at 13%.",
-        "Cash is basically empty at $7, so no real firepower until a winner is trimmed.",
-        "Top five positions are 55% of the book \u2014 concentrated, by design, in your best ideas."
-      ],
-      "actions": [
-        "Hold \u2014 do nothing; only $7 cash to deploy.",
-        "Hold TSM through its earnings on July 16.",
-        "Hold CRWD near $193 \u2014 the drop is just a 4-for-1 split.",
-        "Hold MU \u2014 the memory selloff is sentiment, not a broken story."
-      ],
-      "risks": [
-        "Memory sentiment is ugly after SK Hynix's weak outlook; another leg down in MU below $155 would confirm real demand worry, not just noise.",
-        "So much of the book rides on AI chips together \u2014 if NVDA closes under $190, slow any new buying and hold a little dry powder."
-      ],
-      "scout": [
-        "HIGH CONVICTION PANW $321 \u2014 raised full-year guidance and next-gen security booming; targets lifted to $425; buy $300 under $315, target $420 \u2014 still your first free dollars when a winner is trimmed.",
-        "HIGH CONVICTION GEV $1,092 \u2014 AI data centers can't run without its turbines and its order book is at a record; buy $300 under $1,000, target $1,208.",
-        "SPECULATIVE UPSIDE TEM $57 \u2014 AI trained on real hospital patient data is a moat rivals can't rebuild; buy $125 near $57, stop $46, target $100."
-      ]
-    },
-    {
       "generated_at": "2026-07-13 08:54:44",
       "summary": "You've finished cutting IREN and redeployed into MSFT, NVDA, VRT, PATH and CRWD \u2014 with $7 left, this is a patience week, hold everything.",
       "insights": [
@@ -69,6 +45,29 @@
         "HIGH CONVICTION PANW $329 \u2014 raised full-year guidance and next-gen security revenue up 60%; Needham target $425; buy $300 under $315, target $420.",
         "HIGH CONVICTION GEV $1,077 \u2014 record $163B backlog and turbines the AI grid can't run without; buy $300 under $1,000, target $1,208.",
         "SPECULATIVE UPSIDE TEM $57 \u2014 AI trained on real hospital data is a moat rivals can't rebuild; buy $125 near $57, stop $46, target $100."
+      ]
+    },
+    {
+      "generated_at": "2026-07-13 17:59:31",
+      "summary": "You've finished cutting IREN and redeployed into MSFT, NVDA, VRT, PATH and CRWD \u2014 with only $7 cash this is a patience week: hold everything and let your chip names ride into TSM's July 16 earnings.",
+      "insights": [
+        "AI chips (NVDA, AVGO, TSM, AMD, MU) are about half your entire book.",
+        "Cash is basically zero at $7 \u2014 no dry powder to buy a dip right now.",
+        "Your top five holdings are 55% of the book \u2014 concentrated by design, not by accident."
+      ],
+      "actions": [
+        "Hold everything \u2014 only $7 left to deploy.",
+        "Hold TSM through its July 16 earnings.",
+        "Hold MU near $900 \u2014 the drop is supply-fear, not a broken story."
+      ],
+      "risks": [
+        "MU pricing-power fear: a close below $900 would confirm the pullback is real.",
+        "TSM earnings July 16 could swing all your chip names if AI-spending guidance disappoints."
+      ],
+      "scout": [
+        "HIGH CONVICTION PANW ~$330 \u2014 Wells Fargo lifted its target to $420 (Jul 1) on booming AI-security demand; buy $300 under $315, target $420 \u2014 still my #1, buy first when cash frees.",
+        "HIGH CONVICTION GEV ~$1,089 \u2014 record $163B backlog and AI-grid turbines rivals can't supply, guidance raised; buy $300 under $1,000, target $1,208; earnings Jul 22.",
+        "SPECULATIVE UPSIDE TEM ~$57 \u2014 AI trained on real hospital data is a moat rivals can't rebuild; buy $125 near $57, stop $46, target $100."
       ]
     }
   ],

@@ -107,14 +107,32 @@ def compute_indicators(df: pd.DataFrame) -> Indicators:
 
 def build_quote(md, ind: Indicators) -> Quote:
     close = md.history["Close"]
-    # Prefer the live tick (fast_info) over the daily-bar close, which lags
-    # intraday and misses extended hours. Today's % change is vs the prior
-    # session close. Fall back to daily bars when live fields are absent (mock).
+    last_close = float(close.iloc[-1])
+    prev_bar = float(close.iloc[-2]) if len(close) > 1 else last_close
     live = getattr(md, "live_price", None)
-    prev_close = getattr(md, "prev_close", None)
-    price = float(live) if live else float(close.iloc[-1])
-    prev = float(prev_close) if prev_close else (
-        float(close.iloc[-2]) if len(close) > 1 else price)
+
+    # The daily history is the authoritative session ledger and it updates
+    # intraday, so it is the source of truth for today's change. yfinance's
+    # get_info()/fast_info fields have been observed to lag a full trading day
+    # in this environment (regularMarketPrice = YESTERDAY's close, previousClose
+    # = the day before), which inverted a green day into a red one. So anchor on
+    # the bars, and only reach for a live tick OFF-session (pre/post market),
+    # where a fresh tick genuinely beats the last completed daily bar.
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+    today = datetime.now(ZoneInfo("America/New_York")).strftime("%Y-%m-%d")
+    last_bar_day = str(md.history.index[-1])[:10]
+
+    if last_bar_day == today:
+        # Today's bar exists (regular session, updating live): it IS the price;
+        # the prior bar is the true previous close. Ignore a stale get_info tick.
+        price = last_close
+        prev = prev_bar
+    else:
+        # No bar for today yet (pre-market, or source hasn't posted today): the
+        # last completed bar is the previous close and a live tick is the price.
+        prev = last_close
+        price = float(live) if live else last_close
     change = price - prev
     return Quote(
         symbol=md.symbol,
