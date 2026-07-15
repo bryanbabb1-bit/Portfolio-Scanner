@@ -106,10 +106,20 @@ def compute_indicators(df: pd.DataFrame) -> Indicators:
 
 
 def build_quote(md, ind: Indicators) -> Quote:
-    close = md.history["Close"]
+    # Drop NaN closes first: this environment's data source has been observed to
+    # return a daily bar whose Close is NaN (empty/unposted session), which used
+    # to poison last_close -> change -> the whole portfolio day_change sum with a
+    # NaN and 500 the JSON response. dropna() anchors us on the last REAL bar.
+    close = md.history["Close"].dropna()
+    if len(close) == 0:
+        # No valid price data at all — degrade gracefully instead of crashing.
+        return Quote(symbol=md.symbol, name=md.name, price=0.0, change=0.0,
+                     change_pct=0.0, volume=0.0, source=md.source)
     last_close = float(close.iloc[-1])
     prev_bar = float(close.iloc[-2]) if len(close) > 1 else last_close
     live = getattr(md, "live_price", None)
+    if live is not None and (not np.isfinite(live)):
+        live = None  # a NaN/inf live tick is worse than the last real bar
 
     # The daily history is the authoritative session ledger and it updates
     # intraday, so it is the source of truth for today's change. yfinance's
@@ -121,7 +131,7 @@ def build_quote(md, ind: Indicators) -> Quote:
     from datetime import datetime
     from zoneinfo import ZoneInfo
     today = datetime.now(ZoneInfo("America/New_York")).strftime("%Y-%m-%d")
-    last_bar_day = str(md.history.index[-1])[:10]
+    last_bar_day = str(close.index[-1])[:10]  # last VALID bar, not a NaN today-bar
 
     if last_bar_day == today:
         # Today's bar exists (regular session, updating live): it IS the price;
@@ -134,13 +144,16 @@ def build_quote(md, ind: Indicators) -> Quote:
         prev = last_close
         price = float(live) if live else last_close
     change = price - prev
+    vol = float(md.history["Volume"].iloc[-1])
+    if not np.isfinite(vol):
+        vol = 0.0
     return Quote(
         symbol=md.symbol,
         name=md.name,
         price=round(price, 2),
         change=round(change, 2),
         change_pct=round((change / prev * 100) if prev else 0.0, 2),
-        volume=float(md.history["Volume"].iloc[-1]),
+        volume=vol,
         source=md.source,
     )
 

@@ -8,9 +8,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 389.3,
-    "as_of": "2026-07-13 17:59:31",
-    "ts": 1783983571.7472286
+    "price": 384.83,
+    "as_of": "2026-07-14 09:34:48",
+    "ts": 1784039688.1784563
   },
   "NET": {
     "symbol": "NET",
@@ -21,9 +21,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 270.0,
-    "as_of": "2026-07-13 17:59:31",
-    "ts": 1783983571.9184728
+    "price": 282.5,
+    "as_of": "2026-07-14 09:34:48",
+    "ts": 1784039688.2992866
   },
   "NEE": {
     "symbol": "NEE",
@@ -34,9 +34,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 88.38,
-    "as_of": "2026-07-13 17:59:31",
-    "ts": 1783983571.7609391
+    "price": 89.63,
+    "as_of": "2026-07-14 09:34:48",
+    "ts": 1784039688.190409
   },
   "TSM": {
     "symbol": "TSM",
@@ -47,22 +47,22 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 423.3,
-    "as_of": "2026-07-13 17:59:31",
-    "ts": 1783983571.8058486
+    "price": 423.74,
+    "as_of": "2026-07-14 09:34:48",
+    "ts": 1784039688.2134156
   },
   "AVGO": {
     "symbol": "AVGO",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Apple chip deal locked; don't chase.",
-    "thesis": "Apple chip deal locked; don't chase.",
+    "headline": "Apple chip deal locked; add on weakness only.",
+    "thesis": "Apple chip deal locked; add on weakness only.",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 383.98,
-    "as_of": "2026-07-13 17:59:31",
-    "ts": 1783983571.783541
+    "price": 391.72,
+    "as_of": "2026-07-14 09:34:48",
+    "ts": 1784039688.2023044
   },
   "IREN": {
     "symbol": "IREN",
@@ -86,9 +86,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 203.38,
-    "as_of": "2026-07-13 17:59:31",
-    "ts": 1783983571.7304888
+    "price": 205.97,
+    "as_of": "2026-07-14 09:34:48",
+    "ts": 1784039688.1618233
   },
   "AMD": {
     "symbol": "AMD",
@@ -99,9 +99,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 533.97,
-    "as_of": "2026-07-13 17:59:31",
-    "ts": 1783983571.821959
+    "price": 550.18,
+    "as_of": "2026-07-14 09:34:48",
+    "ts": 1784039688.226335
   },
   "MU": {
     "symbol": "MU",
@@ -112,9 +112,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 927.83,
-    "as_of": "2026-07-13 17:59:31",
-    "ts": 1783983571.8425303
+    "price": 966.04,
+    "as_of": "2026-07-14 09:34:48",
+    "ts": 1784039688.2390308
   },
   "AMZN": {
     "symbol": "AMZN",
@@ -125,9 +125,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 246.63,
-    "as_of": "2026-07-13 17:59:31",
-    "ts": 1783983571.8603723
+    "price": 245.79,
+    "as_of": "2026-07-14 09:34:48",
+    "ts": 1784039688.2511933
   },
   "GOOGL": {
     "symbol": "GOOGL",
@@ -138,9 +138,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 352.59,
-    "as_of": "2026-07-13 17:59:31",
-    "ts": 1783983571.8819323
+    "price": 356.75,
+    "as_of": "2026-07-14 09:34:48",
+    "ts": 1784039688.2641945
   },
   "AAPL": {
     "symbol": "AAPL",
@@ -151,9 +151,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 317.19,
-    "as_of": "2026-07-13 17:59:31",
-    "ts": 1783983571.9047017
+    "price": 315.04,
+    "as_of": "2026-07-14 09:34:48",
+    "ts": 1784039688.2830245
   },
   "MELI": {
     "symbol": "MELI",
@@ -172,14 +172,14 @@
     "symbol": "NTAP",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "New position; give it room.",
-    "thesis": "New position; give it room.",
+    "headline": "New position running; give it room.",
+    "thesis": "New position running; give it room.",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 162.99,
-    "as_of": "2026-07-13 17:59:31",
-    "ts": 1783983571.958877
+    "price": 173.29,
+    "as_of": "2026-07-14 09:34:48",
+    "ts": 1784039688.3431296
   },
   "ANET": {
     "symbol": "ANET",
@@ -190,9 +190,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 180.5,
-    "as_of": "2026-07-13 17:59:31",
-    "ts": 1783983571.9991002
+    "price": 184.34,
+    "as_of": "2026-07-14 09:34:48",
+    "ts": 1784039688.367083
   },
   "BATL": {
     "symbol": "BATL",
@@ -269,8 +269,8 @@
     "stop": "",
     "source": "brief",
     "price": 11.85,
-    "as_of": "2026-07-13 17:59:31",
-    "ts": 1783983571.9310367
+    "as_of": "2026-07-14 09:34:48",
+    "ts": 1784039688.3312669
   },
   "CRWD": {
     "symbol": "CRWD",
@@ -281,9 +281,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 186.6,
-    "as_of": "2026-07-13 17:59:31",
-    "ts": 1783983571.9446313
+    "price": 204.67,
+    "as_of": "2026-07-14 09:34:48",
+    "ts": 1784039688.313597
   },
   "ELTX": {
     "symbol": "ELTX",
@@ -411,9 +411,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 305.11,
-    "as_of": "2026-07-13 17:59:31",
-    "ts": 1783983571.9779656
+    "price": 305.17,
+    "as_of": "2026-07-14 09:34:48",
+    "ts": 1784039688.3567622
   },
   "SDOT": {
     "symbol": "SDOT",

@@ -2,10 +2,22 @@
 from __future__ import annotations
 
 import json
+import math
 import os
 import tempfile
 
 import pandas as pd
+
+
+def _num(x) -> float:
+    """Coerce None/NaN/inf to 0.0. Note `nan or 0` == nan (NaN is truthy), so
+    plain `x or 0` does NOT guard NaN — a single NaN quote would otherwise
+    poison a sum and make the whole response non-JSON-compliant (500)."""
+    try:
+        f = float(x)
+    except (TypeError, ValueError):
+        return 0.0
+    return f if math.isfinite(f) else 0.0
 
 from ..config import settings
 from ..models.schemas import (
@@ -139,12 +151,12 @@ def portfolio_summary() -> tuple[PortfolioSummary, list[StockReport]]:
 
     # Uninvested cash (buying power) counts toward the account total and the
     # allocation, but is never quoted/charted/scanned — it's just a number.
-    cash = float(pf.get("cash", 0) or 0)
-    positions_mv = sum(r.market_value or 0 for r in reports)
+    cash = _num(pf.get("cash", 0))
+    positions_mv = sum(_num(r.market_value) for r in reports)
     total_mv = positions_mv + cash
-    total_cost = sum((r.cost_basis or 0) * (r.shares or 0) for r in reports)
+    total_cost = sum(_num(r.cost_basis) * _num(r.shares) for r in reports)
     total_pl = positions_mv - total_cost      # cash has no P/L
-    day_change = sum((r.quote.change or 0) * (r.shares or 0) for r in reports)
+    day_change = sum(_num(r.quote.change) * _num(r.shares) for r in reports)
     prev_value = total_mv - day_change        # yesterday's account value (incl. cash)
 
     by_theme: dict[str, float] = {}

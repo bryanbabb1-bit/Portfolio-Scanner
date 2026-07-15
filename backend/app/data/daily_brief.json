@@ -1,18 +1,23 @@
 {
-  "type": "morning",
+  "type": "eod",
   "date": "2026-07-14",
-  "generated_at": "2026-07-14 07:15:02",
+  "generated_at": "2026-07-14 15:00:23",
   "engine": "claude",
-  "headline": "Broad chip selloff; TSM earnings in 2 days",
-  "summary": "NVDA, AVGO, AMD and TSM are all down together today on no company-specific news — a sector-wide risk-off day, not a thesis problem. TSM earnings in 2 days could set the tone for the rest of the book.",
+  "headline": "NVDA and AMD carry a solid up day",
+  "summary": "Book gained 1.89% today, powered by NVDA's 4.1% jump and AMD's continued run. MSFT and TSM lagged slightly, with TSM's earnings now just two days out.",
   "watch": [
-    "NVDA -3.5% to $203.53 — no news, hold, do nothing.",
-    "AVGO -4.0% to $384.05 — sector-wide drop, hold.",
-    "AMD -4.2% to $534.39, still +6.3% overall — hold.",
-    "TSM reports earnings in 2 days — expect bigger swings, hold through it.",
-    "MSFT steady at $386.88, +0.5% today while others fall.",
-    "PATH stop-loss triggers at $10.30 — now $11.84, watch it.",
-    "Cash is $7 — no room to buy today's dip."
+    "TSM reports earnings in 2 days — expect a move off $420.48.",
+    "PATH stop-loss still armed at $10.30 — sells automatically if hit.",
+    "Hold MSFT near $385.20 — do nothing, thesis intact.",
+    "Hold AVGO near $389.33 — do nothing, down 3.4% but stable.",
+    "Let NVDA and AMD keep running — both trending up strong."
   ],
-  "recap": []
+  "recap": [
+    "Book rose 1.89% to $12,641, best day in a while.",
+    "NVDA jumped 4.1% to $211.87, now up 4.7% overall.",
+    "AMD gained 2.6% to $548.30, your biggest winner at +9.0%.",
+    "MSFT dipped 1.5% to $385.20, still down 5.8% — no alarm.",
+    "PATH stop stayed armed at $10.30, PATH closed at $11.96, untouched.",
+    "Only $7 cash left — you're essentially fully invested."
+  ]
 }

@@ -144,11 +144,24 @@ class MarketData:
 
 
 # --------------------------------------------------------------- yfinance
+def _clean_hist(hist):
+    """Drop bars with a NaN Close. yfinance in this environment has been seen to
+    return a trailing daily bar (e.g. today's, or even a completed prior day)
+    with NaN OHLC — an empty/unposted session. If that NaN reaches downstream
+    (quote change, sparkline, indicators, charts) it serializes to a non-JSON
+    `nan` and 500s the whole response. Sanitize once, at the source."""
+    if hist is None or hist.empty:
+        return hist
+    if "Close" in hist.columns:
+        hist = hist[hist["Close"].notna()]
+    return hist
+
+
 def _fetch_live(symbol: str) -> MarketData:
     import yfinance as yf  # imported lazily so mock mode has no hard dep
 
     tkr = yf.Ticker(symbol)
-    hist = tkr.history(period="1y", auto_adjust=True)
+    hist = _clean_hist(tkr.history(period="1y", auto_adjust=True))
     if hist is None or hist.empty:
         raise RuntimeError(f"no history for {symbol}")
 
@@ -294,7 +307,7 @@ def _fetch_live_prices(symbol: str) -> MarketData:
     for indicator/score math."""
     import yfinance as yf
 
-    hist = yf.Ticker(symbol).history(period="1y", auto_adjust=True)
+    hist = _clean_hist(yf.Ticker(symbol).history(period="1y", auto_adjust=True))
     if hist is None or hist.empty:
         raise RuntimeError(f"no history for {symbol}")
     return MarketData(symbol.upper(), symbol.upper(), hist, {}, [], "live")
@@ -362,8 +375,8 @@ def get_intraday(symbol: str, range_: str = "1d") -> tuple[pd.DataFrame, str]:
     try:
         import yfinance as yf
 
-        hist = yf.Ticker(symbol).history(period=period, interval=interval,
-                                         auto_adjust=True)
+        hist = _clean_hist(yf.Ticker(symbol).history(period=period, interval=interval,
+                                                     auto_adjust=True))
         if hist is None or hist.empty:
             raise RuntimeError(f"no intraday for {symbol}")
         return _cache_put(key, (hist, "live"))

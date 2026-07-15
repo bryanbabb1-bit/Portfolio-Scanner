@@ -1,30 +1,6 @@
 {
   "portfolio:brief": [
     {
-      "generated_at": "2026-07-13 08:54:44",
-      "summary": "You've finished cutting IREN and redeployed into MSFT, NVDA, VRT, PATH and CRWD \u2014 with $7 left, this is a patience week, hold everything.",
-      "insights": [
-        "Nearly half your money sits in AI chips \u2014 NVDA, AVGO, TSM, AMD and MU.",
-        "Cash is basically zero at $7, so you're fully invested with no dry powder.",
-        "Your top five names are 55% of the book \u2014 concentrated by design, but tightly."
-      ],
-      "actions": [
-        "Hold \u2014 do nothing; only $7 cash to deploy.",
-        "Hold TSM through its July 16 earnings.",
-        "Hold MU near market \u2014 the memory drop is sentiment, not a broken story.",
-        "Hold CRWD near $193 \u2014 that drop was a 4-for-1 split, not a loss."
-      ],
-      "risks": [
-        "A weak TSM earnings report July 16 could drag your whole chip sleeve down together.",
-        "Broad market wobble on the Iran headlines \u2014 slow any new buying if NVDA closes under $190."
-      ],
-      "scout": [
-        "HIGH CONVICTION PANW $321 \u2014 raised full-year guidance and next-gen security demand is booming; targets lifted toward $425; buy $300 under $315, target $420 \u2014 still your first free dollars.",
-        "HIGH CONVICTION GEV $1,060 \u2014 AI data centers can't run without its turbines and its order book is at a record; buy $300 under $1,000, target $1,208.",
-        "SPECULATIVE UPSIDE TEM $57 \u2014 AI trained on real hospital patient data is a moat rivals can't rebuild; buy $125 near $57, stop $46, target $100."
-      ]
-    },
-    {
       "generated_at": "2026-07-13 11:56:31",
       "summary": "IREN is fully cut and redeployed into MSFT, NVDA, VRT, PATH and CRWD \u2014 with $7 cash this is a patience week, and Micron just raised guidance which strengthens your hold.",
       "insights": [
@@ -68,6 +44,29 @@
         "HIGH CONVICTION PANW ~$330 \u2014 Wells Fargo lifted its target to $420 (Jul 1) on booming AI-security demand; buy $300 under $315, target $420 \u2014 still my #1, buy first when cash frees.",
         "HIGH CONVICTION GEV ~$1,089 \u2014 record $163B backlog and AI-grid turbines rivals can't supply, guidance raised; buy $300 under $1,000, target $1,208; earnings Jul 22.",
         "SPECULATIVE UPSIDE TEM ~$57 \u2014 AI trained on real hospital data is a moat rivals can't rebuild; buy $125 near $57, stop $46, target $100."
+      ]
+    },
+    {
+      "generated_at": "2026-07-14 09:34:48",
+      "summary": "IREN is fully cut and redeployed into MSFT, NVDA, VRT, PATH and CRWD \u2014 with only $7 cash this is a patience week, and you hold your chip book steady into TSM's July 16 earnings.",
+      "insights": [
+        "More than three-quarters of your book is AI chips and AI infrastructure \u2014 one big theme.",
+        "Cash is essentially zero at $7, so there is nothing to deploy this week.",
+        "Your winners CRWD (+8.9%), NTAP (+5.7%) and NET (+4.8%) all popped today and sit near their highs."
+      ],
+      "actions": [
+        "Hold everything \u2014 only $7 cash to deploy.",
+        "Hold TSM through its July 16 earnings \u2014 do nothing.",
+        "Let CRWD, NET and NTAP run \u2014 no trimming into strength."
+      ],
+      "risks": [
+        "TSM reports July 16; a weak AI outlook could hit your whole chip book \u2014 get cautious if NVDA closes under $190.",
+        "You're highly concentrated in chips (top-5 = 54% of the book), so a chip-sector wobble hurts more than it should."
+      ],
+      "scout": [
+        "HIGH CONVICTION PANW $349 \u2014 Needham lifted target to $425 (Jul 7), Wells Fargo/Citi to $420/$400; AI-security demand booming; buy $300 on a pullback under $315, target $420 \u2014 still my #1, buy first when cash frees.",
+        "HIGH CONVICTION GEV ~$1,175 \u2014 record $163B backlog and raised 2026 guidance; turbines the AI grid can't run without; buy $300 under $1,000, target $1,211; earnings Jul 22.",
+        "SPECULATIVE UPSIDE TEM $57 \u2014 AI trained on real hospital data is a moat rivals can't rebuild; buy $125 near $57, stop $46, target $100."
       ]
     }
   ],
