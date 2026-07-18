@@ -131,6 +131,8 @@ class AdvisorNote(BaseModel):
     posture: Optional[str] = None  # "act" | "watch" — patience is a position
     call: Optional[str] = None  # one-word standing stance: BUY/ADD/HOLD/TRIM/SELL/AVOID/WATCH
     insights: list[str] = []    # technical / portfolio-health observations
+    mix: list[str] = []         # allocation health vs strategy targets — "is the mix still right?"
+    positions: list[str] = []   # per-name color on notable holdings (leaders/laggards/movers)
     actions: list[str] = []     # concrete recommendations (ticker + level each)
     risks: list[str] = []       # each risk paired with its confirming signal
     scout: list[str] = []       # not-owned strategy-fit growth names to accumulate toward

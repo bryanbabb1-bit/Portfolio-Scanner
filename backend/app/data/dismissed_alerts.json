@@ -1,15 +1,9 @@
 {
-  "AAPL:Breakout setup": 1784043322.143008,
-  "ANET:52w-high zone": 1784043322.143008,
-  "ANET:Breakout setup": 1784043322.143008,
-  "AAPL:52w-high zone": 1784043322.143008,
-  "PATH:Below long-term trend": 1784043322.143008,
-  "MSFT:Below long-term trend": 1784043322.143008,
-  "AMD:Big up day": 1784043322.143008,
-  "CRWD:Big up day": 1784043322.143008,
-  "CRWD:52w-high zone": 1784043322.143008,
-  "CRWD:Breakout setup": 1784043322.143008,
-  "NET:52w-high zone": 1784043322.143008,
-  "NTAP:Big up day": 1784043322.143008,
-  "NTAP:Breakout setup": 1784043322.143008
+  "AAPL:52w-high zone": 1784374909.5209901,
+  "PATH:Below long-term trend": 1784374909.5209901,
+  "MSFT:Below long-term trend": 1784374909.5209901,
+  "MU:Position underwater": 1784374909.5209901,
+  "VRT:Position underwater": 1784374909.5209901,
+  "NET:Breakout setup": 1784374909.5209901,
+  "NET:52w-high zone": 1784374909.5209901
 }

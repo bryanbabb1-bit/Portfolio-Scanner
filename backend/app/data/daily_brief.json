@@ -1,23 +1,23 @@
 {
   "type": "eod",
-  "date": "2026-07-14",
-  "generated_at": "2026-07-14 15:00:23",
+  "date": "2026-07-17",
+  "generated_at": "2026-07-17 15:00:53",
   "engine": "claude",
-  "headline": "NVDA and AMD carry a solid up day",
-  "summary": "Book gained 1.89% today, powered by NVDA's 4.1% jump and AMD's continued run. MSFT and TSM lagged slightly, with TSM's earnings now just two days out.",
+  "headline": "Red across the board, nothing broken",
+  "summary": "Every holding fell today and the book slipped 1.12% to $12,887 — a normal pullback, not a signal to touch your core. Your only live issue is PATH creeping toward its sell level.",
   "watch": [
-    "TSM reports earnings in 2 days — expect a move off $420.48.",
-    "PATH stop-loss still armed at $10.30 — sells automatically if hit.",
-    "Hold MSFT near $385.20 — do nothing, thesis intact.",
-    "Hold AVGO near $389.33 — do nothing, down 3.4% but stable.",
-    "Let NVDA and AMD keep running — both trending up strong."
+    "Sell PATH if it hits $11.26 — it's close.",
+    "Stop-loss PATH at $10.30 if $11.26 breaks.",
+    "Hold NVDA, MSFT, TSM, AVGO, NEE, AMD — do nothing.",
+    "If TSM keeps sliding near $398, that's a buy, not an exit.",
+    "If AVGO keeps sliding near $371, that's a buy, not an exit."
   ],
   "recap": [
-    "Book rose 1.89% to $12,641, best day in a while.",
-    "NVDA jumped 4.1% to $211.87, now up 4.7% overall.",
-    "AMD gained 2.6% to $548.30, your biggest winner at +9.0%.",
-    "MSFT dipped 1.5% to $385.20, still down 5.8% — no alarm.",
-    "PATH stop stayed armed at $10.30, PATH closed at $11.96, untouched.",
-    "Only $7 cash left — you're essentially fully invested."
+    "Book dropped to $12,887, down 1.12% on the day.",
+    "All six core names closed red — no exceptions today.",
+    "NVDA still up 0.2% overall despite falling 2.2% today.",
+    "TSM (-7.7%) and AVGO (-7.8%) are your biggest laggards — hold both.",
+    "PATH fell to $12.15, now $0.89 from your $11.26 sell trigger.",
+    "Cash is $96 — you're fully invested, nothing to deploy."
   ]
 }

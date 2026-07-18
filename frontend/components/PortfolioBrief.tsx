@@ -79,9 +79,10 @@ export function PortfolioBrief() {
 
       {!note && !loading && !err && (
         <p className="mut" style={{ fontSize: 14 }}>
-          One senior-advisor read across the whole book: posture, concentration,
-          and the 2-3 actions that matter this week — or just talk to the
-          advisor below, no brief required.
+          One senior-advisor read across the whole book: how you stand, whether
+          your mix is still on-plan, color on your holdings, and the actions
+          that matter this week — or just talk to the advisor below, no brief
+          required.
         </p>
       )}
 
@@ -103,6 +104,18 @@ export function PortfolioBrief() {
             <div className="advisor-sec">
               <h4>Where you stand</h4>
               <BulletList items={note.insights} kind="insight" />
+            </div>
+          )}
+          {(note.mix?.length ?? 0) > 0 && (
+            <div className="advisor-sec">
+              <h4>Is your mix still right?</h4>
+              <BulletList items={note.mix!} kind="insight" />
+            </div>
+          )}
+          {(note.positions?.length ?? 0) > 0 && (
+            <div className="advisor-sec">
+              <h4>Your holdings</h4>
+              <BulletList items={note.positions!} kind="insight" />
             </div>
           )}
           {note.actions?.length > 0 && (

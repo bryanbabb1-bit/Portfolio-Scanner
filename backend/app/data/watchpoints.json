@@ -332,5 +332,32 @@
     "ts": 1783599295.6203773,
     "triggered_at": "2026-07-09 07:15",
     "triggered_ts": 1783599312.3500786
+  },
+  {
+    "id": "7a43da73ee4f",
+    "symbol": "PANW",
+    "kind": "price_below",
+    "level": 315.0,
+    "note": "Buy $186 of PANW if it drops under $315.",
+    "side": "buy",
+    "confirm": "touch",
+    "source": "advisor",
+    "status": "dismissed",
+    "created_at": "2026-07-15 06:53",
+    "ts": 1784116392.0255203,
+    "dismissed_ts": 1784122720.5964158
+  },
+  {
+    "id": "caea93cf852e",
+    "symbol": "PATH",
+    "kind": "price_below",
+    "level": 11.26,
+    "note": "Sell PATH if it breaks below $11.26.",
+    "side": "sell",
+    "confirm": "touch",
+    "source": "advisor",
+    "status": "armed",
+    "created_at": "2026-07-15 08:41",
+    "ts": 1784122873.4077046
   }
 ]

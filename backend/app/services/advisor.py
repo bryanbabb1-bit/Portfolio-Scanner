@@ -99,6 +99,8 @@ def _remember_history(key: str, note: AdvisorNote) -> None:
         "generated_at": note.generated_at,
         "summary": note.summary,
         "insights": note.insights,
+        "mix": note.mix,
+        "positions": note.positions,
         "actions": note.actions,
         "risks": note.risks,
         "scout": note.scout,
@@ -130,8 +132,11 @@ def get_last_note(key: str) -> AdvisorNote | None:
         generated_at=h.get("generated_at", ""),
         summary=h.get("summary", ""),
         insights=h.get("insights", []),
+        mix=h.get("mix", []),
+        positions=h.get("positions", []),
         actions=h.get("actions", []),
         risks=h.get("risks", []),
+        scout=h.get("scout", []),
     )
 
 
@@ -452,6 +457,8 @@ def _parse_note(symbol: str, engine: str, raw: str) -> AdvisorNote:
     posture = None
     call = None
     insights: list[str] = []
+    mix: list[str] = []
+    positions: list[str] = []
     actions: list[str] = []
     risks: list[str] = []
     scout: list[str] = []
@@ -468,6 +475,8 @@ def _parse_note(symbol: str, engine: str, raw: str) -> AdvisorNote:
             if c and c[0] in {"BUY", "ADD", "HOLD", "TRIM", "SELL", "AVOID", "WATCH"}:
                 call = c[0]
             insights = _as_bullets(obj.get("insights") or obj.get("technical_read"))
+            mix = _as_bullets(obj.get("mix") or obj.get("allocation"))
+            positions = _as_bullets(obj.get("positions") or obj.get("holdings"))
             actions = _as_bullets(obj.get("actions") or obj.get("recommendation"))
             risks = _as_bullets(obj.get("risks"))
             scout = _as_bullets(obj.get("scout") or obj.get("growth_targets"))
@@ -484,6 +493,8 @@ def _parse_note(symbol: str, engine: str, raw: str) -> AdvisorNote:
         posture=posture,
         call=call,
         insights=insights,
+        mix=mix,
+        positions=positions,
         actions=actions,
         risks=risks,
         scout=scout,
@@ -624,6 +635,40 @@ def _facts_from_portfolio(summary: PortfolioSummary, reports: list[StockReport],
     return "\n".join(lines)
 
 
+def _mix_block(summary: PortfolioSummary) -> str:
+    """Current theme weights vs the approved strategy's allocation targets, as
+    grounded numbers so the advisor's mix read is factual, not guessed. Returns
+    '' if there's no approved strategy with targets."""
+    from . import strategy as strategy_service
+    doc = strategy_service.load()
+    if not doc or not doc.get("approved"):
+        return ""
+    targets = doc.get("allocation_targets") or {}
+    if not targets:
+        return ""
+    total = summary.total_market_value or 0
+    if total <= 0:
+        return ""
+    cur_pct = {t: (v / total * 100) for t, v in summary.by_theme.items()}
+    rows = []
+    # One row per theme that is either a target or currently held, so drift on
+    # both over- and under-weight sides is visible.
+    for theme in sorted(set(targets) | set(cur_pct), key=lambda t: -cur_pct.get(t, 0)):
+        now = cur_pct.get(theme, 0.0)
+        tgt = targets.get(theme)
+        if tgt is None:
+            rows.append(f"  {theme}: now {now:.0f}% (no target — off-plan sleeve)")
+        else:
+            drift = now - tgt
+            tag = ("on target" if abs(drift) <= 3 else
+                   f"{'over' if drift > 0 else 'under'} by {abs(drift):.0f} pts")
+            rows.append(f"  {theme}: now {now:.0f}% vs target {tgt:g}% ({tag})")
+    return ("MIX vs STRATEGY TARGETS (use these EXACT numbers in your 'mix' read; "
+            "within ~3 pts of target = still where it should be, reassure the "
+            "client; larger gaps = name the drift and whether it's worth a "
+            "rebalance yet):\n" + "\n".join(rows) + "\n")
+
+
 def advise_portfolio(summary: PortfolioSummary, reports: list[StockReport],
                      risk: RiskMetrics, alerts: list[PortfolioAlert],
                      force: bool = False, deep: bool = False,
@@ -645,6 +690,7 @@ def advise_portfolio(summary: PortfolioSummary, reports: list[StockReport],
     from . import strategy as strategy_service
     from . import stance as stance_service
     strategy_block = strategy_service.facts_block()
+    mix_block = _mix_block(summary)
     standing = stance_service.book_block([r.symbol for r in reports])
 
     # Capital: the cash in this account is RISK CAPITAL meant to be invested (the
@@ -670,6 +716,7 @@ def advise_portfolio(summary: PortfolioSummary, reports: list[StockReport],
         f"{_PERSONA}\n\n{_RESEARCH_PREFIX if deep else ''}"
         f"Here is your client's full portfolio right now:\n\n{facts}\n"
         f"{strategy_block}\n"
+        f"{mix_block}"
         f"{standing}"
         f"{_prior_advice_block(key)}\n"
         f"{capital_block}\n"
@@ -685,17 +732,37 @@ def advise_portfolio(summary: PortfolioSummary, reports: list[StockReport],
         f"each action with its horizon: 'Quick trade:' (days-weeks, momentum "
         f"or level-driven) or 'Long game:' (months+, compounding/position "
         f"building), so the client knows which clock it runs on.\n\n"
-        f"Give your professional whole-portfolio review: overall posture, "
-        f"concentration/risk assessment, and what — if anything — to do "
-        f"this week (name specific tickers and levels). "
+        f"Give your professional whole-portfolio review. The client's portfolio "
+        f"has SETTLED after the initial repositioning, so they now want MORE "
+        f"substance in this brief, not just orders: a fuller read on how the "
+        f"book is doing, a check that the MIX is still where it should be "
+        f"(reassurance when it is, a flag when it isn't), and color on the "
+        f"actual holdings — while STILL keeping a crisp, clear 'what to do'. "
+        f"Cover overall posture, concentration/risk, mix-vs-plan, the notable "
+        f"names, and what — if anything — to do this week (name specific tickers "
+        f"and levels). "
         f"{_NEWS_TRIM_RULE}"
         f'Respond with ONLY a JSON object, no markdown, with these keys: '
         f'"summary" (ONE short plain sentence — the single most important thing right now), '
         f'"posture" (string: "act" if this week genuinely calls for trades, '
         f'"watch" if the right move is patience), '
-        f'"insights" (array of EXACTLY 2-3 SHORT plain-English facts about the '
-        f'book — e.g. "You are 60% in AI chips." "Cash is thin at 15%." No '
-        f'jargon, no filler), '
+        f'"insights" (array of 3-5 plain-English observations about how the '
+        f'book is doing — momentum, what is working/lagging, cash position, '
+        f'progress vs the goal. One clear idea per bullet, a little more '
+        f'substance than a single stat, but NO jargon and NO filler), '
+        f'"mix" (array of 2-4 plain sentences on ALLOCATION HEALTH — is the '
+        f'theme mix still where it should be versus the strategy targets? Use '
+        f'the EXACT current-vs-target numbers given above. Explicitly REASSURE '
+        f'when a weight is on target ("AI Infra 24% vs 25% target — right where '
+        f'it should be"), and name any real drift plus whether it is worth a '
+        f'rebalance yet. This is the client\'s key ask: they want to know the '
+        f'mix is still right. If no strategy targets are provided, instead give '
+        f'a plain read on diversification and concentration), '
+        f'"positions" (array of 2-4 plain sentences giving COLOR on notable '
+        f'holdings — the biggest position, the strongest performer, a laggard, '
+        f'or anything that moved. One name per bullet, lead with the TICKER and '
+        f'a plain point the client can learn from, e.g. "NVDA is your anchor at '
+        f'13% and still leading — up 4.6% since you bought it." No jargon), '
         f'"actions" (array of 1-4 strings: each a plain ORDER a beginner can '
         f'follow — verb + $amount + TICKER + "at $price" + optional "stop '
         f'$price", under 14 words, NO rationale. Examples: "Buy $150 MU at '

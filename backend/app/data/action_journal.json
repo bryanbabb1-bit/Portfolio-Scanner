@@ -193,5 +193,31 @@
     "note": "Opened a new position",
     "source": "auto",
     "ts": 1783604489.84395
+  },
+  {
+    "id": "9a0edbb06e77",
+    "date": "2026-07-15",
+    "symbol": "AVGO",
+    "action": "buy",
+    "shares": 0.47,
+    "price": null,
+    "cost_basis": 401.97,
+    "realized_pl": null,
+    "note": "Added shares (3.0899 -> 3.55986)",
+    "source": "auto",
+    "ts": 1784122674.4404259
+  },
+  {
+    "id": "e2372db1bb5e",
+    "date": "2026-07-16",
+    "symbol": "TSM",
+    "action": "buy",
+    "shares": 1.0,
+    "price": null,
+    "cost_basis": 431.26,
+    "realized_pl": null,
+    "note": "Added shares (2.76713 -> 3.76713)",
+    "source": "auto",
+    "ts": 1784205725.4358647
   }
 ]

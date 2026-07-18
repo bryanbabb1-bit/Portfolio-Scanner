@@ -143,6 +143,8 @@ export interface AdvisorNote {
   posture?: "act" | "watch" | null;
   call?: string | null;   // standing one-word stance: BUY/ADD/HOLD/TRIM/SELL/WATCH
   insights: string[];
+  mix?: string[];         // allocation health vs strategy targets
+  positions?: string[];   // per-name color on notable holdings
   actions: string[];
   risks: string[];
   scout?: string[];
