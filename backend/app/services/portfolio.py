@@ -292,6 +292,29 @@ def price_history(symbol: str, range_: str = "6mo") -> PriceHistory:
     )
 
 
+def _prior_session_close(md) -> tuple[float, str] | None:
+    """Prior-session close for `md`, plus its date label ("YYYY-MM-DD 16:00").
+
+    Returns the SAME baseline build_quote() uses for today's change, so a 1d
+    chart anchored on this matches the hero's "Today" number exactly. Mirrors
+    build_quote: if today's bar already exists, the prior close is the bar
+    BEFORE it; otherwise the last completed bar IS the prior close.
+    """
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+
+    close = md.history["Close"].dropna()
+    if len(close) == 0:
+        return None
+    today = datetime.now(ZoneInfo("America/New_York")).strftime("%Y-%m-%d")
+    has_today = str(close.index[-1])[:10] == today
+    if has_today and len(close) > 1:
+        prev, prev_idx = float(close.iloc[-2]), close.index[-2]
+    else:
+        prev, prev_idx = float(close.iloc[-1]), close.index[-1]
+    return prev, pd.Timestamp(prev_idx).strftime("%Y-%m-%d 16:00")
+
+
 def portfolio_history(range_: str = "6mo") -> PortfolioHistory:
     """Aggregate portfolio market value over time.
 
@@ -313,6 +336,12 @@ def portfolio_history(range_: str = "6mo") -> PortfolioHistory:
     per_symbol: dict[str, pd.Series] = {}
     total_cost = 0.0
     any_mock = False
+    # For the 1d view, accumulate the account's PRIOR-CLOSE value so we can
+    # anchor the intraday line to it (matching the hero's "Today"). The intraday
+    # series otherwise starts at the OPEN and misses any overnight gap.
+    anchor_prev_value = 0.0
+    anchor_label: str | None = None
+    want_anchor = range_ == "1d"
     for h in holdings:
         sym = h["symbol"].upper()
         shares = float(h.get("shares", 0) or 0)
@@ -323,7 +352,13 @@ def portfolio_history(range_: str = "6mo") -> PortfolioHistory:
                 df, source = market_data.get_intraday(sym, range_)
                 closes = df["Close"].copy()
                 try:
-                    live = market_data.get_market_data(sym).live_price
+                    dmd = market_data.get_market_data(sym)
+                    live = dmd.live_price
+                    if want_anchor:
+                        pc = _prior_session_close(dmd)
+                        if pc is not None:
+                            anchor_prev_value += pc[0] * shares
+                            anchor_label = anchor_label or pc[1]
                 except Exception:
                     live = None
             else:
@@ -358,6 +393,16 @@ def portfolio_history(range_: str = "6mo") -> PortfolioHistory:
             points.append(
                 ValuePoint(date=pd.Timestamp(idx).strftime(fmt), value=round(float(val), 2))
             )
+
+    # Anchor the 1d line to the prior-session close (+ cash), so its % is taken
+    # vs yesterday's close — the same baseline as the hero's "Today" — and the
+    # line visibly starts there and shows any overnight gap, instead of starting
+    # at the open and reporting only intraday drift.
+    if want_anchor and points and anchor_prev_value:
+        points.insert(0, ValuePoint(
+            date=anchor_label or points[0].date,
+            value=round(anchor_prev_value + cash, 2),
+        ))
 
     return PortfolioHistory(
         range=range_,
