@@ -8,9 +8,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 393.51,
-    "as_of": "2026-07-18 06:50:55",
-    "ts": 1784375455.9532595
+    "price": 390.43,
+    "as_of": "2026-07-20 07:27:59",
+    "ts": 1784550479.5791736
   },
   "NET": {
     "symbol": "NET",
@@ -21,9 +21,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 277.66,
-    "as_of": "2026-07-18 06:50:56",
-    "ts": 1784375456.1333857
+    "price": 275.98,
+    "as_of": "2026-07-20 07:27:59",
+    "ts": 1784550479.681755
   },
   "NEE": {
     "symbol": "NEE",
@@ -34,22 +34,22 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 88.7,
-    "as_of": "2026-07-18 06:50:56",
-    "ts": 1784375456.012873
+    "price": 88.73,
+    "as_of": "2026-07-20 07:27:59",
+    "ts": 1784550479.6043253
   },
   "TSM": {
     "symbol": "TSM",
     "action": "ADD",
     "prev_action": "ADD",
-    "headline": "Beat and raised outlook; buy this dip.",
-    "thesis": "Beat and raised outlook; buy this dip.",
+    "headline": "Sales up 36%, sold out; buy dips near $398.",
+    "thesis": "Sales up 36%, sold out; buy dips near $398.",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 397.72,
-    "as_of": "2026-07-18 06:50:55",
-    "ts": 1784375455.97186
+    "price": 408.0,
+    "as_of": "2026-07-20 07:27:59",
+    "ts": 1784550479.567225
   },
   "AVGO": {
     "symbol": "AVGO",
@@ -60,9 +60,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 370.0,
-    "as_of": "2026-07-18 06:50:55",
-    "ts": 1784375455.992258
+    "price": 375.9,
+    "as_of": "2026-07-20 07:27:59",
+    "ts": 1784550479.592502
   },
   "IREN": {
     "symbol": "IREN",
@@ -81,14 +81,14 @@
     "symbol": "NVDA",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Core AI compounder; selloff is noise.",
-    "thesis": "Core AI compounder; selloff is noise.",
+    "headline": "Core AI anchor; add under $190.",
+    "thesis": "Core AI anchor; add under $190.",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 202.49,
-    "as_of": "2026-07-18 06:50:55",
-    "ts": 1784375455.93018
+    "price": 205.62,
+    "as_of": "2026-07-20 07:27:59",
+    "ts": 1784550479.5545883
   },
   "AMD": {
     "symbol": "AMD",
@@ -99,22 +99,22 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 492.5,
-    "as_of": "2026-07-18 06:50:56",
-    "ts": 1784375456.0328577
+    "price": 512.94,
+    "as_of": "2026-07-20 07:27:59",
+    "ts": 1784550479.6162035
   },
   "MU": {
     "symbol": "MU",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "HBM sold out; supply-cut fear overdone.",
-    "thesis": "HBM sold out; supply-cut fear overdone.",
+    "headline": "HBM sold out; supply fear overdone.",
+    "thesis": "HBM sold out; supply fear overdone.",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 844.0,
-    "as_of": "2026-07-18 06:50:56",
-    "ts": 1784375456.0942283
+    "price": 886.09,
+    "as_of": "2026-07-20 07:27:59",
+    "ts": 1784550479.6312025
   },
   "AMZN": {
     "symbol": "AMZN",
@@ -125,35 +125,35 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 246.71,
-    "as_of": "2026-07-18 06:50:56",
-    "ts": 1784375456.0533738
+    "price": 247.66,
+    "as_of": "2026-07-20 07:27:59",
+    "ts": 1784550479.6245728
   },
   "GOOGL": {
     "symbol": "GOOGL",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Let it work into earnings.",
-    "thesis": "Let it work into earnings.",
+    "headline": "Let it work into July 22 earnings.",
+    "thesis": "Let it work into July 22 earnings.",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 346.4,
-    "as_of": "2026-07-18 06:50:56",
-    "ts": 1784375456.1150603
+    "price": 347.78,
+    "as_of": "2026-07-20 07:27:59",
+    "ts": 1784550479.6687264
   },
   "AAPL": {
     "symbol": "AAPL",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Near highs; no new trigger.",
-    "thesis": "Near highs; no new trigger.",
+    "headline": "Near highs; let it run.",
+    "thesis": "Near highs; let it run.",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 333.66,
-    "as_of": "2026-07-18 06:50:56",
-    "ts": 1784375456.0730639
+    "price": 333.74,
+    "as_of": "2026-07-20 07:27:59",
+    "ts": 1784550479.6486244
   },
   "MELI": {
     "symbol": "MELI",
@@ -177,9 +177,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 163.7,
-    "as_of": "2026-07-18 06:50:56",
-    "ts": 1784375456.1964612
+    "price": 167.0,
+    "as_of": "2026-07-20 07:27:59",
+    "ts": 1784550479.7093377
   },
   "ANET": {
     "symbol": "ANET",
@@ -190,9 +190,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 168.0,
-    "as_of": "2026-07-18 06:50:56",
-    "ts": 1784375456.2331598
+    "price": 170.65,
+    "as_of": "2026-07-20 07:27:59",
+    "ts": 1784550479.7370157
   },
   "BATL": {
     "symbol": "BATL",
@@ -268,9 +268,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 12.13,
-    "as_of": "2026-07-18 06:50:56",
-    "ts": 1784375456.1547396
+    "price": 12.07,
+    "as_of": "2026-07-20 07:27:59",
+    "ts": 1784550479.6988678
   },
   "CRWD": {
     "symbol": "CRWD",
@@ -281,9 +281,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 202.77,
-    "as_of": "2026-07-18 06:50:56",
-    "ts": 1784375456.175751
+    "price": 202.2,
+    "as_of": "2026-07-20 07:27:59",
+    "ts": 1784550479.6890244
   },
   "ELTX": {
     "symbol": "ELTX",
@@ -411,9 +411,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 289.05,
-    "as_of": "2026-07-18 06:50:56",
-    "ts": 1784375456.2146819
+    "price": 297.56,
+    "as_of": "2026-07-20 07:27:59",
+    "ts": 1784550479.726325
   },
   "SDOT": {
     "symbol": "SDOT",

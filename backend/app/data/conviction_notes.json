@@ -1,1 +1,26 @@
-{}
+{
+  "watch:01e8113dc17c": {
+    "id": "watch:01e8113dc17c",
+    "symbol": "TSM",
+    "side": "buy",
+    "rule": "watchpoint",
+    "label": "Watchpoint: price ≤ $398",
+    "headline": "TSM: review before acting",
+    "what": "You hold 4.0107 shares, P/L -7.2%. No automated call — open TSM and size any move to your plan.",
+    "why": [
+      "Your watchpoint fired — Watchpoint: price ≤ $398. Your note: 'Buy $96 of TSM near $398 once you have cash to invest.'. Reading: You armed this on 2026-07-18 07:03: price ≤ $398.; Current reading: price $397.72.",
+      "Advisor unavailable — deterministic fallback.",
+      "Your watchpoint: Watchpoint: price ≤ $398."
+    ],
+    "target": "",
+    "stop": "",
+    "price": 397.72,
+    "held": null,
+    "dismissed": true,
+    "generated_at": "2026-07-20 06:08:01",
+    "ts": 1784545681.14417,
+    "action": "HOLD",
+    "entry": "",
+    "size": ""
+  }
+}

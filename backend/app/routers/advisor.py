@@ -7,6 +7,7 @@ from fastapi import APIRouter, HTTPException
 
 from ..models.schemas import AskRequest, RecommendRequest
 from ..services import advisor as advisor_service
+from ..services import jobs as jobs_service
 from ..services import discovery as discovery_service
 from ..services import insights as insights_service
 from ..services import market_data, screener, themes
@@ -76,19 +77,52 @@ def last_note(kind: str = "portfolio", symbol: str | None = None):
     return note
 
 
+def _validate_ask(req: AskRequest) -> tuple[str, str | None, str]:
+    """Shared validation → (kind, symbol|None, question)."""
+    if req.kind not in ("portfolio", "strategy") and not (req.symbol or "").strip():
+        raise HTTPException(status_code=422, detail="symbol required for this kind")
+    return req.kind, (req.symbol or "").strip().upper() or None, req.question.strip()
+
+
 @router.post("/ask")
 def ask(req: AskRequest):
     """Follow-up Q&A on a prior advisor note — resumes the same Claude
-    conversation so the brief and data stay in context."""
-    if req.kind not in ("portfolio", "strategy") and not (req.symbol or "").strip():
-        raise HTTPException(status_code=422, detail="symbol required for this kind")
+    conversation so the brief and data stay in context. Synchronous: fine for
+    quick (non-deep) asks. Deep asks should use /ask/start + /ask/status so the
+    Cloudflare tunnel's ~100s edge timeout can't 524 a long research run."""
+    kind, symbol, question = _validate_ask(req)
     try:
-        return advisor_service.ask(
-            req.kind, (req.symbol or "").strip().upper() or None,
-            req.question.strip(), deep=req.deep)
+        return advisor_service.ask(kind, symbol, question, deep=req.deep)
     except Exception as exc:
         traceback.print_exc()
         raise HTTPException(status_code=502, detail=f"Ask failed: {exc}")
+
+
+@router.post("/ask/start")
+def ask_start(req: AskRequest):
+    """Kick off a follow-up ask in the background and return a job id at once.
+    The client polls /ask/status/{job_id}. This keeps every HTTP request short,
+    so deep web-research asks (1-5 min) survive the tunnel's 100s edge timeout
+    instead of 524'ing."""
+    kind, symbol, question = _validate_ask(req)
+    job_id = jobs_service.submit(
+        advisor_service.ask, kind, symbol, question, deep=req.deep)
+    return {"job_id": job_id, "status": "pending"}
+
+
+@router.get("/ask/status/{job_id}")
+def ask_status(job_id: str):
+    """Poll a backgrounded ask. status: pending | done | error | gone.
+    'gone' means the job id is unknown — usually a backend restart dropped the
+    in-flight worker; the client should just re-ask."""
+    job = jobs_service.get(job_id)
+    if job is None:
+        return {"status": "gone"}
+    if job["status"] == "error":
+        return {"status": "error", "error": job["error"]}
+    if job["status"] == "done":
+        return {"status": "done", "result": job["result"]}
+    return {"status": "pending"}
 
 
 @router.get("/stock/{symbol}")

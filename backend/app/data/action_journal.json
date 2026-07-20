@@ -219,5 +219,31 @@
     "note": "Added shares (2.76713 -> 3.76713)",
     "source": "auto",
     "ts": 1784205725.4358647
+  },
+  {
+    "id": "3ae842fe2386",
+    "date": "2026-07-18",
+    "symbol": "TSM",
+    "action": "buy",
+    "shares": 0.2436,
+    "price": null,
+    "cost_basis": 428.75,
+    "realized_pl": null,
+    "note": "Added shares (3.76713 -> 4.0107)",
+    "source": "auto",
+    "ts": 1784376029.5213938
+  },
+  {
+    "id": "0cafa74c53fb",
+    "date": "2026-07-20",
+    "symbol": "TSM",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "cost_basis": null,
+    "realized_pl": null,
+    "note": "ALERT (not executed) \u2014 watchpoint hit Watchpoint: price \u2264 $398; client still needs to decide/act.",
+    "source": "auto",
+    "ts": 1784545681.1508298
   }
 ]

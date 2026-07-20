@@ -390,6 +390,41 @@ export interface AskAnswer {
   generated_at: string;
 }
 
+// Deep asks run web research for 1-5 min. The Cloudflare tunnel kills any
+// single request at ~100s (524), so we never hold one open: start a background
+// job, then poll a fast status endpoint until it finishes. Each poll is
+// instant, so tunnel + proxy timeouts never fire regardless of research length.
+async function askAdvisorPolling(
+  kind: "portfolio" | "stock" | "breakout" | "strategy",
+  symbol: string | undefined,
+  question: string,
+  deep: boolean
+): Promise<AskAnswer> {
+  const { job_id } = await post<{ job_id: string }>("/api/advisor/ask/start", {
+    kind,
+    symbol,
+    question,
+    deep,
+  });
+  // Poll up to ~8 min (deep research rarely exceeds this). Interval is short so
+  // a quick answer still feels immediate.
+  const intervalMs = 2500;
+  const maxAttempts = Math.ceil((8 * 60 * 1000) / intervalMs);
+  for (let i = 0; i < maxAttempts; i++) {
+    await new Promise((r) => setTimeout(r, intervalMs));
+    const s = await get<{
+      status: "pending" | "done" | "error" | "gone";
+      result?: AskAnswer;
+      error?: string;
+    }>(`/api/advisor/ask/status/${job_id}`);
+    if (s.status === "done" && s.result) return s.result;
+    if (s.status === "error") throw new Error(s.error || "Advisor ask failed");
+    if (s.status === "gone")
+      throw new Error("The advisor restarted mid-answer — please ask again.");
+  }
+  throw new Error("The advisor is taking unusually long — please try again.");
+}
+
 export interface Recommendation {
   engine: string;
   generated_at: string;
@@ -607,7 +642,7 @@ export const api = {
     symbol: string | undefined,
     question: string,
     deep = false
-  ) => post<AskAnswer>("/api/advisor/ask", { kind, symbol, question, deep }),
+  ) => askAdvisorPolling(kind, symbol, question, deep),
   watchpoints: () => get<{ count: number; results: Watchpoint[] }>("/api/watchpoints"),
   addWatchpoint: (wp: { symbol: string; kind: Watchpoint["kind"]; level: number; note?: string; side?: "buy" | "sell"; confirm?: "touch" | "close" }) =>
     post<Watchpoint>("/api/watchpoints", wp),
