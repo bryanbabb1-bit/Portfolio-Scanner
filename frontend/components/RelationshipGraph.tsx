@@ -5,7 +5,9 @@ import { api, GraphData } from "../lib/api";
 // Relationship graph — a force-directed correlation web of the holdings.
 // Tightly-correlated names pull together into clusters, so you can SEE that the
 // book is really one big co-moving bet rather than diversified positions.
-const PALETTE = ["#4d8dff", "#22d3a5", "#f5b544", "#f0616e", "#a78bfa", "#38bdf8", "#fb7185", "#8b93a7"];
+// Ink-range categorical ramp — the blueprint has no neon, so themes are
+// separated by value and warmth rather than by hue saturation.
+const PALETTE = ["#C4551F", "#3D4A2A", "#8A6D1F", "#B3341C", "#5C6B4A", "#7A5230", "#4A5A63", "#6B6558"];
 
 type N = { symbol: string; theme: string; weight: number; x: number; y: number; vx: number; vy: number; r: number; color: string };
 
@@ -79,14 +81,14 @@ export function RelationshipGraph() {
     const draw = () => {
       ctx.clearRect(0, 0, W, H);
       for (const e of edges) {
-        ctx.strokeStyle = `rgba(140,155,180,${Math.min(0.5, (e.corr - 0.35) * 0.9)})`;
+        ctx.strokeStyle = `rgba(20,20,15,${Math.min(0.45, (e.corr - 0.35) * 0.85)})`;
         ctx.lineWidth = 0.5 + e.corr * 1.6;
         ctx.beginPath(); ctx.moveTo(e.a.x, e.a.y); ctx.lineTo(e.b.x, e.b.y); ctx.stroke();
       }
       for (const n of nodes) {
         ctx.fillStyle = n.color;
         ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, 7); ctx.fill();
-        ctx.fillStyle = "#0a0c12"; ctx.font = `700 ${Math.max(9, Math.min(12, n.r * 0.7))}px ui-sans-serif, system-ui`;
+        ctx.fillStyle = "#FAF7F0"; ctx.font = `600 ${Math.max(9, Math.min(12, n.r * 0.7))}px ui-monospace, monospace`;
         ctx.textAlign = "center"; ctx.textBaseline = "middle";
         ctx.fillText(n.symbol, n.x, n.y);
       }

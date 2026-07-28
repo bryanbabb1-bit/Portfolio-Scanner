@@ -1,19 +1,23 @@
 {
-  "type": "morning",
-  "date": "2026-07-20",
-  "generated_at": "2026-07-20 07:16:39",
-  "engine": "fallback",
-  "headline": "What to watch today",
-  "summary": "Advisor unavailable — here is the raw setup.",
+  "type": "eod",
+  "date": "2026-07-27",
+  "generated_at": "2026-07-27 15:00:24",
+  "engine": "claude",
+  "headline": "Red day, but GOOGL bucked it and got a buy signal",
+  "summary": "A broad pullback led by AMD and NVDA dragged the book down 1.39% today, while GOOGL bucked the trend, rose 2.1%, and fired two buy-the-dip signals.",
   "watch": [
-    "Book $13,014 (+0.97% today), cash $0.",
-    "NVDA: $205.55 (+1.4% today), P/L +1.6%, RSI 48.2222",
-    "TSM: $408.01 (+2.4% today), P/L -4.8%, RSI 39.1762",
-    "MSFT: $390.45 (-0.9% today), P/L -4.5%, RSI 51.8862",
-    "AVGO: $375.75 (+1.3% today), P/L -6.5%, RSI 43.8958",
-    "NEE: $88.73 (-0.1% today), P/L +1.3%, RSI 54.0318",
-    "AMD: $510.96 (+3.1% today), P/L +1.6%, RSI 46.0718",
-    "Armed triggers (yours):"
+    "TSM at $399.95 — buy $150 if it slides to $390.",
+    "PANW at $317.03 — sell if it falls to $300.",
+    "GOOGL at $326.47 — buy $200 now, signal says add the dip.",
+    "Sell TEM at market — trend broke down, cut the small stake.",
+    "MU at $900.94, still down big — hold, do nothing for now.",
+    "NVDA and AMD both fell hard — hold both, no action needed."
   ],
-  "recap": []
+  "recap": [
+    "Book fell 1.39% to $9,834 today, no cash sitting idle.",
+    "AMD dropped 5.1% and NVDA dropped 5.0% — the day's biggest drags.",
+    "GOOGL rose 2.1% and fired two signals telling you to buy the dip.",
+    "AVGO was flat-to-up (+0.3%); TSM and MU stayed under pressure.",
+    "TEM's uptrend broke today — that small stake is a sell now."
+  ]
 }

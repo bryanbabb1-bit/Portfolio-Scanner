@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { api, Scorecard } from "../lib/api";
+import { alpha, BLUEPRINT } from "../lib/palette";
 
 // Probability Lattice — a Galton board of the advisor's fired calls. Each
 // signal drops into a win/loss bin by its realized edge; the pile that builds
@@ -8,9 +9,10 @@ import { api, Scorecard } from "../lib/api";
 const EDGES = [-20, -10, -5, 0, 5, 10, 20]; // 8 bins; index 4+ = profit side
 const NBINS = EDGES.length + 1;
 const PAL = {
-  green: "#1ec98a", red: "#f0616e", greyBall: "#5a6376", mut: "#868ea3",
-  peg: "#2b3140", lossTint: "rgba(240,97,110,0.05)", profitTint: "rgba(30,201,138,0.06)",
-  line: "rgba(255,255,255,0.22)", base: "rgba(255,255,255,0.12)",
+  green: BLUEPRINT.olive, red: BLUEPRINT.bear, greyBall: BLUEPRINT.muted, mut: BLUEPRINT.muted,
+  peg: alpha(BLUEPRINT.ink, 0.32),
+  lossTint: alpha(BLUEPRINT.bear, 0.06), profitTint: alpha(BLUEPRINT.olive, 0.07),
+  line: alpha(BLUEPRINT.ink, 0.3), base: alpha(BLUEPRINT.ink, 0.16),
 };
 
 function binOf(pct: number) {

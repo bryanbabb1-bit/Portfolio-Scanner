@@ -29,7 +29,7 @@
     },
     {
       "symbol": "MSFT",
-      "shares": 3.93284,
+      "shares": 1.00032,
       "cost_basis": 408.78,
       "theme": null
     },
@@ -76,15 +76,9 @@
       "theme": null
     },
     {
-      "symbol": "NEE",
-      "shares": 14.0,
-      "cost_basis": 87.63,
-      "theme": null
-    },
-    {
       "symbol": "GOOGL",
-      "shares": 1.8118,
-      "cost_basis": 369.6,
+      "shares": 2.09771,
+      "cost_basis": 364.05,
       "theme": null
     },
     {
@@ -94,27 +88,21 @@
       "theme": null
     },
     {
-      "symbol": "NTAP",
-      "shares": 2.0,
-      "cost_basis": 167.48,
-      "theme": null
-    },
-    {
       "symbol": "CRWD",
       "shares": 1.95702,
       "cost_basis": 189.06,
       "theme": null
     },
     {
-      "symbol": "PATH",
-      "shares": 32.72888,
-      "cost_basis": 11.31,
+      "symbol": "PANW",
+      "shares": 0.59919,
+      "cost_basis": 333.78,
       "theme": null
     },
     {
-      "symbol": "VRT",
-      "shares": 0.93975,
-      "cost_basis": 335.2,
+      "symbol": "GEV",
+      "shares": 0.16391,
+      "cost_basis": 1012.69,
       "theme": null
     }
   ],

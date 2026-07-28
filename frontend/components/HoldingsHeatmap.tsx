@@ -65,9 +65,11 @@ function squarify(values: number[], bounds: Rect): Rect[] {
   return out;
 }
 
-const BASE = { r: 23, g: 31, b: 50 };
-const BULL = { r: 13, g: 148, b: 100 };
-const BEAR = { r: 190, g: 54, b: 70 };
+// Inked tiles on a paper page: flat means warm neutral ink, movers ramp to
+// olive / rust. All three stay dark enough for the paper-coloured tile labels.
+const BASE = { r: 122, g: 117, b: 105 };
+const BULL = { r: 61, g: 74, b: 42 };
+const BEAR = { r: 179, g: 52, b: 28 };
 
 function heatColor(metric: number, cap: number): string {
   const t = Math.max(-1, Math.min(1, metric / cap));

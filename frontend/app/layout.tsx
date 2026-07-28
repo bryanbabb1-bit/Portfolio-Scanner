@@ -1,13 +1,23 @@
 import "./globals.css";
 import type { Metadata, Viewport } from "next";
-import { DM_Sans } from "next/font/google";
+import { Anton, DM_Sans, IBM_Plex_Mono } from "next/font/google";
 import { Nav } from "../components/Nav";
+import { BlueprintBackground } from "../components/blueprint/BlueprintBackground";
 import { PwaRegister } from "../components/PwaRegister";
 import { TickerTape } from "../components/TickerTape";
 
-// Self-hosted at build time — no external font requests at runtime, so the
+// All self-hosted at build time — no external font requests at runtime, so the
 // PWA and tunnel keep working offline.
+// DM Sans   = body prose
+// Anton     = heavy condensed display heads (the poster type)
+// Plex Mono = every spec label, data readout and telemetry strip
 const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-dm" });
+const anton = Anton({ subsets: ["latin"], weight: "400", variable: "--font-display" });
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-mono",
+});
 
 export const metadata: Metadata = {
   title: "Portfolio Scanner",
@@ -20,13 +30,13 @@ export const metadata: Metadata = {
   },
   appleWebApp: {
     capable: true,
-    statusBarStyle: "black-translucent",
+    statusBarStyle: "default",
     title: "Scanner",
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#090b11",
+  themeColor: "#F2EEE4",
   width: "device-width",
   initialScale: 1,
   // Lock zoom so the app can't pinch/double-tap-zoom like a webpage — it
@@ -42,8 +52,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={dmSans.variable}>
+    <html
+      lang="en"
+      className={`${dmSans.variable} ${anton.variable} ${plexMono.variable}`}
+    >
       <body>
+        <BlueprintBackground />
         <PwaRegister />
         <Nav />
         <TickerTape />

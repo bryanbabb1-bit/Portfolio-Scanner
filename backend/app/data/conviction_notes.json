@@ -1,26 +1,80 @@
 {
-  "watch:01e8113dc17c": {
-    "id": "watch:01e8113dc17c",
-    "symbol": "TSM",
+  "GOOGL:oversold-at-support:2026-07-27": {
+    "symbol": "GOOGL",
     "side": "buy",
-    "rule": "watchpoint",
-    "label": "Watchpoint: price ≤ $398",
-    "headline": "TSM: review before acting",
-    "what": "You hold 4.0107 shares, P/L -7.2%. No automated call — open TSM and size any move to your plan.",
-    "why": [
-      "Your watchpoint fired — Watchpoint: price ≤ $398. Your note: 'Buy $96 of TSM near $398 once you have cash to invest.'. Reading: You armed this on 2026-07-18 07:03: price ≤ $398.; Current reading: price $397.72.",
-      "Advisor unavailable — deterministic fallback.",
-      "Your watchpoint: Watchpoint: price ≤ $398."
-    ],
-    "target": "",
-    "stop": "",
-    "price": 397.72,
-    "held": null,
+    "rule": "oversold-at-support",
+    "label": "Oversold at the 200-day with the long-term trend intact",
+    "id": "GOOGL:oversold-at-support:2026-07-27",
+    "price": 324.16,
+    "theme": "AI",
+    "held": true,
     "dismissed": true,
-    "generated_at": "2026-07-20 06:08:01",
-    "ts": 1784545681.14417,
-    "action": "HOLD",
-    "entry": "",
-    "size": ""
+    "generated_at": "2026-07-27 06:00:19",
+    "ts": 1785150013.9928977,
+    "action": "ADD",
+    "headline": "Same call: buy the AI dip",
+    "what": "Add to GOOGL now — record-earnings selloff on capex fear, nothing's broken.",
+    "why": [
+      "Down 20.5% from its high on a beat, not a miss — fear, not fundamentals",
+      "Trend still up over the long run even though it's stalled short-term",
+      "No new news since your $317.69 buy call 4 days ago — up 2% since, thesis intact",
+      "Losing steam short-term, but that's the setup you buy, not sell"
+    ],
+    "entry": "near $324.16",
+    "size": "$1,000 (10% of book)",
+    "target": "$390",
+    "stop": "$300"
+  },
+  "plan:5df39d06e749:2026-07-27": {
+    "id": "plan:5df39d06e749:2026-07-27",
+    "symbol": "GOOGL",
+    "side": "buy",
+    "rule": "plan-reeval",
+    "label": "Reconsider staged plan",
+    "headline": "Bounce started — add now, don't wait",
+    "what": "GOOGL is up off $321 already; buy $600 near $324 now instead of waiting for $323.",
+    "why": [
+      "Up 1.4% today to $324.31, moving away from your $323 entry",
+      "Sitting right at its long-term support line ($323.59) — the floor is holding",
+      "Nothing broke: still ADD, target $390, stop $300"
+    ],
+    "target": "390",
+    "stop": "300",
+    "action": "ADD",
+    "price": 324.31,
+    "plan_text": "Changing my call from HOLD to ADD: GOOGL fell 7% since earnings to $323, sitting right on its long-term support — add $600 near $323.",
+    "move_pct": 0.9,
+    "theme": "Plan",
+    "held": true,
+    "dismissed": true,
+    "data_source": "live",
+    "generated_at": "2026-07-27 06:02:06",
+    "ts": 1785150121.0153706
+  },
+  "TEM:trend-break:2026-07-27": {
+    "symbol": "TEM",
+    "side": "sell",
+    "rule": "trend-break",
+    "label": "Trend break: under the 200-day in a death-cross regime and falling",
+    "id": "TEM:trend-break:2026-07-27",
+    "price": 43.97,
+    "theme": "AI",
+    "held": true,
+    "dismissed": true,
+    "generated_at": "2026-07-27 07:18:46",
+    "ts": 1785154713.4650314,
+    "action": "SELL",
+    "headline": "Trend broke down, cut the small stake",
+    "what": "Sell the full TEM position at market near $43.97 now.",
+    "why": [
+      "Changing my call on TEM from HOLD to SELL because it fell to $43.97 from the $46.01 hold call, a real 4.4% break, and it's still sliding under both trend lines ($51.29 and $61.00)",
+      "This was always a tiny satellite trade, not a core AI conviction name, so stop discipline applies here",
+      "Down over 55% from its high with weak momentum and no bounce forming",
+      "Small loss, small position — better to free the cash for higher-conviction ideas than hope it turns"
+    ],
+    "entry": "at market near $43.97",
+    "size": "Full TEM position (small satellite, no core sizing to protect)",
+    "target": "",
+    "stop": ""
   }
 }

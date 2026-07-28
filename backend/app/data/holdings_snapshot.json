@@ -4,7 +4,7 @@
     "cost": 202.42
   },
   "MSFT": {
-    "shares": 3.93284,
+    "shares": 1.00032,
     "cost": 408.78
   },
   "AMD": {
@@ -35,32 +35,24 @@
     "shares": 1.84754,
     "cost": 243.03
   },
-  "NEE": {
-    "shares": 14.0,
-    "cost": 87.63
-  },
   "GOOGL": {
-    "shares": 1.8118,
-    "cost": 369.6
+    "shares": 2.09771,
+    "cost": 364.05
   },
   "ANET": {
     "shares": 0.89158,
     "cost": 168.24
   },
-  "NTAP": {
-    "shares": 2.0,
-    "cost": 167.48
-  },
   "CRWD": {
     "shares": 1.95702,
     "cost": 189.06
   },
-  "PATH": {
-    "shares": 32.72888,
-    "cost": 11.31
+  "PANW": {
+    "shares": 0.59919,
+    "cost": 333.78
   },
-  "VRT": {
-    "shares": 0.93975,
-    "cost": 335.2
+  "GEV": {
+    "shares": 0.16391,
+    "cost": 1012.69
   }
 }

@@ -29,11 +29,12 @@ import { ProbabilityLattice } from "../components/ProbabilityLattice";
 import { ActionJournal } from "../components/ActionJournal";
 import { StockCard } from "../components/StockCard";
 import { SortControl, SortKey, sortReports } from "../components/SortControl";
+import { SpecHeader, TelemetryStrip } from "../components/blueprint";
 import { money, pct } from "../components/format";
 
-/* Modern-finance home: the real dashboard components, arranged in a smarter
-   multi-column layout. Theme is global (globals.css). Old dashboard kept at
-   /classic. */
+/* The home sheet. Blueprint chrome (masthead, telemetry footer) wraps the
+   real dashboard components in a multi-column layout. Theme tokens are global
+   (globals.css); blueprint primitives live in components/blueprint. */
 
 export default function Dashboard() {
   const [summary, setSummary] = useState<PortfolioSummary | null>(null);
@@ -132,12 +133,14 @@ export default function Dashboard() {
     <>
       <SignalSlap signals={signals} onDismissed={markDismissed} focusId={focusSlap} />
 
+      <SpecHeader system="PORTFOLIO SCANNER" version="2.0" />
+
       <WatchdogBar signals={signals} insights={insights} />
 
       {/* account header */}
       <header className="mfx-head">
         <div className="lead">
-          <div className="eyebrow"><span className="pulse" /> Portfolio · {summary.positions} positions · {summary.source} data</div>
+          <div className="eyebrow"><span className="pulse" /> Book · {summary.positions} positions · {summary.source} data</div>
           <div className="val">{money(summary.total_market_value)}</div>
           <div className="deltas">
             <span className={`mfx-chip ${summary.day_change >= 0 ? "up" : "down"}`}>
@@ -267,14 +270,23 @@ export default function Dashboard() {
         <div className="mfx-status">
           <span className="on" /> Watchdog online · advisor Claude · {summary.positions} positions · {summary.source} data
         </div>
-        <Link href="/classic">Classic dashboard</Link>
+        <Link href="/risk">Risk Desk</Link>
+        <Link href="/debate">Agent Debate</Link>
+        <Link href="/backtest">Backtest</Link>
         <Link href="/strategy">Strategy</Link>
-        <Link href="/runners">Runner Radar</Link>
         <Link href="/discover">Discovery</Link>
-        <Link href="/news">News</Link>
         <Link href="/settings">Settings</Link>
-        <span className="note">Portfolio Scanner</span>
       </div>
+
+      <TelemetryStrip
+        right={[
+          ["Engine", "LOCAL"],
+          ["Model", "CLAUDE"],
+          ["Data", summary.source.toUpperCase()],
+        ]}
+        line1="Discipline. Data. Decisions."
+        line2="Built to compound."
+      />
     </>
   );
 }

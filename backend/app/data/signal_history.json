@@ -628,5 +628,59 @@
     "price": 397.72,
     "ts": 1784545681.14417,
     "date": "2026-07-20"
+  },
+  {
+    "id": "watch:caea93cf852e",
+    "symbol": "PATH",
+    "side": "sell",
+    "rule": "watchpoint",
+    "price": 11.13,
+    "ts": 1784727916.7380009,
+    "date": "2026-07-22"
+  },
+  {
+    "id": "GOOGL:oversold-at-support:2026-07-23",
+    "symbol": "GOOGL",
+    "side": "buy",
+    "rule": "oversold-at-support",
+    "price": 323.53,
+    "ts": 1784813465.6086423,
+    "date": "2026-07-23"
+  },
+  {
+    "id": "watch:d10ffef514d3",
+    "symbol": "PATH",
+    "side": "sell",
+    "rule": "watchpoint",
+    "price": 10.3,
+    "ts": 1784830758.9275088,
+    "date": "2026-07-23"
+  },
+  {
+    "id": "GOOGL:oversold-at-support:2026-07-27",
+    "symbol": "GOOGL",
+    "side": "buy",
+    "rule": "oversold-at-support",
+    "price": 324.16,
+    "ts": 1785150013.9928977,
+    "date": "2026-07-27"
+  },
+  {
+    "id": "plan:5df39d06e749:2026-07-27",
+    "symbol": "GOOGL",
+    "side": "buy",
+    "rule": "plan-reeval",
+    "price": 324.31,
+    "ts": 1785150121.0153706,
+    "date": "2026-07-27"
+  },
+  {
+    "id": "TEM:trend-break:2026-07-27",
+    "symbol": "TEM",
+    "side": "sell",
+    "rule": "trend-break",
+    "price": 43.97,
+    "ts": 1785154713.4650314,
+    "date": "2026-07-27"
   }
 ]
