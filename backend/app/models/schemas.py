@@ -425,6 +425,11 @@ class PortfolioConfig(BaseModel):
     # (nothing to act on there) and only watch names you actually hold. Saves
     # Claude usage when there's no cash to deploy.
     quiet_unowned_low_cash: bool = True
+    # Only fire buy/sell SIGNALS for names you actually hold or watch. The
+    # discovery universe is market-wide now (~190 tickers), so scanning it for
+    # slaps produces alerts on names with no place in the book. Discovery and
+    # the advisor's scouting are unaffected — this gates the signal engine only.
+    signals_owned_only: bool = True
     themes: dict[str, str] = {}
     holdings: list[Holding] = []
     watchlist: list[WatchItem] = []

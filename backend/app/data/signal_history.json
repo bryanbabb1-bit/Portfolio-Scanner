@@ -763,5 +763,23 @@
     "price": 5.185,
     "ts": 1785254494.828771,
     "date": "2026-07-28"
+  },
+  {
+    "id": "ITRI:runner-ignition:2026-07-28",
+    "symbol": "ITRI",
+    "side": "buy",
+    "rule": "runner-ignition",
+    "price": 100.27,
+    "ts": 1785255032.787265,
+    "date": "2026-07-28"
+  },
+  {
+    "id": "MPLT:runner-ignition:2026-07-28",
+    "symbol": "MPLT",
+    "side": "buy",
+    "rule": "runner-ignition",
+    "price": 10.7055,
+    "ts": 1785255295.456365,
+    "date": "2026-07-28"
   }
 ]

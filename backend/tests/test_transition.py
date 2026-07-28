@@ -207,28 +207,33 @@ def test_marking_a_step_done_persists(monkeypatch):
     assert tr.set_step_done(99) is None
 
 
-def test_facts_block_only_speaks_once_activated(monkeypatch):
+def test_facts_block_speaks_for_a_draft_plan_too(monkeypatch):
+    """Gating this on ACTIVATION was a bug: a generated-but-not-activated plan
+    was invisible to the advisor, so the brief and the plan issued conflicting
+    orders on the same book. Activation controls monitoring, not whether the
+    plan is the client's standing intent."""
     monkeypatch.setattr(tr, "analyse", lambda: ANALYSIS)
     _stub(monkeypatch)
     tr.generate()
-    assert tr.facts_block() == ""          # generated but not activated
 
-    plan = tr._load()
-    plan["activated"] = True
-    tr._save(plan)
     block = tr.facts_block()
-    assert "ACTIVE TRANSITION PLAN" in block
-    assert "Step 1" in block
+    assert "STANDING TRANSITION PLAN" in block
+    assert "DRAFT" in block
+    assert "OUTSTANDING step 1" in block
 
-
-def test_facts_block_reports_completed_steps(monkeypatch):
-    monkeypatch.setattr(tr, "analyse", lambda: ANALYSIS)
-    _stub(monkeypatch)
-    tr.generate()
     plan = tr._load()
     plan["activated"] = True
     tr._save(plan)
+    assert "[ACTIVE]" in tr.facts_block()
+
+
+def test_facts_block_separates_outstanding_from_completed(monkeypatch):
+    monkeypatch.setattr(tr, "analyse", lambda: ANALYSIS)
+    _stub(monkeypatch)
+    tr.generate()
     tr.set_step_done(1)
+
     block = tr.facts_block()
-    assert "Already executed: steps 1" in block
-    assert "Step 2" in block
+    assert "ALREADY DONE" in block          # step 1, executed
+    assert "OUTSTANDING step 2" in block    # step 2, still to do
+    assert "OUTSTANDING step 1" not in block

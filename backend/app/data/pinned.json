@@ -61,5 +61,19 @@
     "price_at_pin": null,
     "created_at": "2026-07-22 18:05:00",
     "ts": 1784761500.0926325
+  },
+  {
+    "id": "8b645c836682",
+    "symbol": "LVWR",
+    "source": "signal",
+    "text": "Do nothing today; place a $175 buy on LVWR only if it drops to $2.40.",
+    "points": [
+      "$3.55 (+48% from a $2.40 fill)",
+      "daily close below $2.05 \u2014 exit, never add"
+    ],
+    "status": "open",
+    "price_at_pin": 2.72,
+    "created_at": "2026-07-28 11:24:50",
+    "ts": 1785255890.0546002
   }
 ]

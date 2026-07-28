@@ -141,7 +141,7 @@ export function Nav() {
         <div className="nav-drawer">
           {NAV.map((e) =>
             isGroup(e) ? (
-              <div key={e.label}>
+              <div key={e.label} className="drawer-group">
                 <div className="drawer-label">{e.label}</div>
                 {e.items.map((i) => (
                   <Link

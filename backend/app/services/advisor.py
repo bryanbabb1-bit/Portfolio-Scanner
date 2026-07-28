@@ -1273,6 +1273,17 @@ def _book_context(summary=None, reports=None) -> str:
                          + " | ".join(doc["guardrails"]))
     except Exception:
         pass
+    # _book_context feeds the single-stock review, the chat AND the
+    # notification recommendation. Injecting the standing rebalance here means
+    # every one of those surfaces argues from the same plan as the brief,
+    # instead of each issuing its own conflicting order on the same book.
+    try:
+        from . import transition as _tr
+        campaign = _tr.facts_block()
+        if campaign:
+            lines.append(campaign)
+    except Exception:
+        pass
     pend = _pending_commitments()
     if pend:
         lines.append(pend)

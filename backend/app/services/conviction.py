@@ -344,6 +344,14 @@ def scan() -> list[dict]:
         items: list[tuple] = []
         book_ctx = ""
         low_cash = False  # no dry powder → skip not-owned + runner checks/enrichment
+        # Standing preference, read outside the try so a config failure can
+        # never leave it undefined further down. Defaults to the safe/quiet
+        # behaviour: only signal on names actually in the book.
+        try:
+            owned_only = bool(
+                pf_service.load_portfolio().get("signals_owned_only", True))
+        except Exception:
+            owned_only = True
         try:
             summary, reports = pf_service.portfolio_summary()
             book_val = summary.total_market_value
@@ -390,9 +398,15 @@ def scan() -> list[dict]:
                               r.market_value is not None, r.unrealized_pl_pct,
                               screener.breakout_score(r.indicators, r.quote),
                               r.theme, r.days_to_earnings))
-            for c in discovery.discover(min_score=0, limit=200)["results"]:
-                items.append((c.symbol, c.indicators, c.quote, False, None,
-                              c.score, c.theme, None))
+            # Signals on names outside the book are alerts you can't act on and
+            # wouldn't want to — and since the discovery universe went
+            # market-wide (~190 tickers) they'd be constant. Discovery itself
+            # and the advisor's scouting still see the whole market; this gates
+            # the SLAP engine only.
+            if not owned_only:
+                for c in discovery.discover(min_score=0, limit=200)["results"]:
+                    items.append((c.symbol, c.indicators, c.quote, False, None,
+                                  c.score, c.theme, None))
         except Exception as exc:
             print(f"[conviction] scan data failed: {exc!r}")
 
@@ -448,7 +462,9 @@ def scan() -> list[dict]:
         # so the slap never says BUY on a name that already topped.
         try:
             from . import runner
-            for m in ([] if low_cash else runner.igniting_movers()):
+            # Runner ignition is by definition a whole-market scan for names
+            # you don't own, so owned-only silences it outright.
+            for m in ([] if (low_cash or owned_only) else runner.igniting_movers()):
                 sym = m["symbol"]
                 cool_key = f"{sym}:runner-ignition"
                 last = fired.get(cool_key)

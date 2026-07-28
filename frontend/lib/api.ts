@@ -626,6 +626,7 @@ export interface PortfolioConfig {
   cash?: number;
   core_convictions?: string[];
   quiet_unowned_low_cash?: boolean;
+  signals_owned_only?: boolean;
   themes: Record<string, string>;
   holdings: Holding[];
   watchlist: WatchItem[];

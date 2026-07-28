@@ -448,16 +448,27 @@ a { color: inherit; text-decoration: none; }
   background: var(--bg-card);
   padding: 6px 0;
 }
+/* display:block is load-bearing. The drawer is a flex column, so TOP-LEVEL
+   links get block layout for free — but grouped links live inside a wrapper
+   div, are not flex items, and as inline <a> elements they flowed side by side
+   and wrapped into a scattered mess on narrow screens. */
 .nav-drawer a {
+  display: block;
   font-family: var(--font-mono), ui-monospace, monospace;
   padding: 12px 24px; font-size: 12px; font-weight: 500;
   letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
   border-left: 3px solid transparent;
 }
+.nav-drawer .drawer-group { display: flex; flex-direction: column; }
+.nav-drawer .drawer-group + .drawer-group,
+.nav-drawer .drawer-group + a { border-top: 1px solid var(--hairline); }
 .nav-drawer .drawer-label {
+  display: block;
   padding: 14px 24px 6px; font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent);
 }
+/* Grouped items sit slightly inset so the hierarchy is readable at a glance. */
+.nav-drawer .drawer-group a { padding-left: 34px; }
 .nav-drawer a:hover { color: var(--text); background: var(--surface-hover); }
 .nav-drawer a.active { color: var(--text); border-left-color: var(--accent); background: var(--surface-hover); }
 

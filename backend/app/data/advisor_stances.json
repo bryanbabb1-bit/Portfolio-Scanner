@@ -8,9 +8,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 394.8,
-    "as_of": "2026-07-28 07:03:40",
-    "ts": 1785240220.8190646
+    "price": 398.33,
+    "as_of": "2026-07-28 11:27:20",
+    "ts": 1785256040.7147121
   },
   "NET": {
     "symbol": "NET",
@@ -21,9 +21,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 265.74,
-    "as_of": "2026-07-28 07:03:40",
-    "ts": 1785240220.793258
+    "price": 266.39,
+    "as_of": "2026-07-28 11:27:20",
+    "ts": 1785256040.7556832
   },
   "NEE": {
     "symbol": "NEE",
@@ -53,16 +53,16 @@
   },
   "AVGO": {
     "symbol": "AVGO",
-    "action": "HOLD",
+    "action": "ADD",
     "prev_action": "HOLD",
-    "headline": "AI chip demand confirmed; add on weakness later.",
-    "thesis": "AI chip demand confirmed; add on weakness later.",
+    "headline": "The weakness I said to wait for arrived.",
+    "thesis": "The weakness I said to wait for arrived.",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 375.95,
-    "as_of": "2026-07-28 07:03:40",
-    "ts": 1785240220.2498477
+    "price": 381.53,
+    "as_of": "2026-07-28 11:27:20",
+    "ts": 1785256040.6848457
   },
   "IREN": {
     "symbol": "IREN",
@@ -81,14 +81,14 @@
     "symbol": "NVDA",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Held up best in the selloff; anchor intact.",
-    "thesis": "Held up best in the selloff; anchor intact.",
+    "headline": "Anchor intact; held up best in the selloff.",
+    "thesis": "Anchor intact; held up best in the selloff.",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 195.61,
-    "as_of": "2026-07-28 07:03:40",
-    "ts": 1785240220.12511
+    "price": 197.4,
+    "as_of": "2026-07-28 11:27:20",
+    "ts": 1785256040.666084
   },
   "AMD": {
     "symbol": "AMD",
@@ -125,35 +125,35 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 233.39,
-    "as_of": "2026-07-28 07:03:40",
-    "ts": 1785240220.6575074
+    "price": 231.59,
+    "as_of": "2026-07-28 11:27:20",
+    "ts": 1785256040.7405884
   },
   "GOOGL": {
     "symbol": "GOOGL",
     "action": "ADD",
     "prev_action": "ADD",
-    "headline": "Cheapest big AI platform; keep adding on weakness.",
-    "thesis": "Cheapest big AI platform; keep adding on weakness.",
+    "headline": "Cheapest big AI platform; keep buying weakness.",
+    "thesis": "Cheapest big AI platform; keep buying weakness.",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 327.35,
-    "as_of": "2026-07-28 07:03:40",
-    "ts": 1785240220.4394002
+    "price": 333.76,
+    "as_of": "2026-07-28 11:27:20",
+    "ts": 1785256040.7006588
   },
   "AAPL": {
     "symbol": "AAPL",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Near highs into Thursday earnings; let it run.",
-    "thesis": "Near highs into Thursday earnings; let it run.",
+    "headline": "Near highs with real catalyst; let it run.",
+    "thesis": "Near highs with real catalyst; let it run.",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 338.5,
-    "as_of": "2026-07-28 07:03:40",
-    "ts": 1785240220.5291507
+    "price": 339.7,
+    "as_of": "2026-07-28 11:27:20",
+    "ts": 1785256040.7286787
   },
   "MELI": {
     "symbol": "MELI",
@@ -190,9 +190,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 166.0,
-    "as_of": "2026-07-28 07:03:41",
-    "ts": 1785240221.0012155
+    "price": 166.66,
+    "as_of": "2026-07-28 11:27:20",
+    "ts": 1785256040.8702097
   },
   "BATL": {
     "symbol": "BATL",
@@ -281,9 +281,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 182.21,
-    "as_of": "2026-07-28 07:03:40",
-    "ts": 1785240220.8731718
+    "price": 181.37,
+    "as_of": "2026-07-28 11:27:20",
+    "ts": 1785256040.8095284
   },
   "ELTX": {
     "symbol": "ELTX",
@@ -508,16 +508,16 @@
   },
   "DLR": {
     "symbol": "DLR",
-    "action": "AVOID",
-    "prev_action": null,
-    "headline": "Weak signal, no volume behind it",
-    "thesis": "Skip DLR \u2014 this bounce has almost no buying interest behind it.",
+    "action": "HOLD",
+    "prev_action": "AVOID",
+    "headline": "Revising from AVOID; you bought it, guidance raised twice.",
+    "thesis": "Revising from AVOID; you bought it, guidance raised twice.",
     "target": "",
     "stop": "",
-    "source": "signal",
-    "price": 180.46,
-    "as_of": "2026-07-10 08:53:37",
-    "ts": 1783691617.3434484
+    "source": "brief",
+    "price": 195.0,
+    "as_of": "2026-07-28 11:27:20",
+    "ts": 1785256040.77267
   },
   "WDFC": {
     "symbol": "WDFC",
@@ -580,22 +580,22 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 317.75,
-    "as_of": "2026-07-28 07:03:40",
-    "ts": 1785240220.9096522
+    "price": 320.54,
+    "as_of": "2026-07-28 11:27:20",
+    "ts": 1785256040.8325908
   },
   "GEV": {
     "symbol": "GEV",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Record backlog and raised guidance; stay put.",
-    "thesis": "Record backlog and raised guidance; stay put.",
+    "headline": "Wind missed but full-year guidance raised; tiny position.",
+    "thesis": "Wind missed but full-year guidance raised; tiny position.",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 958.49,
-    "as_of": "2026-07-28 07:03:40",
-    "ts": 1785240220.9645724
+    "price": 944.76,
+    "as_of": "2026-07-28 11:27:20",
+    "ts": 1785256040.8508146
   },
   "TEM": {
     "symbol": "TEM",
@@ -821,15 +821,15 @@
   "EGG": {
     "symbol": "EGG",
     "action": "AVOID",
-    "prev_action": null,
-    "headline": "No news behind the spike \u2014 do not chase",
-    "thesis": "Buy nothing. Skip EGG entirely and leave the $1,078 cash for GOOGL at $330 and PATH.",
+    "prev_action": "AVOID",
+    "headline": "No news behind the spike \u2014 stand aside",
+    "thesis": "Buy nothing in EGG; keep the $1,078 cash for GOOGL at $330 and PATH.",
     "target": "",
     "stop": "",
     "source": "reco:runner",
-    "price": 4.69,
-    "as_of": "2026-07-28 10:46:03",
-    "ts": 1785253563.3188243
+    "price": 5.03,
+    "as_of": "2026-07-28 11:07:26",
+    "ts": 1785254846.0710804
   },
   "PMN": {
     "symbol": "PMN",
@@ -908,5 +908,44 @@
     "price": 5.18,
     "as_of": "2026-07-28 11:02:27",
     "ts": 1785254547.5142844
+  },
+  "ITRI": {
+    "symbol": "ITRI",
+    "action": "BUY",
+    "prev_action": null,
+    "headline": "Real earnings beat \u2014 take a small starter, hard stop",
+    "thesis": "Buy $300 of ITRI at market near $100, hard stop if it closes below $95.",
+    "target": "$126 (+26%), the analyst average; Guggenheim raised its target to $135 today",
+    "stop": "daily close below $95 \u2014 no averaging down",
+    "source": "reco:runner",
+    "price": 100.27,
+    "as_of": "2026-07-28 11:11:32",
+    "ts": 1785255092.6068778
+  },
+  "MPLT": {
+    "symbol": "MPLT",
+    "action": "AVOID",
+    "prev_action": null,
+    "headline": "Skip MPLT \u2014 that pop is wreckage, not ignition",
+    "thesis": "Buy nothing in MPLT; keep the $1,078 cash for the GOOGL $330 order and core dips.",
+    "target": "",
+    "stop": "",
+    "source": "reco:runner",
+    "price": 10.71,
+    "as_of": "2026-07-28 11:15:33",
+    "ts": 1785255333.8474503
+  },
+  "CEG": {
+    "symbol": "CEG",
+    "action": "HOLD",
+    "prev_action": null,
+    "headline": "Cleared PJM auction, Walmart nuclear deal; new position.",
+    "thesis": "Cleared PJM auction, Walmart nuclear deal; new position.",
+    "target": "",
+    "stop": "",
+    "source": "brief",
+    "price": 261.11,
+    "as_of": "2026-07-28 11:27:20",
+    "ts": 1785256040.7893207
   }
 }

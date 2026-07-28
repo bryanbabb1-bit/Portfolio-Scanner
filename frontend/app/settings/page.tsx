@@ -194,6 +194,24 @@ export default function Settings() {
           <label className="cfg-toggle">
             <input
               type="checkbox"
+              checked={cfg.signals_owned_only ?? true}
+              onChange={(e) => setCfg({ ...cfg, signals_owned_only: e.target.checked })}
+            />
+            <span>
+              Only signal on names I own or watch
+              <span className="mut" style={{ display: "block", fontSize: 12, textTransform: "none", letterSpacing: 0, fontWeight: 400 }}>
+                No buy/sell alerts for stocks outside your book. The discovery
+                universe is market-wide now, so scanning it for alerts surfaces
+                names with no place in the portfolio. Discovery and the
+                advisor&apos;s scouting still see the whole market — this only
+                gates the signal engine and Runner Radar alerts.
+              </span>
+            </span>
+          </label>
+
+          <label className="cfg-toggle">
+            <input
+              type="checkbox"
               checked={cfg.quiet_unowned_low_cash ?? true}
               onChange={(e) => setCfg({ ...cfg, quiet_unowned_low_cash: e.target.checked })}
             />

@@ -1,7 +1,7 @@
 {
   "owner": "You",
   "advisor_persona": "senior financial advisor at Charles Schwab",
-  "cash": 1077.83,
+  "cash": 1696.0,
   "core_convictions": [
     "NVDA",
     "AVGO",
@@ -43,12 +43,6 @@
       "symbol": "AMZN",
       "shares": 2.74262,
       "cost_basis": 242.46,
-      "theme": null
-    },
-    {
-      "symbol": "TSM",
-      "shares": 1.58023,
-      "cost_basis": 428.75,
       "theme": null
     },
     {

@@ -522,19 +522,38 @@ def set_step_done(n: int, done: bool = True) -> dict | None:
 
 
 def facts_block() -> str:
-    """The active plan, for advisor prompts — so the brief knows the campaign."""
+    """The standing plan, for advisor prompts.
+
+    Gated on a plan EXISTING, not on it being activated. Activation only
+    controls monitoring (watchlist + triggers); it says nothing about whether
+    the plan is the client's standing intent. Gating on it meant a generated
+    plan was invisible to the brief, so the two surfaces cheerfully issued
+    contradictory orders on the same book — which is exactly what a shared
+    ledger exists to prevent.
+    """
     plan = _load()
-    if not plan or not plan.get("activated") or not plan.get("steps"):
+    if not plan or not plan.get("steps"):
         return ""
+    state = "ACTIVE" if plan.get("activated") else "DRAFT (not yet activated)"
     open_steps = [s for s in plan["steps"] if not s.get("done")]
-    if not open_steps:
-        return ""
-    lines = ["ACTIVE TRANSITION PLAN (the client is mid-rebalance — stay "
-             "consistent with it and do not propose conflicting trades):"]
+    done = [s for s in plan["steps"] if s.get("done")]
+
+    lines = [
+        f"STANDING TRANSITION PLAN [{state}] — the client has a sequenced "
+        f"rebalance on file. This is the agreed campaign for this book. Stay "
+        f"CONSISTENT with it: do not propose trades that contradict it, and do "
+        f"not re-recommend a step already executed. If you genuinely disagree "
+        f"with a step, say so explicitly ('the plan says X; I'd revise it "
+        f"because Y') rather than quietly issuing a different order."
+    ]
+    if plan.get("headline"):
+        lines.append(f"- Plan: {plan['headline']}")
     for s in open_steps[:6]:
         parts = " / ".join(x for x in (s.get("sell"), s.get("buy")) if x)
-        lines.append(f"- Step {s['n']} (when {s['trigger']}): {parts}")
-    done = [s for s in plan["steps"] if s.get("done")]
-    if done:
-        lines.append(f"- Already executed: steps {', '.join(str(s['n']) for s in done)}.")
+        lines.append(f"- OUTSTANDING step {s['n']} (when {s['trigger']}): {parts}")
+    for c in (plan.get("completed") or [])[-6:]:
+        parts = " / ".join(x for x in (c.get("sell"), c.get("buy")) if x)
+        lines.append(f"- ALREADY DONE {c.get('done_at', '')[:10]}: {parts}")
+    if not open_steps and done:
+        lines.append("- Every step is complete; the rebalance is finished.")
     return "\n".join(lines)
