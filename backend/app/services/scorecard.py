@@ -15,6 +15,23 @@ import time
 from ..config import settings
 
 _FILE = settings.PORTFOLIO_FILE.parent / "signal_history.json"
+
+
+def purge(symbol: str) -> int:
+    """Drop every recorded signal for a symbol. Returns how many went.
+
+    For tickers that were never real (a typo, a delisting): their rows can
+    never be graded, so they are noise in the ledger forever."""
+    sym = (symbol or "").upper()
+    with _lock:
+        items = _load()
+        keep = [x for x in items if x.get("symbol", "").upper() != sym]
+        removed = len(items) - len(keep)
+        if removed:
+            _FILE.parent.mkdir(parents=True, exist_ok=True)
+            with open(_FILE, "w", encoding="utf-8") as f:
+                json.dump(keep, f, indent=2)
+        return removed
 _lock = threading.Lock()
 
 
@@ -60,15 +77,29 @@ def compute(price_of=None) -> dict:
         def price_of(sym: str):
             try:
                 md = market_data.get_price_data(sym)
-                return float(md.history["Close"].iloc[-1])
             except Exception:
+                return None
+            # A live fetch that FAILED degrades to mock in auto mode. Grading
+            # a real fired signal against an invented price manufactures a
+            # win/loss out of nothing — exactly how a stale typo'd ticker
+            # (APPL) polluted the live record with a fabricated result. Only
+            # refuse when mock is a fallback; when DATA_MODE is genuinely
+            # "mock" (tests, demos) it is the expected source.
+            if md.source == "mock" and settings.DATA_MODE != "mock":
+                return None
+            try:
+                return float(md.history["Close"].iloc[-1])
+            except (IndexError, KeyError, TypeError, ValueError):
                 return None
 
     now = time.time()
     graded: list[dict] = []
+    ungraded: list[str] = []
     for e in _load():
         cur = price_of(e["symbol"])
         if cur is None or not e["price"]:
+            if e["symbol"] not in ungraded:
+                ungraded.append(e["symbol"])
             continue
         fwd = (cur / e["price"] - 1) * 100
         effective = fwd if e["side"] == "buy" else -fwd
@@ -102,4 +133,7 @@ def compute(price_of=None) -> dict:
         "overall_avg_pct": round(sum(overall) / len(overall), 2) if overall else None,
         "rules": rule_stats,
         "signals": sorted(graded, key=lambda g: -g["ts"])[:30],
+        # Symbols whose price could not be trusted — surfaced rather than
+        # silently dropped, so a delisted or typo'd ticker is visible.
+        "ungraded": ungraded,
     }

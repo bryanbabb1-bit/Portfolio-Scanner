@@ -29,7 +29,7 @@ import time
 
 from ..config import settings
 from . import backtest as bt
-from . import scorecard
+from . import conviction, scorecard
 
 _FILE = settings.PORTFOLIO_FILE.parent / "rule_tuning.json"
 _lock = threading.Lock()
@@ -147,8 +147,11 @@ def rule_health() -> dict:
             "live_win_rate": (l or {}).get("win_rate"),
             "live_avg_pct": (l or {}).get("avg_effective_pct"),
             "knob": _KNOBS.get(rule),
-            "proposal": _proposal(rule, verdict),
+            "proposal": _proposal(rule, verdict, retired=rule in conviction.RETIRED_RULES),
             "accepted": accepted.get(rule),
+            # Retired rules no longer fire at the client, but ARE still
+            # replayed — so this table stays the evidence for un-retiring.
+            "retired": rule in conviction.RETIRED_RULES,
         })
 
     order = {v: i for i, v in enumerate(("RETIRE", "RETUNE", "MARGINAL", "EARNING"))}
@@ -168,8 +171,15 @@ def rule_health() -> dict:
     }
 
 
-def _proposal(rule: str, verdict: str) -> str | None:
+def _proposal(rule: str, verdict: str, retired: bool = False) -> str | None:
     """Plain-English next step. Deliberately NOT a computed threshold."""
+    if retired:
+        return (
+            "Already retired — it no longer fires at you, but it is still "
+            "replayed here so this record can justify bringing it back. "
+            "Re-check after a real drawdown; the evidence against it comes "
+            "from a rising market."
+        )
     if verdict == "EARNING":
         return None
     if verdict == "MARGINAL":
@@ -189,6 +199,20 @@ def _proposal(rule: str, verdict: str) -> str | None:
 
 def _notes(report, live, counts) -> list[str]:
     notes = []
+    if conviction.RETIRED_RULES:
+        notes.append(
+            f"{len(conviction.RETIRED_RULES)} rule(s) are RETIRED and no longer "
+            f"fire: {', '.join(sorted(conviction.RETIRED_RULES))}. They are "
+            "still replayed here, so this table remains the evidence for "
+            "reinstating them."
+        )
+    ungraded = live.get("ungraded") or []
+    if ungraded:
+        notes.append(
+            f"Live grading skipped {', '.join(ungraded)} — no trustworthy "
+            "price. A signal graded against fallback data would be a "
+            "fabricated result, so it is excluded rather than guessed."
+        )
     if not report:
         notes.append(
             "No backtest on record — run the replay on the Backtest sheet, "

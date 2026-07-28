@@ -222,11 +222,15 @@ def test_conviction_rules_fire_and_stay_quiet():
     sigs = _detect("T", broken_struct, quiet, True, -40.0, 40)
     assert not any(s["rule"] == "rsi-buy-zone" for s in sigs)
 
-    # RSI sell zone on a held name at the highs
+    # RSI sell zone on a held name at the highs. The rule LOGIC still works,
+    # but the rule is retired (it lost money on the replay), so it only shows
+    # up for the backtest — see tests/test_retirement.py.
     hot75 = Indicators(rsi=76, sma50=101, sma200=95, trend="uptrend",
                        pct_from_52w_high=-1, volume_ratio=1.0)
-    sigs = _detect("T", hot75, quiet, True, 30.0, 60)
+    sigs = _detect("T", hot75, quiet, True, 30.0, 60, include_retired=True)
     assert any(s["rule"] == "rsi-sell-zone" for s in sigs)
+    assert not any(s["rule"] == "rsi-sell-zone"
+                   for s in _detect("T", hot75, quiet, True, 30.0, 60))
 
     # RSI reclaim: crossed up through 45 after a washout, structure intact
     reclaim = Indicators(rsi=46, rsi_prev=43, rsi_min_10d=29, sma50=98,
@@ -249,8 +253,11 @@ def test_conviction_rules_fire_and_stay_quiet():
     crash2 = Quote(symbol="T", price=80, change=-8, change_pct=-9.0, source="live")
     broken2 = Indicators(rsi=35, sma50=90, sma200=95, trend="downtrend",
                          pct_from_52w_high=-30, volume_ratio=2.0)
+    # include_retired: this asserts the EARNINGS GATE (buys blocked, sells not),
+    # and the sell rules that fit this setup are retired from firing live.
     assert any(s["side"] == "sell"
-               for s in _detect("T", broken2, crash2, True, -25.0, 20, earn_days=1))
+               for s in _detect("T", broken2, crash2, True, -25.0, 20,
+                                earn_days=1, include_retired=True))
 
     # momentum ignition: already ripping on volume near highs (the SNDK case)
     ripping = Quote(symbol="T", price=100, change=6, change_pct=6.4, source="live")
@@ -279,13 +286,16 @@ def test_conviction_rules_fire_and_stay_quiet():
     sigs = _detect("T", washed, bounce, True, -30.0, 25)
     assert any(s["rule"] == "washed-out-reversal" for s in sigs)
 
-    # held, crashing through a broken trend -> sell
+    # held, crashing through a broken trend -> sell. Both of these rules are
+    # RETIRED (they lost money on the replay), so the logic is asserted with
+    # include_retired and the live suppression is asserted right after.
     crash = Quote(symbol="T", price=80, change=-8, change_pct=-9.0, source="live")
     broken = Indicators(rsi=35, sma50=90, sma200=95, trend="downtrend",
                         pct_from_52w_high=-30, volume_ratio=2.0)
-    sigs = _detect("T", broken, crash, True, -25.0, 20)
+    sigs = _detect("T", broken, crash, True, -25.0, 20, include_retired=True)
     assert any(s["rule"] == "trend-break" for s in sigs)
     assert any(s["rule"] == "sharp-breakdown" for s in sigs)
+    assert not _detect("T", broken, crash, True, -25.0, 20)
 
 
 def test_auto_theme_categorization():

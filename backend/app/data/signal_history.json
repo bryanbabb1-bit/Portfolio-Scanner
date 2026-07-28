@@ -18,15 +18,6 @@
     "date": "2026-07-02"
   },
   {
-    "id": "APPL:trend-break:2026-07-02",
-    "symbol": "APPL",
-    "side": "sell",
-    "rule": "trend-break",
-    "price": 100.0,
-    "ts": 1783018356.620153,
-    "date": "2026-07-02"
-  },
-  {
     "id": "watch:7db01f56e8b9",
     "symbol": "CIFR",
     "side": "sell",

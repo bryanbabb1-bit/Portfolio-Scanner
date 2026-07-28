@@ -210,6 +210,7 @@ export interface RuleHealth {
   knob: string | null;
   proposal: string | null;
   accepted: { rule: string; accepted_at: string; note: string } | null;
+  retired: boolean;
 }
 
 export interface Learning {

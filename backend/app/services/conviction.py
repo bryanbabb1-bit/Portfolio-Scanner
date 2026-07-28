@@ -53,11 +53,37 @@ def _save(path, data: dict) -> None:
 
 
 # ------------------------------------------------------------------- rules
+# Rules RETIRED on backtest evidence (2026-07-27). The 5-year replay graded
+# every rule at 20 sessions; these three lost money on large samples, and the
+# reason is the same in all three: they sell weakness in quality names, and
+# over this period weakness in quality names was bought.
+#
+#   trend-break      424 signals  -3.95% avg  profit factor 0.54
+#   rsi-sell-zone    377 signals  -4.08% avg  profit factor 0.41
+#   sharp-breakdown   69 signals -10.54% avg  profit factor 0.18
+#
+# (For a SELL, "effective" return is negated — so sharp-breakdown firing at
+# -10.54% means price ROSE ~10.5% over the next 20 sessions on average. It
+# was selling bottoms.)
+#
+# They are suppressed from FIRING, not deleted, and the backtest still
+# replays them (see `include_retired`). Deleting the logic would destroy the
+# only evidence that could ever justify bringing them back — and the record
+# above is regime-dependent: a mega-cap AI book through a bull run. Re-check
+# on the Learning sheet after a genuine drawdown before treating this as
+# settled. Un-retire by removing the entry here.
+RETIRED_RULES = frozenset({"trend-break", "rsi-sell-zone", "sharp-breakdown"})
+
+
 def _detect(sym: str, ind, quote, held: bool, pl_pct, score: float,
-            earn_days: int | None = None) -> list[dict]:
+            earn_days: int | None = None, *,
+            include_retired: bool = False) -> list[dict]:
     """High bar on purpose: a slap that fires weekly is a slap; one that
     fires hourly is wallpaper. earn_days gates BUY signals — no new entries
-    into a binary event."""
+    into a binary event.
+
+    include_retired: the BACKTEST passes True so retired rules keep being
+    measured. The live scan leaves it False so they never reach the client."""
     out: list[dict] = []
     # NEVER signal off fallback/mock data — a live fetch failing must not
     # produce a real slap on a stale price (AMD's mock anchor is $165 while
@@ -71,6 +97,8 @@ def _detect(sym: str, ind, quote, held: bool, pl_pct, score: float,
     def add(side, rule, label):
         if side == "buy" and near_earnings:
             return  # never slap a buy 0-2 days before a report
+        if rule in RETIRED_RULES and not include_retired:
+            return  # lost money on the replay — measured, not fired
         out.append({"symbol": sym, "side": side, "rule": rule, "label": label})
 
     # ----- BUY -----

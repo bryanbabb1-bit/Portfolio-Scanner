@@ -120,8 +120,11 @@ def replay_symbol(
         # THE live rule engine, unchanged. pl_pct is None: unrealized P/L is a
         # property of the client's cost basis, not of history, and no rule in
         # `_detect` reads it.
+        # include_retired=True so retired rules KEEP being graded — otherwise
+        # retiring one destroys the only evidence that could un-retire it.
         try:
-            sigs = conviction._detect(symbol, ind, quote, held, None, score)
+            sigs = conviction._detect(symbol, ind, quote, held, None, score,
+                                      include_retired=True)
         except Exception:
             continue
         if not sigs:

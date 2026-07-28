@@ -67,7 +67,16 @@
 .lr-rule {
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 12px; font-weight: 500;
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
 }
+/* A retired rule is struck through: it still has a record here, but it no
+   longer reaches the client. */
+.lr-rule .lr-retired {
+  font-size: 9px; letter-spacing: .11em; text-transform: uppercase;
+  color: var(--muted); border: 1px solid var(--border); padding: 2px 6px;
+}
+.lr-block.retired .lr-rule { text-decoration: line-through; text-decoration-color: var(--muted); }
+.lr-block.retired .lr-rule .lr-retired { text-decoration: none; }
 .lr-verdict {
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 9.5px; font-weight: 600; letter-spacing: .1em;

@@ -149,9 +149,15 @@ export default function LoopPage() {
           <span />
         </div>
         {d.rules.map((r) => (
-          <div key={r.rule} className={`lr-block ${r.verdict.toLowerCase()}`}>
+          <div
+            key={r.rule}
+            className={`lr-block ${r.verdict.toLowerCase()} ${r.retired ? "retired" : ""}`}
+          >
             <div className="lr-row">
-              <span className="lr-rule">{r.rule}</span>
+              <span className="lr-rule">
+                {r.rule}
+                {r.retired && <span className="lr-retired">retired</span>}
+              </span>
               <span className={`lr-verdict ${r.verdict.toLowerCase()}`}>{r.verdict}</span>
               <span className="lr-num">
                 {r.backtest_signals ? (
