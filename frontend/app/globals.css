@@ -1359,6 +1359,12 @@ select { cursor: pointer; }
 .hm-sym { fill: #FAF7F0; font-weight: 800; letter-spacing: .03em; pointer-events: none; }
 .hm-pct { fill: rgba(250, 247, 240, 0.88); font-weight: 600; pointer-events: none; }
 
+/* ---------------------------------------------------------------- 404 */
+.nf-panel { max-width: 640px; margin: 24px auto; }
+.nf-head { font-size: clamp(30px, 5vw, 46px); }
+.nf-body { font-size: 14px; line-height: 1.65; color: var(--muted); margin-bottom: 20px; }
+.nf-links { display: flex; flex-wrap: wrap; gap: 10px; }
+
 /* ---- the brief's plan: what to do, and when ------------------------------
    The brief owns the sequence now; there is no separate transition feature to
    contradict it, so this renders full-width inside the brief. */
