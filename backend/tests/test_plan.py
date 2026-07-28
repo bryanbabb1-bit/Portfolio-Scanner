@@ -61,13 +61,6 @@ def test_stop_gate_is_a_fall():
     assert g["direction"] == "fall" and g["met"] is False
 
 
-def test_floor_from_strategy_or_default():
-    assert plan._floor({"allocation_targets": {"Cash & Income": 16}}, 10_000) == (1600, 16.0)
-    # no cash target → 15% fallback
-    assert plan._floor({"allocation_targets": {"AI": 30}}, 10_000) == (1500, 15.0)
-    assert plan._floor(None, 10_000) == (1500, 15.0)
-
-
 def test_stop_is_not_a_funder():
     # a protective stop (sell on a drop / "stop loss") is a guard, never a
     # cash-raising trim, so it must not fund other buys

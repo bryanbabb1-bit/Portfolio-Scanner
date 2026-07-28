@@ -134,6 +134,13 @@ export interface StayCourse {
   };
 }
 
+export interface AdvisorStep {
+  n: number;
+  when: string;
+  do: string;
+  why?: string;
+}
+
 export interface AdvisorNote {
   symbol: string;
   persona: string;
@@ -148,6 +155,7 @@ export interface AdvisorNote {
   actions: string[];
   risks: string[];
   scout?: string[];
+  sequence?: AdvisorStep[];
   raw?: string;
 }
 
@@ -952,7 +960,7 @@ export const api = {
       `/api/advisor/last?kind=${kind}${symbol ? `&symbol=${symbol}` : ""}`
     ).catch(() => null as AdvisorNote | null),
   askAdvisor: (
-    kind: "portfolio" | "stock" | "breakout" | "strategy",
+    kind: "portfolio" | "stock" | "breakout",
     symbol: string | undefined,
     question: string,
     deep = false
@@ -965,41 +973,8 @@ export const api = {
     send<{ deleted: string }>(`/api/watchpoints/${id}`, "DELETE"),
   extractWatchpoints: () =>
     send<{ created: number; results: Watchpoint[] }>("/api/watchpoints/extract", "POST"),
-  strategy: () => get<StrategyDoc>("/api/strategy").catch(() => null as StrategyDoc | null),
-  generateStrategy: (inputs: {
-    target_value?: number;
-    horizon?: string;
-    monthly_contribution?: number;
-    risk_appetite?: string;
-    notes?: string;
-    deep?: boolean;
-  }) => post<StrategyDoc>("/api/strategy/generate", inputs),
-  saveStrategy: (doc: StrategyDoc) => put<StrategyDoc>("/api/strategy", doc),
   insights: () => get<PortfolioInsights>("/api/insights"),
   risk: () => get<RiskDesk>("/api/risk"),
-  transition: () => get<TransitionPlan | null>("/api/transition"),
-  startTransition: () => post<{ job_id: string }>("/api/transition", {}),
-  transitionJob: (jobId: string) =>
-    get<{ status: "pending" | "done" | "error"; result: TransitionPlan | null; error?: string }>(
-      `/api/transition/job/${jobId}`
-    ),
-  activateTransition: () =>
-    post<{ watched: string[]; watchpoints: number; error: string | null }>(
-      "/api/transition/activate",
-      {}
-    ),
-  transitionStep: (n: number, done: boolean) =>
-    post<TransitionStep>(`/api/transition/step/${n}?done=${done}`, {}),
-  cleansheet: () => get<CleanSheet | null>("/api/cleansheet"),
-  startCleansheet: () =>
-    post<{ job_id: string | null; result: CleanSheet | null; cached: boolean }>(
-      "/api/cleansheet?force=true",
-      {}
-    ),
-  cleansheetJob: (jobId: string) =>
-    get<{ status: "pending" | "done" | "error"; result: CleanSheet | null; error?: string }>(
-      `/api/cleansheet/job/${jobId}`
-    ),
   learning: () => get<Learning>("/api/learning"),
   acceptProposal: (rule: string, note = "") =>
     post<RuleHealth["accepted"]>(

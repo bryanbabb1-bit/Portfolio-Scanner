@@ -475,31 +475,22 @@ def test_advisor_consistency_memory(tmp_path, monkeypatch):
     assert len(advisor._history["portfolio:brief"]) == 3
 
 
-def test_strategy_persistence_and_gating(tmp_path, monkeypatch):
-    from app.services import strategy
+def test_risk_profile_is_the_only_standing_mandate(monkeypatch):
+    """The generated strategy document was removed: it accumulated stale
+    claims and contradicted the live brief. One client-controlled sentence
+    replaces it, and it is what reaches the advisor."""
+    from app.services import advisor
+    from app.services import portfolio as pf_service
 
-    monkeypatch.setattr(strategy, "_FILE", tmp_path / "strategy.json")
-    assert strategy.load() is None
-    assert strategy.facts_block() == ""  # nothing yet
+    monkeypatch.setattr(pf_service, "load_portfolio", lambda: {
+        "risk_profile": "Aggressive, double-digit growth, no new capital."})
+    block = advisor._risk_profile_block()
+    assert "Aggressive, double-digit growth" in block
+    assert "no separate strategy document" in block
+    assert "only thing that issues orders" in block
 
-    doc = strategy.save({
-        "goals": {"target_value": 50000, "horizon": "5 years",
-                  "monthly_contribution": 500, "risk_appetite": "balanced"},
-        "thesis": "Compound AI infrastructure exposure with disciplined cash.",
-        "short_term": ["Redeploy $300/week into dips"],
-        "long_term": ["Build NVDA to a 10% core position"],
-        "allocation_targets": {"AI Infrastructure": 30, "Cash & Income": 20},
-        "guardrails": ["No single position above 15%"],
-        "milestones": ["$15k by 2026-12-31"],
-        "approved": False,
-    })
-    assert doc["updated_at"]
-    # drafts are NOT injected into briefs — only approved plans are
-    assert strategy.facts_block() == ""
-    strategy.save({**doc, "approved": True})
-    block = strategy.facts_block()
-    assert "AGREED STRATEGY" in block
-    assert "grow to $50,000" in block and "AI Infrastructure 30%" in block
+    monkeypatch.setattr(pf_service, "load_portfolio", lambda: {})
+    assert advisor._risk_profile_block() == ""
 
 
 def test_watchpoints_arm_trigger_journal(tmp_path, monkeypatch):

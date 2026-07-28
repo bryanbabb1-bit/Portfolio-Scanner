@@ -17,8 +17,6 @@ const NAV: Entry[] = [
     items: [
       { href: "/risk", label: "Risk Desk" },
       { href: "/debate", label: "Agent Debate" },
-      { href: "/cleansheet", label: "Clean Sheet" },
-      { href: "/transition", label: "Transition Plan" },
       { href: "/backtest", label: "Backtest" },
       { href: "/loop", label: "Learning Loop" },
     ],
@@ -33,7 +31,6 @@ const NAV: Entry[] = [
       { href: "/news", label: "News Wire" },
     ],
   },
-  { href: "/strategy", label: "Strategy" },
   { href: "/settings", label: "Settings" },
 ];
 

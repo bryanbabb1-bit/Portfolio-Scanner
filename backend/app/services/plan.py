@@ -22,7 +22,7 @@ import time
 
 from ..config import settings
 from . import conviction, pins as pins_svc, portfolio as pf
-from . import strategy as strat_svc, watchpoints as wp_svc
+from . import watchpoints as wp_svc
 
 # Ideas the client dismissed ("not doing that one") — hidden from the board for
 # a while so they don't nag, but a fresh strong pitch can resurface after.
@@ -206,21 +206,6 @@ def _wp_gate(w: dict, current: float | None, rsi: float | None) -> dict | None:
         "direction": "rise" if kind == "rsi_above" else "fall",
         "met": met, "rsi": True,
     }
-
-
-def _floor(strategy: dict | None, book: float) -> tuple[float, float]:
-    """Dry-powder floor in dollars and percent, from the strategy's cash
-    allocation target (falling back to 15%)."""
-    pct = 15.0
-    if strategy:
-        for k, v in (strategy.get("allocation_targets") or {}).items():
-            if "cash" in k.lower():
-                try:
-                    pct = float(v)
-                except (TypeError, ValueError):
-                    pass
-                break
-    return round(book * pct / 100), pct
 
 
 def build_plan() -> dict:

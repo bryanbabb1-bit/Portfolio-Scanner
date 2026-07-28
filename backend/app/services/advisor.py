@@ -18,6 +18,7 @@ import time
 from ..config import settings
 from ..models.schemas import (
     AdvisorNote,
+    AdvisorStep,
     BreakoutCandidate,
     PortfolioAlert,
     PortfolioSummary,
@@ -469,6 +470,7 @@ def _parse_note(symbol: str, engine: str, raw: str) -> AdvisorNote:
     actions: list[str] = []
     risks: list[str] = []
     scout: list[str] = []
+    sequence: list[AdvisorStep] = []
     text = raw.strip()
     # Extract JSON object if the model wrapped it in prose/fences.
     start, end = text.find("{"), text.rfind("}")
@@ -487,6 +489,20 @@ def _parse_note(symbol: str, engine: str, raw: str) -> AdvisorNote:
             actions = _as_bullets(obj.get("actions") or obj.get("recommendation"))
             risks = _as_bullets(obj.get("risks"))
             scout = _as_bullets(obj.get("scout") or obj.get("growth_targets"))
+            for i, st in enumerate(obj.get("sequence") or [], start=1):
+                if not isinstance(st, dict) or not str(st.get("do", "")).strip():
+                    continue
+                try:
+                    n = int(st.get("n") or i)
+                except (TypeError, ValueError):
+                    n = i
+                sequence.append(AdvisorStep(
+                    n=n,
+                    when=str(st.get("when", "") or "immediately").strip(),
+                    do=str(st.get("do", "")).strip(),
+                    why=str(st.get("why", "") or "").strip(),
+                ))
+            sequence.sort(key=lambda s: s.n)
         except json.JSONDecodeError:
             pass
     if not summary:
@@ -505,6 +521,7 @@ def _parse_note(symbol: str, engine: str, raw: str) -> AdvisorNote:
         actions=actions,
         risks=risks,
         scout=scout,
+        sequence=sequence,
         raw=raw,
     )
 
@@ -647,48 +664,46 @@ def _facts_from_portfolio(summary: PortfolioSummary, reports: list[StockReport],
     if track:
         lines.append("")
         lines.append(track)
-    # A brief that contradicts the rebalance the client is mid-way through is
-    # worse than no brief — it re-opens decisions already made.
-    from . import transition
-    campaign = transition.facts_block()
-    if campaign:
-        lines.append("")
-        lines.append(campaign)
     return "\n".join(lines)
 
 
 def _mix_block(summary: PortfolioSummary) -> str:
-    """Current theme weights vs the approved strategy's allocation targets, as
-    grounded numbers so the advisor's mix read is factual, not guessed. Returns
-    '' if there's no approved strategy with targets."""
-    from . import strategy as strategy_service
-    doc = strategy_service.load()
-    if not doc or not doc.get("approved"):
-        return ""
-    targets = doc.get("allocation_targets") or {}
-    if not targets:
-        return ""
+    """Current theme weights, as plain numbers.
+
+    This used to compare against a generated strategy document's allocation
+    targets. That document was removed: it accumulated stale claims and ended
+    up contradicting the live brief, telling the client to sell what the brief
+    had told them to buy the same day. There is now no second plan to drift
+    from — the brief is the only thing that issues orders."""
     total = summary.total_market_value or 0
-    if total <= 0:
+    if total <= 0 or not summary.by_theme:
         return ""
     cur_pct = {t: (v / total * 100) for t, v in summary.by_theme.items()}
-    rows = []
-    # One row per theme that is either a target or currently held, so drift on
-    # both over- and under-weight sides is visible.
-    for theme in sorted(set(targets) | set(cur_pct), key=lambda t: -cur_pct.get(t, 0)):
-        now = cur_pct.get(theme, 0.0)
-        tgt = targets.get(theme)
-        if tgt is None:
-            rows.append(f"  {theme}: now {now:.0f}% (no target — off-plan sleeve)")
-        else:
-            drift = now - tgt
-            tag = ("on target" if abs(drift) <= 3 else
-                   f"{'over' if drift > 0 else 'under'} by {abs(drift):.0f} pts")
-            rows.append(f"  {theme}: now {now:.0f}% vs target {tgt:g}% ({tag})")
-    return ("MIX vs STRATEGY TARGETS (use these EXACT numbers in your 'mix' read; "
-            "within ~3 pts of target = still where it should be, reassure the "
-            "client; larger gaps = name the drift and whether it's worth a "
-            "rebalance yet):\n" + "\n".join(rows) + "\n")
+    rows = [f"  {t}: {p:.0f}%" for t, p in
+            sorted(cur_pct.items(), key=lambda x: -x[1])]
+    return ("CURRENT MIX (use these EXACT numbers in your 'mix' read; judge it "
+            "against the client's risk profile, not against a target "
+            "list):\n" + "\n".join(rows) + "\n")
+
+
+def _risk_profile_block() -> str:
+    """The client's ONE standing instruction. Replaces the strategy document."""
+    from . import portfolio as pf_service
+    try:
+        profile = (pf_service.load_portfolio().get("risk_profile") or "").strip()
+    except Exception:
+        profile = ""
+    if not profile:
+        return ""
+    return (
+        f"THE CLIENT'S STANDING MANDATE — this is the ONLY strategic "
+        f"instruction you have, and it is the whole brief:\n  {profile}\n"
+        f"There is no separate strategy document, no allocation targets and no "
+        f"other plan. YOU are the only thing that issues orders, so your brief "
+        f"must be self-consistent and must not contradict what you told the "
+        f"client last time without saying plainly that you are changing your "
+        f"mind and why.\n\n"
+    )
 
 
 def advise_portfolio(summary: PortfolioSummary, reports: list[StockReport],
@@ -709,9 +724,8 @@ def advise_portfolio(summary: PortfolioSummary, reports: list[StockReport],
         _cache[key] = (time.time(), note)
         return note
 
-    from . import strategy as strategy_service
     from . import stance as stance_service
-    strategy_block = strategy_service.facts_block()
+    strategy_block = _risk_profile_block()
     mix_block = _mix_block(summary)
     standing = stance_service.book_block([r.symbol for r in reports])
 
@@ -808,6 +822,18 @@ def advise_portfolio(summary: PortfolioSummary, reports: list[StockReport],
         f'candidates, the whole market, and your own research; at least one HIGH '
         f'CONVICTION idea every time, and include a SPECULATIVE UPSIDE pick when '
         f'you genuinely see one. Not-owned names only), '
+        f'"sequence" (array of 3-6 objects {{"n","when","do","why"}} — THE PLAN. '
+        f'This is the client\'s #1 ask and REQUIRED every brief: what to sell, '
+        f'what to buy, and IN WHAT ORDER, staged over weeks rather than all at '
+        f'once. "n" is the step number, "when" is the CONDITION to wait for '
+        f'("immediately", or a concrete price like "AVGO recovers to $390"), '
+        f'"do" is one plain order (verb + $amount + TICKER + level), "why" is '
+        f'one sentence. HARD RULES: every buy must be funded by a sell in the '
+        f'SAME or an EARLIER step — the client has almost no spare cash, so '
+        f'never spend money that does not exist. Do not dump a large position '
+        f'in one step; stage it. Prefer selling into strength over selling a '
+        f'position at its low. This sequence IS the plan — it must agree with '
+        f'your actions and stances, not compete with them), '
         f'"stances" (array of {{"symbol","call","thesis"}} — your DEFINITIVE '
         f'one-word call on EACH holding: BUY|ADD|HOLD|TRIM|SELL|WATCH, thesis '
         f'under 10 words. This becomes the single call shown on every screen, so '
@@ -821,7 +847,16 @@ def advise_portfolio(summary: PortfolioSummary, reports: list[StockReport],
         f'target (e.g. "miner exposure was 41%, now X% — target <25%"), and '
         f'frame recommendations strictly as the next incremental step. If the '
         f'client has been de-risking, tell them when they have done ENOUGH '
-        f'rather than defaulting to more cuts.'
+        f'rather than defaulting to more cuts. '
+        f'ABSOLUTE RULE — DO NOT REVERSE YOURSELF ON A FRESH POSITION: if the '
+        f'action ledger shows the client BOUGHT a name within the last 14 days, '
+        f'you may NOT tell them to sell or trim it. You (or the plan) told them '
+        f'to buy it; reversing days later on a price wiggle destroys their '
+        f'trust and their money in fees and spread. The ONLY exception is a '
+        f'genuine BUSINESS break — cut guidance, lost customer, broken balance '
+        f'sheet — and if you invoke it you must name the specific event. A '
+        f'price falling is NOT a reason. If a recent buy now looks oversized, '
+        f'say "hold it and let it season", never "sell".'
     )
     raw, sid = _run_claude(prompt, research=deep)
     note = _parse_note("PORTFOLIO", "claude", raw) if raw else \
@@ -1263,27 +1298,13 @@ def _book_context(summary=None, reports=None) -> str:
         lines.append("By theme: " + ", ".join(
             f"{k} ${v:,.0f}" for k, v in
             sorted(summary.by_theme.items(), key=lambda x: -x[1])[:6]))
-    # The hard guardrails the advisor keeps citing MUST be in context — and so
-    # must anything already queued that would breach them.
-    try:
-        from . import strategy as _strat
-        doc = _strat.load()
-        if doc and doc.get("approved") and doc.get("guardrails"):
-            lines.append("HARD GUARDRAILS (do not violate): "
-                         + " | ".join(doc["guardrails"]))
-    except Exception:
-        pass
-    # _book_context feeds the single-stock review, the chat AND the
-    # notification recommendation. Injecting the standing rebalance here means
-    # every one of those surfaces argues from the same plan as the brief,
-    # instead of each issuing its own conflicting order on the same book.
-    try:
-        from . import transition as _tr
-        campaign = _tr.facts_block()
-        if campaign:
-            lines.append(campaign)
-    except Exception:
-        pass
+    # The client's standing mandate. This replaced a generated strategy doc
+    # (with its own guardrails and allocation targets) and a separate
+    # transition plan — two extra surfaces that issued their own orders and
+    # ended up contradicting the brief. One instruction, one voice.
+    block = _risk_profile_block()
+    if block:
+        lines.append(block.strip())
     pend = _pending_commitments()
     if pend:
         lines.append(pend)
@@ -1370,15 +1391,6 @@ def ask(kind: str, symbol: str | None, question: str, deep: bool = False) -> dic
                 summary, reports,
                 insights_service.compute_risk(reports),
                 insights_service.build_alerts(reports))
-            if kind == "strategy":
-                from . import strategy as strategy_service
-                block = strategy_service.facts_block()
-                doc = strategy_service.load()
-                if not block and doc:  # draft exists but isn't approved yet
-                    block = ("DRAFT strategy under discussion:\n"
-                             f"Thesis: {doc.get('thesis')}\n"
-                             "Short-term: " + "; ".join(doc.get("short_term", [])[:5]))
-                facts = f"{facts}\n\n{block}" if block else facts
         else:
             facts = _facts_from_report(pf_service.build_report(symbol))
         prior_note = _prior_advice_block(key, symbol)
@@ -1455,7 +1467,6 @@ def recommend(symbol: str, event: str, kind: str = "alert",
 
     from . import insights as insights_service
     from . import portfolio as pf_service
-    from . import strategy as strategy_service
 
     stamp = time.strftime("%Y-%m-%d %H:%M:%S")
     try:
@@ -1523,7 +1534,7 @@ def recommend(symbol: str, event: str, kind: str = "alert",
     # AND the client's CORE CONVICTIONS (so a core name is never told to sell at
     # a loss on a technical break).
     book = book + "\n\n" + _book_context()
-    strat = strategy_service.facts_block()
+    strat = _risk_profile_block()
     _px = fresh.get("price")
     _stable = stance_service.is_stable(symbol.upper(), _px)
     _prior_stance = stance_service.get(symbol.upper())

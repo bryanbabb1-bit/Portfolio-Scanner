@@ -11,21 +11,16 @@ export function PortfolioBrief() {
   const [loading, setLoading] = useState(false);
   const [deep, setDeep] = useState(false);
   const [err, setErr] = useState<string | null>(null);
-  const [stale, setStale] = useState(false); // brief predates the active strategy
+  const [stale, setStale] = useState(false);
 
-  // Restore the last brief; if the strategy was revised AFTER this brief was
-  // written, it's stale — regenerate so the brief reflects the new plan.
+  // Restore the last brief. There is no strategy document to fall out of sync
+  // with any more — the brief is the only thing that issues orders, so it is
+  // never "stale relative to the plan"; it IS the plan.
   useEffect(() => {
-    Promise.all([api.lastAdvisorNote("portfolio"), api.strategy().catch(() => null)])
-      .then(([n, strat]) => {
-        if (n) setNote((cur) => cur ?? n);
-        const briefTime = n?.generated_at || "";
-        const stratTime = strat?.updated_at || strat?.generated_at || "";
-        if (strat?.approved && stratTime && (!n || stratTime > briefTime)) {
-          setStale(true);
-          run(false); // cache was cleared on the strategy save → regenerates
-        }
-      });
+    api
+      .lastAdvisorNote("portfolio")
+      .then((n) => n && setNote((cur) => cur ?? n))
+      .catch(() => {});
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -116,6 +111,33 @@ export function PortfolioBrief() {
             <div className="advisor-sec">
               <h4>Your holdings</h4>
               <BulletList items={note.positions!} kind="insight" />
+            </div>
+          )}
+          {/* THE PLAN. The brief generates this itself — there is no separate
+              transition feature to contradict it. */}
+          {(note.sequence?.length ?? 0) > 0 && (
+            <div className="advisor-sec brief-plan">
+              <h4>The plan — what to do, and when</h4>
+              <ol className="bp-steps">
+                {note.sequence!.map((s) => (
+                  <li key={s.n}>
+                    <div className="bp-when">
+                      <span className="bp-n">{String(s.n).padStart(2, "0")}</span>
+                      <span className="bp-trigger">{s.when}</span>
+                    </div>
+                    <p className="bp-do">{s.do}</p>
+                    {s.why && <p className="bp-why">{s.why}</p>}
+                    <button
+                      className="btn ghost bp-pin"
+                      onClick={() =>
+                        api.addPin({ source: "brief", text: `${s.do} (when ${s.when})` })
+                      }
+                    >
+                      Pin this step
+                    </button>
+                  </li>
+                ))}
+              </ol>
             </div>
           )}
           {note.actions?.length > 0 && (

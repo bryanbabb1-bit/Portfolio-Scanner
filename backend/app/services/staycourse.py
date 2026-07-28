@@ -55,16 +55,14 @@ def _resilience(reports: list[StockReport]) -> dict | None:
 
 
 def _goal() -> dict | None:
-    """Progress toward the approved strategy target, if one is set."""
-    from . import strategy as strategy_service
-    doc = strategy_service.load()
-    if not doc or not doc.get("approved"):
-        return None
-    g = doc.get("goals") or {}
-    target = g.get("target_value")
-    if not target:
-        return None
-    return {"target": float(target), "horizon": g.get("horizon") or ""}
+    """No numeric goal any more.
+
+    This read a target value off the approved strategy document. That document
+    was removed — it drifted out of sync with the live brief and produced
+    contradictory advice — and the client's standing mandate is qualitative
+    ("aggressive, double-digit growth, little new capital"), not a dated
+    dollar figure to measure progress against."""
+    return None
 
 
 def read(summary: PortfolioSummary, reports: list[StockReport],
