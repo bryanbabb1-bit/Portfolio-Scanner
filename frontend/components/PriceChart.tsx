@@ -114,7 +114,10 @@ export function PriceChart({ symbol, quote }: { symbol: string; quote?: Quote })
           <span className="cp-now">{curPrice != null ? money(curPrice) : "—"}</span>
           {quote != null && (
             <span className={`cp-chg ${quote.change_pct >= 0 ? "pos" : "neg"}`}>
-              {quote.change_pct >= 0 ? "▲" : "▼"} {money(Math.abs(quote.change))} ({pct(Math.abs(quote.change_pct))}) today
+              {/* The percent keeps its sign: pct() prepends "+" for positives,
+                  so abs()-ing it rendered a -4.99% day as "▼ $10.33 (+4.99%)".
+                  The dollar figure stays absolute — the arrow carries it. */}
+              {quote.change_pct >= 0 ? "▲" : "▼"} {money(Math.abs(quote.change))} ({pct(quote.change_pct)}) today
             </span>
           )}
         </div>
