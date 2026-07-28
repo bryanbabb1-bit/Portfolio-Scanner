@@ -127,5 +127,133 @@
       "note": "Stop $192.77 (200-day, 1.9% below). Risking 1% of equity ($0) buys $0 — capped by dry powder."
     },
     "error": null
+  },
+  "ONDS": {
+    "symbol": "ONDS",
+    "name": "Ondas Inc",
+    "price": 8.02,
+    "ts": 1785202665.9714944,
+    "as_of": "2026-07-27 20:37:45",
+    "engine": "claude",
+    "agents": [
+      {
+        "key": "bull",
+        "name": "Bull Agent",
+        "round": 1,
+        "position": "BULLISH",
+        "confidence": 62,
+        "points": [
+          "Backlog just hit $457M with a fresh $70M order burst, raising the bar for future execution.",
+          "New Mistral deal expands Ondas access to US military customers, a credible growth channel.",
+          "Wall Street's 8 analysts rate it strong_buy with a mean target of $19.81, implying 147% upside from $8.02.",
+          "Stock is up 2.82% today and reportedly on pace for its best month this year.",
+          "24/7 Wall St. flags Ondas as a potential acquisition target in the autonomous-defense space."
+        ],
+        "strongest": "Analysts rate ONDS strong_buy with a mean target of $19.81, implying 147% upside from the current $8.02 price.",
+        "ok": true
+      },
+      {
+        "key": "bear",
+        "name": "Bear Agent",
+        "round": 1,
+        "position": "BEARISH",
+        "confidence": 50,
+        "points": [
+          "ONDS is still 42.8% below its 52-week high of $14.01 and sits below its recent trend levels near $9.05 and $9.37 - the bigger trend is still down.",
+          "Today's bounce came on only 0.59x normal trading volume - very few buyers actually showed up to confirm the move.",
+          "The account has $0 in spare cash right now - buying ONDS means selling another holding to fund it.",
+          "The book already lost $142 today against a $197 daily loss limit, and risk status is flagged ELEVATED.",
+          "Fellow drone stock Red Cat fell 26% in a month - this whole group can sell off fast together."
+        ],
+        "strongest": "ONDS is still down 42.8% from its $14.01 high and today's bounce ran on unusually thin volume - a weak move, not a real reversal.",
+        "ok": true
+      },
+      {
+        "key": "macro",
+        "name": "Macro Agent",
+        "round": 1,
+        "position": "BULLISH",
+        "confidence": 55,
+        "points": [
+          "Ondas just booked $70 million in new orders and built a $457 million backlog from military buyers.",
+          "A new Mistral deal expands Ondas's access to the US military, a policy-driven boost for defense-tech names.",
+          "The stock is still 42.76% below its 52-week high of $14.01, showing the group is only now recovering from being out of favor.",
+          "8 analysts rate it strong buy with an average target of $19.81, well above today's $8.02 price.",
+          "Your book is already 100% invested with $0 free cash, so there's no room to add without trimming another holding."
+        ],
+        "strongest": "Rising military order flow ($70M in new orders, $457M backlog) shows real policy-driven demand, not just hype.",
+        "ok": true
+      },
+      {
+        "key": "risk",
+        "name": "Risk Agent",
+        "round": 2,
+        "position": "BEARISH",
+        "confidence": 78,
+        "points": [
+          "You have $0 free cash, so buying ONDS means selling part of another holding first.",
+          "You already lost $142 today, close to your $197 daily loss limit, and risk status is ELEVATED.",
+          "Your open risk across the book is already 7.52% of equity ($739), which is high.",
+          "The sizing math itself caps this trade at $0 — there is no room to buy right now.",
+          "ONDS is a volatile, correlated add to a book that's already 55%+ concentrated in chip and tech names."
+        ],
+        "strongest": "The math caps this buy at $0 today — there is no dry powder and no room under the risk limits.",
+        "ok": true
+      },
+      {
+        "key": "execution",
+        "name": "Execution Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 40,
+        "points": [
+          "Zero spare cash means any ONDS buy first requires trimming another holding near its own live price.",
+          "Stop is set at $6.67, which is 16.8% below the current $8.02 price, using 2x the $0.673 daily range.",
+          "Today's bounce ran on only 0.59x normal volume, so a pullback toward $7.50 (recent support level) would be a stronger entry.",
+          "No earnings date is in this data, so today's move is order-news driven, not tied to a scheduled event to trade around.",
+          "If entry is approved, split it into two pieces: half at market near $8.02, half only if it holds above $7.50."
+        ],
+        "strongest": "With $0 free cash, the first mechanical step is trimming another position near its live price before any ONDS order can be placed.",
+        "ok": true
+      }
+    ],
+    "agents_reporting": 5,
+    "tally": {
+      "bullish": 2,
+      "bearish": 2,
+      "neutral": 1
+    },
+    "verdict": "REJECT",
+    "action": "WATCH",
+    "score": 45,
+    "headline": "Good story, no cash — watch ONDS, do not sell winners to fund it.",
+    "rationale": [
+      "Risk Agent wins: $0 free cash and the sizing math caps this trade at zero dollars.",
+      "Bull's $457M backlog and $70M orders are real, but Bear's weak-volume bounce point stands.",
+      "I overrule Bear's 'drone stocks crash together' fear — that is noise, not a reason to avoid forever.",
+      "Execution Agent's $7.50 pullback entry is the right level if cash ever frees up.",
+      "Funding ONDS means trimming TSM, NVDA or AVGO — none of those trades are worth making today."
+    ],
+    "dissent": [
+      "If a buyer actually bids for Ondas, the stock gaps far above $8.02 and waiting costs you everything.",
+      "Eight analysts see $19.81 — passing on a 147% upside candidate is a real opportunity cost."
+    ],
+    "entry": "",
+    "target": "",
+    "stop": "",
+    "sizing": {
+      "symbol": "ONDS",
+      "price": 8.02,
+      "stop": 6.67,
+      "stop_basis": "2x ATR",
+      "risk_per_share": 1.35,
+      "dollars": 0.0,
+      "shares": 0.0,
+      "pct_of_equity": 0.0,
+      "risk_amount": 0.0,
+      "capped_by": "dry powder",
+      "note": "Stop $6.67 (2x ATR, 16.8% below). Risking 1% of equity ($0) buys $0 — capped by dry powder."
+    },
+    "error": null
   }
 }

@@ -32,7 +32,7 @@ import numpy as np
 import pandas as pd
 
 from ..config import settings
-from . import conviction, market_data, screener, technical
+from . import conviction, market_data, robustness, screener, technical
 from . import portfolio as pf_service
 
 _FILE = settings.PORTFOLIO_FILE.parent / "backtest.json"
@@ -319,6 +319,14 @@ def run(years: int = 5, limit: int | None = None) -> dict:
     buys = [s for s in all_sigs if s["side"] == "buy"]
     curve = _equity_curve(buys, years)
 
+    # Same signals, re-graded across horizons and market regimes. The headline
+    # per-rule average is one cell of this grid; the grid is what says whether
+    # that cell was a finding or an artifact of when we happened to test.
+    grid = robustness.matrix(all_sigs, years)
+    grid["retirement_warnings"] = robustness.crash_rule_warnings(
+        grid, set(conviction.RETIRED_RULES)
+    )
+
     effs = [s[f"eff_{GRADE_AT}"] for s in all_sigs]
     wins = [e for e in effs if e > 0]
     losses = [e for e in effs if e <= 0]
@@ -342,6 +350,7 @@ def run(years: int = 5, limit: int | None = None) -> dict:
         "grade_horizon_days": GRADE_AT,
         "rules": rules,
         "curve": curve,
+        "robustness": grid,
         "caveats": [
             "Long-only replay of the screen. No slippage, commissions or taxes.",
             "The universe is the CURRENT book and watchlist, which is "

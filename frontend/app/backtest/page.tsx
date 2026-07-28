@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { api, Backtest } from "../../lib/api";
 import { EquityCurve } from "../../components/EquityCurve";
+import { RobustnessMatrix } from "../../components/RobustnessMatrix";
 import {
   DisplayHead,
   SheetRule,
@@ -178,6 +179,32 @@ export default function BacktestPage() {
 
           <RuleTable title="Buy rules" rows={buys} horizon={d.grade_horizon_days} />
           <RuleTable title="Sell rules" rows={sells} horizon={d.grade_horizon_days} />
+
+          {d.robustness && (
+            <>
+              {d.robustness.retirement_warnings?.length > 0 && (
+                <SpecPanel title="Retirements The Data Does Not Support" className="bt-warn" plus={false}>
+                  <ul className="bullets risk">
+                    {d.robustness.retirement_warnings.map((w) => (
+                      <li key={w}>{w}</li>
+                    ))}
+                  </ul>
+                </SpecPanel>
+              )}
+              <SpecPanel
+                title="Robustness Matrix"
+                aux={`${d.robustness.rules.length} rules × ${d.robustness.columns.length} conditions`}
+                className="bt-robust"
+              >
+                <p className="bt-policy" style={{ marginTop: 0, marginBottom: 14, paddingTop: 0, borderTop: 0 }}>
+                  Each rule re-graded across every condition. A row that is one
+                  colour is a real result; a row that flips colour means the
+                  headline average was hiding a split.
+                </p>
+                <RobustnessMatrix r={d.robustness} />
+              </SpecPanel>
+            </>
+          )}
 
           <SpecPanel title="Historical Validation Only" className="bt-caveats" plus={false}>
             <ul className="bullets risk">

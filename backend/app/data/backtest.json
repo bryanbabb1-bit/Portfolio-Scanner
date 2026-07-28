@@ -1,7 +1,7 @@
 {
-  "ts": 1785200460.1390975,
-  "as_of": "2026-07-27 20:01:00",
-  "elapsed_s": 3.9,
+  "ts": 1785204386.926811,
+  "as_of": "2026-07-27 21:06:26",
+  "elapsed_s": 4.4,
   "years": 5,
   "universe": 14,
   "symbols_tested": 14,
@@ -877,7 +877,7 @@
       },
       {
         "date": "2023-11-03",
-        "strategy": 0.903,
+        "strategy": 0.9029,
         "benchmark": 1.0247
       },
       {
@@ -1258,7 +1258,7 @@
       {
         "date": "2025-01-23",
         "strategy": 1.634,
-        "benchmark": 1.4617
+        "benchmark": 1.4616
       },
       {
         "date": "2025-01-29",
@@ -1287,7 +1287,7 @@
       },
       {
         "date": "2025-02-27",
-        "strategy": 1.4571,
+        "strategy": 1.457,
         "benchmark": 1.4024
       },
       {
@@ -1452,7 +1452,7 @@
       },
       {
         "date": "2025-09-08",
-        "strategy": 2.0243,
+        "strategy": 2.0242,
         "benchmark": 1.5646
       },
       {
@@ -1537,7 +1537,7 @@
       },
       {
         "date": "2025-12-12",
-        "strategy": 2.2377,
+        "strategy": 2.2376,
         "benchmark": 1.6486
       },
       {
@@ -1741,6 +1741,489 @@
     "max_drawdown_pct": -50.9,
     "days_invested_pct": 77.0,
     "note": "Every BUY opens an equal-weight position the next bar and holds 20 trading days. No slippage, commissions or sizing."
+  },
+  "robustness": {
+    "columns": [
+      "5d",
+      "20d",
+      "60d",
+      "rising",
+      "flat",
+      "falling"
+    ],
+    "horizons": [
+      "5d",
+      "20d",
+      "60d"
+    ],
+    "regimes": [
+      "rising",
+      "flat",
+      "falling"
+    ],
+    "rules": [
+      {
+        "rule": "rsi-sell-zone",
+        "side": "sell",
+        "signals": 377,
+        "cells": {
+          "5d": {
+            "n": 377,
+            "avg": -0.42,
+            "win_rate": 47.2,
+            "thin": false
+          },
+          "20d": {
+            "n": 377,
+            "avg": -4.08,
+            "win_rate": 33.7,
+            "thin": false
+          },
+          "60d": {
+            "n": 377,
+            "avg": -12.11,
+            "win_rate": 31.3,
+            "thin": false
+          },
+          "rising": {
+            "n": 250,
+            "avg": -5.49,
+            "win_rate": 28.4,
+            "thin": false
+          },
+          "flat": {
+            "n": 125,
+            "avg": -1.39,
+            "win_rate": 44.0,
+            "thin": false
+          },
+          "falling": {
+            "n": 2,
+            "avg": 4.03,
+            "win_rate": 50.0,
+            "thin": true
+          }
+        },
+        "verdict": "BROKEN",
+        "reason": "Negative in all 5 measurable conditions — this is the rule, not the test."
+      },
+      {
+        "rule": "sharp-breakdown",
+        "side": "sell",
+        "signals": 69,
+        "cells": {
+          "5d": {
+            "n": 69,
+            "avg": -4.08,
+            "win_rate": 37.7,
+            "thin": false
+          },
+          "20d": {
+            "n": 69,
+            "avg": -10.54,
+            "win_rate": 27.5,
+            "thin": false
+          },
+          "60d": {
+            "n": 69,
+            "avg": -27.74,
+            "win_rate": 20.3,
+            "thin": false
+          },
+          "rising": {
+            "n": 9,
+            "avg": -5.97,
+            "win_rate": 44.4,
+            "thin": true
+          },
+          "flat": {
+            "n": 38,
+            "avg": -7.49,
+            "win_rate": 34.2,
+            "thin": false
+          },
+          "falling": {
+            "n": 22,
+            "avg": -17.66,
+            "win_rate": 9.1,
+            "thin": false
+          }
+        },
+        "verdict": "BROKEN",
+        "reason": "Negative in all 5 measurable conditions — this is the rule, not the test."
+      },
+      {
+        "rule": "trend-break",
+        "side": "sell",
+        "signals": 424,
+        "cells": {
+          "5d": {
+            "n": 424,
+            "avg": -1.53,
+            "win_rate": 45.0,
+            "thin": false
+          },
+          "20d": {
+            "n": 424,
+            "avg": -3.95,
+            "win_rate": 43.9,
+            "thin": false
+          },
+          "60d": {
+            "n": 424,
+            "avg": -13.66,
+            "win_rate": 34.2,
+            "thin": false
+          },
+          "rising": {
+            "n": 101,
+            "avg": 0.11,
+            "win_rate": 54.5,
+            "thin": false
+          },
+          "flat": {
+            "n": 139,
+            "avg": -5.4,
+            "win_rate": 41.7,
+            "thin": false
+          },
+          "falling": {
+            "n": 184,
+            "avg": -5.08,
+            "win_rate": 39.7,
+            "thin": false
+          }
+        },
+        "verdict": "FRAGILE",
+        "reason": "Works in rising but not 5d, 20d, 60d, flat, falling — the single headline number was hiding a split."
+      },
+      {
+        "rule": "momentum-ignition",
+        "side": "buy",
+        "signals": 101,
+        "cells": {
+          "5d": {
+            "n": 101,
+            "avg": -0.65,
+            "win_rate": 48.5,
+            "thin": false
+          },
+          "20d": {
+            "n": 101,
+            "avg": 1.42,
+            "win_rate": 48.5,
+            "thin": false
+          },
+          "60d": {
+            "n": 101,
+            "avg": 7.76,
+            "win_rate": 60.4,
+            "thin": false
+          },
+          "rising": {
+            "n": 57,
+            "avg": 1.33,
+            "win_rate": 43.9,
+            "thin": false
+          },
+          "flat": {
+            "n": 44,
+            "avg": 1.54,
+            "win_rate": 54.5,
+            "thin": false
+          },
+          "falling": {
+            "n": 0,
+            "avg": null,
+            "win_rate": null,
+            "thin": true
+          }
+        },
+        "verdict": "FRAGILE",
+        "reason": "Works in 20d, 60d, rising, flat but not 5d — the single headline number was hiding a split."
+      },
+      {
+        "rule": "blowoff-top",
+        "side": "sell",
+        "signals": 19,
+        "cells": {
+          "5d": {
+            "n": 19,
+            "avg": 1.19,
+            "win_rate": 47.4,
+            "thin": false
+          },
+          "20d": {
+            "n": 19,
+            "avg": -2.03,
+            "win_rate": 36.8,
+            "thin": false
+          },
+          "60d": {
+            "n": 19,
+            "avg": -8.16,
+            "win_rate": 42.1,
+            "thin": false
+          },
+          "rising": {
+            "n": 8,
+            "avg": -5.67,
+            "win_rate": 37.5,
+            "thin": true
+          },
+          "flat": {
+            "n": 10,
+            "avg": 0.73,
+            "win_rate": 40.0,
+            "thin": true
+          },
+          "falling": {
+            "n": 1,
+            "avg": -0.57,
+            "win_rate": 0.0,
+            "thin": true
+          }
+        },
+        "verdict": "FRAGILE",
+        "reason": "Works in 5d but not 20d, 60d — the single headline number was hiding a split."
+      },
+      {
+        "rule": "washed-out-reversal",
+        "side": "buy",
+        "signals": 3,
+        "cells": {
+          "5d": {
+            "n": 3,
+            "avg": 7.36,
+            "win_rate": 100.0,
+            "thin": true
+          },
+          "20d": {
+            "n": 3,
+            "avg": 2.88,
+            "win_rate": 66.7,
+            "thin": true
+          },
+          "60d": {
+            "n": 3,
+            "avg": 41.27,
+            "win_rate": 100.0,
+            "thin": true
+          },
+          "rising": {
+            "n": 1,
+            "avg": 7.4,
+            "win_rate": 100.0,
+            "thin": true
+          },
+          "flat": {
+            "n": 0,
+            "avg": null,
+            "win_rate": null,
+            "thin": true
+          },
+          "falling": {
+            "n": 2,
+            "avg": 0.62,
+            "win_rate": 50.0,
+            "thin": true
+          }
+        },
+        "verdict": "UNPROVEN",
+        "reason": "Only 0 of 6 conditions have 15+ signals — not enough coverage to judge."
+      },
+      {
+        "rule": "rsi-buy-zone",
+        "side": "buy",
+        "signals": 1,
+        "cells": {
+          "5d": {
+            "n": 1,
+            "avg": 0.48,
+            "win_rate": 100.0,
+            "thin": true
+          },
+          "20d": {
+            "n": 1,
+            "avg": 6.21,
+            "win_rate": 100.0,
+            "thin": true
+          },
+          "60d": {
+            "n": 1,
+            "avg": -4.39,
+            "win_rate": 0.0,
+            "thin": true
+          },
+          "rising": {
+            "n": 0,
+            "avg": null,
+            "win_rate": null,
+            "thin": true
+          },
+          "flat": {
+            "n": 1,
+            "avg": 6.21,
+            "win_rate": 100.0,
+            "thin": true
+          },
+          "falling": {
+            "n": 0,
+            "avg": null,
+            "win_rate": null,
+            "thin": true
+          }
+        },
+        "verdict": "UNPROVEN",
+        "reason": "Only 0 of 6 conditions have 15+ signals — not enough coverage to judge."
+      },
+      {
+        "rule": "breakout-triggering",
+        "side": "buy",
+        "signals": 355,
+        "cells": {
+          "5d": {
+            "n": 355,
+            "avg": 0.57,
+            "win_rate": 51.5,
+            "thin": false
+          },
+          "20d": {
+            "n": 355,
+            "avg": 2.51,
+            "win_rate": 54.6,
+            "thin": false
+          },
+          "60d": {
+            "n": 355,
+            "avg": 8.4,
+            "win_rate": 62.5,
+            "thin": false
+          },
+          "rising": {
+            "n": 148,
+            "avg": 3.34,
+            "win_rate": 56.1,
+            "thin": false
+          },
+          "flat": {
+            "n": 190,
+            "avg": 2.06,
+            "win_rate": 53.2,
+            "thin": false
+          },
+          "falling": {
+            "n": 17,
+            "avg": 0.34,
+            "win_rate": 58.8,
+            "thin": false
+          }
+        },
+        "verdict": "ROBUST",
+        "reason": "Positive in all 6 measurable conditions — the edge does not depend on the horizon or the market."
+      },
+      {
+        "rule": "oversold-at-support",
+        "side": "buy",
+        "signals": 143,
+        "cells": {
+          "5d": {
+            "n": 143,
+            "avg": 3.3,
+            "win_rate": 74.1,
+            "thin": false
+          },
+          "20d": {
+            "n": 143,
+            "avg": 4.21,
+            "win_rate": 59.4,
+            "thin": false
+          },
+          "60d": {
+            "n": 143,
+            "avg": 11.92,
+            "win_rate": 72.7,
+            "thin": false
+          },
+          "rising": {
+            "n": 13,
+            "avg": 3.77,
+            "win_rate": 69.2,
+            "thin": true
+          },
+          "flat": {
+            "n": 78,
+            "avg": 4.22,
+            "win_rate": 60.3,
+            "thin": false
+          },
+          "falling": {
+            "n": 52,
+            "avg": 4.3,
+            "win_rate": 55.8,
+            "thin": false
+          }
+        },
+        "verdict": "ROBUST",
+        "reason": "Positive in all 5 measurable conditions — the edge does not depend on the horizon or the market."
+      },
+      {
+        "rule": "rsi-reclaim",
+        "side": "buy",
+        "signals": 141,
+        "cells": {
+          "5d": {
+            "n": 141,
+            "avg": 0.32,
+            "win_rate": 48.9,
+            "thin": false
+          },
+          "20d": {
+            "n": 141,
+            "avg": 2.7,
+            "win_rate": 56.7,
+            "thin": false
+          },
+          "60d": {
+            "n": 141,
+            "avg": 13.09,
+            "win_rate": 75.2,
+            "thin": false
+          },
+          "rising": {
+            "n": 12,
+            "avg": 4.71,
+            "win_rate": 50.0,
+            "thin": true
+          },
+          "flat": {
+            "n": 83,
+            "avg": 2.92,
+            "win_rate": 60.2,
+            "thin": false
+          },
+          "falling": {
+            "n": 46,
+            "avg": 1.78,
+            "win_rate": 52.2,
+            "thin": false
+          }
+        },
+        "verdict": "ROBUST",
+        "reason": "Positive in all 5 measurable conditions — the edge does not depend on the horizon or the market."
+      }
+    ],
+    "min_cell": 15,
+    "regime_signal_counts": {
+      "rising": 599,
+      "flat": 708,
+      "falling": 326
+    },
+    "unclassified": 0,
+    "definition": "Regime is the benchmark's trailing 20-session return at the moment the signal fired: rising >= +3%, falling <= -3%, flat in between. Regime columns are graded at 20 sessions.",
+    "retirement_warnings": [
+      "rsi-sell-zone is retired on 2 falling-market signal(s), under the 15 needed to judge. Its protective value is still unproven, not disproven."
+    ]
   },
   "caveats": [
     "Long-only replay of the screen. No slippage, commissions or taxes.",

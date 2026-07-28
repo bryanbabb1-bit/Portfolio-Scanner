@@ -167,6 +167,7 @@ def rule_health() -> dict:
         "live_signals_graded": live.get("count", 0),
         "live_win_rate": live.get("overall_win_rate"),
         "has_backtest": bool(report),
+        "robustness": (report or {}).get("robustness"),
         "notes": _notes(report, live, counts),
     }
 
@@ -199,6 +200,10 @@ def _proposal(rule: str, verdict: str, retired: bool = False) -> str | None:
 
 def _notes(report, live, counts) -> list[str]:
     notes = []
+    # A retirement the falling-market column does not support is the most
+    # important thing this page can tell you, so it goes first.
+    for w in ((report or {}).get("robustness") or {}).get("retirement_warnings", []):
+        notes.append(w)
     if conviction.RETIRED_RULES:
         notes.append(
             f"{len(conviction.RETIRED_RULES)} rule(s) are RETIRED and no longer "

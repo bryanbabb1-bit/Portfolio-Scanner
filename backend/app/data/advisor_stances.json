@@ -609,5 +609,18 @@
     "price": 44.22,
     "as_of": "2026-07-27 08:45:16",
     "ts": 1785159916.720231
+  },
+  "ONDS": {
+    "symbol": "ONDS",
+    "action": "WATCH",
+    "prev_action": null,
+    "headline": "Good story, no cash \u2014 watch ONDS, do not sell winners to fund it.",
+    "thesis": "Risk Agent wins: $0 free cash and the sizing math caps this trade at zero dollars. Bull's $457M backlog and $70M orders are real, but Bear's weak-volume bounce point stands. I overrule Bear's 'drone stocks crash together' fear \u2014 that is noise, not a reason to avoid forever. Execution Agent's $7.50 pullback entry is the right level if cash ever frees up. Funding ONDS means trimming TSM, NVDA or AVG",
+    "target": "",
+    "stop": "",
+    "source": "debate",
+    "price": 8.02,
+    "as_of": "2026-07-27 20:37:45",
+    "ts": 1785202665.972755
   }
 }

@@ -222,6 +222,7 @@ export interface Learning {
   live_signals_graded: number;
   live_win_rate: number | null;
   has_backtest: boolean;
+  robustness?: Robustness | null;
   notes: string[];
 }
 
@@ -238,6 +239,35 @@ export interface BacktestRule {
   profit_factor: number | null;
   avg_mae: number;
   symbols: number;
+}
+
+export interface RobustnessCell {
+  n: number;
+  avg: number | null;
+  win_rate: number | null;
+  thin: boolean;
+}
+
+export interface RobustnessRow {
+  rule: string;
+  side: "buy" | "sell";
+  signals: number;
+  cells: Record<string, RobustnessCell>;
+  verdict: "ROBUST" | "FRAGILE" | "BROKEN" | "UNPROVEN";
+  reason: string;
+}
+
+export interface Robustness {
+  columns: string[];
+  horizons: string[];
+  regimes: string[];
+  rules: RobustnessRow[];
+  min_cell: number;
+  regime_signal_counts: Record<string, number>;
+  unclassified: number;
+  definition: string;
+  retirement_warnings: string[];
+  note?: string;
 }
 
 export interface BacktestCurvePoint {
@@ -270,6 +300,7 @@ export interface Backtest {
     days_invested_pct?: number;
     note: string;
   };
+  robustness?: Robustness;
   caveats: string[];
 }
 
