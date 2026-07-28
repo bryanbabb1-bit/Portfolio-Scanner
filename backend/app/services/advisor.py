@@ -647,6 +647,13 @@ def _facts_from_portfolio(summary: PortfolioSummary, reports: list[StockReport],
     if track:
         lines.append("")
         lines.append(track)
+    # A brief that contradicts the rebalance the client is mid-way through is
+    # worse than no brief — it re-opens decisions already made.
+    from . import transition
+    campaign = transition.facts_block()
+    if campaign:
+        lines.append("")
+        lines.append(campaign)
     return "\n".join(lines)
 
 

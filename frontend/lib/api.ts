@@ -241,6 +241,66 @@ export interface BacktestRule {
   symbols: number;
 }
 
+export interface TransitionStep {
+  n: number;
+  trigger: string;
+  sell: string;
+  buy: string;
+  buy_symbol: string;
+  buy_level: number;
+  sell_symbol: string;
+  sell_level: number;
+  why: string;
+  realizes: string;
+  done: boolean;
+}
+
+export interface TransitionAnalysis {
+  equity: number;
+  cash: number;
+  target_source: string;
+  drift_pct: number;
+  total_return_pct: number;
+  gap: { theme: string; target_pct: number; current_pct: number; delta: number }[];
+  funding: {
+    symbol: string;
+    theme: string;
+    value: number;
+    weight_pct: number;
+    pl_pct: number;
+    suggested_trim: number;
+    in_target_book: boolean;
+    standing_call?: string;
+    tax: { at_loss: boolean; term: string; held_days: number | null; detail: string };
+  }[];
+  acquire: {
+    symbol: string;
+    theme: string;
+    target_pct: number;
+    target_dollars: number;
+    price: number | null;
+    stop: number | null;
+    why: string;
+  }[];
+}
+
+export interface TransitionPlan {
+  ts: number;
+  as_of?: string;
+  engine: string;
+  headline?: string;
+  approach?: string;
+  first_move?: string;
+  steps: TransitionStep[];
+  guardrails?: string[];
+  analysis: TransitionAnalysis;
+  activated?: boolean;
+  activated_at?: string;
+  watched?: string[];
+  watchpoints_created?: number;
+  error: string | null;
+}
+
 export interface CleanSheetThemeRow {
   theme: string;
   target_pct: number;
@@ -900,6 +960,19 @@ export const api = {
   saveStrategy: (doc: StrategyDoc) => put<StrategyDoc>("/api/strategy", doc),
   insights: () => get<PortfolioInsights>("/api/insights"),
   risk: () => get<RiskDesk>("/api/risk"),
+  transition: () => get<TransitionPlan | null>("/api/transition"),
+  startTransition: () => post<{ job_id: string }>("/api/transition", {}),
+  transitionJob: (jobId: string) =>
+    get<{ status: "pending" | "done" | "error"; result: TransitionPlan | null; error?: string }>(
+      `/api/transition/job/${jobId}`
+    ),
+  activateTransition: () =>
+    post<{ watched: string[]; watchpoints: number; error: string | null }>(
+      "/api/transition/activate",
+      {}
+    ),
+  transitionStep: (n: number, done: boolean) =>
+    post<TransitionStep>(`/api/transition/step/${n}?done=${done}`, {}),
   cleansheet: () => get<CleanSheet | null>("/api/cleansheet"),
   startCleansheet: () =>
     post<{ job_id: string | null; result: CleanSheet | null; cached: boolean }>(

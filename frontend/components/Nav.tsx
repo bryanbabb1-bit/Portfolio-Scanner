@@ -18,6 +18,7 @@ const NAV: Entry[] = [
       { href: "/risk", label: "Risk Desk" },
       { href: "/debate", label: "Agent Debate" },
       { href: "/cleansheet", label: "Clean Sheet" },
+      { href: "/transition", label: "Transition Plan" },
       { href: "/backtest", label: "Backtest" },
       { href: "/loop", label: "Learning Loop" },
     ],
