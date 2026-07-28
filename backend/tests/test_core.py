@@ -475,6 +475,39 @@ def test_advisor_consistency_memory(tmp_path, monkeypatch):
     assert len(advisor._history["portfolio:brief"]) == 3
 
 
+def test_saving_drops_watchlist_entries_you_already_hold(tmp_path, monkeypatch):
+    """Buying a watched name leaves both records behind, so it gets scanned
+    twice and reads as a separate interest. Enforced on save rather than
+    cleaned by hand, so it cannot drift back."""
+    from app.config import settings as app_settings
+    from app.services import portfolio as pf_service
+
+    monkeypatch.setattr(app_settings, "PORTFOLIO_FILE", tmp_path / "portfolio.json")
+    saved = pf_service.save_portfolio({
+        "holdings": [{"symbol": "VRT", "shares": 4, "cost_basis": 260},
+                     {"symbol": "LLY", "shares": 1, "cost_basis": 1200}],
+        "watchlist": [{"symbol": "VRT"}, {"symbol": "lly"},
+                      {"symbol": "SNOW"}, {"symbol": "NU"}],
+    })
+    assert [w["symbol"] for w in saved["watchlist"]] == ["SNOW", "NU"]
+
+    # Round-trips through disk, and is case-insensitive on the way in.
+    on_disk = pf_service.load_portfolio()
+    assert [w["symbol"] for w in on_disk["watchlist"]] == ["SNOW", "NU"]
+    assert len(on_disk["holdings"]) == 2      # holdings untouched
+
+
+def test_saving_an_empty_book_leaves_the_watchlist_alone(tmp_path, monkeypatch):
+    """No holdings means nothing to dedupe against — never wipe the watchlist."""
+    from app.config import settings as app_settings
+    from app.services import portfolio as pf_service
+
+    monkeypatch.setattr(app_settings, "PORTFOLIO_FILE", tmp_path / "p.json")
+    saved = pf_service.save_portfolio({
+        "holdings": [], "watchlist": [{"symbol": "SNOW"}, {"symbol": "NU"}]})
+    assert [w["symbol"] for w in saved["watchlist"]] == ["SNOW", "NU"]
+
+
 def test_risk_profile_is_the_only_standing_mandate(monkeypatch):
     """The generated strategy document was removed: it accumulated stale
     claims and contradicted the live brief. One client-controlled sentence

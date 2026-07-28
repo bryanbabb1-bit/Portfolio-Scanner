@@ -42,12 +42,33 @@ def load_portfolio() -> dict:
         return json.load(f)
 
 
+def _dedupe(cfg: dict) -> dict:
+    """Drop watchlist entries for names already held.
+
+    Once a watched name is bought it is tracked as a holding, so leaving it on
+    the watchlist double-counts it in every scan and reads as a separate
+    interest. That happened naturally here: activating a rebalance plan
+    watchlisted its targets, and buying them left both records behind. Enforced
+    on save so it cannot drift back rather than being cleaned by hand.
+    """
+    held = {str(h.get("symbol", "")).upper()
+            for h in cfg.get("holdings", []) if h.get("symbol")}
+    watch = cfg.get("watchlist")
+    if isinstance(watch, list) and held:
+        cfg["watchlist"] = [
+            w for w in watch
+            if str(w.get("symbol", "")).upper() not in held
+        ]
+    return cfg
+
+
 def save_portfolio(cfg: dict) -> dict:
     """Atomically persist the portfolio config to disk and return it.
 
     Writes to a temp file in the same directory then os.replace() so a crash
     mid-write can never leave a half-written portfolio.json behind.
     """
+    cfg = _dedupe(cfg)
     path = settings.PORTFOLIO_FILE
     path.parent.mkdir(parents=True, exist_ok=True)
     fd, tmp = tempfile.mkstemp(dir=str(path.parent), suffix=".tmp")

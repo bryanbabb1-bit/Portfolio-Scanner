@@ -5,10 +5,7 @@
   "core_convictions": [
     "NVDA",
     "AVGO",
-    "AMD",
-    "TSM",
     "NET",
-    "MU",
     "GOOGL"
   ],
   "quiet_unowned_low_cash": true,
@@ -114,14 +111,6 @@
     }
   ],
   "watchlist": [
-    {
-      "symbol": "VRT",
-      "theme": null
-    },
-    {
-      "symbol": "LLY",
-      "theme": null
-    },
     {
       "symbol": "SNOW",
       "theme": null
