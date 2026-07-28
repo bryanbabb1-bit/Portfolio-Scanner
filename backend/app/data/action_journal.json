@@ -401,5 +401,18 @@
     "note": "Added shares (1.8118 -> 2.09771)",
     "source": "auto",
     "ts": 1785160083.506738
+  },
+  {
+    "id": "9c0be3afe5ef",
+    "date": "2026-07-28",
+    "symbol": "TSM",
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "cost_basis": null,
+    "realized_pl": null,
+    "note": "ALERT (not executed) \u2014 watchpoint hit Watchpoint: price \u2264 $390; client still needs to decide/act.",
+    "source": "auto",
+    "ts": 1785236440.9993646
   }
 ]

@@ -241,6 +241,45 @@ export interface BacktestRule {
   symbols: number;
 }
 
+export interface CleanSheetThemeRow {
+  theme: string;
+  target_pct: number;
+  current_pct: number;
+  delta: number;
+}
+
+export interface CleanSheetPick {
+  symbol: string;
+  theme: string;
+  pct: number;
+  why: string;
+}
+
+export interface CleanSheet {
+  ts: number;
+  as_of?: string;
+  engine: string;
+  equity?: number;
+  thesis?: string;
+  allocation: { theme: string; pct: number; why: string }[];
+  picks: CleanSheetPick[];
+  avoided?: string[];
+  diff: {
+    themes: CleanSheetThemeRow[];
+    held_picks: string[];
+    new_picks: string[];
+    overlap_pct: number;
+    name_overlap_pct: number;
+    blind_spots: CleanSheetThemeRow[];
+    overweight: CleanSheetThemeRow[];
+    equity: number;
+  } | null;
+  verdict?: "ALIGNED" | "PARTIAL" | "DIVERGENT";
+  headline?: string;
+  method?: string;
+  error: string | null;
+}
+
 export interface RobustnessCell {
   n: number;
   avg: number | null;
@@ -861,6 +900,16 @@ export const api = {
   saveStrategy: (doc: StrategyDoc) => put<StrategyDoc>("/api/strategy", doc),
   insights: () => get<PortfolioInsights>("/api/insights"),
   risk: () => get<RiskDesk>("/api/risk"),
+  cleansheet: () => get<CleanSheet | null>("/api/cleansheet"),
+  startCleansheet: () =>
+    post<{ job_id: string | null; result: CleanSheet | null; cached: boolean }>(
+      "/api/cleansheet?force=true",
+      {}
+    ),
+  cleansheetJob: (jobId: string) =>
+    get<{ status: "pending" | "done" | "error"; result: CleanSheet | null; error?: string }>(
+      `/api/cleansheet/job/${jobId}`
+    ),
   learning: () => get<Learning>("/api/learning"),
   acceptProposal: (rule: string, note = "") =>
     post<RuleHealth["accepted"]>(

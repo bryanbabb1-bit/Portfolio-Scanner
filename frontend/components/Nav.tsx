@@ -17,6 +17,7 @@ const NAV: Entry[] = [
     items: [
       { href: "/risk", label: "Risk Desk" },
       { href: "/debate", label: "Agent Debate" },
+      { href: "/cleansheet", label: "Clean Sheet" },
       { href: "/backtest", label: "Backtest" },
       { href: "/loop", label: "Learning Loop" },
     ],

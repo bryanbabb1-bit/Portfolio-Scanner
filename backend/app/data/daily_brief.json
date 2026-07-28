@@ -1,23 +1,18 @@
 {
-  "type": "eod",
-  "date": "2026-07-27",
-  "generated_at": "2026-07-27 15:00:24",
+  "type": "morning",
+  "date": "2026-07-28",
+  "generated_at": "2026-07-28 07:15:00",
   "engine": "claude",
-  "headline": "Red day, but GOOGL bucked it and got a buy signal",
-  "summary": "A broad pullback led by AMD and NVDA dragged the book down 1.39% today, while GOOGL bucked the trend, rose 2.1%, and fired two buy-the-dip signals.",
+  "headline": "Chips selling off; PANW stop is closest trigger",
+  "summary": "Broad red day across your core chip names led by AMD and TSM; nothing armed is close to firing except your PANW stop. AAPL's earnings in 2 days is the one date to circle.",
   "watch": [
-    "TSM at $399.95 — buy $150 if it slides to $390.",
-    "PANW at $317.03 — sell if it falls to $300.",
-    "GOOGL at $326.47 — buy $200 now, signal says add the dip.",
-    "Sell TEM at market — trend broke down, cut the small stake.",
-    "MU at $900.94, still down big — hold, do nothing for now.",
-    "NVDA and AMD both fell hard — hold both, no action needed."
+    "AMD down 4.4% today, your worst mover — hold, do nothing.",
+    "PANW stop at $300, now $318.76 — about 6% away, watch it.",
+    "TSM down 3.6% today, down 10% overall — hold, don't panic.",
+    "AAPL reports earnings in 2 days, trading near its highs — no action, just know it's coming.",
+    "GOOGL down 10% on your cost but nowhere near your $160 add level — hold.",
+    "Cash is $0 — no buying power to add to any dip today.",
+    "Today's big movers (BIYA, LVWR, SONO) aren't in your book — ignore the noise."
   ],
-  "recap": [
-    "Book fell 1.39% to $9,834 today, no cash sitting idle.",
-    "AMD dropped 5.1% and NVDA dropped 5.0% — the day's biggest drags.",
-    "GOOGL rose 2.1% and fired two signals telling you to buy the dip.",
-    "AVGO was flat-to-up (+0.3%); TSM and MU stayed under pressure.",
-    "TEM's uptrend broke today — that small stake is a sell now."
-  ]
+  "recap": []
 }

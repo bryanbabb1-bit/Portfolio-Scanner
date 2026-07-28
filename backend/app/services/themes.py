@@ -27,8 +27,13 @@ _EXTRA: dict[str, str] = {
     "MSFT": "AI", "META": "AI", "NOW": "AI", "PLTR": "AI",
     "IREN": "Compute Power", "CIFR": "Compute Power",
     "WULF": "Compute Power", "CLSK": "Compute Power",
-    "AMZN": "Tech", "MELI": "Tech", "GRAB": "Tech", "ONDS": "Tech",
-    "SGOV": "Cash & Income", "BIL": "Cash & Income", "SPY": "Tech",
+    "AMZN": "Tech", "GRAB": "Tech", "ONDS": "Tech",
+    # Cash & Income is for actual cash equivalents ONLY. An equity ETF landing
+    # here would be counted as dry powder and "deployed" twice; equity and
+    # factor ETFs belong in Broad Market (see discovery.UNIVERSE).
+    "SGOV": "Cash & Income", "BIL": "Cash & Income", "SHV": "Cash & Income",
+    "USFR": "Cash & Income", "TLT": "Cash & Income", "IEF": "Cash & Income",
+    "BND": "Cash & Income", "AGG": "Cash & Income",
 }
 
 
@@ -61,9 +66,13 @@ def _classify_with_claude(symbol: str) -> str | None:
     from . import portfolio as pf_service
 
     try:
-        themes = pf_service.load_portfolio().get("themes", {})
+        owned = pf_service.load_portfolio().get("themes", {})
     except Exception:
-        themes = {}
+        owned = {}
+    # The menu is the FULL vocabulary, not just the themes already held —
+    # otherwise an unknown healthcare ticker has nowhere to go but "Other",
+    # and the book can never grow a sleeve it doesn't already have.
+    themes = discovery.theme_menu(owned)
     if not themes:
         return None
     menu = "\n".join(f"- {name}: {desc}" for name, desc in themes.items())

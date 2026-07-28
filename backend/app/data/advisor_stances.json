@@ -3,14 +3,14 @@
     "symbol": "MSFT",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Azure thesis intact into Wednesday earnings.",
-    "thesis": "Azure thesis intact into Wednesday earnings.",
+    "headline": "Cloud strong into Wednesday earnings; sit tight.",
+    "thesis": "Cloud strong into Wednesday earnings; sit tight.",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 391.81,
-    "as_of": "2026-07-27 10:41:55",
-    "ts": 1785166915.3538437
+    "price": 394.8,
+    "as_of": "2026-07-28 07:03:40",
+    "ts": 1785240220.8190646
   },
   "NET": {
     "symbol": "NET",
@@ -21,9 +21,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 262.27,
-    "as_of": "2026-07-27 10:41:55",
-    "ts": 1785166915.3261533
+    "price": 265.74,
+    "as_of": "2026-07-28 07:03:40",
+    "ts": 1785240220.793258
   },
   "NEE": {
     "symbol": "NEE",
@@ -42,27 +42,27 @@
     "symbol": "TSM",
     "action": "ADD",
     "prev_action": "ADD",
-    "headline": "Raised guidance, record spending; buy near $390.",
-    "thesis": "Raised guidance, record spending; buy near $390.",
+    "headline": "Record profit, raised guidance; buy near $384.",
+    "thesis": "Record profit, raised guidance; buy near $384.",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 389.83,
-    "as_of": "2026-07-27 10:41:55",
-    "ts": 1785166915.151328
+    "price": 384.73,
+    "as_of": "2026-07-28 07:03:40",
+    "ts": 1785240220.2103238
   },
   "AVGO": {
     "symbol": "AVGO",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "AI chip demand confirmed; accumulate on weakness.",
-    "thesis": "AI chip demand confirmed; accumulate on weakness.",
+    "headline": "AI chip demand confirmed; add on weakness later.",
+    "thesis": "AI chip demand confirmed; add on weakness later.",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 377.65,
-    "as_of": "2026-07-27 10:41:55",
-    "ts": 1785166915.178879
+    "price": 375.95,
+    "as_of": "2026-07-28 07:03:40",
+    "ts": 1785240220.2498477
   },
   "IREN": {
     "symbol": "IREN",
@@ -81,79 +81,79 @@
     "symbol": "NVDA",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Hold NVDA \u2014 nothing changed since my last call; thesis and level intact.",
-    "thesis": "Bull's analyst-target and OpenAI data-center points win on evidence: 58 strong-buy analysts, $302.83 target. I overrule Bear \u2014 a one-day 5% drop with the $192.77 floor holding is noise, not thesis damage. I also overrule Execution's 'sell into the drop' line \u2014 selling a core winner at a 2.9% loss is backwards. Risk Agent wins the funding question: $0 dry powder and today's $142 loss mean no new bu",
-    "target": "$302.83",
-    "stop": "$192.77",
-    "source": "debate",
-    "price": 196.51,
-    "as_of": "2026-07-27 19:40:57",
-    "ts": 1785199257.6935914
+    "headline": "Held up best in the selloff; anchor intact.",
+    "thesis": "Held up best in the selloff; anchor intact.",
+    "target": "",
+    "stop": "",
+    "source": "brief",
+    "price": 195.61,
+    "as_of": "2026-07-28 07:03:40",
+    "ts": 1785240220.12511
   },
   "AMD": {
     "symbol": "AMD",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Helios platform and Anthropic deal strengthen thesis.",
-    "thesis": "Helios platform and Anthropic deal strengthen thesis.",
+    "headline": "Helios and Anthropic deal; earnings next week.",
+    "thesis": "Helios and Anthropic deal; earnings next week.",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 479.53,
-    "as_of": "2026-07-27 10:41:55",
-    "ts": 1785166915.2053592
+    "price": 473.5,
+    "as_of": "2026-07-28 07:03:40",
+    "ts": 1785240220.3186917
   },
   "MU": {
     "symbol": "MU",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "AI memory sold out through 2027.",
-    "thesis": "AI memory sold out through 2027.",
+    "headline": "Memory sold out through 2027; don't average down.",
+    "thesis": "Memory sold out through 2027; don't average down.",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 867.11,
-    "as_of": "2026-07-27 10:41:55",
-    "ts": 1785166915.2738442
+    "price": 838.81,
+    "as_of": "2026-07-28 07:03:40",
+    "ts": 1785240220.7270174
   },
   "AMZN": {
     "symbol": "AMZN",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Cloud demand strong; hold through Thursday earnings.",
-    "thesis": "Cloud demand strong; hold through Thursday earnings.",
+    "headline": "Cloud growth strong; hold through Thursday earnings.",
+    "thesis": "Cloud growth strong; hold through Thursday earnings.",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 232.42,
-    "as_of": "2026-07-27 10:41:55",
-    "ts": 1785166915.3010526
+    "price": 233.39,
+    "as_of": "2026-07-28 07:03:40",
+    "ts": 1785240220.6575074
   },
   "GOOGL": {
     "symbol": "GOOGL",
     "action": "ADD",
     "prev_action": "ADD",
-    "headline": "Added today; keep adding on weakness.",
-    "thesis": "Added today; keep adding on weakness.",
+    "headline": "Cheapest big AI platform; keep adding on weakness.",
+    "thesis": "Cheapest big AI platform; keep adding on weakness.",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 327.65,
-    "as_of": "2026-07-27 10:41:55",
-    "ts": 1785166915.227263
+    "price": 327.35,
+    "as_of": "2026-07-28 07:03:40",
+    "ts": 1785240220.4394002
   },
   "AAPL": {
     "symbol": "AAPL",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Near highs into earnings; let it run.",
-    "thesis": "Near highs into earnings; let it run.",
+    "headline": "Near highs into Thursday earnings; let it run.",
+    "thesis": "Near highs into Thursday earnings; let it run.",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 337.63,
-    "as_of": "2026-07-27 10:41:55",
-    "ts": 1785166915.2460747
+    "price": 338.5,
+    "as_of": "2026-07-28 07:03:40",
+    "ts": 1785240220.5291507
   },
   "MELI": {
     "symbol": "MELI",
@@ -185,14 +185,14 @@
     "symbol": "ANET",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Switch launch running; don't chase.",
-    "thesis": "Switch launch running; don't chase.",
+    "headline": "Switch launch running; earnings in a week.",
+    "thesis": "Switch launch running; earnings in a week.",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 166.47,
-    "as_of": "2026-07-27 10:41:55",
-    "ts": 1785166915.464357
+    "price": 166.0,
+    "as_of": "2026-07-28 07:03:41",
+    "ts": 1785240221.0012155
   },
   "BATL": {
     "symbol": "BATL",
@@ -276,14 +276,14 @@
     "symbol": "CRWD",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Running well; red days here are noise.",
-    "thesis": "Running well; red days here are noise.",
+    "headline": "Still trending up; red days are noise.",
+    "thesis": "Still trending up; red days are noise.",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 184.02,
-    "as_of": "2026-07-27 10:41:55",
-    "ts": 1785166915.3819432
+    "price": 182.21,
+    "as_of": "2026-07-28 07:03:40",
+    "ts": 1785240220.8731718
   },
   "ELTX": {
     "symbol": "ELTX",
@@ -575,14 +575,14 @@
     "symbol": "PANW",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Filled at $337; analyst targets up to $432.",
-    "thesis": "Filled at $337; analyst targets up to $432.",
+    "headline": "Analyst targets up to $432; stay put.",
+    "thesis": "Analyst targets up to $432; stay put.",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 326.0,
-    "as_of": "2026-07-27 10:41:55",
-    "ts": 1785166915.4090962
+    "price": 317.75,
+    "as_of": "2026-07-28 07:03:40",
+    "ts": 1785240220.9096522
   },
   "GEV": {
     "symbol": "GEV",
@@ -593,9 +593,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 955.33,
-    "as_of": "2026-07-27 10:41:55",
-    "ts": 1785166915.4370823
+    "price": 958.49,
+    "as_of": "2026-07-28 07:03:40",
+    "ts": 1785240220.9645724
   },
   "TEM": {
     "symbol": "TEM",
@@ -622,5 +622,18 @@
     "price": 8.02,
     "as_of": "2026-07-27 20:37:45",
     "ts": 1785202665.972755
+  },
+  "AAOI": {
+    "symbol": "AAOI",
+    "action": "WATCH",
+    "prev_action": null,
+    "headline": "No cash, earnings in 10 days \u2014 watch AAOI, buy nothing today.",
+    "thesis": "Risk Agent wins on hard facts: $0 dry powder and $739 already at risk make this trade impossible today. I overrule Bull's 60% upside case \u2014 a $157.30 target is worthless when the sizing math buys $0 of stock. Execution Agent is right on price: paying $97.82 days before August 6 earnings is chasing, not buying weakness. Bear's insider-sale point is thin noise, but the timing \u2014 10 days pre-earnings ",
+    "target": "$157.30",
+    "stop": "$88.89",
+    "source": "debate",
+    "price": 97.82,
+    "as_of": "2026-07-27 21:10:49",
+    "ts": 1785204649.4066806
   }
 }

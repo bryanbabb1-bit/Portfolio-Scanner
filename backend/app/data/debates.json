@@ -255,5 +255,134 @@
       "note": "Stop $6.67 (2x ATR, 16.8% below). Risking 1% of equity ($0) buys $0 — capped by dry powder."
     },
     "error": null
+  },
+  "AAOI": {
+    "symbol": "AAOI",
+    "name": "Applied Optoelectronics, Inc.",
+    "price": 97.82,
+    "ts": 1785204649.4050813,
+    "as_of": "2026-07-27 21:10:49",
+    "engine": "claude",
+    "agents": [
+      {
+        "key": "bull",
+        "name": "Bull Agent",
+        "round": 1,
+        "position": "BULLISH",
+        "confidence": 58,
+        "points": [
+          "Wall Street sees real upside: analysts rate it a buy with a $157.30 target, 60.81% above the current $97.82.",
+          "Momentum is turning: the losing-steam signal is flipping bullish and the longer trend just crossed into an up-trend.",
+          "It's down 56.15% from its $223.10 high, near price levels not seen since the mid-$88 to $151 range — cheap entry.",
+          "AI transceiver demand is real: Pearland facility expansion and a broader AI capex-driven rally are lifting the whole photonics group.",
+          "Volume is light at 0.7761x normal, meaning this dip is quiet selling, not a rush for the exits."
+        ],
+        "strongest": "Analysts' $157.30 average target implies 60.81% upside from today's $97.82 price.",
+        "ok": true
+      },
+      {
+        "key": "bear",
+        "name": "Bear Agent",
+        "round": 1,
+        "position": "BEARISH",
+        "confidence": 55,
+        "points": [
+          "AAOI has crashed 56% from its $223.10 high down to $97.82 — that is a stock still in trouble, not a bargain.",
+          "It fell 2.33% today and dropped 8.4% in one day just three sessions ago — the slide has not stopped.",
+          "Earnings land August 6, only 10 days out — a binary event that can gap the price hard in either direction.",
+          "An insider, SVP Yeh, sold $154,225 of stock this week right before that earnings date — not a vote of confidence.",
+          "We have zero dry powder and are already down $142 against a $197 daily loss limit — no cushion if earnings go wrong."
+        ],
+        "strongest": "An insider sold $154,225 of stock just days before a binary earnings event 10 days out — a dangerous combination for new money.",
+        "ok": true
+      },
+      {
+        "key": "macro",
+        "name": "Macro Agent",
+        "round": 1,
+        "position": "NEUTRAL",
+        "confidence": 45,
+        "points": [
+          "Optical and AI-transceiver stocks are falling together — AAOI dropped 8.4% this week alongside COHR, LITE, and POET.",
+          "A Google-capex AI rally lifted photonics names on 2026-07-23, yet AAOI is still 56% below its high — capital is chasing bigger AI names, not this one.",
+          "The stock still trades well above its long-term trend line ($88.89 vs $97.82), so the multi-quarter AI-buildout uptrend isn't broken yet.",
+          "Trading volume is only 0.78x normal, meaning few buyers are stepping in during this dip — weak conviction on either side.",
+          "The 52-week range runs from $19.49 to $223.10 — this name swings hard with AI-infrastructure sentiment, not steady macro drivers."
+        ],
+        "strongest": "Capital is rotating toward mega-cap AI capex winners, not small optical suppliers like AAOI, even as the sector rallies on headlines.",
+        "ok": true
+      },
+      {
+        "key": "risk",
+        "name": "Risk Agent",
+        "round": 2,
+        "position": "BEARISH",
+        "confidence": 90,
+        "points": [
+          "There is $0 of spare cash left in the account — buying AAOI means selling something else first.",
+          "We are already down $142 today against a $197 daily loss cap — almost no room left before trading stops.",
+          "The book already has $739 (7.52% of the account) riding on current stop-losses — AAOI would add more risk on top.",
+          "Nine of ten holdings are AI chip and cloud names (TSM, NVDA, AVGO, AMD, GOOGL, MU, AAPL, AMZN, NET) — AAOI is the same bet again.",
+          "AAOI reports earnings in 10 days, a coin-flip event, landing right when the account has no cash cushion left."
+        ],
+        "strongest": "There is $0 of spare cash — we cannot buy AAOI without selling another position first.",
+        "ok": true
+      },
+      {
+        "key": "execution",
+        "name": "Execution Agent",
+        "round": 2,
+        "position": "BEARISH",
+        "confidence": 62,
+        "points": [
+          "No cash cushion — $0 dry powder means any AAOI buy must come from trimming something else first.",
+          "Earnings hit August 6, only 10 days out — a real chance of a big gap either way.",
+          "An SVP just sold $154,225 of stock this week days before that earnings date.",
+          "If entering at all, wait — buy only on a pullback near $88.89, not chasing $97.82.",
+          "Stop would sit at $88.89, already 9.1% below today's $97.82 — a wide, expensive stop."
+        ],
+        "strongest": "No dry powder and earnings in 10 days means this is a wait-and-see, not a buy-now.",
+        "ok": true
+      }
+    ],
+    "agents_reporting": 5,
+    "tally": {
+      "bullish": 1,
+      "bearish": 3,
+      "neutral": 1
+    },
+    "verdict": "REJECT",
+    "action": "WATCH",
+    "score": 38,
+    "headline": "No cash, earnings in 10 days — watch AAOI, buy nothing today.",
+    "rationale": [
+      "Risk Agent wins on hard facts: $0 dry powder and $739 already at risk make this trade impossible today.",
+      "I overrule Bull's 60% upside case — a $157.30 target is worthless when the sizing math buys $0 of stock.",
+      "Execution Agent is right on price: paying $97.82 days before August 6 earnings is chasing, not buying weakness.",
+      "Bear's insider-sale point is thin noise, but the timing — 10 days pre-earnings — earns it a small deduction.",
+      "Macro Agent is correct that money is flowing to the big AI names we already own; AAOI adds the same bet again."
+    ],
+    "dissent": [
+      "If earnings beat, AAOI can gap toward $157.30 and we miss the whole move waiting for cash.",
+      "The business story is genuine — Pearland expansion and AI transceiver demand are real, not hype.",
+      "Selling a slice of the AI chip names to fund this is defensible if you want a fast-mover sleeve."
+    ],
+    "entry": "",
+    "target": "$157.30",
+    "stop": "$88.89",
+    "sizing": {
+      "symbol": "AAOI",
+      "price": 97.82,
+      "stop": 88.89,
+      "stop_basis": "200-day",
+      "risk_per_share": 8.93,
+      "dollars": 0.0,
+      "shares": 0.0,
+      "pct_of_equity": 0.0,
+      "risk_amount": 0.0,
+      "capped_by": "dry powder",
+      "note": "Stop $88.89 (200-day, 9.1% below). Risking 1% of equity ($0) buys $0 — capped by dry powder."
+    },
+    "error": null
   }
 }

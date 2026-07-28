@@ -1,120 +1,119 @@
 {
   "portfolio:brief": [
     {
-      "generated_at": "2026-07-27 08:45:16",
-      "summary": "You've finished the repositioning and the book is steady \u2014 the only trade left is closing the tiny TEM stake.",
+      "generated_at": "2026-07-27 21:20:46",
+      "summary": "You've finished the cleanup \u2014 TEM closed, proceeds into GOOGL \u2014 so with no cash left the right move this week is simply owning what you own through earnings.",
       "insights": [
-        "The book was flat today at $9,973 and is down just 2.4% since you started \u2014 a calm week while your companies do the work.",
-        "Your winners are quietly carrying the load: AAPL up 9%, NET up 11%, ANET up 4%, and AMD back in the green.",
-        "The soft spots are all price, not business \u2014 GOOGL down 11%, MU down 8%, TSM down 6% are cheap entry points in names you deliberately own.",
-        "You are fully invested with $0 cash, so any new buy has to be funded by selling something \u2014 right now that something is the $94 TEM stake.",
-        "You're at $9,973 against a $25,000 two-year goal, which means the plan needs your big AI positions to work, not a lot of extra trading."
+        "Today's 5% drop in NVDA and AMD was a sector-wide, leverage-driven selloff, not a company problem \u2014 Cramer flagged forced sellers on July 27, 2026, with fundamentals untouched.",
+        "Your defensive names carried the day: GOOGL +2.1%, MSFT +1.9%, NET +1.3% and AAPL +1.2% offset the chip damage, which is exactly why you own platforms too.",
+        "The book is down 3.7% since you started, so nothing here is broken \u2014 you're in a drawdown, not a decline, and the businesses are all still growing.",
+        "Cash is $0 and every position is a name you deliberately chose, so this week you're fully invested with no cleanup work left to do.",
+        "Three earnings land in three days \u2014 MSFT Wednesday, AAPL and AMZN Thursday \u2014 which means the next real move in this book comes from results, not from today's tape."
       ],
       "mix": [
-        "AI 21% vs 22% target and Tech 13% vs 14% target \u2014 both right where they should be, no action needed.",
-        "AI Infrastructure is 64% vs a 35% target, a real 29-point overweight \u2014 but that's NVDA, TSM, AVGO, AMD and MU, your best ideas, so fix it with future dollars, not by selling core.",
-        "Energy sits at 2% vs 8% and Compute Power at 0% vs 5% \u2014 these are the two genuine holes, and they're where I want your next money going.",
-        "Cash reads 0% vs a 16% guideline; that's fine \u2014 this is risk money meant to be owned, not parked, so I'm not asking you to raise cash."
+        "AI 21% versus a 22% target and Tech 13% versus 14% \u2014 both right where they should be, no action needed.",
+        "AI Infrastructure is 64% against a 35% target, a 29-point overweight; that's your deliberate concentration in chips and it's the single reason today hurt.",
+        "Energy at 2% versus 8% and Compute Power at 0% versus 5% are the real gaps \u2014 that's exactly the hole my top two ideas are meant to fill.",
+        "Cash reads 0% against a 16% target, and that's fine: this is risk money meant to be invested, so I'd rather fix the chip overweight with new dollars than by selling."
       ],
       "positions": [
-        "NVDA is your anchor at $1,616, about 16% of the book, and flat since you bought it \u2014 the AI build-out is still routing through its chips, so you sit tight.",
-        "TSM at $1,610 is down 6% but the business raised guidance and expects over 30% revenue growth in 2026 \u2014 this is exactly the weakness you're supposed to buy.",
-        "GOOGL is your worst holding at down 11% and finally turned up 2.7% today \u2014 the bounce has started, and it's the first name I'd feed.",
-        "TEM is a $94 stub that keeps sliding and reports in three days \u2014 it's too small to matter and its trend has broken, so close it."
-      ],
-      "actions": [
-        "Sell all TEM at market \u2014 close the position.",
-        "Buy $90 of GOOGL at market with the TEM proceeds.",
-        "Hold NVDA, TSM, AVGO, AMD and MU \u2014 do nothing.",
-        "Hold AAPL, MSFT and AMZN through earnings this week."
-      ],
-      "risks": [
-        "MSFT, AAPL and AMZN all report within three days, so a weak cloud or AI-spending outlook could knock the whole book down together.",
-        "If NVDA closes under $190, slow new buying and let the dust settle before adding more."
-      ],
-      "scout": [
-        "HIGH CONVICTION ETN near $401 \u2014 still my top idea, unchanged: data-center orders up 240% and a $14.5B backlog mean it sells the power every AI chip needs; buy $250, target $500.",
-        "HIGH CONVICTION SNOW at $276.01 \u2014 companies must organize their data before AI can use it, and this is where enterprise data lives; wait for $265, buy $150, target $340.",
-        "HIGH CONVICTION DLR at $198.85 \u2014 the landlord for AI data centers, it fills your empty Compute Power slot with rent-like income; buy $150 on a dip near $190, target $250.",
-        "SPECULATIVE UPSIDE HUT \u2014 a bitcoin miner turning into AI compute hosting that could re-rate hard; I'm holding my standing $113 buy level, size just $100, target $180."
-      ]
-    },
-    {
-      "generated_at": "2026-07-27 08:46:34",
-      "summary": "You closed TEM today and the cleanup is finished \u2014 nothing you own is broken, so put the last $94 into GOOGL and let the book work.",
-      "insights": [
-        "The repositioning is done: PATH, VRT, NTAP, NEE and TEM are all closed, and your speculative sleeve is now empty versus its 8% cap.",
-        "Today's red is one story, not fourteen \u2014 MU fell 6.9% on China's new memory rival while nine of your fourteen names finished green.",
-        "Your winners are quietly doing the work: NET is up 11.3%, AAPL up 8.9% and pushing its high, ANET up 3.9%.",
-        "The book sits at $9,981 against a $25,000 two-year goal, down 2.3% overall \u2014 the AI leaders are in a pause, not a decline.",
-        "Those closed trades booked roughly $85 in small losses, which you can use later to offset gains \u2014 a quiet consolation for the cleanup."
-      ],
-      "mix": [
-        "AI is 21% versus a 22% target and Tech is 13% versus 14% \u2014 both exactly where they should be, no action needed.",
-        "AI Infrastructure is 64% versus a 35% target, over by 29 points \u2014 that is real drift, but the fix is where new dollars go, never selling NVDA, TSM or AVGO.",
-        "Energy at 2% versus 8% and Compute Power at 0% versus 5% are your genuine holes, and they are exactly what ETN would fill first.",
-        "Cash is 1% versus a 16% target and I am deliberately leaving it there \u2014 that number is a soft guideline, not a reason to sit out quality."
-      ],
-      "positions": [
-        "NVDA is your anchor at 16.3% and dipped 2.2% on news it may guarantee $250B of OpenAI's Ohio data center \u2014 demand is real, the market just dislikes the financing loop (July 26-27).",
-        "MU dropped 6.9% because China's CXMT raised $8.6B and listed today (July 27), but that money attacks ordinary memory, not the AI memory Micron actually sells.",
-        "GOOGL is your worst position at -11% yet rose 2.9% today, which is why it gets the last of your cash rather than a wait.",
-        "AAPL is up 8.9% and near its high with earnings in three days \u2014 I am not trimming into a catalyst just because it is extended."
-      ],
-      "actions": [
-        "Long game: Buy $94 GOOGL at market.",
-        "Long game: Hold MU \u2014 do nothing on the China news.",
-        "Long game: Hold AAPL through earnings \u2014 do nothing.",
-        "Long game: Buy $150 TSM near $398 when cash frees up."
-      ],
-      "risks": [
-        "The AI-spending scare is the real risk, not your companies; if NVDA closes below $190, slow new buying and keep a little more dry powder.",
-        "Cheaper Chinese memory could squeeze Micron's ordinary chip prices; MU losing $900 would tell you the pressure is spreading beyond one headline."
-      ],
-      "scout": [
-        "HIGH CONVICTION ETN \u2014 still my top idea: data-center orders up 240%, 2026 growth guidance raised, and a $9.5B cooling deal; buy $200 near $415, target $500.",
-        "HIGH CONVICTION SNOW $276.03 \u2014 companies must organize their data before AI can use it, and this is where enterprise data lives; buy $150 near $265, target $340.",
-        "SPECULATIVE UPSIDE HUT \u2014 a bitcoin miner turning into AI compute hosting, filling your empty Compute Power slot; buy $100 only back near $113, target $180.",
-        "All three wait on freed capital \u2014 ETN first in line, SNOW second, HUT tiny and last."
-      ]
-    },
-    {
-      "generated_at": "2026-07-27 10:41:55",
-      "summary": "You finished the cleanup \u2014 TEM is closed and the proceeds are in GOOGL \u2014 so today's chip selloff is a market mood, not a problem in your book.",
-      "insights": [
-        "Today's -3.0% is one bad day for chips, not a broken book: the whole sector sold off on China memory-rival headlines and worries that AI spending gets too expensive.",
-        "Your non-chip names actually went UP today \u2014 GOOGL +2.5%, MSFT +2.6%, AAPL +1.4% \u2014 which is exactly why we spread into platforms and security instead of pure hardware.",
-        "Cash is $0 and every dollar is working, which is right for risk capital; the tradeoff is you can't buy today's dip until something frees up.",
-        "The book is $9,725 and down 4.8% since you started, so the road to $25,000 runs through owning these AI leaders through weeks like this, not trading around them.",
-        "Nothing you own reported bad news today \u2014 the drops in NVDA, TSM, AMD and MU are price moves, not business moves, and that distinction is the whole strategy."
-      ],
-      "mix": [
-        "AI is 22% versus a 22% target and Tech is 13% versus 14% \u2014 both exactly where they should be, no action needed.",
-        "AI Infrastructure is 63% versus a 35% target, a 28-point overweight \u2014 this is the real drift and it's why a chip-heavy down day hurts this much.",
-        "I am NOT telling you to sell core chips to fix that; instead let the next dollars in go to Energy (2% vs 8%) and Compute Power (0% vs 5%) so the gap closes by adding, not cutting.",
-        "Cash reads 0% against a 16% guideline \u2014 that's fine here because this is risk capital, but it does mean no dry powder for the next pullback."
-      ],
-      "positions": [
-        "NVDA is your anchor at 16% of the book near $196, down 5% today but only 2.9% below your cost \u2014 my add level is still $190 and it hasn't gotten there.",
-        "TSM is your second-biggest at $1,563 and down 9.1% for you, yet the company raised its outlook and guided record spending this month \u2014 that is a discount on a business that's growing, not shrinking.",
-        "MU is your worst holding at -13.5% on fears about a new Chinese memory rival, but Micron is sold out of its AI memory through 2027 and the Chinese rival is a generation behind on that product.",
-        "AAPL is your only real winner at +9.7% and sits near its high into Thursday's earnings \u2014 it's held up because it isn't spending billions on AI, so I'd let it run rather than trim ahead of the report."
+        "TSM is your anchor at 16% and held up best of the chipmakers today, down just 1.1% while peers fell 5% \u2014 that's quality behaving like quality.",
+        "NVDA fell 5% on worries about how AI deals are financed, not on anything about its business \u2014 I'd add near $190, not sell a dollar of it.",
+        "AAPL is your best holding at +9.5% and just passed NVDA as the world's most valuable company; it reports Thursday, and I'd let it run into the print.",
+        "GOOGL is your worst at -10.3%, yet it rose 2.1% today while chips sank \u2014 you added this morning at the right time and I'd keep adding on weakness."
       ],
       "actions": [
         "Hold everything \u2014 do nothing this week.",
-        "Long game: Buy $150 TSM near $390 when cash frees up.",
-        "Long game: Add $150 NVDA only if it reaches $190.",
-        "Hold MSFT, AAPL and AMZN through earnings Wednesday and Thursday."
+        "Buy $150 TSM near $390 when cash frees up.",
+        "Add $150 NVDA only if it reaches $190."
       ],
       "risks": [
-        "Big Tech reports Wednesday and Thursday; if they signal AI spending is slowing, your chip names fall hardest \u2014 NVDA closing under $190 is the level that confirms it.",
-        "With $0 cash you cannot buy a deeper dip, so the next selloff is one you ride out rather than one you profit from."
+        "Microsoft's Wednesday report is the week's real risk \u2014 weak cloud spending guidance would hit MSFT, NVDA and AVGO together; MSFT under $370 would confirm it.",
+        "Your chip weight means a broad AI pullback hits hard; NVDA closing under $190 is my signal to slow new buying, not to sell."
       ],
       "scout": [
-        "HIGH CONVICTION ETN near $415 \u2014 unchanged as my top idea: data-center orders up 240%, backlog up 48%, and 2026 growth guidance raised to 10%; buy $200, target $500.",
-        "HIGH CONVICTION SNOW at $268 \u2014 enterprises must organize their data before AI can use it, and this is where that data lives; my $265 buy level is finally in reach, buy $150, target $340.",
-        "HIGH CONVICTION DLR at $193.78 \u2014 the landlord for AI data centers and rent-like income that fills your empty Compute Power slot; buy $150 near $190, target $250.",
-        "SPECULATIVE UPSIDE HUT \u2014 a bitcoin miner converting into AI compute hosting that could re-rate hard; still only near $113, size just $100, target $180."
+        "HIGH CONVICTION ETN near $415 \u2014 still my number one: data-center orders up 240%, backlog up 48%, and it reports July 31; buy $200, target $500.",
+        "HIGH CONVICTION SNOW at $272.92 \u2014 enterprises must organize data before AI can use it; BofA and KeyBanc both raised targets in July; buy $150 near $265, target $340.",
+        "HIGH CONVICTION DLR at $195.76 \u2014 the landlord collecting rent from AI data centers, filling your empty Compute Power slot; buy $150 near $190, target $250.",
+        "SPECULATIVE UPSIDE HUT \u2014 a bitcoin miner converting into AI compute hosting that could re-rate hard; only near $113, size just $100, target $180."
+      ]
+    },
+    {
+      "generated_at": "2026-07-28 07:01:39",
+      "summary": "The cleanup is finished \u2014 TEM, PATH, VRT and NTAP are all closed \u2014 so with $0 cash your job this week is simply owning quality through three big earnings reports.",
+      "insights": [
+        "Today's 1.67% drop is a chip-sector mood swing, not your book breaking \u2014 MU, AMD and TSM did nearly all the damage while GOOGL, AAPL, AMZN and MSFT rose.",
+        "TSMC reported record profit up 77% and raised full-year 2026 growth guidance above 40% on July 16, yet the stock fell 15% that month \u2014 the price moved, the business didn't.",
+        "You have $0 cash, so every dollar you own is already working; the next buy needs either new money or a sale, and I don't see a sale worth making.",
+        "Three of your holdings report in 48 hours \u2014 MSFT Wednesday, AAPL and AMZN Thursday \u2014 and the market is grading them on AI spending plans as much as profits.",
+        "You're at $9,665 against a $25,000 goal and down 5.3% since you started, so the next two years need your winners to run \u2014 that argues for owning, not trimming."
+      ],
+      "mix": [
+        "AI is 22% against a 22% target and Tech is 13% against 14% \u2014 both exactly where the plan says they should be, no action needed.",
+        "AI Infrastructure is 63% versus a 35% target, 28 points over \u2014 that's real drift, and it means NVDA, TSM, AVGO, AMD and MU together decide your month.",
+        "I'm not fixing that by selling core names on price; I fix it by pointing every new dollar at your two empty slots, Energy at 2% versus 8% and Compute Power at 0% versus 5%.",
+        "Cash shows 0% against a 16% target, and I'm deliberately ignoring that \u2014 this is risk capital and I won't ask you to sell good businesses to sit in cash."
+      ],
+      "positions": [
+        "NVDA is your anchor at 16% and behaved best of the chips today, down just 0.5% while others fell 4-7% \u2014 down 3.4% from your cost and not a worry.",
+        "MU is your weakest at down 16%, off 6.8% today as memory stocks entered a bear market on Chinese competition \u2014 the alert screen crying loudest here has the worst track record I track.",
+        "TSM is down 10% for you but hit the $390 level you were waiting for, so it's a buy candidate the moment cash exists, not a problem position.",
+        "AAPL is your only real winner at up 10% and sits near its high into Thursday's earnings \u2014 no catalyst says trim, and selling now would hand you a short-term tax bill."
+      ],
+      "actions": [
+        "Hold everything \u2014 no cash to deploy this week.",
+        "Hold MSFT, AAPL and AMZN through Wednesday and Thursday earnings.",
+        "Long game: Buy $150 TSM near $384 when cash frees up.",
+        "Do not add MU here \u2014 hold what you own."
+      ],
+      "risks": [
+        "Memory is the real risk: if MU closes under $900, the China competition story is winning and I'd re-examine the business, not just the price.",
+        "If MSFT or AMZN raise AI spending and get punished for it, your chip names fall too \u2014 NVDA under $190 is my signal to slow all new buying."
+      ],
+      "scout": [
+        "HIGH CONVICTION ETN near $415 \u2014 still my number one: data-center orders up 240%, backlog up 48%, guidance raised to 9-11% growth, reports July 31; buy $200, target $500.",
+        "HIGH CONVICTION DLR at $195.76 \u2014 the landlord collecting rent from AI data centers and the cleanest fill for your empty Compute Power slot; buy $150 near $190, target $250.",
+        "HIGH CONVICTION SNOW at $272.92 \u2014 companies must organize their data before AI can use it, and this is where that data lives; buy $150 near $265, target $340.",
+        "SPECULATIVE UPSIDE HUT under $115 \u2014 a bitcoin miner converting into AI compute hosting that could re-rate hard; size just $100, target $180, first cash goes to ETN."
+      ]
+    },
+    {
+      "generated_at": "2026-07-28 07:03:39",
+      "summary": "You finished the cleanup \u2014 TEM, PATH, VRT, NTAP all closed and the GOOGL add done \u2014 so this week is about owning quality through three big earnings reports, not trading.",
+      "insights": [
+        "The book is $9,664 and down 5.4% overall, but that is almost entirely chip-sector weakness from the last two weeks, not broken businesses.",
+        "Memory is the pain point: MU fell 6.8% today and Micron, Samsung and SK Hynix are all more than 20% off their highs on Chinese competition fears (24/7 Wall St., July 24).",
+        "Your winners are quietly working \u2014 AAPL up 10% and NET up 9.3% \u2014 proving the platform-and-software side of the book cushions the hardware swings.",
+        "You have $0 cash, so no action is even possible this week; that is fine, because three of your holdings report earnings in the next 48 hours.",
+        "You need roughly 43% a year to reach $25,000, which comes from holding the AI leaders through weeks like this, not from reacting to them."
+      ],
+      "mix": [
+        "AI is 22% versus a 22% target and Tech is 13% versus 14% \u2014 both exactly where they should be, nothing to fix.",
+        "AI Infrastructure is 63% versus a 35% target, over by 28 points \u2014 that is real drift, but the fix is where future money goes, not selling NVDA, TSM or AVGO into a dip.",
+        "Energy sits at 2% versus 8% and Compute Power at 0% versus 5%, which is why an Eaton or Digital Realty position is the cleanest use of your next dollars.",
+        "Cash is 0% versus a 16% guideline, and that is acceptable here \u2014 this is risk money meant to be invested, not parked."
+      ],
+      "positions": [
+        "NVDA is your anchor at 16% of the book and held up best in the selloff, down only 0.5% today while AMD fell 4.3% \u2014 that relative strength is the tell.",
+        "TSM is your worst dollar laggard at -10.3%, yet it just posted record profit and raised 2026 revenue growth guidance above 40% \u2014 the price fell, the business improved.",
+        "MU is down 16.3% and is your hardest hold; memory demand is real but China's CXMT is a genuine new competitor, so hold what you own and do not add.",
+        "AAPL is your best performer at +10% and sitting near its 52-week high right into Thursday's earnings \u2014 let it run, and holding past a year also saves you tax."
+      ],
+      "actions": [
+        "Hold everything \u2014 no cash to deploy this week.",
+        "Hold MSFT, AAPL and AMZN through Wednesday and Thursday earnings.",
+        "Long game: Buy $150 TSM near $384 when cash frees up.",
+        "Do not add MU here \u2014 hold what you own."
+      ],
+      "risks": [
+        "Big Tech earnings this week hinge on AI spending plans; if Microsoft or Amazon signal slower data-center buildout, your chip names fall together.",
+        "Memory oversupply from Chinese producers is the real threat to MU; another leg down below your $190 NVDA line means slow all new buying."
+      ],
+      "scout": [
+        "HIGH CONVICTION ETN near $415 \u2014 still my number one: data-center orders up 240%, a 228 GW backlog, and it reports July 31; buy $200, target $500.",
+        "HIGH CONVICTION DLR at $195.76 \u2014 the landlord collecting rent from AI data centers and the cleanest fill for your empty Compute Power slot; buy $150 near $190, target $250.",
+        "HIGH CONVICTION SNOW at $272.92 \u2014 companies must organize their data before AI can use it, and this is where that data lives; buy $150 near $265, target $340.",
+        "SPECULATIVE UPSIDE HUT under $115 \u2014 a bitcoin miner converting into AI compute hosting that could re-rate hard; size just $100, target $180, first cash goes to ETN."
       ]
     }
   ],

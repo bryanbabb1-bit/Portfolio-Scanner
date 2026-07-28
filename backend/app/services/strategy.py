@@ -140,8 +140,12 @@ def generate(inputs: dict, deep: bool = False) -> dict:
         f'"long_term": array of 4-6 strings (the 1+ year strategy — core '
         f'positions, compounding plan, what to build toward), '
         f'"allocation_targets": object mapping theme names to target percent '
-        f'(use these themes: {", ".join(_theme_names())}; include Cash & '
-        f'Income; numbers must sum to about 100), '
+        f'(available themes: {", ".join(_theme_names())}; numbers must sum to '
+        f'about 100). You may allocate to a theme the client does NOT currently '
+        f'own if the plan calls for it — say so explicitly in long_term when '
+        f'you do, and justify it on the merits rather than on diversification '
+        f'for its own sake. Equally, concentration is allowed when you believe '
+        f'it: this list is your vocabulary, not a quota. '
         f'"guardrails": array of 3-5 strings (hard risk rules — position '
         f'caps, drawdown responses, when to go to cash), '
         f'"milestones": array of 3-5 strings (checkpoints with a value or '
@@ -178,9 +182,17 @@ def generate(inputs: dict, deep: bool = False) -> dict:
 
 
 def _theme_names() -> list[str]:
+    """The allocation vocabulary — the FULL sleeve list, not just what is held.
+
+    This used to return only the themes already in the portfolio, which meant
+    the strategic plan could not allocate to a sector the client didn't own.
+    The one layer whose whole job is to think beyond today's book was the
+    layer most tightly bound to it.
+    """
+    from . import discovery
     from . import portfolio as pf_service
     try:
-        return list(pf_service.load_portfolio().get("themes", {}).keys())
+        owned = pf_service.load_portfolio().get("themes", {})
     except Exception:
-        return ["AI", "AI Infrastructure", "Compute Power", "Energy", "Tech",
-                "Cash & Income"]
+        owned = {}
+    return list(discovery.theme_menu(owned).keys())

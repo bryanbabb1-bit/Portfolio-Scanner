@@ -1,0 +1,248 @@
+{
+  "ts": 1785248520.9756324,
+  "as_of": "2026-07-28 09:22:00",
+  "engine": "claude",
+  "goals": {
+    "target_value": 25000,
+    "horizon": "2 years",
+    "monthly_contribution": 0,
+    "risk_appetite": "aggressive",
+    "notes": "I believe in the AI revolution. I am a novice trader with not much history of success. I’d rather trade on high conviction stocks with strong growth outlooks, with some calibrated risks on stocks that could balloon, that tie into my belief in AI. I would rather not sink additional capital in if I don’t have to. I am okay to rebalance my portfolio to align with my goals. I can add capital if needed, but am already down 2 grand in loses this year. Don’t be afraid to make bold calls based on research and technicals that could find us a diamond in the rough type stock that explodes. "
+  },
+  "equity": 9469.06,
+  "thesis": "Own the AI buildout where the money actually lands — networks, power, data and security — plus a small explosive sleeve aimed at turning $9,469 into $25,000.",
+  "allocation": [
+    {
+      "theme": "AI",
+      "pct": 25.0,
+      "why": "The software layer that gets paid every time a company puts AI to work."
+    },
+    {
+      "theme": "AI Infrastructure",
+      "pct": 21.0,
+      "why": "Chips and networking are the toll booth on every AI data center built."
+    },
+    {
+      "theme": "Compute Power",
+      "pct": 20.0,
+      "why": "Data centers, cooling and power gear are sold out years ahead of demand."
+    },
+    {
+      "theme": "Energy",
+      "pct": 12.0,
+      "why": "AI cannot run without electricity, and clean baseload power is the tightest bottleneck."
+    },
+    {
+      "theme": "Tech",
+      "pct": 10.0,
+      "why": "One large steady anchor so the book is not all high-volatility names."
+    },
+    {
+      "theme": "Healthcare",
+      "pct": 7.0,
+      "why": "A big grower that keeps paying even if AI spending pauses for a quarter."
+    },
+    {
+      "theme": "International",
+      "pct": 5.0,
+      "why": "One cheap, fast-growing overseas name adds upside the US market does not offer."
+    }
+  ],
+  "picks": [
+    {
+      "symbol": "ANET",
+      "theme": "AI Infrastructure",
+      "pct": 12.0,
+      "why": "Buy $1,100 of ANET near $160.89 — its switches wire nearly every AI data center."
+    },
+    {
+      "symbol": "VRT",
+      "theme": "Compute Power",
+      "pct": 11.0,
+      "why": "Buy $1,040 of VRT near $259.93 — sells the cooling and power every AI rack needs."
+    },
+    {
+      "symbol": "AAPL",
+      "theme": "Tech",
+      "pct": 10.0,
+      "why": "Buy $950 of AAPL near $337.45 — steadiest name here and still trending up."
+    },
+    {
+      "symbol": "NET",
+      "theme": "AI",
+      "pct": 9.0,
+      "why": "Buy $850 of NET near $252.00 — runs AI apps close to users, growing fast."
+    },
+    {
+      "symbol": "CEG",
+      "theme": "Energy",
+      "pct": 9.0,
+      "why": "Buy $850 of CEG near $261.33 — nuclear power sold straight to AI data centers."
+    },
+    {
+      "symbol": "PANW",
+      "theme": "AI",
+      "pct": 7.0,
+      "why": "Buy $660 of PANW near $310.71 — security budgets get spent no matter the economy."
+    },
+    {
+      "symbol": "LLY",
+      "theme": "Healthcare",
+      "pct": 7.0,
+      "why": "Buy $660 of LLY near $1,226.54 — obesity drug demand that ignores the tech cycle."
+    },
+    {
+      "symbol": "SNOW",
+      "theme": "AI",
+      "pct": 6.0,
+      "why": "Buy $570 of SNOW near $256.22 — AI is useless without the company data it stores."
+    },
+    {
+      "symbol": "ON",
+      "theme": "AI Infrastructure",
+      "pct": 5.0,
+      "why": "Buy $475 of ON near $83.76 — cheap chipmaker tied to power management and autos."
+    },
+    {
+      "symbol": "DLR",
+      "theme": "Compute Power",
+      "pct": 5.0,
+      "why": "Buy $475 of DLR near $194.58 — the landlord collecting rent while AI builds out."
+    },
+    {
+      "symbol": "NU",
+      "theme": "International",
+      "pct": 5.0,
+      "why": "Buy $475 of NU near $14.62 — fast-growing digital bank at a cheap price."
+    },
+    {
+      "symbol": "SMCI",
+      "theme": "AI Infrastructure",
+      "pct": 4.0,
+      "why": "Speculative: buy $375 of SMCI near $27.24, stop $21 — beaten-down AI server maker."
+    },
+    {
+      "symbol": "APLD",
+      "theme": "Compute Power",
+      "pct": 4.0,
+      "why": "Speculative: buy $375 of APLD near $26.05, stop $19 — small AI data-center builder."
+    },
+    {
+      "symbol": "SMR",
+      "theme": "Energy",
+      "pct": 3.0,
+      "why": "Speculative: buy $285 of SMR near $7.82, stop $5.50 — cheap bet on new reactors."
+    },
+    {
+      "symbol": "SOUN",
+      "theme": "AI",
+      "pct": 3.0,
+      "why": "Speculative: buy $285 of SOUN near $6.06, stop $4.25 — tiny voice-AI moonshot."
+    }
+  ],
+  "avoided": [
+    "Broad Market index funds: they would dilute your best AI ideas and cannot get $9,469 to $25,000.",
+    "Consumer staples and dividend defensives: safe and slow, wrong tool for an aggressive two-year goal.",
+    "Cash and bonds: this is risk capital, so it stays invested rather than earning four percent."
+  ],
+  "diff": {
+    "themes": [
+      {
+        "theme": "AI Infrastructure",
+        "target_pct": 21.0,
+        "current_pct": 62.8,
+        "delta": -41.8
+      },
+      {
+        "theme": "AI",
+        "target_pct": 25.0,
+        "current_pct": 22.0,
+        "delta": 3.0
+      },
+      {
+        "theme": "Tech",
+        "target_pct": 10.0,
+        "current_pct": 13.6,
+        "delta": -3.6
+      },
+      {
+        "theme": "Compute Power",
+        "target_pct": 20.0,
+        "current_pct": 0.0,
+        "delta": 20.0
+      },
+      {
+        "theme": "Energy",
+        "target_pct": 12.0,
+        "current_pct": 1.6,
+        "delta": 10.4
+      },
+      {
+        "theme": "Healthcare",
+        "target_pct": 7.0,
+        "current_pct": 0.0,
+        "delta": 7.0
+      },
+      {
+        "theme": "International",
+        "target_pct": 5.0,
+        "current_pct": 0.0,
+        "delta": 5.0
+      }
+    ],
+    "held_picks": [
+      "ANET",
+      "AAPL",
+      "NET",
+      "PANW"
+    ],
+    "new_picks": [
+      "VRT",
+      "CEG",
+      "LLY",
+      "SNOW",
+      "ON",
+      "DLR",
+      "NU",
+      "SMCI",
+      "APLD",
+      "SMR",
+      "SOUN"
+    ],
+    "overlap_pct": 38.0,
+    "name_overlap_pct": 27.0,
+    "blind_spots": [
+      {
+        "theme": "Compute Power",
+        "target_pct": 20.0,
+        "current_pct": 0.0,
+        "delta": 20.0
+      },
+      {
+        "theme": "Healthcare",
+        "target_pct": 7.0,
+        "current_pct": 0.0,
+        "delta": 7.0
+      },
+      {
+        "theme": "International",
+        "target_pct": 5.0,
+        "current_pct": 0.0,
+        "delta": 5.0
+      }
+    ],
+    "overweight": [
+      {
+        "theme": "AI Infrastructure",
+        "target_pct": 21.0,
+        "current_pct": 62.8,
+        "delta": -41.8
+      }
+    ],
+    "equity": 9469.06
+  },
+  "verdict": "PARTIAL",
+  "headline": "38% overlap. The core holds up, but built blind the desk allocates meaningfully differently and wants 3 sleeve(s) you have nothing in.",
+  "error": null,
+  "method": "Built blind: the prompt contained the goal, the horizon and a market-wide candidate list, but NOT the current holdings, allocation, standing calls or strategy. The comparison below is computed in code, not by the model."
+}

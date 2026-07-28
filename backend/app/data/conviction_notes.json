@@ -76,5 +76,30 @@
     "size": "Full TEM position (small satellite, no core sizing to protect)",
     "target": "",
     "stop": ""
+  },
+  "watch:22820a2fcdb2": {
+    "id": "watch:22820a2fcdb2",
+    "symbol": "TSM",
+    "side": "buy",
+    "rule": "watchpoint",
+    "label": "Watchpoint: price ≤ $390",
+    "headline": "Dip hit your $390 mark — buy it",
+    "what": "Buy $150 of TSM near $385, funded by trimming $150 of NET.",
+    "why": [
+      "Chip-sector selloff (SOX-wide) dragged TSM to $385, through your $390 buy level — no TSM-specific bad news in the headlines",
+      "Guidance raise and record spending from your last call still stand; earnings power intact",
+      "You have $0 cash, so fund this from NET, which is extended today (+7.6%) — not from touching TSM or other core names",
+      "Your watchpoint: Watchpoint: price ≤ $390."
+    ],
+    "target": "$537 (+39%)",
+    "stop": "no sell — reassess only if TSM breaks $354",
+    "price": 385.21,
+    "held": null,
+    "dismissed": true,
+    "generated_at": "2026-07-28 06:00:40",
+    "ts": 1785236440.9949448,
+    "action": "ADD",
+    "entry": "$385.21 (market)",
+    "size": "$150, ~1.6% of book; fund by trimming NET (up 7.6% today, no fresh cash)"
   }
 }
