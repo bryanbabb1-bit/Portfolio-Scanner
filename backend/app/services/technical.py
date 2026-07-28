@@ -105,6 +105,69 @@ def compute_indicators(df: pd.DataFrame) -> Indicators:
     )
 
 
+def indicator_frame(df: pd.DataFrame) -> pd.DataFrame:
+    """Point-in-time indicators for EVERY bar, as columns.
+
+    `compute_indicators` answers "what do the indicators say today" by taking
+    .iloc[-1] off each series. The backtest needs the same answer for all 1,250
+    bars, and recomputing the whole stack per bar is ~1,250x the work for
+    identical numbers. This keeps the series instead of the last value, so one
+    vectorized pass yields the whole history.
+
+    Column names match the `Indicators` field names exactly, so a row can be
+    fed straight to the live rule engine — that is what keeps the backtest and
+    production on one definition of every rule.
+
+    Strictly causal: every column at bar i uses only bars <= i. `high_52w` is a
+    TRAILING 252-bar max (not the whole-sample max), or the backtest would know
+    the future.
+    """
+    close, volume = df["Close"], df["Volume"]
+    macd, macd_sig, macd_hist = _macd(close)
+    sma20 = close.rolling(20).mean()
+    sma50 = close.rolling(50).mean()
+    sma200 = close.rolling(200).mean()
+    std20 = close.rolling(20).std()
+    rsi = _rsi(close)
+    vol20 = volume.rolling(20).mean()
+
+    high_52w = close.rolling(252, min_periods=1).max()
+    low_52w = close.rolling(252, min_periods=1).min()
+
+    trend = pd.Series("sideways", index=close.index, dtype=object)
+    trend[(close > sma50) & (sma50 > sma200)] = "uptrend"
+    trend[(close < sma50) & (sma50 < sma200)] = "downtrend"
+
+    out = pd.DataFrame(
+        {
+            "price": close,
+            "change_pct": close.pct_change() * 100,
+            "rsi": rsi,
+            "rsi_prev": rsi.shift(1),
+            "rsi_min_10d": rsi.rolling(10).min(),
+            "ret_5d_pct": (close / close.shift(5) - 1) * 100,
+            "ret_20d_pct": (close / close.shift(20) - 1) * 100,
+            "macd": macd,
+            "macd_signal": macd_sig,
+            "macd_hist": macd_hist,
+            "sma20": sma20,
+            "sma50": sma50,
+            "sma200": sma200,
+            "ema20": close.ewm(span=20, adjust=False).mean(),
+            "atr": _atr(df),
+            "bb_upper": sma20 + 2 * std20,
+            "bb_lower": sma20 - 2 * std20,
+            "high_52w": high_52w,
+            "low_52w": low_52w,
+            "pct_from_52w_high": (close / high_52w - 1) * 100,
+            "avg_volume_20": vol20,
+            "volume_ratio": volume / vol20.replace(0, np.nan),
+        }
+    )
+    out["trend"] = trend
+    return out.replace([np.inf, -np.inf], np.nan)
+
+
 def build_quote(md, ind: Indicators) -> Quote:
     # Drop NaN closes first: this environment's data source has been observed to
     # return a daily bar whose Close is NaN (empty/unposted session), which used

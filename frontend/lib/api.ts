@@ -195,6 +195,54 @@ export interface PortfolioInsights {
   alerts: PortfolioAlert[];
 }
 
+export interface BacktestRule {
+  rule: string;
+  side: "buy" | "sell";
+  signals: number;
+  win_rate: number;
+  avg_5: number;
+  avg_20: number;
+  avg_60: number;
+  best: number;
+  worst: number;
+  profit_factor: number | null;
+  avg_mae: number;
+  symbols: number;
+}
+
+export interface BacktestCurvePoint {
+  date: string;
+  strategy: number;
+  benchmark: number;
+}
+
+export interface Backtest {
+  ts: number;
+  as_of: string;
+  elapsed_s: number;
+  years: number;
+  universe: number;
+  symbols_tested: number;
+  skipped: string[];
+  period: { start: string; end: string } | null;
+  signals: number;
+  win_rate: number | null;
+  avg_return_pct: number | null;
+  profit_factor: number | null;
+  max_drawdown_pct: number | null;
+  grade_horizon_days: number;
+  rules: BacktestRule[];
+  curve: {
+    points: BacktestCurvePoint[];
+    strategy_return_pct?: number;
+    benchmark_return_pct?: number;
+    max_drawdown_pct?: number;
+    days_invested_pct?: number;
+    note: string;
+  };
+  caveats: string[];
+}
+
 export interface DebateAgent {
   key: "bull" | "bear" | "macro" | "risk" | "execution";
   name: string;
@@ -752,6 +800,13 @@ export const api = {
   saveStrategy: (doc: StrategyDoc) => put<StrategyDoc>("/api/strategy", doc),
   insights: () => get<PortfolioInsights>("/api/insights"),
   risk: () => get<RiskDesk>("/api/risk"),
+  backtest: () => get<Backtest | null>("/api/backtest"),
+  startBacktest: (years = 5) =>
+    post<{ job_id: string }>(`/api/backtest?years=${years}`, {}),
+  backtestJob: (jobId: string) =>
+    get<{ status: "pending" | "done" | "error"; result: Backtest | null; error?: string }>(
+      `/api/backtest/job/${jobId}`
+    ),
   debate: (symbol: string) =>
     get<Debate | null>(`/api/debate/${symbol}`),
   debates: (limit = 20) =>

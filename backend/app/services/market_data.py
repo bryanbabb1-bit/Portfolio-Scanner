@@ -313,6 +313,38 @@ def _fetch_live_prices(symbol: str) -> MarketData:
     return MarketData(symbol.upper(), symbol.upper(), hist, {}, [], "live")
 
 
+def get_deep_history(symbol: str, years: int = 5) -> MarketData:
+    """Multi-year OHLCV for the backtest.
+
+    Every other caller wants ~1y, which is all the live/mock fetchers return.
+    A replay needs far more: 200 bars go to warming up the 200-day alone, so a
+    1-year series leaves nothing to test against. Cached separately from the
+    1y data so the dashboard's hot path is untouched.
+    """
+    sym = symbol.upper()
+    key = f"deep:{sym}:{years}"
+    cached = _cache_get(key)
+    if cached is not None:
+        return cached
+
+    if settings.DATA_MODE != "mock":
+        try:
+            import yfinance as yf
+
+            hist = _clean_hist(
+                yf.Ticker(sym).history(period=f"{years}y", auto_adjust=True)
+            )
+            if hist is not None and not hist.empty:
+                return _cache_put(key, MarketData(sym, sym, hist, {}, [], "live"))
+        except Exception as exc:
+            if settings.DATA_MODE == "live":
+                raise
+            print(f"[market_data] deep fetch failed for {sym} ({exc!r}); using mock")
+
+    hist = mock_data.history(sym, days=years * 252)
+    return _cache_put(key, MarketData(sym, sym, hist, {}, [], "mock"))
+
+
 def get_market_data(symbol: str) -> MarketData:
     key = f"md:{symbol.upper()}"
     cached = _cache_get(key)
