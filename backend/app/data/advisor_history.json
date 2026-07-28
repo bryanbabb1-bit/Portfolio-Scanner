@@ -1,41 +1,117 @@
 {
   "portfolio:brief": [
     {
-      "generated_at": "2026-07-28 12:57:13",
-      "summary": "You've finished a heavy de-risking pass \u2014 six positions closed this week, the semi trading names are out, and the book that's left is a clean AI-infrastructure core that needs patience, not more surgery.",
+      "generated_at": "2026-07-28 13:24:58",
+      "summary": "You've finished the cleanup \u2014 15 keepers left \u2014 so this week is about putting your last $210 to work outside AI, not more selling.",
       "insights": [
-        "The repositioning is done: AMZN, TSM, MU, AMD, TEM, PATH, NTAP and NEE are all closed, and what remains is 15 quality names rather than a scattered list of trades.",
-        "Overall the book is down just 1.5% since inception with a 25% swing rate \u2014 that's a normal aggressive-growth ride, not a problem, and the worst drawdown you've sat through was 14.5%.",
-        "Today's -1.13% is concentrated in three names \u2014 VRT down 8.1% into earnings tomorrow, GEV down 6.1%, ETN down 3.6% \u2014 while GOOGL, MSFT, LLY and CRWD all rose, which is exactly how a mixed book is supposed to behave.",
-        "Your winners are the quiet ones: AAPL up 10.4% and NET up 9.1% are carrying the book while the newer AI-infrastructure adds sit slightly underwater and haven't had time to work yet.",
-        "Cash is $210, about 2% of the account \u2014 small, but this is risk capital and it's better used on one real buy than spread thin across four."
+        "You closed AMZN, TSM, MU, AMD and TEM this month and the book is down just 1.5% all-time \u2014 the repositioning is done, not ongoing.",
+        "AAPL is up 10.4% and NET up 9.0%, both still trending higher \u2014 those two are quietly carrying the book while the AI names rest.",
+        "GOOGL at -8.0% is your worst mark, but you only added shares July 27 and it rose 2.6% today; let those new shares season.",
+        "The losses you booked closing AMZN, TSM, MU and AMD offset future gains \u2014 just don't rebuy any of them before late August.",
+        "Cash is $210, the lowest it's been, and it should be invested this week rather than sitting through the Fed meeting doing nothing."
       ],
       "mix": [
-        "AI Infrastructure at 32% plus AI at 22% means over half the book rides the same datacenter build-out \u2014 that is your conviction bet and it is intentional, but it's the one number to watch.",
-        "Compute Power 16% and Energy 14% add up to 30% in the power-for-AI trade, which is genuinely a second bet on the same theme rather than a diversifier.",
-        "Healthcare 7% (LLY) and Tech 7% (AAPL) are your only true offsets and both are working \u2014 these are the parts of the book you should be growing, not trimming.",
-        "No formal targets exist for this account, so the honest read is: concentration is high by design and appropriate for an aggressive mandate, but a new dollar belongs outside AI infrastructure."
+        "AI Infrastructure 32%, AI 22% and Compute Power 16% are really one bet \u2014 70% of your money rides on AI datacenter spending continuing.",
+        "Add Energy at 14% and it's 84%, because CEG, ETN and GEV exist mainly to power those same datacenters.",
+        "For an aggressive double-digit mandate that concentration is a feature, and NVDA at 16.6% is a size I'm comfortable defending.",
+        "The real gap is that Tech 7%, Healthcare 7% and Cash 2% are too small to cushion anything \u2014 today's $210 starts fixing that."
       ],
       "positions": [
-        "NVDA is your anchor at 16.6% of the book and down 2.7% \u2014 it has gone sideways for weeks while the business keeps compounding, and that patience is the position.",
-        "AAPL is your best holding at +10.4% with earnings in two days and sitting near its 52-week high \u2014 hold it, don't take a short-term gain right before the print.",
-        "VRT fell 8.1% today with earnings tomorrow, and it's your third-largest position at $1,057 \u2014 expect a sharp move either way and do not touch it before the number.",
-        "GEV is your smallest position at $153 and down 7.6% after a 6.1% drop today \u2014 it is too small to hurt you, so let it be rather than trading a $153 stub."
+        "NVDA is your anchor at 16.6% and down 2.6%, drifting sideways while the business keeps compounding \u2014 that is a pause, not a problem.",
+        "VRT fell 7.8% today purely on nerves before tomorrow's results; analysts expect about $1.43 per share, roughly 50% growth over last year.",
+        "CEG is weak because New York froze permits for large datacenters for a year on July 19, yet analysts still target about $372.",
+        "AAPL is your best holding at +10.4% and sits near its high with earnings in two days \u2014 I am not trimming a winner into that."
       ],
       "actions": [
-        "Hold \u2014 do nothing this week.",
-        "Buy $200 of LLY near $660 level on any dip.",
-        "Do not trade VRT or MSFT before earnings tomorrow."
+        "Buy $110 of MRK at $131.49.",
+        "Buy $100 of CB at $362.62.",
+        "Sell all $154 of GEV on a bounce, not today.",
+        "Hold NVDA, VRT, MSFT and AAPL through earnings \u2014 do nothing."
       ],
       "risks": [
-        "Over half the book rides the AI datacenter build-out; a weak VRT or MSFT print tomorrow would hit NVDA, AVGO, VRT, CEG and ETN together.",
-        "VRT closing below roughly $88 after earnings would confirm the power-and-cooling trade is losing its bid, not just wobbling."
+        "Almost 85% of your money is one bet on AI datacenter spending; VRT closing under $290 after tomorrow's results would confirm buyers stepping back.",
+        "New York's one-year datacenter permit freeze is a genuine headwind for CEG; another slide before its August 6 report would need a rethink."
       ],
       "scout": [
-        "HIGH CONVICTION UNH \u2014 the largest US health insurer trading at a fraction of its historic multiple after a brutal reset; start $200 on any weakness, target a 50% recovery over two years.",
-        "HIGH CONVICTION V \u2014 a toll booth on every card swipe with 60%+ margins and no AI exposure at all; buy $200 on a pullback, compounds low-teens for years.",
-        "SPECULATIVE UPSIDE OKLO \u2014 small modular nuclear aimed directly at datacenter power demand, pre-revenue and volatile; risk only $100 you can lose entirely, multi-bagger if a reactor gets approved.",
-        "HIGH CONVICTION COST \u2014 membership fees that renew at 90%+ and pricing power in any economy; a boring anchor to own for a decade, buy $150 on a dip."
+        "HIGH CONVICTION \u2014 MRK at $131.49: cheapest big pharma, priced as if the Keytruda patent loss ends the company while the new pipeline keeps beating; buy $110 now, target $165.",
+        "HIGH CONVICTION \u2014 CB at $362.62: Chubb earns twice, from rising insurance prices and interest on its huge bond pile, and it does not care what NVDA does; buy $100 now, target $430.",
+        "SPECULATIVE UPSIDE \u2014 TGT at $143.98: hated retailer priced for permanent decline where even modest margin repair re-rates it hard; size $80 only when the GEV sale frees cash, target $200."
+      ]
+    },
+    {
+      "generated_at": "2026-07-28 13:28:32",
+      "summary": "You've finished the selling \u2014 15 keepers, nothing left to clean up \u2014 so this week is simply putting your last $210 into MRK and CB.",
+      "insights": [
+        "The cleanup is done: eight positions closed this month, and every remaining name is one you actually want to own for years.",
+        "The book is down just 1.6% since you started while carrying real AI exposure \u2014 that is a normal, healthy drawdown, not a problem.",
+        "Today's 1.2% dip is concentrated in the power and equipment names \u2014 VRT, GEV, CEG and ETN \u2014 while GOOGL, MSFT, AAPL and LLY all rose.",
+        "Your $210 of cash is the last piece of the repositioning still unfinished; it has been sitting idle for a day and needs to go to work.",
+        "Four of your fifteen names report earnings within a week, so expect a bumpy stretch that says nothing about the long-term theses."
+      ],
+      "mix": [
+        "AI Infrastructure at 32% and AI at 22% is your intended concentration \u2014 this is where your conviction lives, and I am not asking you to dilute it.",
+        "The honest flag: AI Infrastructure, AI, Compute Power and Energy together are 84% of the book, and all four move on the same story.",
+        "Healthcare at 7% and Tech at 7% are the only genuine counterweights, which is why the MRK and CB buys matter more than their small size suggests.",
+        "Cash at 2% is right for an aggressive profile \u2014 this account is risk capital, so I want that 2% spent, not saved."
+      ],
+      "positions": [
+        "NVDA is your anchor at 16.6% and it is going nowhere \u2014 down 2.8% since you bought, drifting sideways, and quietly compounding while the market waits on the next chip cycle.",
+        "AAPL is your best holding at +10.5% and near its high with earnings in two days \u2014 a real catalyst, so no trim; let the winner run toward long-term tax treatment.",
+        "VRT fell 8.2% today ahead of tomorrow's earnings, which is nerves, not news \u2014 the datacenter cooling demand story is intact and you do not trade the day before a print.",
+        "GEV is down 7.5% and worth only $154 \u2014 the business is fine, but the position is too small to change your outcome, so it funds a better idea."
+      ],
+      "actions": [
+        "Buy $110 MRK at $131.39.",
+        "Buy $100 CB at $362.49.",
+        "Sell all $154 GEV on a bounce \u2014 not today.",
+        "Hold VRT, MSFT, ETN, AAPL through earnings \u2014 do nothing."
+      ],
+      "risks": [
+        "Nearly everything you own rises and falls on the same AI-datacenter story; a bad VRT or MSFT print tomorrow would hit five names at once.",
+        "GEV already dropped 6% today with no clear reason in the news \u2014 I would check the latest headlines before selling, in case something real broke."
+      ],
+      "scout": [
+        "HIGH CONVICTION \u2014 MRK at $131.39: still my top idea; cheapest big pharma, priced as if losing the Keytruda patent ends it while the new pipeline keeps beating. Buy $110 now, target $165.",
+        "HIGH CONVICTION \u2014 CB at $362.49: Chubb earns twice, from rising insurance prices and interest on its huge bond pile, and it does not care what NVDA does. Buy $100 now, target $430.",
+        "SPECULATIVE UPSIDE \u2014 TGT at $144.13: hated retailer priced for permanent decline, where even modest margin repair re-rates it hard. Size $80 only after the GEV sale clears, target $200."
+      ]
+    },
+    {
+      "generated_at": "2026-07-28 13:30:08",
+      "summary": "You've finished the selling \u2014 15 keepers, nothing left to cut \u2014 so the only job this week is putting your last $210 into MRK and CB.",
+      "insights": [
+        "The cleanup is complete: eight positions closed this month and no name on the book is still on the chopping block.",
+        "Today's -1.17% was concentrated \u2014 VRT -8.1%, GEV -5.9%, ETN -3.7%, CEG -3.5% \u2014 one power-and-cooling group moving together, not four separate problems.",
+        "GOOGL rose 2.6% and MSFT 2.1% while the hardware names fell, so the software side of your AI bet cushioned the day.",
+        "After all that repositioning the whole book is only down 1.6% since you started, which is a perfectly fine base to compound from.",
+        "Your $210 of cash is the last unfinished business and has now sat idle across two briefs \u2014 that is the gap to close."
+      ],
+      "mix": [
+        "You have no formal allocation targets, so I judge the mix against your aggressive double-digit-growth mandate \u2014 and on that test it is deliberately, correctly concentrated.",
+        "AI Infrastructure 32%, AI 22%, Compute Power 16% and Energy 14% are really one bet: 84% of the book rides AI spending.",
+        "Healthcare 7% and Tech 7% are the only real counterweights; buying MRK lifts healthcare toward 8% and CB opens a small financials sleeve.",
+        "Cash at 2% is exactly right \u2014 this is risk money meant to be invested, and it is about to be."
+      ],
+      "positions": [
+        "NVDA is your anchor at 16.6% of the book and down 2.8% since you bought \u2014 a flat price, not a broken business.",
+        "VRT fell 8.1% today with results due tomorrow; at $1,057 it is your third-largest holding and I am not trading it beforehand.",
+        "AAPL is your best performer, up 10.4% and near its 52-week high, with earnings in two days \u2014 hold it through.",
+        "GEV is down 7.4% and worth only $154 \u2014 too small to move the needle, which is why it is the one remaining sale."
+      ],
+      "actions": [
+        "Buy $110 MRK at $131.41.",
+        "Buy $100 CB at $362.51.",
+        "Hold VRT, MSFT, ETN and AAPL through earnings.",
+        "Sell all $154 GEV into a bounce, not today."
+      ],
+      "risks": [
+        "Everything you own leans on AI spending \u2014 top five names are 58.5% of the book, so one bad datacenter guide hits four positions at once.",
+        "VRT already dropped 8.1% into tomorrow's report; another drop that size on the numbers means the cooling story is being repriced, not just wobbling."
+      ],
+      "scout": [
+        "HIGH CONVICTION \u2014 MRK at $131.41: cheapest big pharma, priced as if losing Keytruda ends it while the pipeline keeps beating; buy $110 now, target $160.",
+        "HIGH CONVICTION \u2014 CB at $362.51: Chubb earns twice, on rising insurance prices and on interest from its huge bond pile; buy $100 now, target $420.",
+        "SPECULATIVE UPSIDE \u2014 TGT at $144.15: hated retailer priced for permanent decline, where even modest margin repair re-rates it hard; buy $80 after GEV clears, target $185."
       ]
     }
   ]

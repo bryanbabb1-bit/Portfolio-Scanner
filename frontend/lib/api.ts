@@ -716,8 +716,56 @@ export interface AskAnswer {
 // single request at ~100s (524), so we never hold one open: start a background
 // job, then poll a fast status endpoint until it finishes. Each poll is
 // instant, so tunnel + proxy timeouts never fire regardless of research length.
+/** Poll a backgrounded advisor job to completion.
+ *
+ * Every long advisor call goes through this. A single request that runs past
+ * ~100s is killed at the Cloudflare edge with a 524, which is what the brief
+ * started doing once it also had to produce the staged plan. Short polls never
+ * hit that ceiling.
+ */
+async function pollAdvisorJob<T>(jobId: string, label: string): Promise<T> {
+  const intervalMs = 2500;
+  const maxAttempts = Math.ceil((8 * 60 * 1000) / intervalMs);
+  for (let i = 0; i < maxAttempts; i++) {
+    await new Promise((r) => setTimeout(r, intervalMs));
+    const s = await get<{
+      status: "pending" | "done" | "error" | "gone";
+      result?: T;
+      error?: string;
+    }>(`/api/advisor/job/${jobId}`);
+    if (s.status === "done" && s.result) return s.result;
+    if (s.status === "error") throw new Error(s.error || `${label} failed`);
+    if (s.status === "gone")
+      throw new Error("The advisor restarted mid-run — please try again.");
+  }
+  throw new Error("The advisor is taking unusually long — please try again.");
+}
+
+async function advisePortfolioPolling(
+  force: boolean,
+  deep: boolean
+): Promise<AdvisorNote> {
+  const { job_id } = await post<{ job_id: string }>(
+    `/api/advisor/portfolio/start?force=${force}&deep=${deep}`,
+    {}
+  );
+  return pollAdvisorJob<AdvisorNote>(job_id, "Brief");
+}
+
+async function adviseStockPolling(
+  symbol: string,
+  force: boolean,
+  deep: boolean
+): Promise<AdvisorNote> {
+  const { job_id } = await post<{ job_id: string }>(
+    `/api/advisor/stock/${symbol}/start?force=${force}&deep=${deep}`,
+    {}
+  );
+  return pollAdvisorJob<AdvisorNote>(job_id, "Stock review");
+}
+
 async function askAdvisorPolling(
-  kind: "portfolio" | "stock" | "breakout" | "strategy",
+  kind: "portfolio" | "stock" | "breakout",
   symbol: string | undefined,
   question: string,
   deep: boolean
@@ -945,12 +993,14 @@ export const api = {
     get<{ quotes: Record<string, { price: number | null; source: string }> }>(
       `/api/quotes?symbols=${encodeURIComponent(symbols.join(","))}`
     ),
+  // These generate; they can take minutes, so they poll a background job
+  // rather than holding one request open past the tunnel's 100s ceiling.
   adviseStock: (symbol: string, force = false, deep = false) =>
-    get<AdvisorNote>(`/api/advisor/stock/${symbol}?force=${force}&deep=${deep}`),
+    adviseStockPolling(symbol, force, deep),
   adviseBreakout: (symbol: string, force = false, deep = false) =>
     get<AdvisorNote>(`/api/advisor/breakout/${symbol}?force=${force}&deep=${deep}`),
   advisePortfolio: (force = false, deep = false) =>
-    get<AdvisorNote>(`/api/advisor/portfolio?force=${force}&deep=${deep}`),
+    advisePortfolioPolling(force, deep),
   stayTheCourse: () =>
     get<StayCourse>(`/api/advisor/stay-the-course`).catch(() => null as StayCourse | null),
   recommend: (symbol: string, event: string, kind = "alert") =>

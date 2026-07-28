@@ -16,16 +16,12 @@ from ..services import portfolio as pf_service
 router = APIRouter(prefix="/api/advisor", tags=["advisor"])
 
 
-@router.get("/portfolio")
-def advise_portfolio(force: bool = False, deep: bool = False):
-    """Whole-book senior-advisor brief. deep=true adds live web research."""
-    try:
-        summary, reports = pf_service.portfolio_summary()
-        risk = insights_service.compute_risk(reports)
-        alerts = insights_service.build_alerts(reports)
-    except Exception as exc:
-        traceback.print_exc()
-        raise HTTPException(status_code=502, detail=f"Portfolio read failed: {exc}")
+def _build_brief(force: bool, deep: bool):
+    """Assemble the facts and run the brief. Slow by nature — one Claude call
+    plus a market-wide discovery sweep — so callers run it as a job."""
+    summary, reports = pf_service.portfolio_summary()
+    risk = insights_service.compute_risk(reports)
+    alerts = insights_service.build_alerts(reports)
     try:
         # Buy-side context: the advisor should weigh new-name opportunities,
         # not just prune the existing book.
@@ -35,6 +31,56 @@ def advise_portfolio(force: bool = False, deep: bool = False):
     return advisor_service.advise_portfolio(
         summary, reports, risk, alerts, force=force, deep=deep,
         candidates=candidates)
+
+
+@router.get("/portfolio")
+def advise_portfolio(force: bool = False, deep: bool = False):
+    """Whole-book brief, synchronously. Safe only for a CACHE HIT.
+
+    Generating one is a Claude call that now also produces the staged plan, so
+    it regularly runs past the tunnel's ~100s edge timeout and 524s. Clients
+    should POST /portfolio/start and poll; this endpoint stays for the cached
+    path and for local (non-tunnelled) use."""
+    try:
+        return _build_brief(force, deep)
+    except Exception as exc:
+        traceback.print_exc()
+        raise HTTPException(status_code=502, detail=f"Brief failed: {exc}")
+
+
+@router.post("/portfolio/start")
+def advise_portfolio_start(force: bool = False, deep: bool = False):
+    """Kick off the brief in the background; poll /job/{job_id}.
+
+    Same discipline as /ask/start: keep every HTTP request short so a long
+    generation survives the tunnel instead of dying at the edge."""
+    return {"job_id": jobs_service.submit(_build_brief, force, deep),
+            "status": "pending"}
+
+
+@router.post("/stock/{symbol}/start")
+def advise_stock_start(symbol: str, force: bool = False, deep: bool = False):
+    """Backgrounded single-stock read — deep=true can run several minutes."""
+    def _run():
+        return advisor_service.advise_stock(
+            pf_service.build_report(symbol.upper()), force=force, deep=deep)
+    return {"job_id": jobs_service.submit(_run), "status": "pending"}
+
+
+@router.get("/job/{job_id}")
+def advisor_job(job_id: str):
+    """Poll any backgrounded advisor call.
+
+    status: pending | done | error | gone. 'gone' means the id is unknown —
+    usually a backend restart dropped the worker; the client just re-asks."""
+    job = jobs_service.get(job_id)
+    if job is None:
+        return {"status": "gone"}
+    if job["status"] == "error":
+        return {"status": "error", "error": job["error"]}
+    if job["status"] == "done":
+        return {"status": "done", "result": job["result"]}
+    return {"status": "pending"}
 
 
 @router.get("/stay-the-course")
