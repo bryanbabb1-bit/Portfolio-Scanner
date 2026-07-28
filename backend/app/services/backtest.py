@@ -349,5 +349,9 @@ def run(years: int = 5, limit: int | None = None) -> dict:
             f"{GRADE_AT} sessions, matching the live scorecard convention.",
         ],
     }
-    _persist(result)
+    # Only a FULL run becomes the saved record. A `limit`ed run is a debugging
+    # path over part of the universe; letting it overwrite the real result
+    # would silently replace a complete report with a partial one.
+    if limit is None:
+        _persist(result)
     return result

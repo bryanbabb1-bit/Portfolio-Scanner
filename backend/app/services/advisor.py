@@ -627,11 +627,18 @@ def _facts_from_portfolio(summary: PortfolioSummary, reports: list[StockReport],
                 f"{c.symbol} {c.score:.0f}/100 (${c.price}, {c.theme}, "
                 f"RSI {c.indicators.rsi}, {c.indicators.trend})"
                 for c in candidates[:8]))
-    from . import journal
+    from . import journal, learning
     history = journal.facts_block()
     if history:
         lines.append("")
         lines.append(history)
+    # Close the loop: the advisor should know which of its own screens have
+    # actually paid, so it can weight a signal by its record instead of
+    # treating every rule as equally credible.
+    track = learning.facts_block()
+    if track:
+        lines.append("")
+        lines.append(track)
     return "\n".join(lines)
 
 

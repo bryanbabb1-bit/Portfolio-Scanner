@@ -195,6 +195,35 @@ export interface PortfolioInsights {
   alerts: PortfolioAlert[];
 }
 
+export interface RuleHealth {
+  rule: string;
+  side: "buy" | "sell";
+  verdict: "EARNING" | "MARGINAL" | "RETUNE" | "RETIRE";
+  reason: string;
+  backtest_signals: number;
+  backtest_win_rate: number | null;
+  backtest_avg_pct: number | null;
+  profit_factor: number | null;
+  live_signals: number;
+  live_win_rate: number | null;
+  live_avg_pct: number | null;
+  knob: string | null;
+  proposal: string | null;
+  accepted: { rule: string; accepted_at: string; note: string } | null;
+}
+
+export interface Learning {
+  as_of: string;
+  rules: RuleHealth[];
+  counts: Record<string, number>;
+  backtest_as_of: string | null;
+  backtest_period: { start: string; end: string } | null;
+  live_signals_graded: number;
+  live_win_rate: number | null;
+  has_backtest: boolean;
+  notes: string[];
+}
+
 export interface BacktestRule {
   rule: string;
   side: "buy" | "sell";
@@ -800,6 +829,17 @@ export const api = {
   saveStrategy: (doc: StrategyDoc) => put<StrategyDoc>("/api/strategy", doc),
   insights: () => get<PortfolioInsights>("/api/insights"),
   risk: () => get<RiskDesk>("/api/risk"),
+  learning: () => get<Learning>("/api/learning"),
+  acceptProposal: (rule: string, note = "") =>
+    post<RuleHealth["accepted"]>(
+      `/api/learning/accept/${encodeURIComponent(rule)}?note=${encodeURIComponent(note)}`,
+      {}
+    ),
+  unacceptProposal: (rule: string) =>
+    send<{ removed: boolean }>(
+      `/api/learning/accept/${encodeURIComponent(rule)}`,
+      "DELETE"
+    ),
   backtest: () => get<Backtest | null>("/api/backtest"),
   startBacktest: (years = 5) =>
     post<{ job_id: string }>(`/api/backtest?years=${years}`, {}),

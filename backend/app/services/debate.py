@@ -252,9 +252,10 @@ def _facts(symbol: str) -> tuple[str, object]:
 def _journal_block(symbol: str) -> str:
     """What the client has actually DONE in this name lately.
 
-    Without it the desk re-argues a trade the client already made — the same
-    statelessness that made the whole-book brief nag before the action ledger
-    was added."""
+    The per-symbol counterpart of `journal.facts_block()`, which renders the
+    whole book — correct for the brief, but noise in a debate about one name.
+    Without it the desk re-argues a trade the client already made, the same
+    statelessness that made the brief nag before the action ledger existed."""
     rows = [e for e in journal.list_entries(90) if (e.get("symbol") or "").upper() == symbol]
     if not rows:
         return ""

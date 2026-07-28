@@ -1,0 +1,109 @@
+/* Learning Loop sheet 06/08 — the cycle across the top, then the rule-health
+   table with its proposals. */
+
+.loop-top {
+  display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 2fr);
+  gap: 30px; align-items: start; margin-bottom: 26px;
+}
+@media (max-width: 1000px) { .loop-top { grid-template-columns: 1fr; gap: 20px; } }
+
+.loop-cycle {
+  list-style: none; display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(168px, 1fr)); gap: 12px;
+}
+.lc-title {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 12px; font-weight: 600; letter-spacing: .13em; text-transform: uppercase;
+  margin-top: 8px;
+}
+.lc-rule { width: 20px; height: 2px; margin: 8px 0 9px; }
+.lc-body { font-size: 12px; line-height: 1.5; color: var(--muted); }
+.lc-stat {
+  margin-top: 10px; padding-top: 9px; border-top: 1px solid var(--hairline);
+  font-size: 13px; font-weight: 700; font-variant-numeric: var(--tab-nums);
+}
+
+/* ---- verdict counters ---- */
+.loop-counts {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 18px;
+}
+@media (max-width: 620px) { .loop-counts { grid-template-columns: 1fr 1fr; } }
+.lct {
+  border: 1px solid var(--rule); background: var(--bg-card);
+  padding: 12px 14px; display: flex; flex-direction: column; gap: 3px;
+}
+.lct-n { font-size: 28px; font-weight: 800; line-height: 1; font-variant-numeric: var(--tab-nums); }
+.lct-v {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px; letter-spacing: .12em; color: var(--muted);
+}
+.lct.retire { border-left: 3px solid var(--bear); }
+.lct.retire .lct-n { color: var(--bear); }
+.lct.retune { border-left: 3px solid var(--accent); }
+.lct.retune .lct-n { color: var(--accent); }
+.lct.marginal { border-left: 3px solid var(--gold); }
+.lct.earning { border-left: 3px solid var(--bull); }
+.lct.earning .lct-n { color: var(--bull); }
+
+/* ---- rule health table ---- */
+.loop-table { margin-bottom: 18px; }
+.loop-table .lr-row {
+  display: grid; grid-template-columns: 1.6fr 96px 132px 132px 56px 96px;
+  gap: 10px; align-items: center; font-size: 13px;
+  font-variant-numeric: var(--tab-nums);
+}
+.loop-table .lr-head {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--muted); border-bottom: 1px solid var(--rule); padding-bottom: 8px;
+}
+.lr-block { padding: 12px 6px; border-bottom: 1px solid var(--hairline); }
+.lr-block:last-child { border-bottom: 0; }
+.lr-block.retire { box-shadow: inset 3px 0 0 var(--bear); }
+.lr-block.retune { box-shadow: inset 3px 0 0 var(--accent); }
+.lr-block.marginal { box-shadow: inset 3px 0 0 var(--gold); }
+.lr-block.earning { box-shadow: inset 3px 0 0 var(--bull); }
+
+.lr-rule {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 12px; font-weight: 500;
+}
+.lr-verdict {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 9.5px; font-weight: 600; letter-spacing: .1em;
+  padding: 3px 7px; text-align: center; color: var(--on-dark);
+}
+.lr-verdict.retire { background: var(--bear); }
+.lr-verdict.retune { background: var(--accent); }
+.lr-verdict.marginal { background: var(--gold); }
+.lr-verdict.earning { background: var(--bull); }
+.lr-num { font-size: 12px; color: var(--muted); }
+.lr-num i { font-style: normal; font-weight: 700; margin-left: 7px; }
+.lr-num em { font-style: normal; opacity: .6; }
+.lr-pf { font-weight: 700; text-align: right; }
+.lr-accept { padding: 5px 10px; font-size: 10px; width: 100%; }
+.lr-accept.on { border-color: var(--bull); color: var(--bull); }
+
+.lr-reason { margin-top: 8px; font-size: 12.5px; color: var(--muted); line-height: 1.55; }
+.lr-proposal {
+  margin-top: 9px; font-size: 12.5px; line-height: 1.55; color: var(--text);
+  background: var(--surface-sunk); padding: 9px 11px;
+}
+.lr-tag {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 9.5px; letter-spacing: .11em; text-transform: uppercase;
+  color: var(--accent); margin-right: 9px;
+}
+.lr-accepted {
+  margin-top: 8px; font-size: 12px; color: var(--bull); line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+  .loop-table .lr-row { grid-template-columns: 1fr 92px 88px; }
+  .loop-table .lr-row > :nth-child(4),
+  .loop-table .lr-row > :nth-child(5) { display: none; }
+  .loop-table .lr-head > :nth-child(4),
+  .loop-table .lr-head > :nth-child(5) { display: none; }
+}
+
+.loop-notes { border-left: 3px solid var(--gold); }

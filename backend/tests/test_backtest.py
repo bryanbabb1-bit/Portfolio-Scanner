@@ -9,8 +9,22 @@ os.environ["ADVISOR_ENABLED"] = "0"
 
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
+import pytest  # noqa: E402
 
 from app.services import backtest, conviction, market_data, screener, technical  # noqa: E402
+
+
+@pytest.fixture(autouse=True)
+def isolate_store(tmp_path, monkeypatch):
+    """Never write the real backtest.json.
+
+    Without this, `run()` persists from inside the suite — and the
+    short-history test replays a 50-bar stub that produces zero signals, so a
+    test run silently overwrote the genuine saved report with an empty one and
+    every rule on the Learning sheet read as "no historical signals".
+    """
+    monkeypatch.setattr(backtest, "_FILE", tmp_path / "backtest.json")
+    yield
 
 
 def _series(closes, volumes=None) -> pd.DataFrame:
@@ -189,6 +203,17 @@ def test_run_produces_an_honest_report():
     assert r["win_rate"] is not None
     assert r["period"]["start"] <= r["period"]["end"]
     assert r["rules"], "signals fired but no per-rule stats were aggregated"
+
+
+def test_partial_run_never_overwrites_the_saved_report():
+    """A `limit`ed run is a debugging path. If it could persist, a 4-symbol
+    run would replace a full 14-symbol report and the Learning sheet would
+    read every rule as untested."""
+    full = backtest.run(years=5)
+    assert backtest.last_result()["universe"] == full["universe"]
+
+    backtest.run(years=5, limit=2)
+    assert backtest.last_result()["universe"] == full["universe"]
 
 
 def test_short_history_is_reported_as_skipped_not_silently_dropped(monkeypatch):
