@@ -781,5 +781,23 @@
     "price": 10.7055,
     "ts": 1785255295.456365,
     "date": "2026-07-28"
+  },
+  {
+    "id": "watch:eda7305e228f",
+    "symbol": "LLY",
+    "side": "buy",
+    "rule": "watchpoint",
+    "price": 1218.86,
+    "ts": 1785257213.428929,
+    "date": "2026-07-28"
+  },
+  {
+    "id": "plan:8b645c836682:2026-07-28",
+    "symbol": "LVWR",
+    "side": "sell",
+    "rule": "plan-reeval",
+    "price": 2.87,
+    "ts": 1785257287.7222219,
+    "date": "2026-07-28"
   }
 ]

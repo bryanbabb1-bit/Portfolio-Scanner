@@ -195,10 +195,21 @@ def _norm_snap(raw) -> dict:
 
 def _sale_price(sym: str) -> float | None:
     """Best proxy for the price a position was sold at: the current market
-    price (the user just deleted it, so 'now' is the fill). Editable later."""
+    price (the user just deleted it, so 'now' is the fill). Editable later.
+
+    Refuses a MOCK price. In auto mode a failed live fetch degrades to mock, so
+    booking realized P/L against it invents a gain or loss out of nothing —
+    AVGO was recorded sold at $175 while it traded at $382. No price means the
+    entry is journalled without realized P/L rather than with a fictional one.
+    """
     try:
         from . import market_data
-        return round(float(market_data.get_price_data(sym).history["Close"].iloc[-1]), 2)
+        from ..config import settings as _s
+        md = market_data.get_price_data(sym)
+        if md.source == "mock" and _s.DATA_MODE != "mock":
+            print(f"[journal] refusing mock sale price for {sym}")
+            return None
+        return round(float(md.history["Close"].iloc[-1]), 2)
     except Exception:
         return None
 
@@ -221,6 +232,27 @@ def snapshot_and_diff(holdings: list[dict]) -> list[dict]:
                 prev = _norm_snap(json.load(f))
         except (FileNotFoundError, json.JSONDecodeError):
             prev = {}
+
+        # SANITY GATE, before the snapshot is overwritten.
+        #
+        # A caller handing us a short or empty holdings list is far more likely
+        # to be a bad read than a client who liquidated their whole book
+        # between two page loads. Without this guard the diff booked a "closed
+        # the position" sell for every real holding — at a MOCK price, since
+        # the fallback fires on the same failures — and then re-opened them all
+        # on the next good read. Repeated, that produced tens of thousands of
+        # dollars of phantom realized losses and a -217% reported return.
+        suspect = ""
+        if prev and not current:
+            suspect = "holdings list was empty"
+        elif prev and len(current) * 2 < len(prev):
+            suspect = (f"holdings dropped from {len(prev)} to {len(current)} "
+                       f"in one read")
+        if suspect:
+            print(f"[journal] ignoring suspicious snapshot ({suspect}); "
+                  f"keeping the previous baseline")
+            return []          # and deliberately do NOT overwrite the snapshot
+
         _SNAPSHOT_FILE.parent.mkdir(parents=True, exist_ok=True)
         with open(_SNAPSHOT_FILE, "w") as f:
             json.dump(current, f, indent=2)

@@ -25,6 +25,12 @@ def isolate(tmp_path, monkeypatch):
     monkeypatch.setattr(tr, "_FILE", tmp_path / "transition.json")
     monkeypatch.setattr(tr.settings, "ADVISOR_ENABLED", True)
     monkeypatch.setattr(tr, "analyse", lambda full=True: ANALYSIS)
+    # See test_transition.py: no core convictions, so these persistence tests
+    # don't depend on the live config blocking their fixture step.
+    monkeypatch.setattr(tr, "governance", lambda: {
+        "approved": False, "thesis": "", "guardrails": [], "long_term": [],
+        "allocation_targets": {}, "core_convictions": [],
+    })
     yield
 
 

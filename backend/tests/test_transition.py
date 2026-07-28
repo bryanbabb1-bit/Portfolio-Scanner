@@ -16,6 +16,13 @@ from app.services import advisor, transition as tr  # noqa: E402
 def isolate(tmp_path, monkeypatch):
     monkeypatch.setattr(tr, "_FILE", tmp_path / "transition.json")
     monkeypatch.setattr(tr.settings, "ADVISOR_ENABLED", True)
+    # No core convictions: these tests cover the sequencing mechanics, and
+    # must not depend on the live portfolio.json (whose real core list
+    # includes MU, which would block the fixture's own step).
+    monkeypatch.setattr(tr, "governance", lambda: {
+        "approved": False, "thesis": "", "guardrails": [], "long_term": [],
+        "allocation_targets": {}, "core_convictions": [],
+    })
     yield
 
 

@@ -332,7 +332,7 @@
     "price": 5.17,
     "theme": "Runner",
     "held": false,
-    "dismissed": false,
+    "dismissed": true,
     "generated_at": "2026-07-28 11:34:31",
     "ts": 1785256437.674207
   },
@@ -387,5 +387,56 @@
     "dismissed": true,
     "generated_at": "2026-07-28 11:15:33",
     "ts": 1785255295.456365
+  },
+  "watch:eda7305e228f": {
+    "id": "watch:eda7305e228f",
+    "symbol": "LLY",
+    "side": "buy",
+    "rule": "watchpoint",
+    "label": "Watchpoint: price ≤ $1226.54",
+    "headline": "Price hit, but step 1 isn't done yet",
+    "what": "Hold off — buy LLY only after step 1 (sell TSM, buy VRT) fills first.",
+    "why": [
+      "Plan step 2 requires VRT filled and TSM cash settled; VRT is still just an armed order at $259.93, not filled.",
+      "AMZN (funding source for this buy) hasn't been sold yet — selling it now would jump the sequence.",
+      "LLY earnings hit in 8 days (Aug 5); waiting for step 1 also avoids buying right into that binary event.",
+      "Your watchpoint: Watchpoint: price ≤ $1226.54."
+    ],
+    "target": "",
+    "stop": "",
+    "price": 1218.86,
+    "held": null,
+    "dismissed": true,
+    "generated_at": "2026-07-28 11:46:53",
+    "ts": 1785257213.428929,
+    "action": "HOLD",
+    "entry": "",
+    "size": ""
+  },
+  "plan:8b645c836682:2026-07-28": {
+    "id": "plan:8b645c836682:2026-07-28",
+    "symbol": "LVWR",
+    "side": "sell",
+    "rule": "plan-reeval",
+    "label": "Reconsider staged plan",
+    "headline": "Earnings pop, don't chase — keep dip order",
+    "what": "LVWR is up 18% today on earnings; skip buying now, keep your $2.40 order.",
+    "why": [
+      "Jumped to $2.87, +18% today on a strong earnings report",
+      "Still 16% above your $2.40 buy trigger — order won't fill yet",
+      "Very stretched after this run, chasing here risks a fast pullback"
+    ],
+    "target": "3.55",
+    "stop": "2.05",
+    "action": "AVOID",
+    "price": 2.87,
+    "plan_text": "Do nothing today; place a $175 buy on LVWR only if it drops to $2.40.",
+    "move_pct": 5.5,
+    "theme": "Plan",
+    "held": true,
+    "dismissed": true,
+    "data_source": "live",
+    "generated_at": "2026-07-28 11:48:33",
+    "ts": 1785257287.7222219
   }
 }

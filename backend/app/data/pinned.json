@@ -45,35 +45,5 @@
     "created_at": "2026-07-06 17:13:01",
     "ts": 1783375981.0168931,
     "done_at": "2026-07-06 18:06:37"
-  },
-  {
-    "id": "7bda41fca4a1",
-    "symbol": null,
-    "source": "ask",
-    "text": "Buy $150 GOOGL if it drops to $330; pin that level now.",
-    "points": [
-      "Cloud grew 82% this quarter, the strongest number in the book right now.",
-      "No cash sits idle today, so this is a trigger order, not an immediate buy.",
-      "Also worth pinning: add $150 TSM near $398, my other standing dip-buy level.",
-      "Both wait for a real pullback \u2014 don't chase either name at today's price."
-    ],
-    "status": "open",
-    "price_at_pin": null,
-    "created_at": "2026-07-22 18:05:00",
-    "ts": 1784761500.0926325
-  },
-  {
-    "id": "8b645c836682",
-    "symbol": "LVWR",
-    "source": "signal",
-    "text": "Do nothing today; place a $175 buy on LVWR only if it drops to $2.40.",
-    "points": [
-      "$3.55 (+48% from a $2.40 fill)",
-      "daily close below $2.05 \u2014 exit, never add"
-    ],
-    "status": "open",
-    "price_at_pin": 2.72,
-    "created_at": "2026-07-28 11:24:50",
-    "ts": 1785255890.0546002
   }
 ]

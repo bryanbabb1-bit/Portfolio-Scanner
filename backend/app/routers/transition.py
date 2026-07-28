@@ -33,7 +33,17 @@ def get_transition(refresh: bool = False):
         plan = {**plan, "analysis": fresh}
     except Exception as exc:
         print(f"[transition] gap refresh failed, serving stored: {exc!r}")
+    try:
+        plan = {**plan, "coherence": tr.coherence()}
+    except Exception as exc:
+        print(f"[transition] coherence check failed: {exc!r}")
     return plan
+
+
+@router.get("/transition/coherence")
+def get_coherence():
+    """Where the strategy, the plan and the standing calls disagree."""
+    return tr.coherence()
 
 
 @router.get("/transition/analysis")

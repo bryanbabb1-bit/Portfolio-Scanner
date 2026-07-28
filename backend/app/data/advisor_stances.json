@@ -3,27 +3,27 @@
     "symbol": "MSFT",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Cloud strong into Wednesday earnings; sit tight.",
-    "thesis": "Cloud strong into Wednesday earnings; sit tight.",
+    "headline": "Fastest cloud growth in a year expected Wednesday.",
+    "thesis": "Fastest cloud growth in a year expected Wednesday.",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 398.33,
-    "as_of": "2026-07-28 11:27:20",
-    "ts": 1785256040.7147121
+    "price": 398.1,
+    "as_of": "2026-07-28 12:16:01",
+    "ts": 1785258961.109551
   },
   "NET": {
     "symbol": "NET",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Best winner near highs; let it run.",
-    "thesis": "Best winner near highs; let it run.",
+    "headline": "Strong winner near its high; let it run.",
+    "thesis": "Strong winner near its high; let it run.",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 266.39,
-    "as_of": "2026-07-28 11:27:20",
-    "ts": 1785256040.7556832
+    "price": 265.63,
+    "as_of": "2026-07-28 12:16:01",
+    "ts": 1785258961.0732028
   },
   "NEE": {
     "symbol": "NEE",
@@ -53,16 +53,16 @@
   },
   "AVGO": {
     "symbol": "AVGO",
-    "action": "ADD",
+    "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "The weakness I said to wait for arrived.",
-    "thesis": "The weakness I said to wait for arrived.",
+    "headline": "Plan sells half at break-even; wait for that.",
+    "thesis": "Plan sells half at break-even; wait for that.",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 381.53,
-    "as_of": "2026-07-28 11:27:20",
-    "ts": 1785256040.6848457
+    "price": 382.05,
+    "as_of": "2026-07-28 12:16:00",
+    "ts": 1785258960.9508038
   },
   "IREN": {
     "symbol": "IREN",
@@ -81,14 +81,14 @@
     "symbol": "NVDA",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Anchor intact; held up best in the selloff.",
-    "thesis": "Anchor intact; held up best in the selloff.",
+    "headline": "Anchor intact; held up best through the chip selloff.",
+    "thesis": "Anchor intact; held up best through the chip selloff.",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 197.4,
-    "as_of": "2026-07-28 11:27:20",
-    "ts": 1785256040.666084
+    "price": 197.47,
+    "as_of": "2026-07-28 12:16:00",
+    "ts": 1785258960.9326634
   },
   "AMD": {
     "symbol": "AMD",
@@ -120,40 +120,40 @@
     "symbol": "AMZN",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Cloud growth strong; hold through Thursday earnings.",
-    "thesis": "Cloud growth strong; hold through Thursday earnings.",
+    "headline": "Hold through Thursday earnings before any decision.",
+    "thesis": "Hold through Thursday earnings before any decision.",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 231.59,
-    "as_of": "2026-07-28 11:27:20",
-    "ts": 1785256040.7405884
+    "price": 231.23,
+    "as_of": "2026-07-28 11:49:58",
+    "ts": 1785257398.8146574
   },
   "GOOGL": {
     "symbol": "GOOGL",
     "action": "ADD",
     "prev_action": "ADD",
-    "headline": "Cheapest big AI platform; keep buying weakness.",
-    "thesis": "Cheapest big AI platform; keep buying weakness.",
+    "headline": "Cheapest big AI platform; next buy after LLY.",
+    "thesis": "Cheapest big AI platform; next buy after LLY.",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 333.76,
-    "as_of": "2026-07-28 11:27:20",
-    "ts": 1785256040.7006588
+    "price": 334.34,
+    "as_of": "2026-07-28 12:16:01",
+    "ts": 1785258961.0065424
   },
   "AAPL": {
     "symbol": "AAPL",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Near highs with real catalyst; let it run.",
-    "thesis": "Near highs with real catalyst; let it run.",
+    "headline": "Your best gain; let it run through earnings.",
+    "thesis": "Your best gain; let it run through earnings.",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 339.7,
-    "as_of": "2026-07-28 11:27:20",
-    "ts": 1785256040.7286787
+    "price": 339.5,
+    "as_of": "2026-07-28 12:16:01",
+    "ts": 1785258961.0290616
   },
   "MELI": {
     "symbol": "MELI",
@@ -184,15 +184,15 @@
   "ANET": {
     "symbol": "ANET",
     "action": "HOLD",
-    "prev_action": "HOLD",
-    "headline": "Switch launch running; earnings in a week.",
-    "thesis": "Switch launch running; earnings in a week.",
+    "prev_action": "SELL",
+    "headline": "Plan says sell; I'd wait for next week's report.",
+    "thesis": "Plan says sell; I'd wait for next week's report.",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 166.66,
-    "as_of": "2026-07-28 11:27:20",
-    "ts": 1785256040.8702097
+    "price": 167.38,
+    "as_of": "2026-07-28 12:16:01",
+    "ts": 1785258961.2054775
   },
   "BATL": {
     "symbol": "BATL",
@@ -281,9 +281,9 @@
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 181.37,
-    "as_of": "2026-07-28 11:27:20",
-    "ts": 1785256040.8095284
+    "price": 182.8,
+    "as_of": "2026-07-28 12:16:01",
+    "ts": 1785258961.147019
   },
   "ELTX": {
     "symbol": "ELTX",
@@ -406,14 +406,14 @@
     "symbol": "VRT",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "No bad news; dip is sector sentiment.",
-    "thesis": "No bad news; dip is sector sentiment.",
+    "headline": "Big backlog into tomorrow's report; sit tight.",
+    "thesis": "Big backlog into tomorrow's report; sit tight.",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 297.56,
-    "as_of": "2026-07-20 07:27:59",
-    "ts": 1784550479.726325
+    "price": 267.68,
+    "as_of": "2026-07-28 12:16:00",
+    "ts": 1785258960.9693425
   },
   "SDOT": {
     "symbol": "SDOT",
@@ -509,15 +509,15 @@
   "DLR": {
     "symbol": "DLR",
     "action": "HOLD",
-    "prev_action": "AVOID",
-    "headline": "Revising from AVOID; you bought it, guidance raised twice.",
-    "thesis": "Revising from AVOID; you bought it, guidance raised twice.",
+    "prev_action": "HOLD",
+    "headline": "Landlord to AI data centers; guidance raised twice.",
+    "thesis": "Landlord to AI data centers; guidance raised twice.",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 195.0,
-    "as_of": "2026-07-28 11:27:20",
-    "ts": 1785256040.77267
+    "price": 195.54,
+    "as_of": "2026-07-28 12:16:01",
+    "ts": 1785258961.092015
   },
   "WDFC": {
     "symbol": "WDFC",
@@ -575,27 +575,27 @@
     "symbol": "PANW",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Analyst targets up to $432; stay put.",
-    "thesis": "Analyst targets up to $432; stay put.",
+    "headline": "Plan says sell; targets rising, so not yet.",
+    "thesis": "Plan says sell; targets rising, so not yet.",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 320.54,
-    "as_of": "2026-07-28 11:27:20",
-    "ts": 1785256040.8325908
+    "price": 319.95,
+    "as_of": "2026-07-28 12:16:01",
+    "ts": 1785258961.16767
   },
   "GEV": {
     "symbol": "GEV",
-    "action": "HOLD",
-    "prev_action": "HOLD",
-    "headline": "Wind missed but full-year guidance raised; tiny position.",
-    "thesis": "Wind missed but full-year guidance raised; tiny position.",
+    "action": "SELL",
+    "prev_action": "SELL",
+    "headline": "Changed from HOLD: smallest tail, funds the LLY buy.",
+    "thesis": "Changed from HOLD: smallest tail, funds the LLY buy.",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 944.76,
-    "as_of": "2026-07-28 11:27:20",
-    "ts": 1785256040.8508146
+    "price": 947.21,
+    "as_of": "2026-07-28 12:16:01",
+    "ts": 1785258961.1878095
   },
   "TEM": {
     "symbol": "TEM",
@@ -808,15 +808,15 @@
   "LVWR": {
     "symbol": "LVWR",
     "action": "AVOID",
-    "prev_action": null,
-    "headline": "Don't chase the spike \u2014 set a pullback buy",
-    "thesis": "Skip LVWR at $2.78; place a $175 buy only if it falls to $2.40.",
-    "target": "$3.55 (+48% from a $2.40 fill) \u2014 analysts' average target",
-    "stop": "daily close below $2.05 \u2014 exit, never add",
-    "source": "reco:runner",
-    "price": 2.78,
-    "as_of": "2026-07-28 10:45:15",
-    "ts": 1785253515.7902026
+    "prev_action": "AVOID",
+    "headline": "Earnings pop, don't chase \u2014 keep dip order",
+    "thesis": "LVWR is up 18% today on earnings; skip buying now, keep your $2.40 order.",
+    "target": "3.55",
+    "stop": "2.05",
+    "source": "plan-watch",
+    "price": 2.87,
+    "as_of": "2026-07-28 11:48:33",
+    "ts": 1785257313.9893594
   },
   "EGG": {
     "symbol": "EGG",
@@ -938,14 +938,40 @@
   "CEG": {
     "symbol": "CEG",
     "action": "HOLD",
-    "prev_action": null,
-    "headline": "Cleared PJM auction, Walmart nuclear deal; new position.",
-    "thesis": "Cleared PJM auction, Walmart nuclear deal; new position.",
+    "prev_action": "HOLD",
+    "headline": "Nuclear demand real; drop is sector sentiment.",
+    "thesis": "Nuclear demand real; drop is sector sentiment.",
     "target": "",
     "stop": "",
     "source": "brief",
-    "price": 261.11,
-    "as_of": "2026-07-28 11:27:20",
-    "ts": 1785256040.7893207
+    "price": 263.72,
+    "as_of": "2026-07-28 12:16:00",
+    "ts": 1785258960.9881024
+  },
+  "LLY": {
+    "symbol": "LLY",
+    "action": "ADD",
+    "prev_action": "BUY",
+    "headline": "Changed from HOLD: healthcare is 7 points light.",
+    "thesis": "Changed from HOLD: healthcare is 7 points light.",
+    "target": "",
+    "stop": "",
+    "source": "brief",
+    "price": 1220.33,
+    "as_of": "2026-07-28 12:16:01",
+    "ts": 1785258961.050108
+  },
+  "ETN": {
+    "symbol": "ETN",
+    "action": "HOLD",
+    "prev_action": "HOLD",
+    "headline": "Data-center orders up 240%; reports Friday.",
+    "thesis": "Data-center orders up 240%; reports Friday.",
+    "target": "",
+    "stop": "",
+    "source": "brief",
+    "price": 384.65,
+    "as_of": "2026-07-28 12:16:01",
+    "ts": 1785258961.1295362
   }
 }

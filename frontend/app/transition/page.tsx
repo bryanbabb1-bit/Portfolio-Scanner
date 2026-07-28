@@ -182,6 +182,42 @@ export default function TransitionPage() {
 
       {running && !d && <p className="tr-running">Working out the sequence…</p>}
 
+      {/* Where the layers disagree. Shown ABOVE the plan: a contradiction the
+          app knows about must never be something you discover by reading two
+          screens and noticing they differ. */}
+      {d?.coherence && !d.coherence.clean && (
+        <SpecPanel
+          title="Where The Layers Disagree"
+          aux={`aiming at: ${d.coherence.target_source}`}
+          className="tr-coherence"
+          plus={false}
+        >
+          <p className="tr-coh-lead">
+            Your approved <b>Strategy</b> governs. The Clean Sheet is a
+            challenger, and the plan below is the path to the Strategy target —
+            not to its own opinion.
+          </p>
+          <ul className="tr-coh-list">
+            {d.coherence.conflicts.map((c) => (
+              <li key={`${c.symbol}-${c.severity}`} className={c.severity}>
+                <span className="tr-coh-sev">{c.severity}</span>
+                <span className="tr-coh-body">
+                  <b>{c.symbol}</b> {c.detail}
+                  <i>{c.resolution}</i>
+                </span>
+              </li>
+            ))}
+          </ul>
+          {d.coherence.core_convictions.length > 0 && (
+            <p className="tr-coh-core">
+              Protected core convictions:{" "}
+              <b>{d.coherence.core_convictions.join(", ")}</b>. Steps selling
+              these are blocked automatically.
+            </p>
+          )}
+        </SpecPanel>
+      )}
+
       {d && d.steps.length > 0 && a && (
         <>
           <SpecPanel title="The Plan" className="tr-headline-panel">
@@ -235,20 +271,32 @@ export default function TransitionPage() {
           <ol className="tr-steps">
             {d.steps.map((s) => (
               <li key={s.n}>
-                <SpecPanel plus={false} className={`tr-step ${s.done ? "done" : ""}`}>
+                <SpecPanel
+                  plus={false}
+                  className={`tr-step ${s.done ? "done" : ""} ${s.blocked ? "blocked" : ""}`}
+                >
                   <div className="trs-head">
                     <span className="step-num">STEP {String(s.n).padStart(2, "0")}</span>
                     <span className="trs-trigger">
-                      <i>when</i> {s.trigger}
+                      {s.blocked ? (
+                        <span className="trs-blocked-tag">Blocked by your strategy</span>
+                      ) : (
+                        <>
+                          <i>when</i> {s.trigger}
+                        </>
+                      )}
                     </span>
-                    <button
-                      className={`btn ghost trs-check ${s.done ? "on" : ""}`}
-                      onClick={() => toggleStep(s.n, !s.done)}
-                      disabled={busy}
-                    >
-                      {s.done ? "Done" : "Mark done"}
-                    </button>
+                    {!s.blocked && (
+                      <button
+                        className={`btn ghost trs-check ${s.done ? "on" : ""}`}
+                        onClick={() => toggleStep(s.n, !s.done)}
+                        disabled={busy}
+                      >
+                        {s.done ? "Done" : "Mark done"}
+                      </button>
+                    )}
                   </div>
+                  {s.blocked && <p className="trs-blocked">{s.blocked_reason}</p>}
                   <div className="trs-orders">
                     {s.sell && (
                       <p className="trs-order sell">

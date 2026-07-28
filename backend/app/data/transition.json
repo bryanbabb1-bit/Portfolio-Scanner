@@ -1,191 +1,156 @@
 {
-  "ts": 1785253187.9486654,
-  "as_of": "2026-07-28 10:39:47",
+  "ts": 1785259469.4435647,
+  "as_of": "2026-07-28 12:24:29",
   "engine": "claude",
-  "headline": "Sell TSM and AMZN now, stage out of AVGO and NVDA, buy VRT, LLY, SNOW.",
-  "approach": "We sell what the target book does not want first — TSM and AMZN outright, then AVGO and NVDA in halves so we never dump a big position in one day. Each sale funds the very next buy, biggest allocation gap first: compute power, then healthcare, then data. Nothing moves to the next step until the prior sale has settled and the cash is actually in the account.",
-  "first_move": "Sell all $619 of TSM at market today, then place a $1,040 VRT buy order at $259.93.",
+  "headline": "Cut the ANET tail, stage two DLR trims, then fund NU and SNOW.",
+  "approach": "Your core — NVDA, AVGO and VRT — is untouchable here, so the funding has to come from the tail and from DLR, and it does. Sell the sub-2% ANET stub first, then buy NU with those proceeds plus your $210 cash. DLR gets trimmed in two pieces rather than dumped, and only once both trims are done do you put the money into SNOW.",
+  "first_move": "Sell all $150 of ANET at market today — it is the sub-2% tail your plan wants gone.",
   "steps": [
     {
       "n": 1,
-      "trigger": "Immediately",
-      "sell": "Sell all $619 of TSM at market.",
-      "buy": "Buy $1,040 of VRT near $259.93.",
-      "buy_symbol": "VRT",
-      "buy_level": 259.93,
-      "sell_symbol": "TSM",
+      "trigger": "immediately",
+      "sell": "Sell all $150 of ANET at market.",
+      "buy": "",
+      "buy_symbol": "",
+      "buy_level": 0.0,
+      "sell_symbol": "ANET",
       "sell_level": 0.0,
-      "why": "Closes the single biggest hole in the book, compute power, using cash plus the TSM proceeds.",
-      "realizes": "Books a short-term loss on TSM that offsets your most expensive gains; no TSM rebuy for 30 days.",
-      "done": false
+      "why": "Clears the sub-2% tail position your plan says to cut first.",
+      "realizes": "Books a small loss that offsets gains you take; don't rebuy ANET for 30 days.",
+      "done": false,
+      "blocked": false,
+      "blocked_reason": ""
     },
     {
       "n": 2,
-      "trigger": "VRT order is filled and TSM cash has settled",
-      "sell": "Sell all $633 of AMZN at market.",
-      "buy": "Buy $660 of LLY near $1,226.54.",
-      "buy_symbol": "LLY",
-      "buy_level": 1226.54,
-      "sell_symbol": "AMZN",
+      "trigger": "NU trades at $14.62 or lower",
+      "sell": "",
+      "buy": "Buy $285 of NU near $14.62.",
+      "buy_symbol": "NU",
+      "buy_level": 14.62,
+      "sell_symbol": "",
       "sell_level": 0.0,
-      "why": "Adds a healthcare earner whose demand does not care what the AI cycle does.",
-      "realizes": "Books a loss on AMZN you can use against gains; don't rebuy AMZN for 30 days.",
-      "done": false
+      "why": "Opens your first financials position, funded by the ANET sale plus your $210 cash.",
+      "realizes": "",
+      "done": false,
+      "blocked": false,
+      "blocked_reason": ""
     },
     {
       "n": 3,
-      "trigger": "AVGO recovers its 4.7% loss back to your break-even price",
-      "sell": "Sell $680 of AVGO, about half the position.",
-      "buy": "Buy $570 of SNOW near $256.22.",
-      "buy_symbol": "SNOW",
-      "buy_level": 256.22,
-      "sell_symbol": "AVGO",
+      "trigger": "DLR gets back to what you paid or better",
+      "sell": "Trim $175 of DLR at market.",
+      "buy": "",
+      "buy_symbol": "",
+      "buy_level": 0.0,
+      "sell_symbol": "DLR",
       "sell_level": 0.0,
-      "why": "Halves your largest chip overweight into strength rather than at a low.",
-      "realizes": "Books half of AVGO's short-term loss against gains; no AVGO rebuy for 30 days.",
-      "done": false
+      "why": "Starts cutting the data-center overweight without selling into weakness.",
+      "realizes": "Books a small loss usable against gains; don't rebuy DLR for 30 days.",
+      "done": false,
+      "blocked": false,
+      "blocked_reason": ""
     },
     {
       "n": 4,
-      "trigger": "AVGO holds at or above the step 3 sale price for a week",
-      "sell": "Sell the remaining $683 of AVGO at market.",
-      "buy": "Buy $475 of ON near $83.76.",
-      "buy_symbol": "ON",
-      "buy_level": 83.76,
-      "sell_symbol": "AVGO",
+      "trigger": "one week after step 3, with DLR still at or above your cost",
+      "sell": "Trim $150 more of DLR at market.",
+      "buy": "",
+      "buy_symbol": "",
+      "buy_level": 0.0,
+      "sell_symbol": "DLR",
       "sell_level": 0.0,
-      "why": "Finishes the AVGO exit and swaps into a cheaper chipmaker tied to power and autos.",
-      "realizes": "Books the rest of AVGO's short-term loss; the 30-day no-rebuy clock restarts today.",
-      "done": false
+      "why": "Finishes the trim in a second piece so you never dump the whole position at once.",
+      "realizes": "Books the rest of the small loss; you still own DLR, just smaller.",
+      "done": false,
+      "blocked": false,
+      "blocked_reason": ""
     },
     {
       "n": 5,
-      "trigger": "NVDA recovers its 2.5% loss back to your break-even price",
-      "sell": "Trim $500 of NVDA, leaving about $1,076.",
-      "buy": "Buy $475 of NU near $14.62.",
-      "buy_symbol": "NU",
-      "buy_level": 14.62,
-      "sell_symbol": "NVDA",
+      "trigger": "SNOW pulls back to $256.22 or lower from $273.52",
+      "sell": "",
+      "buy": "Buy $325 of SNOW near $256.22.",
+      "buy_symbol": "SNOW",
+      "buy_level": 256.22,
+      "sell_symbol": "",
       "sell_level": 0.0,
-      "why": "Starts cutting the concentration while keeping most of your best AI name intact.",
-      "realizes": "Books a small short-term loss on NVDA against gains; no NVDA rebuy for 30 days.",
-      "done": false
-    },
-    {
-      "n": 6,
-      "trigger": "Steps 1 through 5 are all filled and NVDA is still near break-even",
-      "sell": "Trim another $500 of NVDA at market.",
-      "buy": "Buy $375 of SMCI near $27.24, stop $21.",
-      "buy_symbol": "SMCI",
-      "buy_level": 27.24,
-      "sell_symbol": "NVDA",
-      "sell_level": 0.0,
-      "why": "Finishes the trim and opens a small speculative sleeve with a hard exit already set.",
-      "realizes": "Books the second slice of NVDA's short-term loss; leaves roughly $1,000 cash for APLD, SMR and SOUN later.",
-      "done": false
+      "why": "Puts the DLR proceeds into a real data position instead of leaving cash idle.",
+      "realizes": "",
+      "done": false,
+      "blocked": false,
+      "blocked_reason": ""
     }
   ],
   "guardrails": [
-    "Stop selling AVGO or NVDA if they keep falling and no bounce comes — never sell quality at its low.",
-    "Do not rebuy TSM, AMZN, AVGO or NVDA within 30 days, or the tax loss is cancelled.",
-    "Pause all buying if the whole market drops hard; let it steady before spending the next dollar.",
-    "Cut SMCI at $21 and keep every speculative buy under $400 — that sleeve never gets averaged down."
+    "Stop all buying for two weeks if the book falls below $8,200.",
+    "Never sell NVDA, AVGO or VRT to fund this — core goes only on broken business news.",
+    "Skip any buy whose funding sale has not actually happened first.",
+    "Do not rebuy ANET or DLR within 30 days or the tax loss is disallowed."
   ],
   "analysis": {
-    "equity": 9693.54,
-    "cash": 1077.83,
-    "target_source": "cleansheet",
-    "drift_pct": 31.8,
+    "equity": 9696.73,
+    "cash": 209.64,
+    "target_source": "strategy",
+    "drift_pct": 14.2,
     "gap": [
       {
-        "theme": "AI Infrastructure",
-        "target_pct": 21.0,
-        "current_pct": 38.2,
-        "delta": -17.2
-      },
-      {
-        "theme": "Cash & Income",
-        "target_pct": 0.0,
-        "current_pct": 11.1,
-        "delta": -11.1
-      },
-      {
-        "theme": "Tech",
+        "theme": "Compute Power",
         "target_pct": 10.0,
-        "current_pct": 13.4,
-        "delta": -3.4
+        "current_pct": 15.9,
+        "delta": -5.9
+      },
+      {
+        "theme": "AI Infrastructure",
+        "target_pct": 28.0,
+        "current_pct": 31.8,
+        "delta": -3.8
       },
       {
         "theme": "Energy",
         "target_pct": 12.0,
-        "current_pct": 10.3,
-        "delta": 1.7
+        "current_pct": 14.4,
+        "delta": -2.4
       },
       {
         "theme": "AI",
-        "target_pct": 25.0,
-        "current_pct": 22.0,
-        "delta": 3.0
+        "target_pct": 20.0,
+        "current_pct": 22.1,
+        "delta": -2.1
       },
       {
-        "theme": "International",
+        "theme": "Cash & Income",
+        "target_pct": 3.0,
+        "current_pct": 2.2,
+        "delta": 0.8
+      },
+      {
+        "theme": "Tech",
+        "target_pct": 8.0,
+        "current_pct": 6.8,
+        "delta": 1.2
+      },
+      {
+        "theme": "Financials",
         "target_pct": 5.0,
         "current_pct": 0.0,
         "delta": 5.0
       },
       {
         "theme": "Healthcare",
-        "target_pct": 7.0,
-        "current_pct": 0.0,
-        "delta": 7.0
-      },
-      {
-        "theme": "Compute Power",
-        "target_pct": 20.0,
-        "current_pct": 4.9,
-        "delta": 15.1
+        "target_pct": 14.0,
+        "current_pct": 6.8,
+        "delta": 7.2
       }
     ],
     "funding": [
       {
-        "symbol": "TSM",
-        "theme": "AI Infrastructure",
-        "value": 618.91,
-        "weight_pct": 6.4,
-        "pl_pct": -8.7,
-        "suggested_trim": 278.41,
-        "in_target_book": false,
-        "standing_call": "ADD",
-        "tax": {
-          "at_loss": true,
-          "term": "short",
-          "held_days": 12,
-          "detail": "Selling books a loss you can use to offset gains — short-term, which offsets the most expensive gains first. Don't rebuy within 30 days or the loss is disallowed."
-        }
-      },
-      {
-        "symbol": "AMZN",
-        "theme": "Tech",
-        "value": 632.61,
-        "weight_pct": 6.5,
-        "pl_pct": -4.9,
-        "suggested_trim": 161.06,
-        "in_target_book": false,
-        "standing_call": "HOLD",
-        "tax": {
-          "at_loss": true,
-          "term": "unknown",
-          "held_days": null,
-          "detail": "Selling books a loss you can use to offset gains. Don't rebuy within 30 days or the loss is disallowed."
-        }
-      },
-      {
         "symbol": "AVGO",
         "theme": "AI Infrastructure",
-        "value": 1363.36,
-        "weight_pct": 14.1,
-        "pl_pct": -4.7,
-        "suggested_trim": 613.29,
+        "value": 1356.02,
+        "weight_pct": 14.0,
+        "pl_pct": -5.2,
+        "suggested_trim": 162.09,
         "in_target_book": false,
         "standing_call": "HOLD",
         "tax": {
@@ -198,11 +163,27 @@
       {
         "symbol": "NVDA",
         "theme": "AI Infrastructure",
-        "value": 1575.99,
+        "value": 1576.79,
         "weight_pct": 16.3,
         "pl_pct": -2.5,
-        "suggested_trim": 708.94,
+        "suggested_trim": 188.48,
         "in_target_book": false,
+        "standing_call": "HOLD",
+        "tax": {
+          "at_loss": true,
+          "term": "short",
+          "held_days": 19,
+          "detail": "Selling books a loss you can use to offset gains — short-term, which offsets the most expensive gains first. Don't rebuy within 30 days or the loss is disallowed."
+        }
+      },
+      {
+        "symbol": "VRT",
+        "theme": "Compute Power",
+        "value": 1070.72,
+        "weight_pct": 11.0,
+        "pl_pct": -0.4,
+        "suggested_trim": 396.46,
+        "in_target_book": true,
         "standing_call": "HOLD",
         "tax": {
           "at_loss": true,
@@ -214,10 +195,10 @@
       {
         "symbol": "ANET",
         "theme": "AI Infrastructure",
-        "value": 148.14,
+        "value": 149.74,
         "weight_pct": 1.5,
-        "pl_pct": -1.2,
-        "suggested_trim": 66.64,
+        "pl_pct": -0.2,
+        "suggested_trim": 17.9,
         "in_target_book": true,
         "standing_call": "HOLD",
         "tax": {
@@ -228,107 +209,183 @@
         }
       },
       {
-        "symbol": "AAPL",
-        "theme": "Tech",
-        "value": 661.93,
-        "weight_pct": 6.8,
-        "pl_pct": 10.2,
-        "suggested_trim": 168.52,
+        "symbol": "DLR",
+        "theme": "Compute Power",
+        "value": 474.37,
+        "weight_pct": 4.9,
+        "pl_pct": -0.1,
+        "suggested_trim": 175.65,
         "in_target_book": true,
         "standing_call": "HOLD",
         "tax": {
-          "at_loss": false,
-          "term": "unknown",
-          "held_days": null,
-          "detail": "Selling books a taxable gain."
+          "at_loss": true,
+          "term": "short",
+          "held_days": 0,
+          "detail": "Selling books a loss you can use to offset gains — short-term, which offsets the most expensive gains first. Don't rebuy within 30 days or the loss is disallowed."
         }
       }
     ],
     "acquire": [
       {
-        "symbol": "VRT",
-        "theme": "Compute Power",
-        "target_pct": 11.0,
-        "target_dollars": 1066.29,
-        "price": 267.57,
-        "stop": 245.35,
-        "why": "Buy $1,040 of VRT near $259.93 — sells the cooling and power every AI rack needs."
-      },
-      {
-        "symbol": "LLY",
-        "theme": "Healthcare",
-        "target_pct": 7.0,
-        "target_dollars": 678.55,
-        "price": 1217.16,
-        "stop": 1145.87,
-        "why": "Buy $660 of LLY near $1,226.54 — obesity drug demand that ignores the tech cycle."
-      },
-      {
         "symbol": "SNOW",
         "theme": "AI",
         "target_pct": 6.0,
-        "target_dollars": 581.61,
-        "price": 275.97,
-        "stop": 248.94,
+        "target_dollars": 581.8,
+        "price": 273.52,
+        "stop": 246.49,
         "why": "Buy $570 of SNOW near $256.22 — AI is useless without the company data it stores."
       },
       {
         "symbol": "ON",
         "theme": "AI Infrastructure",
         "target_pct": 5.0,
-        "target_dollars": 484.68,
-        "price": 86.18,
+        "target_dollars": 484.84,
+        "price": 85.19,
         "stop": 74.53,
         "why": "Buy $475 of ON near $83.76 — cheap chipmaker tied to power management and autos."
-      },
-      {
-        "symbol": "NU",
-        "theme": "International",
-        "target_pct": 5.0,
-        "target_dollars": 484.68,
-        "price": 14.78,
-        "stop": 13.79,
-        "why": "Buy $475 of NU near $14.62 — fast-growing digital bank at a cheap price."
       },
       {
         "symbol": "SMCI",
         "theme": "AI Infrastructure",
         "target_pct": 4.0,
-        "target_dollars": 387.74,
-        "price": 28.57,
-        "stop": 23.68,
+        "target_dollars": 387.87,
+        "price": 28.48,
+        "stop": 23.59,
         "why": "Speculative: buy $375 of SMCI near $27.24, stop $21 — beaten-down AI server maker."
       },
       {
         "symbol": "APLD",
         "theme": "Compute Power",
         "target_pct": 4.0,
-        "target_dollars": 387.74,
-        "price": 26.7,
-        "stop": 21.03,
+        "target_dollars": 387.87,
+        "price": 26.53,
+        "stop": 20.85,
         "why": "Speculative: buy $375 of APLD near $26.05, stop $19 — small AI data-center builder."
       },
       {
         "symbol": "SMR",
         "theme": "Energy",
         "target_pct": 3.0,
-        "target_dollars": 290.81,
-        "price": 8.37,
-        "stop": 6.9,
+        "target_dollars": 290.9,
+        "price": 8.27,
+        "stop": 6.8,
         "why": "Speculative: buy $285 of SMR near $7.82, stop $5.50 — cheap bet on new reactors."
       },
       {
         "symbol": "SOUN",
         "theme": "AI",
         "target_pct": 3.0,
-        "target_dollars": 290.81,
-        "price": 6.47,
-        "stop": 5.65,
+        "target_dollars": 290.9,
+        "price": 6.3,
+        "stop": 5.48,
         "why": "Speculative: buy $285 of SOUN near $6.06, stop $4.25 — tiny voice-AI moonshot."
       }
     ],
-    "total_return_pct": -6.76
+    "total_return_pct": -217.12,
+    "governance": {
+      "approved": true,
+      "thesis": "Own a concentrated core of AI compute, data-center power and one great healthcare compounder, bought on weakness and held for years, funded by cutting the sub-2% tail positions rather than adding new cash, with a capped speculative sleeve for the asymmetric shot.",
+      "guardrails": [
+        "No single position above 18% of the book; top five stay under 60%.",
+        "Speculative sleeve capped at 8% total, each pick near 3%, never averaged down.",
+        "Every speculative buy gets a stop set before entry — SMCI stop $21.",
+        "Core names are sold only on broken business news, never on a falling price.",
+        "If the book drops below $8,200, pause all new buying for two weeks."
+      ],
+      "long_term": [
+        "Core to hold for years: NVDA, AVGO, VRT, GOOGL, MSFT — add on weakness, never sell on price.",
+        "LLY is your second engine: 2026 guidance raised to $82-85B and a newly approved weight-loss pill.",
+        "Shrink from 15 positions to 8-10 so your best ideas actually move the account.",
+        "Keep the power sleeve near 12% through CEG, down 20% this year while signing data-center contracts.",
+        "Add Financials — a theme you don't own — only via NU near $14.62, for its fast-growing digital bank.",
+        "Hold winners past one year; this year's booked losses offset gains you do take."
+      ],
+      "allocation_targets": {
+        "AI Infrastructure": 28.0,
+        "AI": 20.0,
+        "Compute Power": 10.0,
+        "Energy": 12.0,
+        "Tech": 8.0,
+        "Healthcare": 14.0,
+        "Financials": 5.0,
+        "Cash & Income": 3.0
+      },
+      "core_convictions": [
+        "NVDA",
+        "AVGO",
+        "AMD",
+        "TSM",
+        "NET",
+        "MU",
+        "GOOGL"
+      ]
+    }
   },
-  "activated": false,
+  "completed": [
+    {
+      "sig": "TSM|VRT|Sell all $619 of TSM at market.|Buy $1,040 of VRT near $259.93.",
+      "sell": "Sell all $619 of TSM at market.",
+      "buy": "Buy $1,040 of VRT near $259.93.",
+      "done_at": "2026-07-28 12:01:44"
+    },
+    {
+      "sig": "AMZN|LLY|Sell all $633 of AMZN at market.|Buy $660 of LLY near $1,226.54.",
+      "sell": "Sell all $633 of AMZN at market.",
+      "buy": "Buy $660 of LLY near $1,226.54.",
+      "done_at": "2026-07-28 12:03:33"
+    }
+  ],
+  "governance": {
+    "approved": true,
+    "thesis": "Own a concentrated core of AI compute, data-center power and one great healthcare compounder, bought on weakness and held for years, funded by cutting the sub-2% tail positions rather than adding new cash, with a capped speculative sleeve for the asymmetric shot.",
+    "guardrails": [
+      "No single position above 18% of the book; top five stay under 60%.",
+      "Speculative sleeve capped at 8% total, each pick near 3%, never averaged down.",
+      "Every speculative buy gets a stop set before entry — SMCI stop $21.",
+      "Core names are sold only on broken business news, never on a falling price.",
+      "If the book drops below $8,200, pause all new buying for two weeks."
+    ],
+    "long_term": [
+      "Core to hold for years: NVDA, AVGO, VRT, GOOGL, MSFT — add on weakness, never sell on price.",
+      "LLY is your second engine: 2026 guidance raised to $82-85B and a newly approved weight-loss pill.",
+      "Shrink from 15 positions to 8-10 so your best ideas actually move the account.",
+      "Keep the power sleeve near 12% through CEG, down 20% this year while signing data-center contracts.",
+      "Add Financials — a theme you don't own — only via NU near $14.62, for its fast-growing digital bank.",
+      "Hold winners past one year; this year's booked losses offset gains you do take."
+    ],
+    "allocation_targets": {
+      "AI Infrastructure": 28.0,
+      "AI": 20.0,
+      "Compute Power": 10.0,
+      "Energy": 12.0,
+      "Tech": 8.0,
+      "Healthcare": 14.0,
+      "Financials": 5.0,
+      "Cash & Income": 3.0
+    },
+    "core_convictions": [
+      "NVDA",
+      "AVGO",
+      "AMD",
+      "TSM",
+      "NET",
+      "MU",
+      "GOOGL"
+    ]
+  },
+  "activated": true,
+  "activated_at": "2026-07-28 11:46:27",
+  "watched": [
+    "VRT",
+    "LLY",
+    "SNOW",
+    "ON",
+    "NU",
+    "SMCI",
+    "APLD",
+    "SMR",
+    "SOUN"
+  ],
+  "watchpoints_created": 6,
   "error": null
 }

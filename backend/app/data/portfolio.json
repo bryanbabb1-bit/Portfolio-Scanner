@@ -1,7 +1,7 @@
 {
   "owner": "You",
   "advisor_persona": "senior financial advisor at Charles Schwab",
-  "cash": 1696.0,
+  "cash": 209.64,
   "core_convictions": [
     "NVDA",
     "AVGO",
@@ -12,6 +12,7 @@
     "GOOGL"
   ],
   "quiet_unowned_low_cash": true,
+  "signals_owned_only": true,
   "themes": {
     "AI": "Companies building or monetizing artificial intelligence models and applications",
     "Tech": "Broad technology leaders and platforms",
@@ -37,12 +38,6 @@
       "symbol": "AVGO",
       "shares": 3.55986,
       "cost_basis": 401.97,
-      "theme": null
-    },
-    {
-      "symbol": "AMZN",
-      "shares": 2.74262,
-      "cost_basis": 242.46,
       "theme": null
     },
     {
@@ -98,7 +93,62 @@
       "shares": 3.25438,
       "cost_basis": 261.19,
       "theme": null
+    },
+    {
+      "symbol": "ETN",
+      "shares": 1.0,
+      "cost_basis": 385.3,
+      "theme": null
+    },
+    {
+      "symbol": "VRT",
+      "shares": 4.0,
+      "cost_basis": 268.82,
+      "theme": null
+    },
+    {
+      "symbol": "LLY",
+      "shares": 0.54057,
+      "cost_basis": 1220.93,
+      "theme": null
     }
   ],
-  "watchlist": []
+  "watchlist": [
+    {
+      "symbol": "VRT",
+      "theme": null
+    },
+    {
+      "symbol": "LLY",
+      "theme": null
+    },
+    {
+      "symbol": "SNOW",
+      "theme": null
+    },
+    {
+      "symbol": "ON",
+      "theme": null
+    },
+    {
+      "symbol": "NU",
+      "theme": null
+    },
+    {
+      "symbol": "SMCI",
+      "theme": null
+    },
+    {
+      "symbol": "APLD",
+      "theme": null
+    },
+    {
+      "symbol": "SMR",
+      "theme": null
+    },
+    {
+      "symbol": "SOUN",
+      "theme": null
+    }
+  ]
 }

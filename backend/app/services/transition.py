@@ -135,17 +135,66 @@ def _tax_note(pl_pct: float | None, first_buy: str | None) -> dict:
             "detail": detail}
 
 
+# --------------------------------------------------------------- governance
+def governance() -> dict:
+    """The constitution this plan must obey: the APPROVED strategy, the core
+    convictions, and the standing per-symbol calls.
+
+    Order of authority, which had been inverted:
+      1. STRATEGY      approved by the client. Allocation targets and
+                       guardrails bind everything downstream.
+      2. CLEAN SHEET   a challenger. It is built BLIND on purpose — it cannot
+                       see the strategy, the guardrails or the core
+                       convictions — so it is a diagnostic, never a target.
+      3. TRANSITION    the path to the STRATEGY target, inside the guardrails.
+      4. STANCE        the standing per-symbol call every surface already shares.
+    """
+    doc = strategy_service.load() or {}
+    try:
+        cfg = pf_service.load_portfolio()
+        core = [str(s).upper() for s in (cfg.get("core_convictions") or [])]
+    except Exception:
+        core = []
+    return {
+        "approved": bool(doc.get("approved")),
+        "thesis": str(doc.get("thesis") or ""),
+        "guardrails": list(doc.get("guardrails") or []),
+        "long_term": list(doc.get("long_term") or []),
+        "allocation_targets": {str(k): float(v) for k, v in
+                               (doc.get("allocation_targets") or {}).items()},
+        "core_convictions": core,
+    }
+
+
 # ------------------------------------------------------------------- the gap
 def _target() -> tuple[dict[str, float], list[dict], str]:
-    """(theme -> target pct, target picks, source). Clean Sheet wins; it has names."""
-    cs = cleansheet.last_result()
-    if cs and cs.get("allocation"):
-        alloc = {str(a["theme"]): float(a.get("pct") or 0) for a in cs["allocation"]}
-        return alloc, list(cs.get("picks") or []), "cleansheet"
+    """(theme -> target pct, target picks, source).
+
+    THE APPROVED STRATEGY WINS. This used to prefer the Clean Sheet "because it
+    has names", which inverted the hierarchy: a construction deliberately built
+    without sight of the strategy, the guardrails or the core convictions
+    became the thing execution aimed at. That is how a plan came to stage out
+    of AVGO — a designated core conviction the strategy says to hold for years
+    and never sell on price — while the brief and the stance ledger both said
+    HOLD.
+
+    The Clean Sheet still supplies candidate NAMES for sleeves the strategy
+    wants but does not name, because that is a gap it can legitimately fill.
+    It never sets the weights.
+    """
     doc = strategy_service.load() or {}
+    cs = cleansheet.last_result() or {}
+    cs_picks = list(cs.get("picks") or [])
+
     if doc.get("approved") and doc.get("allocation_targets"):
-        return ({str(k): float(v) for k, v in doc["allocation_targets"].items()},
-                [], "strategy")
+        alloc = {str(k): float(v) for k, v in doc["allocation_targets"].items()}
+        # Only keep Clean Sheet names whose theme the STRATEGY actually wants.
+        picks = [p for p in cs_picks if str(p.get("theme")) in alloc]
+        return alloc, picks, "strategy"
+
+    if cs.get("allocation"):
+        alloc = {str(a["theme"]): float(a.get("pct") or 0) for a in cs["allocation"]}
+        return alloc, cs_picks, "cleansheet (no approved strategy)"
     return {}, [], "none"
 
 
@@ -327,8 +376,41 @@ def _prompt(a: dict) -> str:
             + "\n\n"
         )
 
+    g = a.get("governance") or governance()
+    gov_lines = []
+    if g.get("thesis"):
+        gov_lines.append(f"Approved strategy: {g['thesis']}")
+    for x in g.get("long_term", [])[:6]:
+        gov_lines.append(f"  - {x}")
+    if g.get("guardrails"):
+        gov_lines.append("HARD GUARDRAILS (violating one invalidates the plan):")
+        gov_lines.extend(f"  - {x}" for x in g["guardrails"])
+    if g.get("core_convictions"):
+        gov_lines.append(
+            "CORE CONVICTIONS — " + ", ".join(g["core_convictions"]) + ". These "
+            "are the client's designated long-term holds. You may NEVER stage "
+            "a sell of these on a PRICE move, a bounce, a recovery or the "
+            "passage of time. They are sold ONLY on broken business news. If a "
+            "core name is overweight, the correct move is to stop adding and "
+            "let contributions dilute it — NOT to sell it. Do not put a core "
+            "name in a sell step.")
+    gov_block = ("THE CLIENT'S STANDING PLAN — this is the constitution and it "
+                 "OUTRANKS your own view of the ideal book:\n"
+                 + "\n".join(gov_lines) + "\n\n") if gov_lines else ""
+
+    stance_lines = []
+    for f in a["funding"][:10]:
+        st = f.get("standing_call")
+        if st:
+            stance_lines.append(f"  {f['symbol']}: {st}")
+    stance_block = (
+        "STANDING CALLS already given to the client on these names. Do not "
+        "contradict one without saying so explicitly:\n"
+        + "\n".join(stance_lines) + "\n\n") if stance_lines else ""
+
     return (
         f"{advisor._PERSONA}\n\n"
+        f"{gov_block}{stance_block}"
         f"Build a SEQUENCED REBALANCE PLAN. The client is over-concentrated, is "
         f"down {a['total_return_pct']:+.1f}% overall, and has ${a['cash']:,.0f} in "
         f"cash — so every purchase must be FUNDED BY A SALE. They have "
@@ -342,6 +424,10 @@ def _prompt(a: dict) -> str:
         f"FUNDING SOURCES (overweight positions that could be trimmed):\n{fund_lines}\n\n"
         f"ACQUISITION TARGETS (wanted, not owned):\n{acq_lines}\n\n"
         f"RULES FOR THIS PLAN:\n"
+        f"- NEVER stage a sell of a CORE CONVICTION on price or time. If one is "
+        f"overweight, say so and let it dilute — do not sell it.\n"
+        f"- The approved allocation targets above are the destination. Do not "
+        f"substitute your own preferred weights.\n"
         f"- Every buy must be funded by a sell in the SAME or an EARLIER step. "
         f"Never propose spending money that does not exist.\n"
         f"- Sell what the target book does not want BEFORE trimming what it does.\n"
@@ -358,6 +444,7 @@ def _prompt(a: dict) -> str:
 
 def generate(force: bool = True) -> dict:
     a = analyse()
+    a["governance"] = governance()
     if a["target_source"] == "none":
         return {"ts": time.time(), "engine": "blocked", "analysis": a,
                 "error": "No target to move toward — build a Clean Sheet or "
@@ -381,6 +468,7 @@ def generate(force: bool = True) -> dict:
     prior = _load()
     completed = list(prior.get("completed") or [])
     done_sigs = {c.get("sig") for c in completed}
+    core = set(governance().get("core_convictions") or [])
 
     steps = []
     for i, st in enumerate(obj.get("steps") or [], start=1):
@@ -401,6 +489,22 @@ def generate(force: bool = True) -> dict:
         # A rebuild renumbers the steps, so done-state is carried by move
         # identity rather than by position in the list.
         step["done"] = _signature(step) in done_sigs
+        # A rule that protects real money is enforced in CODE, not requested of
+        # a model. A step selling a designated core conviction is blocked: it
+        # is shown (silently dropping model output hides a disagreement) but it
+        # can never be marked done and never arms a trigger.
+        if step["sell_symbol"] and step["sell_symbol"] in core:
+            step["blocked"] = True
+            step["blocked_reason"] = (
+                f"{step['sell_symbol']} is one of your core convictions. Your "
+                f"strategy says core names are sold only on broken business "
+                f"news, never on a price move — so this step is blocked, not "
+                f"actionable. Remove it from core convictions in Settings if "
+                f"you genuinely want to trade it."
+            )
+        else:
+            step["blocked"] = False
+            step["blocked_reason"] = ""
         steps.append(step)
     steps.sort(key=lambda x: x["n"])
 
@@ -417,6 +521,7 @@ def generate(force: bool = True) -> dict:
         # Both survive a rebuild: the execution ledger, and the fact that the
         # targets are already on the watchlist with live triggers.
         "completed": completed,
+        "governance": a.get("governance"),
         "activated": bool(prior.get("activated")),
         "activated_at": prior.get("activated_at"),
         "watched": prior.get("watched") or [],
@@ -457,6 +562,8 @@ def activate() -> dict:
 
     made = 0
     for st in plan["steps"]:
+        if st.get("blocked"):
+            continue          # a blocked step must never become an armed trigger
         if st.get("buy_symbol") and st.get("buy_level"):
             try:
                 watchpoints.add(st["buy_symbol"], "price_below",
@@ -503,6 +610,8 @@ def set_step_done(n: int, done: bool = True) -> dict | None:
         for st in plan.get("steps", []):
             if int(st.get("n", 0)) != n:
                 continue
+            if st.get("blocked") and done:
+                return st     # blocked steps cannot be executed
             st["done"] = bool(done)
             found = st
             sig = _signature(st)
@@ -519,6 +628,87 @@ def set_step_done(n: int, done: bool = True) -> dict | None:
             plan["completed"] = completed
             _save(plan)
         return found
+
+
+def coherence() -> dict:
+    """Cross-check every layer that can issue an opinion on the same symbol.
+
+    Strategy, Clean Sheet, Transition and the stance ledger each have a view.
+    When they disagree the app must SAY so rather than let whichever surface
+    the client happens to open win — that is how one screen said hold AVGO for
+    years while another said sell it this week.
+    """
+    g = governance()
+    core = set(g.get("core_convictions") or [])
+    plan = _load()
+    conflicts: list[dict] = []
+
+    for st in plan.get("steps", []):
+        sym = st.get("sell_symbol")
+        if not sym:
+            continue
+        if sym in core:
+            conflicts.append({
+                "symbol": sym, "severity": "critical",
+                "detail": (f"The plan sells {sym}, but it is a CORE CONVICTION "
+                           f"your strategy says to hold for years and never "
+                           f"sell on price."),
+                "resolution": "Step blocked. Strategy wins.",
+            })
+            continue
+        call = (stance_service.get(sym) or {}).get("action")
+        if call in {"BUY", "ADD", "HOLD"}:
+            conflicts.append({
+                "symbol": sym, "severity": "warning",
+                "detail": (f"The plan sells {sym}, but the standing call from "
+                           f"the brief is {call}."),
+                "resolution": "Reconcile before acting — one of them is stale.",
+            })
+
+    cs = cleansheet.last_result() or {}
+    if cs.get("allocation") and g.get("allocation_targets"):
+        cs_alloc = {str(a["theme"]): float(a.get("pct") or 0)
+                    for a in cs["allocation"]}
+        resolution = ("Strategy governs. Treat the Clean Sheet as a challenger "
+                      "— revise the strategy if you find it persuasive.")
+        for theme in set(g["allocation_targets"]) | set(cs_alloc):
+            want = g["allocation_targets"].get(theme, 0.0)
+            other = cs_alloc.get(theme, 0.0)
+            if abs(other - want) < 10:
+                continue
+            if theme not in g["allocation_targets"]:
+                detail = (f"The blind Clean Sheet build wanted {other:.0f}% "
+                          f"{theme}, a sleeve your strategy does not include.")
+            elif theme not in cs_alloc:
+                detail = (f"Strategy targets {want:.0f}% {theme}; the blind "
+                          f"Clean Sheet build wanted none.")
+            else:
+                detail = (f"Strategy targets {want:.0f}% {theme}; the blind "
+                          f"Clean Sheet build wanted {other:.0f}%.")
+            conflicts.append({"symbol": theme, "severity": "info",
+                              "detail": detail, "resolution": resolution})
+
+    # One row per subject: a name trimmed across several steps is one
+    # disagreement, not three.
+    seen: set[tuple[str, str]] = set()
+    deduped = []
+    for c in conflicts:
+        key = (c["symbol"], c["severity"])
+        if key in seen:
+            continue
+        seen.add(key)
+        deduped.append(c)
+    conflicts = deduped
+
+    order = {"critical": 0, "warning": 1, "info": 2}
+    conflicts.sort(key=lambda c: order.get(c["severity"], 9))
+    return {
+        "target_source": _target()[2],
+        "strategy_approved": g["approved"],
+        "core_convictions": sorted(core),
+        "conflicts": conflicts,
+        "clean": not conflicts,
+    }
 
 
 def facts_block() -> str:
@@ -550,7 +740,11 @@ def facts_block() -> str:
         lines.append(f"- Plan: {plan['headline']}")
     for s in open_steps[:6]:
         parts = " / ".join(x for x in (s.get("sell"), s.get("buy")) if x)
-        lines.append(f"- OUTSTANDING step {s['n']} (when {s['trigger']}): {parts}")
+        if s.get("blocked"):
+            lines.append(f"- BLOCKED step {s['n']} (violates the strategy, "
+                         f"do NOT act on or repeat it): {parts}")
+        else:
+            lines.append(f"- OUTSTANDING step {s['n']} (when {s['trigger']}): {parts}")
     for c in (plan.get("completed") or [])[-6:]:
         parts = " / ".join(x for x in (c.get("sell"), c.get("buy")) if x)
         lines.append(f"- ALREADY DONE {c.get('done_at', '')[:10]}: {parts}")

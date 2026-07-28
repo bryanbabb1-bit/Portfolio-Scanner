@@ -253,6 +253,21 @@ export interface TransitionStep {
   why: string;
   realizes: string;
   done: boolean;
+  blocked?: boolean;
+  blocked_reason?: string;
+}
+
+export interface Coherence {
+  target_source: string;
+  strategy_approved: boolean;
+  core_convictions: string[];
+  clean: boolean;
+  conflicts: {
+    symbol: string;
+    severity: "critical" | "warning" | "info";
+    detail: string;
+    resolution: string;
+  }[];
 }
 
 export interface TransitionAnalysis {
@@ -294,6 +309,7 @@ export interface TransitionPlan {
   steps: TransitionStep[];
   guardrails?: string[];
   analysis: TransitionAnalysis;
+  coherence?: Coherence;
   activated?: boolean;
   activated_at?: string;
   watched?: string[];
