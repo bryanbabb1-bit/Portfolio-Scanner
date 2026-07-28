@@ -43,6 +43,18 @@ class Settings:
     # Cache advisor narratives longer than raw quotes — they are expensive.
     ADVISOR_CACHE_TTL: int = int(os.getenv("ADVISOR_CACHE_TTL", "3600"))
 
+    # --------------------------------------------------------------- risk desk
+    # Risk always comes first: these are the desk's standing limits. Sizing is
+    # derived from them, not guessed per trade.
+    RISK_PER_TRADE_PCT: float = float(os.getenv("RISK_PER_TRADE_PCT", "1.0"))
+    DAILY_LOSS_LIMIT_PCT: float = float(os.getenv("DAILY_LOSS_LIMIT_PCT", "2.0"))
+    MAX_POSITION_PCT: float = float(os.getenv("MAX_POSITION_PCT", "25.0"))
+    # Stop distance in ATRs below entry — wide enough to survive normal noise.
+    STOP_ATR_MULT: float = float(os.getenv("STOP_ATR_MULT", "2.0"))
+    # VaR and correlation are meaningless on a short sample; below this many
+    # overlapping sessions the desk reports the shortfall instead of a number.
+    RISK_MIN_DAYS: int = int(os.getenv("RISK_MIN_DAYS", "60"))
+
     # ------------------------------------------------------------------- http
     CORS_ORIGINS: list[str] = os.getenv(
         "CORS_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000"

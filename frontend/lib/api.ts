@@ -195,6 +195,61 @@ export interface PortfolioInsights {
   alerts: PortfolioAlert[];
 }
 
+export interface PositionRisk {
+  symbol: string;
+  price: number;
+  market_value: number;
+  weight_pct: number;
+  stop?: number;
+  stop_basis?: string;
+  stop_distance_pct?: number;
+  risk_amount?: number;
+  risk_pct_of_equity?: number;
+  over_size: boolean;
+}
+
+export interface PositionPlan {
+  symbol: string;
+  price: number;
+  stop?: number;
+  stop_basis?: string;
+  risk_per_share?: number;
+  dollars: number;
+  shares: number;
+  pct_of_equity: number;
+  risk_amount: number;
+  capped_by?: string;
+  note: string;
+}
+
+export interface RiskDesk {
+  equity: number;
+  invested: number;
+  cash: number;
+  status: "PROTECTED" | "ELEVATED" | "BREACHED";
+  risk_per_trade_pct: number;
+  risk_budget_amount: number;
+  daily_loss_limit_pct: number;
+  daily_loss_limit_amount: number;
+  day_pl: number;
+  day_pl_pct: number;
+  limit_breached: boolean;
+  portfolio_risk_pct?: number;
+  portfolio_risk_amount?: number;
+  exposure_utilization_pct: number;
+  positions: PositionRisk[];
+  max_drawdown_pct?: number;
+  var95_pct?: number;
+  var95_amount?: number;
+  beta?: number;
+  avg_correlation?: number;
+  liquidity?: string;
+  history_days: number;
+  notes: string[];
+  metrics: RiskMetrics;
+  source: string;
+}
+
 export interface ConvictionSignal {
   id: string;
   symbol: string;
@@ -662,6 +717,9 @@ export const api = {
   }) => post<StrategyDoc>("/api/strategy/generate", inputs),
   saveStrategy: (doc: StrategyDoc) => put<StrategyDoc>("/api/strategy", doc),
   insights: () => get<PortfolioInsights>("/api/insights"),
+  risk: () => get<RiskDesk>("/api/risk"),
+  sizePosition: (symbol: string) =>
+    get<PositionPlan>(`/api/risk/size/${symbol}`),
   dismissAlert: (id?: string) =>
     send<{ dismissed: number }>(
       `/api/insights/dismiss${id ? `?id=${encodeURIComponent(id)}` : ""}`,

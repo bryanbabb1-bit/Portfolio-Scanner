@@ -309,6 +309,70 @@ class PortfolioInsights(BaseModel):
     alerts: list[PortfolioAlert] = []
 
 
+# ---------------------------------------------------------------- risk desk
+class PositionRisk(BaseModel):
+    """Per-holding open risk: how much is on the table down to the stop."""
+    symbol: str
+    price: float
+    market_value: float
+    weight_pct: float
+    stop: Optional[float] = None
+    stop_basis: Optional[str] = None       # "2.0x ATR" | "200-day" | None
+    stop_distance_pct: Optional[float] = None
+    risk_amount: Optional[float] = None    # $ lost if the stop trades
+    risk_pct_of_equity: Optional[float] = None
+    over_size: bool = False                # breaches MAX_POSITION_PCT
+
+
+class PositionPlan(BaseModel):
+    """Pre-trade sizing for one candidate — the answer to 'how much?'."""
+    symbol: str
+    price: float
+    stop: Optional[float] = None
+    stop_basis: Optional[str] = None
+    risk_per_share: Optional[float] = None
+    dollars: float = 0.0                   # position size to buy
+    shares: float = 0.0                    # fractional shares allowed
+    pct_of_equity: float = 0.0
+    risk_amount: float = 0.0               # $ risked to the stop
+    capped_by: Optional[str] = None        # "max position" | "dry powder" | None
+    note: str = ""
+
+
+class RiskDesk(BaseModel):
+    """The whole risk picture: limits, open risk, and the exposure overview."""
+    equity: float
+    invested: float
+    cash: float
+    status: str                            # PROTECTED | ELEVATED | BREACHED
+    # 01 position size
+    risk_per_trade_pct: float
+    risk_budget_amount: float
+    # 02/03 stops + daily limits
+    daily_loss_limit_pct: float
+    daily_loss_limit_amount: float
+    day_pl: float
+    day_pl_pct: float
+    limit_breached: bool
+    # 04 portfolio risk
+    portfolio_risk_pct: Optional[float] = None
+    portfolio_risk_amount: Optional[float] = None
+    exposure_utilization_pct: float = 0.0
+    positions: list[PositionRisk] = []
+    # 05 overview strip
+    max_drawdown_pct: Optional[float] = None
+    var95_pct: Optional[float] = None
+    var95_amount: Optional[float] = None
+    beta: Optional[float] = None
+    avg_correlation: Optional[float] = None
+    liquidity: Optional[str] = None        # HIGH | MEDIUM | LOW
+    # honesty
+    history_days: int = 0
+    notes: list[str] = []
+    metrics: RiskMetrics = RiskMetrics()
+    source: str = "live"
+
+
 class PortfolioNewsItem(BaseModel):
     """A news headline tagged with the symbol(s) it came from."""
     title: str
