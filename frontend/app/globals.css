@@ -1348,6 +1348,44 @@ select { cursor: pointer; }
 .hm-sym { fill: #FAF7F0; font-weight: 800; letter-spacing: .03em; pointer-events: none; }
 .hm-pct { fill: rgba(250, 247, 240, 0.88); font-weight: 600; pointer-events: none; }
 
+/* ---- spec key/value rows (risk status, debate status, any spec panel) ---- */
+.rs-rows { display: flex; flex-direction: column; }
+.rs-row {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 14px;
+  padding: 9px 0; border-top: 1px solid var(--hairline);
+  font-size: 13px;
+}
+.rs-row:first-child { border-top: 0; }
+.rs-row dt {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted);
+}
+.rs-row dd { font-weight: 700; font-variant-numeric: var(--tab-nums); text-align: right; }
+
+/* -------------------------------------------------- desk strip (stock page) */
+.desk-strip {
+  display: grid; grid-template-columns: 1fr 1.4fr; gap: 0;
+  border: 1px solid var(--rule); background: var(--bg-card);
+  margin-bottom: 18px;
+}
+@media (max-width: 760px) { .desk-strip { grid-template-columns: 1fr; } }
+.ds-block { padding: 13px 16px; display: flex; flex-direction: column; gap: 5px; }
+.ds-block + .ds-block { border-left: 1px solid var(--rule); }
+@media (max-width: 760px) {
+  .ds-block + .ds-block { border-left: 0; border-top: 1px solid var(--rule); }
+}
+.ds-label {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px; letter-spacing: .11em; text-transform: uppercase; color: var(--muted);
+}
+.ds-val { font-size: 20px; font-weight: 800; line-height: 1.1; font-variant-numeric: var(--tab-nums); }
+.ds-val.ds-verdict.approve { color: var(--bull); }
+.ds-val.ds-verdict.reject { color: var(--bear); }
+.ds-val.ds-idle { font-size: 15px; color: var(--muted); font-weight: 700; }
+.ds-note { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+.ds-link { color: var(--accent); font-weight: 600; white-space: nowrap; }
+.ds-link:hover { text-decoration: underline; }
+
 /* --------------------------------------------------------------- news wire */
 .wire { display: flex; flex-direction: column; gap: 10px; }
 .wire-item { padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }

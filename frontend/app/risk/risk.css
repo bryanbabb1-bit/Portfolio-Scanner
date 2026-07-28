@@ -26,18 +26,7 @@
 .rs-badge.elevated { color: var(--gold); background: var(--gold-bg); }
 .rs-badge.breached { color: var(--bear); background: var(--bear-bg); }
 
-.rs-rows { display: flex; flex-direction: column; }
-.rs-row {
-  display: flex; align-items: baseline; justify-content: space-between; gap: 14px;
-  padding: 9px 0; border-top: 1px solid var(--hairline);
-  font-size: 13px;
-}
-.rs-row:first-child { border-top: 0; }
-.rs-row dt {
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted);
-}
-.rs-row dd { font-weight: 700; font-variant-numeric: var(--tab-nums); }
+/* .rs-rows / .rs-row live in globals.css — the debate sheet uses them too. */
 
 /* ---- standing rules ---- */
 .risk-rules { margin-top: 18px; }

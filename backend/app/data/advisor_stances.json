@@ -81,14 +81,14 @@
     "symbol": "NVDA",
     "action": "HOLD",
     "prev_action": "HOLD",
-    "headline": "Core AI anchor; add under $190.",
-    "thesis": "Core AI anchor; add under $190.",
-    "target": "",
-    "stop": "",
-    "source": "brief",
-    "price": 196.47,
-    "as_of": "2026-07-27 10:41:55",
-    "ts": 1785166915.1220076
+    "headline": "Hold NVDA \u2014 nothing changed since my last call; thesis and level intact.",
+    "thesis": "Bull's analyst-target and OpenAI data-center points win on evidence: 58 strong-buy analysts, $302.83 target. I overrule Bear \u2014 a one-day 5% drop with the $192.77 floor holding is noise, not thesis damage. I also overrule Execution's 'sell into the drop' line \u2014 selling a core winner at a 2.9% loss is backwards. Risk Agent wins the funding question: $0 dry powder and today's $142 loss mean no new bu",
+    "target": "$302.83",
+    "stop": "$192.77",
+    "source": "debate",
+    "price": 196.51,
+    "as_of": "2026-07-27 19:40:57",
+    "ts": 1785199257.6935914
   },
   "AMD": {
     "symbol": "AMD",

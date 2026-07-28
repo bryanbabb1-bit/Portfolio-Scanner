@@ -195,6 +195,40 @@ export interface PortfolioInsights {
   alerts: PortfolioAlert[];
 }
 
+export interface DebateAgent {
+  key: "bull" | "bear" | "macro" | "risk" | "execution";
+  name: string;
+  round: 1 | 2;
+  position: "BULLISH" | "BEARISH" | "NEUTRAL";
+  confidence: number;
+  points: string[];
+  strongest: string;
+  ok: boolean;
+}
+
+export interface Debate {
+  symbol: string;
+  name?: string;
+  price: number;
+  ts: number;
+  as_of: string;
+  engine: string;
+  agents: DebateAgent[];
+  agents_reporting: number;
+  tally: { bullish: number; bearish: number; neutral: number };
+  verdict: "APPROVE" | "REJECT" | null;
+  action: string;
+  score: number;
+  headline: string;
+  rationale: string[];
+  dissent: string[];
+  entry: string;
+  target: string;
+  stop: string;
+  sizing: PositionPlan;
+  error: string | null;
+}
+
 export interface PositionRisk {
   symbol: string;
   price: number;
@@ -718,6 +752,19 @@ export const api = {
   saveStrategy: (doc: StrategyDoc) => put<StrategyDoc>("/api/strategy", doc),
   insights: () => get<PortfolioInsights>("/api/insights"),
   risk: () => get<RiskDesk>("/api/risk"),
+  debate: (symbol: string) =>
+    get<Debate | null>(`/api/debate/${symbol}`),
+  debates: (limit = 20) =>
+    get<{ results: Debate[] }>(`/api/debate?limit=${limit}`),
+  startDebate: (symbol: string, force = false) =>
+    post<{ job_id: string | null; result: Debate | null; cached: boolean }>(
+      `/api/debate/${symbol}?force=${force}`,
+      {}
+    ),
+  debateJob: (jobId: string) =>
+    get<{ status: "pending" | "done" | "error"; result: Debate | null; error?: string }>(
+      `/api/debate/job/${jobId}`
+    ),
   sizePosition: (symbol: string) =>
     get<PositionPlan>(`/api/risk/size/${symbol}`),
   dismissAlert: (id?: string) =>

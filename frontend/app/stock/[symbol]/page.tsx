@@ -3,6 +3,7 @@ import { use, useEffect, useState } from "react";
 import Link from "next/link";
 import { api, StockReport } from "../../../lib/api";
 import { AdvisorPanel } from "../../../components/AdvisorPanel";
+import { DeskStrip } from "../../../components/DeskStrip";
 import { OptionsPlay } from "../../../components/OptionsPlay";
 import { PriceChart } from "../../../components/PriceChart";
 import { Signals } from "../../../components/Signals";
@@ -76,6 +77,8 @@ export default function StockDetail({
           </div>
         </div>
       )}
+
+      <DeskStrip symbol={r.symbol} />
 
       <PriceChart symbol={r.symbol} quote={r.quote} />
 
