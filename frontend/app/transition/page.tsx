@@ -23,10 +23,21 @@ export default function TransitionPage() {
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
   const [loaded, setLoaded] = useState(false);
+  const [loadFailed, setLoadFailed] = useState(false);
   const poll = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
-    api.transition().then(setD).catch(() => {}).finally(() => setLoaded(true));
+    api
+      .transition()
+      .then((p) => {
+        setD(p);
+        setLoadFailed(false);
+      })
+      // A failed load is NOT "no plan". Conflating them showed the empty state,
+      // which invited a rebuild that silently replaced a perfectly good saved
+      // plan — the plan looked like it never persisted.
+      .catch(() => setLoadFailed(true))
+      .finally(() => setLoaded(true));
     return () => {
       if (poll.current) clearInterval(poll.current);
     };
@@ -34,6 +45,12 @@ export default function TransitionPage() {
 
   const run = async () => {
     if (running) return;
+    // Rebuilding replaces the sequence. Completed steps survive (the ledger
+    // outlives the plan), but the remaining order will change — so ask.
+    if (d?.steps.length && !window.confirm(
+      `This replaces the current ${d.steps.length}-step plan with a new one. ` +
+      `Steps you have marked done stay done. Continue?`
+    )) return;
     setErr(null);
     setRunning(true);
     try {
@@ -117,7 +134,11 @@ export default function TransitionPage() {
             />
             <Row k="Progress" v={d?.steps.length ? `${doneCount} of ${d.steps.length}` : "—"} />
           </dl>
-          <button className="btn tr-run" onClick={run} disabled={running || busy}>
+          <button
+            className="btn tr-run"
+            onClick={run}
+            disabled={running || busy || loadFailed}
+          >
             {running ? "Building…" : d ? "Rebuild the plan" : "Build the plan"}
           </button>
           {d && d.steps.length > 0 && !d.activated && (
@@ -138,7 +159,20 @@ export default function TransitionPage() {
       {err && <div className="err">{err}</div>}
       {d?.error && <div className="err">{d.error}</div>}
 
-      {!d && loaded && !running && (
+      {loadFailed && (
+        <SpecEmpty>
+          <b>Could not reach the plan.</b> Your saved plan is still on the
+          server — this is a loading problem, not an empty one.{" "}
+          <button className="btn ghost tr-retry" onClick={() => location.reload()}>
+            Retry
+          </button>
+          <br />
+          Do not rebuild to make this go away; that would replace the plan you
+          already have.
+        </SpecEmpty>
+      )}
+
+      {!d && loaded && !loadFailed && !running && (
         <SpecEmpty>
           <b>No plan on record.</b> This turns the Clean Sheet target into a
           sequence you can actually execute — funded sells, staged buys, and a

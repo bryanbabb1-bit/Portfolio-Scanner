@@ -414,5 +414,70 @@
     "note": "ALERT (not executed) \u2014 watchpoint hit Watchpoint: price \u2264 $390; client still needs to decide/act.",
     "source": "auto",
     "ts": 1785236440.9993646
+  },
+  {
+    "id": "6e94f1fd65b5",
+    "date": "2026-07-28",
+    "symbol": "TSM",
+    "action": "sell",
+    "shares": 2.4305,
+    "price": 391.6,
+    "cost_basis": 428.75,
+    "realized_pl": -90.29,
+    "note": "Trimmed (4.0107 -> 1.58023)",
+    "source": "auto",
+    "ts": 1785253111.1236362
+  },
+  {
+    "id": "cd6cef4dc86e",
+    "date": "2026-07-28",
+    "symbol": "DLR",
+    "action": "buy",
+    "shares": 2.42594,
+    "price": null,
+    "cost_basis": 195.8,
+    "realized_pl": null,
+    "note": "Opened a new position",
+    "source": "auto",
+    "ts": 1785253111.1276228
+  },
+  {
+    "id": "b44a244ab07d",
+    "date": "2026-07-28",
+    "symbol": "CEG",
+    "action": "buy",
+    "shares": 3.25438,
+    "price": null,
+    "cost_basis": 261.19,
+    "realized_pl": null,
+    "note": "Opened a new position",
+    "source": "auto",
+    "ts": 1785253111.1553955
+  },
+  {
+    "id": "6cde37ee33ab",
+    "date": "2026-07-28",
+    "symbol": "AMD",
+    "action": "sell",
+    "shares": 1.8351,
+    "price": 459.01,
+    "cost_basis": 502.92,
+    "realized_pl": -80.58,
+    "note": "Closed the position (1.83514 sh)",
+    "source": "auto",
+    "ts": 1785253111.3347628
+  },
+  {
+    "id": "96fb086e4420",
+    "date": "2026-07-28",
+    "symbol": "MU",
+    "action": "sell",
+    "shares": 0.7472,
+    "price": 821.26,
+    "cost_basis": 1001.95,
+    "realized_pl": -135.01,
+    "note": "Closed the position (0.74719 sh)",
+    "source": "auto",
+    "ts": 1785253111.5083354
   }
 ]

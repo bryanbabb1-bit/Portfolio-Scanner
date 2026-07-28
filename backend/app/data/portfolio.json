@@ -1,7 +1,7 @@
 {
   "owner": "You",
   "advisor_persona": "senior financial advisor at Charles Schwab",
-  "cash": 0.0,
+  "cash": 1077.83,
   "core_convictions": [
     "NVDA",
     "AVGO",
@@ -34,21 +34,9 @@
       "theme": null
     },
     {
-      "symbol": "AMD",
-      "shares": 1.83514,
-      "cost_basis": 502.92,
-      "theme": null
-    },
-    {
       "symbol": "AVGO",
       "shares": 3.55986,
       "cost_basis": 401.97,
-      "theme": null
-    },
-    {
-      "symbol": "MU",
-      "shares": 0.74719,
-      "cost_basis": 1001.95,
       "theme": null
     },
     {
@@ -59,7 +47,7 @@
     },
     {
       "symbol": "TSM",
-      "shares": 4.0107,
+      "shares": 1.58023,
       "cost_basis": 428.75,
       "theme": null
     },
@@ -103,6 +91,18 @@
       "symbol": "GEV",
       "shares": 0.16391,
       "cost_basis": 1012.69,
+      "theme": null
+    },
+    {
+      "symbol": "DLR",
+      "shares": 2.42594,
+      "cost_basis": 195.8,
+      "theme": null
+    },
+    {
+      "symbol": "CEG",
+      "shares": 3.25438,
+      "cost_basis": 261.19,
       "theme": null
     }
   ],

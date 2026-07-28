@@ -682,5 +682,86 @@
     "price": 385.21,
     "ts": 1785236440.9949448,
     "date": "2026-07-28"
+  },
+  {
+    "id": "MRK:high-conviction-discovery:2026-07-28",
+    "symbol": "MRK",
+    "side": "buy",
+    "rule": "high-conviction-discovery",
+    "price": 131.76,
+    "ts": 1785253145.731367,
+    "date": "2026-07-28"
+  },
+  {
+    "id": "WM:high-conviction-discovery:2026-07-28",
+    "symbol": "WM",
+    "side": "buy",
+    "rule": "high-conviction-discovery",
+    "price": 240.51,
+    "ts": 1785253145.731367,
+    "date": "2026-07-28"
+  },
+  {
+    "id": "DE:high-conviction-discovery:2026-07-28",
+    "symbol": "DE",
+    "side": "buy",
+    "rule": "high-conviction-discovery",
+    "price": 635.5,
+    "ts": 1785253145.731367,
+    "date": "2026-07-28"
+  },
+  {
+    "id": "LVWR:runner-ignition:2026-07-28",
+    "symbol": "LVWR",
+    "side": "buy",
+    "rule": "runner-ignition",
+    "price": 2.775,
+    "ts": 1785253145.731367,
+    "date": "2026-07-28"
+  },
+  {
+    "id": "EGG:runner-ignition:2026-07-28",
+    "symbol": "EGG",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 4.695,
+    "ts": 1785253145.731367,
+    "date": "2026-07-28"
+  },
+  {
+    "id": "PMN:runner-ignition:2026-07-28",
+    "symbol": "PMN",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 16.82,
+    "ts": 1785253145.731367,
+    "date": "2026-07-28"
+  },
+  {
+    "id": "FIRY:runner-ignition:2026-07-28",
+    "symbol": "FIRY",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 11.545,
+    "ts": 1785253145.731367,
+    "date": "2026-07-28"
+  },
+  {
+    "id": "OPK:runner-ignition:2026-07-28",
+    "symbol": "OPK",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 1.6301,
+    "ts": 1785253671.19615,
+    "date": "2026-07-28"
+  },
+  {
+    "id": "BIYA:runner-ignition:2026-07-28",
+    "symbol": "BIYA",
+    "side": "buy",
+    "rule": "runner-ignition",
+    "price": 5.185,
+    "ts": 1785254494.828771,
+    "date": "2026-07-28"
   }
 ]

@@ -10,23 +10,37 @@ router = APIRouter(prefix="/api", tags=["transition"])
 
 
 @router.get("/transition")
-def get_transition():
-    """The saved plan, with the gap recomputed live so drift stays current."""
+def get_transition(refresh: bool = False):
+    """The saved plan. Cheap by default so a page load can never fail.
+
+    The gap and funding are recomputed (they only need the portfolio summary),
+    but the per-target price lookup is NOT — that builds a full report for
+    every acquisition target and made this endpoint slow enough to hit the
+    tunnel's ~100s ceiling. A failed load rendered as "no plan", which invited
+    a rebuild and silently replaced a plan that was saved perfectly well.
+    Pass refresh=true for live target prices.
+    """
     plan = tr.last_plan()
     if not plan:
         return None
     try:
-        plan = {**plan, "analysis": tr.analyse()}
-    except Exception:
-        pass          # keep the stored snapshot rather than failing the page
+        fresh = tr.analyse(full=refresh)
+        stored = plan.get("analysis") or {}
+        if not refresh:
+            # Keep the prices captured when the plan was generated; only the
+            # cheap parts are re-derived.
+            fresh["acquire"] = stored.get("acquire") or fresh.get("acquire") or []
+        plan = {**plan, "analysis": fresh}
+    except Exception as exc:
+        print(f"[transition] gap refresh failed, serving stored: {exc!r}")
     return plan
 
 
 @router.get("/transition/analysis")
-def get_analysis():
+def get_analysis(full: bool = True):
     """The deterministic half only — gap, funding sources, targets. No model."""
     try:
-        return tr.analyse()
+        return tr.analyse(full=full)
     except Exception as exc:
         raise HTTPException(status_code=502, detail=f"Analysis failed: {exc}")
 

@@ -85,6 +85,7 @@
 }
 
 .tr-guard { border-left: 3px solid var(--bear); margin-top: 18px; }
+.tr-retry { margin-left: 10px; padding: 4px 12px; font-size: 10px; }
 
 /* ---- funding ledger ---- */
 .tr-fund { margin-top: 18px; }

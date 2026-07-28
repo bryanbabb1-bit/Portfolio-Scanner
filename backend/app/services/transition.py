@@ -27,7 +27,7 @@ import threading
 import time
 
 from ..config import settings
-from . import advisor, cleansheet, journal, risk as risk_service
+from . import advisor, cleansheet, journal, market_data, risk as risk_service
 from . import portfolio as pf_service
 from . import stance as stance_service
 from . import strategy as strategy_service
@@ -64,6 +64,18 @@ def _save(d: dict) -> None:
 
 def last_plan() -> dict | None:
     return _load() or None
+
+
+def completed_moves() -> list[dict]:
+    """Steps already executed, PERSISTED ACROSS REBUILDS.
+
+    A rebuild used to produce a brand-new plan that started again at step 1
+    "sell immediately", silently discarding what had already been done — so
+    the plan looked like it never saved. Completed moves now outlive the plan
+    that contained them and are fed back into the next generation, the same
+    action-ledger discipline the whole-book brief already uses.
+    """
+    return list(_load().get("completed") or [])
 
 
 # ----------------------------------------------------------------- tax facts
@@ -137,8 +149,15 @@ def _target() -> tuple[dict[str, float], list[dict], str]:
     return {}, [], "none"
 
 
-def analyse() -> dict:
-    """The deterministic half: gap, funding sources, acquisition targets."""
+def analyse(full: bool = True) -> dict:
+    """The deterministic half: gap, funding sources, acquisition targets.
+
+    full=False skips the per-target price/stop lookup, which is the expensive
+    part — it builds a full report (history + analyst + news) for every
+    acquisition target. That cost is fine when generating a plan; paying it on
+    every page load is what made GET slow enough to hit the tunnel's ~100s
+    ceiling, and a failed GET looked like "no plan" and invited a rebuild.
+    """
     summary, held = pf_service.portfolio_summary()
     equity = summary.total_market_value or 0.0
     target_theme, picks, source = _target()
@@ -195,22 +214,30 @@ def analyse() -> dict:
     funding.sort(key=lambda f: (f["in_target_book"], f["pl_pct"]))
 
     # ---- acquisition targets ----------------------------------------------
+    wanted = [str(p.get("symbol", "")).upper() for p in picks]
+    wanted = [s for s in wanted if s and s not in held_syms]
+    if full and wanted:
+        # One parallel prefetch instead of N serial cold fetches.
+        try:
+            market_data.warm_cache(wanted, max_workers=8)
+        except Exception:
+            pass
+
     acquire = []
     for p in picks:
         sym = str(p.get("symbol", "")).upper()
         if not sym or sym in held_syms:
             continue
         want = float(p.get("pct") or 0) / 100 * equity
-        entry = price = None
+        price = None
         stop = None
-        try:
-            rep = pf_service.build_report(sym)
-            price = rep.quote.price
-            plan = risk_service.plan_for(rep, equity, cash=equity)
-            stop = plan.stop
-            entry = price
-        except Exception:
-            pass
+        if full:
+            try:
+                rep = pf_service.build_report(sym)
+                price = rep.quote.price
+                stop = risk_service.plan_for(rep, equity, cash=equity).stop
+            except Exception:
+                pass
         acquire.append({
             "symbol": sym,
             "theme": str(p.get("theme", "")),
@@ -286,6 +313,20 @@ def _prompt(a: dict) -> str:
         for g in a["gap"] if abs(g["delta"]) >= 1
     )
 
+    done = completed_moves()
+    done_block = ""
+    if done:
+        done_block = (
+            "ALREADY EXECUTED — these moves are DONE. Do NOT recommend them "
+            "again, and treat the proceeds as already spent:\n"
+            + "\n".join(
+                f"  {c.get('done_at', '')[:10]}: "
+                + " / ".join(x for x in (c.get("sell"), c.get("buy")) if x)
+                for c in done[-12:]
+            )
+            + "\n\n"
+        )
+
     return (
         f"{advisor._PERSONA}\n\n"
         f"Build a SEQUENCED REBALANCE PLAN. The client is over-concentrated, is "
@@ -296,6 +337,7 @@ def _prompt(a: dict) -> str:
         f"what to buy, in what order, and what has to happen first.\n\n"
         f"BOOK: ${a['equity']:,.0f} across the positions below. "
         f"{a['drift_pct']:.0f}% of the book has to change hands to reach target.\n\n"
+        f"{done_block}"
         f"ALLOCATION GAP:\n{gap_lines}\n\n"
         f"FUNDING SOURCES (overweight positions that could be trimmed):\n{fund_lines}\n\n"
         f"ACQUISITION TARGETS (wanted, not owned):\n{acq_lines}\n\n"
@@ -336,11 +378,15 @@ def generate(force: bool = True) -> dict:
     except json.JSONDecodeError:
         obj = {}
 
+    prior = _load()
+    completed = list(prior.get("completed") or [])
+    done_sigs = {c.get("sig") for c in completed}
+
     steps = []
     for i, st in enumerate(obj.get("steps") or [], start=1):
         if not isinstance(st, dict):
             continue
-        steps.append({
+        step = {
             "n": int(st.get("n") or i),
             "trigger": str(st.get("trigger", "")),
             "sell": str(st.get("sell", "")),
@@ -351,8 +397,11 @@ def generate(force: bool = True) -> dict:
             "sell_level": float(st.get("sell_level") or 0),
             "why": str(st.get("why", "")),
             "realizes": str(st.get("realizes", "")),
-            "done": False,
-        })
+        }
+        # A rebuild renumbers the steps, so done-state is carried by move
+        # identity rather than by position in the list.
+        step["done"] = _signature(step) in done_sigs
+        steps.append(step)
     steps.sort(key=lambda x: x["n"])
 
     result = {
@@ -365,7 +414,13 @@ def generate(force: bool = True) -> dict:
         "steps": steps,
         "guardrails": advisor._as_bullets(obj.get("guardrails")),
         "analysis": a,
-        "activated": False,
+        # Both survive a rebuild: the execution ledger, and the fact that the
+        # targets are already on the watchlist with live triggers.
+        "completed": completed,
+        "activated": bool(prior.get("activated")),
+        "activated_at": prior.get("activated_at"),
+        "watched": prior.get("watched") or [],
+        "watchpoints_created": prior.get("watchpoints_created") or 0,
         "error": None,
     }
     with _lock:
@@ -430,15 +485,40 @@ def activate() -> dict:
     return {"watched": added, "watchpoints": made, "error": None}
 
 
+def _signature(st: dict) -> str:
+    """Identity of a move, stable across rebuilds that renumber the steps."""
+    return "|".join([
+        str(st.get("sell_symbol", "")).upper(),
+        str(st.get("buy_symbol", "")).upper(),
+        str(st.get("sell", ""))[:60],
+        str(st.get("buy", ""))[:60],
+    ])
+
+
 def set_step_done(n: int, done: bool = True) -> dict | None:
     with _lock:
         plan = _load()
+        completed = list(plan.get("completed") or [])
+        found = None
         for st in plan.get("steps", []):
-            if int(st.get("n", 0)) == n:
-                st["done"] = bool(done)
-                _save(plan)
-                return st
-    return None
+            if int(st.get("n", 0)) != n:
+                continue
+            st["done"] = bool(done)
+            found = st
+            sig = _signature(st)
+            completed = [c for c in completed if c.get("sig") != sig]
+            if done:
+                completed.append({
+                    "sig": sig,
+                    "sell": st.get("sell", ""),
+                    "buy": st.get("buy", ""),
+                    "done_at": time.strftime("%Y-%m-%d %H:%M:%S"),
+                })
+            break
+        if found is not None:
+            plan["completed"] = completed
+            _save(plan)
+        return found
 
 
 def facts_block() -> str:
