@@ -1,19 +1,21 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { api, Scorecard } from "../lib/api";
-import { alpha, BLUEPRINT } from "../lib/palette";
+import { alpha, Palette, usePalette } from "../lib/palette";
 
 // Probability Lattice — a Galton board of the advisor's fired calls. Each
 // signal drops into a win/loss bin by its realized edge; the pile that builds
 // up IS the track record. Inspired by the "law of large numbers" quincunx.
 const EDGES = [-20, -10, -5, 0, 5, 10, 20]; // 8 bins; index 4+ = profit side
 const NBINS = EDGES.length + 1;
-const PAL = {
-  green: BLUEPRINT.olive, red: BLUEPRINT.bear, greyBall: BLUEPRINT.muted, mut: BLUEPRINT.muted,
-  peg: alpha(BLUEPRINT.ink, 0.32),
-  lossTint: alpha(BLUEPRINT.bear, 0.06), profitTint: alpha(BLUEPRINT.olive, 0.07),
-  line: alpha(BLUEPRINT.ink, 0.3), base: alpha(BLUEPRINT.ink, 0.16),
-};
+// Canvas can't resolve var(), so the board's colours are derived from the live
+// palette each time the theme changes rather than frozen at module load.
+const palOf = (p: Palette) => ({
+  green: p.bull, red: p.bear, greyBall: p.muted, mut: p.muted,
+  peg: alpha(p.ink, 0.32),
+  lossTint: alpha(p.bear, 0.06), profitTint: alpha(p.bull, 0.07),
+  line: alpha(p.ink, 0.3), base: alpha(p.ink, 0.16),
+});
 
 function binOf(pct: number) {
   let i = 0;
@@ -27,6 +29,7 @@ export function ProbabilityLattice() {
   const rafRef = useRef<number>(0);
   const [sc, setSc] = useState<Scorecard | null>(null);
   const [landed, setLanded] = useState(0);
+  const pal = usePalette();
 
   useEffect(() => { api.scorecard().then(setSc).catch(() => {}); }, []);
 
@@ -35,6 +38,7 @@ export function ProbabilityLattice() {
     if (!sc || !canvas || !wrap || !sc.signals.length) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
+    const PAL = palOf(pal);
 
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const cssW = wrap.clientWidth || 340;
@@ -125,7 +129,9 @@ export function ProbabilityLattice() {
     };
     rafRef.current = requestAnimationFrame(frame);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [sc]);
+    // `pal` is a stable object between theme changes, so this redraws when the
+    // lights go down and at no other time.
+  }, [sc, pal]);
 
   if (sc && sc.count === 0) return null;
   const wr = sc?.overall_win_rate;

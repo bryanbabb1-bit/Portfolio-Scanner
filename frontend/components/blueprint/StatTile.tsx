@@ -1,5 +1,3 @@
-import { BLUEPRINT } from "../../lib/palette";
-
 /* Big-figure stat tile with a mono caption and the poster's small jagged
    trace underneath. Pass `series` to draw the trace; omit it and the tile
    simply doesn't draw one (we never invent a shape for missing data). */
@@ -23,7 +21,7 @@ export function StatTile({
       <div className={`st-value ${tone === "plain" ? "" : tone}`}>{value}</div>
       {foot && <div className="st-foot">{foot}</div>}
       {series && series.length > 1 && (
-        <Trace series={series} color={tone === "neg" ? BLUEPRINT.bear : BLUEPRINT.ink} />
+        <Trace series={series} color={tone === "neg" ? "var(--bear)" : "var(--text)"} />
       )}
     </div>
   );
@@ -45,7 +43,9 @@ function Trace({ series, color }: { series: number[]; color: string }) {
     .join(" ");
   return (
     <svg className="st-spark" viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none" aria-hidden>
-      <path d={d} fill="none" stroke={color} strokeWidth="1.2" vectorEffect="non-scaling-stroke" />
+      {/* stroke via style, not the attribute — SVG presentation attributes
+          don't resolve var(), inline styles do. */}
+      <path d={d} fill="none" style={{ stroke: color }} strokeWidth="1.2" vectorEffect="non-scaling-stroke" />
     </svg>
   );
 }

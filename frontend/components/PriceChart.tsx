@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import { api, Candle, CHART_RANGES, ChartRange, PriceHistory, Quote, RANGE_LABELS } from "../lib/api";
-import { alpha, BLUEPRINT } from "../lib/palette";
 import { money, pct } from "./format";
 
 // Pure inline-SVG chart — no external charting lib, so it stays self-contained
@@ -223,10 +222,10 @@ export function PriceChart({ symbol, quote }: { symbol: string; quote?: Quote })
               </text>
               {/* sell zone band: RSI 70-100 */}
               <rect x={geom.padL} y={geom.ry(100)} width={geom.W - geom.padL - geom.padR}
-                height={geom.ry(70) - geom.ry(100)} fill={alpha(BLUEPRINT.bear, 0.09)} />
+                height={geom.ry(70) - geom.ry(100)} style={{ fill: "var(--bear)", fillOpacity: 0.09 }} />
               {/* buy zone band: RSI 0-30 */}
               <rect x={geom.padL} y={geom.ry(30)} width={geom.W - geom.padL - geom.padR}
-                height={geom.ry(0) - geom.ry(30)} fill={alpha(BLUEPRINT.olive, 0.11)} />
+                height={geom.ry(0) - geom.ry(30)} style={{ fill: "var(--bull)", fillOpacity: 0.11 }} />
               {[70, 30].map((lvl) => (
                 <g key={lvl}>
                   <line x1={geom.padL} x2={geom.W - geom.padR} y1={geom.ry(lvl)} y2={geom.ry(lvl)}

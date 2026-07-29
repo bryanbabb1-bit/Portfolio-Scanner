@@ -1,6 +1,5 @@
 "use client";
 import { BacktestCurvePoint } from "../lib/api";
-import { alpha, BLUEPRINT } from "../lib/palette";
 
 /* Strategy equity vs benchmark — the 04/08 chart. Inline SVG, no chart lib. */
 export function EquityCurve({
@@ -68,7 +67,7 @@ export function EquityCurve({
         </text>
       ))}
 
-      <path d={area} fill={alpha(BLUEPRINT.olive, 0.12)} stroke="none" />
+      <path d={area} style={{ fill: "var(--bull)", fillOpacity: 0.12 }} stroke="none" />
       <path d={line("benchmark")} className="eq-bench" />
       <path d={line("strategy")} className="eq-strat" />
 

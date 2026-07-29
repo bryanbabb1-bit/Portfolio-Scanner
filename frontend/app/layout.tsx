@@ -5,6 +5,7 @@ import { Nav } from "../components/Nav";
 import { BlueprintBackground } from "../components/blueprint/BlueprintBackground";
 import { PwaRegister } from "../components/PwaRegister";
 import { TickerTape } from "../components/TickerTape";
+import { THEME_BOOT_SCRIPT } from "../lib/theme";
 
 // All self-hosted at build time — no external font requests at runtime, so the
 // PWA and tunnel keep working offline.
@@ -55,7 +56,12 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${dmSans.variable} ${anton.variable} ${plexMono.variable}`}
+      suppressHydrationWarning
     >
+      <head>
+        {/* Resolves the theme before first paint — see lib/theme.ts. */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_BOOT_SCRIPT }} />
+      </head>
       <body>
         <BlueprintBackground />
         <PwaRegister />

@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { api, GraphData } from "../lib/api";
+import { alpha, usePalette } from "../lib/palette";
 
 // Relationship graph — a force-directed correlation web of the holdings.
 // Tightly-correlated names pull together into clusters, so you can SEE that the
@@ -8,6 +9,10 @@ import { api, GraphData } from "../lib/api";
 // Ink-range categorical ramp — the blueprint has no neon, so themes are
 // separated by value and warmth rather than by hue saturation.
 const PALETTE = ["#C4551F", "#3D4A2A", "#8A6D1F", "#B3341C", "#5C6B4A", "#7A5230", "#4A5A63", "#6B6558"];
+// The same eight hues lifted for the after-hours ground. A categorical ramp is
+// the one place a single token swap won't do — the whole set has to move
+// together or the clusters stop being distinguishable from each other.
+const PALETTE_NIGHT = ["#E8853D", "#8FB562", "#D6A62F", "#E0705A", "#A3B885", "#C08A55", "#7FA3B5", "#A8A192"];
 
 type N = { symbol: string; theme: string; weight: number; x: number; y: number; vx: number; vy: number; r: number; color: string };
 
@@ -16,6 +21,7 @@ export function RelationshipGraph() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const rafRef = useRef<number>(0);
   const [data, setData] = useState<GraphData | null>(null);
+  const pal = usePalette();
 
   useEffect(() => { api.graph().then(setData).catch(() => {}); }, []);
 
@@ -32,7 +38,8 @@ export function RelationshipGraph() {
     ctx.scale(dpr, dpr);
 
     const themes = Array.from(new Set(data.nodes.map((n) => n.theme)));
-    const colorOf = (t: string) => PALETTE[themes.indexOf(t) % PALETTE.length];
+    const ramp = pal.isNight ? PALETTE_NIGHT : PALETTE;
+    const colorOf = (t: string) => ramp[themes.indexOf(t) % ramp.length];
     const cx = W / 2, cy = H / 2;
     const nodes: N[] = data.nodes.map((n, i) => {
       const a = (i / data.nodes.length) * Math.PI * 2;
@@ -81,14 +88,16 @@ export function RelationshipGraph() {
     const draw = () => {
       ctx.clearRect(0, 0, W, H);
       for (const e of edges) {
-        ctx.strokeStyle = `rgba(20,20,15,${Math.min(0.45, (e.corr - 0.35) * 0.85)})`;
+        ctx.strokeStyle = alpha(pal.ink, Math.min(0.45, (e.corr - 0.35) * 0.85));
         ctx.lineWidth = 0.5 + e.corr * 1.6;
         ctx.beginPath(); ctx.moveTo(e.a.x, e.a.y); ctx.lineTo(e.b.x, e.b.y); ctx.stroke();
       }
       for (const n of nodes) {
         ctx.fillStyle = n.color;
         ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, 7); ctx.fill();
-        ctx.fillStyle = "#FAF7F0"; ctx.font = `600 ${Math.max(9, Math.min(12, n.r * 0.7))}px ui-monospace, monospace`;
+        // The card colour is light on paper and near-black at night, which is
+        // exactly the contrast a symbol needs against its own node either way.
+        ctx.fillStyle = pal.card; ctx.font = `600 ${Math.max(9, Math.min(12, n.r * 0.7))}px ui-monospace, monospace`;
         ctx.textAlign = "center"; ctx.textBaseline = "middle";
         ctx.fillText(n.symbol, n.x, n.y);
       }
@@ -107,7 +116,7 @@ export function RelationshipGraph() {
     };
     rafRef.current = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [data]);
+  }, [data, pal]);
 
   if (data && data.nodes.length < 2) return null;
   const avg = data?.avg_corr;

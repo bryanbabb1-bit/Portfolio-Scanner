@@ -34,6 +34,90 @@
      inert defaults for any page that doesn't mount it. */
   --mood-rgb: 110, 106, 96;
   --mood-alpha: 0;
+
+  /* Chart surfaces. Declared as tokens so the canvas and inline-SVG views can
+     read the live theme instead of holding their own hardcoded copies —
+     lib/palette.ts resolves these at runtime. */
+  --chart-grid: rgba(20, 20, 15, 0.10);
+  --chart-hairline: rgba(20, 20, 15, 0.12);
+  /* Frosted nav — the ground colour with alpha, so it can't be `var(--bg)`. */
+  --bg-blur: rgba(242, 238, 228, 0.88);
+  --grid-dot: rgba(20, 20, 15, 0.13);
+  /* The poster's hard offset shadow. Carried as a triplet so each rule keeps
+     its own alpha; at night it goes pure black, which still reads because the
+     cards sit LIGHTER than the ground. */
+  --shadow-rgb: 20, 20, 15;
+  /* The foreground as a triplet, for the few places that need it at an
+     arbitrary alpha rather than one of the fixed surface tokens. */
+  --ink-rgb: 20, 20, 15;
+  --chart-label: #FAF7F0;      /* text ON a filled tile, both themes */
+  --heat-flat: 110, 106, 96;
+  --heat-up: 38, 105, 55;
+  --heat-down: 178, 46, 28;
+}
+
+/* =====================================================================
+   AFTER HOURS — the same app with the lights off.
+
+   Paper by day, amber phosphor by night. This is a full second palette,
+   not a filter: every token is redeclared so nothing has to know which
+   theme it is in. Two rules make it work —
+
+   1. --on-dark INVERTS. It means "text sitting on a filled chip", so on
+      paper it is paper and at night it is the void. Every solid badge,
+      button and stamp follows automatically.
+   2. Semantic colours LIFT. The paper olive (#3D4A2A) and rust vanish on
+      a dark ground, so night uses brighter siblings at the same hue.
+   ===================================================================== */
+:root[data-theme="night"] {
+  --bg: #0B0B09;               /* warm near-black, never pure */
+  --bg-elev: #131311;
+  --bg-card: #121210;
+  --surface-sunk: rgba(232, 226, 210, 0.05);
+  --surface-hover: rgba(232, 163, 61, 0.10);
+  --border: rgba(232, 226, 210, 0.16);
+  --border-lit: rgba(232, 163, 61, 0.55);
+  --rule: rgba(232, 226, 210, 0.26);
+  --hairline: rgba(232, 226, 210, 0.10);
+  --text: #E8E2D4;             /* warm chalk, not white */
+  --muted: #8B857A;
+  --accent: #E8A33D;           /* the phosphor */
+  --accent-2: #7FA653;
+  --accent-dim: rgba(232, 163, 61, 0.14);
+  --bull: #7FA653;
+  --bull-bg: rgba(127, 166, 83, 0.14);
+  --bear: #E0705A;
+  --bear-bg: rgba(224, 112, 90, 0.14);
+  --neutral: #8B857A;
+  --gold: #D6A62F;
+  --gold-bg: rgba(214, 166, 47, 0.15);
+  --on-dark: #0B0B09;
+
+  --chart-grid: rgba(232, 226, 210, 0.10);
+  --chart-hairline: rgba(232, 226, 210, 0.13);
+  --bg-blur: rgba(11, 11, 9, 0.86);
+  --grid-dot: rgba(232, 226, 210, 0.09);
+  --shadow-rgb: 0, 0, 0;
+  --ink-rgb: 232, 226, 210;
+  --heat-flat: 122, 117, 105;
+  --heat-up: 74, 138, 84;
+  --heat-down: 196, 74, 54;
+}
+
+/* The masthead crosshair and corner ticks are drawn in ink; at night they
+   need to be drawn in light instead. */
+:root[data-theme="night"] .spec-panel > .ct { border-color: var(--text); }
+
+/* CRT scanlines. Deliberately faint — enough to read as a screen, not enough
+   to fight the type. Sits above the page but below every interactive layer. */
+:root[data-theme="night"] body::after {
+  content: ""; position: fixed; inset: 0; z-index: 900; pointer-events: none;
+  opacity: 0.35;
+  background: repeating-linear-gradient(
+    to bottom, rgba(0, 0, 0, 0) 0 2px, rgba(0, 0, 0, 0.20) 2px 3px);
+}
+@media (prefers-reduced-motion: reduce) {
+  :root[data-theme="night"] body::after { opacity: 0.22; }
 }
 
 /* ===================================================================== */
@@ -164,7 +248,7 @@ body {
   position: fixed; inset: 0; width: 100%; height: 100%;
   z-index: -1; pointer-events: none;
   background-image:
-    radial-gradient(circle at 1px 1px, rgba(20, 20, 15, 0.13) 1px, transparent 0);
+    radial-gradient(circle at 1px 1px, var(--grid-dot) 1px, transparent 0);
   background-size: 24px 24px;
   opacity: 0.75;
   -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, #000 35%, transparent 78%);
@@ -438,7 +522,7 @@ a { color: inherit; text-decoration: none; }
 /* ---------------------------------------------------------------- nav */
 .nav {
   border-bottom: 1px solid var(--rule);
-  background: rgba(242, 238, 228, 0.88);
+  background: var(--bg-blur);
   backdrop-filter: blur(14px) saturate(120%);
   position: sticky;
   top: 0;
@@ -468,6 +552,33 @@ a { color: inherit; text-decoration: none; }
 .nav-links a.active, .nav-group.active > button { box-shadow: inset 0 -2px 0 var(--accent); }
 .nav-right { display: flex; align-items: center; gap: 10px; margin-left: auto; }
 
+/* ---- After Hours switch ------------------------------------------------- */
+.theme-switch {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 8px 4px 6px;
+  background: none; border: 1px solid var(--border); border-radius: 3px;
+  color: var(--muted); cursor: pointer;
+  transition: color .18s ease, border-color .18s ease, background .18s ease;
+}
+.theme-switch:hover { color: var(--text); border-color: var(--rule); background: var(--surface-hover); }
+.theme-switch.night { color: var(--accent); border-color: var(--border-lit); }
+.ts-glyph { position: relative; display: inline-flex; }
+/* The dot says "the session is choosing", so it sits ON the glyph rather than
+   next to the label — the label already states the preference in words. */
+.ts-auto {
+  position: absolute; right: -2px; top: -2px;
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--accent);
+}
+.ts-label {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 9px; font-weight: 600; letter-spacing: .12em;
+  /* Reserve the widest word so the nav doesn't reflow as the label cycles. */
+  min-width: 4ch;
+  text-align: left;
+}
+@media (max-width: 720px) { .ts-label { display: none; } }
+
 /* grouped nav dropdown (Desk / Research) */
 .nav-group { position: relative; }
 .nav-group > button .caret { font-size: 8px; opacity: .7; }
@@ -475,7 +586,7 @@ a { color: inherit; text-decoration: none; }
   position: absolute; top: 38px; left: 0; min-width: 190px; z-index: 30;
   background: var(--bg-card); border: 1px solid var(--rule);
   padding: 5px; display: flex; flex-direction: column;
-  box-shadow: 6px 6px 0 rgba(20, 20, 15, 0.08);
+  box-shadow: 6px 6px 0 rgba(var(--shadow-rgb), 0.08);
 }
 .nav-menu a {
   font-family: var(--font-mono), ui-monospace, monospace;
@@ -572,7 +683,7 @@ a { color: inherit; text-decoration: none; }
 .mut { color: var(--muted); }
 
 .stock-card { display: flex; flex-direction: column; gap: 12px; transition: border-color .15s ease, box-shadow .15s ease; }
-.stock-card:hover { border-color: var(--accent); box-shadow: 4px 4px 0 rgba(20, 20, 15, 0.07); }
+.stock-card:hover { border-color: var(--accent); box-shadow: 4px 4px 0 rgba(var(--shadow-rgb), 0.07); }
 .sc-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
 .sc-id { min-width: 0; }
 .sc-sym { font-size: 17px; font-weight: 800; letter-spacing: 0.02em; }
@@ -619,7 +730,7 @@ a { color: inherit; text-decoration: none; }
 .score-ring {
   --v: 0;
   width: 62px; height: 62px; border-radius: 50%;
-  background: conic-gradient(var(--accent) calc(var(--v) * 1%), rgba(20, 20, 15, 0.10) 0);
+  background: conic-gradient(var(--accent) calc(var(--v) * 1%), var(--chart-grid) 0);
   display: grid; place-items: center; flex-shrink: 0;
 }
 .score-ring .inner {
@@ -698,9 +809,9 @@ a { color: inherit; text-decoration: none; }
   background: var(--bg-card); padding: 0 24px;
   animation: slap-pop .35s cubic-bezier(.2, 1.4, .4, 1);
 }
-.slap-card.buy { border: 2px solid var(--bull); box-shadow: 10px 10px 0 rgba(20, 20, 15, 0.14); }
-.slap-card.sell { border: 2px solid var(--bear); box-shadow: 10px 10px 0 rgba(20, 20, 15, 0.14); }
-.slap-card.hold { border: 2px solid var(--accent); box-shadow: 10px 10px 0 rgba(20, 20, 15, 0.14); }
+.slap-card.buy { border: 2px solid var(--bull); box-shadow: 10px 10px 0 rgba(var(--shadow-rgb), 0.14); }
+.slap-card.sell { border: 2px solid var(--bear); box-shadow: 10px 10px 0 rgba(var(--shadow-rgb), 0.14); }
+.slap-card.hold { border: 2px solid var(--accent); box-shadow: 10px 10px 0 rgba(var(--shadow-rgb), 0.14); }
 
 /* advisor recommendation verdict (RecoSlap + alert reco) */
 .reco-verdict { display: flex; align-items: center; gap: 12px; margin-top: 12px; flex-wrap: wrap; }
@@ -727,11 +838,11 @@ a { color: inherit; text-decoration: none; }
 .slap-close {
   position: absolute; top: 50%; right: 12px; transform: translateY(-50%);
   width: 28px; height: 28px;
-  background: rgba(20, 20, 15, 0.22); border: none; color: inherit;
+  background: rgba(var(--ink-rgb), 0.22); border: none; color: inherit;
   font-size: 14px; line-height: 1; cursor: pointer;
   display: grid; place-items: center;
 }
-.slap-close:hover { background: rgba(20, 20, 15, 0.4); }
+.slap-close:hover { background: rgba(var(--ink-rgb), 0.4); }
 .slap-head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .slap-sym { font-size: 40px; line-height: 1; }
 .slap-price { font-size: 20px; font-weight: 700; color: var(--muted); }
@@ -1056,7 +1167,7 @@ main.page > .slap-overlay { animation: slap-fade .25s ease; }
   position: absolute; top: 44px; right: 0; width: 360px; max-width: 86vw;
   max-height: 70vh; overflow-y: auto; z-index: 40;
   background: var(--bg-card); border: 1px solid var(--rule);
-  box-shadow: 6px 6px 0 rgba(20, 20, 15, 0.10);
+  box-shadow: 6px 6px 0 rgba(var(--shadow-rgb), 0.10);
 }
 .bell-head {
   display: flex; align-items: center; justify-content: space-between;
@@ -1352,7 +1463,7 @@ select { cursor: pointer; }
 
 /* breakout radar cards */
 .breakout-card { transition: border-color .18s ease, box-shadow .18s ease; }
-.breakout-card:hover { border-color: var(--accent); box-shadow: 4px 4px 0 rgba(20, 20, 15, 0.07); }
+.breakout-card:hover { border-color: var(--accent); box-shadow: 4px 4px 0 rgba(var(--shadow-rgb), 0.07); }
 .breakout-card .sc-sym { font-size: 18px; }
 
 /* ------------------------------------------------------------ movers strip */
@@ -1406,7 +1517,7 @@ select { cursor: pointer; }
 .hm-tile { cursor: pointer; }
 .hm-tile rect { transition: opacity .15s; }
 .hm-tile:hover rect { opacity: 0.82; stroke: var(--text); stroke-width: 1.5; }
-.hm-sym { fill: #FAF7F0; font-weight: 800; letter-spacing: .03em; pointer-events: none; }
+.hm-sym { fill: var(--chart-label); font-weight: 800; letter-spacing: .03em; pointer-events: none; }
 .hm-pct { fill: rgba(250, 247, 240, 0.88); font-weight: 600; pointer-events: none; }
 
 /* ---------------------------------------------------------------- 404 */
@@ -1564,7 +1675,7 @@ select { cursor: pointer; }
   position: relative; width: min(330px, 86vw);
   background: var(--bg-card); border: 1px solid var(--rule);
   padding: 22px; font-family: var(--font-mono), ui-monospace, monospace;
-  box-shadow: 0 26px 60px rgba(20, 20, 15, 0.35);
+  box-shadow: 0 26px 60px rgba(var(--shadow-rgb), 0.35);
   animation: ft-drop .5s cubic-bezier(.16, 1, .3, 1) both;
 }
 @keyframes ft-drop {

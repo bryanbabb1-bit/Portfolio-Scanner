@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { StockReport } from "../lib/api";
+import { heatColor, usePalette } from "../lib/palette";
 import { money, pct } from "./format";
 
 // Squarified treemap: tile area = market value, color = day move or total P/L.
@@ -70,24 +71,15 @@ function squarify(values: number[], bounds: Rect): Rect[] {
 // up tile were both "dark warm grey" and only the red side actually read.
 // These diverge either side of a neutral that is still dark enough for the
 // paper-coloured labels to stay legible.
-const BASE = { r: 110, g: 106, b: 96 };   // flat — warm grey
-const BULL = { r: 38, g: 105, b: 55 };    // up   — a real green
-const BEAR = { r: 178, g: 46, b: 28 };    // down — rust
-
-function heatColor(metric: number, cap: number): string {
-  const t = Math.max(-1, Math.min(1, metric / cap));
-  const target = t >= 0 ? BULL : BEAR;
-  // Ease the ramp so ordinary moves are visibly tinted. Linear meant a typical
-  // 0.8% day landed at 20% saturation and looked flat.
-  const k = Math.pow(Math.abs(t), 0.6);
-  const mix = (a: number, b: number) => Math.round(a + (b - a) * k);
-  return `rgb(${mix(BASE.r, target.r)},${mix(BASE.g, target.g)},${mix(BASE.b, target.b)})`;
-}
+// The three anchor colours now live as --heat-flat/-up/-down tokens so the
+// after-hours theme can lift them off a black ground, and the eased ramp that
+// keeps an ordinary 0.8% day visibly tinted lives in lib/palette heatColor().
 
 type Mode = "day" | "total";
 
 export function HoldingsHeatmap({ holdings }: { holdings: StockReport[] }) {
   const router = useRouter();
+  const pal = usePalette();
   const [mode, setMode] = useState<Mode>("day");
   // On phones a tall portrait canvas keeps tile labels readable.
   const [compact, setCompact] = useState(false);
@@ -157,7 +149,7 @@ export function HoldingsHeatmap({ holdings }: { holdings: StockReport[] }) {
                 width={Math.max(rect.w - 3, 0)}
                 height={Math.max(rect.h - 3, 0)}
                 rx={2}
-                fill={heatColor(metric, cap)}
+                fill={heatColor(metric, cap, pal)}
               />
               {showText && (
                 <text
