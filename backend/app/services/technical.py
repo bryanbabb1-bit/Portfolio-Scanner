@@ -168,6 +168,45 @@ def indicator_frame(df: pd.DataFrame) -> pd.DataFrame:
     return out.replace([np.inf, -np.inf], np.nan)
 
 
+def current_price(md) -> tuple[float, float] | None:
+    """(price, previous close) for a symbol — THE authoritative pair.
+
+    The daily history is the authoritative session ledger and it updates
+    intraday, so it is the source of truth. yfinance's get_info()/fast_info
+    have been observed to lag a full trading day in this environment
+    (regularMarketPrice = YESTERDAY's close), which once inverted a green day
+    into a red one. So anchor on the bars, and reach for a live tick ONLY
+    off-session, where a fresh tick genuinely beats the last completed bar.
+
+    Extracted so the hero total and the portfolio chart cannot disagree. They
+    did: the chart overrode its last point with md.live_price unconditionally,
+    which put every holding a few dollars above the hero and made the two
+    numbers on the same screen drift by ~$40.
+    """
+    close = md.history["Close"].dropna()
+    if len(close) == 0:
+        return None
+    last_close = float(close.iloc[-1])
+    prev_bar = float(close.iloc[-2]) if len(close) > 1 else last_close
+
+    live = getattr(md, "live_price", None)
+    if live is not None and not np.isfinite(live):
+        live = None  # a NaN/inf live tick is worse than the last real bar
+
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+    today = datetime.now(ZoneInfo("America/New_York")).strftime("%Y-%m-%d")
+    last_bar_day = str(close.index[-1])[:10]  # last VALID bar, not a NaN today-bar
+
+    if last_bar_day == today:
+        # Today's bar exists (regular session, updating live): it IS the price;
+        # the prior bar is the true previous close. Ignore a stale get_info tick.
+        return last_close, prev_bar
+    # No bar for today yet (pre-market, or the source hasn't posted): the last
+    # completed bar is the previous close and a live tick is the price.
+    return (float(live) if live else last_close), last_close
+
+
 def build_quote(md, ind: Indicators) -> Quote:
     # Drop NaN closes first: this environment's data source has been observed to
     # return a daily bar whose Close is NaN (empty/unposted session), which used
@@ -178,34 +217,9 @@ def build_quote(md, ind: Indicators) -> Quote:
         # No valid price data at all — degrade gracefully instead of crashing.
         return Quote(symbol=md.symbol, name=md.name, price=0.0, change=0.0,
                      change_pct=0.0, volume=0.0, source=md.source)
-    last_close = float(close.iloc[-1])
-    prev_bar = float(close.iloc[-2]) if len(close) > 1 else last_close
-    live = getattr(md, "live_price", None)
-    if live is not None and (not np.isfinite(live)):
-        live = None  # a NaN/inf live tick is worse than the last real bar
-
-    # The daily history is the authoritative session ledger and it updates
-    # intraday, so it is the source of truth for today's change. yfinance's
-    # get_info()/fast_info fields have been observed to lag a full trading day
-    # in this environment (regularMarketPrice = YESTERDAY's close, previousClose
-    # = the day before), which inverted a green day into a red one. So anchor on
-    # the bars, and only reach for a live tick OFF-session (pre/post market),
-    # where a fresh tick genuinely beats the last completed daily bar.
-    from datetime import datetime
-    from zoneinfo import ZoneInfo
-    today = datetime.now(ZoneInfo("America/New_York")).strftime("%Y-%m-%d")
-    last_bar_day = str(close.index[-1])[:10]  # last VALID bar, not a NaN today-bar
-
-    if last_bar_day == today:
-        # Today's bar exists (regular session, updating live): it IS the price;
-        # the prior bar is the true previous close. Ignore a stale get_info tick.
-        price = last_close
-        prev = prev_bar
-    else:
-        # No bar for today yet (pre-market, or source hasn't posted today): the
-        # last completed bar is the previous close and a live tick is the price.
-        prev = last_close
-        price = float(live) if live else last_close
+    # Same rule as the chart — see current_price() for why the daily bars win
+    # over a live tick during the session.
+    price, prev = current_price(md)
     change = price - prev
     vol = float(md.history["Volume"].iloc[-1])
     if not np.isfinite(vol):

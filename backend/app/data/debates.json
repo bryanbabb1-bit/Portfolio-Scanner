@@ -1,0 +1,130 @@
+{
+  "VRT": {
+    "symbol": "VRT",
+    "name": "Vertiv Holdings, LLC",
+    "price": 269.56,
+    "ts": 1785274042.4092913,
+    "as_of": "2026-07-28 16:27:22",
+    "engine": "claude",
+    "agents": [
+      {
+        "key": "bull",
+        "name": "Bull Agent",
+        "round": 1,
+        "position": "BULLISH",
+        "confidence": 55,
+        "points": [
+          "26 Wall Street analysts rate VRT a strong buy with an average target of $376.15, over 39% above today's $269.56.",
+          "VRT still trades far above its 52-week low of $121.69, proof the longer-term trend remains strongly up.",
+          "Today's volume ran 1.67 times normal on the dip, a sign big buyers are stepping in, not fleeing.",
+          "The $15 billion order backlog stays intact heading into tomorrow's earnings, underpinning revenue regardless of today's swing.",
+          "Price still sits well above the longer-term trend line near $245, and our 4 shares are already up 0.3% from cost."
+        ],
+        "strongest": "26 analysts rate VRT a strong buy with a $376.15 average target, 39.5% above today's price.",
+        "ok": true
+      },
+      {
+        "key": "bear",
+        "name": "Bear Agent",
+        "round": 1,
+        "position": "BEARISH",
+        "confidence": 52,
+        "points": [
+          "VRT fell 6.27% today to $269.56 on volume 1.67x the norm — that's real selling pressure, not noise.",
+          "Momentum has turned down and price is well below its recent trending levels near $304 and $313 — the up-move is losing steam.",
+          "Earnings land tomorrow, 2026-07-29 — a binary event that can gap this position sharply overnight with no way to react in time.",
+          "Stock is already down 28.3% from its 52-week high of $376.15, so real damage is showing even before the earnings print.",
+          "VRT is 11.1% of the book sitting next to NVDA at 16% and AVGO at 14%, and the book is 98% deployed with only $210 in cash if this goes wrong."
+        ],
+        "strongest": "A 6.27% drop on 1.67x normal volume the day before earnings is the exact setup where a bad surprise does the most damage.",
+        "ok": true
+      },
+      {
+        "key": "macro",
+        "name": "Macro Agent",
+        "round": 1,
+        "position": "NEUTRAL",
+        "confidence": 55,
+        "points": [
+          "VRT sits early in the AI power buildout theme, a multi-year capital cycle, not a one-quarter story.",
+          "Stock fell 6.27% today to $269.56, but the long-term trend near $245 is still pointing up.",
+          "26 analysts still rate it a strong buy with a $376 target, 39.5% above today's price.",
+          "The risk desk is ELEVATED with only $210 of cash left (2% of the book) — no room to add.",
+          "Earnings land tomorrow (2026-07-29), a binary event that can move the stock hard in either direction."
+        ],
+        "strongest": "The secular AI power buildout still backs this stock, but an ELEVATED risk desk and earnings tomorrow argue for standing pat, not adding.",
+        "ok": true
+      },
+      {
+        "key": "risk",
+        "name": "Risk Agent",
+        "round": 2,
+        "position": "BULLISH",
+        "confidence": 32,
+        "points": [
+          "We already own this — 4 shares at $269.56, no new cash trade needed before earnings.",
+          "Stop is set at $245.36 with $19 of risk per share, survivable and already deterministic from the desk.",
+          "VRT is 11.1% of the book next to NVDA 16% and AVGO 14%, all same power/AI theme — real concentration risk.",
+          "Book is 98% deployed with only $210 cash and risk status is ELEVATED — no room to add before earnings.",
+          "26 analysts still call it a strong buy with a $376.15 target, 39.5% upside, supporting a hold not a cut."
+        ],
+        "strongest": "No new fact since the last call: price is flat at $269.56, so the standing HOLD stands unchanged into tomorrow's earnings.",
+        "ok": true
+      },
+      {
+        "key": "execution",
+        "name": "Execution Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 55,
+        "points": [
+          "Hold your 4 VRT shares as is — do nothing before earnings tomorrow.",
+          "Don't add new money now; only $210 cash is left and earnings could gap the price either way.",
+          "Keep a stop at $245.36 — if it breaks below there after earnings, sell.",
+          "If VRT jumps after earnings, wait for a pullback near $269.56 before adding, don't chase.",
+          "If it drops toward $245.36 post-earnings, only then consider buying $210 in one shot, not staged."
+        ],
+        "strongest": "With only $210 in cash and earnings tomorrow, the right move is hold and let the report happen before risking new money.",
+        "ok": true
+      }
+    ],
+    "agents_reporting": 5,
+    "tally": {
+      "bullish": 2,
+      "bearish": 1,
+      "neutral": 2
+    },
+    "verdict": "APPROVE",
+    "action": "HOLD",
+    "score": 62,
+    "headline": "Hold your 4 VRT shares through tomorrow's earnings — nothing has changed today.",
+    "rationale": [
+      "Bull's backlog and 26-analyst strong-buy case survives; the business is intact heading into the print.",
+      "I overruled Bear: a one-day 6% drop before earnings is noise, not a broken thesis.",
+      "Bear's real point stands — VRT plus NVDA and AVGO is one big power-and-AI bet.",
+      "Execution's 'do nothing before earnings' is right; only $210 cash left, so no adding here.",
+      "Risk Agent's low-confidence bullish lean adds nothing — we already own it, no new trade needed."
+    ],
+    "dissent": [
+      "If tomorrow's report cuts guidance or shows orders slowing, the thesis weakens and holding was wrong.",
+      "An earnings gap down could hit our $245 level overnight with no chance to react."
+    ],
+    "entry": "",
+    "target": "$376.15",
+    "stop": "$245.36",
+    "sizing": {
+      "symbol": "VRT",
+      "price": 269.56,
+      "stop": 245.36,
+      "stop_basis": "200-day",
+      "risk_per_share": 24.2,
+      "dollars": 209.64,
+      "shares": 0.7777,
+      "pct_of_equity": 2.17,
+      "risk_amount": 18.82,
+      "capped_by": "dry powder",
+      "note": "Stop $245.36 (200-day, 9.0% below). Risking 1% of equity ($19) buys $210 — capped by dry powder."
+    },
+    "error": null
+  }
+}

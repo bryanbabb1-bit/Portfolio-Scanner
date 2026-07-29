@@ -65,16 +65,21 @@ function squarify(values: number[], bounds: Rect): Rect[] {
   return out;
 }
 
-// Inked tiles on a paper page: flat means warm neutral ink, movers ramp to
-// olive / rust. All three stay dark enough for the paper-coloured tile labels.
-const BASE = { r: 122, g: 117, b: 105 };
-const BULL = { r: 61, g: 74, b: 42 };
-const BEAR = { r: 179, g: 52, b: 28 };
+// Inked tiles on a paper page. The two directions have to differ in HUE, not
+// just in darkness: the previous green was a dark olive, so a flat tile and an
+// up tile were both "dark warm grey" and only the red side actually read.
+// These diverge either side of a neutral that is still dark enough for the
+// paper-coloured labels to stay legible.
+const BASE = { r: 110, g: 106, b: 96 };   // flat — warm grey
+const BULL = { r: 38, g: 105, b: 55 };    // up   — a real green
+const BEAR = { r: 178, g: 46, b: 28 };    // down — rust
 
 function heatColor(metric: number, cap: number): string {
   const t = Math.max(-1, Math.min(1, metric / cap));
   const target = t >= 0 ? BULL : BEAR;
-  const k = Math.abs(t);
+  // Ease the ramp so ordinary moves are visibly tinted. Linear meant a typical
+  // 0.8% day landed at 20% saturation and looked flat.
+  const k = Math.pow(Math.abs(t), 0.6);
   const mix = (a: number, b: number) => Math.round(a + (b - a) * k);
   return `rgb(${mix(BASE.r, target.r)},${mix(BASE.g, target.g)},${mix(BASE.b, target.b)})`;
 }
@@ -131,7 +136,9 @@ export function HoldingsHeatmap({ holdings }: { holdings: StockReport[] }) {
       <svg className="heatmap" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" role="img">
         {tiles.map(({ r, rect }) => {
           const metric = mode === "day" ? r.quote.change_pct : r.unrealized_pl_pct ?? 0;
-          const cap = mode === "day" ? 4 : 40;
+          // Saturate at a move that is genuinely notable rather than extreme:
+          // 4% and 40% meant an ordinary session sat near the flat colour.
+          const cap = mode === "day" ? 2.5 : 20;
           const showText = rect.w > 68 && rect.h > 40;
           const showPct = rect.w > 68 && rect.h > 64;
           const fs = Math.min(26, Math.max(12, Math.sqrt(rect.w * rect.h) / 7));
@@ -149,7 +156,7 @@ export function HoldingsHeatmap({ holdings }: { holdings: StockReport[] }) {
                 y={rect.y + 1.5}
                 width={Math.max(rect.w - 3, 0)}
                 height={Math.max(rect.h - 3, 0)}
-                rx={6}
+                rx={2}
                 fill={heatColor(metric, cap)}
               />
               {showText && (

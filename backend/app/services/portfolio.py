@@ -389,11 +389,21 @@ def portfolio_history(range_: str = "6mo") -> PortfolioHistory:
         except Exception:
             continue
         any_mock = any_mock or source == "mock"
-        # Make the FINAL point the live tick (incl. pre/after-hours) so the
-        # chart's latest value matches the live total shown at the top — the
-        # daily-close endpoint drifts in extended hours. .copy() above keeps us
-        # from mutating the cached history.
-        if live and source != "mock" and len(closes):
+        # Make the FINAL point the SAME price the hero total uses, via the one
+        # shared rule. This used to override with md.live_price unconditionally
+        # — but the hero stopped trusting that field when it was found to lag a
+        # full session, so the override became the cause of the drift instead
+        # of the cure: every holding sat a few dollars high and the two numbers
+        # on the same screen disagreed by ~$40. .copy() above keeps us from
+        # mutating the cached history.
+        if not intraday and source != "mock" and len(closes):
+            from .technical import current_price
+            pair = current_price(md)
+            if pair:
+                closes.iloc[-1] = pair[0]
+        elif intraday and live and source != "mock" and len(closes):
+            # Intraday bars are their own ledger; the live tick is the right
+            # tail for them.
             closes.iloc[-1] = float(live)
         per_symbol[sym] = closes * shares
 

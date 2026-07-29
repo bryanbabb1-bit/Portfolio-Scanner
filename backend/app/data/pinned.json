@@ -1,0 +1,35 @@
+[
+  {
+    "id": "a026abfeb8da",
+    "symbol": null,
+    "source": "brief",
+    "text": "Buy $110 MRK at $131.84 (when immediately)",
+    "points": [],
+    "status": "open",
+    "price_at_pin": null,
+    "created_at": "2026-07-28 15:08:10",
+    "ts": 1785269290.6593575
+  },
+  {
+    "id": "3f866ddcf399",
+    "symbol": null,
+    "source": "brief",
+    "text": "Buy $100 CB at $363.55 (when immediately)",
+    "points": [],
+    "status": "open",
+    "price_at_pin": null,
+    "created_at": "2026-07-28 15:08:13",
+    "ts": 1785269293.8302133
+  },
+  {
+    "id": "4dc1e32286aa",
+    "symbol": null,
+    "source": "brief",
+    "text": "Quick trade: Sell all $155 GEV on a green day.",
+    "points": [],
+    "status": "open",
+    "price_at_pin": null,
+    "created_at": "2026-07-28 20:21:33",
+    "ts": 1785288093.648868
+  }
+]

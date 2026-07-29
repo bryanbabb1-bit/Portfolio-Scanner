@@ -1,0 +1,23 @@
+{
+  "type": "eod",
+  "date": "2026-07-28",
+  "generated_at": "2026-07-28 20:19:50",
+  "engine": "claude",
+  "headline": "Rough day, but earnings week is coming",
+  "summary": "The book slipped 1.01% today mostly on VRT and CEG weakness, while GOOGL and AAPL held up and cushioned the drop. Nothing broke — just noise ahead of two big earnings dates.",
+  "watch": [
+    "VRT reports earnings tomorrow — expect a big swing, hold through it.",
+    "Don't add to VRT until after earnings clears the uncertainty.",
+    "AAPL reports earnings in 2 days — hold, don't chase it near $340.08.",
+    "GOOGL still down 8.3% overall — hold, let today's bounce build.",
+    "Hold NVDA and AVGO — do nothing, thesis is intact."
+  ],
+  "recap": [
+    "Book fell 1.01% to $9,675, cash sits at $210.",
+    "VRT dropped 6.3% to $269.56, the day's biggest drag, but still up 0.3% overall.",
+    "CEG fell 3.8% to $259.82, still only down 0.5% since you bought it.",
+    "GOOGL was today's best performer, up 2.2% to $333.71.",
+    "AAPL edged up 0.9% to $340.08, still your top winner at +10.5%.",
+    "NVDA and AVGO barely moved, both still underwater on your cost."
+  ]
+}
