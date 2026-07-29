@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata, Viewport } from "next";
 import { Anton, DM_Sans, IBM_Plex_Mono } from "next/font/google";
+import { AdvisorDock } from "../components/AdvisorDock";
 import { Nav } from "../components/Nav";
 import { BlueprintBackground } from "../components/blueprint/BlueprintBackground";
 import { PwaRegister } from "../components/PwaRegister";
@@ -68,6 +69,8 @@ export default function RootLayout({
         <Nav />
         <TickerTape />
         <main className="container page">{children}</main>
+        {/* Always-open line to the advisor — every page, no brief required. */}
+        <AdvisorDock />
       </body>
     </html>
   );

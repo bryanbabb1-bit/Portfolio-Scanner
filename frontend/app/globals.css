@@ -467,6 +467,114 @@ body {
   .ph-note { grid-column: 1 / -1; font-size: 12.5px; }
 }
 
+/* ---- advisor dock: the always-open line, on every page -------------------
+   Sits above the nav (20) and the bell menu (40) but BELOW the slap (1000) —
+   a slap is a demand for a decision and has to be able to cover this. */
+.adock-launch {
+  position: fixed; right: 18px; bottom: 18px; z-index: 850;
+  display: flex; align-items: center; gap: 9px;
+  padding: 10px 14px; cursor: pointer;
+  background: var(--bg-card); color: var(--text);
+  border: 1px solid var(--border);
+  box-shadow: 0 6px 20px rgba(var(--shadow-rgb), 0.14);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px; letter-spacing: 0.09em; text-transform: uppercase;
+}
+.adock-launch:hover { border-color: var(--border-lit); background: var(--surface-hover); }
+.adock-kbd {
+  font-size: 9.5px; letter-spacing: 0.08em; color: var(--muted);
+  border: 1px solid var(--hairline); padding: 2px 5px;
+}
+/* A live pulse, because "always on" has to be visible to be believed. */
+.adock-dot {
+  width: 7px; height: 7px; border-radius: 50%; flex: none;
+  background: var(--bull); box-shadow: 0 0 0 0 rgba(var(--ink-rgb), 0.25);
+  animation: adock-pulse 2.4s ease-out infinite;
+}
+.adock-dot.off { background: var(--bear); animation: none; }
+@keyframes adock-pulse {
+  0% { box-shadow: 0 0 0 0 var(--bull-bg); }
+  70% { box-shadow: 0 0 0 7px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+@media (prefers-reduced-motion: reduce) { .adock-dot { animation: none; } }
+
+.adock {
+  position: fixed; right: 18px; bottom: 18px; z-index: 850;
+  width: min(430px, calc(100vw - 36px));
+  max-height: min(72vh, 660px);
+  display: flex; flex-direction: column;
+  background: var(--bg-card); border: 1px solid var(--border);
+  box-shadow: 0 14px 40px rgba(var(--shadow-rgb), 0.20);
+}
+.adock-head {
+  display: flex; align-items: center; gap: 8px; flex: none;
+  padding: 11px 12px; border-bottom: 1px solid var(--rule);
+  font-family: var(--font-mono), ui-monospace, monospace;
+}
+.adock-who { font-size: 11.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+.adock-state { font-size: 9.5px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted); }
+.adock-head-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+.adock-deep {
+  display: flex; align-items: center; gap: 5px; cursor: pointer;
+  font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
+}
+.adock-icon {
+  background: none; border: 1px solid transparent; cursor: pointer; color: var(--muted);
+  font-family: inherit; font-size: 10.5px; letter-spacing: 0.08em;
+  text-transform: uppercase; padding: 3px 6px;
+}
+.adock-icon:hover { color: var(--text); border-color: var(--border); }
+
+.adock-body { flex: 1; overflow-y: auto; padding: 12px; }
+.adock-empty p { font-size: 13px; color: var(--muted); line-height: 1.55; margin-bottom: 12px; }
+.adock-openers { display: flex; flex-direction: column; gap: 6px; }
+.adock-opener {
+  text-align: left; cursor: pointer; font: inherit; font-size: 13px;
+  padding: 9px 11px; color: var(--text);
+  background: var(--surface-sunk); border: 1px solid transparent;
+}
+.adock-opener:hover { border-color: var(--border-lit); background: var(--surface-hover); }
+
+.adock-turn + .adock-turn { margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--hairline); }
+.adock-q {
+  font-size: 13px; font-weight: 600; margin-bottom: 7px;
+  display: flex; gap: 8px; align-items: baseline;
+}
+.adock-at {
+  margin-left: auto; flex: none; font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 9.5px; color: var(--muted); font-weight: 400;
+}
+.adock-a p { font-size: 13.5px; line-height: 1.55; margin-bottom: 7px; }
+.adock-err { font-size: 13px; color: var(--bear); }
+
+.adock-input {
+  flex: none; display: flex; gap: 8px; align-items: flex-end;
+  padding: 10px 12px; border-top: 1px solid var(--rule);
+}
+.adock-input textarea {
+  flex: 1; resize: none; font: inherit; font-size: 13.5px; line-height: 1.45;
+  padding: 8px 10px; color: var(--text);
+  background: var(--surface-sunk); border: 1px solid var(--border);
+}
+.adock-input textarea:focus { outline: none; border-color: var(--border-lit); }
+
+/* On a phone he takes the bottom of the screen rather than floating in a
+   corner — the launcher clears the home-bar inset. */
+@media (max-width: 720px) {
+  .adock {
+    right: 0; left: 0; bottom: 0; width: 100%;
+    max-height: 80vh;
+    padding-bottom: env(safe-area-inset-bottom);
+    border-left: none; border-right: none; border-bottom: none;
+  }
+  .adock-launch {
+    right: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom));
+  }
+  .adock-launch-label { display: none; }
+}
+
 /* core-conviction toggle chips (Settings) */
 .conv-chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .conv-chip {
