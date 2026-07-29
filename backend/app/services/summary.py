@@ -73,6 +73,45 @@ def dismiss() -> dict:
     return {"dismissed": _brief_id(b)}
 
 
+# A scheduled brief gets a few shots inside its window before it settles for a
+# fallback. The advisor is a local CLI invocation and it can hiccup transiently:
+# on 2026-07-29 the 16:00 recap drew "Advisor unavailable — here is the raw
+# setup", and because the day was stamped on that fallback the window closed with
+# no real recap at all and a push whose entire body read "Today's close recap".
+# The same build succeeded on the next attempt, so one hiccup should cost one
+# heartbeat (~2 min), not the day.
+MAX_ADVISOR_ATTEMPTS = 4
+
+
+def _run_due(kind: str, state: dict, today: str) -> dict | None:
+    """Run one scheduled brief, retrying a failed advisor call in-window.
+
+    The day is stamped only once the advisor actually answered, or once the
+    attempts are spent — so a transient failure doesn't burn the slot, and a
+    genuine outage still delivers something rather than going silent.
+    """
+    brief = build(kind)
+    # Attempts are date-stamped so a count left behind by a crash can't suppress
+    # tomorrow's retries.
+    prior = str(state.get(f"{kind}_tries") or "")
+    tries = (int(prior.split(":")[1]) if prior.startswith(f"{today}:") else 0) + 1
+
+    if brief.get("engine") == "claude" or tries >= MAX_ADVISOR_ATTEMPTS:
+        _emit(brief)
+        state[kind] = today
+        state.pop(f"{kind}_tries", None)
+        _save(_STATE_FILE, state)
+        return brief
+
+    # Hold the slot open for the next heartbeat instead of spending the window on
+    # a brief that has no advisor read in it.
+    state[f"{kind}_tries"] = f"{today}:{tries}"
+    _save(_STATE_FILE, state)
+    print(f"[summary] {kind} brief: advisor unavailable, "
+          f"attempt {tries}/{MAX_ADVISOR_ATTEMPTS} — retrying next heartbeat")
+    return None
+
+
 def maybe_send_daily(force_kind: str | None = None) -> dict | None:
     """Emit the morning brief or close recap if due (once per day each)."""
     if force_kind:
@@ -86,17 +125,9 @@ def maybe_send_daily(force_kind: str | None = None) -> dict | None:
     mins = et.hour * 60 + et.minute
     state = _load(_STATE_FILE, {})
     if 8 * 60 + 15 <= mins < 10 * 60 and state.get("morning") != today:
-        brief = build("morning")
-        _emit(brief)
-        state["morning"] = today
-        _save(_STATE_FILE, state)
-        return brief
+        return _run_due("morning", state, today)
     if 16 * 60 <= mins < 17 * 60 + 30 and state.get("eod") != today:
-        brief = build("eod")
-        _emit(brief)
-        state["eod"] = today
-        _save(_STATE_FILE, state)
-        return brief
+        return _run_due("eod", state, today)
     return None
 
 
@@ -234,6 +265,10 @@ def _emit(brief: dict) -> None:
         from . import push
         title = ("MORNING BRIEF" if brief["type"] == "morning" else "CLOSE RECAP")
         body = brief.get("headline") or "Your daily brief is ready."
+        # A fallback brief has no advisor read in it, so say that outright rather
+        # than pushing a label that looks like a normal brief and isn't.
+        if brief.get("engine") != "claude":
+            body = f"Couldn't reach the advisor — raw numbers only. {body}"
         push.send(f"▪ {title}", body, sound="default",
                   data={"type": "brief", "kind": brief["type"]})
     except Exception as exc:
