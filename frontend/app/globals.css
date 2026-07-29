@@ -455,7 +455,13 @@ body {
 .ph-badge.extended { color: var(--gold); background: var(--gold-bg); }
 .ph-badge.weak { color: var(--bear); background: var(--bear-bg); }
 .ph-badge.steady { color: var(--muted); background: var(--surface-sunk); }
-.ph-note { color: var(--muted); }
+.ph-note { color: var(--muted); font-variant-numeric: var(--tab-nums); }
+/* Facts are separated by the rule, not by punctuation typed into the string,
+   so a row that drops a fact can't leave a dangling separator behind. */
+.ph-f + .ph-f::before { content: "·"; color: var(--neutral); margin: 0 7px; }
+/* The facts that can actually demand a decision — book-wide superlatives and a
+   near-term earnings date — carry full-strength ink so they read first. */
+.ph-f.lead { color: var(--text); font-weight: 600; }
 @media (max-width: 720px) {
   .ph-row { grid-template-columns: 48px 1fr auto; row-gap: 4px; }
   .ph-note { grid-column: 1 / -1; font-size: 12.5px; }
