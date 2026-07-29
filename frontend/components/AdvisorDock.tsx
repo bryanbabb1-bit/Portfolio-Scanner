@@ -64,6 +64,8 @@ export function AdvisorDock() {
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
+    // localStorage paints instantly; the server's record is the truth and wins
+    // as soon as it lands, so a thread started on the phone shows up here.
     setThread(load<Turn[]>(THREAD_KEY, []));
     // ?ask (or #ask) opens him directly — that's the landing spot for a push
     // notification tap, so "look at this" can go straight into a conversation.
@@ -73,6 +75,16 @@ export function AdvisorDock() {
         window.location.hash === "#ask");
     setOpen(deepLink || load<boolean>(OPEN_KEY, false));
     setReady(true);
+    api.advisorChat("portfolio").then(({ turns }) => {
+      if (!turns.length) return;
+      setThread(
+        turns.map((t) => ({
+          q: t.q,
+          at: t.ts.slice(11, 16),
+          a: { engine: "claude", answer: t.a, points: t.points, generated_at: t.ts },
+        }))
+      );
+    });
   }, []);
 
   useEffect(() => {
@@ -196,6 +208,9 @@ export function AdvisorDock() {
               onClick={() => {
                 setThread([]);
                 setPinned(new Set());
+                // Forget it on the server too, or it returns on next load and
+                // still feeds his recap.
+                api.clearAdvisorChat("portfolio").catch(() => {});
               }}
               disabled={busy}
             >

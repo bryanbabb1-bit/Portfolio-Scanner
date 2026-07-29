@@ -705,6 +705,14 @@ async function get<T>(path: string): Promise<T> {
   return res.json();
 }
 
+/** One recorded turn of the ongoing advisor conversation. */
+export interface ChatTurn {
+  ts: string;
+  q: string;
+  a: string;
+  points: string[];
+}
+
 export interface AskAnswer {
   engine: string;
   answer: string;
@@ -1015,6 +1023,17 @@ export const api = {
     question: string,
     deep = false
   ) => askAdvisorPolling(kind, symbol, question, deep),
+  // The recorded conversation, so the thread is the same on every device rather
+  // than living in one browser's localStorage.
+  advisorChat: (kind = "portfolio", symbol?: string) =>
+    get<{ turns: ChatTurn[] }>(
+      `/api/advisor/chat?kind=${kind}${symbol ? `&symbol=${symbol}` : ""}`
+    ).catch(() => ({ turns: [] as ChatTurn[] })),
+  clearAdvisorChat: (kind = "portfolio", symbol?: string) =>
+    send<{ cleared: number }>(
+      `/api/advisor/chat?kind=${kind}${symbol ? `&symbol=${symbol}` : ""}`,
+      "DELETE"
+    ),
   watchpoints: () => get<{ count: number; results: Watchpoint[] }>("/api/watchpoints"),
   addWatchpoint: (wp: { symbol: string; kind: Watchpoint["kind"]; level: number; note?: string; side?: "buy" | "sell"; confirm?: "touch" | "close" }) =>
     post<Watchpoint>("/api/watchpoints", wp),

@@ -43,14 +43,20 @@ def invalidate_cache() -> None:
 
 def reset_memory() -> None:
     """Full 'look forward, not back' reset: clear the advisor's BACKWARD memory
-    — the brief/stock history summaries and resumed chat sessions — plus cached
-    advice, so a fresh strategy carries no stale claims (e.g. a phantom 'you
-    acted on the $191 add'). Does NOT touch stances or the strategy itself."""
+    — the brief/stock history summaries, resumed chat sessions and the recorded
+    conversation — plus cached advice, so a fresh strategy carries no stale
+    claims (e.g. a phantom 'you acted on the $191 add'). Does NOT touch stances
+    or the strategy itself.
+
+    The conversation log belongs in here: it feeds the cold-path recap, so
+    leaving it behind would let the reset purge a stale claim from history and
+    then have the recap hand the same claim straight back."""
     invalidate_cache()
     _history.clear()
     _sessions.clear()
+    from . import chat as chat_service
     import json as _json
-    for f in (_HISTORY_FILE, _SESSIONS_FILE):
+    for f in (_HISTORY_FILE, _SESSIONS_FILE, chat_service._FILE):
         try:
             with open(f, "w", encoding="utf-8") as fh:
                 _json.dump({}, fh)
@@ -1341,12 +1347,8 @@ def ask(kind: str, symbol: str | None, question: str, deep: bool = False) -> dic
             question, re.I):
         deep = True
 
-    if kind == "portfolio":
-        key = "portfolio:brief"
-    elif kind == "strategy":
-        key = "strategy:plan"
-    else:
-        key = f"{kind}:{symbol}"
+    from . import chat as chat_service
+    key = chat_service.key_for(kind, symbol)
     research_note = _RESEARCH_PREFIX if deep else ""
     snapshot, price_receipts = _live_snapshot(kind, symbol)
     # Carry the standing call(s) so a follow-up can't contradict the last verdict.
@@ -1394,8 +1396,12 @@ def ask(kind: str, symbol: str | None, question: str, deep: bool = False) -> dic
         else:
             facts = _facts_from_report(pf_service.build_report(symbol))
         prior_note = _prior_advice_block(key, symbol)
+        # The session is gone, so hand him back the thread itself — otherwise a
+        # restart makes him answer as though this were the first thing you'd
+        # ever said to him.
+        recap = chat_service.recap_block(key)
         prompt = (f"{_PERSONA}\n\n{research_note}{snapshot}"
-                  f"The client's current data:\n\n{facts}\n{prior_note}"
+                  f"The client's current data:\n\n{facts}\n{prior_note}{recap}"
                   f"\nClient question: {question}\n\n{_ASK_FMT}")
         raw, sid = _run_claude(prompt, research=deep, model=ask_model)
 
@@ -1415,6 +1421,9 @@ def ask(kind: str, symbol: str | None, question: str, deep: bool = False) -> dic
             points = _as_bullets(obj.get("points"))
         except json.JSONDecodeError:
             pass
+    # The turn outlives the CLI session, so the thread survives a restart and
+    # every device sees the same conversation.
+    chat_service.record(key, question, answer, points)
     return {"engine": "claude", "generated_at": stamp,
             "answer": answer, "points": points, "prices": price_receipts,
             "as_of": stamp}

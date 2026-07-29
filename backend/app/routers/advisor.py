@@ -7,6 +7,7 @@ from fastapi import APIRouter, HTTPException
 
 from ..models.schemas import AskRequest, RecommendRequest
 from ..services import advisor as advisor_service
+from ..services import chat as chat_service
 from ..services import jobs as jobs_service
 from ..services import discovery as discovery_service
 from ..services import insights as insights_service
@@ -154,6 +155,27 @@ def ask_start(req: AskRequest):
     job_id = jobs_service.submit(
         advisor_service.ask, kind, symbol, question, deep=req.deep)
     return {"job_id": job_id, "status": "pending"}
+
+
+@router.get("/chat")
+def chat_thread(kind: str = "portfolio", symbol: str | None = None,
+                limit: int = chat_service.KEEP_TURNS):
+    """The recorded conversation for a context, oldest first.
+
+    Served so the thread is the SAME on every device — it used to live only in
+    one browser's localStorage, so a conversation started on the phone was
+    invisible on the desktop."""
+    key = chat_service.key_for(kind, (symbol or "").strip().upper() or None)
+    return {"kind": kind, "symbol": symbol,
+            "turns": chat_service.recent(key, max(1, min(limit, chat_service.KEEP_TURNS)))}
+
+
+@router.delete("/chat")
+def chat_clear(kind: str = "portfolio", symbol: str | None = None):
+    """Forget one conversation. Clearing the thread in the UI clears it here too,
+    so 'clear' means forgotten rather than hidden on this device."""
+    key = chat_service.key_for(kind, (symbol or "").strip().upper() or None)
+    return {"cleared": chat_service.clear(key)}
 
 
 @router.get("/ask/status/{job_id}")

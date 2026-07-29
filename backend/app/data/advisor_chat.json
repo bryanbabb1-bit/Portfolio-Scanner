@@ -1,0 +1,23 @@
+{
+  "portfolio:brief": [
+    {
+      "ts": "2026-07-29 18:28:45",
+      "q": "In one sentence only: name the single position you are most worried about.",
+      "a": "Hold ETN — do nothing, but it's the one I'm watching closest today.",
+      "points": [
+        "ETN is down 6.3% today near $361.88 on heavy selling volume, the sharpest drop in the book.",
+        "Earnings land Friday — that report will confirm whether this is noise or a real problem.",
+        "No sell signal yet; the business thesis hasn't broken, so this stays a hold not a cut."
+      ]
+    },
+    {
+      "ts": "2026-07-29 18:29:32",
+      "q": "Which position did you just tell me you were watching closest? One sentence.",
+      "a": "Hold ETN — do nothing.",
+      "points": [
+        "Still the one I'm watching closest today.",
+        "Earnings due in 2 days; wait for the report before deciding anything."
+      ]
+    }
+  ]
+}
