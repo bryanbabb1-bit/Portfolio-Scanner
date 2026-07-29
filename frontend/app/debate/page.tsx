@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { api, Debate } from "../../lib/api";
 import { DebatePentagon } from "../../components/DebatePentagon";
+import { useStagedReveal } from "../../components/useStagedReveal";
 import {
   DisplayHead,
   SheetRule,
@@ -30,6 +31,10 @@ export default function DebatePage() {
   const [d, setD] = useState<Debate | null>(null);
   const [recent, setRecent] = useState<Debate[]>([]);
   const [running, setRunning] = useState(false);
+  // A freshly convened debate is released argument by argument — it WAS an
+  // event, so it should land like one. Reopening a saved ruling shows in full;
+  // there is nothing to dramatise about re-reading a decision.
+  const [fresh, setFresh] = useState(false);
   const [err, setErr] = useState<string | null>(null);
   const poll = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -44,7 +49,11 @@ export default function DebatePage() {
       setSymbol(sym);
       api
         .debate(sym)
-        .then((existing) => existing && setD(existing))
+        .then((existing) => {
+          if (!existing) return;
+          setFresh(false);
+          setD(existing);
+        })
         .catch(() => {});
     }
     return () => {
@@ -61,6 +70,7 @@ export default function DebatePage() {
     try {
       const start = await api.startDebate(s, force);
       if (start.result) {
+        setFresh(false);
         setD(start.result);
         setRunning(false);
         return;
@@ -71,6 +81,7 @@ export default function DebatePage() {
           const j = await api.debateJob(start.job_id!);
           if (j.status === "done" && j.result) {
             if (poll.current) clearInterval(poll.current);
+            setFresh(true);
             setD(j.result);
             setRunning(false);
             api.debates().then((r) => setRecent(r.results)).catch(() => {});
@@ -89,10 +100,20 @@ export default function DebatePage() {
     }
   };
 
+  // Agents land one at a time, then the ruling. The work is already done —
+  // this only controls how it arrives.
+  const steps = d ? d.agents.length + 1 : 0;
+  const revealed = useStagedReveal(steps, { live: fresh, stepMs: 1150 });
+  const agentsIn = d ? d.agents.slice(0, revealed) : [];
+  const rulingIn = d ? revealed > d.agents.length : false;
+
   const load = async (sym: string) => {
     setErr(null);
     const existing = await api.debate(sym).catch(() => null);
-    if (existing) setD(existing);
+    if (existing) {
+      setFresh(false);
+      setD(existing);
+    }
     else convene(sym);
   };
 
@@ -157,7 +178,7 @@ export default function DebatePage() {
 
       {err && <div className="err">{err}</div>}
 
-      <DebatePentagon agents={d?.agents ?? []} running={running} />
+      <DebatePentagon agents={agentsIn} running={running || (!!d && !rulingIn)} />
 
       {running && (
         <p className="deb-running">
@@ -165,13 +186,25 @@ export default function DebatePage() {
         </p>
       )}
 
+      {d && !rulingIn && (
+        <SpecPanel title="The Ruling" aux={`${d.symbol} · ${money(d.price)}`}
+          className="deb-verdict deliberating" plus={false}>
+          <p className="dv-deliberating">
+            <span className="dv-thinking" aria-hidden />
+            The desk is still arguing. The judge rules once every agent has
+            spoken.
+          </p>
+        </SpecPanel>
+      )}
+
       {d && (
         <>
-          {/* the ruling */}
+          {/* the ruling — held back until every agent has spoken */}
+          {rulingIn && (
           <SpecPanel
             title="The Ruling"
             aux={`${d.symbol} · ${money(d.price)}`}
-            className={`deb-verdict ${d.verdict === "APPROVE" ? "approve" : "reject"}`}
+            className={`deb-verdict ${d.verdict === "APPROVE" ? "approve" : "reject"} landed`}
           >
             <div className="dv-head">
               <span className="dv-badge">{d.verdict ?? "NO RULING"}</span>
@@ -215,13 +248,14 @@ export default function DebatePage() {
             </div>
             <p className="dv-sizing">{d.sizing.note}</p>
           </SpecPanel>
+          )}
 
           {/* the transcript */}
           <div className="section-title" style={{ marginTop: 26 }}>
             The transcript
           </div>
           <div className="deb-grid">
-            {d.agents.map((a) => (
+            {agentsIn.map((a) => (
               <SpecPanel
                 key={a.key}
                 title={a.name}

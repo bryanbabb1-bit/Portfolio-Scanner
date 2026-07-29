@@ -17,6 +17,7 @@ import { WatchdogBar } from "../components/WatchdogBar";
 import { SignalSlap } from "../components/SignalSlap";
 import { PortfolioChart } from "../components/PortfolioChart";
 import { HoldingsHeatmap } from "../components/HoldingsHeatmap";
+import { HoldingsBoard } from "../components/HoldingsBoard";
 import { StayTheCourse } from "../components/StayTheCourse";
 import { AlertsPanel } from "../components/AlertsPanel";
 import { RiskStats } from "../components/RiskStats";
@@ -27,6 +28,9 @@ import { ProbabilityLattice } from "../components/ProbabilityLattice";
 import { ActionJournal } from "../components/ActionJournal";
 import { StockCard } from "../components/StockCard";
 import { SortControl, SortKey, sortReports } from "../components/SortControl";
+import { Odometer } from "../components/Odometer";
+import { RoomTemperature } from "../components/RoomTemperature";
+import { Bell } from "../components/Bell";
 import { SpecHeader, TelemetryStrip } from "../components/blueprint";
 import { money, pct } from "../components/format";
 
@@ -41,8 +45,9 @@ export default function Dashboard() {
   const [signals, setSignals] = useState<ConvictionSignal[]>([]);
   const [hist, setHist] = useState<PortfolioHistory | null>(null);
   const [focusSlap, setFocusSlap] = useState<string | null>(null);
+  const [forceBell, setForceBell] = useState<"open" | "close" | null>(null);
   const [sort, setSort] = useState<SortKey>("value");
-  const [view, setView] = useState<"chart" | "heatmap">("chart");
+  const [view, setView] = useState<"chart" | "heatmap" | "board">("chart");
   const [err, setErr] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -67,9 +72,13 @@ export default function Dashboard() {
   }, []);
 
   // A tapped push notification lands on /?slap=<id> — surface that slap.
+  // /?bell=open|close previews the ritual without waiting for 9:30.
   useEffect(() => {
-    const id = new URLSearchParams(window.location.search).get("slap");
+    const q = new URLSearchParams(window.location.search);
+    const id = q.get("slap");
     if (id) setFocusSlap(id);
+    const b = q.get("bell");
+    if (b === "open" || b === "close") setForceBell(b);
   }, []);
 
   const sortedHoldings = useMemo(() => sortReports(holdings, sort), [holdings, sort]);
@@ -95,6 +104,9 @@ export default function Dashboard() {
 
   return (
     <>
+      <RoomTemperature dayPct={summary.day_change_pct} />
+      <Bell summary={summary} holdings={holdings} force={forceBell} />
+
       <SignalSlap signals={signals} onDismissed={markDismissed} focusId={focusSlap} />
 
       <SpecHeader system="PORTFOLIO SCANNER" version="2.0" />
@@ -105,7 +117,9 @@ export default function Dashboard() {
       <header className="mfx-head">
         <div className="lead">
           <div className="eyebrow"><span className="pulse" /> Book · {summary.positions} positions · {summary.source} data</div>
-          <div className="val">{money(summary.total_market_value)}</div>
+          <div className="val">
+            <Odometer value={summary.total_market_value} prefix="$" />
+          </div>
           <div className="deltas">
             <span className={`mfx-chip ${summary.day_change >= 0 ? "up" : "down"}`}>
               <span className="k">Today</span>{money(summary.day_change, 0)} ({pct(summary.day_change_pct)})
@@ -140,9 +154,16 @@ export default function Dashboard() {
             <div className="range-toggle">
               <button className={view === "chart" ? "active" : ""} onClick={() => setView("chart")}>Value</button>
               <button className={view === "heatmap" ? "active" : ""} onClick={() => setView("heatmap")}>Heatmap</button>
+              <button className={view === "board" ? "active" : ""} onClick={() => setView("board")}>Board</button>
             </div>
           </div>
-          {view === "chart" ? <PortfolioChart /> : <HoldingsHeatmap holdings={holdings} />}
+          {view === "chart" ? (
+            <PortfolioChart />
+          ) : view === "heatmap" ? (
+            <HoldingsHeatmap holdings={holdings} />
+          ) : (
+            <HoldingsBoard holdings={holdings} />
+          )}
         </div>
         <div className="mfx-col">
           {insights && <RiskStats risk={insights.risk} />}

@@ -57,6 +57,40 @@
   font-size: 10px; letter-spacing: .16em; fill: var(--accent);
 }
 
+/* ---- live arrival ----------------------------------------------------
+   A convened debate WAS an event; releasing it argument by argument makes it
+   land like one. Reopening a saved ruling shows in full — see `fresh` on the
+   page. No extra model calls: this is presentation only. */
+.deb-verdict.deliberating { margin-top: 6px; border-left: 3px solid var(--muted); }
+.dv-deliberating {
+  display: flex; align-items: center; gap: 12px;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 12px; letter-spacing: .06em; color: var(--muted);
+}
+.dv-thinking {
+  width: 9px; height: 9px; border-radius: 50%; background: var(--accent);
+  flex: none; animation: dv-think 1.15s ease-in-out infinite;
+}
+@keyframes dv-think {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.7); opacity: .35; }
+}
+.deb-verdict.landed { animation: dv-land .5s cubic-bezier(.16, 1, .3, 1) both; }
+@keyframes dv-land {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+/* Each agent card arrives on its own beat. */
+.deb-agent { animation: da-in .45s cubic-bezier(.16, 1, .3, 1) both; }
+@keyframes da-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .deb-verdict.landed, .deb-agent { animation: none; }
+  .dv-thinking { animation: none; }
+}
+
 /* ---- the ruling ---- */
 .deb-verdict { margin-top: 6px; }
 .deb-verdict.approve { border-left: 3px solid var(--bull); }

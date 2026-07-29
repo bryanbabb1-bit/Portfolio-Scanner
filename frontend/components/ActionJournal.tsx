@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { api, JournalDraft, JournalEntry } from "../lib/api";
+import { FillTicket } from "./FillTicket";
 import { money } from "./format";
 
 const ACTION_META: Record<string, { label: string; cls: string }> = {
@@ -25,6 +26,8 @@ export function ActionJournal() {
   const [editing, setEditing] = useState<string | null>(null);
   const [draft, setDraft] = useState<JournalDraft>(BLANK);
   const [err, setErr] = useState<string | null>(null);
+  // The ticket that stamps down when a trade is recorded.
+  const [filled, setFilled] = useState<JournalEntry | null>(null);
 
   const load = () => api.journal(90).then((d) => setEntries(d.results)).catch(() => {});
   useEffect(() => {
@@ -65,8 +68,13 @@ export function ActionJournal() {
   async function save() {
     setErr(null);
     try {
-      if (adding) await api.addJournal(draft);
-      else if (editing) await api.updateJournal(editing, draft);
+      if (adding) {
+        const created = await api.addJournal(draft);
+        setFilled(created);
+      } else if (editing) {
+        // An edit corrects the record; nothing was executed, so no ticket.
+        await api.updateJournal(editing, draft);
+      }
       cancel();
       load();
     } catch (e: any) {
@@ -144,6 +152,7 @@ export function ActionJournal() {
 
   return (
     <div className="card journal-panel" style={{ marginBottom: 24 }}>
+      <FillTicket entry={filled} onDone={() => setFilled(null)} />
       <div className="chart-head" style={{ marginBottom: open ? 8 : 0 }}>
         <button className="section-title collapse-head" style={{ margin: 0 }} onClick={toggle}>
           <span className="chev">{open ? "▾" : "▸"}</span> Action Journal{" "}

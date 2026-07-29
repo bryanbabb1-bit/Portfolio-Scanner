@@ -30,8 +30,58 @@
   --on-dark: #FAF7F0;        /* text sitting on an inked chip */
   --glow: none;
   --tab-nums: "tnum" 1, "lnum" 1;
-  /* ambient mood: set by the dashboard from today's P/L */
-  --mood-rgb: 196, 85, 31;
+  /* Ambient mood. RoomTemperature sets both from today's P/L; these are the
+     inert defaults for any page that doesn't mount it. */
+  --mood-rgb: 110, 106, 96;
+  --mood-alpha: 0;
+}
+
+/* ===================================================================== */
+/* PULSE — the always-on layer. Ambient, cheap, and deliberately close to
+   the threshold of perception: it should be felt, not noticed.           */
+/* ===================================================================== */
+
+/* Room temperature: a wash of today's P/L colour bled in from the top. */
+.room-wash {
+  position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(
+    1200px 620px at 50% -12%,
+    rgba(var(--mood-rgb), var(--mood-alpha)),
+    transparent 70%);
+  transition: background 2.4s ease;
+}
+
+/* Odometer: each digit is its own rolling column, so you see the mechanism. */
+/* One variable drives the cell height, the glyph box and the travel distance,
+   so they can't drift apart. Slightly over 1em because the display face very
+   nearly fills its em box — at exactly 1em the digits clip. */
+.odo {
+  --odo-h: 1.28em;
+  display: inline-flex; align-items: center;
+  font-variant-numeric: tabular-nums;
+}
+/* Separators are centred on the same box as the digits rather than sitting on
+   a text baseline, so "$", "," and "." line up with the rolling columns. */
+.odo-sep {
+  display: inline-grid; place-items: center;
+  height: var(--odo-h);
+}
+.odo-d {
+  display: inline-grid; position: relative;
+  height: var(--odo-h); width: 0.62ch; overflow: hidden; line-height: 1;
+}
+.odo-strip {
+  display: block; position: absolute; top: 0; left: 0; right: 0;
+  transition: transform 1.05s cubic-bezier(.16, 1, .3, 1);
+  will-change: transform;
+}
+.odo-strip > span {
+  display: grid; place-items: center;
+  height: var(--odo-h); line-height: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .odo-strip { transition: none; }
+  .room-wash { transition: none; }
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1385,6 +1435,230 @@ select { cursor: pointer; }
 .bp-do { font-size: 15.5px; font-weight: 700; line-height: 1.45; }
 .bp-why { margin-top: 5px; font-size: 12.5px; color: var(--muted); line-height: 1.5; }
 .bp-pin { margin-top: 9px; padding: 4px 11px; font-size: 10px; }
+
+/* ===================================================================== */
+/* THE BELL — the two moments that bracket a session. Fires once per event
+   per day and clears itself. A ritual that overstays becomes a chore.    */
+/* ===================================================================== */
+.bell {
+  position: fixed; inset: 0; z-index: 1300; overflow: hidden;
+  background: var(--bg); cursor: pointer;
+  animation: bell-in .25s ease both;
+}
+.bell.out { animation: bell-out .5s ease both; }
+@keyframes bell-in { from { opacity: 0 } to { opacity: 1 } }
+@keyframes bell-out { to { opacity: 0 } }
+
+/* the strike */
+.bell-flash {
+  position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background: var(--accent);
+  animation: bell-flash 1.6s ease-out both;
+}
+.bell.close .bell-flash { background: var(--text); }
+@keyframes bell-flash {
+  0% { opacity: 0 } 6% { opacity: .9 } 24% { opacity: .45 } 100% { opacity: 0 }
+}
+
+.bell-word {
+  position: absolute; inset: 0; z-index: 3; display: grid; place-items: center;
+  pointer-events: none;
+  animation: bell-word 2.9s cubic-bezier(.16, 1, .3, 1) both;
+}
+.bell-word .display {
+  font-family: var(--font-display), sans-serif; font-weight: 400;
+  font-size: clamp(56px, 15vw, 190px); text-transform: uppercase;
+  letter-spacing: .02em; color: var(--text); line-height: .9;
+}
+@keyframes bell-word {
+  0% { opacity: 0; transform: scale(.84) }
+  12% { opacity: 1; transform: scale(1) }
+  72% { opacity: 1; transform: scale(1.02) }
+  100% { opacity: 0; transform: scale(1.05) }
+}
+
+/* the open: positions deal in */
+.bell-deal {
+  position: absolute; inset: 0; z-index: 1; padding: 6vh 5vw;
+  display: grid; gap: 8px; align-content: center;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+}
+.bell-card {
+  border: 1px solid var(--rule); background: var(--bg-card);
+  padding: 12px 13px; display: flex; justify-content: space-between;
+  align-items: baseline; gap: 10px;
+  opacity: 0; transform: translateY(24px);
+  animation: bell-deal .55s cubic-bezier(.16, 1, .3, 1) both;
+}
+@keyframes bell-deal { to { opacity: 1; transform: none } }
+.bc-sym {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 12px; font-weight: 600; letter-spacing: .05em;
+}
+.bc-chg {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 12.5px; font-weight: 600; font-variant-numeric: var(--tab-nums);
+}
+.bc-chg.up { color: var(--bull); }
+.bc-chg.down { color: var(--bear); }
+
+/* the close: the day resolves into one card */
+.bell-resolve {
+  position: absolute; inset: 0; z-index: 1; display: grid; place-items: center;
+}
+.br-card {
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  padding: 34px 46px; border: 1px solid var(--rule); background: var(--bg-card);
+  opacity: 0; animation: bell-deal .6s 1.5s cubic-bezier(.16, 1, .3, 1) both;
+}
+.br-k {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--muted);
+}
+.br-v {
+  font-family: var(--font-display), sans-serif; font-weight: 400;
+  font-size: clamp(44px, 8vw, 84px); line-height: 1;
+  font-variant-numeric: var(--tab-nums);
+}
+.br-v.up { color: var(--bull); }
+.br-v.down { color: var(--bear); }
+.br-sub {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 12px; color: var(--muted); font-variant-numeric: var(--tab-nums);
+}
+
+.bell-dismiss {
+  position: absolute; left: 0; right: 0; bottom: 26px; z-index: 4;
+  text-align: center;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--muted); opacity: 0;
+  animation: fade-in .4s 2.4s ease both;
+}
+@keyframes fade-in { to { opacity: 1 } }
+
+@media (prefers-reduced-motion: reduce) {
+  .bell, .bell-flash, .bell-word, .bell-card, .br-card, .bell-dismiss {
+    animation: none;
+  }
+  .bell-flash { display: none; }
+  .bell-card, .br-card, .bell-dismiss { opacity: 1; transform: none; }
+}
+
+/* ===================================================================== */
+/* THE FILL — a ticket stamps down when a trade is RECORDED. The moment is
+   attached to logging, not to trading: the journal is what stops the advisor
+   re-recommending a move you already made.                               */
+/* ===================================================================== */
+.fill-wrap {
+  position: fixed; inset: 0; z-index: 1200; display: grid; place-items: center;
+  background: rgba(20, 20, 15, 0.42); backdrop-filter: blur(3px);
+  animation: fw-in .2s ease both;
+}
+.fill-wrap.out { animation: fw-out .4s ease both; }
+@keyframes fw-in { from { opacity: 0 } to { opacity: 1 } }
+@keyframes fw-out { to { opacity: 0 } }
+
+.fill-ticket {
+  position: relative; width: min(330px, 86vw);
+  background: var(--bg-card); border: 1px solid var(--rule);
+  padding: 22px; font-family: var(--font-mono), ui-monospace, monospace;
+  box-shadow: 0 26px 60px rgba(20, 20, 15, 0.35);
+  animation: ft-drop .5s cubic-bezier(.16, 1, .3, 1) both;
+}
+@keyframes ft-drop {
+  from { opacity: 0; transform: translateY(-18px) scale(.94); }
+  to { opacity: 1; transform: none; }
+}
+.ft-k {
+  font-size: 9.5px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--muted);
+}
+.ft-head {
+  font-family: var(--font-display), sans-serif; font-weight: 400;
+  font-size: 27px; letter-spacing: .02em; text-transform: uppercase;
+  margin-top: 3px;
+}
+.ft-lines { margin-top: 14px; }
+.ft-line {
+  display: flex; justify-content: space-between; gap: 12px;
+  padding: 7px 0; border-top: 1px solid var(--hairline); font-size: 12.5px;
+}
+.ft-line b { font-variant-numeric: var(--tab-nums); }
+/* The stamp lands a beat after the ticket, like it was pressed by hand. */
+.ft-stamp {
+  position: absolute; right: -12px; top: 52px;
+  font-family: var(--font-display), sans-serif; font-weight: 400;
+  font-size: 30px; letter-spacing: .06em; text-transform: uppercase;
+  padding: 2px 12px; border: 3px solid currentColor;
+  color: var(--bull);
+  transform: rotate(-13deg) scale(2.4); opacity: 0;
+  animation: ft-stamp .42s .5s cubic-bezier(.3, 1.5, .5, 1) both;
+}
+.ft-stamp.sell { color: var(--bear); }
+@keyframes ft-stamp {
+  to { transform: rotate(-13deg) scale(1); opacity: .9; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fill-ticket, .ft-stamp, .fill-wrap { animation: none; }
+  .ft-stamp { opacity: .9; transform: rotate(-13deg); }
+}
+
+/* ===================================================================== */
+/* THE BOARD — split-flap holdings. An analog instrument, which is exactly
+   why it belongs in the blueprint language.                             */
+/* ===================================================================== */
+.board {
+  border: 1px solid var(--rule); background: var(--ink);
+  padding: 18px 20px 14px; overflow-x: auto;
+}
+.board-head {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 14px;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px; letter-spacing: .16em; text-transform: uppercase;
+  color: rgba(250, 247, 240, 0.5);
+  border-bottom: 1px solid rgba(250, 247, 240, 0.16);
+  padding-bottom: 11px; margin-bottom: 12px;
+}
+.board-rows { display: flex; flex-direction: column; min-width: 520px; }
+.board-row {
+  display: grid; grid-template-columns: auto auto 92px 62px 78px;
+  gap: 16px; align-items: center; padding: 7px 0;
+  color: rgba(250, 247, 240, 0.92);
+  font-variant-numeric: var(--tab-nums);
+}
+.board-row + .board-row { border-top: 1px solid rgba(250, 247, 240, 0.08); }
+.board-row:hover { background: rgba(250, 247, 240, 0.05); }
+.board-chg, .board-wt, .board-pl {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 12px; text-align: right;
+}
+.board-chg.up, .board-pl.up { color: #7FA653; }     /* lifted olive: the board
+   is an inked panel, so the paper-ground olive would disappear against it */
+.board-chg.down, .board-pl.down { color: #E0705A; }
+.board-wt { color: rgba(250, 247, 240, 0.42); }
+
+/* the flaps themselves */
+.sf { display: inline-flex; gap: 2px; }
+.sf-cell {
+  width: 20px; height: 27px; position: relative; border-radius: 2px;
+  background: #24241F; color: #FAF7F0;
+  display: inline-grid; place-items: center;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 14px; font-weight: 600;
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.55);
+}
+/* the hairline where a real flap hinges */
+.sf-cell::after {
+  content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px;
+  background: rgba(0, 0, 0, 0.5);
+}
+.sf-cell.spin { color: var(--accent); }
+.sf-px .sf-cell { background: #1C1C18; font-size: 13px; }
+@media (max-width: 640px) {
+  .sf-cell { width: 17px; height: 24px; font-size: 12.5px; }
+}
 
 /* ---- spec key/value rows (risk status, debate status, any spec panel) ---- */
 .rs-rows { display: flex; flex-direction: column; }
