@@ -72,6 +72,9 @@ function Digit({ char, animate }: { char: string; animate: boolean }) {
 
   return (
     <span className="odo-d" aria-hidden>
+      {/* Sizes the column to a real glyph in the real font. Widest digit, not
+          "0", so nothing clips when the strip rolls past it. */}
+      <span className="odo-ghost">4</span>
       <span
         className="odo-strip"
         style={{

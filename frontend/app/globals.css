@@ -150,10 +150,15 @@
   display: inline-grid; place-items: center;
   height: var(--odo-h);
 }
+/* The cell is sized by a hidden real digit rather than a `ch` guess. `ch` is
+   the advance of "0", which is NOT the widest glyph in every face, and the
+   fraction that was here made the columns narrower than the digits so they
+   clipped into each other. Let the font decide. */
 .odo-d {
   display: inline-grid; position: relative;
-  height: var(--odo-h); width: 0.62ch; overflow: hidden; line-height: 1;
+  height: var(--odo-h); overflow: hidden; line-height: 1;
 }
+.odo-ghost { visibility: hidden; }
 .odo-strip {
   display: block; position: absolute; top: 0; left: 0; right: 0;
   transition: transform 1.05s cubic-bezier(.16, 1, .3, 1);
