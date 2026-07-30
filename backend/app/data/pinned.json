@@ -27,9 +27,62 @@
     "source": "brief",
     "text": "Quick trade: Sell all $155 GEV on a green day.",
     "points": [],
-    "status": "open",
+    "status": "done",
     "price_at_pin": null,
     "created_at": "2026-07-28 20:21:33",
-    "ts": 1785288093.648868
+    "ts": 1785288093.648868,
+    "done_at": "2026-07-30 09:26:01",
+    "retired_reason": "position closed 2026-07-29"
+  },
+  {
+    "id": "e24807672ec4",
+    "symbol": null,
+    "source": "brief",
+    "text": "Buy $150 VRT near $243 (when GEV proceeds settle)",
+    "points": [],
+    "status": "open",
+    "price_at_pin": null,
+    "created_at": "2026-07-29 07:27:38",
+    "ts": 1785328058.7381773
+  },
+  {
+    "id": "bcec61ae1269",
+    "symbol": null,
+    "source": "brief",
+    "text": "Sell all $152 GEV at market (when GEV closes green on any day)",
+    "points": [],
+    "status": "done",
+    "price_at_pin": null,
+    "created_at": "2026-07-29 07:27:40",
+    "ts": 1785328060.4602916,
+    "done_at": "2026-07-30 09:26:01",
+    "retired_reason": "position closed 2026-07-29"
+  },
+  {
+    "id": "7a9ba32567d6",
+    "symbol": null,
+    "source": "ask",
+    "text": "Buy $200 NVDA near $190.01; this is a real dip in your core holding, not a gamble.",
+    "points": [
+      "NVDA fell 3.55% today because the whole chip sector sold off, not because of anything Nvidia did.",
+      "Unlike VRT, NVDA has no earnings this week \u2014 there's no landmine, just a market-wide dip to buy.",
+      "Keep it small at $200 so you can watch it work before committing more of that extra cash.",
+      "The VRT frustration was about earnings timing on a smaller name, not proof that buying quality on weakness is wrong."
+    ],
+    "status": "open",
+    "price_at_pin": null,
+    "created_at": "2026-07-29 15:57:38",
+    "ts": 1785358658.0150123
+  },
+  {
+    "id": "95b5a047b3f6",
+    "symbol": null,
+    "source": "brief",
+    "text": "Trim $190 PANW at market (when BRK-B falls below $500)",
+    "points": [],
+    "status": "open",
+    "price_at_pin": null,
+    "created_at": "2026-07-30 06:51:58",
+    "ts": 1785412318.5965202
   }
 ]

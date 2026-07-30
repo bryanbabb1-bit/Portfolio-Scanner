@@ -467,6 +467,43 @@ body {
   .ph-note { grid-column: 1 / -1; font-size: 12.5px; }
 }
 
+/* ---- pinned actions: where the Pin buttons actually land ---------------- */
+.pa-count {
+  margin-left: 8px; font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px; font-weight: 700; padding: 2px 7px;
+  color: var(--accent); background: var(--accent-dim);
+}
+.pa-list { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+.pa-row {
+  display: flex; align-items: center; gap: 12px; padding: 10px;
+  border-left: 3px solid var(--accent);
+}
+.pa-row:hover { background: var(--surface-hover); }
+.pa-row.is-done { border-left-color: var(--border); }
+.pa-row.is-done .pa-text { color: var(--muted); text-decoration: line-through; }
+.pa-main { flex: 1; display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.pa-text { font-size: 13.5px; line-height: 1.45; }
+.pa-meta {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--muted);
+}
+.pa-acts { flex: none; display: flex; align-items: center; gap: 6px; }
+.pa-drop {
+  background: none; border: 1px solid transparent; cursor: pointer;
+  color: var(--muted); font: inherit; font-size: 15px; line-height: 1;
+  padding: 3px 7px;
+}
+.pa-drop:hover { color: var(--bear); border-color: var(--border); }
+.pa-done { margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--hairline); }
+.pa-toggle {
+  background: none; border: none; cursor: pointer; padding: 0 0 8px;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase;
+  color: var(--muted);
+}
+.pa-toggle:hover { color: var(--text); }
+
 /* ---- advisor dock: the always-open line, on every page -------------------
    Sits above the nav (20) and the bell menu (40) but BELOW the slap (1000) —
    a slap is a demand for a decision and has to be able to cover this. */

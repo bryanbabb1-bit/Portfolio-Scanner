@@ -6,7 +6,7 @@
     "action": "note",
     "shares": null,
     "price": null,
-    "note": "ALERT (not executed) — watchpoint hit Watchpoint: price ≤ $196; client still needs to decide/act.",
+    "note": "ALERT (not executed) \u00e2\u20ac\u201d watchpoint hit Watchpoint: price \u00e2\u2030\u00a4 $196; client still needs to decide/act.",
     "source": "auto",
     "ts": 1783508451.879658,
     "cost_basis": null,
@@ -45,7 +45,7 @@
     "action": "note",
     "shares": null,
     "price": null,
-    "note": "ALERT (not executed) — watchpoint hit Watchpoint: price ≥ $196; client still needs to decide/act.",
+    "note": "ALERT (not executed) \u00e2\u20ac\u201d watchpoint hit Watchpoint: price \u00e2\u2030\u00a5 $196; client still needs to decide/act.",
     "source": "auto",
     "ts": 1783519125.6611807,
     "cost_basis": null,
@@ -84,7 +84,7 @@
     "action": "note",
     "shares": null,
     "price": null,
-    "note": "ALERT (not executed) — watchpoint hit Watchpoint: price ≤ $430; client still needs to decide/act.",
+    "note": "ALERT (not executed) \u00e2\u20ac\u201d watchpoint hit Watchpoint: price \u00e2\u2030\u00a4 $430; client still needs to decide/act.",
     "source": "auto",
     "ts": 1783553788.3135035,
     "cost_basis": null,
@@ -112,7 +112,7 @@
     "price": null,
     "cost_basis": null,
     "realized_pl": null,
-    "note": "ALERT (not executed) — watchpoint hit Watchpoint: RSI ≥ 45; client still needs to decide/act.",
+    "note": "ALERT (not executed) \u00e2\u20ac\u201d watchpoint hit Watchpoint: RSI \u00e2\u2030\u00a5 45; client still needs to decide/act.",
     "source": "auto",
     "ts": 1783599937.222974
   },
@@ -190,7 +190,7 @@
     "price": null,
     "cost_basis": null,
     "realized_pl": null,
-    "note": "ALERT (not executed) — watchpoint hit Watchpoint: price ≤ $398; client still needs to decide/act.",
+    "note": "ALERT (not executed) \u00e2\u20ac\u201d watchpoint hit Watchpoint: price \u00e2\u2030\u00a4 $398; client still needs to decide/act.",
     "source": "auto",
     "ts": 1784545681.1508298
   },
@@ -229,7 +229,7 @@
     "price": null,
     "cost_basis": null,
     "realized_pl": null,
-    "note": "ALERT (not executed) — watchpoint hit Watchpoint: price ≤ $11.26; client still needs to decide/act.",
+    "note": "ALERT (not executed) \u00e2\u20ac\u201d watchpoint hit Watchpoint: price \u00e2\u2030\u00a4 $11.26; client still needs to decide/act.",
     "source": "auto",
     "ts": 1784727916.7519815
   },
@@ -268,7 +268,7 @@
     "price": null,
     "cost_basis": null,
     "realized_pl": null,
-    "note": "ALERT (not executed) — watchpoint hit Watchpoint: price ≤ $10.3; client still needs to decide/act.",
+    "note": "ALERT (not executed) \u00e2\u20ac\u201d watchpoint hit Watchpoint: price \u00e2\u2030\u00a4 $10.3; client still needs to decide/act.",
     "source": "auto",
     "ts": 1784830758.936366
   },
@@ -307,7 +307,7 @@
     "price": null,
     "cost_basis": null,
     "realized_pl": null,
-    "note": "ALERT (not executed) — watchpoint hit Watchpoint: price ≤ $390; client still needs to decide/act.",
+    "note": "ALERT (not executed) \u00e2\u20ac\u201d watchpoint hit Watchpoint: price \u00e2\u2030\u00a4 $390; client still needs to decide/act.",
     "source": "auto",
     "ts": 1785236440.9993646
   },
@@ -398,7 +398,7 @@
     "price": null,
     "cost_basis": null,
     "realized_pl": null,
-    "note": "ALERT (not executed) — watchpoint hit Watchpoint: price ≤ $1226.54; client still needs to decide/act.",
+    "note": "ALERT (not executed) \u00e2\u20ac\u201d watchpoint hit Watchpoint: price \u00e2\u2030\u00a4 $1226.54; client still needs to decide/act.",
     "source": "auto",
     "ts": 1785257213.4474924
   },
@@ -414,5 +414,57 @@
     "note": "Closed the position (2.74262 sh)",
     "source": "auto",
     "ts": 1785258278.5741167
+  },
+  {
+    "id": "745bb17a3f6c",
+    "date": "2026-07-29",
+    "symbol": "VRT",
+    "action": "buy",
+    "shares": 0.6275,
+    "price": null,
+    "cost_basis": 272.18,
+    "realized_pl": null,
+    "note": "Added shares (4 -> 4.62748)",
+    "source": "auto",
+    "ts": 1785332677.6835382
+  },
+  {
+    "id": "2a557d15e5c7",
+    "date": "2026-07-29",
+    "symbol": "MRK",
+    "action": "buy",
+    "shares": 0.83532,
+    "price": null,
+    "cost_basis": 131.69,
+    "realized_pl": null,
+    "note": "Opened a new position",
+    "source": "auto",
+    "ts": 1785332677.6871636
+  },
+  {
+    "id": "2cde1b239e58",
+    "date": "2026-07-29",
+    "symbol": "CB",
+    "action": "buy",
+    "shares": 0.28856,
+    "price": null,
+    "cost_basis": 363.88,
+    "realized_pl": null,
+    "note": "Opened a new position",
+    "source": "auto",
+    "ts": 1785332677.7021878
+  },
+  {
+    "id": "b4fa96818136",
+    "date": "2026-07-29",
+    "symbol": "GEV",
+    "action": "sell",
+    "shares": 0.1639,
+    "price": 936.77,
+    "cost_basis": 1012.69,
+    "realized_pl": -12.44,
+    "note": "Closed the position (0.16391 sh)",
+    "source": "auto",
+    "ts": 1785333038.9948204
   }
 ]

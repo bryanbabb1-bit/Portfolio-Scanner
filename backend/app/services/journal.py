@@ -29,6 +29,19 @@ def _realized(shares, price, cost) -> float | None:
         return round(shares * (price - cost), 2)
     return None
 
+# A single trade cannot be worth more than the book it happens in — you can't
+# sell what you don't hold, and cash here is a rounding error. Anything past this
+# multiple of the last trusted book value is a corrupt read, not an order.
+_MAX_TRADE_VS_BOOK = 2.0
+
+# ...and a position's share count cannot multiply by this much between two reads
+# of a 120-second poll. This is the test that survives a baseline which is ALREADY
+# poisoned: the value test above measures against the previous book, so if the
+# corrupt number is the one sitting in the snapshot it inflates the very yardstick
+# it should be failing against, and the recovery read books the giant sell.
+# A ratio is immune to that because it doesn't depend on any total.
+_MAX_SHARE_RATIO = 20.0
+
 # Legacy free-text action names -> structured actions (one-time migration).
 _LEGACY_ACTIONS = {"opened": "buy", "added": "buy", "trimmed": "sell",
                    "sold": "sell", "completed": "note"}
@@ -214,6 +227,28 @@ def _sale_price(sym: str) -> float | None:
         return None
 
 
+def retire_closed_symbol(sym: str) -> None:
+    """Stand down the instructions attached to a position that just closed.
+
+    The order is filled; anything still telling the client to place it is stale.
+    Failures are swallowed on purpose — tidying up must never be able to stop a
+    real fill from being journaled.
+    """
+    try:
+        from . import pins as pins_service
+        retired = pins_service.retire_for_symbol(sym)
+        if retired:
+            print(f"[journal] {sym} closed — retired {len(retired)} stale pin(s)")
+    except Exception as exc:
+        print(f"[journal] could not retire pins for {sym}: {exc!r}")
+    try:
+        from . import stance as stance_service
+        if stance_service.drop(sym):
+            print(f"[journal] {sym} closed — dropped its standing call")
+    except Exception as exc:
+        print(f"[journal] could not drop stance for {sym}: {exc!r}")
+
+
 def snapshot_and_diff(holdings: list[dict]) -> list[dict]:
     """Compare current holdings to the last snapshot; journal any trades and
     BOOK realized P/L on trims/closes (shares sold x (sale price - cost basis)).
@@ -248,6 +283,46 @@ def snapshot_and_diff(holdings: list[dict]) -> list[dict]:
         elif prev and len(current) * 2 < len(prev):
             suspect = (f"holdings dropped from {len(prev)} to {len(current)} "
                        f"in one read")
+
+        # Second gate: a SINGLE position's share count moving by an absurd amount
+        # in one read is also a bad read — a decimal point that went missing, not
+        # a trade. The count gate above cannot see this, because the number of
+        # holdings never changes.
+        #
+        # On 2026-07-29 NVDA's shares came back as 898497 instead of 8.98497. The
+        # diff booked an 898,489-share buy, then an 898,488-share sell on the way
+        # back down, for -$11,779,177.88 of phantom realized loss and a reported
+        # total return of -117,299%.
+        #
+        # The test is value-based and measured against the PREVIOUS book, which is
+        # the copy we still trust: you cannot sell more than you hold or buy with
+        # money you do not have, so a single trade worth several times the whole
+        # book is impossible by construction.
+        if not suspect and prev:
+            prev_book = sum((p.get("shares") or 0) * (p.get("cost") or 0)
+                            for p in prev.values())
+            for sym, cur in current.items():
+                old = prev.get(sym)
+                if not old or not old.get("shares"):
+                    continue
+                old_sh, new_sh = old["shares"], cur["shares"]
+                delta = abs(new_sh - old_sh)
+                basis = old.get("cost") or cur.get("cost") or 0
+                if not delta:
+                    continue
+                ratio = (max(old_sh, new_sh) / min(old_sh, new_sh)
+                         if min(old_sh, new_sh) > 0 else 0)
+                if ratio > _MAX_SHARE_RATIO:
+                    suspect = (f"{sym} shares moved {old_sh:g} -> {new_sh:g}, "
+                               f"a {ratio:,.0f}x change in one read")
+                    break
+                if basis and prev_book and delta * basis > _MAX_TRADE_VS_BOOK * prev_book:
+                    suspect = (
+                        f"{sym} shares moved {old_sh:g} -> {new_sh:g}, "
+                        f"implying a ${delta * basis:,.0f} trade against a "
+                        f"${prev_book:,.0f} book")
+                    break
+
         if suspect:
             print(f"[journal] ignoring suspicious snapshot ({suspect}); "
                   f"keeping the previous baseline")
@@ -284,6 +359,12 @@ def snapshot_and_diff(holdings: list[dict]) -> list[dict]:
 
     for sym, old in prev.items():
         if old["shares"] > 0 and current.get(sym, {"shares": 0})["shares"] == 0:
+            # The order is filled and the position is gone, so anything still
+            # telling the client to place it has to stand down. Otherwise the
+            # brief keeps reading an open "Sell all $152 GEV" pin and a standing
+            # SELL stance off a position that closed days ago, and repeats the
+            # instruction every morning — which is exactly what GEV did.
+            retire_closed_symbol(sym)
             _sell(sym, round(old["shares"], 4), old["cost"],
                   f"Closed the position ({old['shares']:g} sh)")
 

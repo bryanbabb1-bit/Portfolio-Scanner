@@ -68,6 +68,20 @@ def all_stances() -> dict:
     return _load()
 
 
+def drop(symbol: str) -> bool:
+    """Forget the standing call on a symbol. Used when the position closes: a
+    standing SELL on something the client no longer holds is not a call, it is a
+    stale instruction the brief keeps reissuing."""
+    sym = (symbol or "").upper()
+    with _lock:
+        d = _load()
+        if sym not in d:
+            return False
+        d.pop(sym)
+        _save(d)
+    return True
+
+
 def _norm(action: str | None) -> str:
     a = str(action or "").upper().strip().split()[0] if action else "HOLD"
     return a if a in _VALID else "HOLD"

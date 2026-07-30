@@ -536,6 +536,12 @@ export interface ConvictionSignal {
   generated_at: string;
 }
 
+/** Fired whenever the pinned list changes, so any view of it can stay live. */
+export const PINS_CHANGED = "pins:changed";
+function pinsChanged() {
+  if (typeof window !== "undefined") window.dispatchEvent(new Event(PINS_CHANGED));
+}
+
 export interface Pin {
   id: string;
   symbol?: string | null;
@@ -545,6 +551,8 @@ export interface Pin {
   status: "open" | "done";
   created_at: string;
   done_at?: string | null;
+  /** Set when the pin was stood down automatically (e.g. the position closed). */
+  retired_reason?: string | null;
 }
 
 export interface JournalEntry {
@@ -1097,11 +1105,29 @@ export const api = {
     send<JournalEntry>(`/api/journal/${id}`, "PATCH", draft),
   deleteJournal: (id: string) => send<{ deleted: string }>(`/api/journal/${id}`, "DELETE"),
   clearJournal: () => post<{ cleared: number }>("/api/journal/clear", {}),
-  addPin: (pin: { symbol?: string | null; source: string; text: string; points?: string[] }) =>
-    post<Pin>("/api/pins", pin),
-  setPinStatus: (id: string, status: "open" | "done") =>
-    send<Pin>(`/api/pins/${id}`, "PATCH", { status }),
-  deletePin: (id: string) => send<{ deleted: string }>(`/api/pins/${id}`, "DELETE"),
+  // Every pin button in the app goes through here, so announcing the change
+  // centrally is what lets the pinned list update the moment you pin something
+  // — whichever button you used.
+  addPin: async (pin: {
+    symbol?: string | null;
+    source: string;
+    text: string;
+    points?: string[];
+  }) => {
+    const created = await post<Pin>("/api/pins", pin);
+    pinsChanged();
+    return created;
+  },
+  setPinStatus: async (id: string, status: "open" | "done") => {
+    const updated = await send<Pin>(`/api/pins/${id}`, "PATCH", { status });
+    pinsChanged();
+    return updated;
+  },
+  deletePin: async (id: string) => {
+    const gone = await send<{ deleted: string }>(`/api/pins/${id}`, "DELETE");
+    pinsChanged();
+    return gone;
+  },
   discover: (minScore = 0, limit = 24) =>
     get<{ count: number; universe: number; source: string; results: BreakoutCandidate[] }>(
       `/api/discover?min_score=${minScore}&limit=${limit}`

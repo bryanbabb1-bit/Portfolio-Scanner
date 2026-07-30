@@ -7,6 +7,7 @@ recommendation can be checked off once acted on.
 from __future__ import annotations
 
 import json
+import re
 import threading
 import time
 import uuid
@@ -117,6 +118,59 @@ def update(pin_id: str, status: str) -> dict | None:
                           f"Acted on pinned advice: {updated['text']}",
                           source="pin")
     return updated
+
+
+_EXIT_VERBS = ("sell", "trim", "close", "exit", "dump", "liquidate", "unload")
+
+
+def retire_for_symbol(symbol: str, reason: str = "position closed") -> list[str]:
+    """Stand down open pins that tell the client to exit a position they no
+    longer hold. Returns the ids retired.
+
+    Deliberately conservative, because retiring a pin the client still needs is
+    worse than leaving a stale one. A pin is only retired when it is explicitly
+    tagged with the symbol, or when BOTH:
+
+      * the FIRST ticker-shaped token in its text is that symbol — the subject of
+        the instruction, rather than a ticker named in a trailing condition, and
+      * the text carries an exit verb.
+
+    So "Sell all $152 GEV at market" retires, while
+    "Buy $150 VRT near $243 (when GEV proceeds settle)" survives: its subject is
+    VRT and the GEV clause is a precondition that just came true.
+
+    Any unrecognised token in the subject slot blocks retirement rather than being
+    skipped over — "Sell SPMO once GEV proceeds land" is about SPMO, and reading
+    past it to find GEV would cancel a live order. Every ambiguity here resolves
+    toward leaving the pin alone.
+    """
+    sym = (symbol or "").upper()
+    if not sym:
+        return []
+    retired: list[str] = []
+    with _lock:
+        items = _load()
+        for p in items:
+            if p.get("status") != "open":
+                continue
+            text = p.get("text") or ""
+            tagged = (p.get("symbol") or "").upper() == sym
+            if not tagged:
+                found = re.findall(r"\b[A-Z][A-Z.\-]{0,5}\b", text)
+                subject = found[0] if found else None
+                has_exit = any(v in text.lower() for v in _EXIT_VERBS)
+                if subject != sym or not has_exit:
+                    continue
+            p["status"] = "done"
+            p["done_at"] = time.strftime("%Y-%m-%d %H:%M:%S")
+            p["retired_reason"] = reason
+            retired.append(p["id"])
+        if retired:
+            _save(items)
+    # No "acted on pinned advice" journal note here: the journal is already
+    # recording the sell that triggered this, and a second entry would claim the
+    # client worked a checklist they never touched.
+    return retired
 
 
 def delete(pin_id: str) -> bool:
