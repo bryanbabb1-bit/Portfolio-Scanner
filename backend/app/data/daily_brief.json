@@ -1,23 +1,19 @@
 {
-  "type": "eod",
-  "date": "2026-07-28",
-  "generated_at": "2026-07-28 20:19:50",
+  "type": "morning",
+  "date": "2026-08-05",
+  "generated_at": "2026-08-05 07:15:04",
   "engine": "claude",
-  "headline": "Rough day, but earnings week is coming",
-  "summary": "The book slipped 1.01% today mostly on VRT and CEG weakness, while GOOGL and AAPL held up and cushioned the drop. Nothing broke — just noise ahead of two big earnings dates.",
+  "headline": "LLY earnings today, CEG earnings tomorrow",
+  "summary": "Book is green across the board and cash is at zero, so today is about watching two earnings events, not making trades. LLY already jumped on its report — the rest of the book is quietly trending up with nothing at a trigger level.",
   "watch": [
-    "VRT reports earnings tomorrow — expect a big swing, hold through it.",
-    "Don't add to VRT until after earnings clears the uncertainty.",
-    "AAPL reports earnings in 2 days — hold, don't chase it near $340.08.",
-    "GOOGL still down 8.3% overall — hold, let today's bounce build.",
-    "Hold NVDA and AVGO — do nothing, thesis is intact."
+    "LLY reports earnings today, already up 5.4% to $1,175.69 — hold, let it play out.",
+    "CEG reports earnings tomorrow — hold into it, no action needed today.",
+    "NVDA at $215.45, still climbing, up 6.1% overall — hold, do nothing.",
+    "AVGO at $416.14, near its recent high — hold, don't chase here.",
+    "GOOGL at $383.72, strong steady move — hold, let the winner run.",
+    "VRT at $270.31, quiet flat day — hold, no trigger hit.",
+    "Cash is $0 — no buying power today, nothing to add even on dips.",
+    "METC, HL, SOPH and others are jumping 5-10% — none are yours, ignore the noise."
   ],
-  "recap": [
-    "Book fell 1.01% to $9,675, cash sits at $210.",
-    "VRT dropped 6.3% to $269.56, the day's biggest drag, but still up 0.3% overall.",
-    "CEG fell 3.8% to $259.82, still only down 0.5% since you bought it.",
-    "GOOGL was today's best performer, up 2.2% to $333.71.",
-    "AAPL edged up 0.9% to $340.08, still your top winner at +10.5%.",
-    "NVDA and AVGO barely moved, both still underwater on your cost."
-  ]
+  "recap": []
 }

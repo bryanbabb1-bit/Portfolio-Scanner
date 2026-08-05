@@ -165,10 +165,18 @@ def execute_pending(book: dict, opens: dict) -> list[str]:
         px = opens.get(order["symbol"])
         if not px:
             continue
-        buy(book, order["symbol"], order["dollars"], float(px),
-            order["conviction"], order["why"])
+        try:
+            buy(book, order["symbol"], order["dollars"], float(px),
+                order["conviction"], order["why"])
+        except ValueError as exc:
+            # Out of cash, or a bad price. Leave the order queued and move on —
+            # one unfillable order must not abort the whole run and strand the
+            # orders behind it.
+            print(f"[thesis] {order['symbol']} not filled: {exc}")
+            continue
         pos = book["positions"][-1]
-        pos["stop"] = round(float(px) * (1 - STOP_PCT), 4)
+        # Honour a stop width the review has adjusted, not the original constant.
+        pos["stop"] = round(float(px) * (1 - book.get("stop_pct", STOP_PCT)), 4)
         pos["high_water"] = round(float(px), 4)
         book["pending"].remove(order)
         filled.append(f"{order['symbol']} @ {float(px):.2f}")
@@ -240,6 +248,121 @@ def sell(book: dict, symbol: str, price: float, why: str) -> dict:
     return book
 
 
+# ---------------------------------------------------------------- learning
+# The book reviews itself on this cadence. Weekly rather than daily because a
+# rule changed off three days of noise is not learning, it is thrashing.
+REVIEW_EVERY_DAYS = 7
+# A rule only changes on evidence this thick. Two stopped-out positions is a
+# bad week; six is a pattern.
+MIN_EVIDENCE = 6
+
+
+def learn(force: bool = False) -> dict | None:
+    """Review the book's own record and adjust the rules that are demonstrably
+    wrong.
+
+    This is deliberately narrow. It looks at what the book DID and what happened
+    next, and it may only touch the mechanical risk rules — stop width, trailing
+    distance, position count. It cannot touch the thesis: a thesis that rewrites
+    itself to match the tape is not a thesis, and the falsifiers exist precisely
+    so the view gets abandoned rather than adjusted.
+
+    Every change is recorded with the evidence that caused it, so a rule can be
+    traced back to the trades that justified it.
+    """
+    book = load()
+    today = _et_now().strftime("%Y-%m-%d")
+    last = book.get("last_review")
+    if not force and last:
+        from datetime import date
+        try:
+            gap = (date.fromisoformat(today) - date.fromisoformat(last)).days
+            if gap < REVIEW_EVERY_DAYS:
+                return None
+        except ValueError:
+            pass
+
+    closed = [p for p in book["positions"] if p.get("closed")]
+    lessons: list[dict] = []
+    changes: list[dict] = []
+
+    stopped = [p for p in closed if "stop" in (p.get("exit_note") or "")
+               or p.get("realized", 0) < 0]
+    winners = [p for p in closed if p.get("realized", 0) > 0]
+
+    if len(closed) >= MIN_EVIDENCE:
+        stop_rate = len(stopped) / len(closed)
+        # Stopped out of most positions while the thesis stands = the stop is
+        # tighter than the noise in these names, not that the names are wrong.
+        if stop_rate >= 0.7:
+            old = book.get("stop_pct", STOP_PCT)
+            new = round(min(old + 0.05, 0.35), 2)
+            if new > old:
+                book["stop_pct"] = new
+                changes.append({
+                    "rule": "stop_pct", "from": old, "to": new,
+                    "why": (f"{len(stopped)} of {len(closed)} positions stopped out "
+                            f"({stop_rate:.0%}). A stop inside the daily range of "
+                            f"these names cuts winners as noise."),
+                })
+        # Cutting almost nothing is its own failure: the stop is not protecting.
+        elif stop_rate <= 0.15 and len(closed) >= MIN_EVIDENCE * 2:
+            old = book.get("stop_pct", STOP_PCT)
+            new = round(max(old - 0.05, 0.10), 2)
+            if new < old:
+                book["stop_pct"] = new
+                changes.append({
+                    "rule": "stop_pct", "from": old, "to": new,
+                    "why": (f"only {len(stopped)} of {len(closed)} stopped out — the "
+                            f"stop is sitting too far away to be doing any work."),
+                })
+
+        avg_win = (sum(p["realized"] for p in winners) / len(winners)) if winners else 0
+        avg_loss = (abs(sum(p["realized"] for p in stopped)) / len(stopped)) if stopped else 0
+        lessons.append({
+            "date": today, "closed": len(closed),
+            "win_rate": round(len(winners) / len(closed) * 100, 1),
+            "avg_win": round(avg_win, 2), "avg_loss": round(avg_loss, 2),
+            "payoff": round(avg_win / avg_loss, 2) if avg_loss else None,
+            "note": ("winners are bigger than losers — the asymmetry is working"
+                     if avg_win > avg_loss else
+                     "losers are as big as winners — the exits are the problem, "
+                     "not the entries"),
+        })
+    else:
+        lessons.append({
+            "date": today, "closed": len(closed),
+            "note": (f"only {len(closed)} closed positions — not enough to change "
+                     f"anything. Needs {MIN_EVIDENCE}. Recording and waiting."),
+        })
+
+    book.setdefault("lessons", []).extend(lessons)
+    book.setdefault("rule_changes", []).extend(changes)
+    book["last_review"] = today
+    save(book)
+    return {"date": today, "lessons": lessons, "changes": changes}
+
+
+def review() -> dict:
+    """Everything the book has learned, and every rule it has changed."""
+    book = load()
+    rules = dict(RULES)
+    if book.get("stop_pct"):
+        rules["stop_loss"] = (f"-{book['stop_pct'] * 100:.0f}% hard stop per position "
+                              f"(adjusted from -{STOP_PCT * 100:.0f}% by review)")
+    return {
+        "rules_now": rules,
+        "lessons": book.get("lessons", []),
+        "rule_changes": book.get("rule_changes", []),
+        "last_review": book.get("last_review"),
+        "next_review_after_days": REVIEW_EVERY_DAYS,
+        "scope": ("Reviews may only touch mechanical risk rules. The thesis is "
+                  "out of scope by design — a thesis that rewrites itself to "
+                  "match the tape is not a thesis, and the falsifiers exist so "
+                  "the view gets abandoned rather than quietly adjusted."),
+    }
+
+
 def _et_now():
     from datetime import datetime
     from zoneinfo import ZoneInfo
@@ -309,6 +432,13 @@ def maybe_run(force: bool = False) -> dict | None:
         hist.append({"day": today, "equity": scored["equity"]})
     book["last_run"] = today
     save(book)
+
+    # The book reviews its own record on a cadence — this is what makes it
+    # improve rather than just repeat.
+    try:
+        learn()
+    except Exception as exc:
+        print(f"[thesis] review failed: {exc!r}")
 
     if filled or acted:
         try:

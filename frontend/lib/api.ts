@@ -705,6 +705,10 @@ export interface PortfolioHistory {
   source: string;
   cost_basis: number;
   points: ValuePoint[];
+  /** The index rebased to the portfolio's starting value — same axis, so the
+   *  gap between the lines is the out/under-performance. */
+  benchmark?: ValuePoint[];
+  benchmark_symbol?: string;
 }
 
 async function get<T>(path: string): Promise<T> {

@@ -1987,3 +1987,10 @@ main.page { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
   /* breakout/discovery rows: let the button column wrap under the content */
   .breakout-card > div:first-child { flex-wrap: wrap; }
 }
+
+/* Portfolio vs the index — the comparison lives next to the number it judges. */
+.pf-vs {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px; letter-spacing: 0.04em; color: var(--muted);
+  margin-top: 5px;
+}

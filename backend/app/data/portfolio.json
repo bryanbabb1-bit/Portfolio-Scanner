@@ -1,15 +1,13 @@
 {
   "owner": "You",
   "advisor_persona": "senior financial advisor at Charles Schwab",
-  "cash": 209.64,
+  "cash": 0.0,
   "core_convictions": [
-    "NVDA",
-    "AVGO",
-    "NET",
-    "GOOGL"
+    "NVDA"
   ],
   "quiet_unowned_low_cash": true,
   "signals_owned_only": true,
+  "risk_profile": "Aggressive risk profile targeting double-digit annual growth, with little or no additional capital being contributed.",
   "themes": {
     "AI": "Companies building or monetizing artificial intelligence models and applications",
     "Tech": "Broad technology leaders and platforms",
@@ -21,8 +19,8 @@
   "holdings": [
     {
       "symbol": "NVDA",
-      "shares": 7.98497,
-      "cost_basis": 202.42,
+      "shares": 8.98497,
+      "cost_basis": 203.12,
       "theme": null
     },
     {
@@ -68,18 +66,6 @@
       "theme": null
     },
     {
-      "symbol": "PANW",
-      "shares": 0.59919,
-      "cost_basis": 333.78,
-      "theme": null
-    },
-    {
-      "symbol": "GEV",
-      "shares": 0.16391,
-      "cost_basis": 1012.69,
-      "theme": null
-    },
-    {
       "symbol": "DLR",
       "shares": 2.42594,
       "cost_basis": 195.8,
@@ -99,14 +85,26 @@
     },
     {
       "symbol": "VRT",
-      "shares": 4.0,
-      "cost_basis": 268.82,
+      "shares": 5.47207,
+      "cost_basis": 267.64,
       "theme": null
     },
     {
       "symbol": "LLY",
       "shares": 0.54057,
       "cost_basis": 1220.93,
+      "theme": null
+    },
+    {
+      "symbol": "MRK",
+      "shares": 0.83532,
+      "cost_basis": 131.69,
+      "theme": null
+    },
+    {
+      "symbol": "CB",
+      "shares": 0.28856,
+      "cost_basis": 363.88,
       "theme": null
     }
   ],
@@ -139,6 +137,5 @@
       "symbol": "SOUN",
       "theme": null
     }
-  ],
-  "risk_profile": "Aggressive risk profile targeting double-digit annual growth, with little or no additional capital being contributed."
+  ]
 }

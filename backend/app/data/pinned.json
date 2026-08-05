@@ -5,10 +5,11 @@
     "source": "brief",
     "text": "Buy $110 MRK at $131.84 (when immediately)",
     "points": [],
-    "status": "open",
+    "status": "done",
     "price_at_pin": null,
     "created_at": "2026-07-28 15:08:10",
-    "ts": 1785269290.6593575
+    "ts": 1785269290.6593575,
+    "done_at": "2026-07-30 12:39:51"
   },
   {
     "id": "3f866ddcf399",
@@ -16,10 +17,11 @@
     "source": "brief",
     "text": "Buy $100 CB at $363.55 (when immediately)",
     "points": [],
-    "status": "open",
+    "status": "done",
     "price_at_pin": null,
     "created_at": "2026-07-28 15:08:13",
-    "ts": 1785269293.8302133
+    "ts": 1785269293.8302133,
+    "done_at": "2026-07-30 12:39:50"
   },
   {
     "id": "4dc1e32286aa",
@@ -40,10 +42,11 @@
     "source": "brief",
     "text": "Buy $150 VRT near $243 (when GEV proceeds settle)",
     "points": [],
-    "status": "open",
+    "status": "done",
     "price_at_pin": null,
     "created_at": "2026-07-29 07:27:38",
-    "ts": 1785328058.7381773
+    "ts": 1785328058.7381773,
+    "done_at": "2026-07-30 12:39:48"
   },
   {
     "id": "bcec61ae1269",
@@ -69,10 +72,11 @@
       "Keep it small at $200 so you can watch it work before committing more of that extra cash.",
       "The VRT frustration was about earnings timing on a smaller name, not proof that buying quality on weakness is wrong."
     ],
-    "status": "open",
+    "status": "done",
     "price_at_pin": null,
     "created_at": "2026-07-29 15:57:38",
-    "ts": 1785358658.0150123
+    "ts": 1785358658.0150123,
+    "done_at": "2026-07-30 12:39:43"
   },
   {
     "id": "95b5a047b3f6",
@@ -80,9 +84,66 @@
     "source": "brief",
     "text": "Trim $190 PANW at market (when BRK-B falls below $500)",
     "points": [],
-    "status": "open",
+    "status": "done",
     "price_at_pin": null,
     "created_at": "2026-07-30 06:51:58",
-    "ts": 1785412318.5965202
+    "ts": 1785412318.5965202,
+    "done_at": "2026-08-03 08:47:51",
+    "retired_reason": "position closed"
+  },
+  {
+    "id": "9d91e232fe5b",
+    "symbol": null,
+    "source": "brief",
+    "text": "Sell $400 of CEG at market (when CEG closes below $228)",
+    "points": [],
+    "status": "open",
+    "price_at_pin": null,
+    "created_at": "2026-08-04 07:08:05",
+    "ts": 1785845285.94227
+  },
+  {
+    "id": "adb07251c707",
+    "symbol": null,
+    "source": "brief",
+    "text": "Buy $150 of ETN on the pullback (when ETN pulls back near $360 after today's 8.2% jump)",
+    "points": [],
+    "status": "open",
+    "price_at_pin": null,
+    "created_at": "2026-08-04 07:08:08",
+    "ts": 1785845288.1382334
+  },
+  {
+    "id": "da369a53ddc8",
+    "symbol": null,
+    "source": "brief",
+    "text": "Buy $180 of BRK-B instead of GD (when BRK-B trades below $500)",
+    "points": [],
+    "status": "open",
+    "price_at_pin": null,
+    "created_at": "2026-08-04 07:08:10",
+    "ts": 1785845290.6385992
+  },
+  {
+    "id": "b22e75d7b246",
+    "symbol": null,
+    "source": "brief",
+    "text": "Buy $180 of GD near $383.42 (when the NET proceeds settle and BRK-B is above $500)",
+    "points": [],
+    "status": "open",
+    "price_at_pin": null,
+    "created_at": "2026-08-04 07:08:11",
+    "ts": 1785845291.8113654
+  },
+  {
+    "id": "49202cbd2569",
+    "symbol": null,
+    "source": "brief",
+    "text": "Trim $180 of NET at market (when after NET reports on August 6 and the stock is higher)",
+    "points": [],
+    "status": "open",
+    "price_at_pin": null,
+    "created_at": "2026-08-04 07:08:13",
+    "ts": 1785845293.6499376
   }
 ]

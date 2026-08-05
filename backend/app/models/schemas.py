@@ -486,3 +486,8 @@ class PortfolioHistory(BaseModel):
     source: str         # "live" | "mock"
     cost_basis: float   # flat total cost baseline
     points: list[ValuePoint] = []
+    # The index over the same window, REBASED to the portfolio's starting value
+    # so both lines share one axis and the gap between them is the answer to
+    # "am I beating the market or just riding it".
+    benchmark: list[ValuePoint] = []
+    benchmark_symbol: str = "SPY"

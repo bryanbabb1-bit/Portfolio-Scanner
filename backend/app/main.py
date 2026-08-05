@@ -14,8 +14,8 @@ from fastapi.responses import JSONResponse
 
 from .config import settings
 from .routers import (
-    advisor, backtest, breakouts, conviction, debate, devices, discovery,
-    graph, insights, journal, learning, options, paper, pins, plan, portfolio,
+    advisor, backtest, book, breakouts, conviction, debate, devices, discovery,
+    graph, insights, journal, learning, options, pins, plan, portfolio,
     risk, runner, scan, summary, watchpoints,
 )
 
@@ -54,7 +54,7 @@ app.include_router(risk.router)
 app.include_router(debate.router)
 app.include_router(backtest.router)
 app.include_router(learning.router)
-app.include_router(paper.router)
+app.include_router(book.router)
 
 
 @app.exception_handler(Exception)

@@ -1,0 +1,56 @@
+[
+  {
+    "id": "VRT:washed-out-reversal:2026-07-30",
+    "symbol": "VRT",
+    "side": "buy",
+    "rule": "washed-out-reversal",
+    "price": 229.68,
+    "ts": 1785409239.184659,
+    "date": "2026-07-30"
+  },
+  {
+    "id": "VRT:oversold-at-support:2026-07-30",
+    "symbol": "VRT",
+    "side": "buy",
+    "rule": "oversold-at-support",
+    "price": 233.59,
+    "ts": 1785411459.310477,
+    "date": "2026-07-30"
+  },
+  {
+    "id": "VRT:oversold-at-support:2026-08-03",
+    "symbol": "VRT",
+    "side": "buy",
+    "rule": "oversold-at-support",
+    "price": 241.6,
+    "ts": 1785754801.4145458,
+    "date": "2026-08-03"
+  },
+  {
+    "id": "ETN:breakout-triggering:2026-08-03",
+    "symbol": "ETN",
+    "side": "buy",
+    "rule": "breakout-triggering",
+    "price": 438.28,
+    "ts": 1785787261.9377825,
+    "date": "2026-08-03"
+  },
+  {
+    "id": "ANET:breakout-triggering:2026-08-05",
+    "symbol": "ANET",
+    "side": "buy",
+    "rule": "breakout-triggering",
+    "price": 214.53,
+    "ts": 1785927604.3015628,
+    "date": "2026-08-05"
+  },
+  {
+    "id": "ANET:momentum-ignition:2026-08-05",
+    "symbol": "ANET",
+    "side": "buy",
+    "rule": "momentum-ignition",
+    "price": 214.53,
+    "ts": 1785927604.3015628,
+    "date": "2026-08-05"
+  }
+]

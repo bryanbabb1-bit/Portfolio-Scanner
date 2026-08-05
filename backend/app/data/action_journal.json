@@ -466,5 +466,83 @@
     "note": "Closed the position (0.16391 sh)",
     "source": "auto",
     "ts": 1785333038.9948204
+  },
+  {
+    "id": "e7d5c1a80571",
+    "date": "2026-07-30",
+    "symbol": null,
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "cost_basis": null,
+    "realized_pl": null,
+    "note": "Acted on pinned advice: Buy $200 NVDA near $190.01; this is a real dip in your core holding, not a gamble.",
+    "source": "pin",
+    "ts": 1785433183.8719063
+  },
+  {
+    "id": "781f670ac659",
+    "date": "2026-07-30",
+    "symbol": null,
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "cost_basis": null,
+    "realized_pl": null,
+    "note": "Acted on pinned advice: Buy $150 VRT near $243 (when GEV proceeds settle)",
+    "source": "pin",
+    "ts": 1785433188.3700404
+  },
+  {
+    "id": "0c7422b40cc8",
+    "date": "2026-07-30",
+    "symbol": null,
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "cost_basis": null,
+    "realized_pl": null,
+    "note": "Acted on pinned advice: Buy $100 CB at $363.55 (when immediately)",
+    "source": "pin",
+    "ts": 1785433190.894593
+  },
+  {
+    "id": "3a6fc2591222",
+    "date": "2026-07-30",
+    "symbol": null,
+    "action": "note",
+    "shares": null,
+    "price": null,
+    "cost_basis": null,
+    "realized_pl": null,
+    "note": "Acted on pinned advice: Buy $110 MRK at $131.84 (when immediately)",
+    "source": "pin",
+    "ts": 1785433191.7211316
+  },
+  {
+    "id": "b57e638cb040",
+    "date": "2026-08-03",
+    "symbol": "PANW",
+    "action": "sell",
+    "shares": 0.5992,
+    "price": 339.01,
+    "cost_basis": 333.78,
+    "realized_pl": 3.13,
+    "note": "Closed the position (0.59919 sh)",
+    "source": "auto",
+    "ts": 1785764871.6294177
+  },
+  {
+    "id": "1dbf90c0b666",
+    "date": "2026-08-03",
+    "symbol": "VRT",
+    "action": "buy",
+    "shares": 0.8446,
+    "price": null,
+    "cost_basis": 267.64,
+    "realized_pl": null,
+    "note": "Added shares (4.62748 -> 5.47207)",
+    "source": "auto",
+    "ts": 1785764888.4008234
   }
 ]

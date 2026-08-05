@@ -37,10 +37,15 @@ export function PortfolioChart() {
     const padT = 14;
     const plotH = H - 42;
 
+    const bench = data?.benchmark ?? [];
+    // The benchmark shares the axis, so it has to be inside the scale too —
+    // otherwise a market that outran the book gets clipped off the top and the
+    // comparison silently flatters us.
     const vals = pts.map((p) => p.value);
+    const benchVals = bench.map((p) => p.value);
     const cost = data?.cost_basis ?? 0;
-    const yMax = Math.max(...vals, cost);
-    const yMin = Math.min(...vals, cost);
+    const yMax = Math.max(...vals, ...benchVals, cost);
+    const yMin = Math.min(...vals, ...benchVals, cost);
     const pad = (yMax - yMin) * 0.08 || 1;
     const lo = yMin - pad;
     const hi = yMax + pad;
@@ -52,14 +57,39 @@ export function PortfolioChart() {
     const line = pts.reduce((acc, p, i) => acc + (i === 0 ? "M" : "L") + `${x(i)},${y(p.value)}`, "");
     const area = `${line}L${x(pts.length - 1)},${padT + plotH}L${x(0)},${padT + plotH}Z`;
     const ticks = Array.from({ length: 5 }, (_, k) => lo + ((hi - lo) * k) / 4);
-    return { W, H, padL, padR, padT, plotH, x, y, line, area, ticks, cost };
-  }, [pts, data?.cost_basis]);
+
+    // Benchmark points are matched to portfolio dates, so index by date rather
+    // than position — a missing session would otherwise shear the line sideways.
+    const byDate = new Map(bench.map((p) => [p.date, p.value]));
+    let benchLine = "";
+    let started = false;
+    pts.forEach((p, i) => {
+      const v = byDate.get(p.date);
+      if (v == null) return;
+      benchLine += (started ? "L" : "M") + `${x(i)},${y(v)}`;
+      started = true;
+    });
+    const benchLast = bench.length ? bench[bench.length - 1].value : null;
+
+    return { W, H, padL, padR, padT, plotH, x, y, line, area, ticks, cost,
+             benchLine, benchLast, byDate };
+  }, [pts, data?.cost_basis, data?.benchmark]);
 
   const first = pts[0]?.value;
   const last = pts[pts.length - 1]?.value;
   const chg = first != null && last != null && first ? ((last / first - 1) * 100) : 0;
   const up = chg >= 0;
   const stroke = up ? "var(--bull)" : "var(--bear)";
+
+  // Both series are rebased to the same start, so the difference in their
+  // percentage moves is the only comparison that matters: am I beating the
+  // market, or just riding it?
+  const bench = data?.benchmark ?? [];
+  const benchChg =
+    bench.length >= 2 && bench[0].value
+      ? (bench[bench.length - 1].value / bench[0].value - 1) * 100
+      : null;
+  const edge = benchChg == null ? null : chg - benchChg;
 
   return (
     <div className="card panel-glow" style={{ marginBottom: 28 }}>
@@ -71,6 +101,16 @@ export function PortfolioChart() {
               {money(last, 0)}{" "}
               <span className={up ? "pos" : "neg"} style={{ fontSize: 13, fontWeight: 700 }}>
                 {up ? "▲" : "▼"} {Math.abs(chg).toFixed(2)}% · {RANGE_LABELS[range]}
+              </span>
+            </div>
+          )}
+          {edge != null && (
+            <div className="pf-vs">
+              {data?.benchmark_symbol || "SPY"} {benchChg! >= 0 ? "+" : ""}
+              {benchChg!.toFixed(2)}%
+              <span className={edge >= 0 ? "pos" : "neg"}>
+                {" "}· you&apos;re {edge >= 0 ? "ahead" : "behind"} by{" "}
+                {Math.abs(edge).toFixed(2)} pts
               </span>
             </div>
           )}
@@ -126,6 +166,32 @@ export function PortfolioChart() {
             <path d={geom.area} fill="url(#pffill)" />
             <path d={geom.line} fill="none" stroke={stroke} strokeWidth={2.4} />
 
+            {/* The index, rebased to where the book started. Drawn thinner and
+                dashed so it reads as the yardstick, not a second holding. */}
+            {geom.benchLine && (
+              <g>
+                <path
+                  d={geom.benchLine}
+                  fill="none"
+                  stroke="var(--neutral)"
+                  strokeWidth={1.5}
+                  strokeDasharray="6 4"
+                  opacity={0.9}
+                />
+                {geom.benchLast != null && (
+                  <text
+                    x={geom.W - geom.padR}
+                    y={geom.y(geom.benchLast) - 5}
+                    fill="var(--neutral)"
+                    fontSize={10}
+                    textAnchor="end"
+                  >
+                    {data?.benchmark_symbol || "SPY"} {money(geom.benchLast, 0)}
+                  </text>
+                )}
+              </g>
+            )}
+
             {hover != null && pts[hover] && (
               <g>
                 <line x1={geom.x(hover)} x2={geom.x(hover)} y1={geom.padT} y2={geom.padT + geom.plotH} stroke="var(--muted)" strokeDasharray="3 3" strokeWidth={1} />
@@ -148,7 +214,14 @@ export function PortfolioChart() {
                 )}
               </>
             ) : (
-              <>Hover to inspect portfolio value on any day. Gold dashes = total cost basis.</>
+              <>
+                Hover to inspect portfolio value on any day. Gold dashes = total
+                cost basis
+                {geom?.benchLine
+                  ? `; grey dashes = ${data?.benchmark_symbol || "SPY"}, rebased to your starting value so the gap is the out/under-performance`
+                  : ""}
+                .
+              </>
             )}
           </div>
         </>

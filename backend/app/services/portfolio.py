@@ -440,4 +440,54 @@ def portfolio_history(range_: str = "6mo") -> PortfolioHistory:
         source="mock" if any_mock else "live",
         cost_basis=round(total_cost, 2),
         points=points,
+        benchmark=_benchmark_series(points, range_, intraday),
     )
+
+
+_BENCHMARK = "SPY"
+
+
+def _benchmark_series(points: list[ValuePoint], range_: str,
+                      intraday: bool) -> list[ValuePoint]:
+    """The index over the same window, rebased to the portfolio's first value.
+
+    Rebasing rather than plotting SPY's own price is the whole point: on one
+    shared axis the two lines start together, so the distance between them at
+    any moment IS the out- or under-performance. A raw SPY price line next to a
+    $9k account would just be two unrelated squiggles.
+
+    Returns an empty list on any failure — a missing benchmark should quietly
+    drop the comparison line, never break the chart.
+    """
+    if len(points) < 2:
+        return []
+    try:
+        if intraday:
+            df, source = market_data.get_intraday(_BENCHMARK, range_)
+            closes = df["Close"]
+        else:
+            md = market_data.get_market_data(_BENCHMARK)
+            source = md.source
+            closes = md.history["Close"]
+        if source != "live" or closes is None or closes.empty:
+            return []
+
+        fmt = "%Y-%m-%d %H:%M" if intraday else "%Y-%m-%d"
+        by_label = {pd.Timestamp(i).strftime(fmt): float(v) for i, v in closes.items()}
+
+        start_value = points[0].value
+        base = None
+        out: list[ValuePoint] = []
+        for p in points:
+            px = by_label.get(p.date)
+            if px is None:
+                continue
+            if base is None:
+                base = px
+            out.append(ValuePoint(date=p.date,
+                                  value=round(start_value * px / base, 2)))
+        # A couple of matched dates is not a comparison worth drawing.
+        return out if len(out) >= max(2, len(points) // 4) else []
+    except Exception as exc:
+        print(f"[portfolio] benchmark series failed: {exc!r}")
+        return []
