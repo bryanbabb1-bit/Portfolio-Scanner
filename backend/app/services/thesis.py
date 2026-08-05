@@ -240,6 +240,91 @@ def sell(book: dict, symbol: str, price: float, why: str) -> dict:
     return book
 
 
+def _et_now():
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+    return datetime.now(ZoneInfo("America/New_York"))
+
+
+def _live_quotes(symbols: list[str]) -> tuple[dict, dict]:
+    """(last prices, session opens) — LIVE data only.
+
+    Anything mock-sourced is dropped rather than traded on. This codebase has
+    already booked fake realized losses off mock prices once; a book that fills
+    orders against generated data would be worse than no book.
+    """
+    from . import market_data
+    last: dict = {}
+    opens: dict = {}
+    for sym in dict.fromkeys(symbols):
+        try:
+            md = market_data.get_price_data(sym)
+            if md.source != "live" or md.history is None or md.history.empty:
+                print(f"[thesis] {sym}: {md.source} data — skipped")
+                continue
+            last[sym] = {"price": float(md.history["Close"].iloc[-1])}
+            opens[sym] = float(md.history["Open"].iloc[-1])
+        except Exception as exc:
+            print(f"[thesis] {sym}: quote failed ({exc!r})")
+    return last, opens
+
+
+def maybe_run(force: bool = False) -> dict | None:
+    """Run the book. Called from the watchdog heartbeat, so it manages itself.
+
+    Fills staged orders at the session open, trails and cuts per the rules,
+    records one equity mark a day, and pushes only when something actually
+    happened. Silent otherwise — a daily "nothing changed" notification is how
+    notifications get muted.
+    """
+    et = _et_now()
+    today = et.strftime("%Y-%m-%d")
+    if not force:
+        if et.weekday() >= 5:
+            return None
+        mins = et.hour * 60 + et.minute
+        # After the open has printed, before the close is stale.
+        if mins < 9 * 60 + 35 or mins > 16 * 60 + 30:
+            return None
+
+    book = load()
+    already = book.get("last_run") == today
+    if already and not book.get("pending") and not force:
+        return None
+
+    symbols = [o["symbol"] for o in book.get("pending", [])]
+    symbols += [p["symbol"] for p in book["positions"] if not p.get("closed")]
+    if not symbols:
+        return None
+    quotes, opens = _live_quotes(symbols)
+    if not quotes:
+        return None                     # no live data: do nothing at all
+
+    filled = execute_pending(book, opens)
+    acted = check_stops(book, quotes)
+
+    scored = mark(book, quotes)
+    hist = book.setdefault("equity_history", [])
+    if not hist or hist[-1]["day"] != today:
+        hist.append({"day": today, "equity": scored["equity"]})
+    book["last_run"] = today
+    save(book)
+
+    if filled or acted:
+        try:
+            from . import push
+            lines = filled + acted
+            push.send("THESIS BOOK",
+                      f"${scored['equity']:,.0f} ({scored['return_pct']:+.1f}%) · "
+                      + "; ".join(lines[:3]),
+                      data={"type": "thesis"})
+        except Exception as exc:
+            print(f"[thesis] push failed: {exc!r}")
+
+    return {"filled": filled, "stop_actions": acted,
+            "equity": scored["equity"], "return_pct": scored["return_pct"]}
+
+
 def mark(book: dict, quotes: dict) -> dict:
     """Mark the book to live prices. Returns the scorecard."""
     rows = []

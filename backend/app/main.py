@@ -98,6 +98,16 @@ def _heartbeat() -> None:
             conviction.scan()
         except Exception as exc:  # never let the loop die
             print(f"[heartbeat] scan failed: {exc!r}")
+        # The thesis book manages itself: fills staged orders at the open,
+        # trails and cuts per its rules, marks once a day. Early-returns cheaply
+        # outside market hours and after it has already run today.
+        try:
+            from .services import thesis
+            result = thesis.maybe_run()
+            if result and (result["filled"] or result["stop_actions"]):
+                print(f"[heartbeat] thesis book: {result}")
+        except Exception as exc:
+            print(f"[heartbeat] thesis book failed: {exc!r}")
         _t.sleep(120)
 
 
