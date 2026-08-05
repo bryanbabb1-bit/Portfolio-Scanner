@@ -402,6 +402,47 @@ def thesis_book():
     return thesis_service.mark(book, quotes)
 
 
+@router.post("/thesis/execute")
+def thesis_execute():
+    """Fill every staged order at today's OPEN, then run the stop rules.
+
+    Safe to call repeatedly: orders leave the queue as they fill, so a second
+    call on the same day is a no-op rather than a double position.
+    """
+    from ..services import market_data
+    from ..services import thesis as thesis_service
+
+    book = thesis_service.load()
+    opens: dict = {}
+    for order in book.get("pending", []):
+        sym = order["symbol"]
+        if sym in opens:
+            continue
+        try:
+            md = market_data.get_price_data(sym)
+            opens[sym] = float(md.history["Open"].iloc[-1])
+        except Exception as exc:
+            print(f"[thesis] no open for {sym}: {exc!r}")
+
+    filled = thesis_service.execute_pending(book, opens)
+
+    quotes: dict = {}
+    for p in book["positions"]:
+        if p.get("closed") or p["symbol"] in quotes:
+            continue
+        try:
+            md = market_data.get_price_data(p["symbol"])
+            quotes[p["symbol"]] = {"price": float(md.history["Close"].iloc[-1])}
+        except Exception:
+            pass
+    acted = thesis_service.check_stops(book, quotes)
+    thesis_service.save(book)
+
+    return {"filled": filled, "stop_actions": acted,
+            "still_pending": book.get("pending", []),
+            "book": thesis_service.mark(book, quotes)}
+
+
 @router.get("/rules")
 def rules():
     """The model, stated plainly. If it can't be written down it can't be tested."""

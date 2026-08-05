@@ -123,6 +123,88 @@ def save(book: dict) -> None:
         json.dump(book, f, indent=2)
 
 
+# ------------------------------------------------------------ my risk rules
+RULES = {
+    "capital": "$1,000. Equities only. No crypto, no leverage, no options.",
+    "positions": "4-6 names. 15-30% each. Concentrated on purpose.",
+    "stop_loss": "-20% hard stop per position, from the fill. No exceptions, "
+                 "no averaging down into one.",
+    "book_stop": "-35% on the whole book: stop opening, close everything, "
+                 "reassess. That is the most I am willing to lose.",
+    "take_profit": "Trim 1/3 at +50%. The rest rides a 25% trailing stop from "
+                   "its high, so a winner can actually become a big winner.",
+    "cash": "Cash is a position. If nothing qualifies, hold it.",
+    "review": "Marked every session. Stops checked on the close.",
+}
+
+STOP_PCT = 0.20
+TRAIL_PCT = 0.25
+TRIM_AT = 0.50
+BOOK_STOP_PCT = 0.35
+
+
+def queue(book: dict, symbol: str, dollars: float, conviction: str, why: str) -> dict:
+    """Stage an order to fill at the NEXT market open.
+
+    Orders are staged rather than filled instantly because a simulation that
+    fills at a price already on the screen is just backdating. These execute at
+    tomorrow's open, at whatever that open turns out to be.
+    """
+    book.setdefault("pending", []).append({
+        "symbol": symbol.upper(), "dollars": round(dollars, 2),
+        "conviction": conviction, "why": why,
+        "queued": time.strftime("%Y-%m-%d %H:%M:%S"),
+    })
+    return book
+
+
+def execute_pending(book: dict, opens: dict) -> list[str]:
+    """Fill every staged order at the supplied opening prices."""
+    filled: list[str] = []
+    for order in list(book.get("pending", [])):
+        px = opens.get(order["symbol"])
+        if not px:
+            continue
+        buy(book, order["symbol"], order["dollars"], float(px),
+            order["conviction"], order["why"])
+        pos = book["positions"][-1]
+        pos["stop"] = round(float(px) * (1 - STOP_PCT), 4)
+        pos["high_water"] = round(float(px), 4)
+        book["pending"].remove(order)
+        filled.append(f"{order['symbol']} @ {float(px):.2f}")
+    return filled
+
+
+def check_stops(book: dict, quotes: dict) -> list[str]:
+    """Trail the winners, cut the losers. Returns what it did and why."""
+    acted: list[str] = []
+    for p in book["positions"]:
+        if p.get("closed"):
+            continue
+        q = quotes.get(p["symbol"])
+        if not q or not q.get("price"):
+            continue
+        px = float(q["price"])
+        # Ratchet the high-water mark, then trail from it — never downward.
+        p["high_water"] = round(max(p.get("high_water", p["entry"]), px), 4)
+        gain = px / p["entry"] - 1
+        if gain >= TRIM_AT and not p.get("trimmed"):
+            p["trimmed"] = True
+            trail = round(p["high_water"] * (1 - TRAIL_PCT), 4)
+            p["stop"] = round(max(p.get("stop", 0), trail), 4)
+            acted.append(f"{p['symbol']} +{gain * 100:.0f}%: trailing stop armed "
+                         f"at {p['stop']:.2f}")
+        elif p.get("trimmed"):
+            trail = round(p["high_water"] * (1 - TRAIL_PCT), 4)
+            if trail > p.get("stop", 0):
+                p["stop"] = trail
+        if px <= p.get("stop", 0):
+            sell(book, p["symbol"], px,
+                 f"stop hit at {px:.2f} (stop {p['stop']:.2f})")
+            acted.append(f"{p['symbol']} STOPPED OUT at {px:.2f}")
+    return acted
+
+
 def buy(book: dict, symbol: str, dollars: float, price: float,
         conviction: str, why: str) -> dict:
     """Open or add to a position. Refuses to spend cash the book doesn't have —
