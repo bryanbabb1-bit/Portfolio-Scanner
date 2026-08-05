@@ -390,7 +390,9 @@ def get_price_data(symbol: str) -> MarketData:
 
 
 # ---------------------------------------------------------------- intraday
-_INTRADAY_SPEC = {"1d": ("1d", "5m"), "5d": ("5d", "30m")}
+# yfinance caps 5-minute bars at 60 days of history, which is the deepest
+# intraday window available and what the paper-trading backtest replays.
+_INTRADAY_SPEC = {"1d": ("1d", "5m"), "5d": ("5d", "30m"), "60d": ("60d", "5m")}
 
 
 def get_intraday(symbol: str, range_: str = "1d") -> tuple[pd.DataFrame, str]:

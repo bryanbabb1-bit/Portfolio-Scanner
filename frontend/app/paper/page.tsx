@@ -1,0 +1,251 @@
+"use client";
+import { useEffect, useState } from "react";
+import { API_BASE } from "../../lib/api";
+import { DisplayHead } from "../../components/blueprint/DisplayHead";
+import "./paper.css";
+
+/* Paper-trading lab.
+ *
+ * This page exists to answer one question honestly: does the rule set have an
+ * edge worth real money? So the verdict leads, and it leads even when the answer
+ * is no — a strategy page that only knows how to look encouraging is worse than
+ * no page, because it will eventually talk you into funding something.
+ */
+
+interface Trade {
+  symbol: string;
+  day: string;
+  entry_time: string;
+  entry: number;
+  stop: number;
+  target: number;
+  shares: number;
+  risk_dollars: number;
+  setup: string;
+  realized: number;
+  r_multiple: number | null;
+  exit_reason: string;
+}
+
+interface Backtest {
+  metrics: Record<string, number | null>;
+  significance: {
+    n: number;
+    mean_r?: number;
+    sd_r?: number;
+    std_error?: number;
+    t_stat?: number;
+    significant?: boolean;
+    trades_needed_for_95pct?: number | null;
+    verdict: string;
+  };
+  blocked: Record<string, number>;
+  days: number;
+  symbols: string[];
+  trades: Trade[];
+  trades_per_session: number;
+  config: Record<string, number>;
+}
+
+interface Rules {
+  account: Record<string, string>;
+  setup: string[];
+  execution: string[];
+  risk: string[];
+  universe: string[];
+}
+
+const money = (v: number) => `${v < 0 ? "-" : ""}$${Math.abs(v).toFixed(2)}`;
+
+export default function PaperPage() {
+  const [bt, setBt] = useState<Backtest | null>(null);
+  const [rules, setRules] = useState<Rules | null>(null);
+  const [err, setErr] = useState<string | null>(null);
+  const [running, setRunning] = useState(false);
+
+  const load = (force = false) => {
+    setRunning(force);
+    fetch(`${API_BASE}/api/paper/backtest${force ? "?force=true" : ""}`, {
+      cache: "no-store",
+    })
+      .then((r) => r.json())
+      .then(setBt)
+      .catch((e) => setErr(String(e)))
+      .finally(() => setRunning(false));
+  };
+
+  useEffect(() => {
+    load();
+    fetch(`${API_BASE}/api/paper/rules`, { cache: "no-store" })
+      .then((r) => r.json())
+      .then(setRules)
+      .catch(() => {});
+  }, []);
+
+  const sig = bt?.significance;
+  const proven = !!sig?.significant && (bt?.metrics.expectancy_r ?? 0) > 0;
+  // Two to four weeks is what was asked for. Whether that is long enough is a
+  // arithmetic question, not an opinion, so it gets answered here.
+  const perSession = bt?.trades_per_session ?? 0;
+  const sessionsNeeded =
+    sig?.trades_needed_for_95pct && perSession
+      ? Math.ceil(sig.trades_needed_for_95pct / perSession)
+      : null;
+
+  return (
+    <>
+      <DisplayHead line1="PAPER" line2="TRADING LAB" tone="hot" />
+      <p className="dh-sub">
+        $1,000 cash account · deterministic rules · replayed on 5-minute bars
+      </p>
+
+      {err && <div className="err">{err}</div>}
+      {!bt && !err && <p className="loading">Replaying 60 sessions…</p>}
+
+      {bt && (
+        <>
+          {/* The verdict, before anything that looks like a scoreboard. */}
+          <div className={`pl-verdict ${proven ? "ok" : "no"}`}>
+            <div className="pl-verdict-tag">{proven ? "Edge demonstrated" : "Not cleared for funding"}</div>
+            <p className="pl-verdict-line">
+              {proven
+                ? "The measured edge is statistically distinguishable from luck."
+                : "This rule set has no measurable edge on the sample tested. The result is indistinguishable from a coin flip, so nothing here justifies real money yet."}
+            </p>
+            <div className="pl-sig">
+              <span><b>{sig?.n}</b> trades</span>
+              <span>expectancy <b>{bt.metrics.expectancy_r ?? "—"}R</b></span>
+              <span>t-stat <b>{sig?.t_stat ?? "—"}</b> <i>(needs 2.0)</i></span>
+              <span>profit factor <b>{bt.metrics.profit_factor ?? "—"}</b></span>
+            </div>
+          </div>
+
+          <div className="mfx-label">How it did</div>
+          <div className="pl-stats">
+            {[
+              ["Trades", bt.metrics.trades],
+              ["Win rate", `${bt.metrics.win_rate}%`],
+              ["Profit factor", bt.metrics.profit_factor ?? "—"],
+              ["Expectancy", `${bt.metrics.expectancy_r ?? "—"}R`],
+              ["Net", money(Number(bt.metrics.net ?? 0))],
+              ["Return", `${bt.metrics.return_pct}%`],
+              ["Max drawdown", `${bt.metrics.max_drawdown_pct}%`],
+              ["Ending equity", money(Number(bt.metrics.ending_equity ?? 0))],
+            ].map(([k, v]) => (
+              <div className="pl-stat" key={String(k)}>
+                <div className="pl-stat-k">{k}</div>
+                <div className="pl-stat-v">{String(v)}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* The part that decides whether forward testing can settle anything. */}
+          <div className="mfx-label">Can 2-4 weeks prove this?</div>
+          <div className="card pl-power">
+            <p>
+              The model takes <b>{perSession}</b> trades a session, so two to four
+              weeks (10-20 sessions) produces roughly{" "}
+              <b>{Math.round(perSession * 10)}-{Math.round(perSession * 20)} trades</b>.
+              Single-trade results scatter with a standard deviation of{" "}
+              <b>{sig?.sd_r}R</b>.
+            </p>
+            <p>
+              {sessionsNeeded ? (
+                <>
+                  Resolving an edge the size currently measured at 95% confidence
+                  would take about <b>{sig?.trades_needed_for_95pct} trades</b> —
+                  roughly <b>{sessionsNeeded} sessions</b>.
+                </>
+              ) : (
+                <>
+                  The measured edge is so close to zero that no realistic number
+                  of sessions would separate it from noise. That is the finding.
+                </>
+              )}{" "}
+              A good result over 2-4 weeks would be encouraging; it would not be
+              evidence.
+            </p>
+          </div>
+
+          <div className="mfx-label">Why signals did not become trades</div>
+          <div className="card">
+            <p className="mut pl-note">
+              Bar counts, not distinct setups — one setup can trigger on several
+              consecutive bars. <b>no_buying_power</b> is the cash-account
+              constraint doing its job: the setup was valid and the money was
+              either already deployed or still settling.
+            </p>
+            <div className="pl-blocked">
+              {Object.entries(bt.blocked)
+                .sort((a, b) => b[1] - a[1])
+                .map(([k, v]) => (
+                  <div className="pl-b" key={k}>
+                    <span className="pl-b-k">{k.replace(/_/g, " ")}</span>
+                    <span className="pl-b-v">{v}</span>
+                  </div>
+                ))}
+            </div>
+          </div>
+
+          {rules && (
+            <>
+              <div className="mfx-label">The model</div>
+              <div className="card pl-rules">
+                <div className="pl-why">
+                  <b>Cash account.</b> {rules.account.why} {rules.account.settlement}{" "}
+                  {rules.account.budget}
+                </div>
+                {(["setup", "execution", "risk"] as const).map((k) => (
+                  <div className="pl-rule-block" key={k}>
+                    <h4>{k}</h4>
+                    <ul>
+                      {rules[k].map((r) => (
+                        <li key={r}>{r}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+                <div className="pl-universe">
+                  <h4>universe</h4>
+                  <p>{rules.universe.join(" · ")}</p>
+                </div>
+              </div>
+            </>
+          )}
+
+          <div className="mfx-label">
+            Every trade
+            <button className="btn ghost pl-rerun" onClick={() => load(true)} disabled={running}>
+              {running ? "Replaying…" : "Re-run"}
+            </button>
+          </div>
+          <div className="card pl-trades-wrap">
+            <table className="pl-trades">
+              <thead>
+                <tr>
+                  <th>Day</th><th>Symbol</th><th>Entry</th><th>Stop</th>
+                  <th>Shares</th><th>Risk</th><th>P/L</th><th>R</th><th>Exit</th>
+                </tr>
+              </thead>
+              <tbody>
+                {bt.trades.map((t, i) => (
+                  <tr key={i} className={(t.r_multiple ?? 0) >= 0 ? "up" : "down"}>
+                    <td>{t.day}</td>
+                    <td className="pl-sym">{t.symbol}</td>
+                    <td>{t.entry.toFixed(2)}</td>
+                    <td>{t.stop.toFixed(2)}</td>
+                    <td>{t.shares.toFixed(3)}</td>
+                    <td>{money(t.risk_dollars)}</td>
+                    <td>{money(t.realized)}</td>
+                    <td>{t.r_multiple ?? "—"}</td>
+                    <td className="pl-exit">{t.exit_reason}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
+      )}
+    </>
+  );
+}
