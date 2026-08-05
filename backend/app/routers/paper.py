@@ -229,6 +229,109 @@ def swing_backtest(force: bool = False):
     return blob
 
 
+_REGIME_CACHE = settings.PORTFOLIO_FILE.parent / "regime_backtest.json"
+
+
+@router.get("/regime")
+def regime_backtest(force: bool = False, years: int = 15):
+    """The regime model over 15 years, split in half.
+
+    The out-of-sample half is reported separately and was used to choose
+    nothing. A backtest without that split only tells you what already happened.
+    """
+    if not force:
+        try:
+            with open(_REGIME_CACHE, encoding="utf-8") as f:
+                blob = json.load(f)
+            if time.time() - blob.get("cached_at", 0) < _TTL:
+                return blob
+        except (FileNotFoundError, json.JSONDecodeError):
+            pass
+
+    import datetime as dt
+
+    from ..services import market_data
+    from ..services import regime as regime_service
+    from ..services import swing as swing_service
+    from ..services.regime import RegimeConfig
+
+    frames = regime_service.load_frames(swing_service.UNIVERSE, years=years)
+    if "SPY" not in frames:
+        return {"error": "no live SPY history — cannot establish the regime"}
+
+    spy = frames["SPY"]
+    days = sorted({ts.date() for d in frames.values() for ts in d.index})
+    mid = days[len(days) // 2]
+
+    def bench(a: dt.date, b: dt.date) -> dict:
+        w = spy[(spy.index.date >= a) & (spy.index.date <= b)]
+        if w.empty:
+            return {}
+        p0, p1 = float(w["Close"].iloc[0]), float(w["Close"].iloc[-1])
+        yrs = len(w) / 252
+        peak = dd = 0.0
+        for v in w["Close"]:
+            peak = max(peak, float(v))
+            dd = max(dd, (peak - float(v)) / peak)
+        return {"cagr_pct": round(((p1 / p0) ** (1 / yrs) - 1) * 100, 2),
+                "max_drawdown_pct": round(dd * 100, 2),
+                "return_pct": round((p1 / p0 - 1) * 100, 2)}
+
+    def cut(a, b):
+        return {s: d[(d.index.date >= a) & (d.index.date <= b)]
+                for s, d in frames.items()}
+
+    windows = []
+    for label, a, b in (("full", days[0], days[-1]),
+                        ("in_sample", days[0], mid),
+                        ("out_of_sample", mid, days[-1])):
+        r = regime_service.simulate(cut(a, b), RegimeConfig())
+        windows.append({
+            "window": label, "from": str(a), "to": str(b),
+            "cagr_pct": r.extra["cagr_pct"],
+            "max_drawdown_pct": r.metrics["max_drawdown_pct"],
+            "trades": len(r.trades),
+            "pct_risk_on": r.extra["pct_risk_on"],
+            "benchmark": bench(a, b),
+        })
+
+    full = regime_service.simulate(frames, RegimeConfig())
+    eq = {c["day"]: c["equity"] for c in full.daily_equity}
+    ordered = sorted(eq)
+    by_year = []
+    for yr in sorted({d[:4] for d in ordered}):
+        span = [d for d in ordered if d.startswith(yr)]
+        if len(span) < 20:
+            continue
+        w = spy[(spy.index.date >= dt.date.fromisoformat(span[0]))
+                & (spy.index.date <= dt.date.fromisoformat(span[-1]))]
+        b = (round((float(w["Close"].iloc[-1]) / float(w["Close"].iloc[0]) - 1) * 100, 1)
+             if not w.empty else None)
+        by_year.append({"year": yr,
+                        "strategy_pct": round((eq[span[-1]] / eq[span[0]] - 1) * 100, 1),
+                        "benchmark_pct": b})
+
+    blob = {
+        "cached_at": time.time(),
+        "config": full.config,
+        "metrics": full.metrics,
+        "extra": full.extra,
+        "windows": windows,
+        "by_year": by_year,
+        "symbols": full.symbols,
+        "days": full.days,
+        "trades": full.trades[-40:],
+        "daily_equity": full.daily_equity[::10],
+    }
+    try:
+        _REGIME_CACHE.parent.mkdir(parents=True, exist_ok=True)
+        with open(_REGIME_CACHE, "w", encoding="utf-8") as f:
+            json.dump(blob, f, indent=2)
+    except OSError as exc:
+        print(f"[paper] could not cache regime backtest: {exc!r}")
+    return blob
+
+
 @router.get("/rules")
 def rules():
     """The model, stated plainly. If it can't be written down it can't be tested."""

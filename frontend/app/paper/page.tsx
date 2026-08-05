@@ -59,6 +59,18 @@ interface Swing {
   trades: Trade[];
 }
 
+interface Regime {
+  metrics: Record<string, number | null>;
+  extra: Record<string, number | null>;
+  windows: {
+    window: string; from: string; to: string;
+    cagr_pct: number | null; max_drawdown_pct: number; trades: number;
+    pct_risk_on: number;
+    benchmark: { cagr_pct?: number; max_drawdown_pct?: number };
+  }[];
+  by_year: { year: string; strategy_pct: number; benchmark_pct: number | null }[];
+}
+
 interface Rules {
   account: Record<string, string>;
   setup: string[];
@@ -72,6 +84,7 @@ const money = (v: number) => `${v < 0 ? "-" : ""}$${Math.abs(v).toFixed(2)}`;
 export default function PaperPage() {
   const [bt, setBt] = useState<Backtest | null>(null);
   const [sw, setSw] = useState<Swing | null>(null);
+  const [rg, setRg] = useState<Regime | null>(null);
   const [rules, setRules] = useState<Rules | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const [running, setRunning] = useState(false);
@@ -92,6 +105,10 @@ export default function PaperPage() {
     fetch(`${API_BASE}/api/paper/swing`, { cache: "no-store" })
       .then((r) => r.json())
       .then(setSw)
+      .catch(() => {});
+    fetch(`${API_BASE}/api/paper/regime`, { cache: "no-store" })
+      .then((r) => r.json())
+      .then((d) => !d.error && setRg(d))
       .catch(() => {});
     fetch(`${API_BASE}/api/paper/rules`, { cache: "no-store" })
       .then((r) => r.json())
@@ -117,6 +134,90 @@ export default function PaperPage() {
       </p>
 
       {err && <div className="err">{err}</div>}
+
+      {rg && (
+        <>
+          <div className="pl-verdict no">
+            <div className="pl-verdict-tag">
+              Best model found · still trails buy-and-hold
+            </div>
+            <p className="pl-verdict-line">
+              Own SPY while it is above its 200-day; hunt pullbacks when it
+              isn&apos;t. Over 15 years it compounds at{" "}
+              <b>{rg.extra.cagr_pct}%</b> against SPY&apos;s{" "}
+              <b>{rg.windows[0]?.benchmark.cagr_pct}%</b>, but cuts the worst
+              drawdown from <b>{rg.windows[0]?.benchmark.max_drawdown_pct}%</b>{" "}
+              to <b>{rg.metrics.max_drawdown_pct}%</b>. It is a risk-management
+              result, not an alpha result.
+            </p>
+            <div className="pl-sig">
+              <span>risk-on <b>{rg.extra.pct_risk_on}%</b> of days</span>
+              <span><b>{rg.extra.index_trades}</b> index holds</span>
+              <span><b>{rg.extra.hunt_trades}</b> pullback trades</span>
+            </div>
+          </div>
+
+          {/* The split is the whole point: the second half chose nothing. */}
+          <div className="mfx-label">Out-of-sample check</div>
+          <div className="card pl-trades-wrap">
+            <table className="pl-trades pl-bench">
+              <thead>
+                <tr>
+                  <th>Window</th><th>Model CAGR</th><th>SPY CAGR</th>
+                  <th>Model DD</th><th>SPY DD</th><th>Risk-on</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rg.windows.map((w) => (
+                  <tr key={w.window}>
+                    <td>{w.window.replace(/_/g, " ")}</td>
+                    <td>{w.cagr_pct}%</td>
+                    <td>{w.benchmark.cagr_pct}%</td>
+                    <td className="pl-good">{w.max_drawdown_pct}%</td>
+                    <td className="pl-bad">{w.benchmark.max_drawdown_pct}%</td>
+                    <td>{w.pct_risk_on}%</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <p className="mut pl-note" style={{ marginTop: 12, marginBottom: 0 }}>
+              The out-of-sample half was used to choose nothing. The model holds
+              up there — but it does not beat the index in any window.
+            </p>
+          </div>
+
+          <div className="mfx-label">Regime model, year by year</div>
+          <div className="card pl-trades-wrap">
+            <table className="pl-trades pl-bench">
+              <thead>
+                <tr><th>Year</th><th>Model</th><th>SPY</th><th>Difference</th></tr>
+              </thead>
+              <tbody>
+                {rg.by_year.map((y) => {
+                  const d = y.benchmark_pct == null ? null : y.strategy_pct - y.benchmark_pct;
+                  return (
+                    <tr key={y.year}>
+                      <td>{y.year}</td>
+                      <td>{y.strategy_pct}%</td>
+                      <td>{y.benchmark_pct == null ? "—" : `${y.benchmark_pct}%`}</td>
+                      <td className={d == null ? "" : d >= 0 ? "pl-good" : "pl-bad"}>
+                        {d == null ? "—" : `${d >= 0 ? "+" : ""}${d.toFixed(1)}`}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+            <p className="mut pl-note" style={{ marginTop: 12, marginBottom: 0 }}>
+              It matches the index in strong bull years because it is simply
+              holding it, wins the sustained bears (2018, 2022), and loses to
+              whipsaw when a crash reverses fast (2020).
+            </p>
+          </div>
+
+          <div className="mfx-label">Pullback model on its own</div>
+        </>
+      )}
 
       {sw && (
         <>
