@@ -354,5 +354,9 @@ def mark(book: dict, quotes: dict) -> dict:
         "multiple_needed": round(GOAL / equity, 1) if equity > 0 else None,
         "positions": sorted(rows, key=lambda r: -r["value"]),
         "closed": [p for p in book["positions"] if p.get("closed")],
+        # Staged-but-unfilled orders belong in the view too: "nothing here yet"
+        # and "five orders waiting for the open" are very different states.
+        "pending": book.get("pending", []),
+        "equity_history": book.get("equity_history", []),
         "log": book["log"][-40:],
     }

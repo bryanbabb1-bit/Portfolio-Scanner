@@ -1,0 +1,94 @@
+/* The live thesis book. */
+
+.bk-top {
+  display: flex; flex-wrap: wrap; align-items: flex-end; gap: 24px;
+  margin: 20px 0 12px;
+}
+.bk-k {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 9.5px; letter-spacing: 0.11em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 4px;
+}
+.bk-v {
+  font-family: var(--font-display), Impact, sans-serif;
+  font-size: clamp(38px, 6vw, 60px); line-height: 0.95;
+  font-variant-numeric: var(--tab-nums);
+}
+.bk-v.up { color: var(--text); }
+.bk-v.down { color: var(--bear); }
+.bk-delta {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 12px; margin-top: 6px;
+}
+.bk-delta.up { color: var(--bull); }
+.bk-delta.down { color: var(--bear); }
+.bk-stats { display: flex; flex-wrap: wrap; gap: 10px 26px; margin-left: auto; }
+.bk-stat { text-align: right; }
+.bk-sv { font-size: 17px; font-weight: 700; font-variant-numeric: var(--tab-nums); }
+
+/* Deliberately near-empty at the start: 1% of the way to $100k should LOOK
+   like 1% of the way to $100k. */
+.bk-progress {
+  position: relative; height: 24px; margin-bottom: 24px;
+  background: var(--surface-sunk); border: 1px solid var(--border);
+}
+.bk-bar { height: 100%; background: var(--accent); opacity: 0.85; }
+.bk-bar-label {
+  position: absolute; inset: 0; display: flex; align-items: center;
+  padding-left: 10px;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text);
+}
+
+.bk-scroll { overflow-x: auto; }
+.bk-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.bk-table th {
+  text-align: left; padding: 7px 10px; white-space: nowrap;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 9.5px; letter-spacing: 0.09em; text-transform: uppercase;
+  color: var(--muted); border-bottom: 1px solid var(--rule);
+}
+.bk-table td {
+  padding: 8px 10px; border-bottom: 1px solid var(--hairline);
+  font-variant-numeric: var(--tab-nums); vertical-align: top;
+}
+.bk-sym { font-weight: 800; white-space: nowrap; }
+.bk-conv {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--muted); white-space: nowrap;
+}
+.bk-why { color: var(--muted); font-size: 12px; line-height: 1.5; min-width: 240px; }
+.bk-num { margin-left: auto; font-weight: 700; }
+.bk-good { color: var(--bull); }
+.bk-bad { color: var(--bear); }
+/* A trailing stop is a different animal from the entry stop — it means the
+   position has already earned something worth protecting. */
+.bk-trail { color: var(--accent); font-weight: 700; }
+
+.bk-row {
+  display: flex; align-items: baseline; gap: 12px; padding: 9px 0;
+  border-bottom: 1px solid var(--hairline);
+}
+.bk-note { font-size: 12px; line-height: 1.55; margin-top: 12px; }
+
+.bk-thesis .bk-one { font-size: 15px; line-height: 1.6; margin-bottom: 14px; }
+.bk-thesis ul, .bk-falsify ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.bk-thesis li, .bk-falsify li {
+  font-size: 13.5px; line-height: 1.55; padding-left: 15px; position: relative;
+}
+.bk-thesis li::before, .bk-falsify li::before {
+  content: ""; position: absolute; left: 0; top: 8px;
+  width: 5px; height: 5px; background: var(--accent-2);
+}
+.bk-falsify li::before { background: var(--bear); }
+.bk-kill, .bk-odds {
+  font-size: 13px; line-height: 1.55; margin-top: 14px; padding-top: 12px;
+  border-top: 1px dashed var(--hairline); color: var(--muted);
+}
+
+@media (max-width: 720px) {
+  .bk-stats { margin-left: 0; }
+  .bk-why { min-width: 0; }
+}

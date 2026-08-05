@@ -13,6 +13,7 @@ type Entry = Item | { label: string; items: Item[] };
 // scanners (finding things to reason about).
 const NAV: Entry[] = [
   { href: "/", label: "Dashboard" },
+  { href: "/book", label: "The Book" },
   {
     label: "Desk",
     items: [
