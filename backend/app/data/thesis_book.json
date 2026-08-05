@@ -1,0 +1,84 @@
+{
+  "cash": 0.0,
+  "positions": [
+    {
+      "symbol": "SMR",
+      "shares": 47.418336,
+      "entry": 9.49,
+      "opened": "2026-08-04",
+      "conviction": "core",
+      "why": "NuScale: the ONLY NRC-certified SMR design, under $10 after an earnings miss while capital chases unapproved pre-revenue names. If the power gap forces a bid for anything permitted, certification is the scarce asset.",
+      "closed": null,
+      "exit_price": null,
+      "realized": 0.0
+    },
+    {
+      "symbol": "NNE",
+      "shares": 11.007155,
+      "entry": 18.17,
+      "opened": "2026-08-04",
+      "conviction": "satellite",
+      "why": "Nano Nuclear: smallest cap, microreactors aimed at behind-the-meter data centre load \u2014 the highest-beta expression of the same shortage. Sized as a lottery ticket, not a position.",
+      "closed": null,
+      "exit_price": null,
+      "realized": 0.0
+    },
+    {
+      "symbol": "GEV",
+      "shares": 0.196361,
+      "entry": 1018.53,
+      "opened": "2026-08-04",
+      "conviction": "anchor",
+      "why": "GE Vernova: gas turbines and grid equipment are what actually delivers power on the BINDING 2026-27 timeline, with sold-out order books. Funds the thesis if the SMR leg stays dead money.",
+      "closed": null,
+      "exit_price": null,
+      "realized": 0.0
+    },
+    {
+      "symbol": "PWR",
+      "shares": 0.21645,
+      "entry": 693.0,
+      "opened": "2026-08-04",
+      "conviction": "anchor",
+      "why": "Quanta: builds the interconnection itself. Whoever wins the generation argument, the wires still have to be strung \u2014 the least-conditional way to be long the bottleneck.",
+      "closed": null,
+      "exit_price": null,
+      "realized": 0.0
+    }
+  ],
+  "log": [
+    {
+      "ts": "2026-08-04 21:06:58",
+      "action": "buy",
+      "symbol": "SMR",
+      "shares": 47.418336,
+      "price": 9.49,
+      "why": "NuScale: the ONLY NRC-certified SMR design, under $10 after an earnings miss while capital chases unapproved pre-revenue names. If the power gap forces a bid for anything permitted, certification is the scarce asset."
+    },
+    {
+      "ts": "2026-08-04 21:06:58",
+      "action": "buy",
+      "symbol": "NNE",
+      "shares": 11.007155,
+      "price": 18.17,
+      "why": "Nano Nuclear: smallest cap, microreactors aimed at behind-the-meter data centre load \u2014 the highest-beta expression of the same shortage. Sized as a lottery ticket, not a position."
+    },
+    {
+      "ts": "2026-08-04 21:06:58",
+      "action": "buy",
+      "symbol": "GEV",
+      "shares": 0.196361,
+      "price": 1018.53,
+      "why": "GE Vernova: gas turbines and grid equipment are what actually delivers power on the BINDING 2026-27 timeline, with sold-out order books. Funds the thesis if the SMR leg stays dead money."
+    },
+    {
+      "ts": "2026-08-04 21:06:58",
+      "action": "buy",
+      "symbol": "PWR",
+      "shares": 0.21645,
+      "price": 693.0,
+      "why": "Quanta: builds the interconnection itself. Whoever wins the generation argument, the wires still have to be strung \u2014 the least-conditional way to be long the bottleneck."
+    }
+  ],
+  "started": "2026-08-04"
+}

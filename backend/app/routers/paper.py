@@ -374,6 +374,34 @@ def sizing_study(force: bool = False):
     return blob
 
 
+@router.get("/thesis")
+def thesis_book():
+    """The thesis book, marked to live prices.
+
+    Deliberately live rather than cached: this is a real position being scored,
+    and a stale mark on a concentrated book is how you avoid noticing a thesis
+    has broken.
+    """
+    from ..services import market_data
+    from ..services import thesis as thesis_service
+
+    book = thesis_service.load()
+    quotes: dict = {}
+    for p in book.get("positions", []):
+        if p.get("closed"):
+            continue
+        sym = p["symbol"]
+        if sym in quotes:
+            continue
+        try:
+            md = market_data.get_price_data(sym)
+            quotes[sym] = {"price": float(md.history["Close"].iloc[-1]),
+                           "source": md.source}
+        except Exception as exc:
+            print(f"[thesis] quote failed for {sym}: {exc!r}")
+    return thesis_service.mark(book, quotes)
+
+
 @router.get("/rules")
 def rules():
     """The model, stated plainly. If it can't be written down it can't be tested."""
