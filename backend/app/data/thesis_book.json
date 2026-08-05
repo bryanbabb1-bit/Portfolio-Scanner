@@ -1,43 +1,130 @@
 {
-  "cash": 1000.0,
-  "positions": [],
-  "log": [],
-  "pending": [
+  "cash": 0.0,
+  "positions": [
     {
       "symbol": "SMR",
-      "dollars": 300,
+      "shares": 32.64418,
+      "entry": 9.19,
+      "opened": "2026-08-05",
       "conviction": "core",
       "why": "NuScale: only NRC-certified SMR design, under $10 after an earnings miss. Certification is the scarce asset if the power shortage forces a bid.",
-      "queued": "2026-08-04 21:15:23"
+      "closed": null,
+      "exit_price": null,
+      "realized": 0.0,
+      "stop": 7.352,
+      "high_water": 9.3
     },
     {
       "symbol": "NNE",
-      "dollars": 150,
+      "shares": 8.116883,
+      "entry": 18.48,
+      "opened": "2026-08-05",
       "conviction": "satellite",
       "why": "Nano Nuclear: smallest cap, behind-the-meter microreactors. Highest beta to the same shortage. Lottery-ticket sizing.",
-      "queued": "2026-08-04 21:15:23"
+      "closed": null,
+      "exit_price": null,
+      "realized": 0.0,
+      "stop": 14.784,
+      "high_water": 18.48
     },
     {
       "symbol": "GEV",
-      "dollars": 200,
+      "shares": 0.191205,
+      "entry": 1046.0,
+      "opened": "2026-08-05",
       "conviction": "anchor",
       "why": "GE Vernova: turbines and grid gear deliver power on the BINDING 2026-27 timeline, order books sold out.",
-      "queued": "2026-08-04 21:15:23"
+      "closed": null,
+      "exit_price": null,
+      "realized": 0.0,
+      "stop": 836.8,
+      "high_water": 1046.0
     },
     {
       "symbol": "PWR",
-      "dollars": 200,
+      "shares": 0.286771,
+      "entry": 697.42,
+      "opened": "2026-08-05",
       "conviction": "anchor",
       "why": "Quanta: builds the interconnection itself. Least conditional way to be long the bottleneck.",
-      "queued": "2026-08-04 21:15:23"
+      "closed": null,
+      "exit_price": null,
+      "realized": 0.0,
+      "stop": 557.936,
+      "high_water": 697.42
     },
     {
       "symbol": "VST",
-      "dollars": 150,
+      "shares": 0.96401,
+      "entry": 155.6,
+      "opened": "2026-08-05",
       "conviction": "anchor",
       "why": "Vistra: already-interconnected generation with spare capacity \u2014 the one thing hyperscalers can actually buy today.",
-      "queued": "2026-08-04 21:15:23"
+      "closed": null,
+      "exit_price": null,
+      "realized": 0.0,
+      "stop": 124.48,
+      "high_water": 155.6
     }
   ],
-  "started": "2026-08-04"
+  "log": [
+    {
+      "ts": "2026-08-05 08:35:15",
+      "action": "buy",
+      "symbol": "SMR",
+      "shares": 32.64418,
+      "price": 9.19,
+      "why": "NuScale: only NRC-certified SMR design, under $10 after an earnings miss. Certification is the scarce asset if the power shortage forces a bid."
+    },
+    {
+      "ts": "2026-08-05 08:35:15",
+      "action": "buy",
+      "symbol": "NNE",
+      "shares": 8.116883,
+      "price": 18.48,
+      "why": "Nano Nuclear: smallest cap, behind-the-meter microreactors. Highest beta to the same shortage. Lottery-ticket sizing."
+    },
+    {
+      "ts": "2026-08-05 08:35:15",
+      "action": "buy",
+      "symbol": "GEV",
+      "shares": 0.191205,
+      "price": 1046.0,
+      "why": "GE Vernova: turbines and grid gear deliver power on the BINDING 2026-27 timeline, order books sold out."
+    },
+    {
+      "ts": "2026-08-05 08:35:15",
+      "action": "buy",
+      "symbol": "PWR",
+      "shares": 0.286771,
+      "price": 697.42,
+      "why": "Quanta: builds the interconnection itself. Least conditional way to be long the bottleneck."
+    },
+    {
+      "ts": "2026-08-05 08:35:15",
+      "action": "buy",
+      "symbol": "VST",
+      "shares": 0.96401,
+      "price": 155.6,
+      "why": "Vistra: already-interconnected generation with spare capacity \u2014 the one thing hyperscalers can actually buy today."
+    }
+  ],
+  "pending": [],
+  "started": "2026-08-04",
+  "equity_history": [
+    {
+      "day": "2026-08-05",
+      "equity": 982.21
+    }
+  ],
+  "last_run": "2026-08-05",
+  "lessons": [
+    {
+      "date": "2026-08-05",
+      "closed": 0,
+      "note": "only 0 closed positions \u2014 not enough to change anything. Needs 6. Recording and waiting."
+    }
+  ],
+  "rule_changes": [],
+  "last_review": "2026-08-05"
 }

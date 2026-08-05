@@ -55,13 +55,21 @@ export default function BookPage() {
   const [err, setErr] = useState<string | null>(null);
 
   const load = () => {
-    fetch(`${API_BASE}/api/paper/thesis`, { cache: "no-store" })
-      .then((r) => r.json())
+    fetch(`${API_BASE}/api/book`, { cache: "no-store" })
+      .then(async (r) => {
+        if (!r.ok) throw new Error(`${r.status} ${r.statusText}`);
+        return r.json();
+      })
       .then((d) => {
+        // A 404 body parses as valid JSON, so "did it parse" is not the same
+        // question as "is this a book". Checking the shape is what stops a
+        // dead endpoint from white-screening the page.
+        if (!d || !d.thesis) throw new Error("the book endpoint returned no book");
         setB(d);
         setPending(d.pending || []);
+        setErr(null);
       })
-      .catch((e) => setErr(String(e)));
+      .catch((e) => setErr(e?.message || String(e)));
   };
 
   useEffect(() => {
@@ -71,16 +79,28 @@ export default function BookPage() {
     return () => clearInterval(id);
   }, []);
 
-  if (err) return <div className="err">{err}</div>;
+  if (err)
+    return (
+      <>
+        <DisplayHead line1="THE" line2="BOOK" tone="hot" />
+        <div className="err">Could not load the book: {err}</div>
+      </>
+    );
   if (!b) return <p className="loading">Loading the book…</p>;
 
   const up = b.return_pct >= 0;
+  // Every list below is optional in the payload. Defaulting here rather than at
+  // each use means a partial response degrades the page instead of blanking it.
+  const positions = b.positions ?? [];
+  const log = b.log ?? [];
+  const falsifiers = b.thesis?.falsifiers ?? [];
+  const argument = b.thesis?.argument ?? [];
 
   return (
     <>
       <DisplayHead line1="THE" line2="BOOK" tone="hot" />
       <p className="dh-sub">
-        {b.thesis.name} · opened {b.started} · $1,000 start · equities only
+        {b.thesis?.name} · opened {b.started} · $1,000 start · equities only
       </p>
 
       <div className="bk-top">
@@ -131,7 +151,7 @@ export default function BookPage() {
         </>
       )}
 
-      {b.positions.length > 0 && (
+      {positions.length > 0 && (
         <>
           <div className="mfx-label">Open positions</div>
           <div className="card bk-scroll">
@@ -143,7 +163,7 @@ export default function BookPage() {
                 </tr>
               </thead>
               <tbody>
-                {b.positions.map((p) => (
+                {positions.map((p) => (
                   <tr key={p.symbol} className={p.pl >= 0 ? "up" : "down"}>
                     <td className="bk-sym">{p.symbol}</td>
                     <td className="bk-conv">{p.conviction}</td>
@@ -167,19 +187,19 @@ export default function BookPage() {
 
       <div className="mfx-label">The thesis</div>
       <div className="card bk-thesis">
-        <p className="bk-one">{b.thesis.one_liner}</p>
-        <ul>{b.thesis.argument.map((a) => <li key={a}>{a}</li>)}</ul>
+        <p className="bk-one">{b.thesis?.one_liner}</p>
+        <ul>{argument.map((a) => <li key={a}>{a}</li>)}</ul>
       </div>
 
       {/* Next to the P/L on purpose. */}
       <div className="mfx-label">What would prove me wrong</div>
       <div className="card bk-falsify">
-        <ul>{b.thesis.falsifiers.map((f) => <li key={f}>{f}</li>)}</ul>
-        <p className="bk-kill"><b>Kill switch.</b> {b.thesis.kill_switch}</p>
-        <p className="bk-odds"><b>Honest odds.</b> {b.thesis.honest_odds}</p>
+        <ul>{falsifiers.map((f) => <li key={f}>{f}</li>)}</ul>
+        <p className="bk-kill"><b>Kill switch.</b> {b.thesis?.kill_switch}</p>
+        <p className="bk-odds"><b>Honest odds.</b> {b.thesis?.honest_odds}</p>
       </div>
 
-      {b.log.length > 0 && (
+      {log.length > 0 && (
         <>
           <div className="mfx-label">Every action taken</div>
           <div className="card bk-scroll">
@@ -188,7 +208,7 @@ export default function BookPage() {
                 <tr><th>When</th><th>Action</th><th>Symbol</th><th>Shares</th><th>Price</th><th>Why</th></tr>
               </thead>
               <tbody>
-                {[...b.log].reverse().map((l, i) => (
+                {[...log].reverse().map((l, i) => (
                   <tr key={i} className={l.action === "buy" ? "up" : "down"}>
                     <td>{l.ts.slice(5, 16)}</td>
                     <td className="bk-conv">{l.action}</td>
