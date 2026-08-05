@@ -332,6 +332,48 @@ def regime_backtest(force: bool = False, years: int = 15):
     return blob
 
 
+_SIZING_CACHE = settings.PORTFOLIO_FILE.parent / "sizing_study.json"
+
+
+@router.get("/sizing")
+def sizing_study(force: bool = False):
+    """What the proven edge is worth at higher risk per trade.
+
+    This is where the "took 10k to 1M" stories actually come from — bet size,
+    not a better setup. It is reported with the ruin column attached and with a
+    second table run at the bottom of the edge's confidence interval, because
+    sizing for an edge you have overestimated is how the same maths that
+    compounds an account destroys one.
+    """
+    if not force:
+        try:
+            with open(_SIZING_CACHE, encoding="utf-8") as f:
+                blob = json.load(f)
+            if time.time() - blob.get("cached_at", 0) < _TTL:
+                return blob
+        except (FileNotFoundError, json.JSONDecodeError):
+            pass
+
+    from ..services import sizing as sizing_service
+    from ..services import swing as swing_service
+
+    res = swing_service.backtest(years=5)
+    rs = [t["r_multiple"] for t in res.trades if t.get("r_multiple") is not None]
+    if len(rs) < 30:
+        return {"error": "not enough trades to study sizing"}
+
+    blob = sizing_service.study(rs, trades_per_year=res.extra["trades_per_year"] or 30,
+                                years=5.0, runs=20000)
+    blob["cached_at"] = time.time()
+    try:
+        _SIZING_CACHE.parent.mkdir(parents=True, exist_ok=True)
+        with open(_SIZING_CACHE, "w", encoding="utf-8") as f:
+            json.dump(blob, f, indent=2)
+    except OSError as exc:
+        print(f"[paper] could not cache sizing study: {exc!r}")
+    return blob
+
+
 @router.get("/rules")
 def rules():
     """The model, stated plainly. If it can't be written down it can't be tested."""
