@@ -107,6 +107,128 @@ def backtest(force: bool = False):
     return blob
 
 
+_SWING_CACHE = settings.PORTFOLIO_FILE.parent / "swing_backtest.json"
+
+
+def _benchmark(curve: list[dict], years: float) -> dict:
+    """Buy-and-hold SPY over the identical window.
+
+    Without this a CAGR is a number with nothing to be better than. A strategy
+    that trails the index it could have simply bought is a hobby, however good
+    its t-statistic looks.
+    """
+    import datetime as dt
+
+    from ..services import market_data
+
+    if not curve:
+        return {}
+    try:
+        spy = market_data.get_deep_history("SPY", years=5)
+        if spy.source != "live":
+            return {}
+        h = spy.history
+        a = dt.date.fromisoformat(curve[0]["day"])
+        b = dt.date.fromisoformat(curve[-1]["day"])
+        win = h[(h.index.date >= a) & (h.index.date <= b)]
+        if win.empty:
+            return {}
+        p0, p1 = float(win["Close"].iloc[0]), float(win["Close"].iloc[-1])
+        peak = dd = 0.0
+        for v in win["Close"]:
+            peak = max(peak, float(v))
+            dd = max(dd, (peak - float(v)) / peak)
+        return {
+            "symbol": "SPY",
+            "return_pct": round((p1 / p0 - 1) * 100, 2),
+            "cagr_pct": round(((p1 / p0) ** (1 / years) - 1) * 100, 2) if years > 0.5 else None,
+            "max_drawdown_pct": round(dd * 100, 2),
+        }
+    except Exception as exc:
+        print(f"[paper] benchmark failed: {exc!r}")
+        return {}
+
+
+def _by_year(curve: list[dict]) -> list[dict]:
+    """Per-calendar-year strategy return against the same year of SPY.
+
+    The headline number hides the whole character of this model — it is
+    counter-cyclical, and only a year-by-year split shows that.
+    """
+    import datetime as dt
+
+    from ..services import market_data
+
+    out: list[dict] = []
+    if not curve:
+        return out
+    equity = {c["day"]: c["equity"] for c in curve}
+    days = sorted(equity)
+    try:
+        h = market_data.get_deep_history("SPY", years=5).history
+    except Exception:
+        h = None
+    for yr in sorted({d[:4] for d in days}):
+        span = [d for d in days if d.startswith(yr)]
+        if len(span) < 20:
+            continue
+        row = {"year": yr,
+               "strategy_pct": round((equity[span[-1]] / equity[span[0]] - 1) * 100, 1),
+               "benchmark_pct": None}
+        if h is not None:
+            win = h[(h.index.date >= dt.date.fromisoformat(span[0]))
+                    & (h.index.date <= dt.date.fromisoformat(span[-1]))]
+            if not win.empty:
+                row["benchmark_pct"] = round(
+                    (float(win["Close"].iloc[-1]) / float(win["Close"].iloc[0]) - 1) * 100, 1)
+        out.append(row)
+    return out
+
+
+@router.get("/swing")
+def swing_backtest(force: bool = False):
+    """The multi-day model — the one with a measurable edge.
+
+    Replaces day trading, which the intraday backtest showed could not work on
+    this account: PDT-blocked, settlement-throttled, and physically unable to
+    risk more than ~0.23% per trade against a 2% budget.
+    """
+    if not force:
+        try:
+            with open(_SWING_CACHE, encoding="utf-8") as f:
+                blob = json.load(f)
+            if time.time() - blob.get("cached_at", 0) < _TTL:
+                return blob
+        except (FileNotFoundError, json.JSONDecodeError):
+            pass
+
+    from ..services import swing as swing_service
+
+    res = swing_service.backtest(years=5)
+    years = res.extra.get("years") or 5
+    blob = {
+        "cached_at": time.time(),
+        "config": res.config,
+        "metrics": res.metrics,
+        "extra": res.extra,
+        "significance": _significance(res.trades),
+        "benchmark": _benchmark(res.daily_equity, years),
+        "by_year": _by_year(res.daily_equity),
+        "blocked": res.blocked,
+        "days": res.days,
+        "symbols": res.symbols,
+        "trades": res.trades,
+        "daily_equity": res.daily_equity[::5],   # weekly points are enough to plot
+    }
+    try:
+        _SWING_CACHE.parent.mkdir(parents=True, exist_ok=True)
+        with open(_SWING_CACHE, "w", encoding="utf-8") as f:
+            json.dump(blob, f, indent=2)
+    except OSError as exc:
+        print(f"[paper] could not cache swing backtest: {exc!r}")
+    return blob
+
+
 @router.get("/rules")
 def rules():
     """The model, stated plainly. If it can't be written down it can't be tested."""

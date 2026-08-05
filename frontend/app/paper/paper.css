@@ -95,3 +95,9 @@
   font-family: var(--font-mono), ui-monospace, monospace; font-size: 10.5px;
   text-transform: uppercase; letter-spacing: 0.05em;
 }
+
+/* benchmark + year tables: the comparison, not a data dump */
+.pl-bench td:first-child, .pl-bench th:first-child { color: var(--muted); }
+.pl-bench td { font-weight: 600; }
+.pl-good { color: var(--bull); }
+.pl-bad { color: var(--bear); }

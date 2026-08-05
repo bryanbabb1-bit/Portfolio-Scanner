@@ -47,6 +47,18 @@ interface Backtest {
   config: Record<string, number>;
 }
 
+interface Swing {
+  metrics: Record<string, number | null>;
+  extra: Record<string, number | null>;
+  significance: Backtest["significance"];
+  benchmark: { symbol?: string; return_pct?: number; cagr_pct?: number; max_drawdown_pct?: number };
+  by_year: { year: string; strategy_pct: number; benchmark_pct: number | null }[];
+  blocked: Record<string, number>;
+  days: number;
+  symbols: string[];
+  trades: Trade[];
+}
+
 interface Rules {
   account: Record<string, string>;
   setup: string[];
@@ -59,6 +71,7 @@ const money = (v: number) => `${v < 0 ? "-" : ""}$${Math.abs(v).toFixed(2)}`;
 
 export default function PaperPage() {
   const [bt, setBt] = useState<Backtest | null>(null);
+  const [sw, setSw] = useState<Swing | null>(null);
   const [rules, setRules] = useState<Rules | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const [running, setRunning] = useState(false);
@@ -76,6 +89,10 @@ export default function PaperPage() {
 
   useEffect(() => {
     load();
+    fetch(`${API_BASE}/api/paper/swing`, { cache: "no-store" })
+      .then((r) => r.json())
+      .then(setSw)
+      .catch(() => {});
     fetch(`${API_BASE}/api/paper/rules`, { cache: "no-store" })
       .then((r) => r.json())
       .then(setRules)
@@ -100,6 +117,84 @@ export default function PaperPage() {
       </p>
 
       {err && <div className="err">{err}</div>}
+
+      {sw && (
+        <>
+          <div className={`pl-verdict ${sw.significance.significant ? "ok" : "no"}`}>
+            <div className="pl-verdict-tag">
+              Swing model · {sw.significance.significant ? "edge is real" : "not proven"}
+            </div>
+            <p className="pl-verdict-line">
+              Buying pullbacks inside uptrends has a statistically real edge
+              ({sw.significance.n} trades over {sw.extra.years} years,
+              t-stat {sw.significance.t_stat}). But it is a <b>defensive</b> edge,
+              not a return-maximising one — over this window it did not beat
+              simply owning the index.
+            </p>
+            <div className="pl-sig">
+              <span>expectancy <b>+{sw.metrics.expectancy_r}R</b></span>
+              <span>profit factor <b>{sw.metrics.profit_factor}</b></span>
+              <span>t-stat <b>{sw.significance.t_stat}</b> <i>(needs 2.0)</i></span>
+              <span>avg hold <b>{sw.extra.avg_hold_days}d</b></span>
+              <span><b>{sw.extra.trades_per_year}</b> trades/yr</span>
+            </div>
+          </div>
+
+          <div className="mfx-label">Against just buying the index</div>
+          <div className="card pl-trades-wrap">
+            <table className="pl-trades pl-bench">
+              <thead>
+                <tr><th></th><th>Strategy</th><th>{sw.benchmark.symbol || "SPY"} buy &amp; hold</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Total return</td>
+                  <td>{sw.metrics.return_pct}%</td>
+                  <td>{sw.benchmark.return_pct}%</td></tr>
+                <tr><td>CAGR</td>
+                  <td>{sw.extra.cagr_pct}%</td>
+                  <td>{sw.benchmark.cagr_pct}%</td></tr>
+                <tr><td>Max drawdown</td>
+                  <td>{sw.metrics.max_drawdown_pct}%</td>
+                  <td>{sw.benchmark.max_drawdown_pct}%</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          {/* The headline hides the whole character of this thing. */}
+          <div className="mfx-label">Where it earns its keep</div>
+          <div className="card pl-trades-wrap">
+            <table className="pl-trades pl-bench">
+              <thead>
+                <tr><th>Year</th><th>Strategy</th><th>SPY</th><th>Difference</th></tr>
+              </thead>
+              <tbody>
+                {sw.by_year.map((y) => {
+                  const d = y.benchmark_pct == null ? null : y.strategy_pct - y.benchmark_pct;
+                  return (
+                    <tr key={y.year} className={(d ?? 0) >= 0 ? "up" : "down"}>
+                      <td>{y.year}</td>
+                      <td>{y.strategy_pct}%</td>
+                      <td>{y.benchmark_pct == null ? "—" : `${y.benchmark_pct}%`}</td>
+                      <td className={d == null ? "" : d >= 0 ? "pl-good" : "pl-bad"}>
+                        {d == null ? "—" : `${d >= 0 ? "+" : ""}${d.toFixed(1)}`}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+            <p className="mut pl-note" style={{ marginTop: 12, marginBottom: 0 }}>
+              It wins when the index falls and lags when it runs. Money at risk
+              roughly three days in four; the rest is cash. Survivorship caveat:
+              the universe is names liquid enough to still matter today, which
+              flatters any long-only backtest.
+            </p>
+          </div>
+
+          <div className="mfx-label">Day-trading model, for contrast</div>
+        </>
+      )}
+
       {!bt && !err && <p className="loading">Replaying 60 sessions…</p>}
 
       {bt && (
