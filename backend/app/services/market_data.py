@@ -144,6 +144,19 @@ class MarketData:
 
 
 # --------------------------------------------------------------- yfinance
+def yf_symbol(symbol: str) -> str:
+    """Ticker as YAHOO spells it.
+
+    Class shares are written with a dot nearly everywhere (BRK.B, BF.B) and
+    yfinance only accepts a hyphen. Without this the fetch fails, the symbol
+    silently degrades to MOCK data, and the mock series carries a tz-naive index
+    that then refuses to concat with the tz-aware live ones — which took the
+    whole portfolio-history endpoint down with a 502 rather than just losing one
+    line.
+    """
+    return symbol.upper().strip().replace(".", "-")
+
+
 def _clean_hist(hist):
     """Drop bars with a NaN Close. yfinance in this environment has been seen to
     return a trailing daily bar (e.g. today's, or even a completed prior day)
@@ -160,7 +173,7 @@ def _clean_hist(hist):
 def _fetch_live(symbol: str) -> MarketData:
     import yfinance as yf  # imported lazily so mock mode has no hard dep
 
-    tkr = yf.Ticker(symbol)
+    tkr = yf.Ticker(yf_symbol(symbol))
     hist = _clean_hist(tkr.history(period="1y", auto_adjust=True))
     if hist is None or hist.empty:
         raise RuntimeError(f"no history for {symbol}")
@@ -307,7 +320,7 @@ def _fetch_live_prices(symbol: str) -> MarketData:
     for indicator/score math."""
     import yfinance as yf
 
-    hist = _clean_hist(yf.Ticker(symbol).history(period="1y", auto_adjust=True))
+    hist = _clean_hist(yf.Ticker(yf_symbol(symbol)).history(period="1y", auto_adjust=True))
     if hist is None or hist.empty:
         raise RuntimeError(f"no history for {symbol}")
     return MarketData(symbol.upper(), symbol.upper(), hist, {}, [], "live")
@@ -332,7 +345,7 @@ def get_deep_history(symbol: str, years: int = 5) -> MarketData:
             import yfinance as yf
 
             hist = _clean_hist(
-                yf.Ticker(sym).history(period=f"{years}y", auto_adjust=True)
+                yf.Ticker(yf_symbol(sym)).history(period=f"{years}y", auto_adjust=True)
             )
             if hist is not None and not hist.empty:
                 return _cache_put(key, MarketData(sym, sym, hist, {}, [], "live"))
@@ -409,7 +422,7 @@ def get_intraday(symbol: str, range_: str = "1d") -> tuple[pd.DataFrame, str]:
     try:
         import yfinance as yf
 
-        hist = _clean_hist(yf.Ticker(symbol).history(period=period, interval=interval,
+        hist = _clean_hist(yf.Ticker(yf_symbol(symbol)).history(period=period, interval=interval,
                                                      auto_adjust=True))
         if hist is None or hist.empty:
             raise RuntimeError(f"no intraday for {symbol}")

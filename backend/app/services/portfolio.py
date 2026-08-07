@@ -405,6 +405,14 @@ def portfolio_history(range_: str = "6mo") -> PortfolioHistory:
             # Intraday bars are their own ledger; the live tick is the right
             # tail for them.
             closes.iloc[-1] = float(live)
+        # Strip the timezone before storing. Live bars come back tz-aware
+        # (America/New_York) and mock bars are tz-naive, so one symbol that
+        # degrades to mock makes the concat below raise "Cannot join tz-naive
+        # with tz-aware DatetimeIndex" and 502s the ENTIRE chart. Normalising
+        # here means a bad symbol costs its own line and nothing else.
+        if getattr(closes.index, "tz", None) is not None:
+            closes = closes.copy()
+            closes.index = closes.index.tz_localize(None)
         per_symbol[sym] = closes * shares
 
     points: list[ValuePoint] = []
@@ -471,6 +479,9 @@ def _benchmark_series(points: list[ValuePoint], range_: str,
             closes = md.history["Close"]
         if source != "live" or closes is None or closes.empty:
             return []
+        if getattr(closes.index, "tz", None) is not None:
+            closes = closes.copy()
+            closes.index = closes.index.tz_localize(None)
 
         fmt = "%Y-%m-%d %H:%M" if intraday else "%Y-%m-%d"
         by_label = {pd.Timestamp(i).strftime(fmt): float(v) for i, v in closes.items()}
