@@ -1,0 +1,53 @@
+{
+  "last_run": "2026-08-12",
+  "last_result": {
+    "date": "2026-08-12",
+    "ran": [
+      {
+        "symbol": "NBIS",
+        "score": 70,
+        "why": [
+          "earnings in 0d",
+          "moved +29.3% today",
+          "desk has never sat on it"
+        ],
+        "verdict": "APPROVE",
+        "action": "HOLD",
+        "headline": "Hold NBIS \u2014 earnings beat is real, but the $5 add is not worth doing."
+      },
+      {
+        "symbol": "ANET",
+        "score": 35,
+        "why": [
+          "moved +6.7% today",
+          "desk has never sat on it"
+        ],
+        "verdict": "APPROVE",
+        "action": "HOLD",
+        "headline": "Hold ANET \u2014 you added two days ago, thesis intact, no new order today."
+      },
+      {
+        "symbol": "AAPL",
+        "score": 28,
+        "why": [
+          "standing TRIM but still held",
+          "desk has never sat on it"
+        ],
+        "verdict": "APPROVE",
+        "action": "TRIM",
+        "headline": "Nothing new since my call \u2014 the trim stands, hold the rest."
+      },
+      {
+        "symbol": "CRWD",
+        "score": 25,
+        "why": [
+          "earnings in 14d",
+          "desk has never sat on it"
+        ],
+        "verdict": "APPROVE",
+        "action": "HOLD",
+        "headline": "Hold your CRWD \u2014 winner still working, earnings in two weeks, no action."
+      }
+    ]
+  }
+}

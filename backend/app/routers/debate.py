@@ -21,20 +21,25 @@ def list_debates(limit: int = 20):
 
 
 @router.get("/debate/nightly")
-def nightly_preload():
+def nightly_preload(include_queue: bool = False):
     """What the desk pre-loaded overnight, plus tonight's ranked queue.
 
     The queue is shown so the choice is inspectable: you can see WHY a name is
     next rather than trusting that it is."""
     from ..services import nightly, portfolio as pf
 
-    try:
-        _, reports = pf.portfolio_summary()
-        live = [r for r in reports if getattr(r.quote, "source", "") == "live"]
-        queue = nightly.score_candidates(live)[: nightly.MAX_PER_NIGHT * 2]
-    except Exception as exc:
-        print(f"[debate] nightly queue failed: {exc!r}")
-        queue = []
+    # Last night's rulings are a file read and return instantly. Scoring the
+    # queue needs a full portfolio scan, which is far too slow to sit in front
+    # of a homepage panel — so it is opt-in. The panel asks for it only when
+    # there are no rulings to show yet.
+    queue: list = []
+    if include_queue:
+        try:
+            _, reports = pf.portfolio_summary()
+            live = [r for r in reports if getattr(r.quote, "source", "") == "live"]
+            queue = nightly.score_candidates(live)[: nightly.MAX_PER_NIGHT * 2]
+        except Exception as exc:
+            print(f"[debate] nightly queue failed: {exc!r}")
     return {"last": nightly.last_result(), "queue": queue,
             "max_per_night": nightly.MAX_PER_NIGHT,
             "redebate_after_days": nightly.REDEBATE_AFTER_DAYS}

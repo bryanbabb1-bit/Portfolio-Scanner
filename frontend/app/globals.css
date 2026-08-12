@@ -2042,3 +2042,41 @@ main.page { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
 @media (max-width: 720px) {
   .pos-today { text-align: left; }
 }
+
+/* ---- overnight desk on the homepage ------------------------------------ */
+.nd-lead { font-size: 13.5px; line-height: 1.55; color: var(--muted); margin-bottom: 12px; }
+.nd-list { display: flex; flex-direction: column; gap: 2px; }
+.nd-row {
+  display: grid; grid-template-columns: 68px 92px 1fr auto;
+  align-items: center; gap: 12px; padding: 10px;
+  border-left: 3px solid var(--accent); color: var(--text);
+}
+.nd-row:hover { background: var(--surface-hover); }
+.nd-row.queued { border-left-color: var(--border); }
+.nd-sym { font-weight: 800; }
+.nd-verdict {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 9.5px; font-weight: 700; letter-spacing: 0.09em;
+  text-transform: uppercase; padding: 3px 7px; text-align: center;
+  background: var(--surface-sunk); color: var(--muted);
+}
+.nd-verdict.ok { color: var(--bull); background: var(--bull-bg); }
+.nd-verdict.no { color: var(--bear); background: var(--bear-bg); }
+.nd-why { color: var(--muted); font-size: 12.5px; line-height: 1.45; }
+.nd-go {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px; letter-spacing: 0.06em; color: var(--accent); white-space: nowrap;
+}
+.nd-note { font-size: 12px; margin-top: 12px; }
+@media (max-width: 720px) {
+  .nd-row { grid-template-columns: 60px 88px 1fr; row-gap: 6px; }
+  .nd-why { grid-column: 1 / -1; }
+  .nd-go { grid-column: 1 / -1; }
+}
+/* The ruling in one line, with the reason it was picked underneath. */
+.nd-head { display: block; color: var(--text); font-size: 13px; line-height: 1.45; }
+.nd-picked {
+  display: block; margin-top: 3px;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 9.5px; letter-spacing: 0.06em; text-transform: uppercase;
+}

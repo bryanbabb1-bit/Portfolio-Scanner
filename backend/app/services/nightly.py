@@ -186,10 +186,17 @@ def maybe_run(force: bool = False) -> dict | None:
     done: list[dict] = []
     for c in ranked:
         try:
-            result = debate_service.convene(c["symbol"], force=True)
-            done.append({"symbol": c["symbol"], "score": c["score"],
-                         "why": c["why"],
-                         "verdict": (result.get("verdict") or {}).get("ruling")})
+            result = debate_service.convene(c["symbol"], force=True) or {}
+            # verdict/action/headline are flat STRINGS on the debate result.
+            # Treating verdict as a nested object cost four completed debates
+            # their summary row — the transcripts were cached fine, but the
+            # night reported "0 sessions" because the recording step threw.
+            done.append({
+                "symbol": c["symbol"], "score": c["score"], "why": c["why"],
+                "verdict": result.get("verdict"),
+                "action": result.get("action"),
+                "headline": result.get("headline"),
+            })
         except Exception as exc:
             print(f"[nightly] {c['symbol']} debate failed: {exc!r}")
 

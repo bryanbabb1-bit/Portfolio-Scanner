@@ -21,6 +21,7 @@ import { HoldingsBoard } from "../components/HoldingsBoard";
 import { StayTheCourse } from "../components/StayTheCourse";
 import { AlertsPanel } from "../components/AlertsPanel";
 import { RiskStats } from "../components/RiskStats";
+import { NightlyDesk } from "../components/NightlyDesk";
 import { PinnedActions } from "../components/PinnedActions";
 import { PortfolioBrief } from "../components/PortfolioBrief";
 import { ProbabilityLattice } from "../components/ProbabilityLattice";
@@ -182,6 +183,9 @@ export default function Dashboard() {
           <AlertsPanel alerts={insights.alerts} />
         </>
       )}
+      {/* Last night's rulings, waiting to be read. */}
+      <NightlyDesk />
+
       <PinnedActions />
 
       {/* row 3 — the read AND the plan. One surface, full width, because it is

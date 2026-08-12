@@ -382,5 +382,900 @@
       "note": "Stop $432.72 (2x ATR, 6.9% below). Risking 1% of equity ($0) buys $1 — capped by dry powder."
     },
     "error": null
+  },
+  "NET": {
+    "symbol": "NET",
+    "name": "Cloudflare, Inc.",
+    "price": 284.43,
+    "ts": 1786053628.6888356,
+    "as_of": "2026-08-06 17:00:28",
+    "engine": "claude",
+    "agents": [
+      {
+        "key": "bull",
+        "name": "Bull Agent",
+        "round": 1,
+        "position": "BULLISH",
+        "confidence": 62,
+        "points": [
+          "Cloudflare beat earnings and raised its full-year profit outlook, per Bloomberg and Business Wire today.",
+          "Multiple outlets (IBD, Barron's, StockStory) confirm booming customer growth drove the beat.",
+          "Shares sit only 5.6% below the 52-week high of $301.33, showing the uptrend is intact.",
+          "Today's trading volume is 37% above normal, showing strong buying interest around the report.",
+          "Your position is already up 17% since your $243.03 average cost."
+        ],
+        "strongest": "Cloudflare beat earnings, raised its profit outlook, and multiple outlets confirm customer growth is booming.",
+        "ok": true
+      },
+      {
+        "key": "bear",
+        "name": "Bear Agent",
+        "round": 1,
+        "position": "BEARISH",
+        "confidence": 42,
+        "points": [
+          "Wall Street's own price target is $269.13, below today's $284.43 — the pros think this is already too expensive.",
+          "Stock fell 2.91% today even with strong earnings headlines — that's often a sign good news is already priced in.",
+          "Shares are only 5.6% below their 52-week high of $301.33, leaving little room before this stalls out.",
+          "This position is already up 17% since $243.03 cost — an earnings day is a good time to lock some of that in, not chase more.",
+          "The whole book is 100% invested with zero spare cash, so a stumble here can't be cheaply averaged down."
+        ],
+        "strongest": "Analysts' own average price target of $269.13 sits below where NET trades right now at $284.43.",
+        "ok": true
+      },
+      {
+        "key": "macro",
+        "name": "Macro Agent",
+        "round": 1,
+        "position": "BULLISH",
+        "confidence": 68,
+        "points": [
+          "NET jumped on today's earnings beat, showing money is rotating hard into AI infrastructure names right now.",
+          "Price is still trending up, holding above its longer-term averages near $255 and $215.",
+          "31 analysts rate it a buy, showing broad conviction this AI theme still has room to run.",
+          "Price is only 5.6% below its 52-week high of $301.33, meaning much of the good news may already be priced in.",
+          "The average analyst price target of $269.13 sits below today's $284.43, capping near-term upside."
+        ],
+        "strongest": "NET jumped today on an earnings beat, confirming capital is rotating into AI infrastructure winners.",
+        "ok": true
+      },
+      {
+        "key": "risk",
+        "name": "Risk Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 58,
+        "points": [
+          "No dry powder left — 100% invested, so any new NET buy is capped at $0 regardless of conviction.",
+          "NET is already 5% of a book that's 19% NVDA, 14% VRT, 14% AVGO — all correlated AI-infrastructure names.",
+          "Total open risk to stops across the book is already 7.98% of equity ($842), near the edge of what's sustainable.",
+          "Stop at $254.91 is 10.4% below live price $284.43 — a real drawdown if earnings enthusiasm fades.",
+          "Position is already up 17% from $243.03 cost — trimming into strength banks a gain without adding new risk."
+        ],
+        "strongest": "Zero dry powder means adding risk here is not an option — the only lever left is trimming.",
+        "ok": true
+      },
+      {
+        "key": "execution",
+        "name": "Execution Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 58,
+        "points": [
+          "NET is $284.43, up only 0.6% from my last call at $282.67 — nothing material changed.",
+          "Company beat earnings and raised guidance today, per Bloomberg and Business Wire.",
+          "Wall Street's average target is $269.13, below today's $284.43 price.",
+          "Stock is only 5.6% below its 52-week high of $301.33, so most good news is priced in.",
+          "The book is 100% invested with zero spare cash, so new buying isn't an option anyway."
+        ],
+        "strongest": "Price moved only 0.6% since my last call, so today's earnings pop doesn't change the plan.",
+        "ok": true
+      }
+    ],
+    "agents_reporting": 5,
+    "tally": {
+      "bullish": 2,
+      "bearish": 1,
+      "neutral": 2
+    },
+    "verdict": "APPROVE",
+    "action": "TRIM",
+    "score": 62,
+    "headline": "Nothing new since my last call — keep the small trim order at $290.",
+    "rationale": [
+      "Execution's point wins: NET moved 0.6% since my call — no new fact justifies flipping.",
+      "Bull is right on the business — beat, raised outlook, booming customers — so this is a trim, not a sell.",
+      "I overrule Bear's 'lock it in' urgency: a 17% gain in a winning AI name is not a reason to dump it.",
+      "Risk's point stands: NET sits beside NVDA, VRT and AVGO — same AI bet, and the book has zero cash.",
+      "Macro's bullish read loses on one detail: analysts' average target $269 sits below today's $284."
+    ],
+    "dissent": [
+      "If NET runs past $301 on this earnings beat, trimming here leaves real upside on the table.",
+      "Bull's raised-guidance argument could re-rate the stock well above the $269 analyst target."
+    ],
+    "entry": "",
+    "target": "$301.33",
+    "stop": "$254.91",
+    "sizing": {
+      "symbol": "NET",
+      "price": 284.43,
+      "stop": 254.91,
+      "stop_basis": "2x ATR",
+      "risk_per_share": 29.52,
+      "dollars": 0.0,
+      "shares": 0.0,
+      "pct_of_equity": 0.0,
+      "risk_amount": 0.0,
+      "capped_by": "dry powder",
+      "note": "Stop $254.91 (2x ATR, 10.4% below). Risking 1% of equity ($0) buys $0 — capped by dry powder."
+    },
+    "error": null
+  },
+  "LWLG": {
+    "symbol": "LWLG",
+    "name": "Lightwave Logic, Inc.",
+    "price": 8.15,
+    "ts": 1786556158.4871747,
+    "as_of": "2026-08-12 12:35:58",
+    "engine": "claude",
+    "agents": [
+      {
+        "key": "bull",
+        "name": "Bull Agent",
+        "round": 1,
+        "position": "BULLISH",
+        "confidence": 58,
+        "points": [
+          "Shares jumped 7.80% today to $8.15 and remain in a clear uptrend.",
+          "Wall Street's average price target is $10.55, about 29.45% above today's price, based on 33 analysts.",
+          "The stock just crossed above its long-term trend level, a shift that has often preceded bigger rallies.",
+          "Momentum just turned positive after a rough stretch, suggesting the recent slide is reversing.",
+          "Even after today's pop, shares sit 55% below their 52-week high of $18.22, leaving lots of room to recover."
+        ],
+        "strongest": "Analysts see $10.55 fair value, nearly 30% above today's $8.15 price, across 33 estimates.",
+        "ok": true
+      },
+      {
+        "key": "bear",
+        "name": "Bear Agent",
+        "round": 1,
+        "position": "BEARISH",
+        "confidence": 55,
+        "points": [
+          "Stock is down 55.27% from its 52-week high of $18.22, showing this rallies fast and crashes harder.",
+          "Trading volume today is only 0.523x normal, meaning the +7.80% pop lacks real conviction behind it.",
+          "Q2 2026 earnings just posted a wider net loss of $0.04 a share, even as shares are rallying.",
+          "33 analysts rate this just a hold, not a buy, despite the $10.55 average target.",
+          "Momentum reading (MACD -0.0047) is still below its own signal line, meaning the trend just barely turned up."
+        ],
+        "strongest": "",
+        "ok": true
+      },
+      {
+        "key": "macro",
+        "name": "Macro Agent",
+        "round": 1,
+        "position": "NEUTRAL",
+        "confidence": 48,
+        "points": [
+          "Stock is up 55.27% from its 52-week high of $18.22, showing this AI theme has cooled off hard.",
+          "Trading volume is only 0.523x the 20-day average, so today's 7.80% pop lacks broad participation.",
+          "Price sits above both the $6.7825 and $8.0586 short-term trend lines, confirming the recent uptrend is intact.",
+          "Wall Street's mean target of $10.55 implies 29.45% upside, but that's spread across 33 analysts rating it a hold, not a buy.",
+          "The book is already 100% deployed with an ELEVATED risk status, so there's no dry powder to add regardless of the setup."
+        ],
+        "strongest": "The stock is still 55% below its 52-week high, meaning the broader trend for this name remains badly damaged despite today's pop.",
+        "ok": true
+      },
+      {
+        "key": "risk",
+        "name": "Risk Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 65,
+        "points": [
+          "Book is 100% deployed with only $5 of cash left, so there's no room to add to LWLG.",
+          "LWLG is already just $106, about 1% of the book — not a concentration problem on its own.",
+          "NVDA, VRT, and AVGO already make up 47% of the book, all riding the same AI trend as LWLG.",
+          "Total risk across every stop in the book is already 8.14% of equity ($887) — stretched, not starving for more.",
+          "The $7.11 stop caps this trade's risk at $1, so it barely moves the needle either way."
+        ],
+        "strongest": "The book is 100% deployed with only $5 of cash — there's nothing left to put into LWLG right now.",
+        "ok": true
+      },
+      {
+        "key": "execution",
+        "name": "Execution Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 45,
+        "points": [
+          "Already bought 13 shares of LWLG near $8.1 today — hold, don't chase it at $8.15.",
+          "Sell if LWLG drops to $7.11 — that's the stop.",
+          "No cash to add more — the account is fully invested, only $5 of room here.",
+          "Volume is thin today, so any bigger order could move the price — keep any add small if you do it.",
+          "Earnings just came out yesterday, so no big surprise event is looming right now."
+        ],
+        "strongest": "Hold what you bought at $8.1 and sell if it falls to $7.11 — there's no cash to add more anyway.",
+        "ok": true
+      }
+    ],
+    "agents_reporting": 5,
+    "tally": {
+      "bullish": 1,
+      "bearish": 1,
+      "neutral": 3
+    },
+    "verdict": "APPROVE",
+    "action": "HOLD",
+    "score": 57,
+    "headline": "You already own it — hold the 13 shares, sell only under $7.11.",
+    "rationale": [
+      "Execution's call wins: you bought at $8.10 today, so nothing more is needed here.",
+      "I overrule Bull's 58 confidence — a 29% analyst target on a hold rating isn't a buy case.",
+      "Bear's point stands: the company lost money again in Q2 and today's pop had thin buying.",
+      "Risk desk is right that $106 in a speculative name is small enough to simply leave alone.",
+      "This is a speculative bet, not a core holding — it lives or dies by the $7.11 line."
+    ],
+    "dissent": [
+      "If the polymer chip deals turn real, $8.15 will look cheap and a 13-share stake too small."
+    ],
+    "entry": "",
+    "target": "$10.55",
+    "stop": "$7.11",
+    "sizing": {
+      "symbol": "LWLG",
+      "price": 8.15,
+      "stop": 7.11,
+      "stop_basis": "200-day",
+      "risk_per_share": 1.04,
+      "dollars": 5.0,
+      "shares": 0.6135,
+      "pct_of_equity": 0.05,
+      "risk_amount": 0.64,
+      "capped_by": "dry powder",
+      "note": "Stop $7.11 (200-day, 12.8% below). Risking 1% of equity ($1) buys $5 — capped by dry powder."
+    },
+    "error": null
+  },
+  "NVDA": {
+    "symbol": "NVDA",
+    "name": "NVIDIA Corporation",
+    "price": 223.44,
+    "ts": 1786558178.10512,
+    "as_of": "2026-08-12 13:09:38",
+    "engine": "claude",
+    "agents": [
+      {
+        "key": "bull",
+        "name": "Bull Agent",
+        "round": 1,
+        "position": "BULLISH",
+        "confidence": 68,
+        "points": [
+          "Wall Street's average target is $302.83, about 35% above the current $223.44 price.",
+          "58 analysts rate it strong_buy, and the stock is trending up with strong momentum signals.",
+          "Still 5% below its 52-week high of $235.47, so there's room to run before new highs.",
+          "Nvidia just partnered with Goldman Sachs and BlackRock to fund its AI build-out, expanding its financing muscle.",
+          "Position is already up 10%, and the client added shares near $191 when the trend held, proving the demand thesis."
+        ],
+        "strongest": "58 analysts rate NVDA strong_buy with an average target of $302.83, about 35% above today's price.",
+        "ok": true
+      },
+      {
+        "key": "bear",
+        "name": "Bear Agent",
+        "round": 1,
+        "position": "BEARISH",
+        "confidence": 34,
+        "points": [
+          "Priced for perfection: analysts see $302.83 target but stock already ran to $223.44, near its 52-week high of $235.47.",
+          "Earnings hit in 14 days (2026-08-26) — a binary event that can gap the stock either direction before you can react.",
+          "Bank of America just sent a 'blunt message' to Nvidia investors per today's headline — a sign sentiment cracks are forming.",
+          "Trading volume today is only 0.58x the 20-day average, so this move up lacks strong conviction behind it.",
+          "The book is already 18.4% concentrated in NVDA plus heavy exposure to AVGO, VRT and other AI-infra names — one bad print here hits the whole book."
+        ],
+        "strongest": "Earnings in 14 days is a binary risk sitting right on top of a stock already near its 52-week high with weak volume support.",
+        "ok": true
+      },
+      {
+        "key": "macro",
+        "name": "Macro Agent",
+        "round": 1,
+        "position": "BULLISH",
+        "confidence": 60,
+        "points": [
+          "Nvidia's $500 billion AI buildout with Goldman Sachs and BlackRock financing shows fresh money still pouring into this theme.",
+          "Wall Street's average price target of $302.83 implies 35.5% more upside, meaning big investors remain bullish.",
+          "Shares sit just 5.1% below the 52-week high of $235.47, showing the uptrend is still intact.",
+          "Trading volume is only 57.68% of normal, a sign fewer buyers are chasing the rally right now.",
+          "Earnings land in 14 days (Aug 26), a binary event that could swing the stock sharply either way."
+        ],
+        "strongest": "Nvidia's $500 billion AI buildout with Goldman Sachs and BlackRock financing shows capital still rotating into this theme.",
+        "ok": true
+      },
+      {
+        "key": "risk",
+        "name": "Risk Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 58,
+        "points": [
+          "Book is 100% invested with only $5 of cash left, so there's no real room to add to NVDA.",
+          "NVDA is already the single biggest holding at 18.4% of the book, on top of 15% VRT and 14% AVGO in the same AI theme.",
+          "Total money at risk if stops get hit is already 8.13% of the whole book ($886) — that's elevated.",
+          "Earnings hit in 14 days and can gap the stock hard either way, right as risk is already stretched.",
+          "The desk's own sizing gives this trade just $5 with $0 at risk — barely worth doing, so standing pat is the same as taking it."
+        ],
+        "strongest": "The book is fully deployed with $5 of cash and already 8.13% of equity at risk to stops, so there's no room to add before an earnings gap in 14 days.",
+        "ok": true
+      },
+      {
+        "key": "execution",
+        "name": "Execution Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 55,
+        "points": [
+          "Hold NVDA — do nothing, no new money to put in right now.",
+          "The book is 100% invested with only $5 of cash left, so no room to add.",
+          "If bought, the stop goes at $208.41 to protect the position.",
+          "Earnings land August 26, just 14 days out — don't add size before that date.",
+          "Position is already up 10% at $223.44 — let it ride, no trim needed."
+        ],
+        "strongest": "No cash to deploy and earnings in 14 days means the only order here is hold, stop at $208.41.",
+        "ok": true
+      }
+    ],
+    "agents_reporting": 5,
+    "tally": {
+      "bullish": 2,
+      "bearish": 1,
+      "neutral": 2
+    },
+    "verdict": "APPROVE",
+    "action": "HOLD",
+    "score": 72,
+    "headline": "Hold NVDA — the business is working and nothing new happened.",
+    "rationale": [
+      "Bull's case wins: 58 analysts at strong buy, $302.83 average target, uptrend intact.",
+      "Overruled Bear's Bank of America headline — a vague 'blunt message' with no cited content is noise.",
+      "Bear's earnings point survives: August 26 is real and argues against adding size now.",
+      "Risk Agent is right that the book is fully invested; there is no cash to add anyway.",
+      "Overruled Execution Agent's neutral stance — holding a winning anchor is a conviction call, not a shrug."
+    ],
+    "dissent": [
+      "NVDA plus AVGO and VRT is nearly half the book on one AI theme; a bad print hits everything at once.",
+      "If earnings guidance actually disappoints, this is a business event, not noise, and the thesis needs re-examining."
+    ],
+    "entry": "",
+    "target": "$302.83",
+    "stop": "",
+    "sizing": {
+      "symbol": "NVDA",
+      "price": 223.44,
+      "stop": 208.41,
+      "stop_basis": "2x ATR",
+      "risk_per_share": 15.03,
+      "dollars": 5.0,
+      "shares": 0.0224,
+      "pct_of_equity": 0.05,
+      "risk_amount": 0.34,
+      "capped_by": "dry powder",
+      "note": "Stop $208.41 (2x ATR, 6.7% below). Risking 1% of equity ($0) buys $5 — capped by dry powder."
+    },
+    "error": null
+  },
+  "NBIS": {
+    "symbol": "NBIS",
+    "name": "Nebius Group N.V.",
+    "price": 247.9,
+    "ts": 1786560862.7519844,
+    "as_of": "2026-08-12 13:54:22",
+    "engine": "claude",
+    "agents": [
+      {
+        "key": "bull",
+        "name": "Bull Agent",
+        "round": 1,
+        "position": "BULLISH",
+        "confidence": 78,
+        "points": [
+          "Revenue beat drove shares up 28.30% today to $247.90, confirming the growth story is real, not hype.",
+          "Price sits above all three trend lines (20/50/200-day averages), a clean uptrend with the 50-day above the 200-day.",
+          "Volume today is 1.89x the 20-day average, showing real conviction behind the move, not a thin squeeze.",
+          "GPU spot prices reportedly tripled per Morningstar, meaning Nebius sells capacity into a scarce, high-priced market right now.",
+          "16 analysts rate it a buy, and even after today's pop the stock is still 13.5% below its 52-week high of $286.69."
+        ],
+        "strongest": "Nebius beat on revenue and gapped up 28.30% on 1.89x normal volume, real money confirming the AI infrastructure demand story.",
+        "ok": true
+      },
+      {
+        "key": "bear",
+        "name": "Bear Agent",
+        "round": 1,
+        "position": "BEARISH",
+        "confidence": 32,
+        "points": [
+          "NBIS trades near $247.90 but the average analyst target is only $250.75 — barely 1% higher, so the easy upside is already priced in.",
+          "The stock just jumped 28.3% in a single day on earnings; gaps this large often give back part of the move in the days after.",
+          "Today's trading volume is 1.89 times normal, a spike that can mark a short-term blow-off top rather than a fresh start.",
+          "The book already holds heavy AI infrastructure bets — NVDA 18%, VRT 15%, AVGO 14%, CEG 8% — adding NBIS piles onto a crowded trade.",
+          "Desk risk is already ELEVATED with 8.16% of equity exposed to stop-outs, leaving little room to add more risk here."
+        ],
+        "strongest": "At $247.90 the stock is basically at the average analyst target of $250.75, so today's 28% pop already used up the obvious upside.",
+        "ok": true
+      },
+      {
+        "key": "macro",
+        "name": "Macro Agent",
+        "round": 1,
+        "position": "BULLISH",
+        "confidence": 58,
+        "points": [
+          "CoreWeave and Super Micro earnings today confirm AI spending is still surging across the whole sector, a real group-wide tailwind.",
+          "Morningstar reports GPU rental prices tripled, showing computing capacity is still scarce - this buildout cycle looks early, not late.",
+          "Stock is still 13.5% below its 52-week high of $286.69, so the sector's move higher isn't exhausted yet.",
+          "Wall Street's average price target is $250.75, barely above today's $247.90 price, so much of this rally is already priced in.",
+          "Your book already holds NVDA at 18%, VRT at 15%, and AVGO at 14% - the AI infrastructure rotation is already heavily represented here."
+        ],
+        "strongest": "CoreWeave and Super Micro both beat today, confirming AI infrastructure spending is surging sector-wide, not just at this one name.",
+        "ok": true
+      },
+      {
+        "key": "risk",
+        "name": "Risk Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 58,
+        "points": [
+          "Position is just $241, 2.2% of the book; the $5 add barely moves size.",
+          "This trade risks only $1 against a $109 per-trade risk budget — no limit is breached.",
+          "Book is 100% deployed with only $5 of dry powder, and risk status is already ELEVATED at 8.16% open risk to stops.",
+          "Average pairwise correlation across the book is a low 0.12, so this isn't stacking correlated risk despite NVDA at 18% and VRT at 15%.",
+          "The stop at $196.2 is 21% below today's $247.90, but capped dollar loss is only $1 given the $5 size."
+        ],
+        "strongest": "This trade risks just $1 against a $109 budget, so at this size it cannot breach any standing limit.",
+        "ok": true
+      },
+      {
+        "key": "execution",
+        "name": "Execution Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 45,
+        "points": [
+          "Hold NBIS — do nothing new, you already own it from the 2026-08-07 buy.",
+          "Earnings already happened today, so the big risk event is behind you, not ahead.",
+          "Desk math sizes any add at just $5 with a stop at $196.2 — too small to split into pieces.",
+          "Today's volume is heavy enough (1.89x normal) that you could exit cleanly if needed.",
+          "Book risk is already flagged ELEVATED, so this is not the moment to add new money here."
+        ],
+        "strongest": "Hold NBIS and keep the stop at $196.2 — earnings risk is over and the allowed add is only $5, too small to matter.",
+        "ok": true
+      }
+    ],
+    "agents_reporting": 5,
+    "tally": {
+      "bullish": 2,
+      "bearish": 1,
+      "neutral": 2
+    },
+    "verdict": "APPROVE",
+    "action": "HOLD",
+    "score": 72,
+    "headline": "Hold NBIS — earnings beat is real, but the $5 add is not worth doing.",
+    "rationale": [
+      "Bull's revenue-beat and volume evidence wins: the 28% move came on real earnings, not a squeeze.",
+      "Overruled Bear's blow-off-top call — 32 confidence on chart pattern guessing, not business facts.",
+      "Overruled Bear's crowding claim: the desk's own numbers show these names move independently.",
+      "Execution Agent is right that the earnings risk is behind you and a $5 add is meaningless.",
+      "Your 08-07 buy already caught this move — you are up 34% and own the position you need."
+    ],
+    "dissent": [
+      "Analysts see only ~$251, so the stock may stall near here for months.",
+      "Neoclouds renting scarce GPUs can lose pricing power fast once capacity arrives."
+    ],
+    "entry": "",
+    "target": "$286.69",
+    "stop": "$196.2",
+    "sizing": {
+      "symbol": "NBIS",
+      "price": 247.9,
+      "stop": 196.2,
+      "stop_basis": "2x ATR",
+      "risk_per_share": 51.7,
+      "dollars": 5.0,
+      "shares": 0.0202,
+      "pct_of_equity": 0.05,
+      "risk_amount": 1.04,
+      "capped_by": "dry powder",
+      "note": "Stop $196.20 (2x ATR, 20.9% below). Risking 1% of equity ($1) buys $5 — capped by dry powder."
+    },
+    "error": null
+  },
+  "ANET": {
+    "symbol": "ANET",
+    "name": "Arista Networks, Inc.",
+    "price": 210.83,
+    "ts": 1786560916.4638886,
+    "as_of": "2026-08-12 13:55:16",
+    "engine": "claude",
+    "agents": [
+      {
+        "key": "bull",
+        "name": "Bull Agent",
+        "round": 1,
+        "position": "BULLISH",
+        "confidence": 68,
+        "points": [
+          "Stock is up 6.56% today near its high of $210.83 on strong earnings and AI networking demand.",
+          "Wall Street analysts rate it strong buy with an average target of $241.82, about 15% above today's price.",
+          "Position is already up 17.7% since cost of $179.11.",
+          "Jim Cramer flagged the stock after a Q2 beat and 50% rally, per Insider Monkey.",
+          "Wedge Capital Management just raised its ANET holdings, showing fresh institutional buying."
+        ],
+        "strongest": "27 analysts rate it strong buy with a $241.82 target, still 15% above today's $210.83 price.",
+        "ok": true
+      },
+      {
+        "key": "bear",
+        "name": "Bear Agent",
+        "round": 1,
+        "position": "BEARISH",
+        "confidence": 30,
+        "points": [
+          "ANET is at $210.83, exactly its 52-week high (0.0% off), so new money here buys at the very top of the range.",
+          "Today's 6.56% jump came on only 0.79x normal volume, thin participation behind an extended move.",
+          "The average analyst target is $241.82, just 14.7% above today's price after a run from $116.13 to $210.83.",
+          "The stop is set at $188.93, over 10% below the current price, so a normal pullback still costs real money before it triggers.",
+          "The book is 100% invested with risk status ELEVATED and $890 already exposed to stops, leaving no cushion for a reversal here."
+        ],
+        "strongest": "Buying at the exact 52-week high on below-average volume means paying full price for a move the market itself isn't fully confirming.",
+        "ok": true
+      },
+      {
+        "key": "macro",
+        "name": "Macro Agent",
+        "round": 1,
+        "position": "BULLISH",
+        "confidence": 58,
+        "points": [
+          "Headlines cite 'AI networking demand' driving today's +6.56% earnings-beat move, confirming capital is still rotating into the AI infrastructure theme.",
+          "27 analysts rate this strong_buy with a mean target of $241.82, showing Street money still flowing toward this pocket of AI spend.",
+          "Price sits exactly at its 52-week high ($210.83, 0.0% off high), meaning capital keeps chasing this name rather than rotating out.",
+          "Today's volume is only 0.79x the 20-day average, so the rally isn't backed by a broad wave of new money coming in.",
+          "No new macro fact since the $204.24 call (+3.2%, immaterial) — the AI-capex tailwind story is unchanged, not stronger or weaker."
+        ],
+        "strongest": "Analyst base (27 strong_buy, $241.82 target) shows Street capital still rotating into this AI infrastructure name.",
+        "ok": true
+      },
+      {
+        "key": "risk",
+        "name": "Risk Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 55,
+        "points": [
+          "Book is 100% deployed ($10,894 of $10,899 equity), leaving only $5 dry powder for any new risk.",
+          "Total open risk to stops already sits at 8.16% of equity ($890), and today's P/L (+$205) is near the $218 daily loss limit.",
+          "AI infrastructure names NVDA 18%, VRT 15%, AVGO 14%, CEG 8%, and ANET 4% already total roughly 59% of the book.",
+          "The $188.93 stop is 10.4% below the $210.83 price, but desk sizing caps risk at $1, so it stays inside the $109 per-trade budget.",
+          "ANET is already 3.7% of the book and up 17.7% since cost, so this is a book to protect, not one needing more chasing."
+        ],
+        "strongest": "The book is fully deployed with $890 already exposed to stops and only +$205 of cushion before the daily loss limit, so risk capacity favors defense over adding here.",
+        "ok": true
+      },
+      {
+        "key": "execution",
+        "name": "Execution Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 55,
+        "points": [
+          "Hold ANET — no new buy or sell order needed right now.",
+          "Stop stays at $188.93; that's the only exit level that matters today.",
+          "You already added shares 2 days ago near $204; no reason to add more at $210.83.",
+          "$210.83 is the top of its 1-year range, so it's not a fresh entry point for new cash.",
+          "No earnings date ahead to trade around — the Q2 beat already happened and priced in."
+        ],
+        "strongest": "Hold — stop is set at $188.93, position is already sized, no order to place today.",
+        "ok": true
+      }
+    ],
+    "agents_reporting": 5,
+    "tally": {
+      "bullish": 2,
+      "bearish": 1,
+      "neutral": 2
+    },
+    "verdict": "APPROVE",
+    "action": "HOLD",
+    "score": 71,
+    "headline": "Hold ANET — you added two days ago, thesis intact, no new order today.",
+    "rationale": [
+      "Bull's earnings-and-demand case wins: the +6.56% move came on a real Q2 beat, not chatter.",
+      "I overrule Bear's 'buys at the top' point — you are not buying, you already own it at $179.11.",
+      "Bear's thin-volume flag survives as a reason not to add, not a reason to sell a winner.",
+      "Risk's read wins on cash: with $5 left, there is nothing to add with anyway.",
+      "Execution is right — you bought on 2026-08-10, and chasing $210.83 two days later adds nothing."
+    ],
+    "dissent": [
+      "ANET plus NVDA, VRT, AVGO and CEG are roughly 59% of the book — one AI spending stall hits all five.",
+      "Trefis says Arista is waiting on parts, not orders; a supply delay could push revenue into later quarters."
+    ],
+    "entry": "",
+    "target": "$241.82",
+    "stop": "$188.93",
+    "sizing": {
+      "symbol": "ANET",
+      "price": 210.83,
+      "stop": 188.93,
+      "stop_basis": "2x ATR",
+      "risk_per_share": 21.9,
+      "dollars": 5.0,
+      "shares": 0.0237,
+      "pct_of_equity": 0.05,
+      "risk_amount": 0.52,
+      "capped_by": "dry powder",
+      "note": "Stop $188.93 (2x ATR, 10.4% below). Risking 1% of equity ($1) buys $5 — capped by dry powder."
+    },
+    "error": null
+  },
+  "AAPL": {
+    "symbol": "AAPL",
+    "name": "Apple Inc.",
+    "price": 301.58,
+    "ts": 1786560988.9740334,
+    "as_of": "2026-08-12 13:56:28",
+    "engine": "claude",
+    "agents": [
+      {
+        "key": "bull",
+        "name": "Bull Agent",
+        "round": 1,
+        "position": "BULLISH",
+        "confidence": 50,
+        "points": [
+          "41 analysts still rate it a buy, with an average price target of $322 — about 7% above today's $301.58.",
+          "Shares are 11% off their high of $339.79, a rare discount window for a name that usually trades at a premium.",
+          "Apple still trades well above its long-run average near $280, so the bigger multi-year trend remains up.",
+          "New CEO John Ternus takes over September 1 — a fresh leadership catalyst the market hasn't fully priced in yet.",
+          "Client already trimmed this down to a small 3.6%-of-book stake on 2026-08-10, so what's left is low-risk exposure worth holding toward the $322 target."
+        ],
+        "strongest": "41 analysts still rate Apple a buy with a $322 target, about 7% above today's $301.58 price.",
+        "ok": true
+      },
+      {
+        "key": "bear",
+        "name": "Bear Agent",
+        "round": 1,
+        "position": "BEARISH",
+        "confidence": 42,
+        "points": [
+          "Momentum is broken: the stock is falling, losing steam, and stuck in a sideways range for months.",
+          "Down 11.2% from its high of $339.79 with no sign yet of turning back up.",
+          "Jefferies just cut its price target today, and the CEO handoff to John Ternus starts Sept. 1 — leadership uncertainty ahead.",
+          "Even Wall Street's own $322.28 average target is barely above today's $301.58 price — not much reward left.",
+          "Trading volume is very thin today, so the drop could get worse on any bad news with few buyers around."
+        ],
+        "strongest": "Apple just broke a key support level, down over 11% from its high with a fresh price-target cut today and no buyers showing up.",
+        "ok": true
+      },
+      {
+        "key": "macro",
+        "name": "Macro Agent",
+        "round": 1,
+        "position": "NEUTRAL",
+        "confidence": 42,
+        "points": [
+          "Long-term trend line ($309) is still above the very long-term line ($280), so the broader market regime for this stock is still constructive.",
+          "But price ($301.58) is stuck below both its 3-week ($320.95) and 3-month ($309.21) averages, meaning no clear trend either way right now.",
+          "Trading volume today is only 0.44x normal, showing big money isn't rotating into or out of this name with conviction.",
+          "Inside this client's book, fresh capital keeps rotating into AI infrastructure names (NVDA 18%, VRT 15%, AVGO 14%) rather than into Apple.",
+          "Wall Street's average price target of $322.28 implies only 6.87% upside, a modest number for a stock this far along its growth curve."
+        ],
+        "strongest": "The stock sits in a sideways drift between its short- and medium-term trend lines with unusually light trading, so no capital rotation is currently favoring it either way.",
+        "ok": true
+      },
+      {
+        "key": "risk",
+        "name": "Risk Agent",
+        "round": 2,
+        "position": "BEARISH",
+        "confidence": 55,
+        "points": [
+          "Book is 100% invested with just $5 of cash left, so there's no room to add to AAPL.",
+          "Total risk across the book is already $890 (8.17% of equity), and status is ELEVATED.",
+          "AAPL is only 3.6% of the book ($391); trimming further frees cash without hurting overall risk.",
+          "NVDA, AVGO, GOOGL and MSFT already total over 44% of the book, all correlated tech like AAPL.",
+          "New order risks $0 by design (stop $284.53, size $5), so it doesn't itself breach any limit — but it also doesn't buy back capacity."
+        ],
+        "strongest": "Book is 100% deployed with only $5 in cash and open risk already at 8.17% of equity — no capacity to add, every reason to keep trimming.",
+        "ok": true
+      },
+      {
+        "key": "execution",
+        "name": "Execution Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 55,
+        "points": [
+          "Hold what's left after the 2026-08-10 trim to 1.29812 shares — do nothing new right now.",
+          "Stop already set at $284.53, below today's $301.58 — no action needed unless it hits.",
+          "Wall Street's $322 target is only about 7% above today's price, not a big reward.",
+          "Position is just 3.6% of the book at $391 — too small to matter either way.",
+          "No new news since the trim — Jefferies cut and CEO handoff were already known."
+        ],
+        "strongest": "Position is already trimmed to 3.6% of book with a stop at $284.53 — nothing new to execute today.",
+        "ok": true
+      }
+    ],
+    "agents_reporting": 5,
+    "tally": {
+      "bullish": 1,
+      "bearish": 2,
+      "neutral": 2
+    },
+    "verdict": "APPROVE",
+    "action": "TRIM",
+    "score": 61,
+    "headline": "Nothing new since my call — the trim stands, hold the rest.",
+    "rationale": [
+      "Execution Agent wins: no fresh fact since the 08-10 trim, so no new order today.",
+      "I overrule Bear Agent — the Jefferies cut and CEO handoff were already known and priced.",
+      "I overrule Bull Agent's 50-confidence case — 7% to Wall Street's $322 is thin reward.",
+      "Macro Agent is right that fresh money keeps going to NVDA, VRT and AVGO, not Apple.",
+      "Risk Agent's cash point is real but $391 is too small to move the book either way."
+    ],
+    "dissent": [
+      "If Apple's new CEO lands a real product win after Sept. 1, this trim looks early.",
+      "Apple is still well above $280 and the long-term uptrend is genuinely intact."
+    ],
+    "entry": "",
+    "target": "$322.28",
+    "stop": "$284.53",
+    "sizing": {
+      "symbol": "AAPL",
+      "price": 301.58,
+      "stop": 284.53,
+      "stop_basis": "2x ATR",
+      "risk_per_share": 17.05,
+      "dollars": 5.0,
+      "shares": 0.0166,
+      "pct_of_equity": 0.05,
+      "risk_amount": 0.28,
+      "capped_by": "dry powder",
+      "note": "Stop $284.53 (2x ATR, 5.7% below). Risking 1% of equity ($0) buys $5 — capped by dry powder."
+    },
+    "error": null
+  },
+  "CRWD": {
+    "symbol": "CRWD",
+    "name": "CrowdStrike Holdings, Inc.",
+    "price": 222.04,
+    "ts": 1786561063.442695,
+    "as_of": "2026-08-12 13:57:43",
+    "engine": "claude",
+    "agents": [
+      {
+        "key": "bull",
+        "name": "Bull Agent",
+        "round": 1,
+        "position": "BULLISH",
+        "confidence": 58,
+        "points": [
+          "Trend is firmly up: price $222.04 is 63% above the 200-day average of $136.25.",
+          "Only 1.3857% below its 52-week high of $225.16 — near the top of its range.",
+          "Bookings strength showed up in recent reports two quarters early per Trefis coverage.",
+          "Momentum readings and a golden-cross setup both flag bullish per today's signals.",
+          "Position already up 17.4% on a $189.06 cost basis — thesis is playing out."
+        ],
+        "strongest": "CRWD sits just 1.4% below its 52-week high with a confirmed uptrend and bullish momentum signals.",
+        "ok": true
+      },
+      {
+        "key": "bear",
+        "name": "Bear Agent",
+        "round": 1,
+        "position": "BEARISH",
+        "confidence": 55,
+        "points": [
+          "Price sits at $222.04, just -1.39% off the 52-week high of $225.16, leaving little room before it's stretched.",
+          "Momentum reading of 68.2 is deep into the zone where rallies often stall or reverse hard.",
+          "Analyst mean target is $194.67, which is actually below today's price, implying -12.33% downside.",
+          "Simply Wall St flags CRWD as ~15% above fair value even as the AI-security story gets louder.",
+          "Earnings hit in 14 days on 2026-08-26 — a binary event that can gap the stock either direction with no warning."
+        ],
+        "strongest": "The average Wall Street target of $194.67 is already below the current $222.04 price, a built-in -12.33% air pocket.",
+        "ok": true
+      },
+      {
+        "key": "macro",
+        "name": "Macro Agent",
+        "round": 1,
+        "position": "NEUTRAL",
+        "confidence": 52,
+        "points": [
+          "Software stocks are back in favor right now — CRWD sits just 1.4% below its $225.16 high, riding that wave.",
+          "The stock trades above what analysts think it's worth — their average target is $194.66, well under today's $222.04.",
+          "Earnings hit in 14 days (Aug 26) — a real event that could flip this rotation trade fast either way.",
+          "This isn't an isolated bet — AI-theme names already make up nearly half the book, so a group reversal hurts everywhere at once.",
+          "Buying volume today is thin, under half the normal pace, so the recent strength isn't backed by broad demand yet."
+        ],
+        "strongest": "The software/AI rotation is a real tailwind — CRWD sits just 1.4% off its $225.16 high even as analysts' $194.66 target says it's pricey.",
+        "ok": true
+      },
+      {
+        "key": "risk",
+        "name": "Risk Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 60,
+        "points": [
+          "Held CRWD is only $435, 4.0% of the book, so this trade barely moves total risk.",
+          "AI-theme names already near half the book, so a group reversal would hurt everywhere at once.",
+          "Desk sizing caps this add at $5 with zero risked dollars — not a real position change.",
+          "Book is already 100% deployed with only $5 dry powder, leaving no room to size up anyway.",
+          "Earnings in 14 days is a binary event; adding size ahead of it isn't justified by the data."
+        ],
+        "strongest": "Book is 100% deployed with $5 dry powder and desk sizing caps this add at $5 risking $0, so this trade is a non-event for the book.",
+        "ok": true
+      },
+      {
+        "key": "execution",
+        "name": "Execution Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 55,
+        "points": [
+          "New trade size here is just $5 — too small to act on, so hold what you own.",
+          "Keep the stop at $203.41 on existing shares; that's the level that matters, not $222.04.",
+          "Earnings land August 26, 14 days out — don't add or trim into that binary event.",
+          "Today's buying volume is thin, under half normal, a bad day to chase near $222.04.",
+          "Position is already up 17.4% versus your $189.06 cost — let it ride, no action needed."
+        ],
+        "strongest": "The desk sized new money into CRWD at just $5 — the sizing itself says hold, not trade.",
+        "ok": true
+      }
+    ],
+    "agents_reporting": 5,
+    "tally": {
+      "bullish": 1,
+      "bearish": 1,
+      "neutral": 3
+    },
+    "verdict": "APPROVE",
+    "action": "HOLD",
+    "score": 72,
+    "headline": "Hold your CRWD — winner still working, earnings in two weeks, no action.",
+    "rationale": [
+      "Bull's trend case wins: CRWD near its high with the position up 17.4% is a thesis working.",
+      "I overrule Bear's analyst-target argument — a $194.67 average target lagging a fast-moving winner is stale, not a sell signal.",
+      "Bear's earnings point survives as timing, not thesis: nothing gets added or trimmed 14 days before Aug 26.",
+      "Execution and Risk agents are right that a $5 add is not a real position — hold what you own.",
+      "Macro's thin-volume caution earns a pass on chasing here, but it does not touch a core holding you already own cheaper."
+    ],
+    "dissent": [
+      "If Aug 26 earnings disappoint, a name this close to its high can give back the entire 17.4% gain fast.",
+      "AI-theme names are nearly half the book, so one group-wide reversal hits CRWD alongside NVDA, AVGO and VRT together."
+    ],
+    "entry": "",
+    "target": "",
+    "stop": "$203.41",
+    "sizing": {
+      "symbol": "CRWD",
+      "price": 222.04,
+      "stop": 203.41,
+      "stop_basis": "2x ATR",
+      "risk_per_share": 18.63,
+      "dollars": 5.0,
+      "shares": 0.0225,
+      "pct_of_equity": 0.05,
+      "risk_amount": 0.42,
+      "capped_by": "dry powder",
+      "note": "Stop $203.41 (2x ATR, 8.4% below). Risking 1% of equity ($0) buys $5 — capped by dry powder."
+    },
+    "error": null
   }
 }

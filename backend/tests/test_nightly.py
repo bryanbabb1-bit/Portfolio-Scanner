@@ -139,6 +139,37 @@ def test_the_nightly_budget_is_capped(monkeypatch):
     assert len(out["ran"]) == 4
 
 
+def test_a_completed_debate_is_actually_recorded(monkeypatch):
+    """verdict/action/headline are flat strings on the debate result.
+
+    Reading verdict as a nested object threw AFTER four full debates had run
+    and been cached, so a night that cost real calls reported zero sessions.
+    """
+    import datetime as dt
+    from zoneinfo import ZoneInfo
+    from app.services import conviction, debate, portfolio as pf
+
+    monkeypatch.setattr(nightly, "_et_now",
+                        lambda: dt.datetime(2026, 8, 12, 19, 0,
+                                            tzinfo=ZoneInfo("America/New_York")))
+    monkeypatch.setattr(nightly, "_load_state", lambda: {})
+    monkeypatch.setattr(nightly, "_save_state", lambda d: None)
+    monkeypatch.setattr(pf, "portfolio_summary",
+                        lambda: (None, [_report("AAPL", dte=1)]))
+    monkeypatch.setattr(conviction, "scan", lambda: [])
+    monkeypatch.setattr(debate, "convene", lambda s, force=False: {
+        "symbol": s, "verdict": "APPROVE", "action": "ADD",
+        "headline": "the thesis still holds",
+    })
+
+    out = nightly.maybe_run()
+    assert len(out["ran"]) == 1
+    row = out["ran"][0]
+    assert row["verdict"] == "APPROVE"
+    assert row["action"] == "ADD"
+    assert row["headline"] == "the thesis still holds"
+
+
 def test_mock_priced_names_are_never_debated(monkeypatch):
     import datetime as dt
     from zoneinfo import ZoneInfo
