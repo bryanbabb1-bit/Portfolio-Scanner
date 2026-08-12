@@ -113,6 +113,10 @@ export default function Dashboard() {
 
       <WatchdogBar signals={signals} insights={insights} />
 
+      {/* Last night's rulings, at the top: they are the first thing to read
+          in the morning, and buried mid-page they were never found. */}
+      <NightlyDesk />
+
       {/* account header */}
       <header className="mfx-head">
         <div className="lead">
@@ -183,9 +187,6 @@ export default function Dashboard() {
           <AlertsPanel alerts={insights.alerts} />
         </>
       )}
-      {/* Last night's rulings, waiting to be read. */}
-      <NightlyDesk />
-
       <PinnedActions />
 
       {/* row 3 — the read AND the plan. One surface, full width, because it is

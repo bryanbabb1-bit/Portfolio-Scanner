@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { API_BASE } from "../lib/api";
+import { ageFrom, isStale } from "./format";
 
 /* Last night's desk, on the homepage.
  *
@@ -20,6 +21,8 @@ interface Ran {
   action?: string | null;
   /** The ruling in one sentence — the reason to read further, or not. */
   headline?: string | null;
+  /** When the desk actually sat, so a stale ruling can't read as current. */
+  ts?: number | null;
 }
 
 interface Queued {
@@ -70,7 +73,7 @@ export function NightlyDesk() {
   return (
     <>
       <div className="mfx-label">
-        The desk {ran.length ? `· ${n.last.date}` : "· sitting tonight"}
+        The desk {ran.length ? `· convened ${n.last.date}` : "· sitting tonight"}
       </div>
       <div className="card nd">
         {ran.length > 0 ? (
@@ -88,7 +91,15 @@ export function NightlyDesk() {
                   </span>
                   <span className="nd-why">
                     {r.headline && <span className="nd-head">{r.headline}</span>}
-                    <span className="nd-picked">picked: {r.why.join(" · ")}</span>
+                    <span className="nd-picked">
+                      {r.ts ? (
+                        <span className={isStale(r.ts) ? "nd-stale" : ""}>
+                          convened {ageFrom(r.ts)}
+                          {isStale(r.ts) ? " · may be dated" : ""} ·{" "}
+                        </span>
+                      ) : null}
+                      picked: {r.why.join(" · ")}
+                    </span>
                   </span>
                   <span className="nd-go">Read the debate →</span>
                 </Link>

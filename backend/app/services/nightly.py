@@ -196,6 +196,7 @@ def maybe_run(force: bool = False) -> dict | None:
                 "verdict": result.get("verdict"),
                 "action": result.get("action"),
                 "headline": result.get("headline"),
+                "ts": result.get("ts"),
             })
         except Exception as exc:
             print(f"[nightly] {c['symbol']} debate failed: {exc!r}")

@@ -2080,3 +2080,6 @@ main.page { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 9.5px; letter-spacing: 0.06em; text-transform: uppercase;
 }
+/* Ruling age. A debate with no date reads as current however old it is. */
+.ds-age { display: block; margin-top: 4px; font-size: 11px; color: var(--muted); }
+.ds-age.stale, .nd-stale { color: var(--accent); font-weight: 700; }

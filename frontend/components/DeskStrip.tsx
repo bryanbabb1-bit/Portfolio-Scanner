@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { api, Debate, PositionPlan } from "../lib/api";
-import { money } from "./format";
+import { ageFrom, isStale, money } from "./format";
 
 /* Desk strip for a stock page: the deterministic sizing (free) plus the
    standing debate ruling if the desk has already sat on this name.
@@ -44,6 +44,12 @@ export function DeskStrip({ symbol }: { symbol: string }) {
               <Link href={`/debate?symbol=${symbol}`} className="ds-link">
                 See the debate →
               </Link>
+              {d.ts && (
+                <span className={`ds-age${isStale(d.ts) ? " stale" : ""}`}>
+                  convened {ageFrom(d.ts)}
+                  {isStale(d.ts) ? " · may be dated" : ""}
+                </span>
+              )}
             </span>
           </>
         ) : (

@@ -13,7 +13,8 @@
         ],
         "verdict": "APPROVE",
         "action": "HOLD",
-        "headline": "Hold NBIS \u2014 earnings beat is real, but the $5 add is not worth doing."
+        "headline": "Hold NBIS — earnings beat is real, but the $5 add is not worth doing.",
+        "ts": 1786560862.7519844
       },
       {
         "symbol": "ANET",
@@ -24,7 +25,8 @@
         ],
         "verdict": "APPROVE",
         "action": "HOLD",
-        "headline": "Hold ANET \u2014 you added two days ago, thesis intact, no new order today."
+        "headline": "Hold ANET — you added two days ago, thesis intact, no new order today.",
+        "ts": 1786560916.4638886
       },
       {
         "symbol": "AAPL",
@@ -35,7 +37,8 @@
         ],
         "verdict": "APPROVE",
         "action": "TRIM",
-        "headline": "Nothing new since my call \u2014 the trim stands, hold the rest."
+        "headline": "Nothing new since my call — the trim stands, hold the rest.",
+        "ts": 1786560988.9740334
       },
       {
         "symbol": "CRWD",
@@ -46,7 +49,8 @@
         ],
         "verdict": "APPROVE",
         "action": "HOLD",
-        "headline": "Hold your CRWD \u2014 winner still working, earnings in two weeks, no action."
+        "headline": "Hold your CRWD — winner still working, earnings in two weeks, no action.",
+        "ts": 1786561063.442695
       }
     ]
   }
