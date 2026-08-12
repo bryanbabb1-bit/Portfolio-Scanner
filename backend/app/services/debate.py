@@ -373,19 +373,23 @@ def convene(symbol: str, force: bool = False) -> dict:
 
     facts, report = _facts(sym)
 
-    # Round 1: the three opening arguments are independent, so run them at once.
-    r1_agents = [a for a in AGENTS if a["round"] == 1]
-    with ThreadPoolExecutor(max_workers=len(r1_agents)) as pool:
-        round1 = list(pool.map(lambda a: _run_agent(a, sym, facts), r1_agents))
+    # Attribute all six CLI calls to this feature so its real cost is known
+    # rather than estimated — it is by far the most expensive thing in the app.
+    with advisor.usage_scope("debate"):
+        # Round 1: the three opening arguments are independent, run at once.
+        r1_agents = [a for a in AGENTS if a["round"] == 1]
+        with ThreadPoolExecutor(max_workers=len(r1_agents)) as pool:
+            round1 = list(pool.map(lambda a: _run_agent(a, sym, facts), r1_agents))
 
-    # Round 2: these must SEE round 1, so they follow it (still concurrent).
-    prior = _prior_block(round1)
-    r2_agents = [a for a in AGENTS if a["round"] == 2]
-    with ThreadPoolExecutor(max_workers=len(r2_agents)) as pool:
-        round2 = list(pool.map(lambda a: _run_agent(a, sym, facts, prior), r2_agents))
+        # Round 2: these must SEE round 1, so they follow it (still concurrent).
+        prior = _prior_block(round1)
+        r2_agents = [a for a in AGENTS if a["round"] == 2]
+        with ThreadPoolExecutor(max_workers=len(r2_agents)) as pool:
+            round2 = list(pool.map(lambda a: _run_agent(a, sym, facts, prior),
+                                   r2_agents))
 
-    agents = round1 + round2
-    ruling = _judge(sym, facts, agents)
+        agents = round1 + round2
+        ruling = _judge(sym, facts, agents)
 
     live = [a for a in agents if a["ok"]]
     bulls = sum(1 for a in live if a["position"] == "BULLISH")

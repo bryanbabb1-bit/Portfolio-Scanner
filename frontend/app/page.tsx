@@ -22,9 +22,7 @@ import { StayTheCourse } from "../components/StayTheCourse";
 import { AlertsPanel } from "../components/AlertsPanel";
 import { RiskStats } from "../components/RiskStats";
 import { PinnedActions } from "../components/PinnedActions";
-import { PositionHealth } from "../components/PositionHealth";
 import { PortfolioBrief } from "../components/PortfolioBrief";
-import { DailyBrief } from "../components/DailyBrief";
 import { ProbabilityLattice } from "../components/ProbabilityLattice";
 import { ActionJournal } from "../components/ActionJournal";
 import { StockCard } from "../components/StockCard";
@@ -174,15 +172,16 @@ export default function Dashboard() {
 
       <EarningsRunway holdings={holdings} />
 
-      {/* row 2 — what to do. The brief owns the plan now; there is no separate
-          plan board or transition feature to disagree with it. */}
-      <div className="mfx-label">What to do</div>
-      <div className="mfx-grid two">
-        {insights && insights.alerts.length > 0 ? <AlertsPanel alerts={insights.alerts} /> : <DailyBrief />}
-        <PositionHealth holdings={holdings} />
-      </div>
-      {/* Pins had no view at all once the plan board was dropped. This is a list,
-          not a plan — it can't contradict the brief. */}
+      {/* The "What to do" row is gone. Position Health restated the badge next
+          to it and never got used; the only thing worth keeping from it was the
+          earnings countdown, which now sits on the cards where you actually
+          look. Alerts stay — they fire rarely and mean something when they do. */}
+      {insights && insights.alerts.length > 0 && (
+        <>
+          <div className="mfx-label">Needs your attention</div>
+          <AlertsPanel alerts={insights.alerts} />
+        </>
+      )}
       <PinnedActions />
 
       {/* row 3 — the read AND the plan. One surface, full width, because it is

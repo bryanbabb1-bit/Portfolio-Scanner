@@ -1994,3 +1994,51 @@ main.page { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
   font-size: 11px; letter-spacing: 0.04em; color: var(--muted);
   margin-top: 5px;
 }
+
+/* Earnings countdown on the holding card — the one thing worth keeping from
+   the retired at-a-glance panel. */
+.sc-earn {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--muted); margin: 10px 0 0;
+  padding: 5px 8px; background: var(--surface-sunk);
+}
+/* Inside a week it stops being trivia and starts being a decision. */
+.sc-earn.soon { color: var(--accent); background: var(--accent-dim); font-weight: 700; }
+
+/* ---- position panel on the stock page: dollars first ------------------- */
+.pos-panel { margin-bottom: 24px; }
+.pos-top {
+  display: flex; flex-wrap: wrap; align-items: flex-start; gap: 24px;
+  padding-bottom: 16px; margin-bottom: 14px;
+  border-bottom: 1px dashed var(--hairline);
+}
+.pos-main { flex: 1; min-width: 200px; }
+.pos-k {
+  display: block;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 9.5px; letter-spacing: 0.11em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 4px;
+}
+.pos-value {
+  font-family: var(--font-display), Impact, sans-serif;
+  font-size: clamp(30px, 4.5vw, 44px); line-height: 1;
+  font-variant-numeric: var(--tab-nums);
+}
+.pos-pl { font-size: 14px; font-weight: 700; margin-top: 7px; }
+/* Today is the number you came for, so it gets its own block, not a footnote. */
+.pos-today { text-align: right; min-width: 130px; }
+.pos-today-v {
+  font-size: 26px; font-weight: 800; line-height: 1;
+  font-variant-numeric: var(--tab-nums);
+}
+.pos-today-s { font-size: 12.5px; font-weight: 600; margin-top: 4px; }
+.pos-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 14px 20px;
+}
+.pos-v { font-size: 15px; font-weight: 700; font-variant-numeric: var(--tab-nums); }
+.pos-v.hot { color: var(--accent); }
+@media (max-width: 720px) {
+  .pos-today { text-align: left; }
+}

@@ -65,18 +65,64 @@ export default function StockDetail({
         </p>
       </div>
 
-      {r.shares != null && (
-        <div className="grid grid-stats" style={{ marginBottom: 24 }}>
-          <div className="card stat"><span className="label">Shares</span><span className="value">{r.shares}</span></div>
-          <div className="card stat"><span className="label">Cost basis</span><span className="value">{money(r.cost_basis)}</span></div>
-          <div className="card stat"><span className="label">Market value</span><span className="value">{money(r.market_value)}</span></div>
-          <div className="card stat">
-            <span className="label">Unrealized P/L</span>
-            <span className={`value ${signClass(r.unrealized_pl)}`}>{money(r.unrealized_pl)}</span>
-            <span className={`sub ${signClass(r.unrealized_pl_pct)}`}>{pct(r.unrealized_pl_pct)}</span>
+      {/* Your position, stated in dollars first.
+          The old version was four flat tiles with no daily figure at all — you
+          could see what the STOCK did today but not what YOUR money did, which
+          is the number you actually came to look at. */}
+      {r.shares != null && r.shares > 0 && (() => {
+        const shares = r.shares!;
+        const cost = r.cost_basis ?? 0;
+        const value = r.market_value ?? shares * r.quote.price;
+        const invested = shares * cost;
+        const pl = r.unrealized_pl ?? value - invested;
+        const plPct = r.unrealized_pl_pct ?? (invested ? (pl / invested) * 100 : 0);
+        // quote.change is the per-share move today, so this is what the
+        // POSITION made or lost today rather than what one share did.
+        const dayPl = shares * (r.quote.change ?? 0);
+
+        return (
+          <div className="card pos-panel">
+            <div className="pos-top">
+              <div className="pos-main">
+                <div className="pos-k">Your position</div>
+                <div className="pos-value">{money(value)}</div>
+                <div className={`pos-pl ${signClass(pl)}`}>
+                  {pl >= 0 ? "+" : ""}{money(pl)} ({pct(plPct)}) all time
+                </div>
+              </div>
+              <div className={`pos-today ${signClass(dayPl)}`}>
+                <div className="pos-k">Today</div>
+                <div className="pos-today-v">
+                  {dayPl >= 0 ? "+" : ""}{money(dayPl)}
+                </div>
+                <div className="pos-today-s">{pct(r.quote.change_pct)}</div>
+              </div>
+            </div>
+            <div className="pos-grid">
+              <div><span className="pos-k">Shares</span><span className="pos-v">{num(shares, 4)}</span></div>
+              <div><span className="pos-k">Avg cost</span><span className="pos-v">{money(cost)}</span></div>
+              <div><span className="pos-k">Last price</span><span className="pos-v">{money(r.quote.price)}</span></div>
+              <div><span className="pos-k">Invested</span><span className="pos-v">{money(invested)}</span></div>
+              <div>
+                <span className="pos-k">Break-even</span>
+                <span className="pos-v">
+                  {r.quote.price >= cost
+                    ? `${pct(((r.quote.price - cost) / cost) * 100, 1)} above`
+                    : `${pct(((cost - r.quote.price) / cost) * 100, 1)} below`}
+                </span>
+              </div>
+              {r.days_to_earnings != null && r.days_to_earnings >= 0 && (
+                <div>
+                  <span className="pos-k">Earnings</span>
+                  <span className={`pos-v${r.days_to_earnings <= 7 ? " hot" : ""}`}>
+                    {r.days_to_earnings === 0 ? "today" : `in ${r.days_to_earnings}d`}
+                  </span>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
 
       <DeskStrip symbol={r.symbol} />
 

@@ -45,6 +45,20 @@ export function StockCard({ r }: { r: StockReport }) {
         </div>
       </div>
 
+      {/* Earnings was the only thing worth keeping from the at-a-glance panel,
+          so it lives on the card now. Inside a week it goes loud — that is the
+          window where it changes what you would do today. */}
+      {r.days_to_earnings != null && r.days_to_earnings >= 0 && r.days_to_earnings <= 21 && (
+        <div className={`sc-earn${r.days_to_earnings <= 7 ? " soon" : ""}`}>
+          {r.days_to_earnings === 0
+            ? "Earnings today"
+            : r.days_to_earnings === 1
+              ? "Earnings tomorrow"
+              : `Earnings in ${r.days_to_earnings} days`}
+          {r.earnings_date ? ` · ${r.earnings_date.slice(5)}` : ""}
+        </div>
+      )}
+
       {/* headline insight brought forward from the detail page */}
       <div className="sc-insight">
         {top && (

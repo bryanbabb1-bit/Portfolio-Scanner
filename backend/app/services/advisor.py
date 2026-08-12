@@ -14,6 +14,7 @@ import shutil
 import subprocess
 import threading
 import time
+from contextlib import contextmanager
 
 from ..config import settings
 from ..models.schemas import (
@@ -376,6 +377,84 @@ _NEWS_TRIM_RULE = (
 )
 
 
+# ------------------------------------------------------------- token usage
+# The CLI reports what every call actually cost and we were throwing it away,
+# so "what does convening the desk cost?" could only ever be answered with a
+# guess. Recorded per feature, in memory only — this is for sizing decisions,
+# not accounting, and it must never be able to fail a Claude call.
+_USAGE_FILE = settings.PORTFOLIO_FILE.parent / "token_usage.json"
+_usage_lock = threading.Lock()
+# Which feature is calling. Set by the caller around a block of CLI work.
+_usage_feature = "unattributed"
+
+
+def _record_usage(model_tag: str, payload: dict) -> None:
+    try:
+        u = payload.get("usage") or {}
+        inp = int(u.get("input_tokens") or 0)
+        out = int(u.get("output_tokens") or 0)
+        cache_r = int(u.get("cache_read_input_tokens") or 0)
+        cache_w = int(u.get("cache_creation_input_tokens") or 0)
+        if not (inp or out or cache_r or cache_w):
+            return
+        with _usage_lock:
+            try:
+                with open(_USAGE_FILE, encoding="utf-8") as f:
+                    data = json.load(f)
+            except (FileNotFoundError, json.JSONDecodeError):
+                data = {}
+            row = data.setdefault(_usage_feature, {
+                "calls": 0, "input": 0, "output": 0,
+                "cache_read": 0, "cache_write": 0, "cost_usd": 0.0})
+            row["calls"] += 1
+            row["input"] += inp
+            row["output"] += out
+            row["cache_read"] += cache_r
+            row["cache_write"] += cache_w
+            row["cost_usd"] = round(
+                row["cost_usd"] + float(payload.get("total_cost_usd") or 0), 4)
+            row.setdefault("models", {})
+            row["models"][model_tag] = row["models"].get(model_tag, 0) + 1
+            _USAGE_FILE.parent.mkdir(parents=True, exist_ok=True)
+            with open(_USAGE_FILE, "w", encoding="utf-8") as f:
+                json.dump(data, f, indent=2)
+    except Exception as exc:
+        # Never let bookkeeping break the thing it is measuring.
+        print(f"[advisor] usage record failed: {exc!r}")
+
+
+@contextmanager
+def usage_scope(feature: str):
+    """Attribute every CLI call inside this block to one feature."""
+    global _usage_feature
+    prev = _usage_feature
+    _usage_feature = feature
+    try:
+        yield
+    finally:
+        _usage_feature = prev
+
+
+def usage_report() -> dict:
+    """Per-feature token totals and the average cost of one run."""
+    try:
+        with open(_USAGE_FILE, encoding="utf-8") as f:
+            data = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return {}
+    out = {}
+    for feature, row in data.items():
+        calls = max(row.get("calls", 0), 1)
+        total_in = row["input"] + row["cache_read"] + row["cache_write"]
+        out[feature] = {
+            **row,
+            "avg_input_per_call": round(total_in / calls),
+            "avg_output_per_call": round(row["output"] / calls),
+            "avg_total_per_call": round((total_in + row["output"]) / calls),
+        }
+    return out
+
+
 def _run_claude(prompt: str, resume: str | None = None, research: bool = False,
                 model: str | None = None) -> tuple[str | None, str | None]:
     """Invoke `claude -p` headless; return (result_text, session_id).
@@ -434,6 +513,7 @@ def _run_claude(prompt: str, resume: str | None = None, research: bool = False,
             print(f"[advisor] claude is_error (model={tag}): "
                   f"{str(payload.get('result'))[:200]!r}")
             return None
+        _record_usage(tag, payload)
         return payload.get("result"), payload.get("session_id")
 
     chosen = model if model is not None else settings.CLAUDE_MODEL

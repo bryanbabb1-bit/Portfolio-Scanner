@@ -1,0 +1,26 @@
+{
+  "debate": {
+    "calls": 9,
+    "input": 18,
+    "output": 8501,
+    "cache_read": 309051,
+    "cache_write": 76737,
+    "cost_usd": 0.7731,
+    "models": {
+      "sonnet": 8,
+      "default": 1
+    }
+  },
+  "unattributed": {
+    "calls": 2,
+    "input": 4,
+    "output": 2113,
+    "cache_read": 59910,
+    "cache_write": 19427,
+    "cost_usd": 0.2258,
+    "models": {
+      "sonnet": 1,
+      "default": 1
+    }
+  }
+}
