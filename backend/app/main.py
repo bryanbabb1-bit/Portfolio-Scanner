@@ -108,6 +108,17 @@ def _heartbeat() -> None:
                 print(f"[heartbeat] thesis book: {result}")
         except Exception as exc:
             print(f"[heartbeat] thesis book failed: {exc!r}")
+        # Overnight desk pre-load: a few high-priority names debated after the
+        # close so the rulings are waiting in the morning. Early-returns outside
+        # its window and after it has run for the day, so this is free by day.
+        try:
+            from .services import nightly
+            pre = nightly.maybe_run()
+            if pre and pre.get("ran"):
+                print(f"[heartbeat] desk pre-loaded: "
+                      f"{[d['symbol'] for d in pre['ran']]}")
+        except Exception as exc:
+            print(f"[heartbeat] nightly desk failed: {exc!r}")
         _t.sleep(120)
 
 

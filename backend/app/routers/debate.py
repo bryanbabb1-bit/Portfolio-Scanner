@@ -20,6 +20,33 @@ def list_debates(limit: int = 20):
     return {"results": debate_service.history(limit)}
 
 
+@router.get("/debate/nightly")
+def nightly_preload():
+    """What the desk pre-loaded overnight, plus tonight's ranked queue.
+
+    The queue is shown so the choice is inspectable: you can see WHY a name is
+    next rather than trusting that it is."""
+    from ..services import nightly, portfolio as pf
+
+    try:
+        _, reports = pf.portfolio_summary()
+        live = [r for r in reports if getattr(r.quote, "source", "") == "live"]
+        queue = nightly.score_candidates(live)[: nightly.MAX_PER_NIGHT * 2]
+    except Exception as exc:
+        print(f"[debate] nightly queue failed: {exc!r}")
+        queue = []
+    return {"last": nightly.last_result(), "queue": queue,
+            "max_per_night": nightly.MAX_PER_NIGHT,
+            "redebate_after_days": nightly.REDEBATE_AFTER_DAYS}
+
+
+@router.post("/debate/nightly/run")
+def run_nightly(force: bool = True):
+    """Force the overnight pre-load now instead of waiting for the window."""
+    from ..services import nightly
+    return nightly.maybe_run(force=force) or {"ran": [], "note": "not due"}
+
+
 @router.get("/debate/{symbol}")
 def get_debate(symbol: str):
     """The cached debate for a symbol, or null when the desk hasn't sat."""
