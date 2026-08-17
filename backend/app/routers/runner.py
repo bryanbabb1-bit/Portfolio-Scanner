@@ -20,3 +20,10 @@ def runners(min_score: float = 0.0, limit: int = 40, extra: str = ""):
     except Exception as exc:
         traceback.print_exc()
         raise HTTPException(status_code=502, detail=f"Runner radar failed: {exc}")
+
+
+@router.get("/lowfloat")
+def low_float_screen(force: bool = False, relax_float: bool = False):
+    """The five-filter low-float momentum screen, run across the market."""
+    from ..services import lowfloat
+    return lowfloat.screen(force=force, relax_float=relax_float)
