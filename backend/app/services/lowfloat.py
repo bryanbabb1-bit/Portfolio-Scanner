@@ -40,24 +40,43 @@ from ..config import settings
 STATED = {"max_price": 20.0, "min_rvol": 2.0, "min_volume": 4_000_000,
           "max_float": 20_000_000, "max_cap": 2_000_000_000}
 
-# Calibrated defaults. Replayed over 90 sessions, float<20M produced a name on
-# 5% of days — the screen was effectively always empty. Float is the ONLY
-# binding filter: moving volume or rvol barely changes the count, while float
-# moves it almost linearly.
+# Float is back to the stated 20M. An earlier calibration concluded it had to be
+# loosened to 150M to fire at all — that conclusion was drawn from a 90-name
+# sample, and it was wrong. Against the real 2,000-name universe the stated
+# screen returns ~24 names a day:
 #
-#   float<20M   0.1/day   95% empty
-#   float<50M   0.3/day   80% empty
-#   float<100M  1.0/day   48% empty
-#   float<150M  1.5/day   27% empty, 70% of days land in the 1-5 band
+#   float<20M    24 names   <- as stated
+#   float<50M    30
+#   float<150M   39
 #
-# 150M is chosen for the count, and the honest cost is that it is no longer
-# really a LOW-float screen — it is a high-turnover screen with a float ceiling.
-# The tension is real and is surfaced in describe() rather than buried.
+# Loosening float was solving a problem that only existed because the universe
+# was too small to see. The thesis stays intact.
 MAX_PRICE = 20.0
 MIN_RVOL = 2.0
 MIN_VOLUME = 4_000_000
-MAX_FLOAT = 150_000_000
+MAX_FLOAT = 20_000_000
 MAX_CAP = 2_000_000_000
+
+# A floor the original screen did not have, and the lever that actually gets
+# from ~24 names to a handful. Measured at full coverage:
+#
+#   no floor   24 names        (sub-$1 churn dominates)
+#   >= $1      13
+#   >= $2      10
+#   >= $3       5   <- the 1-5 band
+#   >= $5       1
+#
+# This TIGHTENS the thesis rather than diluting it. Below a few dollars there is
+# no institutional participation, halts are routine and dilution is constant, so
+# a 400x rvol print is churn rather than a squeeze — the opposite of what the
+# screen is hunting.
+MIN_PRICE = 3.00
+
+# Yahoo caps a screener page at 25 regardless of the count requested, so the
+# whole qualifying set has to be walked. 80 pages is 2,000 names, comfortably
+# past the number that clear a 4M-share volume bar on any given day.
+PAGE_SIZE = 25
+MAX_PAGES = 80
 
 _CACHE: dict[str, tuple[float, list[dict]]] = {}
 _TTL = 600
@@ -73,7 +92,8 @@ def _rvol(quote: dict) -> float | None:
 
 
 def screen(force: bool = False, relax_float: bool = False,
-           max_price: float | None = None, min_rvol: float | None = None,
+           max_price: float | None = None, min_price: float | None = None,
+           min_rvol: float | None = None,
            min_volume: int | None = None, max_float: int | None = None,
            max_cap: int | None = None) -> dict:
     """Run the five filters across the market.
@@ -88,45 +108,63 @@ def screen(force: bool = False, relax_float: bool = False,
     # Every threshold is overridable, so tightening back toward the stated
     # screen is a query parameter rather than a code change.
     px_max = max_price if max_price is not None else MAX_PRICE
+    px_min = min_price if min_price is not None else MIN_PRICE
     rv_min = min_rvol if min_rvol is not None else MIN_RVOL
     vol_min = min_volume if min_volume is not None else MIN_VOLUME
     flt_max = max_float if max_float is not None else MAX_FLOAT
     cap_max = max_cap if max_cap is not None else MAX_CAP
 
-    key = f"lowfloat:{relax_float}:{px_max}:{rv_min}:{vol_min}:{flt_max}:{cap_max}"
+    key = (f"lowfloat:{relax_float}:{px_max}:{px_min}:{rv_min}:{vol_min}:"
+           f"{flt_max}:{cap_max}")
     hit = _CACHE.get(key)
     if hit and not force and (time.time() - hit[0]) < _TTL:
         return {"results": hit[1], "cached": True, "filters": describe()}
 
     rows: dict[str, dict] = {}
     scanned = 0
+    total_available = None
     try:
         import yfinance as yf
         from yfinance import EquityQuery as Q
 
-        # Push every filter Yahoo can evaluate server-side into the query, so
-        # what comes back is already close. Float is not queryable, so it is
-        # applied below.
+        # Every filter Yahoo can evaluate goes server-side, so what comes back
+        # already satisfies four of the five. Float is not queryable and is
+        # applied below, per surviving symbol.
         custom = Q("and", [
             Q("lt", ["intradayprice", px_max]),
+            Q("gt", ["intradayprice", px_min]),
             Q("gt", ["dayvolume", vol_min]),
             Q("lt", ["intradaymarketcap", cap_max]),
         ])
-        # most_actives catches names the custom query's field coverage misses.
-        for src in (custom, "most_actives", "small_cap_gainers"):
+
+        # PAGINATE. A single call returns 25 rows out of thousands — reading
+        # only the first page meant screening a keyhole and calling it the
+        # market. Yahoo reports `total`, so coverage is measurable rather than
+        # assumed, and the walk continues until the qualifying set is exhausted.
+        offset = 0
+        for _ in range(MAX_PAGES):
             try:
-                kw = {"count": 100}
-                if not isinstance(src, str):
-                    kw.update(sortField="dayvolume", sortAsc=False)
-                res = yf.screen(src, **kw)
-                quotes = res.get("quotes", []) if isinstance(res, dict) else []
-                scanned += len(quotes)
-                for q in quotes:
-                    sym = q.get("symbol")
-                    if sym:
-                        rows.setdefault(sym, q)
+                res = yf.screen(custom, count=PAGE_SIZE, offset=offset,
+                                sortField="dayvolume", sortAsc=False)
             except Exception as exc:
-                print(f"[lowfloat] screener {src!r} failed: {exc!r}")
+                print(f"[lowfloat] page at offset {offset} failed: {exc!r}")
+                break
+            quotes = res.get("quotes", []) if isinstance(res, dict) else []
+            if total_available is None:
+                total_available = res.get("total")
+            if not quotes:
+                break
+            scanned += len(quotes)
+            before = len(rows)
+            for q in quotes:
+                sym = q.get("symbol")
+                if sym:
+                    rows.setdefault(sym, q)
+            if len(rows) == before:
+                break                     # same page repeating; stop
+            offset += len(quotes)
+            if total_available and offset >= total_available:
+                break
     except Exception as exc:
         return {"results": [], "note": f"screener unavailable: {exc}",
                 "filters": describe()}
@@ -149,7 +187,7 @@ def screen(force: bool = False, relax_float: bool = False,
         price = q.get("regularMarketPrice")
         vol = q.get("regularMarketVolume")
         cap = q.get("marketCap")
-        if price is None or price >= px_max:
+        if price is None or price >= px_max or price < px_min:
             continue
         if not vol or vol < vol_min:
             continue
@@ -191,7 +229,14 @@ def screen(force: bool = False, relax_float: bool = False,
 
     out.sort(key=lambda r: -(r["float_turnover"] or r["rvol"]))
     _CACHE[key] = (time.time(), out)
-    return {"results": out, "scanned": scanned, "cached": False,
+    return {"results": out, "scanned": scanned,
+            "universe_total": total_available,
+            # Honest coverage: what fraction of the qualifying landscape was
+            # actually looked at. A screen that silently sees 2% of the market
+            # is worse than one that says so.
+            "coverage_pct": (round(scanned / total_available * 100, 1)
+                             if total_available else None),
+            "cached": False,
             "filters": describe(px_max, rv_min, vol_min, flt_max, cap_max)}
 
 
@@ -199,20 +244,21 @@ def describe(px=None, rv=None, vol=None, flt=None, cap=None) -> dict:
     flt = flt if flt is not None else MAX_FLOAT
     return {
         "max_price": px if px is not None else MAX_PRICE,
+        "min_price": MIN_PRICE,
         "min_rvol": rv if rv is not None else MIN_RVOL,
         "min_volume": vol if vol is not None else MIN_VOLUME,
         "max_float": flt,
         "max_market_cap": cap if cap is not None else MAX_CAP,
         "stated": STATED,
         "loosened_from_stated": flt > STATED["max_float"],
-        "calibration": ("float<20M as stated returned a name on 5% of sessions "
-                        "over a 90-day replay. Float is the only filter that "
-                        "moves the count; volume and rvol barely do. 150M lands "
-                        "~1.5 names/day with 70% of days in the 1-5 band."),
-        "honest_cost": ("At a 150M float ceiling this is no longer a LOW-float "
-                        "screen — it is a high-turnover screen with a float "
-                        "cap. The squeeze mechanics that justified the original "
-                        "20M are much weaker here."),
+        "calibration": ("Against the full ~2,000-name qualifying universe the "
+                        "screen as stated returns ~24 names a day. An earlier "
+                        "run suggested float had to be loosened to 150M to fire "
+                        "at all; that came from a 90-name sample and was wrong. "
+                        "Float is unchanged at 20M."),
+        "narrowing": ("The way down to a handful is a $1 price floor, not a "
+                      "looser float. About a third of what passes is sub-$1, "
+                      "where a 400x rvol print is churn rather than a squeeze."),
         "caveat": ("A screen shortens a list; it is not an edge. Float is the "
                    "filter carrying the thesis and the least reliable field — "
                    "it goes stale after offerings, which these names do "

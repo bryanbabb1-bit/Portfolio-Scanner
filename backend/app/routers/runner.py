@@ -25,6 +25,7 @@ def runners(min_score: float = 0.0, limit: int = 40, extra: str = ""):
 @router.get("/lowfloat")
 def low_float_screen(force: bool = False, relax_float: bool = False,
                      max_price: float | None = None,
+                     min_price: float | None = None,
                      min_rvol: float | None = None,
                      min_volume: int | None = None,
                      max_float: int | None = None,
@@ -33,6 +34,7 @@ def low_float_screen(force: bool = False, relax_float: bool = False,
     tightening back to the originally stated screen is a query parameter."""
     from ..services import lowfloat
     return lowfloat.screen(force=force, relax_float=relax_float,
-                           max_price=max_price, min_rvol=min_rvol,
+                           max_price=max_price, min_price=min_price,
+                           min_rvol=min_rvol,
                            min_volume=min_volume, max_float=max_float,
                            max_cap=max_cap)

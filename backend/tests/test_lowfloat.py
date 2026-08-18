@@ -18,18 +18,32 @@ def test_the_originally_stated_screen_is_preserved_verbatim():
                          "max_cap": 2_000_000_000}
 
 
-def test_defaults_are_the_calibrated_ones_and_say_they_are_loosened():
-    assert lf.MAX_FLOAT == 150_000_000
-    d = lf.describe()
-    assert d["loosened_from_stated"] is True
-    assert "no longer a LOW-float screen" in d["honest_cost"]
+def test_float_stays_at_the_stated_threshold():
+    # An earlier calibration loosened this to 150M off a 90-name sample. At full
+    # coverage the stated screen fires ~24 times a day, so the loosening was
+    # solving a problem that only existed because the universe was too small.
+    assert lf.MAX_FLOAT == lf.STATED["max_float"] == 20_000_000
+    assert lf.describe()["loosened_from_stated"] is False
 
 
-def test_the_stated_screen_can_be_restored_by_parameter(monkeypatch):
+def test_the_narrowing_lever_is_the_price_floor():
+    assert lf.MIN_PRICE == 3.00
+    assert "price floor" in lf.describe()["narrowing"]
+
+
+def test_a_sub_dollar_churner_is_excluded(monkeypatch):
+    # 400x rvol on a $0.15 stock is dilution churn, not a squeeze.
+    out = _run(monkeypatch, [_quote(regularMarketPrice=0.15,
+                                    averageDailyVolume3Month=20_000)],
+               {"AAA": {"float_shares": 5_000_000}})
+    assert out["results"] == []
+
+
+def test_every_threshold_is_overridable(monkeypatch):
+    # Loosening back is a query parameter, never an edit.
     out = _run(monkeypatch, [_quote()], {"AAA": {"float_shares": 45_000_000}},
-               max_float=lf.STATED["max_float"])
-    assert out["results"] == []          # 45M float fails the original 20M
-    assert out["filters"]["loosened_from_stated"] is False
+               max_float=50_000_000)
+    assert [r["symbol"] for r in out["results"]] == ["AAA"]
 
 
 def test_relative_volume_is_against_the_name_s_own_average():
