@@ -38,3 +38,10 @@ def low_float_screen(force: bool = False, relax_float: bool = False,
                            min_rvol=min_rvol,
                            min_volume=min_volume, max_float=max_float,
                            max_cap=max_cap)
+
+
+@router.get("/squeeze")
+def squeeze_setups(force: bool = False, limit: int = 25):
+    """Pre-ignition squeeze conditions — fuel and constraint, before the spark."""
+    from ..services import squeeze
+    return squeeze.screen(force=force, limit=limit)
