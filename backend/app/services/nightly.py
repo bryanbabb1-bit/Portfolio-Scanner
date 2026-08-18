@@ -173,7 +173,9 @@ def screen_and_judge(limit: int = SCREEN_JUDGED) -> list[dict]:
     for cand in results[:limit]:
         sym = cand["symbol"]
         try:
-            d = debate_service.convene(sym, force=True) or {}
+            # Strangers judged as strangers — see debate._facts.
+            d = debate_service.convene(sym, force=True,
+                                       standalone=True) or {}
             judged.append({
                 "symbol": sym, "price": cand["price"],
                 "change_pct": cand["change_pct"], "rvol": cand["rvol"],
@@ -181,6 +183,8 @@ def screen_and_judge(limit: int = SCREEN_JUDGED) -> list[dict]:
                 "float_turnover": cand.get("float_turnover"),
                 "verdict": d.get("verdict"), "action": d.get("action"),
                 "headline": d.get("headline"), "ts": d.get("ts"),
+                # Price AT the ruling, so the call can be graded later.
+                "price_at_ruling": cand["price"],
             })
         except Exception as exc:
             print(f"[nightly] {sym} screen-debate failed: {exc!r}")

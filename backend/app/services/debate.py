@@ -202,9 +202,38 @@ def _clamp_int(val, lo: int, hi: int, default: int) -> int:
 
 
 # --------------------------------------------------------------------- facts
-def _facts(symbol: str) -> tuple[str, object]:
-    """The shared evidence pack every agent argues over."""
+def _facts(symbol: str, standalone: bool = False) -> tuple[str, object]:
+    """The shared evidence pack every agent argues over.
+
+    standalone judges the SETUP with no portfolio context at all. It exists
+    because the portfolio-aware pack quietly biases the verdict toward AVOID:
+    desk sizing is computed off available cash, so a name gets rejected with
+    "no cash to buy it anyway" — a fact about the book, not about the stock.
+    Screen candidates are strangers and have to be judged as strangers, or the
+    screen is really just measuring how much dry powder is left.
+    """
     report = pf_service.build_report(symbol)
+    if standalone:
+        # _facts_from_report still carries position lines for a name that
+        # happens to be held, and "you are up 10% on this" is precisely the kind
+        # of context that turns a setup judgement into a portfolio judgement.
+        _POSITION_WORDS = ("unrealized", "cost basis", "shares held",
+                           "your position", "you own", "market value")
+        setup_only = "\n".join(
+            ln for ln in advisor._facts_from_report(report).splitlines()
+            if not any(w in ln.lower() for w in _POSITION_WORDS)
+        )
+        block = "\n\n".join(x for x in [
+            setup_only,
+            "EVALUATE THIS SETUP ON ITS OWN MERITS. There is no portfolio, no "
+            "position, no cash constraint and no prior history with this name. "
+            "Do NOT reason about affordability, position sizing, or whether it "
+            "fits an existing book — none of that exists here. The only "
+            "question is whether the setup itself is worth taking, and a good "
+            "setup is a good setup whether or not anyone can afford it.",
+        ] if x)
+        return block, report
+
     summary, held = pf_service.portfolio_summary()
 
     holding = next((r for r in held if r.symbol == report.symbol), None)
@@ -353,7 +382,8 @@ def _judge(symbol: str, facts: str, agents: list[dict]) -> dict:
 
 
 # ----------------------------------------------------------------------- run
-def convene(symbol: str, force: bool = False) -> dict:
+def convene(symbol: str, force: bool = False,
+            standalone: bool = False) -> dict:
     """Run a full debate on `symbol`. Six CLI calls — never call this on a poll."""
     sym = (symbol or "").upper()
     if not force:
@@ -371,7 +401,7 @@ def convene(symbol: str, force: bool = False) -> dict:
             "verdict": None,
         }
 
-    facts, report = _facts(sym)
+    facts, report = _facts(sym, standalone=standalone)
 
     # Attribute all six CLI calls to this feature so its real cost is known
     # rather than estimated — it is by far the most expensive thing in the app.

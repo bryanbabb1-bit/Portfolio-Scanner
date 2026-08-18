@@ -20,6 +20,13 @@ def list_debates(limit: int = 20):
     return {"results": debate_service.history(limit)}
 
 
+@router.get("/debate/scorecard")
+def verdict_scorecard(days: int = 30):
+    """Trailing 5-day grade on every ruling — was the desk right?"""
+    from ..services import verdict_score
+    return verdict_score.scorecard(days=days)
+
+
 @router.get("/debate/nightly")
 def nightly_preload(include_queue: bool = False):
     """What the desk pre-loaded overnight, plus tonight's ranked queue.

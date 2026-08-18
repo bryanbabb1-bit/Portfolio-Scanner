@@ -1,56 +1,107 @@
 {
-  "last_run": "2026-08-12",
+  "last_run": "2026-08-17",
   "last_result": {
-    "date": "2026-08-12",
+    "date": "2026-08-17",
     "ran": [
       {
-        "symbol": "NBIS",
-        "score": 70,
+        "symbol": "MSFT",
+        "score": 12.0,
         "why": [
-          "earnings in 0d",
-          "moved +29.3% today",
+          "moved -3.0% today"
+        ],
+        "verdict": "APPROVE",
+        "action": "HOLD",
+        "headline": "Hold MSFT \u2014 a 3% dip on rate news is not a reason to sell.",
+        "ts": 1787004169.9041429
+      },
+      {
+        "symbol": "BRK.B",
+        "score": 10.0,
+        "why": [
           "desk has never sat on it"
         ],
         "verdict": "APPROVE",
         "action": "HOLD",
-        "headline": "Hold NBIS — earnings beat is real, but the $5 add is not worth doing.",
-        "ts": 1786560862.7519844
+        "headline": "Hold BRK.B \u2014 nothing changed since my last call; ballast does its job quietly.",
+        "ts": 1787004232.2665968
       },
       {
-        "symbol": "ANET",
-        "score": 35,
+        "symbol": "ISRG",
+        "score": 10.0,
         "why": [
-          "moved +6.7% today",
           "desk has never sat on it"
         ],
         "verdict": "APPROVE",
         "action": "HOLD",
-        "headline": "Hold ANET — you added two days ago, thesis intact, no new order today.",
-        "ts": 1786560916.4638886
+        "headline": "Nothing new since this morning's buy \u2014 hold ISRG and let it work.",
+        "ts": 1787004277.08553
+      }
+    ],
+    "screened": [
+      {
+        "symbol": "YYAI",
+        "price": 1.22,
+        "change_pct": 7.96,
+        "rvol": 6.05,
+        "float_shares": 40262,
+        "float_turnover": 185.93,
+        "verdict": "REJECT",
+        "action": "AVOID",
+        "headline": "Today's 2040% pop is a reverse split, not buying \u2014 skip YYAI entirely.",
+        "ts": 1787022663.1779702,
+        "price_at_ruling": 1.22
       },
       {
-        "symbol": "AAPL",
-        "score": 28,
-        "why": [
-          "standing TRIM but still held",
-          "desk has never sat on it"
-        ],
-        "verdict": "APPROVE",
-        "action": "TRIM",
-        "headline": "Nothing new since my call — the trim stands, hold the rest.",
-        "ts": 1786560988.9740334
+        "symbol": "IPST",
+        "price": 7.39,
+        "change_pct": 235.89,
+        "rvol": 1666.56,
+        "float_shares": 662746,
+        "float_turnover": 151.12,
+        "verdict": "REJECT",
+        "action": "AVOID",
+        "headline": "A 236% one-day spike in a broken $7 stock is not an investment.",
+        "ts": 1787022719.9223113,
+        "price_at_ruling": 7.39
       },
       {
-        "symbol": "CRWD",
-        "score": 25,
-        "why": [
-          "earnings in 14d",
-          "desk has never sat on it"
-        ],
-        "verdict": "APPROVE",
-        "action": "HOLD",
-        "headline": "Hold your CRWD — winner still working, earnings in two weeks, no action.",
-        "ts": 1786561063.442695
+        "symbol": "WFF",
+        "price": 2.02,
+        "change_pct": 40.28,
+        "rvol": 110.61,
+        "float_shares": 1597354,
+        "float_turnover": 50.28,
+        "verdict": "REJECT",
+        "action": "AVOID",
+        "headline": "A 40% one-day pop in a broken shell stock is not an investment.",
+        "ts": 1787022746.7939026,
+        "price_at_ruling": 2.02
+      },
+      {
+        "symbol": "IVF",
+        "price": 1.53,
+        "change_pct": 60.38,
+        "rvol": 47.12,
+        "float_shares": 2283322,
+        "float_turnover": 49.82,
+        "verdict": "REJECT",
+        "action": "AVOID",
+        "headline": "One-day 57% pop on a broken $1.53 stock \u2014 not worth chasing.",
+        "ts": 1787022794.6601317,
+        "price_at_ruling": 1.53
+      },
+      {
+        "symbol": "STFS",
+        "price": 4.21,
+        "change_pct": 7.95,
+        "rvol": 10.49,
+        "float_shares": 118889,
+        "float_turnover": 46.91,
+        "verdict": "REJECT",
+        "action": "AVOID",
+        "headline": "STFS is a broken penny stock bouncing on volume with no news \u2014 pass.",
+        "ts": 1787022837.6407123,
+        "price_at_ruling": 4.21
       }
     ]
   }

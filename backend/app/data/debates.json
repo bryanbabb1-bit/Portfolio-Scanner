@@ -258,25 +258,19 @@
   "MSFT": {
     "symbol": "MSFT",
     "name": "Microsoft Corporation",
-    "price": 464.72,
-    "ts": 1785540172.9739482,
-    "as_of": "2026-07-31 18:22:52",
+    "price": 480.35,
+    "ts": 1787004169.9041429,
+    "as_of": "2026-08-17 17:02:49",
     "engine": "claude",
     "agents": [
       {
         "key": "bull",
         "name": "Bull Agent",
         "round": 1,
-        "position": "BULLISH",
-        "confidence": 78,
-        "points": [
-          "Analysts rate it strong_buy with a mean target of $561.58, about 21% above today's $464.72.",
-          "Shares just jumped 3.02% today on volume 1.57x normal, showing real buying interest.",
-          "Stock is still 13.7% below its 52-week high of $538.66, so there's room to run before new highs.",
-          "Your position is already up 13.7% since your $408.78 average cost.",
-          "This is your best business in the book at 4.7% of the portfolio, worth letting it keep working."
-        ],
-        "strongest": "53 analysts rate MSFT strong_buy with a $561.58 target, implying nearly 21% more upside from here.",
+        "position": "NEUTRAL",
+        "confidence": 50,
+        "points": [],
+        "strongest": "",
         "ok": true
       },
       {
@@ -284,15 +278,15 @@
         "name": "Bear Agent",
         "round": 1,
         "position": "BEARISH",
-        "confidence": 35,
+        "confidence": 32,
         "points": [
-          "Even after today's pop, MSFT is still down 7% year-to-date, per today's headlines.",
-          "Today's 3% jump came on unusually heavy trading (1.6x normal) — often a sign of a short-term top, not a new leg up.",
-          "The stock is stretched well above its recent normal range and still 13.7% below its 52-week high of $538.66.",
-          "The medium-term trend line ($399) has sat below the longer-term trend line ($432) for months — that warning hasn't resolved.",
-          "AI-spending jitters are already hitting peers — Apple's weak forecast and market-wide 'AI jitters' headlines show the group's mood can flip fast."
+          "MSFT just fell 3.04% to $480.35 today, and Yahoo flags a specific reason, not random noise.",
+          "Price is 10.82% below its 52-week high of $538.66 — the rally has already stalled well off the top.",
+          "The trend reading is a Death-cross regime, a real warning sign the desk cannot ignore.",
+          "Today's drop came on light volume (0.75x normal) — no strong buyers showed up to defend the price.",
+          "Bond yields just hit a 19-year high, a threat to expensive stocks like MSFT, and the book has only $5 of cash left with risk status ELEVATED."
         ],
-        "strongest": "MSFT just jumped 3% on heavy volume while already stretched and still below its highs — a classic setup for a fast giveback, not a breakout.",
+        "strongest": "Rising yields hit richly priced stocks like MSFT hardest, and this book is fully deployed with zero cash to average down if it keeps falling.",
         "ok": true
       },
       {
@@ -300,15 +294,15 @@
         "name": "Macro Agent",
         "round": 1,
         "position": "NEUTRAL",
-        "confidence": 55,
+        "confidence": 45,
         "points": [
-          "Rates and liquidity aren't a fresh headwind today: broad tape is up, Reuters notes Amazon eased AI jitters market-wide.",
-          "MSFT sits deep in the AI capex rotation with 53 analysts still strong-buy and a $561.58 target, 20.84% above $464.72.",
-          "Stock is up 3.02% today but still -13.73% from its 52-week high of $538.66, so the adoption-curve re-rating isn't finished pricing in either direction.",
-          "Big Tech capital rotation is uneven right now — Apple just plunged on a weak revenue forecast while Microsoft, Amazon, Micron surge, showing money picking winners inside the theme rather than leaving it.",
-          "Position is already 100% deployed with elevated desk risk status and $0 new risk budgeted here, so there's no macro case for adding regardless of theme strength."
+          "Rates pressure is live: a key yield hit a 19-year high today, a headwind for long-duration mega-cap tech like MSFT.",
+          "MSFT still cost more per share than gains from here justify — down 3.04% today to $480.35, off 10.82% from its $538.66 high.",
+          "MSFT sits within a 431-454 trend range, not breaking down, so this looks like sector rotation, not a name-specific problem.",
+          "AI capex payoff debate is the live macro theme today per the Amazon/Meta spending headline — MSFT rides the same cycle question.",
+          "Wall Street still backs the group: 53 analysts rate strong_buy with an 18.57% upside target, unchanged by today's rate move."
         ],
-        "strongest": "Money is rotating within the AI theme, not out of it — Apple sold off on weak guidance the same day Microsoft and Amazon rallied, favoring incumbents like MSFT.",
+        "strongest": "A 19-year-high yield today is a real rate headwind for mega-cap tech broadly, not a MSFT-specific flaw.",
         "ok": true
       },
       {
@@ -316,15 +310,15 @@
         "name": "Risk Agent",
         "round": 2,
         "position": "NEUTRAL",
-        "confidence": 82,
+        "confidence": 62,
         "points": [
-          "Book is 100% deployed with zero dry powder, so there is no cash to size this trade up.",
-          "Desk sizing already caps this at $1 — that's not a real add, so debating bull/bear case here changes nothing.",
-          "Total open risk to stops is already 7.94% of equity ($788), near the edge of what the book should carry.",
-          "MSFT is 4.7% of the book plus 5% listed separately elsewhere — concentration in mega-cap tech is already heavy alongside NVDA 18% and AVGO 14%.",
-          "No new fact since the last HOLD call at $464.58 — price is unchanged at $464.72."
+          "Desk sizing already caps this add at $5, so it cannot move the book either way.",
+          "Book is 100% deployed with only $5 dry powder and status ELEVATED — no room to add real size anywhere.",
+          "Total open risk to stops is already 7.62% of equity ($836), and MSFT stop at $452.29 adds negligible incremental risk.",
+          "MSFT is 4.4% of the book and sits comfortably under any single-name concentration concern next to NVDA's 18%.",
+          "Position is up 17.5% unrealized with a survivable stop 5.8% below live price — no forced action required."
         ],
-        "strongest": "Desk sizing gives this trade $1 and zero risk — there is nothing here for RISK to approve or block.",
+        "strongest": "The proposed trade is $5 against a $10,969 book that's already 100% deployed — it changes nothing about the book's risk.",
         "ok": true
       },
       {
@@ -332,63 +326,63 @@
         "name": "Execution Agent",
         "round": 2,
         "position": "NEUTRAL",
-        "confidence": 60,
+        "confidence": 55,
         "points": [
-          "Hold the $465 MSFT position as is — the desk gives $0 room to add, size is $1.",
-          "Downside stop sits at $432.72, about 7% below today's $464.72, if you want protection set there.",
-          "Big earnings week ahead per headlines — no new trade here, just be aware of swings.",
-          "Volume today is 1.57x normal, so liquidity is fine whenever you decide to trim or add.",
-          "If you want to bank some gains later, watch $538.66 — that's the old high, a natural trim zone."
+          "Stop is already set at $452.29, below the $454.14 level MSFT has held on pullbacks — no new order needed.",
+          "Position is only 4.4% of the book at $480, so today's 3.04% drop barely moves total risk.",
+          "The book has just $5 of cash and ELEVATED risk status, so there's no room to add here anyway.",
+          "53 analysts rate this strong buy with an 18.57% upside target, arguing against trimming a winner up 17.5%.",
+          "No earnings date or news catalyst in the headlines — today's move is a broad rate-driven dip, not an MSFT-specific break."
         ],
-        "strongest": "Desk sizing gives $0 new risk budget here — mechanically this is hold, not trade.",
+        "strongest": "The $452.29 stop already covers this pullback — no action needed today, just let the level do its job.",
         "ok": true
       }
     ],
     "agents_reporting": 5,
     "tally": {
-      "bullish": 1,
+      "bullish": 0,
       "bearish": 1,
-      "neutral": 3
+      "neutral": 4
     },
     "verdict": "APPROVE",
     "action": "HOLD",
-    "score": 76,
-    "headline": "Hold MSFT — best business you own, nothing changed since my last call.",
+    "score": 74,
+    "headline": "Hold MSFT — a 3% dip on rate news is not a reason to sell.",
     "rationale": [
-      "Bull wins on substance: 53 analysts at strong_buy, $561.58 target, and you're already up 13.7%.",
-      "Bear's confidence 35 doesn't survive — a heavy-volume up day on your best business is buying, not a top.",
-      "I overrule Bear's trend-line warning: a chart line never sells a compounder whose business is intact.",
-      "Risk Agent's point wins the sizing question — the book is fully deployed, so there is no add here.",
-      "Execution's trim-at-the-old-high idea is premature; $538.66 is 16% away and you own this for years."
+      "Risk's quiet point wins: position is 4.4% of the book, up 17.5%, no forced action needed.",
+      "Overruled Bear's 'death-cross' warning — MSFT trades above its recent $454 support with strong buyer ratings.",
+      "Overruled Bear's light-volume claim: thin selling on a rate scare is weak evidence, not distribution.",
+      "Macro's rate headwind is real but sector-wide, not a Microsoft business problem — thesis intact.",
+      "Execution is right that 53 analysts at strong buy argue against trimming a winner up 17.5%."
     ],
     "dissent": [
-      "Big earnings week ahead — a weak cloud number would be a real fact and would change this call.",
-      "AI-capex jitters hit Apple today; if that mood spreads, MSFT could give back this 3% fast."
+      "If yields keep climbing and MSFT loses $452, the dip becomes a real trend change.",
+      "Book is fully invested with $5 cash, so no ability to buy this weakness even if it deepens."
     ],
     "entry": "",
-    "target": "$538.66",
-    "stop": "",
+    "target": "$569.56",
+    "stop": "$452.29",
     "sizing": {
       "symbol": "MSFT",
-      "price": 464.72,
-      "stop": 432.72,
+      "price": 480.35,
+      "stop": 452.29,
       "stop_basis": "2x ATR",
-      "risk_per_share": 32.0,
-      "dollars": 1.03,
-      "shares": 0.0022,
-      "pct_of_equity": 0.01,
-      "risk_amount": 0.07,
+      "risk_per_share": 28.06,
+      "dollars": 5.3,
+      "shares": 0.011,
+      "pct_of_equity": 0.05,
+      "risk_amount": 0.31,
       "capped_by": "dry powder",
-      "note": "Stop $432.72 (2x ATR, 6.9% below). Risking 1% of equity ($0) buys $1 — capped by dry powder."
+      "note": "Stop $452.29 (2x ATR, 5.8% below). Risking 1% of equity ($0) buys $5 — capped by dry powder."
     },
     "error": null
   },
   "NET": {
     "symbol": "NET",
     "name": "Cloudflare, Inc.",
-    "price": 284.43,
-    "ts": 1786053628.6888356,
-    "as_of": "2026-08-06 17:00:28",
+    "price": 330.83,
+    "ts": 1786658636.2460778,
+    "as_of": "2026-08-13 17:03:56",
     "engine": "claude",
     "agents": [
       {
@@ -398,13 +392,13 @@
         "position": "BULLISH",
         "confidence": 62,
         "points": [
-          "Cloudflare beat earnings and raised its full-year profit outlook, per Bloomberg and Business Wire today.",
-          "Multiple outlets (IBD, Barron's, StockStory) confirm booming customer growth drove the beat.",
-          "Shares sit only 5.6% below the 52-week high of $301.33, showing the uptrend is intact.",
-          "Today's trading volume is 37% above normal, showing strong buying interest around the report.",
-          "Your position is already up 17% since your $243.03 average cost."
+          "Price hit a new high today at $330.83, up 6.22% in one session — real strength, not drift.",
+          "31 analysts rate it a buy, and the trend has been strong enough to already run past their $330.65 average target.",
+          "Momentum is confirmed by both fast and slow trend readings pointing the same direction, not just one signal.",
+          "Position is up 36.1% since the $243.03 cost basis, proof this trend has paid off already.",
+          "Zacks flags Cloudflare's AI security strategy as a credible challenger to bigger rivals, a growth angle the market is still pricing in."
         ],
-        "strongest": "Cloudflare beat earnings, raised its profit outlook, and multiple outlets confirm customer growth is booming.",
+        "strongest": "NET just printed a fresh 52-week high on a 6.22% single-day move with all trend signals aligned bullish.",
         "ok": true
       },
       {
@@ -412,31 +406,32 @@
         "name": "Bear Agent",
         "round": 1,
         "position": "BEARISH",
-        "confidence": 42,
+        "confidence": 35,
         "points": [
-          "Wall Street's own price target is $269.13, below today's $284.43 — the pros think this is already too expensive.",
-          "Stock fell 2.91% today even with strong earnings headlines — that's often a sign good news is already priced in.",
-          "Shares are only 5.6% below their 52-week high of $301.33, leaving little room before this stalls out.",
-          "This position is already up 17% since $243.03 cost — an earnings day is a good time to lock some of that in, not chase more.",
-          "The whole book is 100% invested with zero spare cash, so a stumble here can't be cheaply averaged down."
+          "Analyst mean target is $330.65 versus today's $330.83 price — zero upside left, Wall Street already sees fair value.",
+          "Stock sits exactly at its 52-week high (0.0% away) after a 6.22% single-day pop — no room left before a pullback.",
+          "RSI reading of 73.1 and price above the upper band signal a stretched, overbought move that often snaps back.",
+          "Client already trimmed this position on 2026-08-07 (1.85 to 1.28 shares) — the playbook here has been taking profit, not adding.",
+          "Direct peer Akamai fell 22% in 3 months on AI execution risk, and Zacks questions if Cloudflare can hold off Palo Alto Networks and Zscaler.",
+          "x402 settlement volume, tied to Cloudflare's AI agent payments story, is down 93% year-to-date — a forward growth narrative is cooling."
         ],
-        "strongest": "Analysts' own average price target of $269.13 sits below where NET trades right now at $284.43.",
+        "strongest": "The $330.65 average analyst target is basically today's $330.83 price, meaning the stock has already outrun what Wall Street thinks it's worth.",
         "ok": true
       },
       {
         "key": "macro",
         "name": "Macro Agent",
         "round": 1,
-        "position": "BULLISH",
-        "confidence": 68,
+        "position": "NEUTRAL",
+        "confidence": 52,
         "points": [
-          "NET jumped on today's earnings beat, showing money is rotating hard into AI infrastructure names right now.",
-          "Price is still trending up, holding above its longer-term averages near $255 and $215.",
-          "31 analysts rate it a buy, showing broad conviction this AI theme still has room to run.",
-          "Price is only 5.6% below its 52-week high of $301.33, meaning much of the good news may already be priced in.",
-          "The average analyst price target of $269.13 sits below today's $284.43, capping near-term upside."
+          "NET jumped 6.22% today alongside NVDA, PLTR, MDB and TTD — a broad AI-stock rally lifting the whole group, not NET alone.",
+          "NET sits at its 52-week high of $330.83, already matching the average analyst target of $330.65 — almost no upside left per Wall Street.",
+          "Peer Akamai fell 22% in three months on AI execution worries while Nebius jumped 18% — capital is rotating unevenly across AI cloud names.",
+          "NET is trading well above its recent trend and near the very top of its one-year range, a sign the move is stretched.",
+          "Cathie Wood's ARK is still buying NET per recent headlines, showing growth money keeps rotating into this name despite the run-up."
         ],
-        "strongest": "NET jumped today on an earnings beat, confirming capital is rotating into AI infrastructure winners.",
+        "strongest": "NET is at its 52-week high with the average analyst target of $330.65 already reached, leaving essentially zero estimated upside from here.",
         "ok": true
       },
       {
@@ -446,13 +441,13 @@
         "position": "NEUTRAL",
         "confidence": 58,
         "points": [
-          "No dry powder left — 100% invested, so any new NET buy is capped at $0 regardless of conviction.",
-          "NET is already 5% of a book that's 19% NVDA, 14% VRT, 14% AVGO — all correlated AI-infrastructure names.",
-          "Total open risk to stops across the book is already 7.98% of equity ($842), near the edge of what's sustainable.",
-          "Stop at $254.91 is 10.4% below live price $284.43 — a real drawdown if earnings enthusiasm fades.",
-          "Position is already up 17% from $243.03 cost — trimming into strength banks a gain without adding new risk."
+          "No dry powder left — $7 of $11,124 equity, book is 100% deployed already.",
+          "Risk status is ELEVATED with total open risk at 8.03% of equity ($894), already high versus the 2% daily loss limit.",
+          "NET is only 3.8% of the book ($423) — this position is not a concentration problem on its own.",
+          "Today's 6.22% pop moved alongside NVDA, PLTR, MDB, TTD — book already has 18% NVDA, so this is correlated AI-rally risk, not NET-specific edge.",
+          "Stop at $296.42 is 10.4% below the $330.83 price — survivable for the tiny $7 slot, but there's no room to add without a real trim elsewhere."
         ],
-        "strongest": "Zero dry powder means adding risk here is not an option — the only lever left is trimming.",
+        "strongest": "The book has zero dry powder and is already ELEVATED at 8.03% open risk — there is no room to add here regardless of the NET story.",
         "ok": true
       },
       {
@@ -462,141 +457,13 @@
         "position": "NEUTRAL",
         "confidence": 58,
         "points": [
-          "NET is $284.43, up only 0.6% from my last call at $282.67 — nothing material changed.",
-          "Company beat earnings and raised guidance today, per Bloomberg and Business Wire.",
-          "Wall Street's average target is $269.13, below today's $284.43 price.",
-          "Stock is only 5.6% below its 52-week high of $301.33, so most good news is priced in.",
-          "The book is 100% invested with zero spare cash, so new buying isn't an option anyway."
+          "NET is at $330.83, right at the average analyst target of $330.65 — little room left.",
+          "It jumped 6.22% today with other AI names like Nvidia and Palantir, not on its own news.",
+          "You already trimmed this position on 2026-08-07, cutting shares from 1.85 to 1.28.",
+          "Stop is set at $296.42 to protect your 36% gain if this pulls back.",
+          "No spare cash right now — the account is fully invested, so just hold."
         ],
-        "strongest": "Price moved only 0.6% since my last call, so today's earnings pop doesn't change the plan.",
-        "ok": true
-      }
-    ],
-    "agents_reporting": 5,
-    "tally": {
-      "bullish": 2,
-      "bearish": 1,
-      "neutral": 2
-    },
-    "verdict": "APPROVE",
-    "action": "TRIM",
-    "score": 62,
-    "headline": "Nothing new since my last call — keep the small trim order at $290.",
-    "rationale": [
-      "Execution's point wins: NET moved 0.6% since my call — no new fact justifies flipping.",
-      "Bull is right on the business — beat, raised outlook, booming customers — so this is a trim, not a sell.",
-      "I overrule Bear's 'lock it in' urgency: a 17% gain in a winning AI name is not a reason to dump it.",
-      "Risk's point stands: NET sits beside NVDA, VRT and AVGO — same AI bet, and the book has zero cash.",
-      "Macro's bullish read loses on one detail: analysts' average target $269 sits below today's $284."
-    ],
-    "dissent": [
-      "If NET runs past $301 on this earnings beat, trimming here leaves real upside on the table.",
-      "Bull's raised-guidance argument could re-rate the stock well above the $269 analyst target."
-    ],
-    "entry": "",
-    "target": "$301.33",
-    "stop": "$254.91",
-    "sizing": {
-      "symbol": "NET",
-      "price": 284.43,
-      "stop": 254.91,
-      "stop_basis": "2x ATR",
-      "risk_per_share": 29.52,
-      "dollars": 0.0,
-      "shares": 0.0,
-      "pct_of_equity": 0.0,
-      "risk_amount": 0.0,
-      "capped_by": "dry powder",
-      "note": "Stop $254.91 (2x ATR, 10.4% below). Risking 1% of equity ($0) buys $0 — capped by dry powder."
-    },
-    "error": null
-  },
-  "LWLG": {
-    "symbol": "LWLG",
-    "name": "Lightwave Logic, Inc.",
-    "price": 8.15,
-    "ts": 1786556158.4871747,
-    "as_of": "2026-08-12 12:35:58",
-    "engine": "claude",
-    "agents": [
-      {
-        "key": "bull",
-        "name": "Bull Agent",
-        "round": 1,
-        "position": "BULLISH",
-        "confidence": 58,
-        "points": [
-          "Shares jumped 7.80% today to $8.15 and remain in a clear uptrend.",
-          "Wall Street's average price target is $10.55, about 29.45% above today's price, based on 33 analysts.",
-          "The stock just crossed above its long-term trend level, a shift that has often preceded bigger rallies.",
-          "Momentum just turned positive after a rough stretch, suggesting the recent slide is reversing.",
-          "Even after today's pop, shares sit 55% below their 52-week high of $18.22, leaving lots of room to recover."
-        ],
-        "strongest": "Analysts see $10.55 fair value, nearly 30% above today's $8.15 price, across 33 estimates.",
-        "ok": true
-      },
-      {
-        "key": "bear",
-        "name": "Bear Agent",
-        "round": 1,
-        "position": "BEARISH",
-        "confidence": 55,
-        "points": [
-          "Stock is down 55.27% from its 52-week high of $18.22, showing this rallies fast and crashes harder.",
-          "Trading volume today is only 0.523x normal, meaning the +7.80% pop lacks real conviction behind it.",
-          "Q2 2026 earnings just posted a wider net loss of $0.04 a share, even as shares are rallying.",
-          "33 analysts rate this just a hold, not a buy, despite the $10.55 average target.",
-          "Momentum reading (MACD -0.0047) is still below its own signal line, meaning the trend just barely turned up."
-        ],
-        "strongest": "",
-        "ok": true
-      },
-      {
-        "key": "macro",
-        "name": "Macro Agent",
-        "round": 1,
-        "position": "NEUTRAL",
-        "confidence": 48,
-        "points": [
-          "Stock is up 55.27% from its 52-week high of $18.22, showing this AI theme has cooled off hard.",
-          "Trading volume is only 0.523x the 20-day average, so today's 7.80% pop lacks broad participation.",
-          "Price sits above both the $6.7825 and $8.0586 short-term trend lines, confirming the recent uptrend is intact.",
-          "Wall Street's mean target of $10.55 implies 29.45% upside, but that's spread across 33 analysts rating it a hold, not a buy.",
-          "The book is already 100% deployed with an ELEVATED risk status, so there's no dry powder to add regardless of the setup."
-        ],
-        "strongest": "The stock is still 55% below its 52-week high, meaning the broader trend for this name remains badly damaged despite today's pop.",
-        "ok": true
-      },
-      {
-        "key": "risk",
-        "name": "Risk Agent",
-        "round": 2,
-        "position": "NEUTRAL",
-        "confidence": 65,
-        "points": [
-          "Book is 100% deployed with only $5 of cash left, so there's no room to add to LWLG.",
-          "LWLG is already just $106, about 1% of the book — not a concentration problem on its own.",
-          "NVDA, VRT, and AVGO already make up 47% of the book, all riding the same AI trend as LWLG.",
-          "Total risk across every stop in the book is already 8.14% of equity ($887) — stretched, not starving for more.",
-          "The $7.11 stop caps this trade's risk at $1, so it barely moves the needle either way."
-        ],
-        "strongest": "The book is 100% deployed with only $5 of cash — there's nothing left to put into LWLG right now.",
-        "ok": true
-      },
-      {
-        "key": "execution",
-        "name": "Execution Agent",
-        "round": 2,
-        "position": "NEUTRAL",
-        "confidence": 45,
-        "points": [
-          "Already bought 13 shares of LWLG near $8.1 today — hold, don't chase it at $8.15.",
-          "Sell if LWLG drops to $7.11 — that's the stop.",
-          "No cash to add more — the account is fully invested, only $5 of room here.",
-          "Volume is thin today, so any bigger order could move the price — keep any add small if you do it.",
-          "Earnings just came out yesterday, so no big surprise event is looming right now."
-        ],
-        "strongest": "Hold what you bought at $8.1 and sell if it falls to $7.11 — there's no cash to add more anyway.",
+        "strongest": "Price at $330.83 already matches the average analyst target of $330.65, capping near-term upside.",
         "ok": true
       }
     ],
@@ -608,33 +475,162 @@
     },
     "verdict": "APPROVE",
     "action": "HOLD",
-    "score": 57,
-    "headline": "You already own it — hold the 13 shares, sell only under $7.11.",
+    "score": 68,
+    "headline": "Cloudflare just made a new high — hold your 1.28 shares, do nothing.",
     "rationale": [
-      "Execution's call wins: you bought at $8.10 today, so nothing more is needed here.",
-      "I overrule Bull's 58 confidence — a 29% analyst target on a hold rating isn't a buy case.",
-      "Bear's point stands: the company lost money again in Q2 and today's pop had thin buying.",
-      "Risk desk is right that $106 in a speculative name is small enough to simply leave alone.",
-      "This is a speculative bet, not a core holding — it lives or dies by the $7.11 line."
+      "Bull's momentum case wins: a new high on real strength beats Bear's 'it's stretched' worry.",
+      "I overrule Bear — being near a high is not a reason to sell a business you believe in.",
+      "Execution and Risk agree on the practical point: no cash left, so no add is possible anyway.",
+      "Macro is right that today's 6.2% jump came with the whole AI group, not Cloudflare news alone.",
+      "You already trimmed this on Aug 7 at $321 — that was the profit-taking; the rest rides."
     ],
     "dissent": [
-      "If the polymer chip deals turn real, $8.15 will look cheap and a 13-share stake too small."
+      "Wall Street's average target of $330.65 is exactly here — the easy money may be done.",
+      "The AI-agent payments story is cooling fast, and rival Akamai fell 22% on similar worries."
     ],
     "entry": "",
-    "target": "$10.55",
-    "stop": "$7.11",
+    "target": "",
+    "stop": "$296.42",
+    "sizing": {
+      "symbol": "NET",
+      "price": 330.83,
+      "stop": 296.42,
+      "stop_basis": "2x ATR",
+      "risk_per_share": 34.41,
+      "dollars": 7.0,
+      "shares": 0.0212,
+      "pct_of_equity": 0.06,
+      "risk_amount": 0.73,
+      "capped_by": "dry powder",
+      "note": "Stop $296.42 (2x ATR, 10.4% below). Risking 1% of equity ($1) buys $7 — capped by dry powder."
+    },
+    "error": null
+  },
+  "LWLG": {
+    "symbol": "LWLG",
+    "name": "Lightwave Logic, Inc.",
+    "price": 7.29,
+    "ts": 1786655045.4425123,
+    "as_of": "2026-08-13 16:04:05",
+    "engine": "claude",
+    "agents": [
+      {
+        "key": "bull",
+        "name": "Bull Agent",
+        "round": 1,
+        "position": "BULLISH",
+        "confidence": 45,
+        "points": [
+          "Analysts' average target is $9.44, about 29% above the current $7.29.",
+          "The stock is now trending up over the past year even after today's drop.",
+          "The company is landing Stage 3 customers per this week's earnings news.",
+          "Today's -9% drop follows an 8.7% jump yesterday — mostly noise around earnings, not a broken story.",
+          "Shares are down almost 60% from the 52-week high of $18.22, a much cheaper entry than a year ago."
+        ],
+        "strongest": "Wall Street's average price target of $9.44 implies nearly 30% upside from here.",
+        "ok": true
+      },
+      {
+        "key": "bear",
+        "name": "Bear Agent",
+        "round": 1,
+        "position": "BEARISH",
+        "confidence": 68,
+        "points": [
+          "Stock is down 8.99% today to $7.29, an $0.72 drop, showing sellers are in control right now.",
+          "Price sits 59.99% below its 52-week high of $18.22 — this stock has a long history of destroying value.",
+          "Trend is sideways, not up, despite two bullish-sounding signals — the price action itself does not confirm strength.",
+          "The $9.44 analyst target implies a 29.49% gain, but 33 analysts still only rate this a hold, not a buy.",
+          "The position is already down 10.0% since the client bought in on 2026-08-12, one day before this drop."
+        ],
+        "strongest": "The stock just fell 8.99% in a single day to $7.29, confirming real, active selling pressure right now.",
+        "ok": true
+      },
+      {
+        "key": "macro",
+        "name": "Macro Agent",
+        "round": 1,
+        "position": "NEUTRAL",
+        "confidence": 40,
+        "points": [
+          "Capital is rotating into AI optics as a theme, but the news flow calls peers 'already wired ahead' of LWLG, so flows may bypass this name.",
+          "LWLG still sits early on the adoption curve — Q2 earnings showed a wider loss even as Stage 3 customers were added, so revenue scale isn't here yet.",
+          "Down 8.99% today and 59.99% off its $18.22 high, LWLG trades like a rate-sensitive speculative name, not one macro liquidity is protecting.",
+          "Street conviction is thin — a hold rating from all 33 analysts despite a 29.49% upside target shows capital isn't committing to the name yet.",
+          "The book's risk desk is already at ELEVATED status with 100% capital deployed, leaving no dry powder to add into this theme even if the cycle turns favorable."
+        ],
+        "strongest": "News flow shows AI-optics capital rotating toward peers already 'wired ahead,' not confirmed into LWLG despite the shared theme.",
+        "ok": true
+      },
+      {
+        "key": "risk",
+        "name": "Risk Agent",
+        "round": 2,
+        "position": "BEARISH",
+        "confidence": 58,
+        "points": [
+          "Book is 100% deployed with only $7 of dry powder, leaving no room to add to LWLG.",
+          "Desk sizing caps this trade at $7 (0.1% of equity) and $0 risk, confirming there's no capacity here.",
+          "Total open risk to stops across the book is already 8.03% of equity ($893), and status is ELEVATED.",
+          "The $7.12 stop sits just 2.3% below the $7.29 price, so the existing 13-share position is already near its exit.",
+          "At 0.9% of the book ($95), LWLG isn't a concentration threat, but that's exactly why adding isn't worth the risk budget."
+        ],
+        "strongest": "With $7 of dry powder and ELEVATED status, the book has no room to add to LWLG regardless of the story.",
+        "ok": true
+      },
+      {
+        "key": "execution",
+        "name": "Execution Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 50,
+        "points": [
+          "The $7.12 stop is only $0.17 below the $7.29 price, well inside the $0.7686 average daily swing, so it can trip on noise.",
+          "Desk sizing caps any new buy at just $7 (0.1% of equity), too small to matter as a real add.",
+          "Q2 earnings already reported August 11, so no binary event sits between now and the stop.",
+          "Volume is 0.9976x the 20-day average, so liquidity is normal for either holding or exiting.",
+          "The client already bought 13 shares on August 12 at $8.10; this is about managing that position, not opening a new one."
+        ],
+        "strongest": "The $7.12 stop sits just $0.17 under the $7.29 price, inside a $0.7686 average daily move, so it risks triggering on ordinary noise, not a real breakdown.",
+        "ok": true
+      }
+    ],
+    "agents_reporting": 5,
+    "tally": {
+      "bullish": 1,
+      "bearish": 2,
+      "neutral": 2
+    },
+    "verdict": "APPROVE",
+    "action": "HOLD",
+    "score": 56,
+    "headline": "Hold your 13 shares of LWLG; sell only if it closes under $7.12.",
+    "rationale": [
+      "Bull's Stage 3 customer win and $9.44 target beat Bear's 'it fell today' point, which is price, not business.",
+      "I overrule Bear: a 9% drop after an 8.7% jump is earnings noise, and $7.29 still holds above $7.12.",
+      "Execution's read wins — the client bought yesterday at $8.10, so this is position management, not a new trade.",
+      "Risk is right that there is no room to add; that argues against buying more, not against holding $95.",
+      "Macro's 'peers are ahead' caution is fair but too thin to force a sale one day after entry."
+    ],
+    "dissent": [
+      "Bear is right that losses are still widening and revenue is not here yet — if $7.12 breaks, the story is weakening.",
+      "This is a speculative name, not a core compounder, so it gets a hard exit that your quality holdings never would."
+    ],
+    "entry": "",
+    "target": "$9.44",
+    "stop": "$7.12",
     "sizing": {
       "symbol": "LWLG",
-      "price": 8.15,
-      "stop": 7.11,
+      "price": 7.29,
+      "stop": 7.12,
       "stop_basis": "200-day",
-      "risk_per_share": 1.04,
-      "dollars": 5.0,
-      "shares": 0.6135,
-      "pct_of_equity": 0.05,
-      "risk_amount": 0.64,
+      "risk_per_share": 0.17,
+      "dollars": 7.0,
+      "shares": 0.9602,
+      "pct_of_equity": 0.06,
+      "risk_amount": 0.16,
       "capped_by": "dry powder",
-      "note": "Stop $7.11 (200-day, 12.8% below). Risking 1% of equity ($1) buys $5 — capped by dry powder."
+      "note": "Stop $7.12 (200-day, 2.3% below). Risking 1% of equity ($0) buys $7 — capped by dry powder."
     },
     "error": null
   },
@@ -1275,6 +1271,2040 @@
       "risk_amount": 0.42,
       "capped_by": "dry powder",
       "note": "Stop $203.41 (2x ATR, 8.4% below). Risking 1% of equity ($0) buys $5 — capped by dry powder."
+    },
+    "error": null
+  },
+  "NNE": {
+    "symbol": "NNE",
+    "name": "Nano Nuclear Energy Inc.",
+    "price": 20.52,
+    "ts": 1786658568.4190032,
+    "as_of": "2026-08-13 17:02:48",
+    "engine": "claude",
+    "agents": [
+      {
+        "key": "bull",
+        "name": "Bull Agent",
+        "round": 1,
+        "position": "BULLISH",
+        "confidence": 62,
+        "points": [
+          "Shares jumped 7.94% today to $20.52 on an earnings beat, per MarketBeat.",
+          "Benchmark just reiterated a Buy with a $45 price target today.",
+          "Average analyst target is $42.17, more than double the current $20.52 price.",
+          "Volume today is 1.59x normal, showing real buying interest behind the move.",
+          "Named a top pick for AI data center power, tying it to a growing theme."
+        ],
+        "strongest": "Six analysts see fair value near $42, over 2x today's $20.52 price.",
+        "ok": true
+      },
+      {
+        "key": "bear",
+        "name": "Bear Agent",
+        "round": 1,
+        "position": "NEUTRAL",
+        "confidence": 50,
+        "points": [],
+        "strongest": "",
+        "ok": true
+      },
+      {
+        "key": "macro",
+        "name": "Macro Agent",
+        "round": 1,
+        "position": "NEUTRAL",
+        "confidence": 48,
+        "points": [
+          "NNE sits 63.76% below its 52-week high of $56.63, in a long-term downtrend with price below its 200-level average of 26.7432 — capital has rotated out of speculative nuclear despite the theme.",
+          "Nuclear/SMR power for AI data centers is a live rotation theme — 3 of 8 recent headlines tie NNE directly to AI data-center power demand.",
+          "NNE is pre-revenue and just missed Q3 revenue estimates with a loss, the profile of an early-adoption-curve name that is sensitive to the rate backdrop.",
+          "Six analysts still hold a mean target of $42.16667 (105.49% upside), showing some institutional belief the sector theme has further room.",
+          "Position is only 2.0% of the book ($226), so this name carries no meaningful macro exposure either way for the client's portfolio."
+        ],
+        "strongest": "NNE trades 63.76% below its 52-week high and below its 200-level average of 26.7432, showing capital has rotated out of speculative nuclear even as the AI-power theme stays alive.",
+        "ok": true
+      },
+      {
+        "key": "risk",
+        "name": "Risk Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 74,
+        "points": [
+          "Position is only $226, 2% of the book — too small to change the risk picture either way.",
+          "Book is 100% deployed with just $7 of spare cash, so there's no room to add without trimming something else.",
+          "The desk's stop at $17.69 caps the loss on this name at about $1 — trivial next to the $222 daily loss limit.",
+          "Total open risk across the book is already 8.03% of equity ($893) and status is Elevated — no reason to add more.",
+          "Nothing has changed since the last call — price is flat at $20.52, so Hold stands."
+        ],
+        "strongest": "Total open risk is already 8.03% of equity with the desk status Elevated, so adding risk here isn't justified.",
+        "ok": true
+      },
+      {
+        "key": "execution",
+        "name": "Execution Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 55,
+        "points": [
+          "You bought 11 shares yesterday at $19.52 — hold, do nothing at $20.52.",
+          "Price is unchanged since your last check, no new fact to act on.",
+          "Stop-loss is set at $17.69 — sell if it drops there.",
+          "Position is just $226, 2% of your book — no need to add more now.",
+          "Today's earnings beat and the $45 analyst target are already reflected in the price."
+        ],
+        "strongest": "Nothing material has changed since your last call, so keep holding at $20.52 with the stop at $17.69.",
+        "ok": true
+      }
+    ],
+    "agents_reporting": 5,
+    "tally": {
+      "bullish": 1,
+      "bearish": 0,
+      "neutral": 4
+    },
+    "verdict": "APPROVE",
+    "action": "HOLD",
+    "score": 58,
+    "headline": "Hold NNE — you bought yesterday, earnings beat is already in the price.",
+    "rationale": [
+      "Risk agent wins on evidence: nothing has moved since the last call, so nothing to do.",
+      "Execution agent is right that the earnings beat and $45 target are already in today's price.",
+      "I overrule Bull's 62 confidence — a $42 average target is a wish, not a reason to buy today.",
+      "Macro's downtrend point is real but doesn't apply: this is a small speculative bet, already sized.",
+      "You opened this yesterday at $19.52 — the plan is to let it work, not add on day two."
+    ],
+    "dissent": [
+      "If the earnings beat marks a real turn in the business, buying only 11 shares will look far too timid."
+    ],
+    "entry": "",
+    "target": "$42.17",
+    "stop": "$17.69",
+    "sizing": {
+      "symbol": "NNE",
+      "price": 20.52,
+      "stop": 17.69,
+      "stop_basis": "2x ATR",
+      "risk_per_share": 2.83,
+      "dollars": 7.0,
+      "shares": 0.3411,
+      "pct_of_equity": 0.06,
+      "risk_amount": 0.97,
+      "capped_by": "dry powder",
+      "note": "Stop $17.69 (2x ATR, 13.8% below). Risking 1% of equity ($1) buys $7 — capped by dry powder."
+    },
+    "error": null
+  },
+  "AVGO": {
+    "symbol": "AVGO",
+    "name": "Broadcom Inc.",
+    "price": 417.82,
+    "ts": 1786658686.1934187,
+    "as_of": "2026-08-13 17:04:46",
+    "engine": "claude",
+    "agents": [
+      {
+        "key": "bull",
+        "name": "Bull Agent",
+        "round": 1,
+        "position": "BULLISH",
+        "confidence": 62,
+        "points": [
+          "Trend is up: price $417.82 sits above every key average, with the fastest average at $398.38 leading higher.",
+          "Momentum just turned up again, backed by a golden-cross setup, both flagged bullish in the data.",
+          "45 analysts rate it strong_buy with an average target of $527.88, about 26% above today's price.",
+          "Still 13% below its 52-week high of $480.81, leaving room to run before it's stretched.",
+          "Position is already up 3.9% since cost, confirming the July 15 add is working."
+        ],
+        "strongest": "45 analysts rate AVGO strong_buy with a $527.88 target, 26% above the current $417.82 price.",
+        "ok": true
+      },
+      {
+        "key": "bear",
+        "name": "Bear Agent",
+        "round": 1,
+        "position": "BEARISH",
+        "confidence": 35,
+        "points": [
+          "Broadcom trades near fair value but at a premium — one source flags the 23.8x earnings multiple as overvalued.",
+          "Today's small gain came on light trading, only 74% of the normal volume, so buying support looks thin.",
+          "The stock is still 13.1% below its $480.81 high — it hasn't proven it can push to new highs.",
+          "The whole book is 100% invested with just $7 of spare cash and $893 already sitting at risk on stops.",
+          "Shares were already added on 2026-07-15 near $402 — buying more here just stacks size in one crowded AI bet."
+        ],
+        "strongest": "Two separate sources call Broadcom pricey at 23.8x earnings, near fair value but paying a premium for it.",
+        "ok": true
+      },
+      {
+        "key": "macro",
+        "name": "Macro Agent",
+        "round": 1,
+        "position": "BULLISH",
+        "confidence": 58,
+        "points": [
+          "Price $417.82 sits above the 20/50/200 averages ($398.38/$392.04/$368.08) with a golden-cross regime, signaling capital is still rotating into AI infrastructure.",
+          "45 analysts carry a strong_buy with a $527.88 mean target, 26.34% above spot, implying the Street still expects capital to flow this direction.",
+          "Volume is running 0.7383x the 20-day average, a sign this rotation trade is cooling rather than pulling in fresh money right now.",
+          "Cathie Wood added $16.2 million of a popular semiconductor stock on 2026-08-12, evidence new capital is still entering this corner of the theme.",
+          "A Yahoo Finance headline flags AVGO as overvalued at 23.8x P/E even as it trades only 13.1% off its 52-week high, a late-cycle valuation risk."
+        ],
+        "strongest": "AVGO trades above every major trend line in a golden-cross regime, the clearest sign capital rotation into AI infrastructure is still intact.",
+        "ok": true
+      },
+      {
+        "key": "risk",
+        "name": "Risk Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 40,
+        "points": [
+          "Book is 100% invested with only $7 spare, and this trade risks just $1 against a $386.53 stop.",
+          "AVGO is already 13.4% of the book at $1,487, on top of 18% NVDA and 14% VRT in the same AI trade.",
+          "Total open risk across the book is already 8.03% of equity ($893), well into the elevated status.",
+          "Low correlation (0.13 average) means this isn't one crowded bet, so a tiny $7 add doesn't meaningfully raise book risk.",
+          "Position is already up 3.9% since the July 15 add, so there's no damage to repair here."
+        ],
+        "strongest": "The desk's own size caps this add at $7 risking $1, too small to move the 8.03% open-risk needle either way.",
+        "ok": true
+      },
+      {
+        "key": "execution",
+        "name": "Execution Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 55,
+        "points": [
+          "Hold AVGO — do nothing new, it's already up 3.9% from your $401.97 cost.",
+          "The desk only allows a $7 add near $417.82 right now — that's the full ticket size.",
+          "Set your stop at $386.53 to protect the position if it falls.",
+          "Only $7 of cash exists across your whole book, so any add stays token-sized.",
+          "No earnings date is in this data, so there's no binary event to trade around now."
+        ],
+        "strongest": "With only $7 of dry powder in the whole book, execution here means hold and protect with a $386.53 stop, not add size.",
+        "ok": true
+      }
+    ],
+    "agents_reporting": 5,
+    "tally": {
+      "bullish": 2,
+      "bearish": 1,
+      "neutral": 2
+    },
+    "verdict": "APPROVE",
+    "action": "HOLD",
+    "score": 66,
+    "headline": "Hold AVGO — nothing changed since yesterday, and the position is working.",
+    "rationale": [
+      "Bull's trend and analyst case wins: 45 analysts at strong buy, average target $527.88, 26% above today.",
+      "I overrule Bear's valuation point — 23.8x earnings is one headline opinion, not a broken business.",
+      "Bear's crowding point survives: AVGO 13.4%, NVDA 18%, VRT 14% is a lot of one AI bet.",
+      "Execution and Risk are right that a $7 add is meaningless — not worth an order.",
+      "Client already added at $402 on July 15 and is up 3.9%; that work is done."
+    ],
+    "dissent": [
+      "If AI infrastructure spending slows, AVGO plus NVDA plus VRT all fall together — that is 45% of the book.",
+      "Buying support was light today, so the move toward $480.81 may stall first."
+    ],
+    "entry": "",
+    "target": "$527.88",
+    "stop": "$386.53",
+    "sizing": {
+      "symbol": "AVGO",
+      "price": 417.82,
+      "stop": 386.53,
+      "stop_basis": "2x ATR",
+      "risk_per_share": 31.29,
+      "dollars": 7.0,
+      "shares": 0.0168,
+      "pct_of_equity": 0.06,
+      "risk_amount": 0.53,
+      "capped_by": "dry powder",
+      "note": "Stop $386.53 (2x ATR, 7.5% below). Risking 1% of equity ($1) buys $7 — capped by dry powder."
+    },
+    "error": null
+  },
+  "GOOGL": {
+    "symbol": "GOOGL",
+    "name": "Alphabet Inc.",
+    "price": 346.36,
+    "ts": 1786658743.7345564,
+    "as_of": "2026-08-13 17:05:43",
+    "engine": "claude",
+    "agents": [
+      {
+        "key": "bull",
+        "name": "Bull Agent",
+        "round": 1,
+        "position": "BULLISH",
+        "confidence": 58,
+        "points": [
+          "Berkshire and other top managers just bought GOOGL, per today's headlines, showing smart money is stepping in near $346.",
+          "Analysts rate it a strong buy with a $428 average target, about 24% above today's price.",
+          "Google is already using Gemini AI in real products, like the new AI doctor booking with Zocdoc.",
+          "Stock is down only 14% from its $402 high, holding a floor while still trending up over the last year.",
+          "Price near $346 is basically at the average of its recent range, not stretched."
+        ],
+        "strongest": "Berkshire and other big-name investors bought GOOGL last quarter while analysts see 24% more upside from here.",
+        "ok": true
+      },
+      {
+        "key": "bear",
+        "name": "Bear Agent",
+        "round": 1,
+        "position": "BEARISH",
+        "confidence": 32,
+        "points": [
+          "GOOGL sits at $346.36, below its own $354.14 average price — it's stuck, not climbing, despite the AI story.",
+          "Today's move came on barely half of normal trading volume (0.55x) — very few buyers are actually behind this bounce.",
+          "The position is already down 4.9% from cost, and the July 27 add cost more than today's $346.36 price.",
+          "Google just raised its own prices because of a memory chip shortage — a warning sign on costs while AI spending stays heavy.",
+          "Portfolio risk is flagged ELEVATED with $893 already exposed to stop-outs — adding here stretches an already tight budget."
+        ],
+        "strongest": "The July 27 add is already underwater and the stock can't climb back above its own recent average price.",
+        "ok": true
+      },
+      {
+        "key": "macro",
+        "name": "Macro Agent",
+        "round": 1,
+        "position": "NEUTRAL",
+        "confidence": 55,
+        "points": [
+          "Berkshire and Fidelity's Contrafund are reportedly still buying GOOGL, showing big money rotating into this AI leader.",
+          "Google just raised prices due to a memory chip shortage, a cost headwind hitting the whole AI buildout.",
+          "Trading volume is only 0.55x normal, so the recent bounce lacks strong buying conviction right now.",
+          "Wall Street's average target is $428, implying 23.58% upside if AI capital keeps favoring Alphabet.",
+          "Price sits 13.9% below its 52-week high and has moved sideways, putting it mid-cycle, not stretched."
+        ],
+        "strongest": "Berkshire and Fidelity buying GOOGL signals big money still rotating into this AI leader despite sideways price action.",
+        "ok": true
+      },
+      {
+        "key": "risk",
+        "name": "Risk Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 60,
+        "points": [
+          "Book is 100% deployed with only $7 of dry powder, matching this trade's entire size exactly.",
+          "Total open risk to stops already sits at 8.03% of equity ($893) with desk status ELEVATED.",
+          "GOOGL plus AI-theme names NVDA 18%, VRT 14%, AVGO 13%, CEG 8% make this book heavily one-directional despite 0.13 average correlation.",
+          "The $330.72 stop is a real level 4.5% below the $346.36 price and is survivable given the position risks $0 at this size.",
+          "Position is already down 4.9% from cost after a July 27 add, so this book has no cushion left in the name."
+        ],
+        "strongest": "With only $7 of dry powder and 8.03% of equity already exposed to stops under an ELEVATED status, this book has no room to add risk.",
+        "ok": true
+      },
+      {
+        "key": "execution",
+        "name": "Execution Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 55,
+        "points": [
+          "Do nothing right now — hold GOOGL near $346, no new buy needed.",
+          "Stop stays at $330.72; sell if price breaks below that.",
+          "New buy room is only $7, basically nothing — skip adding today.",
+          "You already added shares on 7/27; no reason to buy more now.",
+          "Only act again if price breaks $330.72 or nears the $428 target."
+        ],
+        "strongest": "Keep the stop at $330.72 and hold — the sizing desk allows only $7 of new risk, so there's nothing worth executing today.",
+        "ok": true
+      }
+    ],
+    "agents_reporting": 5,
+    "tally": {
+      "bullish": 1,
+      "bearish": 1,
+      "neutral": 3
+    },
+    "verdict": "APPROVE",
+    "action": "HOLD",
+    "score": 68,
+    "headline": "Hold GOOGL — nothing changed since yesterday, business is fine, no new buy.",
+    "rationale": [
+      "Bull's point that Berkshire and top managers bought here beats Bear's complaint about a quiet trading day.",
+      "Bear's cost warning from the memory-chip price hike is real but hits every AI name, not just Google.",
+      "I overruled Bear entirely — a 4.9% paper loss on a $727 position is noise, not a broken thesis.",
+      "Execution and Risk win the practical point: $7 of spare cash means there is nothing to add with.",
+      "Client already added on 7/27 near these prices — that was the right move and it stands."
+    ],
+    "dissent": [
+      "If Google's costs keep rising and profits shrink next earnings, the sideways price becomes a real warning.",
+      "Roughly half the book sits in AI-linked names, so one bad AI quarter hurts everywhere at once."
+    ],
+    "entry": "",
+    "target": "$428.04",
+    "stop": "$330.72",
+    "sizing": {
+      "symbol": "GOOGL",
+      "price": 346.36,
+      "stop": 330.72,
+      "stop_basis": "200-day",
+      "risk_per_share": 15.64,
+      "dollars": 7.0,
+      "shares": 0.0202,
+      "pct_of_equity": 0.06,
+      "risk_amount": 0.32,
+      "capped_by": "dry powder",
+      "note": "Stop $330.72 (200-day, 4.5% below). Risking 1% of equity ($0) buys $7 — capped by dry powder."
+    },
+    "error": null
+  },
+  "CEG": {
+    "symbol": "CEG",
+    "name": "Constellation Energy Corporatio",
+    "price": 282.5,
+    "ts": 1786744869.120842,
+    "as_of": "2026-08-14 17:01:09",
+    "engine": "claude",
+    "agents": [
+      {
+        "key": "bull",
+        "name": "Bull Agent",
+        "round": 1,
+        "position": "BULLISH",
+        "confidence": 60,
+        "points": [
+          "Wall Street sees more room: mean target $349.96, about 24% above the $282.50 price.",
+          "21 analysts rate it a buy, and momentum is picking up as the stock climbs.",
+          "New power deals just signed for 920 megawatts, adding contracted revenue.",
+          "Barchart flags CEG as a top way to play the AI power demand story.",
+          "Already up 8.2% on the position since the $261.19 buy-in price."
+        ],
+        "strongest": "21 analysts rate CEG a buy with a $349.96 target, nearly 24% above today's $282.50 price.",
+        "ok": true
+      },
+      {
+        "key": "bear",
+        "name": "Bear Agent",
+        "round": 1,
+        "position": "BEARISH",
+        "confidence": 30,
+        "points": [
+          "CEG is down 29.78% from its 402.322 high and still can't reclaim it.",
+          "The 302.0657 long-term average sits above price, meaning the multi-month trend is still broken.",
+          "Trading volume is only 0.6989x normal, so today's +1.39% pop lacks real buying conviction.",
+          "Insider at rival nuclear name Oklo sold $4.9 million in stock amid market skepticism, a warning sign for the whole nuclear-power trade.",
+          "WSJ headline flags 'Red-Hot Power Stocks Are Losing Steam,' matching CEG's stalled, sideways trend."
+        ],
+        "strongest": "CEG remains 29.78% below its high with the long-term trend still broken below the 302.07 average — this is not a clean uptrend.",
+        "ok": true
+      },
+      {
+        "key": "macro",
+        "name": "Macro Agent",
+        "round": 1,
+        "position": "NEUTRAL",
+        "confidence": 55,
+        "points": [
+          "The Wall Street Journal flagged Aug 12 that power stocks broadly are losing steam, a sector-wide headwind.",
+          "CEG is still 29.78% below its 52-week high of $402.32, well into a corrective stretch.",
+          "Wall Street's mean target is $349.96 across 21 analysts, implying 23.88% upside despite the pullback.",
+          "AI power demand is early in its buildout, a multi-year tailwind for nuclear supply like CEG.",
+          "Trading is light at 0.70x normal volume, meaning no urgent capital is flowing in or out right now."
+        ],
+        "strongest": "Power stocks broadly are losing steam per the WSJ on Aug 12, a bigger risk than any single number on CEG.",
+        "ok": true
+      },
+      {
+        "key": "risk",
+        "name": "Risk Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 55,
+        "points": [
+          "CEG is already 8.3% of the book at $919 — no room to add without concentrating further.",
+          "The book is 100% deployed with just $7 of dry powder, matching the desk's tiny $7 add size exactly.",
+          "Total open risk across the book is already 7.73% of equity ($853), and status is ELEVATED with today at -$87 of a $221 daily limit.",
+          "The stop at $262.95 risks $0 on this sizing, so this is a paperwork trim, not a real bet either way.",
+          "Correlation across the book is low at 0.13, so CEG isn't compounding a crowded factor bet — that's the one point in its favor."
+        ],
+        "strongest": "Book is 100% deployed with only $7 of dry powder — there is no capacity to add to CEG right now.",
+        "ok": true
+      },
+      {
+        "key": "execution",
+        "name": "Execution Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 55,
+        "points": [
+          "CEG sits 29.78% below its $402.32 high and hasn't reclaimed the $302.07 level yet.",
+          "Today's move is on light volume, only 0.70x normal, so it's not a strong signal either way.",
+          "21 analysts still rate it a buy with a $349.96 target, about 24% above the $282.50 price.",
+          "WSJ flagged power stocks broadly losing steam on 2026-08-12, a sector headwind worth respecting."
+        ],
+        "strongest": "21 analysts rate CEG a buy with a $349.96 target, 24% above today's $282.50 price.",
+        "ok": true
+      }
+    ],
+    "agents_reporting": 5,
+    "tally": {
+      "bullish": 1,
+      "bearish": 1,
+      "neutral": 3
+    },
+    "verdict": "APPROVE",
+    "action": "HOLD",
+    "score": 66,
+    "headline": "Hold CEG — signed power deals intact, nothing new since my last call.",
+    "rationale": [
+      "Bull's contracted-power point wins: 920 megawatts of signed deals is real revenue, not a story.",
+      "I overruled Bear — an insider sale at Oklo, a different company, tells us nothing about CEG.",
+      "Bear's 'light volume' complaint is noise; quiet trading is not a reason to sell a business.",
+      "Risk Agent is right that CEG is already 8.3% of the book, so no adding here.",
+      "Price moved 0.5% since my last call — immaterial, so the call stays exactly where it was."
+    ],
+    "dissent": [
+      "The WSJ piece on power stocks losing steam is fair — CEG has gone sideways for months.",
+      "CEG is still 30% below its $402 high and has not reclaimed $302 yet.",
+      "If the next quarter shows nuclear output slipping further, the deal wins stop mattering."
+    ],
+    "entry": "",
+    "target": "$349.96",
+    "stop": "$262.95",
+    "sizing": {
+      "symbol": "CEG",
+      "price": 282.5,
+      "stop": 262.95,
+      "stop_basis": "2x ATR",
+      "risk_per_share": 19.55,
+      "dollars": 7.0,
+      "shares": 0.0248,
+      "pct_of_equity": 0.06,
+      "risk_amount": 0.48,
+      "capped_by": "dry powder",
+      "note": "Stop $262.95 (2x ATR, 6.9% below). Risking 1% of equity ($0) buys $7 — capped by dry powder."
+    },
+    "error": null
+  },
+  "LLY": {
+    "symbol": "LLY",
+    "name": "Eli Lilly and Company",
+    "price": 1180.16,
+    "ts": 1786744927.3016844,
+    "as_of": "2026-08-14 17:02:07",
+    "engine": "claude",
+    "agents": [
+      {
+        "key": "bull",
+        "name": "Bull Agent",
+        "round": 1,
+        "position": "BULLISH",
+        "confidence": 62,
+        "points": [
+          "Europe just approved Lilly's obesity pill, opening a new market on top of US demand.",
+          "27 analysts rate it buy with a $1,299 target, about 10% above today's $1,180.16.",
+          "Trend is still up: price sits above its 20/50/200-day averages and above the 200-day by 13%.",
+          "The bullish crossover and rising momentum reading both point the same direction.",
+          "Today's -2.39% dip is a $28 pullback in a stock still up huge off the $691.96 low, a buyable level."
+        ],
+        "strongest": "Europe's first obesity-pill approval adds a fresh, durable growth leg on top of an already-uptrending, buy-rated stock.",
+        "ok": true
+      },
+      {
+        "key": "bear",
+        "name": "Bear Agent",
+        "round": 1,
+        "position": "BEARISH",
+        "confidence": 34,
+        "points": [
+          "Stock is down 2.39% today to $1180.16 with volume only 0.796x normal, so few buyers are stepping in on the dip.",
+          "Price $1180.16 sits below its $1182.01 short-term average, a level it just lost.",
+          "Analyst mean target $1299.01 implies only 10.07% upside for a stock 5.8% of the book and already near its $1235.56 high.",
+          "Position is already down 3.3% from a $1220.93 cost basis, and the July 28 watchpoint at $1226.54 was hit with no client action taken.",
+          "Book-wide status is ELEVATED with 7.73% of equity at risk to stops ($853) and daily loss already at $87 of a $221 limit, so any new LLY weakness adds to a book with little room left."
+        ],
+        "strongest": "The stock just broke below its own short-term trend line on weak volume the same day it dropped 2.39%, and the client already has an unactioned watchpoint sitting at $1226.54.",
+        "ok": true
+      },
+      {
+        "key": "macro",
+        "name": "Macro Agent",
+        "round": 1,
+        "position": "NEUTRAL",
+        "confidence": 55,
+        "points": [
+          "Healthcare draws defensive rotation flows when growth stocks wobble, and LLY sits only 4.48% below its $1235.5601 high.",
+          "Europe's approval of Lilly's weight-loss pill is a policy tailwind that widens the obesity market Lilly is riding.",
+          "New legal action over illegal Retatrutide sales is a regulatory headwind that could slow adoption of the newest drug.",
+          "Wall Street's 27 analysts still rate LLY a buy with a $1299.0067 target, 10.07% above today's $1180.16.",
+          "This position is only 5.8% of the book at $638, so sector rotation here barely moves total portfolio risk."
+        ],
+        "strongest": "Europe's approval of Lilly's weight-loss pill is the clearest policy tailwind, expanding the addressable obesity market right now.",
+        "ok": true
+      },
+      {
+        "key": "risk",
+        "name": "Risk Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 45,
+        "points": [
+          "Book is ELEVATED with $853 already at risk to stops (7.73% of equity) and today's loss at $87 of the $221 limit.",
+          "Dry powder is $7 with the book 100% deployed, so the deterministic size of $7 is all that's available.",
+          "The desk-set stop $1099.20 risks essentially $0 at this size, so it cannot breach the 1% ($110) per-trade budget.",
+          "LLY already sits at 5.8-6% of the book; adding is immaterial to concentration next to NVDA at 18% and VRT at 15%.",
+          "Average pairwise correlation is only 0.13, so LLY is a genuine diversifier against the tech-heavy sleeve, not a stacked bet."
+        ],
+        "strongest": "The trade is capped at $7 with near-zero dollar risk, so it cannot move the book's already-elevated risk profile in either direction.",
+        "ok": true
+      },
+      {
+        "key": "execution",
+        "name": "Execution Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 45,
+        "points": [
+          "Hold LLY — do nothing new; price is $1180.16 and the sizing plan only allows $7.",
+          "$7 is too small to place as a real order — skip a new buy right now.",
+          "Protect the shares you already hold with a stop at $1099.20.",
+          "No earnings date is in this data, so there's no binary event to plan around.",
+          "The book has only $7 of cash left, so there's no room to add more here anyway."
+        ],
+        "strongest": "The sizing plan only frees up $7 for LLY, so the only real move is hold and set the $1099.20 stop.",
+        "ok": true
+      }
+    ],
+    "agents_reporting": 5,
+    "tally": {
+      "bullish": 1,
+      "bearish": 1,
+      "neutral": 3
+    },
+    "verdict": "APPROVE",
+    "action": "HOLD",
+    "score": 68,
+    "headline": "Hold LLY — the business is winning and nothing broke today.",
+    "rationale": [
+      "Bull's Europe obesity-pill approval wins: a new market opened, and that is the thesis.",
+      "I overrule Bear — a $28 dip on light volume is noise, not a thesis break.",
+      "Bear's 'below its short-term average' point is a rounding error at $1180 vs $1182.",
+      "Macro's read is right: LLY is your only healthcare name and it diversifies the tech-heavy book.",
+      "Execution is correct that $7 is too small to place — no new buy today."
+    ],
+    "dissent": [
+      "The lawsuit over illegal Retatrutide sales could slow the newest drug's launch if it widens.",
+      "Only 10% upside to the $1,299 analyst target is a thin cushion near the $1,235.56 high.",
+      "You are 100% invested with $7 cash, so any real dip here cannot be bought."
+    ],
+    "entry": "",
+    "target": "$1299",
+    "stop": "$1099.20",
+    "sizing": {
+      "symbol": "LLY",
+      "price": 1180.16,
+      "stop": 1099.2,
+      "stop_basis": "2x ATR",
+      "risk_per_share": 80.96,
+      "dollars": 7.0,
+      "shares": 0.0059,
+      "pct_of_equity": 0.06,
+      "risk_amount": 0.48,
+      "capped_by": "dry powder",
+      "note": "Stop $1,099.20 (2x ATR, 6.9% below). Risking 1% of equity ($0) buys $7 — capped by dry powder."
+    },
+    "error": null
+  },
+  "MRK": {
+    "symbol": "MRK",
+    "name": "Merck & Company, Inc.",
+    "price": 135.84,
+    "ts": 1786744984.6037908,
+    "as_of": "2026-08-14 17:03:04",
+    "engine": "claude",
+    "agents": [
+      {
+        "key": "bull",
+        "name": "Bull Agent",
+        "round": 1,
+        "position": "BULLISH",
+        "confidence": 58,
+        "points": [
+          "Stock is at $135.84, tied with its 52-week high, showing steady buying interest all year.",
+          "Price is well above its longer-term trend lines ($129.97, $125.36, $112.70), confirming a strong, established uptrend.",
+          "All 26 covering analysts rate it a buy, with an average target of $136.85.",
+          "Simply Wall St. says fair value estimates just moved higher after analysts backed pipeline progress (2026-08-13).",
+          "A potential partnership with Gilead is being framed as a possible next growth engine for Merck (2026-08-13)."
+        ],
+        "strongest": "All 26 analysts rate MRK a buy while the stock sits right at its 52-week high of $135.84.",
+        "ok": true
+      },
+      {
+        "key": "bear",
+        "name": "Bear Agent",
+        "round": 1,
+        "position": "BEARISH",
+        "confidence": 42,
+        "points": [
+          "Merck sits at $135.84, just 0.0% below its 52-week high with almost no room left to run.",
+          "Wall Street's own target is $136.84 — only 0.74% above today's price, so the analyst case is basically priced in already.",
+          "Volume is just 0.56x the 20-day average, meaning this push to the highs lacks real buying conviction.",
+          "The stock is stretched (RSI 68.8, above its upper Bollinger band), the kind of setup that often cools off.",
+          "The whole book is 100% deployed with risk status ELEVATED, so there's no cushion if healthcare names roll over together."
+        ],
+        "strongest": "Analysts' own $136.84 target is barely above the $135.84 price, leaving almost no upside case left to buy.",
+        "ok": true
+      },
+      {
+        "key": "macro",
+        "name": "Macro Agent",
+        "round": 1,
+        "position": "NEUTRAL",
+        "confidence": 55,
+        "points": [
+          "Price is $135.84, right at the $135.84 52-week high, leaving almost no room from here (0.0% off high).",
+          "Analyst mean target is $136.85, only 0.74% above the current price, so the crowd sees little upside left.",
+          "Today's move came on 0.56x normal volume, a thin, low-conviction advance rather than fresh buying pressure.",
+          "Healthcare is a defensive sector; the position is just 1.0% of the book ($113), too small to matter to overall exposure.",
+          "The book is 100% deployed with the risk desk at ELEVATED status, so there's no capital-rotation case to add to this name now."
+        ],
+        "strongest": "Analyst mean target of $136.85 is only 0.74% above the $135.84 price, so the sector/name has little room left before it's priced in.",
+        "ok": true
+      },
+      {
+        "key": "risk",
+        "name": "Risk Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 66,
+        "points": [
+          "Hold MRK — do nothing, it's only $113, 1% of your book.",
+          "No cash to add anyway — you're 100% invested with just $7 free.",
+          "You're already risking 7.73% of the book to stops across all positions.",
+          "Today you're down $87 of a $221 daily loss limit — already elevated.",
+          "Merck moves mostly independent of your other holdings, so it isn't adding concentration risk."
+        ],
+        "strongest": "There's no spare cash to add to MRK, and the book is already carrying 7.73% of equity in open risk to stops.",
+        "ok": true
+      },
+      {
+        "key": "execution",
+        "name": "Execution Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 60,
+        "points": [
+          "No new entry today — you already own it at $135.84, right at the 52-week high of $135.84.",
+          "Desk sizing allows only $7 more (0.1% of equity) with $0 at risk, too small to bother adding.",
+          "Stop is set at $129.25 if you ever do add — that's the level to watch, not today's price.",
+          "Book has just $7 of dry powder left, so there's no real capital to deploy into MRK anyway.",
+          "Hold — do nothing with MRK; let the 0.83532 shares from the 2026-07-29 buy season."
+        ],
+        "strongest": "Desk sizing caps any add at $7 with $0 risked, so mechanically there is nothing to execute — just hold.",
+        "ok": true
+      }
+    ],
+    "agents_reporting": 5,
+    "tally": {
+      "bullish": 1,
+      "bearish": 1,
+      "neutral": 3
+    },
+    "verdict": "APPROVE",
+    "action": "HOLD",
+    "score": 62,
+    "headline": "Hold MRK — a good business at its high, bought two weeks ago. Do nothing.",
+    "rationale": [
+      "Bull's pipeline and Gilead partnership points win on business substance — the reason to own Merck is intact.",
+      "I overrule Bear's 'no room left to run' claim — analyst targets are not a ceiling on a compounder.",
+      "Bear's real point survives: this push to the high came on light trading, so chasing here earns nothing.",
+      "Execution Agent is right that $7 of buying power makes any add meaningless — there is nothing to do.",
+      "Client opened this position on 2026-07-29 and it is up 3.1%; let it season, do not touch it."
+    ],
+    "dissent": [
+      "If Merck's pipeline news turns and drug growth stalls, a 1% position at its high would deserve a real re-think."
+    ],
+    "entry": "",
+    "target": "",
+    "stop": "$129.25",
+    "sizing": {
+      "symbol": "MRK",
+      "price": 135.84,
+      "stop": 129.25,
+      "stop_basis": "2x ATR",
+      "risk_per_share": 6.59,
+      "dollars": 7.0,
+      "shares": 0.0515,
+      "pct_of_equity": 0.06,
+      "risk_amount": 0.34,
+      "capped_by": "dry powder",
+      "note": "Stop $129.25 (2x ATR, 4.9% below). Risking 1% of equity ($0) buys $7 — capped by dry powder."
+    },
+    "error": null
+  },
+  "GD": {
+    "symbol": "GD",
+    "name": "General Dynamics Corporation",
+    "price": 395.78,
+    "ts": 1786745023.1691766,
+    "as_of": "2026-08-14 17:03:43",
+    "engine": "claude",
+    "agents": [
+      {
+        "key": "bull",
+        "name": "Bull Agent",
+        "round": 1,
+        "position": "BULLISH",
+        "confidence": 62,
+        "points": [
+          "GD sits near its 52-week high of $395.97, just 0.05% below, showing real strength.",
+          "21 analysts rate GD a buy with an average target of $419.07, about 6% above today's $395.78.",
+          "The stock has climbed steadily, price is above its 200-day trend line at $349.45, confirming the uptrend.",
+          "Golden Dome missile interceptor testing and Pentagon plans to boost missile stockpiles are direct tailwinds for a defense contractor like GD."
+        ],
+        "strongest": "21 analysts rate GD a buy with a $419.07 target, roughly 6% above the current $395.78 price.",
+        "ok": true
+      },
+      {
+        "key": "bear",
+        "name": "Bear Agent",
+        "round": 1,
+        "position": "BEARISH",
+        "confidence": 48,
+        "points": [
+          "Price sits just $0.19 below its 52-week high of $395.97 with barely any volume behind it — only 0.4374x the normal 20-day average.",
+          "A General Dynamics director just sold over $788K in shares and the CFO cashed out 28,300 options on 2026-08-12 — insiders selling into strength.",
+          "Headline flags 'Mesquite Shell Delays and Board Shake-Up' as something that 'Might Change The Case For Investing In General Dynamics.'",
+          "StockStory named GD one of '3 Industrials Stocks That Concern Us' today, 2026-08-14.",
+          "Even the bull case only gets you 5.89% upside to the average analyst target of $419.07 — thin reward for the risk."
+        ],
+        "strongest": "Insiders sold heavily right as the stock stalled 0.4% below its 52-week high on weak volume — that combination is a classic top signal.",
+        "ok": true
+      },
+      {
+        "key": "macro",
+        "name": "Macro Agent",
+        "round": 1,
+        "position": "BULLISH",
+        "confidence": 55,
+        "points": [
+          "Pentagon push to boost missile stockpiles is pulling capital into defense ETFs (Zacks, 2026-08-12).",
+          "Golden Dome interceptor progress signals durable government orbital-defense spending (IBD, 2026-08-13).",
+          "Sector rotation is largely priced in already: GD sits just 0.05% below its 52-week high of $395.97.",
+          "Weak participation undercuts the tailwind: today's volume is only 0.44x the 20-day average.",
+          "Limited headroom left for a cycle call: analyst mean target $419.07 is only 5.89% above price."
+        ],
+        "strongest": "Pentagon's missile stockpile buildup is fueling sector-wide capital rotation into defense names.",
+        "ok": true
+      },
+      {
+        "key": "risk",
+        "name": "Risk Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 58,
+        "points": [
+          "GD is just 2.3% of the book at $258 — too small to move risk either way.",
+          "Book is 100% deployed with only $7 of dry powder, so there's no room to add.",
+          "Total risk across all stops is already 7.73% of equity ($853) — status is ELEVATED.",
+          "The desk's own sizing for GD is just $7 with $0 risked — not worth acting on.",
+          "Stop is set at $380.77, a safe distance below the $395.78 price — fine to hold as is."
+        ],
+        "strongest": "The book is 100% deployed with only $7 of spare cash, so adding to GD isn't realistic right now.",
+        "ok": true
+      },
+      {
+        "key": "execution",
+        "name": "Execution Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 55,
+        "points": [
+          "Hold GD — do nothing, no new buy fits since only $7 of cash is free.",
+          "If adding later, use a stop at $380.77, not before.",
+          "Today's low trading volume (0.44x normal) means don't chase the price near $395.78.",
+          "No earnings date in the data, so this isn't a binary-event trade right now.",
+          "Position is just $258, 2.3% of the book — too small to trim, too small to matter yet."
+        ],
+        "strongest": "There's only $7 of cash available, so there's no room to add to GD regardless of the debate.",
+        "ok": true
+      }
+    ],
+    "agents_reporting": 5,
+    "tally": {
+      "bullish": 2,
+      "bearish": 1,
+      "neutral": 2
+    },
+    "verdict": "APPROVE",
+    "action": "HOLD",
+    "score": 62,
+    "headline": "Hold GD — do nothing; strong defense trend, but no cash and no new news.",
+    "rationale": [
+      "Bull's defense-spending tailwind and 21-analyst buy rating win — the business case is intact.",
+      "Bear's insider-sale point is overruled; option exercises and one director sale are routine, not a thesis break.",
+      "Risk's math wins: $258 is 2.3% of the book with $7 free — nothing actionable either way.",
+      "Macro's own admission that upside is thin caps enthusiasm; not enough to sell a week-old position.",
+      "Bear's low-volume worry is timing noise, not a reason to exit a name up 3%."
+    ],
+    "dissent": [
+      "If the Mesquite delay or board shake-up turns into a real guidance cut, the thesis weakens.",
+      "Only about 6% upside to the analyst target means patience may pay little near-term.",
+      "Book is fully deployed, so any forced cash raise could put this small position on the block first."
+    ],
+    "entry": "",
+    "target": "$419.07",
+    "stop": "$380.77",
+    "sizing": {
+      "symbol": "GD",
+      "price": 395.78,
+      "stop": 380.77,
+      "stop_basis": "2x ATR",
+      "risk_per_share": 15.01,
+      "dollars": 7.0,
+      "shares": 0.0177,
+      "pct_of_equity": 0.06,
+      "risk_amount": 0.27,
+      "capped_by": "dry powder",
+      "note": "Stop $380.77 (2x ATR, 3.8% below). Risking 1% of equity ($0) buys $7 — capped by dry powder."
+    },
+    "error": null
+  },
+  "BSX": {
+    "symbol": "BSX",
+    "name": "Boston Scientific Corporation",
+    "price": 51.83,
+    "ts": 1786753562.7285924,
+    "as_of": "2026-08-14 19:26:02",
+    "engine": "claude",
+    "agents": [
+      {
+        "key": "bull",
+        "name": "Bull Agent",
+        "round": 1,
+        "position": "BULLISH",
+        "confidence": 48,
+        "points": [
+          "Stock sits at $51.83, down 52% from its $108.14 high, leaving a lot of room to recover.",
+          "29 Wall Street analysts rate it a buy with an average target of $62.69, 20.95% above today's price.",
+          "Momentum just turned positive and price has climbed back above its recent $47.43 trading range.",
+          "Downside is capped hard: the desk's stop at $48.52 risks essentially nothing on this size.",
+          "Even after the drop, price is still up modestly today (+0.27%), showing buyers are stepping in."
+        ],
+        "strongest": "29 analysts rate BSX a buy with a $62.69 average target, 20.95% above the current $51.83 price.",
+        "ok": true
+      },
+      {
+        "key": "bear",
+        "name": "Bear Agent",
+        "round": 1,
+        "position": "BEARISH",
+        "confidence": 55,
+        "points": [
+          "Still down 52% from its 52-week high of $108.14 to $51.83, real trend damage not fully repaired.",
+          "Price of $51.83 sits far below its long-term average near $70.66, so the bigger trend is still down.",
+          "Recent bounce is stretched short-term and volume is light at 0.80x normal, so buying isn't convincing.",
+          "Headlines flag a 'growth slowdown in key businesses' and ask if it's still undervalued after the fall.",
+          "A large holder (Union Bancaire Privee) just sold 173,105 shares, a vote against the stock."
+        ],
+        "strongest": "BSX is still down 52% from its $108.14 high and trades far below its long-term average near $70.66.",
+        "ok": true
+      },
+      {
+        "key": "macro",
+        "name": "Macro Agent",
+        "round": 1,
+        "position": "NEUTRAL",
+        "confidence": 42,
+        "points": [
+          "Healthcare is a defensive sector, a natural landing spot when money rotates out of crowded tech and AI names like NVDA (18%) and AVGO (13%) in this book.",
+          "BSX trades at $51.83, still far below its long-term trend line near $70.66, so the bigger downtrend for this name isn't confirmed broken yet.",
+          "The stock is down 52% from its 52-week high of $108.14, showing how much ground was lost before any recent bounce.",
+          "The recent bounce is happening on light trading, only 0.80 times normal volume, so it doesn't look like a broad rotation into the name yet.",
+          "29 analysts still rate it a buy with a $62.69 target, 20.95% above today's $51.83, showing Street support despite the weak trend."
+        ],
+        "strongest": "BSX still sits far below its long-term trend ($51.83 vs $70.66), so the broken backdrop for this name hasn't reversed despite the recent bounce.",
+        "ok": true
+      },
+      {
+        "key": "risk",
+        "name": "Risk Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 58,
+        "points": [
+          "Buying BSX costs $7, all that's left of the book's $7 in dry powder — nothing left after this.",
+          "The stop at $48.52 keeps the loss on this trade near zero, so it doesn't add real risk.",
+          "The book already risks $853, or 7.73% of equity, across existing stops before this trade.",
+          "Today's loss is already $87 of the $221 daily limit, so there's little room left today.",
+          "BSX is a new name, not overlapping any of the ten positions already held, so it doesn't stack risk."
+        ],
+        "strongest": "This $7 trade barely moves the book, but it spends the desk's last dollar of cash.",
+        "ok": true
+      },
+      {
+        "key": "execution",
+        "name": "Execution Agent",
+        "round": 2,
+        "position": "BULLISH",
+        "confidence": 40,
+        "points": [
+          "Buy $7 of BSX near $51.83, stop at $48.52 — the desk-approved size and level.",
+          "This is a starter position only, not a full buy — $7 risks almost nothing.",
+          "29 analysts rate it a buy with a $62.69 target, room to add later if price holds above $51.83.",
+          "No earnings date in this data, so enter now in one shot rather than waiting.",
+          "If price falls to $48.52, sell all of it — that's the exit, no exceptions."
+        ],
+        "strongest": "",
+        "ok": true
+      }
+    ],
+    "agents_reporting": 5,
+    "tally": {
+      "bullish": 2,
+      "bearish": 1,
+      "neutral": 2
+    },
+    "verdict": "REJECT",
+    "action": "WATCH",
+    "score": 45,
+    "headline": "Good business, wrong moment — $7 buys nothing, so watch BSX instead.",
+    "rationale": [
+      "Risk Agent wins: buying BSX spends the last $7 of dry powder for a position that cannot matter.",
+      "Execution Agent is overruled — a $7 'starter' with a stop is a gesture, not a trade.",
+      "Bear's real point stands: at $51.83 the stock is still far under its long-term average near $70.66.",
+      "Bear's Union Bancaire share-sale bullet is noise — one fund selling tells us nothing about the business.",
+      "Bull's 29-analyst $62.69 target is genuine, but it argues for watching BSX, not for a token buy."
+    ],
+    "dissent": [
+      "If healthcare keeps attracting money out of tech, BSX runs from $51.83 and we own none of it.",
+      "Headlines flag a growth slowdown in key businesses — the recovery case may not be as close as the Street thinks."
+    ],
+    "entry": "",
+    "target": "$62.69",
+    "stop": "",
+    "sizing": {
+      "symbol": "BSX",
+      "price": 51.83,
+      "stop": 48.52,
+      "stop_basis": "2x ATR",
+      "risk_per_share": 3.31,
+      "dollars": 7.0,
+      "shares": 0.1351,
+      "pct_of_equity": 0.06,
+      "risk_amount": 0.45,
+      "capped_by": "dry powder",
+      "note": "Stop $48.52 (2x ATR, 6.4% below). Risking 1% of equity ($0) buys $7 — capped by dry powder."
+    },
+    "error": null
+  },
+  "BRK.B": {
+    "symbol": "BRK.B",
+    "name": "Berkshire Hathaway Inc. New",
+    "price": 498.23,
+    "ts": 1787004232.2665968,
+    "as_of": "2026-08-17 17:03:52",
+    "engine": "claude",
+    "agents": [
+      {
+        "key": "bull",
+        "name": "Bull Agent",
+        "round": 1,
+        "position": "BULLISH",
+        "confidence": 55,
+        "points": [
+          "Analysts rate it a buy with a target near $547.67, about 10% above today's $498.23.",
+          "It's still trending up on a bigger-picture level even after this pullback.",
+          "Berkshire keeps buying — 48 million new shares of Alphabet shows Abel and Buffett see value out there.",
+          "It's only 1.9% of the book, so it's ballast, not a bet that needs to work hard.",
+          "It's down only 5.9% from its 52-week high of $529.42 — no real damage done."
+        ],
+        "strongest": "Three analysts rate it a buy with a mean target of $547.67, about 10% upside from here.",
+        "ok": true
+      },
+      {
+        "key": "bear",
+        "name": "Bear Agent",
+        "round": 1,
+        "position": "BEARISH",
+        "confidence": 35,
+        "points": [
+          "Momentum just turned down: the trend reading flipped bearish with a -2.1771 reading, and price is below its $508.27 short-term average.",
+          "Only 3 analysts cover this name, so the $547.67 target is a thin, low-confidence number to hang a bull case on.",
+          "Light trading volume at 0.84x normal shows no real buying conviction behind the stock right now.",
+          "The position is already down 4.5% from its $521.52 cost and sitting 5.89% below its 52-week high of $529.42.",
+          "Berkshire itself just slashed bank stakes and dumped Constellation, saying more about caution than confidence."
+        ],
+        "strongest": "Momentum has turned down and volume is light, so there's no fuel pushing this back toward the analyst target.",
+        "ok": true
+      },
+      {
+        "key": "macro",
+        "name": "Macro Agent",
+        "round": 1,
+        "position": "NEUTRAL",
+        "confidence": 52,
+        "points": [
+          "Berkshire itself is cutting bank stakes and buying homebuilders, a bet that borrowing costs ease ahead.",
+          "The stock is stuck sideways, not near its $529.42 high or its $465.40 low, so no macro rush either way.",
+          "Trading is quiet at 0.84 times normal volume, meaning no big money is rotating in or out today.",
+          "Analysts still see 9.92% upside to $547.67, so Wall Street isn't souring on the sector story.",
+          "This position is just $210, 1.9% of the book, so sector rotation here barely moves anything."
+        ],
+        "strongest": "Berkshire's own trades, out of banks and into homebuilders, hint the rate backdrop is turning, but that cuts both ways for its own diversified mix.",
+        "ok": true
+      },
+      {
+        "key": "risk",
+        "name": "Risk Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 60,
+        "points": [
+          "This is 1.9% of the book at $210 — too small to move risk either way.",
+          "The book is 100% invested with only $5 of dry powder, so there's no room to add here anyway.",
+          "The desk's own sizing risks $0 on this add with a stop at $491.69 — that stop is safe and cheap.",
+          "Daily loss is already -$70 against a $219 limit, and status is ELEVATED — no reason to stack on more today.",
+          "Total open risk across the book is 7.62% of equity ($836) — adding here doesn't meaningfully change that."
+        ],
+        "strongest": "At 1.9% of the book with $0 risked and a fully invested account, this position can't hurt or help the book — hold it and move on.",
+        "ok": true
+      },
+      {
+        "key": "execution",
+        "name": "Execution Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 60,
+        "points": [
+          "Hold BRK.B — do nothing; price is $498.23, only 0.6% from your last check-in.",
+          "Stop stays at $491.69, the desk's own floor; no new stop needed.",
+          "Position is $210, sized at 0.1%; too small to bother splitting into tranches.",
+          "No earnings date in this data, so there's no binary event to trade around.",
+          "Volume is quiet at 0.84x normal, so there's no rush and no liquidity problem either way."
+        ],
+        "strongest": "Hold — do nothing; the $491.69 stop is already set and the move since your last call is too small to act on.",
+        "ok": true
+      }
+    ],
+    "agents_reporting": 5,
+    "tally": {
+      "bullish": 1,
+      "bearish": 1,
+      "neutral": 3
+    },
+    "verdict": "APPROVE",
+    "action": "HOLD",
+    "score": 62,
+    "headline": "Hold BRK.B — nothing changed since my last call; ballast does its job quietly.",
+    "rationale": [
+      "Bull's steady-uptrend and analyst-upside points survive; nothing in the business changed this week.",
+      "Bear's momentum and volume complaints are overruled — quiet drift is not a broken thesis.",
+      "Risk Agent wins on size: $210 at 1.9% of the book is too small to matter either way.",
+      "Execution Agent is right that a 0.6% move since my last check-in is noise, not a signal.",
+      "Berkshire trimming banks and buying homebuilders reads as normal capital allocation, not a warning."
+    ],
+    "dissent": [
+      "Only 3 analysts cover it, so the $547.67 target is thinner evidence than Bull leaned on.",
+      "With zero dry powder, this $210 sleeve is dead weight versus adding to a stronger name.",
+      "A close under $491.69 would mean the quiet drift became real damage."
+    ],
+    "entry": "",
+    "target": "$547.67",
+    "stop": "$491.69",
+    "sizing": {
+      "symbol": "BRK.B",
+      "price": 498.23,
+      "stop": 491.69,
+      "stop_basis": "200-day",
+      "risk_per_share": 6.54,
+      "dollars": 5.3,
+      "shares": 0.0106,
+      "pct_of_equity": 0.05,
+      "risk_amount": 0.07,
+      "capped_by": "dry powder",
+      "note": "Stop $491.69 (200-day, 1.3% below). Risking 1% of equity ($0) buys $5 — capped by dry powder."
+    },
+    "error": null
+  },
+  "ISRG": {
+    "symbol": "ISRG",
+    "name": "Intuitive Surgical, Inc.",
+    "price": 390.33,
+    "ts": 1787004277.08553,
+    "as_of": "2026-08-17 17:04:37",
+    "engine": "claude",
+    "agents": [
+      {
+        "key": "bull",
+        "name": "Bull Agent",
+        "round": 1,
+        "position": "BULLISH",
+        "confidence": 58,
+        "points": [
+          "Wall Street still sees $478 as fair value, about 22% above the $390 price.",
+          "All 30 analysts covering it rate it a buy despite the recent slide.",
+          "Oppenheimer just upgraded the stock on 2026-08-16, a fresh vote of confidence.",
+          "Momentum just turned up under the surface even as the price drifted lower today.",
+          "New institutional money (Hikari Power) built a stake this week, a sign of accumulation near the lows."
+        ],
+        "strongest": "30 analysts rate it a buy with a $478 target, 22% above today's $390 price.",
+        "ok": true
+      },
+      {
+        "key": "bear",
+        "name": "Bear Agent",
+        "round": 1,
+        "position": "BEARISH",
+        "confidence": 58,
+        "points": [
+          "Price is down 34.16% from its 52-week high of $592.85, and the stock is stuck below the long-term trend line at $476.17.",
+          "A rival just entered the market — coverage says ISRG fell 30% in 2026 as competition arrived, per TIKR's headline today.",
+          "Volume is only 0.63x normal, so there's no real buying conviction pushing this off the lows.",
+          "Even the 22.46% upside case to $478 mean target still leaves the stock way below its old high — this is a broken chart, not a bargain.",
+          "This name is already a tiny 2.7% sliver of the book at $299 — it's not carrying real risk, but it's also not earning its spot."
+        ],
+        "strongest": "The stock is down 34% from its high with a real competitor now in the market — that's a broken story, not a dip.",
+        "ok": true
+      },
+      {
+        "key": "macro",
+        "name": "Macro Agent",
+        "round": 1,
+        "position": "BEARISH",
+        "confidence": 60,
+        "points": [
+          "Price sits 34% below its 52-week high of $592.85, showing big money has already left this name.",
+          "The stock trades under its longer-term trend line (200-day average $476.17 vs price $390.33), a mark of an out-of-favor stock.",
+          "Trading volume is just 0.63x the 20-day average, meaning capital isn't rotating back into this name yet.",
+          "Healthcare is a defensive sector, which gives some ballast versus the rate-sensitive growth names dominating the rest of the book.",
+          "Wall Street's 22% upside case to $478 is a bottom-up analyst view, not a sign of top-down flow returning."
+        ],
+        "strongest": "The stock is 34% off its highs and below its 200-day trend line, meaning the market isn't rotating capital into this name right now.",
+        "ok": true
+      },
+      {
+        "key": "risk",
+        "name": "Risk Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 65,
+        "points": [
+          "Position is $299, just 2.7% of the book — a loss here can't meaningfully hurt equity of $10,969.",
+          "Stop $366.48 risks $0 in dollar terms at this size, well inside the $110 per-trade budget.",
+          "Total open risk across the book is already 7.62% ($836) against a 2% daily loss limit of $219 — status is ELEVATED.",
+          "Book is 100% deployed with $5 dry powder, so any add here has no real fuel behind it.",
+          "Low correlation (0.14 average) means ISRG isn't stacking risk on top of the NVDA/VRT/AVGO growth cluster."
+        ],
+        "strongest": "Book-level risk is already ELEVATED at 7.62% open risk vs a 2% daily limit — this position is too small to move that needle either way.",
+        "ok": true
+      },
+      {
+        "key": "execution",
+        "name": "Execution Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 62,
+        "points": [
+          "Nothing has moved since the buy — stock is at $390.33, basically flat from your $391.09 cost.",
+          "Stop is already set at $366.48, about 6% below the current price of $390.33.",
+          "This position is only $299, so there's no meaningful risk to manage either way.",
+          "No new price break or news changes the plan from this morning's buy.",
+          "Don't add more here — dry powder is basically zero and risk status is elevated."
+        ],
+        "strongest": "Position is flat and tiny at $299 with a stop already set at $366.48 — nothing to execute right now.",
+        "ok": true
+      }
+    ],
+    "agents_reporting": 5,
+    "tally": {
+      "bullish": 1,
+      "bearish": 2,
+      "neutral": 2
+    },
+    "verdict": "APPROVE",
+    "action": "HOLD",
+    "score": 62,
+    "headline": "Nothing new since this morning's buy — hold ISRG and let it work.",
+    "rationale": [
+      "Execution's point wins: the stock is $390.33 versus your $391.09 cost, essentially unchanged.",
+      "I overrule Macro's bearish call — being far below the old high is not a business problem, and 30 analysts still rate it a buy.",
+      "Bull's Oppenheimer upgrade and fresh institutional buying are real, but a one-day-old position needs no new action.",
+      "Risk is right that $299 is 2.7% of the book and cannot hurt you at $10,969 equity.",
+      "Bear's competition point is the one worth watching, but a rival arriving is not yet lost business."
+    ],
+    "dissent": [
+      "If the new rival actually takes surgical volume and Intuitive cuts its outlook, this becomes a real thesis break, not noise."
+    ],
+    "entry": "",
+    "target": "$478",
+    "stop": "$366.48",
+    "sizing": {
+      "symbol": "ISRG",
+      "price": 390.33,
+      "stop": 366.48,
+      "stop_basis": "2x ATR",
+      "risk_per_share": 23.85,
+      "dollars": 5.3,
+      "shares": 0.0136,
+      "pct_of_equity": 0.05,
+      "risk_amount": 0.32,
+      "capped_by": "dry powder",
+      "note": "Stop $366.48 (2x ATR, 6.1% below). Risking 1% of equity ($0) buys $5 — capped by dry powder."
+    },
+    "error": null
+  },
+  "YYAI": {
+    "symbol": "YYAI",
+    "name": "AiRWA Inc.",
+    "price": 1.22,
+    "ts": 1787022663.1779702,
+    "as_of": "2026-08-17 22:11:03",
+    "engine": "claude",
+    "agents": [
+      {
+        "key": "bull",
+        "name": "Bull Agent",
+        "round": 1,
+        "position": "BEARISH",
+        "confidence": 12,
+        "points": [
+          "MACD shows a bullish crossover, with the histogram at 0.211 hinting at short-term momentum.",
+          "Analysts still rate it a hold with a mean target of $1.29, about 5.74% above the current $1.22.",
+          "AiRWA is pursuing a $130 million Best Life deal, a real-world asset expansion catalyst for the AI theme.",
+          "At $1.22 the stock trades over 99% below its 52-week high, so any recovery move is large in percentage terms."
+        ],
+        "strongest": "The MACD bullish crossover is the only technical signal pointing up, with a histogram of 0.211.",
+        "ok": true
+      },
+      {
+        "key": "bear",
+        "name": "Bear Agent",
+        "round": 1,
+        "position": "BEARISH",
+        "confidence": 88,
+        "points": [
+          "The 2040% jump is a 1-for-20 reverse split effective 2026-08-17, not real buying, so the move is fake.",
+          "Stock trades 99.99% below its 52-week high and remains in a confirmed downtrend with a bearish death-cross.",
+          "Volume is only 0.11x the 20-day average, meaning almost nobody is actually trading it at $1.22.",
+          "Price sits far below its 20/50/200-day averages ($2.17/$5.62/$30.81), confirming sellers control every level.",
+          "HRT Financial exited an 885,977-share stake and sold more shares this week, and the stock crashed on the $130M Best Life deal news."
+        ],
+        "strongest": "Today's 2040% pop is purely a 1-for-20 reverse split, not demand, while the stock still sits 99.99% below its 52-week high on almost no volume.",
+        "ok": true
+      },
+      {
+        "key": "macro",
+        "name": "Macro Agent",
+        "round": 1,
+        "position": "BEARISH",
+        "confidence": 78,
+        "points": [
+          "A 1-for-20 reverse split just took effect, a sign a stock is fighting exchange delisting rules, not thriving.",
+          "Volume is only 0.1077x the 20-day average, meaning big money is not rotating into this name right now.",
+          "A large holder, HRT Financial LP, sold out its stake this week, capital leaving rather than arriving.",
+          "Price sits 99.99% below its 52-week high, the kind of collapse that happens when speculative capital flees a theme.",
+          "The stock trades in a confirmed downtrend with no volume support, the opposite of an early-adoption tailwind."
+        ],
+        "strongest": "Institutional capital is leaving (HRT Financial exit) while volume stays a fraction of normal, showing zero rotation into this name.",
+        "ok": true
+      },
+      {
+        "key": "risk",
+        "name": "Risk Agent",
+        "round": 2,
+        "position": "BEARISH",
+        "confidence": 90,
+        "points": [
+          "The 2040% jump near $1.22 is just a 1-for-20 reverse split, not real buying, so the price move is fake.",
+          "Almost nobody is trading it — volume is only 0.11x normal, so any position would be hard to exit at $1.22.",
+          "Price sits 99.99% below its 52-week high and stays under every longer-term average, confirming a collapsing name.",
+          "A large holder, HRT Financial, sold out its stake this week — insiders are leaving, not buying.",
+          "A stop near $1.22 is not survivable in a stock this thin — a bad print could gap through any stop instantly."
+        ],
+        "strongest": "With volume at just 0.11x average, this stock can't be entered or exited safely at any size — that alone breaches basic liquidity limits.",
+        "ok": true
+      },
+      {
+        "key": "execution",
+        "name": "Execution Agent",
+        "round": 2,
+        "position": "BEARISH",
+        "confidence": 85,
+        "points": [
+          "Don't buy YYAI at $1.22 — volume is only 0.11x normal, too thin to fill safely.",
+          "Today's spike is just the 1-for-20 split taking effect, not real buyers, so there's no entry to chase.",
+          "No pullback level to buy — price is 99.99% below its 52-week high with no support shown.",
+          "If holding, sell near $1.22 at market — no earnings date given, so no reason to wait.",
+          "Skip staged buying — upside to the $1.29 analyst target is too small to risk any tranche."
+        ],
+        "strongest": "The 2040% move is a mechanical 1-for-20 split effective today, not demand, so there's no real price to enter at.",
+        "ok": true
+      }
+    ],
+    "agents_reporting": 5,
+    "tally": {
+      "bullish": 0,
+      "bearish": 5,
+      "neutral": 0
+    },
+    "verdict": "REJECT",
+    "action": "AVOID",
+    "score": 8,
+    "headline": "Today's 2040% pop is a reverse split, not buying — skip YYAI entirely.",
+    "rationale": [
+      "Bear's reverse-split point wins: the 2040% move is mechanical, 1-for-20, effective today, not demand.",
+      "Risk Agent's liquidity case holds — volume at 0.11x normal means no safe way out of a position.",
+      "I overruled Bull's analyst-target point: a $1.29 target on a $1.22 stock is 5.7% upside, not a reason.",
+      "Macro's read on HRT Financial exiting an 885,977-share stake confirms money is leaving, not arriving.",
+      "I overruled Execution's 'sell near $1.22 at market' — there is no position here, so there is nothing to sell."
+    ],
+    "dissent": [
+      "The $130 million Best Life real-world-asset deal is real; if it closes and delivers revenue, this could re-rate hard off a tiny base.",
+      "Bull is right that from 99.9% below the old high, even a small bounce is a huge percentage — but that is a lottery ticket, not a setup."
+    ],
+    "entry": "",
+    "target": "",
+    "stop": "",
+    "sizing": {
+      "symbol": "YYAI",
+      "price": 1.22,
+      "stop": null,
+      "stop_basis": null,
+      "risk_per_share": null,
+      "dollars": 0.0,
+      "shares": 0.0,
+      "pct_of_equity": 0.0,
+      "risk_amount": 0.0,
+      "capped_by": null,
+      "note": "No usable stop (needs ATR or a 200-day below price) — size manually and set an exit before entering."
+    },
+    "error": null
+  },
+  "WFF": {
+    "symbol": "WFF",
+    "name": "WF Holding Limited",
+    "price": 2.02,
+    "ts": 1787022746.7939026,
+    "as_of": "2026-08-17 22:12:26",
+    "engine": "claude",
+    "agents": [
+      {
+        "key": "bull",
+        "name": "Bull Agent",
+        "round": 1,
+        "position": "BULLISH",
+        "confidence": 38,
+        "points": [
+          "Stock is up 40.28% today to $2.02 on volume 13.5x the 20-day average, showing massive fresh buying interest.",
+          "Price sits above both the 50-day average ($2.362 close but trend is golden-cross bullish) and the 200-day average of $2.229, a bullish long-term regime signal.",
+          "Even after today's spike, WFF trades 64.87% below its 52-week high of $5.75, leaving significant room to reclaim lost ground.",
+          "29 analysts rate it a hold with an average target of $2.18, implying further upside of 7.92% from here.",
+          "New governance framework and share restructuring approved in July suggest management is actively working to clean up the company's structure."
+        ],
+        "strongest": "A 13.5x volume surge driving a 40% single-day rally signals a real shift in demand, not noise.",
+        "ok": true
+      },
+      {
+        "key": "bear",
+        "name": "Bear Agent",
+        "round": 1,
+        "position": "BEARISH",
+        "confidence": 68,
+        "points": [
+          "Price is down 64.87% from its 52-week high of $5.75 despite today's pop, still deep in a downtrend.",
+          "Volume is 13.54x the 20-day average, a classic one-day spike that often fades fast.",
+          "Momentum is bearish under the surface, with the MACD line at -0.1415 below its signal.",
+          "The stock did a 1-for-5 reverse split in April, a red flag for prior share dilution and weakness.",
+          "29 analysts rate it just a hold with only 7.92% upside to their $2.18 target, no conviction here."
+        ],
+        "strongest": "A 13.54x volume spike after a reverse split and a 65% drop from highs screams speculative blow-off, not a real turn.",
+        "ok": true
+      },
+      {
+        "key": "macro",
+        "name": "Macro Agent",
+        "round": 1,
+        "position": "NEUTRAL",
+        "confidence": 38,
+        "points": [
+          "Volume today is 13.54x the normal daily average, showing a violent rotation of capital in or out, not steady accumulation.",
+          "The trend is sideways with the price at $2.02 sitting between the near-term $2.1653 level and the longer-term $2.229 level, no clear directional flow.",
+          "The stock is down 64.87% from its 52-week high of $5.75, reflecting a name that has already been de-rated hard by the market.",
+          "A one-for-five reverse split this year (2026-04-10) signals this was a heavily diluted, low-float name being reset, a structural red flag for capital quality.",
+          "Analyst consensus is just 'hold' with only 7.92% upside to the $2.18 target, offering little reward for taking on cycle risk here."
+        ],
+        "strongest": "A 13.54x volume surge on a stock already down 64.87% from its high says this is a violent repositioning, not a durable trend, so the macro backdrop is neutral until direction confirms.",
+        "ok": true
+      },
+      {
+        "key": "risk",
+        "name": "Risk Agent",
+        "round": 2,
+        "position": "BEARISH",
+        "confidence": 62,
+        "points": [
+          "A 13.54x normal-volume, 40% one-day pop after a 1-for-5 reverse split is classic thin-float whipsaw, not real accumulation.",
+          "Momentum under the hood is still negative, and price is 64.87% below its own 52-week high of $5.75 — this is a wounded stock.",
+          "Only a hold rating from 29 analysts with target $2.18 means even a clean win nets barely 8% — the reward does not clear the risk.",
+          "A move this size on this much volume can give back most of today's gain in a single session; a stop near $1.75 (13% below $2.02) is the widest defensible line and still doesn't guarantee an orderly exit in a thin, reverse-split name.",
+          "This name has no working history in this book, so it enters as pure speculation with an unproven stop — that alone caps how much conviction risk should extend to it."
+        ],
+        "strongest": "A 40% spike on 13.5x normal volume in a reverse-split microcap is a trap pattern, and the risk of a violent round-trip outweighs the 8% upside analysts see.",
+        "ok": true
+      },
+      {
+        "key": "execution",
+        "name": "Execution Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 32,
+        "points": [
+          "If buying, buy small near $2.02 now, not chasing the spike further today.",
+          "Set a hard stop at $1.90 — just under today's low range, protects against a fade.",
+          "First target to trim is $2.18, the average analyst price, only 8% away.",
+          "No earnings date given, so there's no binary event to plan around here.",
+          "Split this into two buys: half near $2.02 now, half only if it holds above $2.02 tomorrow."
+        ],
+        "strongest": "Buy in two small pieces, not all at once — first near $2.02, second only if $2.02 holds tomorrow.",
+        "ok": true
+      }
+    ],
+    "agents_reporting": 5,
+    "tally": {
+      "bullish": 1,
+      "bearish": 2,
+      "neutral": 2
+    },
+    "verdict": "REJECT",
+    "action": "AVOID",
+    "score": 22,
+    "headline": "A 40% one-day pop in a broken shell stock is not an investment.",
+    "rationale": [
+      "Bear's reverse-split and 65%-below-high points beat Bull's 'room to recover' — cheapness here reflects real damage.",
+      "Risk's thin-float whipsaw case wins: 13.5x volume on a 40% spike fades as fast as it came.",
+      "I overrule Bull's claim the stock sits above its long-term averages — at $2.02 it trades below both $2.16 and $2.23.",
+      "I also overrule Execution's two-stage buy plan; there is no thesis worth staging into, only a price spasm.",
+      "29 analysts see $2.18 — under 8% upside on a name that can halve overnight. The reward does not pay for the risk."
+    ],
+    "dissent": [
+      "If July's restructuring genuinely fixed the business, today's buying could be smart money and this call misses a real turn.",
+      "Macro's neutral stance is defensible — the stock holding above $2.02 for a week would force me to look again."
+    ],
+    "entry": "",
+    "target": "",
+    "stop": "",
+    "sizing": {
+      "symbol": "WFF",
+      "price": 2.02,
+      "stop": null,
+      "stop_basis": null,
+      "risk_per_share": null,
+      "dollars": 0.0,
+      "shares": 0.0,
+      "pct_of_equity": 0.0,
+      "risk_amount": 0.0,
+      "capped_by": null,
+      "note": "No usable stop (needs ATR or a 200-day below price) — size manually and set an exit before entering."
+    },
+    "error": null
+  },
+  "IVF": {
+    "symbol": "IVF",
+    "name": "INVO Fertility, Inc.",
+    "price": 1.53,
+    "ts": 1787022794.6601317,
+    "as_of": "2026-08-17 22:13:14",
+    "engine": "claude",
+    "agents": [
+      {
+        "key": "bull",
+        "name": "Bull Agent",
+        "round": 1,
+        "position": "BULLISH",
+        "confidence": 42,
+        "points": [
+          "Revenue rose 17% and clinic-level EBITDA doubled per the Q2 2026 earnings beat.",
+          "Shares jumped 57.41% today on volume 19.77x the 20-day average, showing heavy conviction buying.",
+          "The single analyst covering IVF has a mean target of $20, over 1200% above the current $1.53 price.",
+          "Momentum signals are bullish: RSI 69.24 and MACD histogram positive at 0.0524.",
+          "Price is pushing above its upper volatility band, a sign new buyers are stepping in aggressively."
+        ],
+        "strongest": "Clinic-level EBITDA doubled and revenue grew 17% in Q2, the fundamental spark behind today's move.",
+        "ok": true
+      },
+      {
+        "key": "bear",
+        "name": "Bear Agent",
+        "round": 1,
+        "position": "BEARISH",
+        "confidence": 78,
+        "points": [
+          "Price is 97.29% below its 52-week high of $56.40, showing catastrophic long-term value destruction.",
+          "The stock trades near $1.53 versus a longer-term average near $4.87, confirming a broken multi-month downtrend.",
+          "Volume is running 19.77x normal, typical of a short squeeze or news spike, not sustainable buying.",
+          "A one-analyst $20 target implies 1207% upside, a red flag for thin, unreliable coverage.",
+          "A 57% single-day pop this violent usually gives back most of its gain within days."
+        ],
+        "strongest": "Down 97.29% from its 52-week high, this is a broken stock having one loud day, not a turnaround.",
+        "ok": true
+      },
+      {
+        "key": "macro",
+        "name": "Macro Agent",
+        "round": 1,
+        "position": "BEARISH",
+        "confidence": 50,
+        "points": [
+          "IVF sits at $1.53, still 97% below its 52-week high of $56.40 — the long slide isn't over.",
+          "Price remains far under its longer-term average levels of $1.27 and $4.87, showing the bigger trend is still down.",
+          "Today's 57% jump is tied to one company's earnings beat, not any broad sector or economic tailwind.",
+          "Only one analyst covers IVF with a $20 target — too thin to lean on for a big-picture call.",
+          "Trading volume is nearly 20 times normal, showing fast speculative money that can just as quickly leave."
+        ],
+        "strongest": "IVF is still down 97% from its 52-week high of $56.40, so the dominant trend is a long downtrend, not a new uptrend.",
+        "ok": true
+      },
+      {
+        "key": "risk",
+        "name": "Risk Agent",
+        "round": 2,
+        "position": "BEARISH",
+        "confidence": 82,
+        "points": [
+          "Price is down 97% from its old high near $56 — this is a broken stock, not a recovery story.",
+          "Volume is almost 20 times normal today — that's a one-day news spike, not steady buying.",
+          "A single analyst's $20 target is not reliable enough to justify chasing a 57% pop.",
+          "This name sits 68% below even its own recent average price near $4.87 — the long trend is down.",
+          "Stocks that jump this hard in one day typically give back most of the gain within days."
+        ],
+        "strongest": "A 57% single-day spike on 20x volume in a stock still down 97% from its high is a trap, not a trend.",
+        "ok": true
+      },
+      {
+        "key": "execution",
+        "name": "Execution Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 55,
+        "points": [
+          "Don't chase — IVF is already up 57% today to $1.53, wait for it to cool off.",
+          "Watch $1.27 as a pullback buy level, a price it traded around before.",
+          "If buying, start with a small amount first, add more only if $1.27 holds.",
+          "Set a stop near $1.30 to limit losses if the buying dries up.",
+          "Today's earnings news is already out, so no big surprise event left to trade around this week."
+        ],
+        "strongest": "Wait for a pullback to $1.27 instead of chasing it at $1.53 after a 57% jump.",
+        "ok": true
+      }
+    ],
+    "agents_reporting": 5,
+    "tally": {
+      "bullish": 1,
+      "bearish": 3,
+      "neutral": 1
+    },
+    "verdict": "REJECT",
+    "action": "AVOID",
+    "score": 22,
+    "headline": "One-day 57% pop on a broken $1.53 stock — not worth chasing.",
+    "rationale": [
+      "Risk Agent's point wins: the stock trades 97% below its old $56 high, a wrecked chart.",
+      "Bear Agent is right that 19.8x normal volume is a one-day news spike, not steady accumulation.",
+      "I overrule Bull Agent: 17% revenue growth is real but tiny against that collapse, and Bull argued at only 42 confidence.",
+      "The $20 target from a single analyst is noise, not evidence — every agent but Bull agreed.",
+      "Execution Agent's 'wait for $1.27' is overruled too: there is no thesis here worth waiting to buy."
+    ],
+    "dissent": [
+      "If clinic profitability keeps doubling, this becomes a real turnaround and I miss a multi-bagger off the bottom."
+    ],
+    "entry": "",
+    "target": "",
+    "stop": "",
+    "sizing": {
+      "symbol": "IVF",
+      "price": 1.53,
+      "stop": 1.08,
+      "stop_basis": "2x ATR",
+      "risk_per_share": 0.45,
+      "dollars": 5.3,
+      "shares": 3.4641,
+      "pct_of_equity": 0.05,
+      "risk_amount": 1.56,
+      "capped_by": "dry powder",
+      "note": "Stop $1.08 (2x ATR, 29.4% below). Risking 1% of equity ($2) buys $5 — capped by dry powder."
+    },
+    "error": null
+  },
+  "STFS": {
+    "symbol": "STFS",
+    "name": "Star Fashion Culture Holdings L",
+    "price": 4.21,
+    "ts": 1787022837.6407123,
+    "as_of": "2026-08-17 22:13:57",
+    "engine": "claude",
+    "agents": [
+      {
+        "key": "bull",
+        "name": "Bull Agent",
+        "round": 1,
+        "position": "BULLISH",
+        "confidence": 25,
+        "points": [
+          "Stock is up 7.95% today to $4.21 on volume 3.4x the normal daily average.",
+          "Golden-cross and MACD bullish signals are both flashing on the current chart.",
+          "41 analysts rate it strong_buy with a mean target of $4.72, about 12% above today's price.",
+          "Price sits far below its 52-week high of $82.80, leaving huge room to run if it recovers even partially.",
+          "At $4.04 short-term average versus $8.87 medium-term, this bounce could be the start of a base."
+        ],
+        "strongest": "41 analysts rate STFS strong_buy with a $4.72 target, 12% above today's $4.21 price.",
+        "ok": true
+      },
+      {
+        "key": "bear",
+        "name": "Bear Agent",
+        "round": 1,
+        "position": "BEARISH",
+        "confidence": 78,
+        "points": [
+          "Stock is down 94.92% from its 52-week high of $82.80, a near-total wipeout that shows the trend is broken.",
+          "The 50-day average price of $8.87 is far above today's $4.21, meaning the medium-term trend is still down despite today's pop.",
+          "Volume today is 3.45x normal, often a sign of a short-term panic bounce or squeeze, not a real turn.",
+          "Only one recent headline exists, so there is no fresh news explaining why the stock should be worth more now.",
+          "The mean analyst target of $4.72 is only 12% above the current price, leaving little reward for the risk after a 94.9% collapse."
+        ],
+        "strongest": "STFS is still down 94.9% from its 52-week high of $82.80, and one green day does not undo that kind of destruction.",
+        "ok": true
+      },
+      {
+        "key": "macro",
+        "name": "Macro Agent",
+        "round": 1,
+        "position": "BEARISH",
+        "confidence": 35,
+        "points": [
+          "STFS sits 94.9% below its $82.80 high — money has left this stock, it hasn't rotated back in.",
+          "Today's 7.95% jump came on 3.4x normal volume, more like a short squeeze than fresh buying interest.",
+          "41 analysts call it a strong buy, but the average target of $4.72 is only 12% above today's $4.21.",
+          "Price is still under the $8.87 and $6.21 longer-run averages, so the bigger trend is still down.",
+          "Wait for STFS to hold above $6.21 for a few weeks before treating this as a real turn."
+        ],
+        "strongest": "STFS is down 94.9% from its $82.80 high, and that collapse outweighs today's one-day bounce.",
+        "ok": true
+      },
+      {
+        "key": "risk",
+        "name": "Risk Agent",
+        "round": 2,
+        "position": "BEARISH",
+        "confidence": 82,
+        "points": [
+          "Price is 94.9% below the $82.80 high, and this is a $4.21 penny stock with no floor.",
+          "Today's pop is a single-name, low-priced spike on 3.45x volume — squeeze risk, extreme swings possible either way.",
+          "Only one stale headline from 2025-09-27 — no news catalyst justifies chasing this move.",
+          "A stock this beaten-down and volatile could easily give back 20-30% in a day if the squeeze fades.",
+          "Reward is capped near $4.72 (12% upside) while downside on a stock down 94.9% is effectively open-ended."
+        ],
+        "strongest": "A name down 94.9% from its high with no news catalyst is a pure gamble, not a position size any risk desk should carry.",
+        "ok": true
+      },
+      {
+        "key": "execution",
+        "name": "Execution Agent",
+        "round": 2,
+        "position": "BEARISH",
+        "confidence": 65,
+        "points": [
+          "Price crashed 94.9% from $82.80 to $4.21 — this is not a stock to buy and hold.",
+          "Today's pop rides 3.4x normal volume, which usually means a short squeeze, not real buying.",
+          "Price is still way under $8.87 and $6.21 — the bigger trend is still down.",
+          "If you trade this, do it small and only as a quick bounce play, not an investment.",
+          "Target of $4.72 is barely 12% above the current $4.21 price — not much reward here."
+        ],
+        "strongest": "This stock has lost 94.9% of its value from $82.80 to $4.21 — that's broken, not cheap.",
+        "ok": true
+      }
+    ],
+    "agents_reporting": 5,
+    "tally": {
+      "bullish": 1,
+      "bearish": 4,
+      "neutral": 0
+    },
+    "verdict": "REJECT",
+    "action": "AVOID",
+    "score": 18,
+    "headline": "STFS is a broken penny stock bouncing on volume with no news — pass.",
+    "rationale": [
+      "Risk Agent's open-ended-downside case wins: 12% to target versus a 94.9% collapse is bad math.",
+      "Bear Agent's point that price sits far under its $8.87 and $6.21 averages beats Bull's 'base forming' claim.",
+      "I overrule Bull Agent — 3.4x volume with one stale headline from September 2025 is a squeeze, not a thesis.",
+      "I also overrule Execution Agent's 'trade it small' suggestion — there is no business case to trade around.",
+      "Macro Agent's $6.21 waiting level is the one constructive idea and I adopt it."
+    ],
+    "dissent": [
+      "41 analysts rate it strong buy; if that reflects real business news I cannot see, I am too harsh.",
+      "A stock down 94.9% can double off the floor fast — early sellers miss the whole move."
+    ],
+    "entry": "",
+    "target": "",
+    "stop": "",
+    "sizing": {
+      "symbol": "STFS",
+      "price": 4.21,
+      "stop": 1.03,
+      "stop_basis": "2x ATR",
+      "risk_per_share": 3.18,
+      "dollars": 5.3,
+      "shares": 1.2589,
+      "pct_of_equity": 0.05,
+      "risk_amount": 4.0,
+      "capped_by": "dry powder",
+      "note": "Stop $1.03 (2x ATR, 75.5% below). Risking 1% of equity ($4) buys $5 — capped by dry powder."
+    },
+    "error": null
+  },
+  "FAMI": {
+    "symbol": "FAMI",
+    "name": "Farmmi, Inc. Ordinary Shares",
+    "price": 0.13,
+    "ts": 1787021232.177677,
+    "as_of": "2026-08-17 21:47:12",
+    "engine": "claude",
+    "agents": [
+      {
+        "key": "bull",
+        "name": "Bull Agent",
+        "round": 1,
+        "position": "BULLISH",
+        "confidence": 25,
+        "points": [
+          "43 analysts rate FAMI a buy with a $0.14 target, about 8% above today's $0.13 price.",
+          "Shares are up 1.38% today on volume almost 9 times the normal amount, a burst of fresh buying.",
+          "Farmmi's US unit Suppchains hit a regulatory milestone, a real catalyst for the business.",
+          "Stock is down 93.5% from its $2.03 high, so even a small bounce could be a big percentage gain.",
+          "Today's bounce comes right after a heavy sell-off, hinting the panic selling may be fading."
+        ],
+        "strongest": "43 analysts still rate FAMI a buy with a target price above where it trades today.",
+        "ok": true
+      },
+      {
+        "key": "bear",
+        "name": "Bear Agent",
+        "round": 1,
+        "position": "BEARISH",
+        "confidence": 78,
+        "points": [
+          "FAMI has collapsed 93.5% from its 52-week high of $2.03 down to $0.13 today.",
+          "The price of $0.13 is far below its own longer-term average near $1.14, confirming a deep, ongoing slide.",
+          "A headline reports FAMI crashed 78% in a single day on 2026-06-29 — this stock can gap down violently.",
+          "Today's trading volume is 8.6x normal, which often means panic selling, not new buyers stepping in.",
+          "The planned stop at $0.06 is 54% below today's $0.13 price, so a lot of value is lost before you're even out."
+        ],
+        "strongest": "FAMI is down 93.5% from its 52-week high and still trading far below its own average price, the profile of a stock in freefall, not a bargain.",
+        "ok": true
+      },
+      {
+        "key": "macro",
+        "name": "Macro Agent",
+        "round": 1,
+        "position": "BEARISH",
+        "confidence": 78,
+        "points": [
+          "Price is 93.5% below its 52-week high of $2.03, now just $0.13, a broken downtrend.",
+          "Trend is a downtrend with price under all major moving averages, signaling no cycle support.",
+          "Volume is 8.59x the 20-day average, typical of capitulation selling, not accumulation.",
+          "Analyst mean target $0.14 implies only 7.69% upside, too small to justify the risk here.",
+          "Recent headlines cite a 78% one-day crash and a fresh 52-week low, showing broken sentiment, not rotation into this name."
+        ],
+        "strongest": "Price sits 93.5% below its 52-week high with volume 8.59x normal, the signature of capitulation, not a top-down opportunity.",
+        "ok": true
+      },
+      {
+        "key": "risk",
+        "name": "Risk Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 55,
+        "points": [
+          "Max loss is capped at $3, small enough that it does not breach any single-trade risk limit of $110.",
+          "The book has only $5 of spare cash left, and this trade uses every dollar of it.",
+          "This stock crashed 78% in a single day before, so a $0.06 stop may not fill where planned.",
+          "Today's loss is already $70 against a $219 daily limit, so there is little room left before the desk locks down.",
+          "Current open risk across the book is already $836, and status is ELEVATED, so this adds to an already stretched risk budget."
+        ],
+        "strongest": "Max loss is capped at $3, so this trade cannot breach a hard limit, but it drains the last of the cash.",
+        "ok": true
+      },
+      {
+        "key": "execution",
+        "name": "Execution Agent",
+        "round": 2,
+        "position": "BEARISH",
+        "confidence": 20,
+        "points": [
+          "FAMI trades at $0.13; the desk stop is $0.06, risking only $3 on a $5 position.",
+          "Volume is 8.6x normal today — could be capitulation, not buyers, so don't chase it.",
+          "This stock crashed 78% in one day before (2026-06-29) — gaps can blow through any stop.",
+          "Downside to stop is 54% from $0.13, so most of the $5 is at risk if it slips.",
+          "Analyst target of $0.14 is basically the current price — no real reward for the risk."
+        ],
+        "strongest": "Risking $3 to find out is fine, but a stock that gapped 78% in a day can jump past a $0.06 stop.",
+        "ok": true
+      }
+    ],
+    "agents_reporting": 5,
+    "tally": {
+      "bullish": 1,
+      "bearish": 3,
+      "neutral": 1
+    },
+    "verdict": "REJECT",
+    "action": "AVOID",
+    "score": 18,
+    "headline": "Skip FAMI — a 13-cent stock that already fell 78% in one day.",
+    "rationale": [
+      "Bear and Macro win on evidence: down 93.5% to $0.13, no sign of a floor.",
+      "I overruled Bull — 43 analysts targeting $0.14 is 1 cent of upside, not a case.",
+      "Execution's gap point stands: after a 78% one-day crash, a $0.06 stop may not fill.",
+      "Risk agent is right that this uses the last $5 of cash while the desk sits ELEVATED.",
+      "Bull's 'huge volume' is the same fact Bear calls panic selling — nobody proved buyers."
+    ],
+    "dissent": [
+      "The Suppchains regulatory milestone is real business news and could spark a violent bounce.",
+      "Max loss here is $3 — trivially small, so being wrong costs almost nothing."
+    ],
+    "entry": "",
+    "target": "",
+    "stop": "",
+    "sizing": {
+      "symbol": "FAMI",
+      "price": 0.13,
+      "stop": 0.06,
+      "stop_basis": "2x ATR",
+      "risk_per_share": 0.07,
+      "dollars": 5.3,
+      "shares": 40.7692,
+      "pct_of_equity": 0.05,
+      "risk_amount": 2.85,
+      "capped_by": "dry powder",
+      "note": "Stop $0.06 (2x ATR, 53.8% below). Risking 1% of equity ($3) buys $5 — capped by dry powder."
+    },
+    "error": null
+  },
+  "IPST": {
+    "symbol": "IPST",
+    "name": "IP Strategy Holdings, Inc.",
+    "price": 7.39,
+    "ts": 1787022719.9223113,
+    "as_of": "2026-08-17 22:11:59",
+    "engine": "claude",
+    "agents": [
+      {
+        "key": "bull",
+        "name": "Bull Agent",
+        "round": 1,
+        "position": "BULLISH",
+        "confidence": 22,
+        "points": [
+          "MACD is bullish with histogram at 0.3764, showing fresh upward momentum today.",
+          "Volume is running 19.7x the 20-day average, showing massive new buyer interest.",
+          "Price is above the upper Bollinger band, confirming an aggressive breakout in progress.",
+          "30 analysts rate it outperform with a mean target of $8.94, 20.97% above the current $7.39.",
+          "Crypto-linked interest and low-float trading are driving fresh headline attention today (Quiver Quantitative, 2026-08-17)."
+        ],
+        "strongest": "30 analysts rate IPST outperform with a $8.94 target, 20.97% above today's $7.39 price.",
+        "ok": true
+      },
+      {
+        "key": "bear",
+        "name": "Bear Agent",
+        "round": 1,
+        "position": "NEUTRAL",
+        "confidence": 50,
+        "points": [],
+        "strongest": "",
+        "ok": true
+      },
+      {
+        "key": "macro",
+        "name": "Macro Agent",
+        "round": 1,
+        "position": "BEARISH",
+        "confidence": 15,
+        "points": [
+          "Trading volume is nearly 20 times normal, showing pure speculative money rushing in, not any real economic trend supporting it.",
+          "Price has collapsed 98% from its year high of $400 to $7.39, marking this as a broken stock, not a rising theme.",
+          "No rate, policy, or sector rotation story explains today's 235% jump; a crypto-linked headline is driving flow, not fundamentals.",
+          "The longer-term price average sits near $39, far above today's $7.39, showing the underlying trend is still down.",
+          "The analyst target of $8.94 is barely above today's price and offers no real cushion given how far this stock has fallen."
+        ],
+        "strongest": "A stock down 98% from a $400 high to $7.39 is a broken name riding a speculative wave, not a macro tailwind.",
+        "ok": true
+      },
+      {
+        "key": "risk",
+        "name": "Risk Agent",
+        "round": 2,
+        "position": "BEARISH",
+        "confidence": 12,
+        "points": [
+          "A stock down 98% from $400 to $7.39 has no survivable stop — risk is effectively unbounded on a name this broken.",
+          "Volume at 19.7x normal is speculative churn, not a trend a stop-loss can reliably protect against.",
+          "The RSI reading of 88.4 means this is stretched far beyond normal buying pressure — entries here get the worst fill.",
+          "The long-term average near $39 versus a $7.39 price confirms the dominant trend is still down, so any bounce is a countertrend bet.",
+          "The analyst target of $8.94 is only 21% above current price — too thin a cushion for a stock this violent to justify the downside risk."
+        ],
+        "strongest": "A name down 98% from its high with no real trend underneath offers no place to put a stop that actually protects capital.",
+        "ok": true
+      },
+      {
+        "key": "execution",
+        "name": "Execution Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 20,
+        "points": [
+          "Buy $150 of IPST at market near $7.39 only as a tiny speculative starter, not a real position.",
+          "Set a hard stop at $6.60, just under today's low volatility range, to cap the loss.",
+          "Sell half at $8.94 near the analyst target price to lock in gains fast.",
+          "Do not chase above $7.90 — that's too far from today's average trading price.",
+          "This stock fell from $400 to $7.39, so treat any bounce as a quick trade, not a hold."
+        ],
+        "strongest": "Take a small starter near $7.39 with a tight stop at $6.60 — this is a trade, not an investment.",
+        "ok": true
+      }
+    ],
+    "agents_reporting": 5,
+    "tally": {
+      "bullish": 1,
+      "bearish": 2,
+      "neutral": 2
+    },
+    "verdict": "REJECT",
+    "action": "AVOID",
+    "score": 18,
+    "headline": "A 236% one-day spike in a broken $7 stock is not an investment.",
+    "rationale": [
+      "Macro's point that nothing but a crypto headline explains a 236% move beats Bull's volume argument — 20x volume is the crowd, not a thesis.",
+      "I overruled Execution Agent: a $6.60 stop under a stock that moved 236% today gets skipped straight through overnight.",
+      "Risk's core observation wins — down 98% from $400 means the business, not just the chart, has already failed.",
+      "Bull's own confidence was 22 out of 100; nobody in the room actually believed this, including the one arguing for it.",
+      "The $8.94 analyst target is 21% up on a stock that moved 236% today — that cushion is meaningless."
+    ],
+    "dissent": [
+      "Low-float squeezes can run several days; this could double again before it collapses.",
+      "30 analysts still rate it outperform, which is more coverage than a true shell company gets.",
+      "If the crypto-linked news is a real business pivot, today is early, not late."
+    ],
+    "entry": "",
+    "target": "",
+    "stop": "",
+    "sizing": {
+      "symbol": "IPST",
+      "price": 7.39,
+      "stop": 5.84,
+      "stop_basis": "2x ATR",
+      "risk_per_share": 1.55,
+      "dollars": 5.3,
+      "shares": 0.7172,
+      "pct_of_equity": 0.05,
+      "risk_amount": 1.11,
+      "capped_by": "dry powder",
+      "note": "Stop $5.84 (2x ATR, 21.0% below). Risking 1% of equity ($1) buys $5 — capped by dry powder."
     },
     "error": null
   }
