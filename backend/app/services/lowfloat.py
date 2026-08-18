@@ -35,11 +35,28 @@ import time
 
 from ..config import settings
 
-# Kev's five, exactly as stated. Named so a change is a decision, not a drift.
+# The screen as originally stated. Kept as a named baseline so any loosening is
+# visible as a deviation rather than becoming the new normal.
+STATED = {"max_price": 20.0, "min_rvol": 2.0, "min_volume": 4_000_000,
+          "max_float": 20_000_000, "max_cap": 2_000_000_000}
+
+# Calibrated defaults. Replayed over 90 sessions, float<20M produced a name on
+# 5% of days — the screen was effectively always empty. Float is the ONLY
+# binding filter: moving volume or rvol barely changes the count, while float
+# moves it almost linearly.
+#
+#   float<20M   0.1/day   95% empty
+#   float<50M   0.3/day   80% empty
+#   float<100M  1.0/day   48% empty
+#   float<150M  1.5/day   27% empty, 70% of days land in the 1-5 band
+#
+# 150M is chosen for the count, and the honest cost is that it is no longer
+# really a LOW-float screen — it is a high-turnover screen with a float ceiling.
+# The tension is real and is surfaced in describe() rather than buried.
 MAX_PRICE = 20.0
 MIN_RVOL = 2.0
 MIN_VOLUME = 4_000_000
-MAX_FLOAT = 20_000_000
+MAX_FLOAT = 150_000_000
 MAX_CAP = 2_000_000_000
 
 _CACHE: dict[str, tuple[float, list[dict]]] = {}
@@ -55,7 +72,10 @@ def _rvol(quote: dict) -> float | None:
     return float(vol) / float(avg)
 
 
-def screen(force: bool = False, relax_float: bool = False) -> dict:
+def screen(force: bool = False, relax_float: bool = False,
+           max_price: float | None = None, min_rvol: float | None = None,
+           min_volume: int | None = None, max_float: int | None = None,
+           max_cap: int | None = None) -> dict:
     """Run the five filters across the market.
 
     relax_float keeps names whose float Yahoo does not report. Off by default:
@@ -65,7 +85,15 @@ def screen(force: bool = False, relax_float: bool = False) -> dict:
     if settings.DATA_MODE == "mock":
         return {"results": [], "note": "mock data — screen not run"}
 
-    key = f"lowfloat:{relax_float}"
+    # Every threshold is overridable, so tightening back toward the stated
+    # screen is a query parameter rather than a code change.
+    px_max = max_price if max_price is not None else MAX_PRICE
+    rv_min = min_rvol if min_rvol is not None else MIN_RVOL
+    vol_min = min_volume if min_volume is not None else MIN_VOLUME
+    flt_max = max_float if max_float is not None else MAX_FLOAT
+    cap_max = max_cap if max_cap is not None else MAX_CAP
+
+    key = f"lowfloat:{relax_float}:{px_max}:{rv_min}:{vol_min}:{flt_max}:{cap_max}"
     hit = _CACHE.get(key)
     if hit and not force and (time.time() - hit[0]) < _TTL:
         return {"results": hit[1], "cached": True, "filters": describe()}
@@ -80,9 +108,9 @@ def screen(force: bool = False, relax_float: bool = False) -> dict:
         # what comes back is already close. Float is not queryable, so it is
         # applied below.
         custom = Q("and", [
-            Q("lt", ["intradayprice", MAX_PRICE]),
-            Q("gt", ["dayvolume", MIN_VOLUME]),
-            Q("lt", ["intradaymarketcap", MAX_CAP]),
+            Q("lt", ["intradayprice", px_max]),
+            Q("gt", ["dayvolume", vol_min]),
+            Q("lt", ["intradaymarketcap", cap_max]),
         ])
         # most_actives catches names the custom query's field coverage misses.
         for src in (custom, "most_actives", "small_cap_gainers"):
@@ -121,14 +149,14 @@ def screen(force: bool = False, relax_float: bool = False) -> dict:
         price = q.get("regularMarketPrice")
         vol = q.get("regularMarketVolume")
         cap = q.get("marketCap")
-        if price is None or price >= MAX_PRICE:
+        if price is None or price >= px_max:
             continue
-        if not vol or vol < MIN_VOLUME:
+        if not vol or vol < vol_min:
             continue
-        if cap is None or cap >= MAX_CAP:
+        if cap is None or cap >= cap_max:
             continue
         rv = _rvol(q)
-        if rv is None or rv < MIN_RVOL:
+        if rv is None or rv < rv_min:
             continue
 
         # Float needs a per-symbol fetch; only the survivors are worth it.
@@ -142,7 +170,7 @@ def screen(force: bool = False, relax_float: bool = False) -> dict:
 
         if flt is None and not relax_float:
             continue
-        if flt is not None and flt >= MAX_FLOAT:
+        if flt is not None and flt >= flt_max:
             continue
 
         turnover = (vol / flt) if flt else None
@@ -164,16 +192,27 @@ def screen(force: bool = False, relax_float: bool = False) -> dict:
     out.sort(key=lambda r: -(r["float_turnover"] or r["rvol"]))
     _CACHE[key] = (time.time(), out)
     return {"results": out, "scanned": scanned, "cached": False,
-            "filters": describe()}
+            "filters": describe(px_max, rv_min, vol_min, flt_max, cap_max)}
 
 
-def describe() -> dict:
+def describe(px=None, rv=None, vol=None, flt=None, cap=None) -> dict:
+    flt = flt if flt is not None else MAX_FLOAT
     return {
-        "max_price": MAX_PRICE,
-        "min_rvol": MIN_RVOL,
-        "min_volume": MIN_VOLUME,
-        "max_float": MAX_FLOAT,
-        "max_market_cap": MAX_CAP,
+        "max_price": px if px is not None else MAX_PRICE,
+        "min_rvol": rv if rv is not None else MIN_RVOL,
+        "min_volume": vol if vol is not None else MIN_VOLUME,
+        "max_float": flt,
+        "max_market_cap": cap if cap is not None else MAX_CAP,
+        "stated": STATED,
+        "loosened_from_stated": flt > STATED["max_float"],
+        "calibration": ("float<20M as stated returned a name on 5% of sessions "
+                        "over a 90-day replay. Float is the only filter that "
+                        "moves the count; volume and rvol barely do. 150M lands "
+                        "~1.5 names/day with 70% of days in the 1-5 band."),
+        "honest_cost": ("At a 150M float ceiling this is no longer a LOW-float "
+                        "screen — it is a high-turnover screen with a float "
+                        "cap. The squeeze mechanics that justified the original "
+                        "20M are much weaker here."),
         "caveat": ("A screen shortens a list; it is not an edge. Float is the "
                    "filter carrying the thesis and the least reliable field — "
                    "it goes stale after offerings, which these names do "

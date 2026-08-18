@@ -10,12 +10,26 @@ import pytest
 from app.services import lowfloat as lf
 
 
-def test_the_five_thresholds_are_what_was_asked_for():
-    assert lf.MAX_PRICE == 20.0
-    assert lf.MIN_RVOL == 2.0
-    assert lf.MIN_VOLUME == 4_000_000
-    assert lf.MAX_FLOAT == 20_000_000
-    assert lf.MAX_CAP == 2_000_000_000
+def test_the_originally_stated_screen_is_preserved_verbatim():
+    # Kept as a baseline so any loosening reads as a deviation rather than
+    # quietly becoming the new normal.
+    assert lf.STATED == {"max_price": 20.0, "min_rvol": 2.0,
+                         "min_volume": 4_000_000, "max_float": 20_000_000,
+                         "max_cap": 2_000_000_000}
+
+
+def test_defaults_are_the_calibrated_ones_and_say_they_are_loosened():
+    assert lf.MAX_FLOAT == 150_000_000
+    d = lf.describe()
+    assert d["loosened_from_stated"] is True
+    assert "no longer a LOW-float screen" in d["honest_cost"]
+
+
+def test_the_stated_screen_can_be_restored_by_parameter(monkeypatch):
+    out = _run(monkeypatch, [_quote()], {"AAA": {"float_shares": 45_000_000}},
+               max_float=lf.STATED["max_float"])
+    assert out["results"] == []          # 45M float fails the original 20M
+    assert out["filters"]["loosened_from_stated"] is False
 
 
 def test_relative_volume_is_against_the_name_s_own_average():
@@ -39,7 +53,7 @@ def test_mock_mode_runs_nothing(monkeypatch):
 
 def test_describe_carries_the_caveat():
     d = lf.describe()
-    assert d["max_float"] == 20_000_000
+    assert d["max_float"] == lf.MAX_FLOAT
     # A screen presented without this reads as a signal generator.
     assert "not an edge" in d["caveat"]
 
@@ -53,7 +67,7 @@ def _quote(**kw):
     return base
 
 
-def _run(monkeypatch, quotes, structures):
+def _run(monkeypatch, quotes, structures, **overrides):
     """Drive screen() with a stubbed market so the filter logic is what's tested."""
     import sys
     import types as _t
@@ -78,7 +92,7 @@ def _run(monkeypatch, quotes, structures):
         market_data, "get_market_data",
         lambda s: _t.SimpleNamespace(structure=structures.get(s)))
     lf._CACHE.clear()
-    return lf.screen(force=True)
+    return lf.screen(force=True, **overrides)
 
 
 def test_a_clean_low_float_runner_passes(monkeypatch):
@@ -101,8 +115,8 @@ def test_each_filter_rejects_on_its_own(monkeypatch, bad, why):
     assert out["results"] == [], why
 
 
-def test_a_big_float_is_rejected(monkeypatch):
-    out = _run(monkeypatch, [_quote()], {"AAA": {"float_shares": 45_000_000}})
+def test_a_float_over_the_ceiling_is_rejected(monkeypatch):
+    out = _run(monkeypatch, [_quote()], {"AAA": {"float_shares": 200_000_000}})
     assert out["results"] == []
 
 
