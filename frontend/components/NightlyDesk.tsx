@@ -36,8 +36,11 @@ interface Screened extends Ran {
   price?: number;
   change_pct?: number;
   rvol?: number;
-  float_shares?: number | null;
-  float_turnover?: number | null;
+  drawdown_pct?: number | null;
+  higher_low?: boolean | null;
+  days_below_20d?: number | null;
+  run_20d_pct?: number | null;
+  reclaim_score?: number | null;
 }
 
 interface Nightly {
@@ -142,9 +145,10 @@ export function NightlyDesk() {
           <div className="mfx-label">Fresh from the screen · judged</div>
           <div className="card nd">
             <p className="nd-lead">
-              Low-float momentum names the screen surfaced overnight — nothing
-              you own. The desk argued each one so you are reading a verdict,
-              not a ticker list.
+              Beaten-down names that have stopped falling and just turned —
+              found across all 5,900 US listings, nothing you own. The desk
+              argued each one, so you are reading a verdict rather than a
+              ticker list.
             </p>
             <div className="nd-list">
               {screened.map((r) => (
@@ -156,11 +160,11 @@ export function NightlyDesk() {
                   <span className="nd-why">
                     {r.headline && <span className="nd-head">{r.headline}</span>}
                     <span className="nd-picked">
-                      {r.price != null ? `$${r.price} ` : ""}
-                      {r.change_pct != null ? `${r.change_pct >= 0 ? "+" : ""}${r.change_pct}% · ` : ""}
-                      {r.rvol != null ? `${r.rvol}x rvol · ` : ""}
-                      {r.float_shares ? `${(r.float_shares / 1e6).toFixed(0)}M float · ` : ""}
-                      {r.float_turnover != null ? `${r.float_turnover}x float traded` : ""}
+                      {r.price != null ? `$${r.price} · ` : ""}
+                      {r.drawdown_pct != null ? `${r.drawdown_pct}% off high · ` : ""}
+                      {r.higher_low ? "higher low · " : ""}
+                      {r.days_below_20d != null ? `${r.days_below_20d}d below 20d · ` : ""}
+                      {r.rvol != null ? `${r.rvol}x volume` : ""}
                     </span>
                   </span>
                   <span className="nd-go">Read the debate →</span>

@@ -147,47 +147,54 @@ def score_candidates(reports: list, signals: list | None = None) -> list[dict]:
 
 
 def screen_and_judge(limit: int = SCREEN_JUDGED) -> list[dict]:
-    """Run the low-float screen, then convene the desk on its best candidates.
+    """Scan the whole market for RECLAIM setups, then convene the desk on the best.
 
-    Ranked by float turnover — volume over float — because that is the number
-    the screen exists to find: how much of the tradeable supply changed hands.
-    A name is only worth a 394k-token debate if the supply actually moved.
+    This deliberately no longer uses the low-float screen. That one requires 4M
+    shares and 2x volume TODAY, conditions that cannot be true until the move has
+    already started — so it only ever surfaced names mid-pop and the desk
+    correctly refused to chase every one of them. Five AVOIDs out of five was the
+    screen's fault, not the judge's.
 
-    These are strangers, not holdings, so the desk is doing real work: deciding
-    whether an unfamiliar name deserves attention at all.
+    The reclaim screen asks the answerable question instead: what has already
+    been destroyed, has stopped going down, and has just begun to turn? That is a
+    setup a judge can actually rule on before the news is public.
+
+    Strangers judged as strangers — no portfolio context. See debate._facts.
     """
     from . import debate as debate_service
-    from . import lowfloat
+    from . import reclaim
 
     try:
-        out = lowfloat.screen(force=True)
+        out = reclaim.screen(force=True, limit=limit * 3)
     except Exception as exc:
-        print(f"[nightly] screen failed: {exc!r}")
+        print(f"[nightly] reclaim screen failed: {exc!r}")
         return []
 
     results = out.get("results") or []
-    print(f"[nightly] screen: {len(results)} passed of "
-          f"{out.get('scanned')} scanned ({out.get('coverage_pct')}% coverage)")
+    print(f"[nightly] reclaim: {len(results)} setups from "
+          f"{out.get('scanned')} of {out.get('universe_total')} "
+          f"({out.get('coverage_pct')}% coverage)")
 
     judged: list[dict] = []
     for cand in results[:limit]:
         sym = cand["symbol"]
         try:
-            # Strangers judged as strangers — see debate._facts.
-            d = debate_service.convene(sym, force=True,
-                                       standalone=True) or {}
+            d = debate_service.convene(sym, force=True, standalone=True) or {}
             judged.append({
                 "symbol": sym, "price": cand["price"],
-                "change_pct": cand["change_pct"], "rvol": cand["rvol"],
-                "float_shares": cand.get("float_shares"),
-                "float_turnover": cand.get("float_turnover"),
+                "change_pct": cand.get("change_pct"), "rvol": cand.get("rvol"),
+                "drawdown_pct": cand.get("drawdown_pct"),
+                "higher_low": cand.get("higher_low"),
+                "days_below_20d": cand.get("days_below_20d"),
+                "run_20d_pct": cand.get("run_20d_pct"),
+                "reclaim_score": cand.get("reclaim_score"),
                 "verdict": d.get("verdict"), "action": d.get("action"),
                 "headline": d.get("headline"), "ts": d.get("ts"),
                 # Price AT the ruling, so the call can be graded later.
                 "price_at_ruling": cand["price"],
             })
         except Exception as exc:
-            print(f"[nightly] {sym} screen-debate failed: {exc!r}")
+            print(f"[nightly] {sym} reclaim-debate failed: {exc!r}")
     return judged
 
 

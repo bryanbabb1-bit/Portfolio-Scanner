@@ -3307,5 +3307,646 @@
       "note": "Stop $5.84 (2x ATR, 21.0% below). Risking 1% of equity ($1) buys $5 — capped by dry powder."
     },
     "error": null
+  },
+  "REAX": {
+    "symbol": "REAX",
+    "name": "REAX",
+    "price": 2.42,
+    "ts": 1787026159.678295,
+    "as_of": "2026-08-17 23:09:19",
+    "engine": "claude",
+    "agents": [
+      {
+        "key": "bull",
+        "name": "Bull Agent",
+        "round": 1,
+        "position": "BULLISH",
+        "confidence": 62,
+        "points": [
+          "42 analysts rate it a buy with an average target near $2.89, about 19% above today's $2.42.",
+          "Real REMAX Group just won strong approval, merging with RE/MAX to add scale.",
+          "Agent count just topped 36,000, showing the growth story is still expanding.",
+          "Momentum is turning up — price is pushing higher against its own recent trend.",
+          "Volume is running 1.4x normal, showing real buying interest behind the move."
+        ],
+        "strongest": "42 analysts back this with a buy rating and a $2.89 target, nearly 20% above today's $2.42.",
+        "ok": true
+      },
+      {
+        "key": "bear",
+        "name": "Bear Agent",
+        "round": 1,
+        "position": "BEARISH",
+        "confidence": 62,
+        "points": [
+          "Price sits at $2.42, still 55.39% below the 52-week high of $5.38 — a huge failed move, not a bargain.",
+          "Long-term trend is still down: price $2.42 is well below the longer-term average of $2.7315.",
+          "The stock just got very stretched short-term (RSI 71) after running from the 52-week low of $1.59, prone to a pullback.",
+          "A headline flags 'a wider profit squeeze' even as shares rallied — growth may be costing real profitability.",
+          "Volume is running 1.41x normal on a stretched move, which can mark exhaustion buying, not fresh strength."
+        ],
+        "strongest": "Shares are still 55% below their 52-week high with the longer-term trend broken, so this bounce could just be a bear-market rally.",
+        "ok": true
+      },
+      {
+        "key": "macro",
+        "name": "Macro Agent",
+        "round": 1,
+        "position": "NEUTRAL",
+        "confidence": 45,
+        "points": [
+          "REAX sits at $2.42, still 55% below its 52-week high of $5.38 — the big downtrend isn't over.",
+          "Price is below its long-term average near $2.73, so the bigger trend still points down despite the bounce.",
+          "Trading volume is 1.4x normal, showing real money rotating into this name around the RE/MAX consolidation news.",
+          "Wall Street's 42 analysts still see upside to $2.89, about 19% above today's $2.42.",
+          "This bounce off the $1.59 low looks stretched short-term — quick pops like this often fade before resuming higher."
+        ],
+        "strongest": "REAX is still 55% below its $5.38 high and trading under its long-term average near $2.73, so the macro trend remains down.",
+        "ok": true
+      },
+      {
+        "key": "risk",
+        "name": "Risk Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 38,
+        "points": [
+          "Daily swings of about $0.15 are huge on a $2.42 stock, so any stop must sit far below entry to survive normal noise.",
+          "Price is still 55% below its old high of $5.38, and below its longer-term average of $2.7315, so the bigger trend is down.",
+          "The stock just ran hard off $1.59 and looks stretched, raising odds of a quick giveback before any real entry.",
+          "Wall Street's target of $2.89 is only about $0.47 above today's price, thin reward for how choppy this name trades.",
+          "Buying strength here means risking a fast round-trip back toward $1.90-$2.00 if the bounce fades."
+        ],
+        "strongest": "A stock this cheap with $0.15 average daily swings needs a wide stop, and a wide stop on a $2.42 name is a big percentage loss if wrong.",
+        "ok": true
+      },
+      {
+        "key": "execution",
+        "name": "Execution Agent",
+        "round": 2,
+        "position": "BEARISH",
+        "confidence": 55,
+        "points": [
+          "Don't chase it now — REAX just ran hard and is stretched, RSI 71.",
+          "Buy $2.89 target is only 19% away, thin cushion after a stretched run.",
+          "Price $2.42 is still far below the $2.7315 average — the bigger trend is down.",
+          "Headline flags a wider profit squeeze even as shares rallied.",
+          "Better entry: wait for a pullback toward $1.92-$1.90 before buying."
+        ],
+        "strongest": "Price $2.42 sits 55% below the 52-week high of $5.38 — this is a stretched bounce, not a bargain entry.",
+        "ok": true
+      }
+    ],
+    "agents_reporting": 5,
+    "tally": {
+      "bullish": 1,
+      "bearish": 2,
+      "neutral": 2
+    },
+    "verdict": "REJECT",
+    "action": "WATCH",
+    "score": 42,
+    "headline": "Real merger story is real, but the price already ran — wait for a pullback.",
+    "rationale": [
+      "Execution's 'don't chase' point wins: REAX ran from $1.59 to $2.42 and is stretched.",
+      "Bull's RE/MAX deal and 36,000 agents are genuine, but 42 analysts see only $2.89 — thin reward.",
+      "I overrule Bull's momentum case: buying after a 52% run to a $0.47 target is poor odds.",
+      "Bear's profit-squeeze headline matters — growth here is costing real profitability, unproven so far.",
+      "Risk's point stands: $0.15 daily swings on a $2.42 stock make any sane exit painfully wide."
+    ],
+    "dissent": [
+      "If the RE/MAX merger closes cleanly, scale could re-rate the stock far past $2.89.",
+      "Waiting for $1.92 may never fill if buyers keep chasing the merger news."
+    ],
+    "entry": "",
+    "target": "",
+    "stop": "",
+    "sizing": {
+      "symbol": "REAX",
+      "price": 2.42,
+      "stop": 2.12,
+      "stop_basis": "2x ATR",
+      "risk_per_share": 0.3,
+      "dollars": 5.3,
+      "shares": 2.1901,
+      "pct_of_equity": 0.05,
+      "risk_amount": 0.66,
+      "capped_by": "dry powder",
+      "note": "Stop $2.12 (2x ATR, 12.4% below). Risking 1% of equity ($1) buys $5 — capped by dry powder."
+    },
+    "error": null
+  },
+  "EIKN": {
+    "symbol": "EIKN",
+    "name": "EIKN",
+    "price": 10.47,
+    "ts": 1787026189.7568195,
+    "as_of": "2026-08-17 23:09:49",
+    "engine": "claude",
+    "agents": [
+      {
+        "key": "bull",
+        "name": "Bull Agent",
+        "round": 1,
+        "position": "BULLISH",
+        "confidence": 58,
+        "points": [
+          "Analysts see 33.91% upside with an average target of $14.02 across 41 analysts.",
+          "Buyers are stepping in hard — volume is running 1.9x the normal daily average.",
+          "Momentum just turned positive, a bullish signal alongside a strong 60.85 reading that isn't overbought.",
+          "Eikon just added a scientist tied to sugammadex research to its board, adding scientific credibility.",
+          "Joining the Russell 3000 Index brings new index-fund buying that wasn't there before."
+        ],
+        "strongest": "41 analysts still see $14.02 fair value, 33.91% above today's $10.47 print.",
+        "ok": true
+      },
+      {
+        "key": "bear",
+        "name": "Bear Agent",
+        "round": 1,
+        "position": "BEARISH",
+        "confidence": 62,
+        "points": [
+          "Stock fell 5.25% today to $10.47 even as volume ran 1.9x normal — that's heavy selling, not accumulation.",
+          "Price is still 32% below its 52-week high of $16.26, a broken chart that hasn't repaired.",
+          "It has no 200-day trend line to lean on, meaning there's no established long-term uptrend backing this bounce.",
+          "An insider lock-up expired August 4, and MarketBeat flagged it — that's a wall of new sellable shares hitting the market.",
+          "Insiders are still down $852k on their own stock per Simply Wall St, a weak signal on management's own conviction."
+        ],
+        "strongest": "A 5.25% drop on 1.9x normal volume, right after an insider lock-up expiry, looks like exit liquidity, not a turn.",
+        "ok": true
+      },
+      {
+        "key": "macro",
+        "name": "Macro Agent",
+        "round": 1,
+        "position": "NEUTRAL",
+        "confidence": 38,
+        "points": [
+          "Clinical-stage biotech is a rate-sensitive, cash-burning sector — this trades on funding conditions, not company news.",
+          "Down 32.04% from its $16.26 high shows the stock already repricing with risk sentiment, typical of speculative-biotech rotation.",
+          "Volume today is 1.9053x normal on a 5.25% drop — capital is actively rotating out, a liquidity signal that overrides any technical setup.",
+          "Joining the Russell 3000 forces passive index flows into the name, a structural tailwind unrelated to the business itself.",
+          "A recent lock-up expiry (Aug 4) typically pressures small/mid-cap names as insider supply hits the float during weak risk appetite."
+        ],
+        "strongest": "Volume is 1.9053x average on a 5.25% down day — that is capital actively rotating out, the clearest macro signal here.",
+        "ok": true
+      },
+      {
+        "key": "risk",
+        "name": "Risk Agent",
+        "round": 2,
+        "position": "BEARISH",
+        "confidence": 55,
+        "points": [
+          "A 5.25% drop on 1.9x normal volume near $10.47 is heavy selling, not buying, whatever the momentum readers say.",
+          "Price sits 32% below its $16.26 high with no long-term uptrend to lean on for support.",
+          "Insiders are down $852k on their own stock and a lock-up expiry on August 4 just added a wave of sellable shares.",
+          "The $14.02 analyst target is 41 opinions averaged, not a floor — it does not protect against more insider-driven supply.",
+          "This is a clinical-stage biotech, a cash-burning, rate-sensitive name whose price is driven by funding conditions, not the board hire."
+        ],
+        "strongest": "A 5.25% drop on 1.9x normal volume is distribution, and a fresh lock-up expiry means more sellers are still coming.",
+        "ok": true
+      },
+      {
+        "key": "execution",
+        "name": "Execution Agent",
+        "round": 2,
+        "position": "BEARISH",
+        "confidence": 55,
+        "points": [
+          "Sell $10.47 near close today — a 5.25% drop on 1.9x normal volume is heavy exit, not entry.",
+          "Skip new entries until it holds above $10 for a few days; no trend line supports a bounce yet.",
+          "Price is 32% below the $16.26 high — don't chase, wait for real strength.",
+          "If already in, cut losses with a stop near $8.36, the 52-week low.",
+          "Insider lock-up expired August 4 — expect more selling pressure into the name before it stabilizes."
+        ],
+        "strongest": "Today's 5.25% drop on 1.9x normal volume is sellers leaving, not buyers arriving — don't buy into that.",
+        "ok": true
+      }
+    ],
+    "agents_reporting": 5,
+    "tally": {
+      "bullish": 1,
+      "bearish": 3,
+      "neutral": 1
+    },
+    "verdict": "REJECT",
+    "action": "WATCH",
+    "score": 38,
+    "headline": "Heavy selling into fresh insider supply — wait for $10 to hold before touching it.",
+    "rationale": [
+      "Bear's lock-up point wins: August 4 freed insider shares, and today's 5.25% drop on double volume looks like that supply arriving.",
+      "I overruled Bull's volume argument — heavy volume on a down day is exit, not accumulation, and Bull read it backwards.",
+      "I also overruled Execution's 'sell near $10.47' order: there is no position here, so the only live choice is buy or wait.",
+      "Macro's quiet point that this is a cash-burning clinical-stage name funded by sentiment, not the board hire, held up on thin conviction.",
+      "Bull's real asset — 41 analysts at a $14.02 average and a melanoma trial cleared to continue — is genuine but doesn't outrun the supply now."
+    ],
+    "dissent": [
+      "The melanoma trial continuing and Russell 3000 index buying are real, and a clean hold above $10 would flip this fast.",
+      "At $10.47 the stock is 32% under its $16.26 high with a $14.02 average target — waiting could cost the first move up."
+    ],
+    "entry": "",
+    "target": "$14.02",
+    "stop": "$8.36",
+    "sizing": {
+      "symbol": "EIKN",
+      "price": 10.47,
+      "stop": 8.85,
+      "stop_basis": "2x ATR",
+      "risk_per_share": 1.62,
+      "dollars": 5.3,
+      "shares": 0.5062,
+      "pct_of_equity": 0.05,
+      "risk_amount": 0.82,
+      "capped_by": "dry powder",
+      "note": "Stop $8.85 (2x ATR, 15.5% below). Risking 1% of equity ($1) buys $5 — capped by dry powder."
+    },
+    "error": null
+  },
+  "WWW": {
+    "symbol": "WWW",
+    "name": "WWW",
+    "price": 19.83,
+    "ts": 1787026222.4694946,
+    "as_of": "2026-08-17 23:10:22",
+    "engine": "claude",
+    "agents": [
+      {
+        "key": "bull",
+        "name": "Bull Agent",
+        "round": 1,
+        "position": "BULLISH",
+        "confidence": 58,
+        "points": [
+          "Still trending up — price $19.83 sits above all its trend averages near $19.35, $18.04 and $17.43.",
+          "29 analysts rate it a buy with an average target of $22.87, about 15% above today's price.",
+          "Trading volume today is 1.5x the normal amount, showing real buying interest at these levels.",
+          "Momentum reading is strong and the longer-term trend flipped bullish (golden cross), a setup that often keeps running.",
+          "Even after today's drop it's up big off its 52-week low of $14.39, showing strong underlying demand."
+        ],
+        "strongest": "29 analysts see $22.87, about 15% upside from today's $19.83 price.",
+        "ok": true
+      },
+      {
+        "key": "bear",
+        "name": "Bear Agent",
+        "round": 1,
+        "position": "BEARISH",
+        "confidence": 58,
+        "points": [
+          "WWW fell 5.71% today on volume 1.5x normal — that's real selling, not noise.",
+          "Momentum already flipped: the trend gauge sits at 0.4189 vs its 0.4292 signal, printing bearish.",
+          "Even after today's drop, WWW trades 33.69% below its 52-week high of $31.7143 — the recovery is shallow.",
+          "The 14-day strength reading is 64.6, close to hot — a stock that just gapped down from warm readings often keeps sliding.",
+          "Analyst upside is only 15.33% to $22.87 even before today's plunge — not much cushion left for more bad days."
+        ],
+        "strongest": "A 5.71% drop on 1.5x normal volume with momentum already turning down says sellers are in control, not buyers.",
+        "ok": true
+      },
+      {
+        "key": "macro",
+        "name": "Macro Agent",
+        "round": 1,
+        "position": "NEUTRAL",
+        "confidence": 45,
+        "points": [
+          "Price is down 5.71% today to $19.83, a sharp single-day drop worth respecting before adding.",
+          "Still trending up with support building near $19.35 and $18.04.",
+          "Down 33.69% from its $31.71 high, so a lot of past damage remains unrecovered.",
+          "29 analysts rate it a buy with a $22.87 target, about 15% above the current $19.83 price.",
+          "Trading volume is 1.5x the norm today, meaning today's move carries more weight than usual."
+        ],
+        "strongest": "29 analysts set a $22.87 target, 15% above today's $19.83 price, but today's heavy sell-off on 1.5x volume needs to prove itself first.",
+        "ok": true
+      },
+      {
+        "key": "risk",
+        "name": "Risk Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 62,
+        "points": [
+          "Stock just dropped 5.71% to $19.83 on heavy trading — that's a real warning sign, not noise.",
+          "Momentum already flipped negative today, which often means more downside follows a gap like this.",
+          "Still down 33.69% from its $31.71 high, so there's no cushion if the selling continues.",
+          "Analyst target of $22.87 is only 15% above today's price — not enough reward to justify the risk right now.",
+          "A single-day 5.71% drop on 1.5x normal volume is a real drawdown risk any stop must survive."
+        ],
+        "strongest": "A 5.71% drop on 1.5x normal volume today is real selling pressure that a new position must be able to survive.",
+        "ok": true
+      },
+      {
+        "key": "execution",
+        "name": "Execution Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 52,
+        "points": [
+          "If buying, wait — don't chase; the stock just fell 5.71% to $19.83 on 1.5x normal volume.",
+          "A pullback entry near $19.35 lines up with its recent support level.",
+          "If it breaks below $18.04, that's the stop — the drop would erode the trend.",
+          "The $22.87 analyst target is only about 15% away, so there's not a lot of room for error.",
+          "No earnings date given, so this isn't a binary bet — safe to scale in over time instead of all at once."
+        ],
+        "strongest": "Wait for a pullback near $19.35 instead of buying into today's 5.71% drop on heavy volume.",
+        "ok": true
+      }
+    ],
+    "agents_reporting": 5,
+    "tally": {
+      "bullish": 1,
+      "bearish": 1,
+      "neutral": 3
+    },
+    "verdict": "REJECT",
+    "action": "WATCH",
+    "score": 44,
+    "headline": "WWW just dropped 5.7% on heavy volume — watch it, don't buy today.",
+    "rationale": [
+      "Bear's point wins: a 5.71% fall on 1.5x volume is real selling, not noise.",
+      "I overrule Bull — being above trend averages doesn't offset a same-day 5.7% break lower.",
+      "Risk agent is right that $22.87 is only 15% away, thin reward for this volatility.",
+      "Execution's 'wait for $19.35' is sound, but I'd rather see the selling stop first.",
+      "No news explains today's drop, so I won't guess at the cause — watch instead."
+    ],
+    "dissent": [
+      "If WWW holds $19.35 and rebounds, Bull's uptrend case was right and I passed on it.",
+      "29 analysts still rate it buy — the business may be fine and today just noise."
+    ],
+    "entry": "",
+    "target": "$22.87",
+    "stop": "$18.04",
+    "sizing": {
+      "symbol": "WWW",
+      "price": 19.83,
+      "stop": 17.96,
+      "stop_basis": "2x ATR",
+      "risk_per_share": 1.87,
+      "dollars": 5.3,
+      "shares": 0.2673,
+      "pct_of_equity": 0.05,
+      "risk_amount": 0.5,
+      "capped_by": "dry powder",
+      "note": "Stop $17.96 (2x ATR, 9.4% below). Risking 1% of equity ($0) buys $5 — capped by dry powder."
+    },
+    "error": null
+  },
+  "METC": {
+    "symbol": "METC",
+    "name": "METC",
+    "price": 12.23,
+    "ts": 1787026282.3884842,
+    "as_of": "2026-08-17 23:11:22",
+    "engine": "claude",
+    "agents": [
+      {
+        "key": "bull",
+        "name": "Bull Agent",
+        "round": 1,
+        "position": "BULLISH",
+        "confidence": 58,
+        "points": [
+          "28 analysts rate it strong_buy with a $14.62 target, about 20% above the $12.23 price.",
+          "Volume is running 1.5x the 20-day average, showing real buying interest at these levels.",
+          "Momentum just turned up — the recent trend reading flipped bullish alongside the volume surge.",
+          "Ramaco's Wyoming project just got a $3.2B build estimate, a rare-earth catalyst beyond coal.",
+          "Stock is down 77.5% from its $54.55 high, at $12.23, well above the 52-week low of $8.90 — room to re-rate."
+        ],
+        "strongest": "28 analysts rate METC strong_buy with a $14.62 target, roughly 20% upside from $12.23.",
+        "ok": true
+      },
+      {
+        "key": "bear",
+        "name": "Bear Agent",
+        "round": 1,
+        "position": "BEARISH",
+        "confidence": 62,
+        "points": [
+          "Price sits 77.5% below its 52-week high of $54.55, and downtrends of this size rarely repair fast.",
+          "The trend is sideways with the longer-term average at $16.09, well above the $12.23 price, a bearish setup.",
+          "Headlines flag deepening coal losses and a GuruFocus call that the stock may be overvalued after its recent 16.3% pop.",
+          "Company just reported a Q2 loss, and Zacks flagged risk of another negative quarter beforehand.",
+          "The $3.2B rare-earth project cost estimate adds heavy execution and funding risk on top of a struggling coal business."
+        ],
+        "strongest": "The stock is down 77.5% from its 52-week high with a Q2 loss just reported and coal losses called out as 'deepening' in the news.",
+        "ok": true
+      },
+      {
+        "key": "macro",
+        "name": "Macro Agent",
+        "round": 1,
+        "position": "NEUTRAL",
+        "confidence": 50,
+        "points": [
+          "METC trades at $12.23, still 77.5% below its 52-week high of $54.55, showing capital has fled coal names this cycle.",
+          "Price remains stuck well under its longer-term average near $16.09, meaning the broader downtrend has not clearly turned.",
+          "Ramaco's $3.2B Wyoming rare-earth project ties METC to US critical-minerals policy, a real tailwind if government funding continues.",
+          "Trading volume is running 54% above normal, showing fresh capital rotating into the name right now.",
+          "28 analysts still rate it a strong buy with a $14.62 target, 19.5% above today's $12.23 price."
+        ],
+        "strongest": "The $3.2B Wyoming rare-earth build links METC to a live US critical-minerals policy tailwind that coal alone would not offer.",
+        "ok": true
+      },
+      {
+        "key": "risk",
+        "name": "Risk Agent",
+        "round": 2,
+        "position": "BEARISH",
+        "confidence": 65,
+        "points": [
+          "Price near $12.23 sits 77.5% below the $54.55 high — that kind of hole rarely fills fast, poor risk/reward.",
+          "The longer-term average near $16.09 is well above today's $12.23 price, confirming the downtrend isn't over.",
+          "Company just reported a Q2 loss with coal losses deepening per recent headlines, a fundamental crack.",
+          "The $3.2B Wyoming project is a funding and execution risk stacked on top of an already-struggling coal business.",
+          "Volume 1.5x normal at $12.23 could just as easily be capitulation selling as fresh buying — no confirmed reversal yet."
+        ],
+        "strongest": "The stock still trades far below its own longer-term average near $16.09, so the downtrend hasn't actually turned yet despite the bounce.",
+        "ok": true
+      },
+      {
+        "key": "execution",
+        "name": "Execution Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 45,
+        "points": [
+          "Buy half your intended amount now, near $12.23, the live price.",
+          "Hold the rest back and add only if METC drops to $10.37.",
+          "Set a stop near $8.90, the 52-week low, to cap downside risk.",
+          "No earnings are pending — Q2 results already came out August 4th, so no near-term binary event.",
+          "Volume is running 1.5x normal right now, so orders near $12.23 should fill easily.",
+          "Don't chase above $14.62 — that's the analyst target, already priced in."
+        ],
+        "strongest": "Split the buy into two pieces — $12.23 now and $10.37 on a pullback — instead of one lump order, since the stock is still 77.5% below its old high and choppy.",
+        "ok": true
+      }
+    ],
+    "agents_reporting": 5,
+    "tally": {
+      "bullish": 1,
+      "bearish": 2,
+      "neutral": 2
+    },
+    "verdict": "REJECT",
+    "action": "AVOID",
+    "score": 34,
+    "headline": "Ramaco is losing money on coal; the bounce isn't a reason to own it.",
+    "rationale": [
+      "Bear's Q2 loss and deepening coal losses beat Bull's analyst-target case — targets lag a broken business.",
+      "Risk Agent's point wins: a $3.2B rare-earth build sits on top of an unprofitable coal operation.",
+      "I overruled Execution Agent — no half-buy here, a losing business isn't fixed by staggered entries.",
+      "Bull's volume argument is thin; heavy trading after a 16% pop cuts both ways, as Risk noted.",
+      "Macro's neutral read is honest, but 'policy might help someday' isn't a reason to buy today."
+    ],
+    "dissent": [
+      "If Washington funds the Wyoming rare-earth project, METC re-rates fast and this call looks far too cautious.",
+      "28 analysts see $14.62; if coal prices turn, the stock recovers from $12.23 without me."
+    ],
+    "entry": "",
+    "target": "",
+    "stop": "",
+    "sizing": {
+      "symbol": "METC",
+      "price": 12.23,
+      "stop": 10.37,
+      "stop_basis": "2x ATR",
+      "risk_per_share": 1.86,
+      "dollars": 5.3,
+      "shares": 0.4334,
+      "pct_of_equity": 0.05,
+      "risk_amount": 0.81,
+      "capped_by": "dry powder",
+      "note": "Stop $10.37 (2x ATR, 15.2% below). Risking 1% of equity ($1) buys $5 — capped by dry powder."
+    },
+    "error": null
+  },
+  "RDDT": {
+    "symbol": "RDDT",
+    "name": "RDDT",
+    "price": 164.5,
+    "ts": 1787026328.228865,
+    "as_of": "2026-08-17 23:12:08",
+    "engine": "claude",
+    "agents": [
+      {
+        "key": "bull",
+        "name": "Bull Agent",
+        "round": 1,
+        "position": "BULLISH",
+        "confidence": 58,
+        "points": [
+          "Reddit jumped 11% on S&P 500 inclusion news, a fresh index-buying catalyst.",
+          "Analysts see $207.48 average target, 26.13% above the current $164.5 price.",
+          "Data licensing revenue grew 24% to $43 million with OpenAI and Google as buyers, a growing new income stream.",
+          "Momentum reading of 55.3 shows the stock isn't broken despite today's drop.",
+          "Volume is running 3.06x normal, showing heavy interest that often precedes a reversal higher."
+        ],
+        "strongest": "S&P 500 inclusion already sparked an 11% pop and analysts still see 26% upside to $207.48.",
+        "ok": true
+      },
+      {
+        "key": "bear",
+        "name": "Bear Agent",
+        "round": 1,
+        "position": "BEARISH",
+        "confidence": 62,
+        "points": [
+          "Price fell 7.63% today to $164.5, and it's now 34.21% below its 52-week high of $270.71.",
+          "Trend is sideways with price below both the 165.841 and 175.025 short-term averages — momentum has stalled.",
+          "An investor says management is hiding a user metric that may be turning against them, per the 24/7 Wall St. headline.",
+          "Volume today is 3.06x normal — a heavy sell-off, not a quiet dip.",
+          "Data licensing revenue from OpenAI and Google is only $43 million, called 'tiny' by Motley Fool — the AI-data story is thin."
+        ],
+        "strongest": "Reddit dropped 7.63% today on 3x normal volume with a user-metric credibility question hanging over the stock.",
+        "ok": true
+      },
+      {
+        "key": "macro",
+        "name": "Macro Agent",
+        "round": 1,
+        "position": "NEUTRAL",
+        "confidence": 50,
+        "points": [
+          "Stock is down 7.63% today to $164.5, now 34% below its 52-week high of $270.71.",
+          "Reddit is joining the S&P 500, forcing index funds to buy shares — a real capital-rotation tailwind.",
+          "A court stripped a legal liability shield from a peer platform today, adding regulatory risk to the sector.",
+          "Price sits below its 20, 50, and 200-day averages, showing the broader trend has turned down.",
+          "Trading volume is over 3 times normal today, showing a big capital flow event either direction."
+        ],
+        "strongest": "S&P 500 inclusion forces passive index funds to buy shares, a real near-term flow tailwind regardless of trend.",
+        "ok": true
+      },
+      {
+        "key": "risk",
+        "name": "Risk Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 55,
+        "points": [
+          "Stock fell 7.63% to $164.5 today on 3.06x normal volume, a violent move not a quiet dip.",
+          "Price sits below its $165.841 and $175.025 short-term levels, meaning the recent trend is stalled.",
+          "Index-fund buying from S&P 500 inclusion is a real one-time flow, but it just fired and can't repeat.",
+          "A management-hiding-metrics headline adds a trust risk that no order size can fix.",
+          "Any position here needs a hard stop under $164.5 given today's swing size alone."
+        ],
+        "strongest": "3x normal volume on a 7.63% drop means this is a real capital event, not noise — respect it with a tight stop, don't chase it.",
+        "ok": true
+      },
+      {
+        "key": "execution",
+        "name": "Execution Agent",
+        "round": 2,
+        "position": "NEUTRAL",
+        "confidence": 55,
+        "points": [
+          "Stock is at $164.5 today, a real price you can act on right now.",
+          "S&P 500 inclusion is a real forced-buying event — index funds must own RDDT.",
+          "Stock dropped 7.63% today on volume 3 times normal, meaning big money is deciding right now.",
+          "It's still 34% below its $270.71 high, so the 'cheap vs falling knife' question is unresolved.",
+          "Wait for the sell-off to calm down before sizing up — don't chase a falling stock."
+        ],
+        "strongest": "Buy $150 of RDDT near $164.50, then buy $150 more only if it holds above $150 for 2 days.",
+        "ok": true
+      }
+    ],
+    "agents_reporting": 5,
+    "tally": {
+      "bullish": 1,
+      "bearish": 1,
+      "neutral": 3
+    },
+    "verdict": "APPROVE",
+    "action": "WATCH",
+    "score": 58,
+    "headline": "Good business, messy tape — watch RDDT, buy only after it steadies above $166.",
+    "rationale": [
+      "Bull's index-inclusion catalyst wins on evidence — the S&P 500 add is confirmed, not speculation.",
+      "I overrule Bear's 'thin AI story': $43M licensing growing 24% is small but real, not a thesis breaker.",
+      "Execution's 'don't chase a falling stock' beats Bull's reversal claim — 3x volume on a 7.6% drop is selling.",
+      "Analysts back the upside: 48 of them see $207, but they rate it hold, so no rush.",
+      "Risk's trust concern on the hidden user metric is unproven rhetoric, but it earns a wait."
+    ],
+    "dissent": [
+      "If index funds finish buying and the stock rips from $164.5, waiting costs the entry.",
+      "If the hidden user-growth metric is genuinely deteriorating, this is a value trap, not a dip."
+    ],
+    "entry": "Buy only above $166",
+    "target": "$207",
+    "stop": "$150",
+    "sizing": {
+      "symbol": "RDDT",
+      "price": 164.5,
+      "stop": 140.23,
+      "stop_basis": "2x ATR",
+      "risk_per_share": 24.27,
+      "dollars": 5.3,
+      "shares": 0.0322,
+      "pct_of_equity": 0.05,
+      "risk_amount": 0.78,
+      "capped_by": "dry powder",
+      "note": "Stop $140.23 (2x ATR, 14.8% below). Risking 1% of equity ($1) buys $5 — capped by dry powder."
+    },
+    "error": null
   }
 }
