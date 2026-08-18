@@ -48,7 +48,11 @@ def squeeze_setups(force: bool = False, limit: int = 25):
 
 
 @router.get("/reclaim")
-def reclaim_setups(force: bool = False, limit: int = 25):
-    """Beaten down, stopped falling, just reclaimed the 20-day on volume."""
+def reclaim_setups(force: bool = False, limit: int = 25,
+                   max_symbols: int | None = None):
+    """Beaten down, stopped falling, just reclaimed the 20-day on volume.
+
+    Scans the whole US listed market (~5,900 names) via bulk download.
+    max_symbols caps the walk for a quick look."""
     from ..services import reclaim
-    return reclaim.screen(force=force, limit=limit)
+    return reclaim.screen(force=force, limit=limit, max_symbols=max_symbols)

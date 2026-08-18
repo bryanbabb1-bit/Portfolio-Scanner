@@ -53,8 +53,6 @@ MIN_PRICE = 2.00
 MIN_AVG_VOL = 300_000
 MAX_CAP = 20_000_000_000
 
-PAGE_SIZE = 25
-MAX_PAGES = 60
 _CACHE: dict[str, tuple[float, list[dict]]] = {}
 _TTL = 900
 
@@ -119,93 +117,98 @@ def analyse(hist, rvol: float | None) -> dict | None:
     }
 
 
-def screen(force: bool = False, limit: int = 25) -> dict:
+BATCH = 250          # symbols per bulk download request
+
+
+def _batch_history(symbols: list[str]):
+    """One year of daily closes+volume for many symbols, in bulk.
+
+    yfinance downloads a batch in a single request, so 5,900 names cost ~24
+    requests instead of 5,900. That is the difference between a screen that can
+    see the market and one that pages through a keyhole.
+    """
+    import pandas as pd
+    import yfinance as yf
+
+    frames = {}
+    for i in range(0, len(symbols), BATCH):
+        chunk = symbols[i:i + BATCH]
+        try:
+            df = yf.download(chunk, period="1y", interval="1d",
+                             auto_adjust=True, progress=False, threads=True,
+                             group_by="ticker")
+        except Exception as exc:
+            print(f"[reclaim] batch {i}: {exc!r}")
+            continue
+        for sym in chunk:
+            try:
+                sub = df[sym] if isinstance(df.columns, pd.MultiIndex) else df
+                sub = sub.dropna(subset=["Close"])
+                if len(sub) >= 60:
+                    frames[sym] = sub
+            except Exception:
+                continue
+        print(f"[reclaim] {min(i + BATCH, len(symbols))}/{len(symbols)} "
+              f"({len(frames)} usable)")
+    return frames
+
+
+def screen(force: bool = False, limit: int = 25,
+           max_symbols: int | None = None) -> dict:
+    """Scan the WHOLE US listed market for reclaim setups."""
     if settings.DATA_MODE == "mock":
         return {"results": [], "note": "mock data — screen not run"}
     hit = _CACHE.get("reclaim")
     if hit and not force and (time.time() - hit[0]) < _TTL:
         return {"results": hit[1], "cached": True, "filters": describe()}
 
-    rows: dict[str, dict] = {}
-    scanned = 0
-    total = None
-    try:
-        import yfinance as yf
-        from yfinance import EquityQuery as Q
+    from . import universe
 
-        q = Q("and", [
-            Q("gt", ["intradayprice", MIN_PRICE]),
-            Q("lt", ["intradaymarketcap", MAX_CAP]),
-            Q("gt", ["dayvolume", MIN_AVG_VOL]),
-        ])
-        offset = 0
-        for _ in range(MAX_PAGES):
-            quotes = []
-            for _attempt in range(2):
-                try:
-                    res = yf.screen(q, count=PAGE_SIZE, offset=offset,
-                                    sortField="dayvolume", sortAsc=False)
-                except Exception as exc:
-                    print(f"[reclaim] page {offset}: {exc!r}")
-                    res = {}
-                if total is None and isinstance(res, dict):
-                    total = res.get("total")
-                quotes = res.get("quotes", []) if isinstance(res, dict) else []
-                if quotes:
-                    break
-                time.sleep(1.5)
-            time.sleep(0.3)
-            if not quotes:
-                break
-            scanned += len(quotes)
-            before = len(rows)
-            for qq in quotes:
-                sym = qq.get("symbol")
-                if sym and "." not in sym and "-" not in sym:
-                    rows.setdefault(sym, qq)
-            if len(rows) == before:
-                break
-            offset += len(quotes)
-            if total and offset >= total:
-                break
-    except Exception as exc:
-        return {"results": [], "note": f"screener unavailable: {exc}",
+    symbols = universe.all_symbols()
+    if max_symbols:
+        symbols = symbols[:max_symbols]
+    if not symbols:
+        return {"results": [], "note": "universe unavailable",
                 "filters": describe()}
 
-    from . import market_data
+    frames = _batch_history(symbols)
 
     out: list[dict] = []
-    for sym, q in rows.items():
-        vol = q.get("regularMarketVolume") or 0
-        avg = q.get("averageDailyVolume3Month") or 0
-        if not avg or avg < MIN_AVG_VOL:
-            continue
-        rvol = (vol / avg) if vol else 0
-        if rvol < MIN_RVOL:
-            continue
+    for sym, h in frames.items():
         try:
-            md = market_data.get_market_data(sym)
-            if md.source != "live":
+            close = h["Close"]
+            price = float(close.iloc[-1])
+            if price < MIN_PRICE:
                 continue
-            a = analyse(md.history, rvol)
+            vol = h["Volume"]
+            avg = float(vol.tail(60).mean())
+            if not avg or avg < MIN_AVG_VOL:
+                continue
+            rvol = float(vol.iloc[-1]) / avg if avg else 0
+            if rvol < MIN_RVOL:
+                continue
+            a = analyse(h, rvol)
+            if not a:
+                continue
+            prev = float(close.iloc[-2]) if len(close) > 1 else price
+            out.append({
+                "symbol": sym,
+                "price": round(price, 2),
+                "change_pct": round((price / prev - 1) * 100, 2) if prev else 0.0,
+                "avg_volume": int(avg),
+                "rvol": round(rvol, 2),
+                **a,
+            })
         except Exception:
             continue
-        if not a:
-            continue
-        out.append({
-            "symbol": sym,
-            "name": q.get("shortName") or sym,
-            "price": round(float(q.get("regularMarketPrice") or 0), 2),
-            "change_pct": round(float(q.get("regularMarketChangePercent") or 0), 2),
-            "rvol": round(rvol, 2),
-            **a,
-        })
 
     out.sort(key=lambda r: -r["reclaim_score"])
     out = out[:limit]
     _CACHE["reclaim"] = (time.time(), out)
-    return {"results": out, "scanned": scanned, "universe_total": total,
-            "coverage_pct": round(scanned / total * 100, 1) if total else None,
+    return {"results": out, "scanned": len(frames),
+            "universe_total": len(symbols),
+            "coverage_pct": round(len(frames) / len(symbols) * 100, 1)
+            if symbols else None,
             "cached": False, "filters": describe()}
 
 
