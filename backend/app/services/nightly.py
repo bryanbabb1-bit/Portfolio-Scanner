@@ -27,6 +27,10 @@ from ..config import settings
 # Per night. Four sessions is ~1.6M tokens and ~4 minutes — real but affordable
 # against a subscription that also has to run the briefs and the book.
 MAX_PER_NIGHT = 4
+# Screen candidates judged per night, on top of the holdings above. Five desk
+# sessions is ~2M tokens and ~$3.85 — the single most expensive scheduled thing
+# in the app, so it is a named number rather than a loop bound.
+SCREEN_JUDGED = 5
 # Don't re-debate a name inside this window; that's what makes it rotate.
 REDEBATE_AFTER_DAYS = 6
 # Overnight ET window. After the close so it never competes with market-hours
@@ -142,6 +146,47 @@ def score_candidates(reports: list, signals: list | None = None) -> list[dict]:
     return sorted(out, key=lambda c: -c["score"])
 
 
+def screen_and_judge(limit: int = SCREEN_JUDGED) -> list[dict]:
+    """Run the low-float screen, then convene the desk on its best candidates.
+
+    Ranked by float turnover — volume over float — because that is the number
+    the screen exists to find: how much of the tradeable supply changed hands.
+    A name is only worth a 394k-token debate if the supply actually moved.
+
+    These are strangers, not holdings, so the desk is doing real work: deciding
+    whether an unfamiliar name deserves attention at all.
+    """
+    from . import debate as debate_service
+    from . import lowfloat
+
+    try:
+        out = lowfloat.screen(force=True)
+    except Exception as exc:
+        print(f"[nightly] screen failed: {exc!r}")
+        return []
+
+    results = out.get("results") or []
+    print(f"[nightly] screen: {len(results)} passed of "
+          f"{out.get('scanned')} scanned ({out.get('coverage_pct')}% coverage)")
+
+    judged: list[dict] = []
+    for cand in results[:limit]:
+        sym = cand["symbol"]
+        try:
+            d = debate_service.convene(sym, force=True) or {}
+            judged.append({
+                "symbol": sym, "price": cand["price"],
+                "change_pct": cand["change_pct"], "rvol": cand["rvol"],
+                "float_shares": cand.get("float_shares"),
+                "float_turnover": cand.get("float_turnover"),
+                "verdict": d.get("verdict"), "action": d.get("action"),
+                "headline": d.get("headline"), "ts": d.get("ts"),
+            })
+        except Exception as exc:
+            print(f"[nightly] {sym} screen-debate failed: {exc!r}")
+    return judged
+
+
 def maybe_run(force: bool = False) -> dict | None:
     """Pre-load the desk overnight. Called from the watchdog heartbeat."""
     et = _et_now()
@@ -201,23 +246,30 @@ def maybe_run(force: bool = False) -> dict | None:
         except Exception as exc:
             print(f"[nightly] {c['symbol']} debate failed: {exc!r}")
 
+    # Then the screen: fresh names nobody in the book has looked at.
+    screened: list[dict] = []
+    try:
+        screened = screen_and_judge()
+    except Exception as exc:
+        print(f"[nightly] screen stage failed: {exc!r}")
+
     state["last_run"] = today
-    state["last_result"] = {"date": today, "ran": done}
+    state["last_result"] = {"date": today, "ran": done, "screened": screened}
     _save_state(state)
 
-    if done:
+    if done or screened:
         try:
             from . import push
             # Name the symbols and their rulings. A bare count would be exactly
             # the notification that gets muted.
-            body = "; ".join(
-                f"{d['symbol']} {d['verdict'] or '—'}" for d in done)
-            push.send("DESK SAT OVERNIGHT", f"Ready to review: {body}",
+            parts = [f"{d['symbol']} {d['action'] or d['verdict'] or '—'}"
+                     for d in done + screened]
+            push.send("DESK SAT OVERNIGHT", f"Ready to review: {'; '.join(parts)}",
                       data={"type": "nightly_debate"})
         except Exception as exc:
             print(f"[nightly] push failed: {exc!r}")
 
-    return {"ran": done}
+    return {"ran": done, "screened": screened}
 
 
 def last_result() -> dict:

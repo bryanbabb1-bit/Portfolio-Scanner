@@ -31,8 +31,17 @@ interface Queued {
   why: string[];
 }
 
+/** A screen candidate the desk judged — a stranger, not a holding. */
+interface Screened extends Ran {
+  price?: number;
+  change_pct?: number;
+  rvol?: number;
+  float_shares?: number | null;
+  float_turnover?: number | null;
+}
+
 interface Nightly {
-  last: { date?: string; ran?: Ran[]; note?: string };
+  last: { date?: string; ran?: Ran[]; screened?: Screened[]; note?: string };
   queue: Queued[];
   max_per_night: number;
 }
@@ -67,8 +76,9 @@ export function NightlyDesk() {
 
   if (!n) return null;
   const ran = n.last?.ran ?? [];
+  const screened = n.last?.screened ?? [];
   const queue = (n.queue ?? []).slice(0, n.max_per_night);
-  if (!ran.length && !queue.length) return null;
+  if (!ran.length && !screened.length && !queue.length) return null;
 
   return (
     <>
@@ -126,6 +136,40 @@ export function NightlyDesk() {
         )}
         {n.last?.note && <p className="mut nd-note">{n.last.note}</p>}
       </div>
+
+      {screened.length > 0 && (
+        <>
+          <div className="mfx-label">Fresh from the screen · judged</div>
+          <div className="card nd">
+            <p className="nd-lead">
+              Low-float momentum names the screen surfaced overnight — nothing
+              you own. The desk argued each one so you are reading a verdict,
+              not a ticker list.
+            </p>
+            <div className="nd-list">
+              {screened.map((r) => (
+                <Link key={r.symbol} href={`/debate?symbol=${r.symbol}`} className="nd-row">
+                  <span className="nd-sym">{r.symbol}</span>
+                  <span className={`nd-verdict ${verdictClass(r.action || r.verdict)}`}>
+                    {r.action || r.verdict || "ruled"}
+                  </span>
+                  <span className="nd-why">
+                    {r.headline && <span className="nd-head">{r.headline}</span>}
+                    <span className="nd-picked">
+                      {r.price != null ? `$${r.price} ` : ""}
+                      {r.change_pct != null ? `${r.change_pct >= 0 ? "+" : ""}${r.change_pct}% · ` : ""}
+                      {r.rvol != null ? `${r.rvol}x rvol · ` : ""}
+                      {r.float_shares ? `${(r.float_shares / 1e6).toFixed(0)}M float · ` : ""}
+                      {r.float_turnover != null ? `${r.float_turnover}x float traded` : ""}
+                    </span>
+                  </span>
+                  <span className="nd-go">Read the debate →</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 }

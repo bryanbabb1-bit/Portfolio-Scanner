@@ -26,17 +26,22 @@ def test_float_stays_at_the_stated_threshold():
     assert lf.describe()["loosened_from_stated"] is False
 
 
-def test_the_narrowing_lever_is_the_price_floor():
-    assert lf.MIN_PRICE == 3.00
+def test_the_screen_runs_as_stated_by_default():
+    # No price floor unless asked for. The floor is a knob, not a silent
+    # correction to somebody else's screen.
+    assert lf.MIN_PRICE == 0.0
+    assert lf.describe()["loosened_from_stated"] is False
     assert "price floor" in lf.describe()["narrowing"]
 
 
-def test_a_sub_dollar_churner_is_excluded(monkeypatch):
-    # 400x rvol on a $0.15 stock is dilution churn, not a squeeze.
-    out = _run(monkeypatch, [_quote(regularMarketPrice=0.15,
-                                    averageDailyVolume3Month=20_000)],
-               {"AAA": {"float_shares": 5_000_000}})
-    assert out["results"] == []
+def test_a_price_floor_excludes_sub_dollar_churn(monkeypatch):
+    # 400x rvol on a $0.15 stock is dilution churn, not a squeeze — but only
+    # when the floor is asked for.
+    q = _quote(regularMarketPrice=0.15, averageDailyVolume3Month=20_000)
+    structures = {"AAA": {"float_shares": 5_000_000}}
+
+    assert _run(monkeypatch, [q], structures, min_price=1.0)["results"] == []
+    assert [r["symbol"] for r in _run(monkeypatch, [q], structures)["results"]] == ["AAA"]
 
 
 def test_every_threshold_is_overridable(monkeypatch):

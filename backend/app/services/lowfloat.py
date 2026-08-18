@@ -63,14 +63,17 @@ MAX_CAP = 2_000_000_000
 #   no floor   24 names        (sub-$1 churn dominates)
 #   >= $1      13
 #   >= $2      10
-#   >= $3       5   <- the 1-5 band
+#   >= $3       5
 #   >= $5       1
+#
+# Default is 0 — the screen runs exactly as stated. The floor is a knob, not a
+# silent correction to somebody else's screen.
 #
 # This TIGHTENS the thesis rather than diluting it. Below a few dollars there is
 # no institutional participation, halts are routine and dilution is constant, so
 # a 400x rvol print is churn rather than a squeeze — the opposite of what the
 # screen is hunting.
-MIN_PRICE = 3.00
+MIN_PRICE = 0.0
 
 # Yahoo caps a screener page at 25 regardless of the count requested, so the
 # whole qualifying set has to be walked. 80 pages is 2,000 names, comfortably
