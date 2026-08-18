@@ -45,3 +45,10 @@ def squeeze_setups(force: bool = False, limit: int = 25):
     """Pre-ignition squeeze conditions — fuel and constraint, before the spark."""
     from ..services import squeeze
     return squeeze.screen(force=force, limit=limit)
+
+
+@router.get("/reclaim")
+def reclaim_setups(force: bool = False, limit: int = 25):
+    """Beaten down, stopped falling, just reclaimed the 20-day on volume."""
+    from ..services import reclaim
+    return reclaim.screen(force=force, limit=limit)
