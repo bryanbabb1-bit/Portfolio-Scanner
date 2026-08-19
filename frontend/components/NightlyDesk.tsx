@@ -43,7 +43,7 @@ interface Screened extends Ran {
   reclaim_score?: number | null;
 }
 
-interface Nightly {
+export interface Nightly {
   last: { date?: string; ran?: Ran[]; screened?: Screened[]; note?: string };
   queue: Queued[];
   max_per_night: number;
@@ -56,7 +56,9 @@ function verdictClass(v: string | null) {
   return "";
 }
 
-export function NightlyDesk() {
+/* The desk lives on a tab now, but the tab needs a count before you open it —
+   so the fetch is a hook the page owns and the panel is handed the result. */
+export function useNightly() {
   const [n, setN] = useState<Nightly | null>(null);
 
   useEffect(() => {
@@ -77,6 +79,16 @@ export function NightlyDesk() {
       .catch(() => {});
   }, []);
 
+  return n;
+}
+
+/** How many things are actually waiting on this tab — rulings plus screens. */
+export function nightlyCount(n: Nightly | null): number {
+  if (!n) return 0;
+  return (n.last?.ran ?? []).length + (n.last?.screened ?? []).length;
+}
+
+export function NightlyDesk({ n }: { n: Nightly | null }) {
   if (!n) return null;
   const ran = n.last?.ran ?? [];
   const screened = n.last?.screened ?? [];

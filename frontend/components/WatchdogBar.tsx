@@ -28,9 +28,12 @@ function marketStatus(now: Date): { open: boolean; label: string } {
 export function WatchdogBar({
   signals,
   insights,
+  onAlerts,
 }: {
   signals: ConvictionSignal[];
   insights: PortfolioInsights | null;
+  /** Jump to the alerts panel — it lives on a tab now, so the page routes it. */
+  onAlerts?: () => void;
 }) {
   const [armed, setArmed] = useState<number | null>(null);
   const [clock, setClock] = useState(() => marketStatus(new Date()));
@@ -53,11 +56,6 @@ export function WatchdogBar({
   const active = signals.filter((s) => !s.dismissed).length;
   const criticals = insights?.alerts.filter((a) => a.severity === "critical").length ?? 0;
 
-  const goto = (id: string) => {
-    const el = document.getElementById(id);
-    el?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
-
   return (
     <div className={`watchdog-bar ${clock.open ? "" : "resting"}`}>
       <span className="radar" aria-hidden="true">
@@ -66,13 +64,20 @@ export function WatchdogBar({
       <span className="wd-title">{clock.open ? "WATCHDOG ACTIVE" : "WATCHDOG RESTING"}</span>
       <span className={`wd-market ${clock.open ? "open" : "closed"}`}>{clock.label}</span>
       <span className="wd-sep" />
-      <button className="wd-stat" onClick={() => goto("game-plan")} title="Jump to your Game Plan">
+      {/* Tripwires and live signals are readouts, not links: the panels they
+          used to scroll to were unmounted, so both clicks did nothing. */}
+      <span className="wd-stat" title="Armed price triggers">
         <strong>{armed ?? "–"}</strong> tripwires
-      </button>
-      <button className="wd-stat" onClick={() => goto("signal-strip")} title="Jump to live signals">
+      </span>
+      <span className="wd-stat" title="Signals live right now">
         <strong>{active}</strong> live signal{active === 1 ? "" : "s"}
-      </button>
-      <button className={`wd-stat ${criticals ? "neg" : ""}`} onClick={() => goto("needs-attention")} title="Jump to Needs Your Attention">
+      </span>
+      <button
+        className={`wd-stat ${criticals ? "neg" : ""}`}
+        onClick={onAlerts}
+        disabled={!onAlerts}
+        title="Jump to Needs Your Attention"
+      >
         <strong>{criticals}</strong> critical
       </button>
     </div>

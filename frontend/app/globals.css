@@ -1133,8 +1133,10 @@ li.pinnable:hover .pin-btn, .chat-a:hover .pin-btn, .pin-btn.pinned { opacity: 1
 .wd-market.open { color: var(--bull); }
 .wd-market.closed { color: var(--muted); }
 .wd-sep { flex: 1; }
-.wd-stat { background: transparent; border: none; color: inherit; font: inherit; font-size: 11px; font-weight: 500; cursor: pointer; padding: 2px 5px; }
-.wd-stat:hover { background: var(--surface-hover); }
+.wd-stat { background: transparent; border: none; color: inherit; font: inherit; font-size: 11px; font-weight: 500; padding: 2px 5px; }
+button.wd-stat { cursor: pointer; }
+button.wd-stat:hover:not(:disabled) { background: var(--surface-hover); }
+button.wd-stat:disabled { cursor: default; opacity: 1; }
 .wd-stat strong { color: var(--text); font-weight: 700; }
 .wd-stat.neg strong, .wd-stat.neg { color: var(--bear); }
 

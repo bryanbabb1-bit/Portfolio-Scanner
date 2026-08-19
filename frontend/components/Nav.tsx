@@ -20,7 +20,6 @@ const NAV: Entry[] = [
       { href: "/risk", label: "Risk Desk" },
       { href: "/debate", label: "Agent Debate" },
       { href: "/backtest", label: "Backtest" },
-      { href: "/paper", label: "Paper Lab" },
       { href: "/loop", label: "Learning Loop" },
     ],
   },

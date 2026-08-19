@@ -43,7 +43,7 @@
 .mfx-chip.total { font-weight: 700; box-shadow: inset 0 0 0 1px currentColor; }
 .mfx-chip.total .k { color: inherit; opacity: 0.75; }
 
-.mfx-head .quickstats { display: grid; grid-template-columns: repeat(3, auto); gap: 10px 26px; }
+.mfx-head .quickstats { display: grid; grid-template-columns: repeat(2, auto); gap: 10px 26px; }
 .mfx-head .qs { text-align: right; }
 .mfx-head .qs .l {
   font-family: var(--font-mono), ui-monospace, monospace;
@@ -51,6 +51,97 @@
   color: var(--muted); margin-bottom: 3px;
 }
 .mfx-head .qs .v { font-size: 17px; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* ---- pinned balance bar -------------------------------------------------
+   The full header scrolls away like any other block; this condensed strip
+   takes over so the account value never leaves the screen. Fixed rather than
+   sticky so no ancestor's overflow can trap it. */
+.bal-stick {
+  position: fixed; left: 0; right: 0;
+  top: calc(62px + env(safe-area-inset-top));
+  z-index: 15;
+  border-bottom: 1px solid var(--rule);
+  background: var(--bg-blur);
+  backdrop-filter: blur(14px) saturate(120%);
+  transform: translateY(-120%);
+  opacity: 0;
+  transition: transform .22s ease, opacity .22s ease;
+  pointer-events: none;
+}
+.bal-stick.show { transform: translateY(0); opacity: 1; pointer-events: auto; }
+/* globals.css runs a "rise" entry animation on every direct child of main.page
+   with fill-mode both, which would pin this bar at opacity 1 / transform none
+   forever — i.e. permanently visible. Opt out; it has its own transition. */
+main.page > .bal-stick { animation: none; }
+.bal-stick-inner {
+  display: flex; align-items: center; gap: 12px;
+  height: 46px; overflow-x: auto; scrollbar-width: none;
+}
+.bal-stick-inner::-webkit-scrollbar { display: none; }
+.bal-stick .bs-val {
+  font-size: 19px; font-weight: 700; font-variant-numeric: tabular-nums;
+  white-space: nowrap; color: var(--text);
+}
+.bal-stick .mfx-chip { font-size: 11.5px; padding: 3px 9px; white-space: nowrap; }
+.bal-stick .bs-cash {
+  margin-left: auto; white-space: nowrap;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px; letter-spacing: .06em; color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.bal-stick .bs-cash .k { color: var(--muted); margin-right: 6px; text-transform: uppercase; }
+@media (max-width: 700px) {
+  .bal-stick .bs-cash { display: none; }
+}
+
+/* ---- dashboard tabs -----------------------------------------------------
+   Four questions, four surfaces. The whole page used to be one column and
+   nothing on it could be found. */
+.dash-tabs {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 0; margin: 18px 0 22px;
+  border: 1px solid var(--border); background: var(--bg-card);
+}
+.dash-tabs button {
+  display: flex; flex-direction: column; gap: 3px; align-items: flex-start;
+  padding: 11px 14px; background: transparent; border: none; cursor: pointer;
+  border-right: 1px solid var(--border); text-align: left;
+  border-bottom: 2px solid transparent;
+}
+.dash-tabs button:last-child { border-right: none; }
+.dash-tabs button:hover { background: var(--surface-hover); }
+.dash-tabs button.active { background: var(--surface-hover); border-bottom-color: var(--accent); }
+.dash-tabs .dt-label {
+  display: flex; align-items: center; gap: 7px;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11.5px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--muted);
+}
+.dash-tabs button.active .dt-label { color: var(--text); }
+.dash-tabs .dt-hint { font-size: 11.5px; color: var(--muted); line-height: 1.2; }
+.dash-tabs .dt-badge {
+  font-size: 10px; font-weight: 700; line-height: 1;
+  padding: 3px 6px; border-radius: 999px;
+  color: var(--on-dark); background: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+@media (max-width: 780px) {
+  .dash-tabs { grid-template-columns: repeat(2, 1fr); }
+  .dash-tabs button:nth-child(2) { border-right: none; }
+  .dash-tabs button:nth-child(-n + 2) { border-bottom: 1px solid var(--border); }
+  .dash-tabs button:nth-child(-n + 2).active { border-bottom: 2px solid var(--accent); }
+  .dash-tabs .dt-hint { display: none; }
+}
+
+/* footer links inside a tab — where to go next from here */
+.tab-more { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 22px; }
+.tab-more a {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px; letter-spacing: .07em; text-transform: uppercase;
+  color: var(--accent); text-decoration: none;
+}
+.tab-more a:hover { text-decoration: underline; }
+.tab-empty { color: var(--muted); font-size: 14px; line-height: 1.55; }
 
 /* ---- section label above a grid row ------------------------------------- */
 .mfx-label {
@@ -239,7 +330,7 @@
 
 @media (max-width: 560px) {
   .mfx-head { gap: 16px; }
-  .mfx-head .quickstats { grid-template-columns: repeat(3, 1fr); width: 100%; }
+  .mfx-head .quickstats { grid-template-columns: repeat(2, 1fr); width: 100%; }
   .mfx-head .qs { text-align: left; }
 }
 
