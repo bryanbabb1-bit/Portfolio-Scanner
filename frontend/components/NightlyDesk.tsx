@@ -56,6 +56,25 @@ function verdictClass(v: string | null) {
   return "";
 }
 
+/* The ruling, both halves of it.
+ *
+ * This used to render `action || verdict`, which showed WATCH and swallowed the
+ * REJECT sitting behind it — so five straight "REJECT, don't buy this" rulings
+ * read on screen as five neutral WATCHes. The verdict is the call; the action
+ * is how the judge phrased it. Show both, and let the verdict pick the colour.
+ */
+function Ruling({ verdict, action }: { verdict: string | null; action?: string | null }) {
+  const v = (verdict || "").toUpperCase();
+  const a = (action || "").toUpperCase();
+  if (!v && !a) return <span className="nd-verdict">ruled</span>;
+  return (
+    <span className={`nd-verdict ${verdictClass(v || a)}`}>
+      {v || a}
+      {v && a && a !== v && <span className="nd-act">{a}</span>}
+    </span>
+  );
+}
+
 /* The desk lives on a tab now, but the tab needs a count before you open it —
    so the fetch is a hook the page owns and the panel is handed the result. */
 export function useNightly() {
@@ -111,9 +130,7 @@ export function NightlyDesk({ n }: { n: Nightly | null }) {
               {ran.map((r) => (
                 <Link key={r.symbol} href={`/debate?symbol=${r.symbol}`} className="nd-row">
                   <span className="nd-sym">{r.symbol}</span>
-                  <span className={`nd-verdict ${verdictClass(r.action || r.verdict)}`}>
-                    {r.action || r.verdict || "ruled"}
-                  </span>
+                  <Ruling verdict={r.verdict} action={r.action} />
                   <span className="nd-why">
                     {r.headline && <span className="nd-head">{r.headline}</span>}
                     <span className="nd-picked">
@@ -166,9 +183,7 @@ export function NightlyDesk({ n }: { n: Nightly | null }) {
               {screened.map((r) => (
                 <Link key={r.symbol} href={`/debate?symbol=${r.symbol}`} className="nd-row">
                   <span className="nd-sym">{r.symbol}</span>
-                  <span className={`nd-verdict ${verdictClass(r.action || r.verdict)}`}>
-                    {r.action || r.verdict || "ruled"}
-                  </span>
+                  <Ruling verdict={r.verdict} action={r.action} />
                   <span className="nd-why">
                     {r.headline && <span className="nd-head">{r.headline}</span>}
                     <span className="nd-picked">

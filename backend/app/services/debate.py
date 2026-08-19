@@ -365,11 +365,20 @@ def _judge(symbol: str, facts: str, agents: list[dict]) -> dict:
     if verdict not in {"APPROVE", "REJECT"}:
         verdict = "REJECT"
     action = str(obj.get("action", "") or "").strip().upper().split()
-    action = action[0] if action and action[0] in _VALID_ACTIONS else "WATCH"
+    action = action[0] if action and action[0] in _VALID_ACTIONS else ""
+    inferred = not action
+    if inferred:
+        # The judge gave no usable call. Defaulting every one of those to WATCH
+        # made a parse failure indistinguishable from a considered "not yet" —
+        # and WATCH was the one word the scorecard would not grade, so a bad
+        # parse quietly became an ungradeable ruling. Take the direction from
+        # the verdict, which did parse, and record that it was inferred.
+        action = "AVOID" if verdict == "REJECT" else "WATCH"
 
     return {
         "verdict": verdict,
         "action": action,
+        "action_inferred": inferred,
         "score": _clamp_int(obj.get("score"), 0, 100, 0),
         "headline": str(obj.get("headline", "") or "").strip(),
         "rationale": advisor._as_bullets(obj.get("rationale")),
@@ -441,6 +450,7 @@ def convene(symbol: str, force: bool = False,
                   "neutral": len(live) - bulls - bears},
         "verdict": ruling["verdict"],
         "action": ruling["action"],
+        "action_inferred": ruling["action_inferred"],
         "score": ruling["score"],
         "headline": ruling["headline"],
         "rationale": ruling["rationale"],

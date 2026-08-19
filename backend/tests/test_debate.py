@@ -167,7 +167,18 @@ def test_bad_verdict_word_fails_closed(monkeypatch):
     _stub_cli(monkeypatch, AGENT_OK, {**JUDGE_OK, "verdict": "MAYBE", "action": "YOLO"})
     result = debate.convene("NVDA", force=True)
     assert result["verdict"] == "REJECT"      # unrecognized -> do not approve
+    # An unusable action follows the verdict rather than defaulting to WATCH:
+    # WATCH is the one call the scorecard treats as ungradeable, so defaulting
+    # there turned every parse failure into a ruling nobody could ever score.
+    assert result["action"] == "AVOID"
+    assert result["action_inferred"] is True
+
+
+def test_a_ruled_action_is_not_marked_inferred(monkeypatch):
+    _stub_cli(monkeypatch, AGENT_OK, {**JUDGE_OK, "verdict": "REJECT", "action": "WATCH"})
+    result = debate.convene("NVDA", force=True)
     assert result["action"] == "WATCH"
+    assert result["action_inferred"] is False
 
 
 # ----------------------------------------------------------------- caching

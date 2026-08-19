@@ -40,6 +40,28 @@ def test_hold_makes_no_claim_and_is_not_graded():
         assert g["graded"] is False and g["right"] is None
 
 
+def test_a_rejected_watch_is_a_skip_and_gets_graded():
+    """The hole this scorecard nearly fell through.
+
+    When the screen changed the judge started writing WATCH instead of AVOID
+    while its verdict stayed REJECT — "watch above $8.39, don't buy here". That
+    is a skip call, and grading it as neutral meant a screen that rejected
+    everything could never be scored wrong.
+    """
+    g = vs.grade_one("WATCH", 10.0, 14.0, "REJECT")     # told to skip, ran +40%
+    assert g["graded"] is True and g["right"] is False
+    assert g["graded_as"] == "AVOID"
+
+    g = vs.grade_one("WATCH", 10.0, 10.2, "REJECT")     # told to skip, went flat
+    assert g["graded"] is True and g["right"] is True
+
+
+def test_an_approved_watch_is_a_real_conditional_and_stays_ungraded():
+    # "APPROVE — buy only above $16" makes no claim about what happens next.
+    g = vs.grade_one("WATCH", 10.0, 14.0, "APPROVE")
+    assert g["graded"] is False and g["right"] is None
+
+
 def test_the_threshold_is_asymmetric_on_purpose():
     # Skipping something that rose 2% was not a bad call.
     assert vs.grade_one("AVOID", 10.0, 10.2)["right"] is True

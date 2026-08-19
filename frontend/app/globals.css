@@ -2049,7 +2049,7 @@ main.page { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
 .nd-lead { font-size: 13.5px; line-height: 1.55; color: var(--muted); margin-bottom: 12px; }
 .nd-list { display: flex; flex-direction: column; gap: 2px; }
 .nd-row {
-  display: grid; grid-template-columns: 68px 92px 1fr auto;
+  display: grid; grid-template-columns: 68px 96px 1fr auto;
   align-items: center; gap: 12px; padding: 10px;
   border-left: 3px solid var(--accent); color: var(--text);
 }
@@ -2064,6 +2064,11 @@ main.page { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
 }
 .nd-verdict.ok { color: var(--bull); background: var(--bull-bg); }
 .nd-verdict.no { color: var(--bear); background: var(--bear-bg); }
+/* the judge's word for the call, under the verdict that decided it */
+.nd-verdict .nd-act {
+  display: block; margin-top: 3px; font-size: 9px; font-weight: 600;
+  letter-spacing: 0.08em; color: var(--muted);
+}
 .nd-why { color: var(--muted); font-size: 12.5px; line-height: 1.45; }
 .nd-go {
   font-family: var(--font-mono), ui-monospace, monospace;

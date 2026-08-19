@@ -13,7 +13,22 @@ Every ruling is stamped with the price at the time. Five sessions later:
 
   AVOID / SELL / TRIM   right if the name did NOT run — flat or down
   BUY / ADD             right if it rose meaningfully
-  HOLD / WATCH          no directional claim, recorded but not graded
+  HOLD                  no directional claim, recorded but not graded
+  WATCH                 depends on the ruling it came with, see below
+
+WHY WATCH IS NOT AUTOMATICALLY NEUTRAL
+--------------------------------------
+When the screen moved from ignition setups to reclaim setups the judge stopped
+writing AVOID and started writing WATCH, while its VERDICT stayed REJECT on
+nine of the first ten names. "REJECT — watch above $8.39, don't buy here" is a
+skip call wearing a neutral word: the client was told not to buy, and if the
+name then doubles that was a miss.
+
+Grading on the action word alone, every one of those calls fell through the
+neutral hole and the scorecard graded nothing — which is exactly the state this
+file was written to prevent. So a WATCH is graded as a skip when the verdict was
+REJECT, and left ungraded when the verdict was APPROVE (an approved WATCH with
+an entry level, "buy only above $16", is a genuine conditional).
 
 The threshold is deliberately asymmetric. Telling someone to skip a stock that
 then went up 2% was not a bad call; telling them to skip one that doubled was.
@@ -38,7 +53,10 @@ MOVE_PCT = 10.0
 
 _BEARISH = {"AVOID", "SELL", "TRIM"}
 _BULLISH = {"BUY", "ADD"}
-_NEUTRAL = {"HOLD", "WATCH"}
+_NEUTRAL = {"HOLD"}
+# Means "skip it" or "not yet" depending on the verdict beside it — resolved in
+# grade_one rather than assumed here.
+_CONDITIONAL = {"WATCH"}
 
 
 def _price_now(symbol: str) -> tuple[float | None, str]:
@@ -53,10 +71,19 @@ def _price_now(symbol: str) -> tuple[float | None, str]:
         return None, "error"
 
 
-def grade_one(action: str, price_then: float, price_now: float) -> dict:
-    """Grade a single call. Returns verdict-was-right plus the move."""
+def grade_one(action: str, price_then: float, price_now: float,
+              verdict: str | None = None) -> dict:
+    """Grade a single call. Returns verdict-was-right plus the move.
+
+    `verdict` disambiguates WATCH: with a REJECT beside it the client was told
+    not to buy, so it grades as a skip; with an APPROVE it is a real "wait for
+    the level" and stays ungraded.
+    """
     move = (price_now / price_then - 1) * 100 if price_then else 0.0
     act = (action or "").upper()
+    ver = (verdict or "").upper()
+    if act in _CONDITIONAL:
+        act = "AVOID" if ver == "REJECT" else ""
     if act in _NEUTRAL or not act:
         return {"move_pct": round(move, 2), "graded": False, "right": None,
                 "note": "no directional call to grade"}
@@ -73,7 +100,7 @@ def grade_one(action: str, price_then: float, price_now: float) -> dict:
         return {"move_pct": round(move, 2), "graded": False, "right": None,
                 "note": f"unrecognised action {act}"}
     return {"move_pct": round(move, 2), "graded": True, "right": right,
-            "note": note}
+            "graded_as": act, "note": note}
 
 
 def scorecard(days: int = 30) -> dict:
@@ -115,14 +142,17 @@ def scorecard(days: int = 30) -> dict:
             rows.append(row)
             continue
         row.update(price_now=round(now, 2), pending=False,
-                   **grade_one(d.get("action"), float(price_then), now))
+                   **grade_one(d.get("action"), float(price_then), now,
+                               d.get("verdict")))
         rows.append(row)
 
     graded = [r for r in rows if r.get("graded")]
     hits = [r for r in graded if r.get("right")]
     by_action: dict[str, dict] = {}
     for r in graded:
-        a = (r.get("action") or "?").upper()
+        # Keyed on what it was graded AS, so a REJECT/WATCH lands in the same
+        # bucket as an AVOID instead of inventing a "WATCH hit rate".
+        a = (r.get("graded_as") or r.get("action") or "?").upper()
         b = by_action.setdefault(a, {"n": 0, "right": 0})
         b["n"] += 1
         b["right"] += 1 if r["right"] else 0
