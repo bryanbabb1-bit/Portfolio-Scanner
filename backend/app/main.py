@@ -14,6 +14,7 @@ from fastapi.responses import JSONResponse
 
 from .config import settings
 from .routers import (
+    accumulation,
     advisor,
     backtest,
     bigmoves,
@@ -23,7 +24,6 @@ from .routers import (
     conviction,
     debate,
     devices,
-    filings,
     discovery,
     graph,
     insights,
@@ -77,8 +77,8 @@ app.include_router(backtest.router)
 app.include_router(learning.router)
 app.include_router(book.router)
 app.include_router(catalysts.router)
-app.include_router(filings.router)
 app.include_router(bigmoves.router)
+app.include_router(accumulation.router)
 
 
 @app.exception_handler(Exception)
@@ -142,13 +142,14 @@ def _heartbeat() -> None:
             catalysts.get()
         except Exception as exc:
             print(f"[heartbeat] catalyst map failed: {exc!r}")
-        # Material filings — this one is also the notifier: get() pushes the
-        # first time it sees a high-severity 8-K on a name in the book.
+        # Where volume showed up before the move. A full-universe daily-bar
+        # scan (~140s), so it is cached for six hours and only ever recomputes
+        # once the cache is cold — the heartbeat just keeps it warm.
         try:
-            from .services import filings
-            filings.get()
+            from .services import accumulation
+            accumulation.get()
         except Exception as exc:
-            print(f"[heartbeat] filings failed: {exc!r}")
+            print(f"[heartbeat] accumulation failed: {exc!r}")
         # Whole-market watch. Cheap (a screener call, cached to the heartbeat's
         # own cadence) and it is the thing that pushes when something enormous
         # happens to a name nobody in this book owns.

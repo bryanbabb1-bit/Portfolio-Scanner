@@ -13,12 +13,19 @@ Run order. All four read the whole US universe (5,865 symbols) through
 | `bigmovers_expectancy.py` | would trading those alerts have made money? | **No.** -0.84% a trade, win rate 41%, profit factor 0.83 |
 | `bigmovers_variants.py` | is any version of the chase positive? | **No.** Eight testable variants, all negative. Holding longer is significantly worse (t = -2.78 at 3 days) |
 
+| `premove_footprint.py` | is there a footprint BEFORE the move? | **Yes.** Volume in the week before a +50% day runs 33x its own average at the 90th percentile, against 1.7x on an ordinary day, and the median name is **down 25% on the month** first. Screening on it concentrates big movers from 1.3% to 13.7% — but the median 5-day outcome is **-8.1%** |
+
 ## What this rules out, and what it does not
 
 Ruled out: chasing a name that is already running. Not one variant cleared zero,
 before spread or slippage, and these are wide-spread names. The desk's standing
 "don't chase" ruling has been correct, which is also why the pipeline produces
 nothing to act on — it is not broken, it is right.
+
+The SEC filings feed was built and then removed: an 8-K is filed alongside the
+press release, so it is complete, official, and incapable of getting you in
+early. `premove_footprint.py` replaced it with the thing that does lead — but
+read both of its columns before trusting it.
 
 NOT ruled out, because it was never tested here: being positioned BEFORE the
 move on a dated, knowable catalyst. MRNA on 2026-08-19 was not a momentum chase

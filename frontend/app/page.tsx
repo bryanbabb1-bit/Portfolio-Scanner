@@ -25,7 +25,7 @@ import { PinnedActions } from "../components/PinnedActions";
 import { PortfolioBrief } from "../components/PortfolioBrief";
 import { BigMoves } from "../components/BigMoves";
 import { CatalystMap } from "../components/CatalystMap";
-import { FilingsFeed } from "../components/FilingsFeed";
+import { Accumulation } from "../components/Accumulation";
 import { ProbabilityLattice } from "../components/ProbabilityLattice";
 import { ActionJournal } from "../components/ActionJournal";
 import { BalanceBar } from "../components/BalanceBar";
@@ -210,9 +210,10 @@ export default function Dashboard() {
               move harder. Built after MRNA. */}
           <CatalystMap />
 
-          {/* The general case: what every name in the book has formally told
-              the market happened. The trial map only speaks for the pharma. */}
-          <FilingsFeed />
+          {/* The general case, and the only one measured to lead the move:
+              an 8-K is filed with the press release, volume shows up before
+              it. This replaced the filings feed. */}
+          <Accumulation />
 
           <div className="mfx-grid two">
             <DailyAttribution holdings={holdings} dayChange={summary.day_change} />
