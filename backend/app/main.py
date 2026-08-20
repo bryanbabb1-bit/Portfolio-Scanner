@@ -22,6 +22,7 @@ from .routers import (
     conviction,
     debate,
     devices,
+    filings,
     discovery,
     graph,
     insights,
@@ -75,6 +76,7 @@ app.include_router(backtest.router)
 app.include_router(learning.router)
 app.include_router(book.router)
 app.include_router(catalysts.router)
+app.include_router(filings.router)
 
 
 @app.exception_handler(Exception)
@@ -138,6 +140,13 @@ def _heartbeat() -> None:
             catalysts.get()
         except Exception as exc:
             print(f"[heartbeat] catalyst map failed: {exc!r}")
+        # Material filings — this one is also the notifier: get() pushes the
+        # first time it sees a high-severity 8-K on a name in the book.
+        try:
+            from .services import filings
+            filings.get()
+        except Exception as exc:
+            print(f"[heartbeat] filings failed: {exc!r}")
         try:
             from .services import nightly
             pre = nightly.maybe_run()

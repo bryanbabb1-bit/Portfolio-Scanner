@@ -24,6 +24,7 @@ import { NightlyDesk, nightlyCount, useNightly } from "../components/NightlyDesk
 import { PinnedActions } from "../components/PinnedActions";
 import { PortfolioBrief } from "../components/PortfolioBrief";
 import { CatalystMap } from "../components/CatalystMap";
+import { FilingsFeed } from "../components/FilingsFeed";
 import { ProbabilityLattice } from "../components/ProbabilityLattice";
 import { ActionJournal } from "../components/ActionJournal";
 import { BalanceBar } from "../components/BalanceBar";
@@ -203,6 +204,10 @@ export default function Dashboard() {
           {/* What could move a holding hard, and which smaller name it would
               move harder. Built after MRNA. */}
           <CatalystMap />
+
+          {/* The general case: what every name in the book has formally told
+              the market happened. The trial map only speaks for the pharma. */}
+          <FilingsFeed />
 
           <div className="mfx-grid two">
             <DailyAttribution holdings={holdings} dayChange={summary.day_change} />

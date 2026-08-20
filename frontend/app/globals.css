@@ -2045,6 +2045,48 @@ main.page { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
   .pos-today { text-align: left; }
 }
 
+/* ---- material filings feed ---------------------------------------------- */
+.fil-lead { font-size: 13.5px; line-height: 1.6; color: var(--muted); margin-bottom: 14px; }
+.fil-list { display: flex; flex-direction: column; gap: 2px; }
+.fil-row {
+  display: grid; grid-template-columns: 52px 62px 74px 1fr auto;
+  align-items: center; gap: 12px; padding: 10px;
+  text-decoration: none; color: var(--text);
+  border-left: 3px solid var(--border);
+}
+.fil-row:hover { background: var(--surface-hover); }
+.fil-row.sev-high { border-left-color: var(--gold); }
+.fil-row.sev-medium { border-left-color: var(--accent-2); }
+.fil-date {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums;
+}
+.fil-sym { font-weight: 800; font-size: 13.5px; }
+.fil-form {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px; letter-spacing: .06em; color: var(--muted);
+  background: var(--surface-sunk); padding: 3px 6px; text-align: center;
+}
+.fil-what { font-size: 13px; line-height: 1.4; }
+.fil-row.sev-high .fil-what { font-weight: 600; }
+.fil-go {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px; letter-spacing: .06em; color: var(--accent); white-space: nowrap;
+}
+.fil-toggle {
+  margin-top: 12px; background: transparent; border: 1px solid var(--border);
+  color: var(--muted); cursor: pointer; padding: 6px 11px;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10.5px; letter-spacing: .07em; text-transform: uppercase;
+}
+.fil-toggle:hover { color: var(--text); border-color: var(--text); }
+.fil-note { margin-top: 10px; font-size: 12px; color: var(--muted); line-height: 1.5; }
+@media (max-width: 780px) {
+  .fil-row { grid-template-columns: 52px 62px 1fr; row-gap: 6px; }
+  .fil-form { display: none; }
+  .fil-what, .fil-go { grid-column: 1 / -1; }
+}
+
 /* ---- catalyst map (partner leverage) ------------------------------------ */
 .cat-lead { font-size: 13.5px; line-height: 1.6; color: var(--muted); margin-bottom: 14px; }
 .cat-lead strong { color: var(--text); }
