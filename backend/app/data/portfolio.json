@@ -1,12 +1,12 @@
 {
   "owner": "You",
   "advisor_persona": "senior financial advisor at Charles Schwab",
-  "cash": 0.0,
+  "cash": 2.5,
   "core_convictions": [
     "NVDA"
   ],
-  "quiet_unowned_low_cash": true,
-  "signals_owned_only": true,
+  "quiet_unowned_low_cash": false,
+  "signals_owned_only": false,
   "risk_profile": "Aggressive risk profile targeting double-digit annual growth, with little or no additional capital being contributed.",
   "themes": {
     "AI": "Companies building or monetizing artificial intelligence models and applications",
@@ -31,19 +31,13 @@
     },
     {
       "symbol": "AVGO",
-      "shares": 3.55986,
-      "cost_basis": 401.97,
-      "theme": null
-    },
-    {
-      "symbol": "AAPL",
-      "shares": 1.95109,
-      "cost_basis": 307.74,
+      "shares": 4.55986,
+      "cost_basis": 393.19,
       "theme": null
     },
     {
       "symbol": "NET",
-      "shares": 1.84754,
+      "shares": 1.27816,
       "cost_basis": 243.03,
       "theme": null
     },
@@ -55,20 +49,14 @@
     },
     {
       "symbol": "ANET",
-      "shares": 0.89158,
-      "cost_basis": 168.24,
+      "shares": 1.89158,
+      "cost_basis": 179.11,
       "theme": null
     },
     {
       "symbol": "CRWD",
       "shares": 1.95702,
       "cost_basis": 189.06,
-      "theme": null
-    },
-    {
-      "symbol": "DLR",
-      "shares": 2.42594,
-      "cost_basis": 195.8,
       "theme": null
     },
     {
@@ -102,9 +90,33 @@
       "theme": null
     },
     {
-      "symbol": "CB",
-      "shares": 0.28856,
-      "cost_basis": 363.88,
+      "symbol": "NBIS",
+      "shares": 0.97378,
+      "cost_basis": 184.85,
+      "theme": null
+    },
+    {
+      "symbol": "GD",
+      "shares": 0.65062,
+      "cost_basis": 384.25,
+      "theme": null
+    },
+    {
+      "symbol": "BRK.B",
+      "shares": 0.42184,
+      "cost_basis": 521.52,
+      "theme": null
+    },
+    {
+      "symbol": "NNE",
+      "shares": 21.0,
+      "cost_basis": 19.36,
+      "theme": null
+    },
+    {
+      "symbol": "ISRG",
+      "shares": 0.76708,
+      "cost_basis": 391.09,
       "theme": null
     }
   ],

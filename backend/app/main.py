@@ -16,6 +16,7 @@ from .config import settings
 from .routers import (
     advisor,
     backtest,
+    bigmoves,
     book,
     breakouts,
     catalysts,
@@ -77,6 +78,7 @@ app.include_router(learning.router)
 app.include_router(book.router)
 app.include_router(catalysts.router)
 app.include_router(filings.router)
+app.include_router(bigmoves.router)
 
 
 @app.exception_handler(Exception)
@@ -147,6 +149,14 @@ def _heartbeat() -> None:
             filings.get()
         except Exception as exc:
             print(f"[heartbeat] filings failed: {exc!r}")
+        # Whole-market watch. Cheap (a screener call, cached to the heartbeat's
+        # own cadence) and it is the thing that pushes when something enormous
+        # happens to a name nobody in this book owns.
+        try:
+            from .services import bigmoves
+            bigmoves.scan()
+        except Exception as exc:
+            print(f"[heartbeat] bigmoves failed: {exc!r}")
         try:
             from .services import nightly
             pre = nightly.maybe_run()

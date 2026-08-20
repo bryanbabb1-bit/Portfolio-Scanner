@@ -33,3 +33,4 @@ backend/bigmovers_cache.pkl
 backend/bigmovers_events.json
 backend/*.err.log
 backend/app/data/sec_ciks.json
+backend/app/data/portfolio.json.bak

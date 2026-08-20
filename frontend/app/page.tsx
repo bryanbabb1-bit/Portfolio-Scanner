@@ -23,6 +23,7 @@ import { RiskStats } from "../components/RiskStats";
 import { NightlyDesk, nightlyCount, useNightly } from "../components/NightlyDesk";
 import { PinnedActions } from "../components/PinnedActions";
 import { PortfolioBrief } from "../components/PortfolioBrief";
+import { BigMoves } from "../components/BigMoves";
 import { CatalystMap } from "../components/CatalystMap";
 import { FilingsFeed } from "../components/FilingsFeed";
 import { ProbabilityLattice } from "../components/ProbabilityLattice";
@@ -187,6 +188,10 @@ export default function Dashboard() {
 
       {tab === "today" && (
         <>
+          {/* The whole market, above the book. He asked to be told what is
+              happening regardless of whether he can act on it. */}
+          <BigMoves />
+
           <StayTheCourse />
 
           {alerts.length > 0 && (
