@@ -2045,6 +2045,60 @@ main.page { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
   .pos-today { text-align: left; }
 }
 
+/* ---- catalyst map (partner leverage) ------------------------------------ */
+.cat-lead { font-size: 13.5px; line-height: 1.6; color: var(--muted); margin-bottom: 14px; }
+.cat-lead strong { color: var(--text); }
+.cat-list { display: flex; flex-direction: column; gap: 2px; }
+.cat-row {
+  display: grid; grid-template-columns: 54px 16px 150px 1fr auto;
+  align-items: center; gap: 12px; padding: 11px 10px;
+  border-left: 3px solid var(--accent-2);
+}
+.cat-row:hover { background: var(--surface-hover); }
+.cat-hold { font-weight: 800; font-size: 14px; }
+.cat-arrow { color: var(--muted); }
+.cat-partners { display: flex; flex-wrap: wrap; gap: 6px; }
+.cat-partner {
+  display: inline-flex; align-items: baseline; gap: 6px; text-decoration: none;
+  padding: 4px 8px; background: var(--accent-dim); color: var(--text);
+}
+.cat-partner:hover { background: var(--accent); color: var(--on-dark); }
+.cat-partner .cp-sym { font-weight: 800; font-size: 13px; }
+.cat-partner .cp-lev {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px; letter-spacing: .05em; color: var(--accent);
+}
+.cat-partner:hover .cp-lev, .cat-partner:hover .cp-cap { color: var(--on-dark); }
+.cat-partner .cp-cap {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px; color: var(--muted);
+}
+.cat-what { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.cat-title {
+  font-size: 13px; line-height: 1.4; color: var(--text);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.cat-meta {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10.5px; letter-spacing: .04em; color: var(--muted);
+}
+.cat-go {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px; letter-spacing: .06em; color: var(--accent);
+  text-decoration: none; white-space: nowrap;
+}
+.cat-warn {
+  margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--rule);
+  font-size: 12.5px; line-height: 1.55; color: var(--muted);
+}
+.cat-warn strong { color: var(--gold); }
+.cat-cover { margin-top: 8px; font-size: 12px; color: var(--muted); line-height: 1.5; }
+@media (max-width: 860px) {
+  .cat-row { grid-template-columns: 54px 16px 1fr; row-gap: 8px; }
+  .cat-what, .cat-go { grid-column: 1 / -1; }
+}
+
 /* ---- overnight desk on the homepage ------------------------------------ */
 .nd-lead { font-size: 13.5px; line-height: 1.55; color: var(--muted); margin-bottom: 12px; }
 .nd-list { display: flex; flex-direction: column; gap: 2px; }

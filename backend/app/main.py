@@ -14,9 +14,28 @@ from fastapi.responses import JSONResponse
 
 from .config import settings
 from .routers import (
-    advisor, backtest, book, breakouts, conviction, debate, devices, discovery,
-    graph, insights, journal, learning, options, pins, plan, portfolio,
-    risk, runner, scan, summary, watchpoints,
+    advisor,
+    backtest,
+    book,
+    breakouts,
+    catalysts,
+    conviction,
+    debate,
+    devices,
+    discovery,
+    graph,
+    insights,
+    journal,
+    learning,
+    options,
+    pins,
+    plan,
+    portfolio,
+    risk,
+    runner,
+    scan,
+    summary,
+    watchpoints,
 )
 
 app = FastAPI(
@@ -55,6 +74,7 @@ app.include_router(debate.router)
 app.include_router(backtest.router)
 app.include_router(learning.router)
 app.include_router(book.router)
+app.include_router(catalysts.router)
 
 
 @app.exception_handler(Exception)
@@ -111,6 +131,13 @@ def _heartbeat() -> None:
         # Overnight desk pre-load: a few high-priority names debated after the
         # close so the rulings are waiting in the morning. Early-returns outside
         # its window and after it has run for the day, so this is free by day.
+        # The catalyst map is a daily registry read, not a market job — warm it
+        # so the Today tab never waits ~60s on clinicaltrials.gov mid-render.
+        try:
+            from .services import catalysts
+            catalysts.get()
+        except Exception as exc:
+            print(f"[heartbeat] catalyst map failed: {exc!r}")
         try:
             from .services import nightly
             pre = nightly.maybe_run()

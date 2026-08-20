@@ -23,6 +23,7 @@ import { RiskStats } from "../components/RiskStats";
 import { NightlyDesk, nightlyCount, useNightly } from "../components/NightlyDesk";
 import { PinnedActions } from "../components/PinnedActions";
 import { PortfolioBrief } from "../components/PortfolioBrief";
+import { CatalystMap } from "../components/CatalystMap";
 import { ProbabilityLattice } from "../components/ProbabilityLattice";
 import { ActionJournal } from "../components/ActionJournal";
 import { BalanceBar } from "../components/BalanceBar";
@@ -198,6 +199,10 @@ export default function Dashboard() {
           <PortfolioBrief />
 
           <PinnedActions />
+
+          {/* What could move a holding hard, and which smaller name it would
+              move harder. Built after MRNA. */}
+          <CatalystMap />
 
           <div className="mfx-grid two">
             <DailyAttribution holdings={holdings} dayChange={summary.day_change} />
