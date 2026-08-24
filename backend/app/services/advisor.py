@@ -455,6 +455,55 @@ def usage_report() -> dict:
     return out
 
 
+# Why the last CLI call failed, so the app can say something truer than
+# "unavailable". Read by /api/health and anything that renders a fallback.
+_LAST_FAILURE: dict = {"reason": None, "detail": None, "ts": 0.0}
+
+
+def _note_failure(reason: str, detail: str) -> None:
+    _LAST_FAILURE.update(reason=reason, detail=detail, ts=time.time())
+
+
+def _clear_failure() -> None:
+    _LAST_FAILURE.update(reason=None, detail=None, ts=time.time())
+
+
+def last_failure() -> dict:
+    """The most recent CLI failure, or a cleared record after any success."""
+    return dict(_LAST_FAILURE)
+
+
+def _explain(proc) -> tuple[str, str]:
+    """Turn a failed CLI run into (reason, human detail).
+
+    The reason lives in the JSON's `result` field, which sits AFTER a long
+    metadata prefix (is_error, duration_api_ms, session_id, usage...). Logging
+    `stdout[:200]` therefore captured the prefix and cut off before the sentence
+    that says why — which is how an exhausted subscription quota came to look
+    exactly like a crashed binary, in the logs and on the dashboard.
+
+    A quota block is identifiable without parsing English: the CLI reports an
+    error having spent no API time and charged nothing, because the request
+    never left the machine.
+    """
+    raw = (proc.stdout or "").strip()
+    payload = {}
+    try:
+        payload = json.loads(raw)
+    except (json.JSONDecodeError, TypeError, ValueError):
+        payload = {}
+    if isinstance(payload, dict) and payload:
+        detail = str(payload.get("result") or payload.get("error") or "").strip()
+        if (payload.get("is_error")
+                and not payload.get("duration_api_ms")
+                and not payload.get("total_cost_usd")):
+            return "usage_limit", (detail or
+                                   "Claude usage limit reached on this account.")[:400]
+        if detail:
+            return "error", detail[:400]
+    return "error", ((proc.stderr or "").strip() or raw or "no output")[:400]
+
+
 def _run_claude(prompt: str, resume: str | None = None, research: bool = False,
                 model: str | None = None) -> tuple[str | None, str | None]:
     """Invoke `claude -p` headless; return (result_text, session_id).
@@ -501,8 +550,11 @@ def _run_claude(prompt: str, resume: str | None = None, research: bool = False,
             print(f"[advisor] claude CLI timeout after {timeout}s (model={tag})")
             return None
         if proc.returncode != 0:
+            reason, detail = _explain(proc)
+            failures.append(reason)
             print(f"[advisor] claude CLI rc={proc.returncode} (model={tag}) "
-                  f"stderr={proc.stderr[:200]!r} stdout={proc.stdout[:200]!r}")
+                  f"{reason}: {detail!r}")
+            _note_failure(reason, detail)
             return None
         try:
             payload = json.loads(proc.stdout)
@@ -510,25 +562,36 @@ def _run_claude(prompt: str, resume: str | None = None, research: bool = False,
             text = proc.stdout.strip()
             return (text, None) if text else None
         if payload.get("is_error"):
-            print(f"[advisor] claude is_error (model={tag}): "
-                  f"{str(payload.get('result'))[:200]!r}")
+            reason, detail = _explain(proc)
+            failures.append(reason)
+            print(f"[advisor] claude is_error (model={tag}) {reason}: {detail!r}")
+            _note_failure(reason, detail)
             return None
         _record_usage(tag, payload)
         return payload.get("result"), payload.get("session_id")
 
+    failures: list[str] = []
     chosen = model if model is not None else settings.CLAUDE_MODEL
     result = _attempt(chosen)
     if result is not None:
+        _clear_failure()
         return result
     # Primary attempt failed. The brief runs on the default (best) model, which
     # hits intermittent usage windows where Sonnet is still available — retry
     # once on the standard model before surrendering to the deterministic
     # narrative. Skip if the standard model is what we just tried.
     fallback = settings.CLAUDE_MODEL_STANDARD
+    if "usage_limit" in failures:
+        # The quota is account-wide. Sonnet is blocked by the same ceiling that
+        # blocked Opus, so the retry cannot succeed — it just makes a plain
+        # "you are out of quota" look like a flaky tool.
+        print("[advisor] usage limit reached — skipping the fallback model")
+        return None, None
     if fallback and (chosen or "") != fallback:
         print(f"[advisor] retrying with fallback model={fallback}")
         result = _attempt(fallback)
         if result is not None:
+            _clear_failure()
             return result
     return None, None
 

@@ -95,11 +95,30 @@ async def unhandled_exception(request: Request, exc: Exception):
 
 @app.get("/api/health")
 def health():
+    # Why the advisor last failed, if it did. "Unavailable" and "you are out of
+    # quota until 12:00" are different states and only one of them is a bug.
+    advisor_error = None
+    try:
+        from .services import advisor as advisor_service
+        f = advisor_service.last_failure()
+        if f.get("reason"):
+            advisor_error = {"reason": f["reason"], "detail": f["detail"],
+                             "ts": f["ts"]}
+    except Exception:
+        pass
+    budget_state = None
+    try:
+        from .services import budget
+        budget_state = budget.state()
+    except Exception:
+        pass
     return {
         "status": "ok",
         "version": app.version,
         "data_mode": settings.DATA_MODE,
         "advisor_enabled": settings.ADVISOR_ENABLED,
+        "advisor_error": advisor_error,
+        "cli_budget": budget_state,
     }
 
 

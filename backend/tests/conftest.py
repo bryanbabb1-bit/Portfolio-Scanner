@@ -27,7 +27,7 @@ os.environ.setdefault("DATA_MODE", "mock")
 # Services that own persistent state. Import failures are tolerated so a
 # broken optional module can never take the whole suite down at collection.
 _SERVICE_MODULES = (
-    "accumulation", "advisor", "backtest", "bigmoves", "catalysts", "chat", "cleansheet", "conviction",
+    "accumulation", "advisor", "backtest", "budget", "bigmoves", "catalysts", "chat", "cleansheet", "conviction",
     "journal", "learning", "pins", "plan", "scorecard", "stance",
     "summary", "themes", "transition", "watchpoints",
 )

@@ -259,6 +259,13 @@ def _enrich(sig: dict, facts: str, book_ctx: str = "", price=None) -> dict:
         f'"why": array of 2-4 bullets citing the numbers}}. '
         f"NEVER say 'consider' or 'you could'. Be decisive."
     )
+    from . import budget
+    if not budget.take("signal"):
+        # Out of the day's enrichment allowance. The signal still fires, still
+        # pushes and still carries its own reading — it just arrives without a
+        # model-written paragraph. Degrading the commentary is cheap; dropping
+        # the alert would defeat the point of watching the whole market.
+        return {**sig, **fallback}
     raw, _ = advisor._run_claude(prompt, model=settings.CLAUDE_MODEL_STANDARD)
     if not raw:
         return {**sig, **fallback}
@@ -496,8 +503,9 @@ def scan() -> list[dict]:
                         f"ticket size); give the exact entry, tiny size and a hard "
                         f"stop, or say to wait for the first pullback.")
                 try:
-                    from . import advisor
-                    reco = advisor.recommend(sym, event, kind="runner")
+                    from . import advisor, budget
+                    reco = (advisor.recommend(sym, event, kind="runner")
+                            if budget.take("signal") else {})
                 except Exception as exc:
                     print(f"[conviction] runner reco failed: {exc!r}")
                     reco = {}
@@ -546,7 +554,9 @@ def scan() -> list[dict]:
                 # is a trigger, not a decision. Run the portfolio-aware advisor
                 # so the slap ends in an actual recommended action (may be HOLD).
                 try:
-                    from . import advisor
+                    from . import advisor, budget
+                    if not budget.take("signal"):
+                        raise RuntimeError("signal budget spent for today")
                     event = (f"Your watchpoint fired — {sig['label']}. "
                              f"Your note: '{sig['what']}'. Reading: "
                              f"{'; '.join(sig.get('why', []))}")

@@ -24,13 +24,16 @@ from zoneinfo import ZoneInfo
 
 from ..config import settings
 
-# Per night. Four sessions is ~1.6M tokens and ~4 minutes — real but affordable
-# against a subscription that also has to run the briefs and the book.
-MAX_PER_NIGHT = 4
-# Screen candidates judged per night, on top of the holdings above. Five desk
-# sessions is ~2M tokens and ~$3.85 — the single most expensive scheduled thing
-# in the app, so it is a named number rather than a loop bound.
-SCREEN_JUDGED = 5
+# Per night, at six CLI calls each. Cut from four on 2026-08-24: the whole-market
+# signal watch turned on four days earlier took daily signals from ~1 to ~21, each
+# costing a call to enrich, and the subscription quota ran dry before lunch.
+# Whatever this number is, budget.take("desk") is the thing that actually enforces it.
+MAX_PER_NIGHT = 3
+# Screen candidates judged per night, on top of the holdings above. This was the
+# single most expensive scheduled thing in the app at five a night (~2M tokens,
+# ~$3.85); cut to two, and gated, because judging strangers is the least
+# load-bearing spend on the schedule — nine of the first ten came back REJECT.
+SCREEN_JUDGED = 2
 # Don't re-debate a name inside this window; that's what makes it rotate.
 REDEBATE_AFTER_DAYS = 6
 # Overnight ET window. After the close so it never competes with market-hours
@@ -179,6 +182,10 @@ def screen_and_judge(limit: int = SCREEN_JUDGED) -> list[dict]:
     for cand in results[:limit]:
         sym = cand["symbol"]
         try:
+            from . import budget
+            if not budget.take("desk", 6):
+                print("[nightly] desk budget spent — skipping remaining screens")
+                break
             d = debate_service.convene(sym, force=True, standalone=True) or {}
             judged.append({
                 "symbol": sym, "price": cand["price"],
@@ -242,6 +249,12 @@ def maybe_run(force: bool = False) -> dict | None:
     done: list[dict] = []
     for c in ranked:
         try:
+            # Six CLI calls a debate. When the desk allowance is gone the night
+            # simply sits shorter rather than eating the quota his questions need.
+            from . import budget
+            if not budget.take("desk", 6):
+                print("[nightly] desk budget spent — stopping early")
+                break
             result = debate_service.convene(c["symbol"], force=True) or {}
             # verdict/action/headline are flat STRINGS on the debate result.
             # Treating verdict as a nested object cost four completed debates

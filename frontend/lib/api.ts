@@ -985,7 +985,15 @@ export const api = {
   dismissIdea: (symbol: string) =>
     post<{ dismissed: string }>(`/api/plan/idea/dismiss?symbol=${encodeURIComponent(symbol)}`, {}),
   graph: () => get<GraphData>("/api/graph"),
-  health: () => get<{ status: string; data_mode: string; advisor_enabled: boolean }>("/api/health"),
+  health: () =>
+    get<{
+      status: string;
+      data_mode: string;
+      advisor_enabled: boolean;
+      /* Why the advisor last failed. "usage_limit" is not a broken tool — it
+         is the subscription's ceiling, and it says so rather than lying. */
+      advisor_error?: { reason: string; detail: string; ts: number } | null;
+    }>("/api/health"),
   summary: () => get<{ brief: DailyBrief | null; dismissed: boolean }>("/api/summary"),
   generateBrief: (kind: "morning" | "eod") =>
     post<DailyBrief>(`/api/summary/generate?kind=${kind}`, {}),

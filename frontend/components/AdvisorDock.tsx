@@ -55,6 +55,7 @@ export function AdvisorDock() {
   const [busy, setBusy] = useState(false);
   const [deep, setDeep] = useState(false);
   const [live, setLive] = useState<boolean | null>(null);
+  const [why, setWhy] = useState<string | null>(null);
   const [pinned, setPinned] = useState<Set<number>>(new Set());
   // Nothing is read from localStorage until after mount, so the server and the
   // first client paint agree.
@@ -112,8 +113,21 @@ export function AdvisorDock() {
   const probe = useCallback(() => {
     api
       .health()
-      .then((h) => setLive(h.status === "ok" && h.advisor_enabled))
-      .catch(() => setLive(false));
+      .then((h) => {
+        setLive(h.status === "ok" && h.advisor_enabled);
+        // A quota block is not an outage. Saying "unreachable" when the real
+        // answer is "out of quota until noon" sent us hunting a dead CLI for
+        // an hour, so the dot now carries the reason it was given.
+        setWhy(h.advisor_error?.reason === "usage_limit"
+          ? "usage limit — resets shortly"
+          : h.advisor_error?.detail
+            ? h.advisor_error.detail.slice(0, 80)
+            : null);
+      })
+      .catch(() => {
+        setLive(false);
+        setWhy(null);
+      });
   }, []);
   useEffect(probe, [probe]);
 
@@ -189,7 +203,7 @@ export function AdvisorDock() {
         <span className={`adock-dot${live === false ? " off" : ""}`} />
         <span className="adock-who">Advisor</span>
         <span className="adock-state">
-          {live === false ? "unreachable" : live == null ? "checking" : "on"}
+          {live === false ? "unreachable" : live == null ? "checking" : why ? why : "on"}
         </span>
         <div className="adock-head-right">
           <label className="adock-deep" title="Let him search the web for live news and sentiment (slower)">
