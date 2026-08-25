@@ -103,7 +103,7 @@ def health():
         f = advisor_service.last_failure()
         if f.get("reason"):
             advisor_error = {"reason": f["reason"], "detail": f["detail"],
-                             "ts": f["ts"]}
+                             "ts": f["ts"], "hint": f.get("hint")}
     except Exception:
         pass
     budget_state = None

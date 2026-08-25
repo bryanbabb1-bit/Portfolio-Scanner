@@ -457,20 +457,75 @@ def usage_report() -> dict:
 
 # Why the last CLI call failed, so the app can say something truer than
 # "unavailable". Read by /api/health and anything that renders a fallback.
-_LAST_FAILURE: dict = {"reason": None, "detail": None, "ts": 0.0}
+_LAST_FAILURE: dict = {"reason": None, "detail": None, "ts": 0.0, "hint": None}
+
+
+_FAILURE_FILE = settings.PORTFOLIO_FILE.parent / "advisor_failure.json"
 
 
 def _note_failure(reason: str, detail: str) -> None:
-    _LAST_FAILURE.update(reason=reason, detail=detail, ts=time.time())
+    _LAST_FAILURE.update(reason=reason, detail=detail, ts=time.time(),
+                         hint=FIX_HINTS.get(reason))
+    _persist_failure()
 
 
 def _clear_failure() -> None:
-    _LAST_FAILURE.update(reason=None, detail=None, ts=time.time())
+    _LAST_FAILURE.update(reason=None, detail=None, ts=time.time(), hint=None)
+    _persist_failure()
+
+
+def _persist_failure() -> None:
+    """Survive a restart.
+
+    Restarting the backend is the FIRST thing anyone does when the CLI stops
+    working, and an in-memory record dies exactly then - erasing the diagnosis
+    at the moment someone is looking for it.
+    """
+    try:
+        _FAILURE_FILE.parent.mkdir(parents=True, exist_ok=True)
+        with open(_FAILURE_FILE, "w", encoding="utf-8") as f:
+            json.dump(_LAST_FAILURE, f, indent=2)
+    except OSError:
+        pass
 
 
 def last_failure() -> dict:
     """The most recent CLI failure, or a cleared record after any success."""
+    if _LAST_FAILURE.get("reason") is None and not _LAST_FAILURE.get("ts"):
+        try:
+            with open(_FAILURE_FILE, encoding="utf-8") as f:
+                d = json.load(f)
+            if isinstance(d, dict):
+                _LAST_FAILURE.update(d)
+        except (FileNotFoundError, json.JSONDecodeError, OSError):
+            pass
     return dict(_LAST_FAILURE)
+
+
+# Two different things stop the CLI dead, they look identical from the outside,
+# and they have OPPOSITE fixes. Both exit rc=1 having spent no API time and
+# charged nothing, because neither request ever left the machine:
+#
+#   quota  "Claude usage limit reached"                    -> wait, it resets
+#   auth   "Failed to authenticate: OAuth session expired" -> run `claude`, /login
+#
+# The first version of this classifier used only the zero-cost heuristic, so it
+# labelled a dead OAuth session "usage_limit" and the dock told Bryan to wait
+# for a reset that was never coming. Telling someone to wait out an expired
+# session is worse than saying nothing, so the text is read FIRST and the
+# heuristic alone is never allowed to name a specific cause.
+_AUTH_PATTERNS = ("failed to authenticate", "oauth", "authentication_error",
+                  "invalid api key", "please run /login", "not logged in",
+                  "unauthorized", "credentials")
+_QUOTA_PATTERNS = ("usage limit", "rate limit", "quota", "too many requests")
+
+# What to actually DO about each. A status with no next step is how an expired
+# login sat there for a day being re-read as an outage.
+FIX_HINTS = {
+    "auth": "Claude is signed out - run `claude` in a terminal and use /login.",
+    "usage_limit": "Usage limit reached - it resets on its own, no action needed.",
+    "blocked": "The CLI refused the request. Try `claude` in a terminal.",
+}
 
 
 def _explain(proc) -> tuple[str, str]:
@@ -479,12 +534,8 @@ def _explain(proc) -> tuple[str, str]:
     The reason lives in the JSON's `result` field, which sits AFTER a long
     metadata prefix (is_error, duration_api_ms, session_id, usage...). Logging
     `stdout[:200]` therefore captured the prefix and cut off before the sentence
-    that says why — which is how an exhausted subscription quota came to look
-    exactly like a crashed binary, in the logs and on the dashboard.
-
-    A quota block is identifiable without parsing English: the CLI reports an
-    error having spent no API time and charged nothing, because the request
-    never left the machine.
+    that says why - which is how a blocked CLI came to look exactly like a
+    crashed binary, in the logs and on the dashboard.
     """
     raw = (proc.stdout or "").strip()
     payload = {}
@@ -492,16 +543,29 @@ def _explain(proc) -> tuple[str, str]:
         payload = json.loads(raw)
     except (json.JSONDecodeError, TypeError, ValueError):
         payload = {}
+
+    detail = ""
     if isinstance(payload, dict) and payload:
         detail = str(payload.get("result") or payload.get("error") or "").strip()
-        if (payload.get("is_error")
-                and not payload.get("duration_api_ms")
-                and not payload.get("total_cost_usd")):
-            return "usage_limit", (detail or
-                                   "Claude usage limit reached on this account.")[:400]
-        if detail:
-            return "error", detail[:400]
-    return "error", ((proc.stderr or "").strip() or raw or "no output")[:400]
+    stderr = (proc.stderr or "").strip()
+    text = f"{detail} {stderr}".lower()
+
+    if any(t in text for t in _AUTH_PATTERNS):
+        return "auth", (detail or stderr or "Claude is not authenticated.")[:400]
+    if any(t in text for t in _QUOTA_PATTERNS):
+        return "usage_limit", (detail or stderr or
+                               "Claude usage limit reached.")[:400]
+    if (isinstance(payload, dict) and payload.get("is_error")
+            and not payload.get("duration_api_ms")
+            and not payload.get("total_cost_usd")):
+        # Never reached the API and said nothing recognisable about why. It is
+        # blocked, but naming a cause here is exactly how "run /login" got
+        # reported as "wait for your limit to reset".
+        return "blocked", (detail or
+                           "The CLI refused the request before calling the API.")[:400]
+    if detail:
+        return "error", detail[:400]
+    return "error", (stderr or raw or "no output")[:400]
 
 
 def _run_claude(prompt: str, resume: str | None = None, research: bool = False,
@@ -581,11 +645,12 @@ def _run_claude(prompt: str, resume: str | None = None, research: bool = False,
     # once on the standard model before surrendering to the deterministic
     # narrative. Skip if the standard model is what we just tried.
     fallback = settings.CLAUDE_MODEL_STANDARD
-    if "usage_limit" in failures:
-        # The quota is account-wide. Sonnet is blocked by the same ceiling that
-        # blocked Opus, so the retry cannot succeed — it just makes a plain
-        # "you are out of quota" look like a flaky tool.
-        print("[advisor] usage limit reached — skipping the fallback model")
+    dead = {"usage_limit", "auth", "blocked"} & set(failures)
+    if dead:
+        # None of these are model-specific: the quota is account-wide and so is
+        # the session, so the fallback hits the same wall. Retrying only makes a
+        # flat refusal look like a flaky tool.
+        print(f"[advisor] {sorted(dead)[0]} - skipping the fallback model")
         return None, None
     if fallback and (chosen or "") != fallback:
         print(f"[advisor] retrying with fallback model={fallback}")

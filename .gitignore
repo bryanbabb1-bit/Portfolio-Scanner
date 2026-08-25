@@ -35,3 +35,4 @@ backend/*.err.log
 backend/app/data/sec_ciks.json
 backend/app/data/portfolio.json.bak
 backend/premove_cache.pkl
+backend/app/data/advisor_failure.json

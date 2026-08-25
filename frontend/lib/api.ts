@@ -992,7 +992,15 @@ export const api = {
       advisor_enabled: boolean;
       /* Why the advisor last failed. "usage_limit" is not a broken tool — it
          is the subscription's ceiling, and it says so rather than lying. */
-      advisor_error?: { reason: string; detail: string; ts: number } | null;
+      advisor_error?: {
+        reason: string;
+        detail: string;
+        ts: number;
+        /* What to DO about it. "auth" means signed out, which needs /login —
+           a status with no next step is how an expired session got re-read as
+           an outage for a day. */
+        hint?: string | null;
+      } | null;
     }>("/api/health"),
   summary: () => get<{ brief: DailyBrief | null; dismissed: boolean }>("/api/summary"),
   generateBrief: (kind: "morning" | "eod") =>

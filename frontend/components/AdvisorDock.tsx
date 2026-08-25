@@ -56,6 +56,7 @@ export function AdvisorDock() {
   const [deep, setDeep] = useState(false);
   const [live, setLive] = useState<boolean | null>(null);
   const [why, setWhy] = useState<string | null>(null);
+  const [hint, setHint] = useState<string | null>(null);
   const [pinned, setPinned] = useState<Set<number>>(new Set());
   // Nothing is read from localStorage until after mount, so the server and the
   // first client paint agree.
@@ -115,18 +116,24 @@ export function AdvisorDock() {
       .health()
       .then((h) => {
         setLive(h.status === "ok" && h.advisor_enabled);
-        // A quota block is not an outage. Saying "unreachable" when the real
-        // answer is "out of quota until noon" sent us hunting a dead CLI for
-        // an hour, so the dot now carries the reason it was given.
-        setWhy(h.advisor_error?.reason === "usage_limit"
-          ? "usage limit — resets shortly"
-          : h.advisor_error?.detail
-            ? h.advisor_error.detail.slice(0, 80)
-            : null);
+        // A block is not an outage, and the two blocks have OPPOSITE fixes:
+        // a quota resets on its own, an expired login never does. Saying
+        // "unreachable" for either sent us hunting a healthy CLI twice, so the
+        // dot now carries the reason AND the thing to do about it.
+        const e = h.advisor_error;
+        setWhy(
+          e?.reason === "auth" ? "signed out — run /login"
+          : e?.reason === "usage_limit" ? "usage limit — resets on its own"
+          : e?.reason === "blocked" ? "CLI refused the request"
+          : e?.detail ? e.detail.slice(0, 80)
+          : null,
+        );
+        setHint(e?.hint ?? null);
       })
       .catch(() => {
         setLive(false);
         setWhy(null);
+        setHint(null);
       });
   }, []);
   useEffect(probe, [probe]);
@@ -236,6 +243,15 @@ export function AdvisorDock() {
           </button>
         </div>
       </div>
+
+      {/* The fix belongs where the failure is felt. Twice now a blocked CLI
+          read as an outage and cost an hour of hunting a healthy binary — a
+          status with no next step does that. */}
+      {hint && (
+        <div className={`adock-fix${why?.startsWith("signed out") ? " act" : ""}`}>
+          {hint}
+        </div>
+      )}
 
       <div className="adock-body" ref={boxRef}>
         {thread.length === 0 && (
