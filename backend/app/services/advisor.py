@@ -522,6 +522,7 @@ _QUOTA_PATTERNS = ("usage limit", "rate limit", "quota", "too many requests")
 # What to actually DO about each. A status with no next step is how an expired
 # login sat there for a day being re-read as an outage.
 FIX_HINTS = {
+    "timeout": "The CLI did not answer in time - usually load. Try again.",
     "auth": "Claude is signed out - run `claude` in a terminal and use /login.",
     "usage_limit": "Usage limit reached - it resets on its own, no action needed.",
     "blocked": "The CLI refused the request. Try `claude` in a terminal.",
@@ -569,7 +570,8 @@ def _explain(proc) -> tuple[str, str]:
 
 
 def _run_claude(prompt: str, resume: str | None = None, research: bool = False,
-                model: str | None = None) -> tuple[str | None, str | None]:
+                model: str | None = None,
+                long_form: bool = False) -> tuple[str | None, str | None]:
     """Invoke `claude -p` headless; return (result_text, session_id).
 
     resume: a prior session id — the CLI reloads that conversation so
@@ -585,8 +587,9 @@ def _run_claude(prompt: str, resume: str | None = None, research: bool = False,
     if _PLAIN_STYLE not in prompt:
         prompt = prompt + _PLAIN_STYLE
     exe = shutil.which(settings.CLAUDE_BIN) or settings.CLAUDE_BIN
-    timeout = max(settings.ADVISOR_TIMEOUT, 300) if research \
-        else settings.ADVISOR_TIMEOUT
+    timeout = (max(settings.ADVISOR_TIMEOUT, 300) if research
+               else max(settings.ADVISOR_TIMEOUT, 240) if long_form
+               else settings.ADVISOR_TIMEOUT)
 
     def _attempt(model_name: str) -> tuple[str | None, str | None] | None:
         """Run the CLI once. Return (result, session_id) on success, or None on
@@ -611,7 +614,11 @@ def _run_claude(prompt: str, resume: str | None = None, research: bool = False,
             print(f"[advisor] claude CLI not found: {exc!r}")
             return None
         except subprocess.TimeoutExpired:
+            detail = (f"No reply within {timeout}s. The brief is the longest "
+                      f"prompt in the app and the box may be busy.")
+            failures.append("timeout")
             print(f"[advisor] claude CLI timeout after {timeout}s (model={tag})")
+            _note_failure("timeout", detail)
             return None
         if proc.returncode != 0:
             reason, detail = _explain(proc)
@@ -931,6 +938,12 @@ def advise_portfolio(summary: PortfolioSummary, reports: list[StockReport],
         if hit and (time.time() - hit[0]) < settings.ADVISOR_CACHE_TTL:
             return hit[1]
 
+    from . import preferences as prefs_service
+    # Strip blocked names before the model ever sees them: an idea never shown
+    # is an idea never championed, and this applies to the deterministic
+    # fallback narrative too.
+    candidates = prefs_service.filter_candidates(candidates)
+
     facts = _facts_from_portfolio(summary, reports, risk, alerts, candidates)
     all_signals = [s for r in reports for s in r.signals]
     if not settings.ADVISOR_ENABLED:
@@ -939,6 +952,7 @@ def advise_portfolio(summary: PortfolioSummary, reports: list[StockReport],
         return note
 
     from . import stance as stance_service
+    prefs_block = prefs_service.block_text()
     strategy_block = _risk_profile_block()
     mix_block = _mix_block(summary)
     standing = stance_service.book_block([r.symbol for r in reports])
@@ -965,7 +979,7 @@ def advise_portfolio(summary: PortfolioSummary, reports: list[StockReport],
     prompt = (
         f"{_PERSONA}\n\n{_RESEARCH_PREFIX if deep else ''}"
         f"Here is your client's full portfolio right now:\n\n{facts}\n"
-        f"{strategy_block}\n"
+        f"{prefs_block}{strategy_block}\n"
         f"{mix_block}"
         f"{standing}"
         f"{_prior_advice_block(key)}\n"
@@ -1072,7 +1086,7 @@ def advise_portfolio(summary: PortfolioSummary, reports: list[StockReport],
         f'price falling is NOT a reason. If a recent buy now looks oversized, '
         f'say "hold it and let it season", never "sell".'
     )
-    raw, sid = _run_claude(prompt, research=deep)
+    raw, sid = _run_claude(prompt, research=deep, long_form=True)
     note = _parse_note("PORTFOLIO", "claude", raw) if raw else \
         _fallback_note("PORTFOLIO", facts, all_signals)
     if raw and sid:
@@ -1093,8 +1107,63 @@ def advise_portfolio(summary: PortfolioSummary, reports: list[StockReport],
                         price=price_by.get(sym))
         except Exception:
             pass
+    # ENFORCE the preferences rather than trusting them to be honoured. There
+    # are four recorded instances of this model being told plainly not to
+    # recommend a name and doing it anyway in the very next brief, so the
+    # prompt is a request and this is the constraint.
+    note = _apply_preferences(note)
+
     _remember_history(key, note)
     _cache[key] = (time.time(), note)
+    return note
+
+
+def _apply_preferences(note):
+    """Strip blocked names out of a finished brief, and say so if any were.
+
+    Silence here would be the worst outcome: Bryan would see a shorter plan and
+    have no idea the model had ignored him again. A removal is logged, counted,
+    and surfaced on the note so it shows up as a number instead of as him
+    noticing for a fifth time.
+    """
+    from . import preferences as prefs_service
+
+    blocked = prefs_service.blocked_symbols()
+    if not blocked:
+        return note
+
+    removed: list[str] = []
+    for field in ("actions", "sequence"):
+        items = getattr(note, field, None)
+        if not items:
+            continue
+        kept, gone = prefs_service.filter_actions(items)
+        if gone:
+            removed += gone
+            try:
+                setattr(note, field, kept)
+            except Exception:
+                pass
+    scout = getattr(note, "scout", None)
+    if scout:
+        kept, gone = prefs_service.filter_scout(scout)
+        if gone:
+            removed += gone
+            try:
+                note.scout = kept
+            except Exception:
+                pass
+
+    if removed:
+        names = ", ".join(sorted(set(removed)))
+        print(f"[advisor] preferences enforced: removed {len(removed)} item(s) "
+              f"for {names} AFTER the model was told not to suggest them")
+        try:
+            note.risks = list(getattr(note, "risks", []) or []) + [
+                f"I removed suggestions for {names} — you asked me not to "
+                f"recommend them. Say the word if you want them back."]
+        except Exception:
+            pass
     return note
 
 
@@ -1250,6 +1319,45 @@ def advise_breakout(cand: BreakoutCandidate, force: bool = False,
 
 
 # ------------------------------------------------------------------ follow-up
+def _prefs_block() -> str:
+    """The standing preferences, for any prompt that issues or defends ideas."""
+    try:
+        from . import preferences as prefs_service
+        return prefs_service.block_text()
+    except Exception:
+        return ""
+
+
+def _capture_prefs(prefs, question: str = "") -> None:
+    """Persist a standing preference the client just stated.
+
+    Deliberately narrow: the model is told to fill this in only for standing
+    instructions about FUTURE ideas, never for a one-off "should I buy X".
+    Getting this wrong in the permissive direction would silently blacklist a
+    name he only asked a question about, so the bar is an explicit instruction.
+    """
+    if not isinstance(prefs, dict):
+        return
+    from . import preferences as prefs_service
+
+    try:
+        for sym in (prefs.get("block") or [])[:8]:
+            sym = str(sym or "").strip().upper()
+            if sym:
+                prefs_service.block(sym, reason=question.strip()[:160],
+                                    source="chat")
+        for sym in (prefs.get("unblock") or [])[:8]:
+            sym = str(sym or "").strip().upper()
+            if sym:
+                prefs_service.unblock(sym)
+        for theme in (prefs.get("want") or [])[:6]:
+            theme = str(theme or "").strip()
+            if theme:
+                prefs_service.want(theme, source="chat")
+    except Exception as exc:
+        print(f"[advisor] preference capture failed: {exc!r}")
+
+
 _ASK_FMT = (
     "You CANNOT change the client's holdings, journal or records from this chat. "
     "If the client corrects a fact about a TRADE they made (e.g. 'we never made "
@@ -1266,7 +1374,12 @@ _ASK_FMT = (
     '$540"), a hold ("Hold — do nothing"), or a watch ("Watch $180; add there"). '
     'Be decisive, take a side, no hedging, '
     '"points": array of 0-4 bullets — the specifics (size, entry, stop, target) '
-    'and the ONE reason, each a plain sentence under 22 words, no jargon}. '
+    'and the ONE reason, each a plain sentence under 22 words, no jargon, '
+    '"prefs": {"block": [tickers he says to STOP recommending], '
+    '"unblock": [tickers he asks for again], '
+    '"want": [sectors/styles he asks for ideas from, e.g. "energy"]} '
+    '— ONLY when he states a STANDING preference about future ideas, not a '
+    'one-off "should I buy X". Omit or leave empty otherwise}. '
     'No lead-in phrases.'
 )
 
@@ -1588,7 +1701,7 @@ def ask(kind: str, symbol: str | None, question: str, deep: bool = False) -> dic
             "to THIS and, if it changes your prior reply, say so in one line.\n\n"
             f"{snapshot}")
         raw, sid = _run_claude(
-            f"{research_note}{anchor}Client follow-up question: {question}\n\n{_ASK_FMT}",
+            f"{research_note}{anchor}{_prefs_block()}Client follow-up question: {question}\n\n{_ASK_FMT}",
             resume=prior, research=deep, model=ask_model)
 
     if raw is None:
@@ -1609,7 +1722,7 @@ def ask(kind: str, symbol: str | None, question: str, deep: bool = False) -> dic
         # ever said to him.
         recap = chat_service.recap_block(key)
         prompt = (f"{_PERSONA}\n\n{research_note}{snapshot}"
-                  f"The client's current data:\n\n{facts}\n{prior_note}{recap}"
+                  f"The client's current data:\n\n{facts}\n{prior_note}{recap}{_prefs_block()}"
                   f"\nClient question: {question}\n\n{_ASK_FMT}")
         raw, sid = _run_claude(prompt, research=deep, model=ask_model)
 
@@ -1627,6 +1740,10 @@ def ask(kind: str, symbol: str | None, question: str, deep: bool = False) -> dic
             obj = json.loads(raw[start : end + 1])
             answer = str(obj.get("answer", "") or "").strip() or raw.strip()
             points = _as_bullets(obj.get("points"))
+            # He stated a standing preference. Capture it HERE, in the same
+            # call that already read his message, so remembering costs nothing
+            # extra — and so the brief cannot quietly forget it tomorrow.
+            _capture_prefs(obj.get("prefs"), question)
         except json.JSONDecodeError:
             pass
     # The turn outlives the CLI session, so the thread survives a restart and

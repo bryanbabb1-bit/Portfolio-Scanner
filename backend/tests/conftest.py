@@ -28,7 +28,7 @@ os.environ.setdefault("DATA_MODE", "mock")
 # broken optional module can never take the whole suite down at collection.
 _SERVICE_MODULES = (
     "accumulation", "advisor", "backtest", "budget", "bigmoves", "catalysts", "chat", "cleansheet", "conviction",
-    "journal", "learning", "pins", "plan", "scorecard", "stance",
+    "journal", "learning", "pins", "plan", "preferences", "scorecard", "stance",
     "summary", "themes", "transition", "watchpoints",
 )
 

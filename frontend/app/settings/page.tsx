@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { api, Holding, PortfolioConfig, WatchItem } from "../../lib/api";
 import { money } from "../../components/format";
+import { Preferences } from "../../components/Preferences";
 
 type Quote = { price: number | null; source: string };
 
@@ -163,6 +164,11 @@ export default function Settings() {
 
       {msg && <div className="ok-banner">{msg}</div>}
       {err && <div className="err" style={{ marginBottom: 16 }}>{err}</div>}
+
+      {/* --------- what he has told the advisor, made visible + reversible --------- */}
+      <div style={{ marginBottom: 20 }}>
+        <Preferences />
+      </div>
 
       {/* --------- profile --------- */}
       <div className="card" style={{ marginBottom: 20 }}>

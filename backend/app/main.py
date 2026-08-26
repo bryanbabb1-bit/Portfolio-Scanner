@@ -33,6 +33,7 @@ from .routers import (
     pins,
     plan,
     portfolio,
+    preferences,
     risk,
     runner,
     scan,
@@ -79,6 +80,7 @@ app.include_router(book.router)
 app.include_router(catalysts.router)
 app.include_router(bigmoves.router)
 app.include_router(accumulation.router)
+app.include_router(preferences.router)
 
 
 @app.exception_handler(Exception)
