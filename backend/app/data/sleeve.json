@@ -1,0 +1,63 @@
+{
+  "config": {
+    "capital_usd": 2000.0,
+    "max_slots": 1,
+    "risk_pct": 8.0
+  },
+  "tickets": [
+    {
+      "id": "tk_20260831191237_MOVE",
+      "symbol": "MOVE",
+      "engine": "footprint",
+      "side": "buy",
+      "status": "watching",
+      "trigger_above": 11.8,
+      "created": "2026-08-31 19:12:37",
+      "ts": 1788217957.3700979,
+      "expires": 1788649957.370056,
+      "entry": 11.8,
+      "stop": 10.384,
+      "target": 16.048,
+      "shares": 112.9944,
+      "notional": 1333.33,
+      "risk_usd": 160.0,
+      "r_unit": 1.416,
+      "sleeve_equity": 2000.0,
+      "why": [
+        "Trading 37x its normal volume before any move — the earliest honest signal measured",
+        "Waits above 11.80 (yesterday's high). No break, no trade — at this volume the median five-day return is negative",
+        "Stop 10.38, 12% under the trigger"
+      ],
+      "headline": "Huge volume spike — buy only above $11.80",
+      "note": "Buy $683 of MOVE at $11.80, but only if it trades above that price. If it can't hold above $11.80, walk away — do not chase it lower.",
+      "note_risk": "one huge volume day with no track record yet of follow-through",
+      "note_engine": "claude",
+      "meta": {
+        "vol_ratio": 37.2,
+        "drift_20d": 1.8,
+        "avg_dollar_vol": 2029527
+      },
+      "fill_price": null,
+      "fill_ts": null,
+      "high_water": null,
+      "current_stop": null,
+      "trail_armed": false,
+      "exit_signal": null,
+      "exit_price": null,
+      "exit_ts": null,
+      "exit_reason": null,
+      "r_multiple": null,
+      "pnl_usd": null,
+      "last_price": 10.95,
+      "sessions_held": 0
+    }
+  ],
+  "equity_history": [
+    {
+      "day": "2026-08-31",
+      "equity": 1639.83
+    }
+  ],
+  "last_mark": null,
+  "daily_scan": "2026-08-31"
+}

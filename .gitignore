@@ -36,3 +36,13 @@ backend/app/data/sec_ciks.json
 backend/app/data/portfolio.json.bak
 backend/premove_cache.pkl
 backend/app/data/advisor_failure.json
+
+# Derived caches. These are rebuilt from the market on demand (the whole-market
+# accumulation scan alone is ~140s and 8KB of churn), so committing them adds
+# noise to every diff and tells a future reader nothing the code does not.
+# The BOOKS are tracked — sleeve.json and thesis_book.json are state, not cache.
+backend/app/data/accumulation.json
+backend/app/data/bigmoves.json
+backend/app/data/catalysts.json
+backend/app/data/catalyst_partners.json
+backend/app/data/cli_budget.json

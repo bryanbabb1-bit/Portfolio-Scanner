@@ -1,0 +1,53 @@
+{
+  "blocked": [
+    {
+      "symbol": "SBUX",
+      "reason": "2026-08-26: stop recommending SBUX",
+      "source": "seed-from-chat",
+      "ts": 1787779001.460038
+    },
+    {
+      "symbol": "VXUS",
+      "reason": "2026-08-26: stop recommending VXUS",
+      "source": "seed-from-chat",
+      "ts": 1787779001.4823327
+    },
+    {
+      "symbol": "DE",
+      "reason": "2026-08-26: stop recommending Deere",
+      "source": "seed-from-chat",
+      "ts": 1787779001.5100708
+    },
+    {
+      "symbol": "TGT",
+      "reason": "2026-08-24: wants energy, not retail like Target",
+      "source": "seed-from-chat",
+      "ts": 1787779001.5259385
+    },
+    {
+      "symbol": "VEA",
+      "reason": "substituted for VXUS on 2026-08-26; same Vanguard foreign-large-blend fund",
+      "source": "substitution-guard",
+      "ts": 1787779634.399541
+    }
+  ],
+  "wanted": [
+    {
+      "theme": "energy",
+      "source": "seed-from-chat",
+      "ts": 1787779001.5366583
+    },
+    {
+      "theme": "high growth",
+      "source": "seed-from-chat",
+      "ts": 1787779001.5499341
+    }
+  ],
+  "notes": [
+    {
+      "text": "Do NOT substitute a near-identical fund or peer for a blocked name — VEA for VXUS, or another broad international index fund, is the same idea wearing a different ticker. He wants energy and high-growth operating companies, not broad international or consumer/retail index exposure.",
+      "source": "substitution-guard",
+      "ts": 1787779634.4209058
+    }
+  ]
+}

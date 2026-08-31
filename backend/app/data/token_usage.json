@@ -12,14 +12,14 @@
     }
   },
   "unattributed": {
-    "calls": 495,
-    "input": 15007,
-    "output": 550049,
-    "cache_read": 22906900,
-    "cache_write": 6415995,
-    "cost_usd": 64.5833,
+    "calls": 500,
+    "input": 15017,
+    "output": 553371,
+    "cache_read": 23033904,
+    "cache_write": 6477845,
+    "cost_usd": 64.9091,
     "models": {
-      "sonnet": 429,
+      "sonnet": 434,
       "default": 66
     }
   }
