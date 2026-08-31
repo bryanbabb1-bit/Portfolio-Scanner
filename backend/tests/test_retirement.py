@@ -46,10 +46,26 @@ def test_retired_rules_still_fire_for_the_backtest():
     assert any(s["rule"] == "trend-break" for s in sigs)
 
 
-def test_the_three_backtest_losers_are_the_retired_set():
+def test_the_retired_set_is_exactly_what_the_evidence_condemned():
+    """Three sell rules retired on the 5-year replay (2026-07-27), and one buy
+    rule retired on its LIVE record (2026-08-31): high-conviction-discovery
+    graded 22% win / -0.78% average over 23 firings, the worst in the book."""
     assert conviction.RETIRED_RULES == frozenset(
-        {"trend-break", "rsi-sell-zone", "sharp-breakdown"}
+        {"trend-break", "rsi-sell-zone", "sharp-breakdown",
+         "high-conviction-discovery"}
     )
+
+
+def test_the_retired_discovery_rule_is_still_measured():
+    """Retirement suppresses firing, never measurement — deleting the logic
+    would destroy the only evidence that could un-retire it."""
+    ind = _ind(rsi=55, sma50=101, sma200=99, trend="uptrend",
+               pct_from_52w_high=-3, volume_ratio=1.0)
+    live = conviction._detect("TEST", ind, _quote(100, 1), False, None, 75)
+    replay = conviction._detect("TEST", ind, _quote(100, 1), False, None, 75,
+                                include_retired=True)
+    assert not any(s["rule"] == "high-conviction-discovery" for s in live)
+    assert any(s["rule"] == "high-conviction-discovery" for s in replay)
 
 
 def test_buy_rules_are_untouched_by_retirement():

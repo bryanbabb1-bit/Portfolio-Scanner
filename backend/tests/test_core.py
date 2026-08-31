@@ -205,9 +205,13 @@ def test_conviction_rules_fire_and_stay_quiet():
     sigs = _detect("T", hot, quiet, True, 40.0, 60)
     assert any(s["side"] == "sell" and s["rule"] == "blowoff-top" for s in sigs)
 
-    # non-held discovery name with top-tier score -> buy
+    # non-held discovery name with top-tier score: RETIRED 2026-08-31 on a
+    # live record of 22% win / -0.78% over 23 firings. Still measured by the
+    # backtest, never slapped.
     sigs = _detect("T", calm, quiet, False, None, 73)
-    assert any(s["rule"] == "high-conviction-discovery" for s in sigs)
+    assert not any(s["rule"] == "high-conviction-discovery" for s in sigs)
+    assert any(s["rule"] == "high-conviction-discovery"
+               for s in _detect("T", calm, quiet, False, None, 73, include_retired=True))
 
     # RSI buy zone WITH confirmation (structure intact, not crashing, score
     # ok) — price 7.5% off the 200-day, so oversold-at-support doesn't claim it
@@ -780,7 +784,7 @@ def test_push_gating_actions_only():
     HOLD / AVOID / 'don't chase' stay silent in-app."""
     from app.services.conviction import _should_push
     assert _should_push({"rule": "watchpoint", "action": "HOLD"})          # your trigger
-    assert _should_push({"rule": "high-conviction-discovery", "action": "BUY"})
+    assert _should_push({"rule": "oversold-at-support", "action": "BUY"})
     assert _should_push({"action": "SELL"})
     assert _should_push({"action": "TRIM"})
     assert not _should_push({"rule": "runner-ignition", "action": "AVOID"})  # extended

@@ -47,7 +47,8 @@ export function SleeveSettings() {
     }
   };
 
-  const pctField = (k: "ignition_stop_pct" | "ignition_max_pct" | "trail_pct", label: string, hint: string) => (
+  const pctField = (k: "ignition_stop_pct" | "ignition_max_pct" | "trail_pct" | "footprint_stop_pct",
+                    label: string, hint: string) => (
     <label>
       <span>{label}</span>
       <input type="number" min={3} max={60} step={1}
@@ -112,6 +113,25 @@ export function SleeveSettings() {
           <input type="number" min={1} max={20} step={1} value={show(cfg.ignition_time_stop_sessions)}
                  onChange={(e) => set("ignition_time_stop_sessions", num(e.target.value))} />
         </label>
+        <label>
+          <span>Pullback stop (ATRs)</span>
+          <input type="number" min={0.5} max={6} step={0.5} value={show(cfg.pullback_atr_stop)}
+                 title="Volatility-based, so a jumpy name gets a wider stop and a smaller position. 2.5 is what the 5-year replay used."
+                 onChange={(e) => set("pullback_atr_stop", num(e.target.value))} />
+        </label>
+        <label>
+          <span>Swing max hold (sessions)</span>
+          <input type="number" min={1} max={20} step={1} value={show(cfg.pullback_max_hold_sessions)}
+                 title="Capital that is not working gets recycled."
+                 onChange={(e) => set("pullback_max_hold_sessions", num(e.target.value))} />
+        </label>
+        <label>
+          <span>Footprint watch (sessions)</span>
+          <input type="number" min={1} max={20} step={1} value={show(cfg.footprint_watch_sessions)}
+                 title="How long a conditional watch waits for its break before expiring unfilled."
+                 onChange={(e) => set("footprint_watch_sessions", num(e.target.value))} />
+        </label>
+        {pctField("footprint_stop_pct", "Footprint stop — % under trigger", "Where the stop sits once a watch breaks its level.")}
       </div>
 
       <div className="editor-foot" style={{ marginTop: 12, display: "flex", gap: 12, alignItems: "center" }}>

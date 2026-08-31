@@ -81,6 +81,7 @@ export function Blotter({ focusId }: { focusId?: string | null }) {
   if (!s.config.enabled) return null;
 
   const armed = s.tickets.filter((t) => t.status === "armed");
+  const watching = s.tickets.filter((t) => t.status === "watching");
   const exits = s.tickets.filter((t) => t.status === "exit");
   const live = s.tickets.filter((t) => t.status === "live");
   const closed = s.tickets.filter((t) => t.status === "closed");
@@ -141,17 +142,24 @@ export function Blotter({ focusId }: { focusId?: string | null }) {
         {live.map((t) => (
           <TicketRow key={t.id} t={t} tone="live" focus={focusId === t.id} onDone={load} />
         ))}
+        {watching.map((t) => (
+          <TicketRow key={t.id} t={t} tone="watching" focus={focusId === t.id} onDone={load} />
+        ))}
 
-        {waiting === 0 && live.length === 0 && (
+        {waiting === 0 && live.length === 0 && watching.length === 0 && (
           <p className="bl-empty">
-            No open tickets. The desk scans the whole market every two minutes during the session
-            and issues a ticket when a name ignites on volume — entry, stop, target and size, pushed
-            to your phone. Extended names are never ticketed.
+            No open tickets. Three engines feed this: <b>ignition</b> (whole market, every two
+            minutes — a name running 7-25% on heavy volume gets an entry, stop, target and size
+            pushed to your phone; extended names are never ticketed), <b>pullback</b> (once a
+            session — oversold and turning up above the 200-day, the only setup here with a
+            t-statistic above 2), and <b>footprint</b> (unusual volume before any move, held as a
+            watch until price breaks the prior day's high).
           </p>
         )}
 
         <div className="bl-foot">
           <div className="bl-score">
+            {s.benchmark_note && <span className="bl-bench">{s.benchmark_note}</span>}
             {scoreRows.length === 0 ? (
               <span className="mut">Scorecard starts with the first closed ticket. Grades are in R, with n beside them.</span>
             ) : scoreRows.map(([eng, sc]) => (
@@ -178,7 +186,7 @@ export function Blotter({ focusId }: { focusId?: string | null }) {
 }
 
 function TicketRow({ t, tone, focus, onDone }: {
-  t: Ticket; tone: "armed" | "live" | "exit" | "closed"; focus: boolean; onDone: () => void;
+  t: Ticket; tone: "watching" | "armed" | "live" | "exit" | "closed"; focus: boolean; onDone: () => void;
 }) {
   const ref = t.fill_price ?? t.entry;
   const stopNow = t.current_stop ?? t.stop;
@@ -186,13 +194,24 @@ function TicketRow({ t, tone, focus, onDone }: {
     <div id={`tk-${t.id}`} className={`bl-row ${tone}${focus ? " focus" : ""}`}>
       <div className="bl-c1">
         <span className={`bl-state ${tone}`}>
-          {tone === "armed" ? "ARMED" : tone === "live" ? "LIVE" : tone === "exit" ? "SELL NOW" : "CLOSED"}
+          {tone === "watching" ? "WATCHING" : tone === "armed" ? "ARMED"
+            : tone === "live" ? "LIVE" : tone === "exit" ? "SELL NOW" : "CLOSED"}
         </span>
         <Link href={`/stock/${t.symbol}`} className="bl-sym">{t.symbol}</Link>
         <span className="bl-eng">{ENGINE_LABEL[t.engine]}{t.headline ? ` · ${t.headline}` : ""}</span>
       </div>
 
       <div className="bl-c2">
+        {tone === "watching" && (
+          <>
+            <span><i>waits above</i> {px(t.trigger_above)}</span>
+            <span><i>now</i> {px(t.last_price)}
+              <span className="mut"> ({t.trigger_above && t.last_price ? pct(t.last_price, t.trigger_above) : "—"} away)</span></span>
+            <span><i>then buy</i> {money(t.notional, 0)}</span>
+            <span><i>stop</i> {px(t.stop)}</span>
+            <span><i>expires</i> {new Date(t.expires * 1000).toLocaleDateString(undefined, { month: "short", day: "numeric" })}</span>
+          </>
+        )}
         {tone === "armed" && (
           <>
             <span><i>Buy</i> {money(t.notional, 0)} <span className="mut">({t.shares.toFixed(2)} sh)</span></span>
@@ -227,11 +246,14 @@ function TicketRow({ t, tone, focus, onDone }: {
           {" "}at {px(t.exit_signal.price)} ({r(t.exit_signal.r)}). Sell it, then confirm the price you got.
         </div>
       )}
-      {tone === "armed" && t.why.length > 0 && (
+      {(tone === "armed" || tone === "watching") && t.why.length > 0 && (
         <ul className="bl-why">{t.why.slice(0, 3).map((w, i) => <li key={i}>{w}</li>)}</ul>
       )}
 
       <div className="bl-c3">
+        {tone === "watching" && (
+          <button className="bl-btn ghost" onClick={async () => { await api.ticketPass(t.id); onDone(); }}>Drop</button>
+        )}
         {tone === "armed" && (
           <>
             <PriceAction label="Filled at…" defaultValue={t.entry}

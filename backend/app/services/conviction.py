@@ -72,7 +72,15 @@ def _save(path, data: dict) -> None:
 # above is regime-dependent: a mega-cap AI book through a bull run. Re-check
 # on the Learning sheet after a genuine drawdown before treating this as
 # settled. Un-retire by removing the entry here.
-RETIRED_RULES = frozenset({"trend-break", "rsi-sell-zone", "sharp-breakdown"})
+# RETIRED 2026-08-31 on its LIVE record, not a replay: high-conviction-discovery
+# fired 23 times and graded 22% win / -0.78% average — the worst rule in the
+# book and the noisiest, and every one of those firings also spent a CLI call
+# on enrichment. It is a breakout score crossing 72 on a name nobody owns,
+# which the sleeve's ignition and pullback engines now cover with an entry, a
+# stop and a size instead of a paragraph. Discovery the PAGE is untouched;
+# this retires the slap only, and the backtest keeps measuring it.
+RETIRED_RULES = frozenset({"trend-break", "rsi-sell-zone", "sharp-breakdown",
+                           "high-conviction-discovery"})
 
 
 def _detect(sym: str, ind, quote, held: bool, pl_pct, score: float,

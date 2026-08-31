@@ -70,12 +70,25 @@ DEFAULTS: dict = {
     "ignition_stop_pct": 0.18,
     "ignition_max_pct": 0.25,
     "ignition_time_stop_sessions": 3,
+    # Pullback (the t=2.48 edge). Stop is volatility-based — 2.5 ATR is what
+    # the 5-year replay used, wide enough to survive normal noise across days.
+    "pullback_atr_stop": 2.5,
+    "pullback_max_hold_sessions": 20,
+    # Footprint. Never bought on the volume alone: at 8x the median 5-day
+    # return is -8%, so the ticket WAITS above the prior day's high and dies
+    # unfilled if the break never comes.
+    "footprint_watch_sessions": 5,
+    "footprint_stop_pct": 0.12,
     # Exits shared by every engine.
     "trail_pct": 0.25,      # trail off the high-water mark once the trade is +1R
     "target_r": 3.0,
 }
 
 ENGINES = ("ignition", "pullback", "footprint", "manual")
+
+# What a ticket can be, in order: a conditional watch that has not triggered,
+# an order waiting on a fill, a position, an exit awaiting confirmation, done.
+OPEN_STATUSES = ("watching", "armed", "live", "exit")
 
 
 def _et_now() -> datetime:
@@ -128,13 +141,17 @@ def set_config(changes: dict) -> dict:
                 cfg[k] = bool(v)
             elif k == "capital_usd":
                 cfg[k] = None if v in (None, "", 0) else max(0.0, float(v))
-            elif k in ("max_slots", "max_tickets_per_day", "ignition_time_stop_sessions"):
+            elif k in ("max_slots", "max_tickets_per_day", "ignition_time_stop_sessions",
+                       "pullback_max_hold_sessions", "footprint_watch_sessions"):
                 cfg[k] = int(max(1, min(20, int(v))))
             elif k == "capital_pct":
                 cfg[k] = float(max(0.0, min(100.0, float(v))))
             elif k == "risk_pct":
                 cfg[k] = float(max(0.5, min(25.0, float(v))))
-            elif k in ("ignition_stop_pct", "ignition_max_pct", "trail_pct"):
+            elif k == "pullback_atr_stop":
+                cfg[k] = float(max(0.5, min(6.0, float(v))))
+            elif k in ("ignition_stop_pct", "ignition_max_pct", "trail_pct",
+                       "footprint_stop_pct"):
                 cfg[k] = float(max(0.03, min(0.60, float(v))))
             elif k == "target_r":
                 cfg[k] = float(max(1.0, min(10.0, float(v))))
@@ -230,8 +247,10 @@ def _session_close_ts(now: datetime | None = None) -> float:
 
 
 def _open_for(book: dict, symbol: str) -> dict | None:
+    """Any live commitment to this name — including a conditional watch, so a
+    second engine cannot stack a duplicate ticket on the same symbol."""
     for t in book["tickets"]:
-        if t["symbol"] == symbol and t.get("status") in ("armed", "live", "exit"):
+        if t["symbol"] == symbol and t.get("status") in OPEN_STATUSES:
             return t
     return None
 
@@ -264,9 +283,16 @@ def issue(symbol: str, engine: str, entry: float, stop: float, *,
           target: float | None = None, why: list[str] | None = None,
           headline: str = "", meta: dict | None = None, push_it: bool = True,
           book: dict | None = None, eq: float | None = None,
-          expires_ts: float | None = None) -> dict | None:
-    """Create an ARMED ticket. Returns None when the desk refuses:
-    disabled, duplicate, daily cap, bad levels, or nothing to size against."""
+          expires_ts: float | None = None,
+          trigger_above: float | None = None) -> dict | None:
+    """Create a ticket. Returns None when the desk refuses: disabled,
+    duplicate, daily cap, bad levels, or nothing to size against.
+
+    trigger_above turns it into a conditional WATCH: it holds no money and
+    makes no noise until price trades through that level, at which point it
+    is re-sized at the trigger and armed. That is the only honest way to take
+    a footprint name — the volume says something is happening, the break says
+    it is happening in the direction you want."""
     with _lock:
         own_book = book is None
         book = book or load()
@@ -288,7 +314,9 @@ def issue(symbol: str, engine: str, entry: float, stop: float, *,
         stamp = _et_now().strftime("%Y%m%d%H%M%S")
         t = {
             "id": f"tk_{stamp}_{sym}",
-            "symbol": sym, "engine": engine, "side": "buy", "status": "armed",
+            "symbol": sym, "engine": engine, "side": "buy",
+            "status": "watching" if trigger_above else "armed",
+            "trigger_above": round(float(trigger_above), 4) if trigger_above else None,
             "created": _et_now().strftime("%Y-%m-%d %H:%M:%S"), "ts": now,
             "expires": expires_ts if expires_ts is not None else _session_close_ts(),
             "entry": round(float(entry), 4), "stop": round(float(stop), 4),
@@ -307,7 +335,7 @@ def issue(symbol: str, engine: str, entry: float, stop: float, *,
         book["tickets"].append(t)
         if own_book:
             save(book)
-        if push_it:
+        if push_it and not trigger_above:
             stop_pct = (t["stop"] / t["entry"] - 1) * 100
             tgt_r = (t["target"] - t["entry"]) / t["r_unit"] if t["r_unit"] else 0
             _notify(
@@ -400,16 +428,55 @@ def _grade(t: dict, price: float, reason: str) -> None:
 
 # --------------------------------------------------------------- lifecycle
 def expire(book: dict, now_ts: float | None = None) -> list[str]:
-    """Armed tickets that were not filled by the close are gone. Silently —
-    an expiry is not news."""
+    """Orders that were not filled by the close, and conditional watches whose
+    break never came, are gone. Silently — an expiry is not news."""
     now_ts = time.time() if now_ts is None else now_ts
     gone: list[str] = []
     for t in book["tickets"]:
-        if t.get("status") == "armed" and now_ts >= float(t.get("expires") or 0):
+        if t.get("status") in ("armed", "watching") and now_ts >= float(t.get("expires") or 0):
             t["status"] = "expired"
             t["closed_ts"] = now_ts
             gone.append(t["symbol"])
     return gone
+
+
+def check_triggers(book: dict, quotes: dict, cfg: dict | None = None,
+                   eq: float | None = None) -> list[dict]:
+    """Conditional watches whose level has traded through become live orders.
+
+    The ticket is RE-SIZED at the trigger, not at the price it was written at:
+    the level is the entry, and sizing off a stale price would put on a
+    position the stop no longer bounds."""
+    cfg = cfg or config(book)
+    eq = equity(book) if eq is None else eq
+    fired: list[dict] = []
+    for t in book["tickets"]:
+        if t.get("status") != "watching" or not t.get("trigger_above"):
+            continue
+        q = quotes.get(t["symbol"])
+        if not q or not q.get("price") or q.get("source", "live") != "live":
+            continue
+        px = float(q["price"])
+        t["last_price"] = round(px, 4)
+        trigger = float(t["trigger_above"])
+        if px < trigger:
+            continue
+        # Enter at the trigger or the current print, whichever is worse for us —
+        # a gap through the level is not a fill at the level.
+        entry = max(trigger, px)
+        planned_dist = float(t["entry"]) - float(t["stop"])
+        stop = entry - planned_dist
+        sz = size(entry, stop, eq, t["engine"], cfg)
+        if sz["shares"] <= 0:
+            continue
+        t.update(status="armed", entry=round(entry, 4), stop=round(stop, 4),
+                 target=round(entry + float(cfg["target_r"]) * sz["r_unit"], 4),
+                 shares=sz["shares"], notional=sz["notional"],
+                 risk_usd=sz["risk_usd"], r_unit=sz["r_unit"],
+                 sleeve_equity=round(eq, 2), triggered_ts=time.time(),
+                 expires=_session_close_ts())
+        fired.append({"kind": "triggered", "ticket": t, "price": entry})
+    return fired
 
 
 def manage(book: dict, quotes: dict, cfg: dict | None = None,
@@ -465,6 +532,11 @@ def manage(book: dict, quotes: dict, cfg: dict | None = None,
               and int(t.get("sessions_held") or 0) >= int(cfg["ignition_time_stop_sessions"])
               and r_now < 0.5):
             reason = "time"
+        elif (t["engine"] in ("pullback", "footprint")
+              and int(t.get("sessions_held") or 0) >= int(cfg["pullback_max_hold_sessions"])):
+            # Capital that is not working gets recycled. The 5-year replay
+            # capped a swing hold at 20 sessions for the same reason.
+            reason = "time"
         if reason:
             t["status"] = "exit"
             t["exit_signal"] = {"reason": reason, "price": round(px, 4),
@@ -478,7 +550,13 @@ def _push_events(events: list[dict]) -> None:
     for e in events:
         t = e["ticket"]
         sym = t["symbol"]
-        if e["kind"] == "trail_armed":
+        if e["kind"] == "triggered":
+            _notify(f"BUY {sym} {_money(t['notional'])} @ {t['entry']:.2f}",
+                    f"Broke {t['trigger_above']:.2f} on the volume it had been "
+                    f"building — stop {t['stop']:.2f}, target {t['target']:.2f}, "
+                    f"risk {_money(t['risk_usd'])} · expires at the close",
+                    sound="buy.wav", data={"type": "ticket", "id": t["id"], "symbol": sym})
+        elif e["kind"] == "trail_armed":
             _notify(f"STOP MOVED {sym} {t['current_stop']:.2f}",
                     f"+1R at {e['price']:.2f} — stop to breakeven, trail armed "
                     f"({int(config()['trail_pct'] * 100)}% off the high)",
@@ -521,6 +599,78 @@ def from_ignition(movers: list[dict], book: dict | None = None,
                       meta={"change_pct": m.get("change_pct"), "rvol": rvol,
                             "market_cap": m.get("market_cap"), "range_pos": m.get("range_pos")},
                       push_it=push_it, book=book, eq=eq)
+            if t:
+                issued.append(t)
+        if own:
+            save(book)
+        return issued
+
+
+def from_pullback(rows: list[dict], book: dict | None = None,
+                  eq: float | None = None, push_it: bool = True) -> list[dict]:
+    """Pullback setups -> armed tickets. The t=2.48 edge, run concentrated."""
+    with _lock:
+        own = book is None
+        book = book or load()
+        eq = equity(book) if eq is None else eq
+        issued: list[dict] = []
+        for row in rows:
+            t = issue(row["symbol"], "pullback", row["entry"], row["stop"],
+                      why=row.get("why"),
+                      headline=f"RSI {row['rsi_prev']:.0f} to {row['rsi']:.0f}, above the 200-day",
+                      meta={"rsi": row.get("rsi"), "rsi_prev": row.get("rsi_prev"),
+                            "pct_above_200d": row.get("pct_above_200d"), "atr": row.get("atr")},
+                      push_it=push_it, book=book, eq=eq)
+            if t:
+                issued.append(t)
+        if own:
+            save(book)
+        return issued
+
+
+def from_footprint(rows: list[dict], book: dict | None = None,
+                   eq: float | None = None) -> list[dict]:
+    """Accumulation names -> CONDITIONAL watches above the prior day's high.
+
+    Deliberately not orders. Screening at 8x volume concentrates the names
+    that touch +50% within a week from 1.3% to 13.7%, but the MEDIAN 5-day
+    return at that threshold is -8.1%: both tails fatten and the left one is
+    heavier. So the volume buys the name a place on the watchlist and the
+    break buys it a position; if the break never comes the ticket expires
+    having cost nothing."""
+    with _lock:
+        own = book is None
+        book = book or load()
+        cfg = config(book)
+        eq = equity(book) if eq is None else eq
+        sessions = int(cfg["footprint_watch_sessions"])
+        issued: list[dict] = []
+        for row in rows:
+            trigger = float(row.get("trigger_above") or 0)
+            price = float(row.get("price") or 0)
+            if trigger <= 0 or price <= 0 or trigger < price * 0.98:
+                continue          # a trigger already behind us is not a trigger
+            stop = trigger * (1 - float(cfg["footprint_stop_pct"]))
+            ratio = row.get("vol_ratio")
+            why = [
+                f"Trading {ratio:.0f}x its normal volume before any move — the "
+                f"earliest honest signal measured" if ratio else
+                "Unusual volume before any move",
+                f"Waits above {trigger:.2f} (yesterday's high). No break, no trade — "
+                f"at this volume the median five-day return is negative",
+                f"Stop {stop:.2f}, {int(cfg['footprint_stop_pct'] * 100)}% under the trigger",
+            ]
+            if row.get("beaten_down"):
+                why.insert(1, "Down on the month and suddenly busy — the profile "
+                              "the study found before a +50% week")
+            t = issue(row["symbol"], "footprint", trigger, stop, why=why,
+                      headline=f"{ratio:.0f}x volume, waiting on {trigger:.2f}" if ratio
+                      else f"waiting on {trigger:.2f}",
+                      meta={"vol_ratio": ratio, "drift_20d": row.get("drift_20d"),
+                            "avg_dollar_vol": row.get("avg_dollar_vol")},
+                      push_it=False, book=book, eq=eq,
+                      trigger_above=trigger,
+                      expires_ts=time.time() + sessions * 86400)
             if t:
                 issued.append(t)
         if own:
@@ -588,20 +738,99 @@ def state(with_quotes: bool = True) -> dict:
         rows.append(row)
     live_notional = sum(float(t.get("shares") or 0) * float(t.get("last_price") or t.get("fill_price") or 0)
                         for t in book["tickets"] if t.get("status") in ("live", "exit"))
+    curve = book.get("equity_history", [])[-120:]
+    bench, bench_note = _benchmark(curve, cap)
     return {
         "config": cfg,
         "capital": cap, "core_value": round(core, 2), "equity": eq,
         "realized": realized_pnl(book), "deployed": round(live_notional, 2),
         "slots_used": _slots_used(book), "issued_today": _issued_today(book),
         "counts": {s: sum(1 for t in book["tickets"] if t.get("status") == s)
-                   for s in ("armed", "live", "exit", "closed", "passed", "expired")},
+                   for s in ("watching", "armed", "live", "exit", "closed",
+                             "passed", "expired")},
         "tickets": rows[:60],
         "scorecard": scorecard(book),
-        "equity_history": book.get("equity_history", [])[-120:],
+        "equity_history": curve,
+        "benchmark": bench,
+        "benchmark_note": bench_note,
     }
 
 
+def _benchmark(curve: list[dict], cap: float) -> tuple[list[dict], str]:
+    """SPY over the same days, REBASED to the sleeve's starting capital.
+
+    Standing rule in this codebase: never show a return without the index
+    beside it. Rebased rather than raw so the two lines share an axis and the
+    gap between them IS the out- or under-performance."""
+    if len(curve) < 2 or cap <= 0:
+        return [], "SPY appears once the sleeve has two days of history."
+    try:
+        from . import market_data
+        md = market_data.get_price_data("SPY")
+        if md.source != "live" or md.history is None or md.history.empty:
+            return [], "SPY unavailable — the comparison is not being faked."
+        closes = {ts.strftime("%Y-%m-%d"): float(c)
+                  for ts, c in zip(md.history.index, md.history["Close"])}
+    except Exception as exc:
+        print(f"[sleeve] benchmark failed: {exc!r}")
+        return [], "SPY unavailable — the comparison is not being faked."
+
+    base = None
+    out: list[dict] = []
+    for row in curve:
+        spy = closes.get(row["day"])
+        if spy is None:
+            continue
+        if base is None:
+            base = spy
+        out.append({"day": row["day"], "equity": round(cap * spy / base, 2)})
+    if len(out) < 2:
+        return [], "Not enough overlapping SPY days yet."
+    first, last = curve[0]["equity"], curve[-1]["equity"]
+    you = (last / first - 1) * 100 if first else 0.0
+    idx = (out[-1]["equity"] / out[0]["equity"] - 1) * 100
+    verb = "ahead of" if you >= idx else "behind"
+    return out, (f"SPY {idx:+.1f}% over the same days · sleeve {you:+.1f}% · "
+                 f"{verb} the index by {abs(you - idx):.1f} points")
+
+
 # ---------------------------------------------------------------- heartbeat
+def _after_open(now: datetime | None = None) -> bool:
+    """Daily-bar engines need the session's first prints; before 09:35 ET the
+    last daily bar is still yesterday's and the screen would repeat itself."""
+    now = now or _et_now()
+    return now.hour * 60 + now.minute >= 9 * 60 + 35
+
+
+def footprint_rows(cfg: dict, limit: int = 4) -> list[dict]:
+    """The loudest accumulation names, with the level each one has to break.
+
+    The trigger is the last COMPLETED session's high — during the day that is
+    yesterday's bar, and the check is by date rather than by position so an
+    intraday partial bar can never become its own trigger."""
+    from . import accumulation, market_data
+    rows = [r for r in (accumulation.get().get("results") or []) if r.get("loud")]
+    out: list[dict] = []
+    for r in rows[:limit * 3]:
+        if len(out) >= limit:
+            break
+        try:
+            md = market_data.get_price_data(r["symbol"])
+            if md.source != "live" or md.history is None or len(md.history) < 2:
+                continue
+            hist = md.history
+            last_day = hist.index[-1].strftime("%Y-%m-%d")
+            bar = hist.iloc[-2] if last_day == _today() else hist.iloc[-1]
+            trigger = float(bar["High"])
+            price = float(hist["Close"].iloc[-1])
+            if trigger <= 0 or price <= 0:
+                continue
+            out.append({**r, "price": price, "trigger_above": round(trigger, 4)})
+        except Exception as exc:
+            print(f"[sleeve] footprint level for {r.get('symbol')}: {exc!r}")
+    return out
+
+
 def issue_window(now: datetime | None = None) -> bool:
     """Weekdays 7:00-16:00 ET: pre-market gappers through the closing bell."""
     now = now or _et_now()
@@ -637,23 +866,38 @@ def maybe_run(force: bool = False) -> dict | None:
         # New tickets only pre-market through the close. After-hours prints
         # are thin and the relative-volume tell is unmeasured there; a name
         # still igniting at 7:00 tomorrow gets its ticket then, with runway.
+        today = _today()
         issued: list[dict] = []
         if force or issue_window():
+            # Ignition is intraday and re-scanned every pass; the daily-bar
+            # engines run once a session, after the open has printed.
             try:
                 from . import runner
                 movers = runner.igniting_movers(limit=6)
-                issued = from_ignition(movers, book=book, push_it=True)
+                issued += from_ignition(movers, book=book, push_it=True)
             except Exception as exc:
                 print(f"[sleeve] ignition scan failed: {exc!r}")
 
-        open_syms = [t["symbol"] for t in book["tickets"] if t.get("status") == "live"]
+            if book.get("daily_scan") != today and (force or _after_open()):
+                book["daily_scan"] = today
+                try:
+                    from . import pullback
+                    issued += from_pullback(pullback.scan(cfg=cfg), book=book, push_it=True)
+                except Exception as exc:
+                    print(f"[sleeve] pullback scan failed: {exc!r}")
+                try:
+                    issued += from_footprint(footprint_rows(cfg), book=book)
+                except Exception as exc:
+                    print(f"[sleeve] footprint scan failed: {exc!r}")
+
         events: list[dict] = []
-        if open_syms:
-            quotes = _live_quotes(open_syms)
-            events = manage(book, quotes, cfg)
+        watch_syms = [t["symbol"] for t in book["tickets"] if t.get("status") == "watching"]
+        open_syms = [t["symbol"] for t in book["tickets"] if t.get("status") == "live"]
+        if open_syms or watch_syms:
+            quotes = _live_quotes(sorted(set(open_syms + watch_syms)))
+            events = check_triggers(book, quotes, cfg) + manage(book, quotes, cfg)
             _push_events(events)
 
-        today = _today()
         hist = book.setdefault("equity_history", [])
         if not hist or hist[-1]["day"] != today:
             try:

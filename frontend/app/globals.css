@@ -2341,3 +2341,6 @@ main.page { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
 .cfg-grid label span { font-family: var(--mono, "IBM Plex Mono", monospace); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; }
 .cfg-grid input { padding: 8px 10px; font-family: var(--mono, "IBM Plex Mono", monospace); font-size: 14px; background: var(--bg-elev); color: var(--text); border: 1px solid var(--border); }
 @media (max-width: 720px) { .cfg-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.bl-row.watching { border-left-color: var(--muted); }
+.bl-state.watching { background: var(--muted); }
+.bl-bench { color: var(--text); font-weight: 500; }

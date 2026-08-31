@@ -250,3 +250,102 @@ def test_tickets_issue_pre_market_through_the_close_only():
     assert sleeve.issue_window(datetime(2026, 8, 31, 15, 59, tzinfo=et))
     assert not sleeve.issue_window(datetime(2026, 8, 31, 17, 30, tzinfo=et))  # after hours
     assert not sleeve.issue_window(datetime(2026, 8, 29, 10, 0, tzinfo=et))   # Saturday
+
+
+# ------------------------------------------------------- conditional watches
+def _accum_row(sym="SY", price=2.90, trigger=3.10, ratio=37.0, beaten=True):
+    return {"symbol": sym, "price": price, "trigger_above": trigger,
+            "vol_ratio": ratio, "beaten_down": beaten, "drift_20d": -16.0,
+            "avg_dollar_vol": 1_100_000, "loud": True}
+
+
+def test_a_footprint_name_is_a_watch_not_an_order(book, _quiet):
+    issued = sleeve.from_footprint([_accum_row()], book=book, eq=1500)
+    assert len(issued) == 1
+    t = issued[0]
+    assert t["status"] == "watching"
+    assert t["trigger_above"] == 3.10
+    assert t["engine"] == "footprint"
+    assert _quiet == []                    # a watch is not news
+    assert any("No break, no trade" in w for w in t["why"])
+
+
+def test_a_trigger_already_behind_us_is_not_a_trigger(book):
+    # Price has already run through yesterday's high — the level says nothing.
+    assert sleeve.from_footprint([_accum_row(price=3.50, trigger=3.10)],
+                                 book=book, eq=1500) == []
+
+
+def test_a_watch_arms_and_pushes_only_when_the_level_trades(book, _quiet):
+    t = sleeve.from_footprint([_accum_row()], book=book, eq=1500)[0]
+    planned = t["entry"] - t["stop"]
+
+    quiet_day = sleeve.check_triggers(book, {"SY": {"price": 3.00, "source": "live"}}, CFG, eq=1500)
+    assert quiet_day == [] and t["status"] == "watching" and _quiet == []
+
+    fired = sleeve.check_triggers(book, {"SY": {"price": 3.24, "source": "live"}}, CFG, eq=1500)
+    sleeve._push_events(fired)
+    assert [e["kind"] for e in fired] == ["triggered"]
+    assert t["status"] == "armed"
+    assert t["entry"] == 3.24                       # a gap through is not a fill at the level
+    assert t["stop"] == pytest.approx(3.24 - planned, abs=0.001)
+    assert t["shares"] > 0 and t["risk_usd"] <= 75.01
+    assert len(_quiet) == 1 and _quiet[0]["title"].startswith("BUY SY")
+
+
+def test_a_watch_that_never_breaks_expires_quietly(book, _quiet):
+    t = sleeve.from_footprint([_accum_row()], book=book, eq=1500)[0]
+    t["expires"] = time.time() - 1
+    assert sleeve.expire(book) == ["SY"]
+    assert t["status"] == "expired" and _quiet == []
+
+
+def test_a_watch_blocks_a_second_ticket_on_the_same_name(book):
+    sleeve.from_footprint([_accum_row()], book=book, eq=1500)
+    assert sleeve.issue("SY", "ignition", 3.0, 2.5, book=book, eq=1500) is None
+
+
+def test_mock_quotes_never_trigger_a_watch(book):
+    t = sleeve.from_footprint([_accum_row()], book=book, eq=1500)[0]
+    assert sleeve.check_triggers(book, {"SY": {"price": 9.9, "source": "mock"}}, CFG, eq=1500) == []
+    assert t["status"] == "watching"
+
+
+def test_a_swing_that_stalls_for_twenty_sessions_is_recycled(book):
+    t = _live(book, sym="SWG", fill=100.0, stop=90.0)
+    t["engine"] = "pullback"
+    seen: list[dict] = []
+    for i in range(22):
+        day = f"2026-09-{i + 1:02d}"
+        seen += sleeve.manage(book, {"SWG": {"price": 101.0, "source": "live"}}, CFG, today=day)
+    # Exactly one exit, raised once, at the hold limit — not every pass after it.
+    assert [e["reason"] for e in seen] == ["time"]
+    assert t["status"] == "exit"
+    assert t["sessions_held"] == CFG["pullback_max_hold_sessions"]
+
+
+# ------------------------------------------------------------- benchmark
+def test_the_curve_never_reports_a_return_without_the_index(monkeypatch):
+    curve = [{"day": "2026-08-03", "equity": 1000.0}, {"day": "2026-08-04", "equity": 1100.0}]
+
+    class _MD:
+        source = "live"
+        history = None
+
+    import pandas as pd
+    idx = pd.to_datetime(["2026-08-03", "2026-08-04"])
+    _MD.history = pd.DataFrame({"Close": [500.0, 505.0]}, index=idx)
+    monkeypatch.setattr("app.services.market_data.get_price_data", lambda s: _MD())
+
+    bench, note = sleeve._benchmark(curve, 1000.0)
+    assert [b["equity"] for b in bench] == [1000.0, 1010.0]   # rebased to the sleeve
+    assert "SPY +1.0%" in note and "ahead of" in note
+
+
+def test_a_failed_benchmark_fetch_says_so_instead_of_faking_it(monkeypatch):
+    def _boom(_):
+        raise RuntimeError("no network")
+    monkeypatch.setattr("app.services.market_data.get_price_data", _boom)
+    bench, note = sleeve._benchmark(
+        [{"day": "2026-08-03", "equity": 1000.0}, {"day": "2026-08-04", "equity": 1100.0}], 1000.0)
+    assert bench == [] and "not being faked" in note

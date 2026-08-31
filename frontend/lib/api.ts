@@ -977,7 +977,7 @@ export interface OptionsIdea {
 }
 
 /** A trading-sleeve ticket: one idea with a lifecycle. */
-export type TicketStatus = "armed" | "live" | "exit" | "closed" | "passed" | "expired";
+export type TicketStatus = "watching" | "armed" | "live" | "exit" | "closed" | "passed" | "expired";
 export interface Ticket {
   id: string;
   symbol: string;
@@ -987,6 +987,8 @@ export interface Ticket {
   created: string;
   ts: number;
   expires: number;
+  /** Set on a conditional watch: the level that has to trade before it arms. */
+  trigger_above: number | null;
   entry: number;
   stop: number;
   target: number;
@@ -1023,6 +1025,10 @@ export interface SleeveConfig {
   ignition_stop_pct: number;
   ignition_max_pct: number;
   ignition_time_stop_sessions: number;
+  pullback_atr_stop: number;
+  pullback_max_hold_sessions: number;
+  footprint_watch_sessions: number;
+  footprint_stop_pct: number;
   trail_pct: number;
   target_r: number;
 }
@@ -1043,6 +1049,9 @@ export interface SleeveState {
   tickets: Ticket[];
   scorecard: Record<string, EngineScore>;
   equity_history: { day: string; equity: number }[];
+  /** SPY over the same days, rebased to the sleeve's capital. */
+  benchmark: { day: string; equity: number }[];
+  benchmark_note: string;
 }
 
 export const api = {
