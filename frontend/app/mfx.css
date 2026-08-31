@@ -26,9 +26,12 @@
   font-size: 10.5px; letter-spacing: 0.11em; text-transform: uppercase;
   color: var(--muted); display: flex; align-items: center; gap: 8px; margin-bottom: 10px;
 }
+/* The balance. The one number on the page set in the display face, and the
+   reason the display face is here at all. */
 .mfx-head .val {
-  font-size: clamp(40px, 6vw, 58px); line-height: 0.95;
-  font-variant-numeric: tabular-nums; margin-bottom: 12px; color: var(--text);
+  font-size: clamp(46px, 6.6vw, 68px); line-height: 0.98;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums; margin-bottom: 14px; color: var(--text);
 }
 .mfx-head .deltas { display: flex; flex-wrap: wrap; gap: 8px; }
 .mfx-chip {

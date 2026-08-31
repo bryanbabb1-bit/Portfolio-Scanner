@@ -32,7 +32,6 @@ import { ActionJournal } from "../components/ActionJournal";
 import { BalanceBar } from "../components/BalanceBar";
 import { StockCard } from "../components/StockCard";
 import { SortControl, SortKey, sortReports } from "../components/SortControl";
-import { RoomTemperature } from "../components/RoomTemperature";
 import { Bell } from "../components/Bell";
 import { TelemetryStrip } from "../components/blueprint";
 import { money } from "../components/format";
@@ -160,7 +159,6 @@ export default function Dashboard() {
 
   return (
     <>
-      <RoomTemperature dayPct={summary.day_change_pct} />
       <Bell summary={summary} holdings={holdings} force={forceBell} />
       <SignalSlap signals={signals} onDismissed={markDismissed} focusId={focusSlap} />
 

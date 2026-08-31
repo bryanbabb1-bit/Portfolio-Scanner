@@ -82,7 +82,7 @@ export default function BookPage() {
   if (err)
     return (
       <>
-        <DisplayHead line1="THE" line2="BOOK" tone="hot" />
+        <DisplayHead line1="The" line2="Book" tone="hot" />
         <div className="err">Could not load the book: {err}</div>
       </>
     );
@@ -98,7 +98,7 @@ export default function BookPage() {
 
   return (
     <>
-      <DisplayHead line1="THE" line2="BOOK" tone="hot" />
+      <DisplayHead line1="The" line2="Book" tone="hot" />
       <p className="dh-sub">
         {b.thesis?.name} · opened {b.started} · $1,000 start · equities only
       </p>

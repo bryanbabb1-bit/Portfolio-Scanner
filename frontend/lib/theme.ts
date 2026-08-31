@@ -46,7 +46,7 @@ export function applyTheme(theme: Theme) {
   // Keep the mobile browser chrome in step, or the notch band stays paper
   // while the page goes black.
   const meta = document.querySelector('meta[name="theme-color"]');
-  if (meta) meta.setAttribute("content", theme === "night" ? "#0B0B09" : "#F2EEE4");
+  if (meta) meta.setAttribute("content", theme === "night" ? "#0F1216" : "#EEEDE8");
 }
 
 /* The same resolution, inlined into <head> so it runs BEFORE first paint.
@@ -60,5 +60,5 @@ if(o==="day"||o==="night"){p=t=o;}
 else if(p==="auto"){var q={};new Intl.DateTimeFormat("en-US",{timeZone:"America/New_York",hour:"numeric",minute:"numeric",weekday:"short",hour12:false}).formatToParts(new Date()).forEach(function(x){q[x.type]=x.value});
 var m=(+q.hour%24)*60+ +q.minute;t=(["Mon","Tue","Wed","Thu","Fri"].indexOf(q.weekday)>=0&&m>=570&&m<960)?"day":"night";}
 if(t==="night"){document.documentElement.setAttribute("data-theme","night");
-var m=document.querySelector('meta[name="theme-color"]');if(m){m.setAttribute("content","#0B0B09");}}
+var m=document.querySelector('meta[name="theme-color"]');if(m){m.setAttribute("content","#0F1216");}}
 }catch(e){}})();`;

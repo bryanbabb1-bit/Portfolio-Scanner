@@ -1,7 +1,9 @@
 import type { ReactNode } from "react";
 
-/* The big condensed poster head: two lines, the second in olive or orange,
-   a short orange rule underneath, then a mono subtitle. */
+/* The page head: two lines set in the display serif, the second coloured, a
+   short brass rule underneath, then a mono subtitle. It was a condensed
+   poster head under the blueprint skin; the type changed, the structure did
+   not. */
 export function DisplayHead({
   line1,
   line2,
@@ -11,7 +13,7 @@ export function DisplayHead({
   line1: string;
   /** second line, coloured */
   line2?: string;
-  /** "alt" = olive, "hot" = orange */
+  /** "alt" = navy, "hot" = brass */
   tone?: "alt" | "hot";
   sub?: ReactNode;
 }) {

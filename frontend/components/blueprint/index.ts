@@ -1,4 +1,4 @@
-export { BlueprintBackground } from "./BlueprintBackground";
+export { DeskBackground } from "./BlueprintBackground";
 export { DisplayHead } from "./DisplayHead";
 export { SheetRule } from "./SheetRule";
 export { SpecEmpty, SpecStatus } from "./SpecStatus";

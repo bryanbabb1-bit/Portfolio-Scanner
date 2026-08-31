@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { PortfolioSummary } from "../lib/api";
-import { Odometer } from "./Odometer";
 import { money, pct } from "./format";
 
 /* The balance, and nothing else, at the top of the sheet.
@@ -46,9 +45,9 @@ export function BalanceBar({ summary }: { summary: PortfolioSummary }) {
           <div className="eyebrow">
             <span className="pulse" /> Book · {summary.positions} positions · {summary.source} data
           </div>
-          <div className="val">
-            <Odometer value={summary.total_market_value} prefix="$" />
-          </div>
+          {/* Set, not animated. The odometer rolled every digit on a 60s poll,
+              which drew the eye to the cents and away from the number. */}
+          <div className="val">{money(summary.total_market_value, 2)}</div>
           <div className="deltas">
             <span className={`mfx-chip ${dayCls}`}>
               <span className="k">Today</span>

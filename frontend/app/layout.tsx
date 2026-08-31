@@ -1,20 +1,35 @@
 import "./globals.css";
 import type { Metadata, Viewport } from "next";
-import { Anton, DM_Sans, IBM_Plex_Mono } from "next/font/google";
+import { Cormorant_Garamond, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import { AdvisorDock } from "../components/AdvisorDock";
 import { Nav } from "../components/Nav";
-import { BlueprintBackground } from "../components/blueprint/BlueprintBackground";
+import { DeskBackground } from "../components/blueprint/BlueprintBackground";
 import { PwaRegister } from "../components/PwaRegister";
 import { TickerTape } from "../components/TickerTape";
 import { THEME_BOOT_SCRIPT } from "../lib/theme";
 
 // All self-hosted at build time — no external font requests at runtime, so the
 // PWA and tunnel keep working offline.
-// DM Sans   = body prose
-// Anton     = heavy condensed display heads (the poster type)
-// Plex Mono = every spec label, data readout and telemetry strip
-const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-dm" });
-const anton = Anton({ subsets: ["latin"], weight: "400", variable: "--font-display" });
+//
+// Cormorant = the display face, and it is doing one job: giving the two or
+//   three numbers that matter (the balance, sleeve equity, a result in R) the
+//   presence a printed research note gives them. It replaced Anton, whose
+//   condensed uppercase read as a poster — the right answer to the hedge-fund
+//   brief in July and the wrong room for a private desk.
+// Plex Sans = everything you actually read.
+// Plex Mono = every label, column and readout. Tabular figures throughout, so
+//   digits line up down a column and a changing price does not shuffle.
+const plexSans = IBM_Plex_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-dm",
+});
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-display",
+});
 const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
@@ -38,7 +53,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#F2EEE4",
+  themeColor: "#EEEDE8",
   width: "device-width",
   initialScale: 1,
   // Lock zoom so the app can't pinch/double-tap-zoom like a webpage — it
@@ -56,7 +71,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${dmSans.variable} ${anton.variable} ${plexMono.variable}`}
+      className={`${plexSans.variable} ${cormorant.variable} ${plexMono.variable}`}
       suppressHydrationWarning
     >
       <head>
@@ -64,7 +79,7 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: THEME_BOOT_SCRIPT }} />
       </head>
       <body>
-        <BlueprintBackground />
+        <DeskBackground />
         <PwaRegister />
         <Nav />
         <TickerTape />

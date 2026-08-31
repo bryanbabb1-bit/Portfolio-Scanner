@@ -30,25 +30,25 @@ export type RGB = { r: number; g: number; b: number };
 
 const rgb = (r: number, g: number, b: number): RGB => ({ r, g, b });
 
-/** The paper theme, literal. Also the SSR fallback for every lookup below. */
+/** The bone room, literal. Also the SSR fallback for every lookup below. */
 export const BLUEPRINT: Palette = {
-  paper: "#F2EEE4",
-  card: "#FAF7F0",
-  sunk: "#E9E3D5",
-  ink: "#14140F",
-  muted: "#6B6558",
-  rule: "rgba(20, 20, 15, 0.34)",
-  hairline: "rgba(20, 20, 15, 0.12)",
-  grid: "rgba(20, 20, 15, 0.10)",
-  accent: "#C4551F", // orange
-  olive: "#3D4A2A", // system / positive
-  bull: "#3D4A2A",
-  bear: "#B3341C",
-  gold: "#8A6D1F",
-  onDark: "#FAF7F0",
-  heatFlat: rgb(110, 106, 96),
-  heatUp: rgb(38, 105, 55),
-  heatDown: rgb(178, 46, 28),
+  paper: "#EEEDE8",
+  card: "#F7F6F2",
+  sunk: "#E4E2DB",
+  ink: "#11161C",
+  muted: "#6E7680",
+  rule: "rgba(17, 22, 28, 0.22)",
+  hairline: "rgba(17, 22, 28, 0.09)",
+  grid: "rgba(17, 22, 28, 0.09)",
+  accent: "#8F7327", // brass
+  olive: "#1B2A41", // navy — structural
+  bull: "#2E6A4E",
+  bear: "#9E3A2C",
+  gold: "#8A6A12",
+  onDark: "#F7F6F2",
+  heatFlat: rgb(110, 118, 128),
+  heatUp: rgb(46, 106, 78),
+  heatDown: rgb(158, 58, 44),
   isNight: false,
 };
 

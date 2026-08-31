@@ -1,177 +1,106 @@
+/* =====================================================================
+   PRIVATE DESK — the floor of a private bank, not a drafting table.
+
+   Two rooms, one language. By day the desk is BONE: a warm neutral paper
+   with graphite ink, the colour of a printed research note. After the close
+   it is GRAPHITE: near-black, warm chalk type, the same numbers under a lamp.
+   Brass is the only accent in either room and it is reserved for the thing
+   that wants your hand — a ticket awaiting a decision, the primary button.
+   Green and red are semantic and never decorative.
+
+   Every value here is a token. Nothing below this block hardcodes a colour,
+   which is why the whole app changes room without either theme knowing the
+   other exists.
+   ===================================================================== */
 :root {
-  /* ---------------------------------------------------------------------
-     BLUEPRINT theme — technical drawing on warm paper.
-     Near-black ink, dark olive (positive / system), orange (accent / alert),
-     monospace spec labels, hairline rules. Replaces the dark slate + blue
-     "modern finance" palette; every dark-specific value below was converted,
-     so there are no rgba(255,255,255,a) surfaces left (invisible on paper).
-     --------------------------------------------------------------------- */
-  --bg: #F2EEE4;             /* warm paper */
-  --bg-elev: #E9E3D5;        /* sunken: inputs, tracks, wells */
-  --bg-card: #FAF7F0;        /* raised: cards, panels */
-  --surface-sunk: rgba(20, 20, 15, 0.045);
-  --surface-hover: rgba(196, 85, 31, 0.07);
-  --border: rgba(20, 20, 15, 0.16);
-  --border-lit: rgba(196, 85, 31, 0.55);
-  --rule: rgba(20, 20, 15, 0.34);      /* hairlines, spec frames, corner ticks */
-  --hairline: rgba(20, 20, 15, 0.10);  /* row separators */
-  --text: #14140F;           /* ink */
-  --muted: #6B6558;
-  --accent: #C4551F;         /* orange — interactive, attention */
-  --accent-2: #3D4A2A;       /* olive — system, confirmed */
-  --accent-dim: rgba(196, 85, 31, 0.12);
-  --bull: #3D4A2A;           /* olive green */
-  --bull-bg: rgba(61, 74, 42, 0.12);
-  --bear: #B3341C;           /* rust */
-  --bear-bg: rgba(179, 52, 28, 0.10);
-  --neutral: #8A8375;
-  --gold: #8A6D1F;           /* dark amber — warning (readable on paper) */
-  --gold-bg: rgba(138, 109, 31, 0.13);
-  --on-dark: #FAF7F0;        /* text sitting on an inked chip */
+  --bg: #EEEDE8;             /* bone */
+  --bg-elev: #E4E2DB;        /* sunken: inputs, tracks, wells */
+  --bg-card: #F7F6F2;        /* raised: cards, panels */
+  --surface-sunk: rgba(17, 22, 28, 0.045);
+  --surface-hover: rgba(143, 115, 39, 0.08);
+  --border: rgba(17, 22, 28, 0.16);
+  --border-lit: rgba(143, 115, 39, 0.55);
+  --rule: rgba(17, 22, 28, 0.22);
+  --hairline: rgba(17, 22, 28, 0.09);
+  --text: #11161C;           /* graphite ink */
+  --muted: #6E7680;
+  --accent: #8F7327;         /* brass */
+  --accent-2: #1B2A41;       /* navy — structural, never an alert */
+  --accent-dim: rgba(143, 115, 39, 0.12);
+  --bull: #2E6A4E;           /* bottle green */
+  --bull-bg: rgba(46, 106, 78, 0.11);
+  --bear: #9E3A2C;           /* oxblood */
+  --bear-bg: rgba(158, 58, 44, 0.10);
+  --neutral: #8A8B86;
+  --gold: #8A6A12;           /* warning */
+  --gold-bg: rgba(138, 106, 18, 0.13);
+  --on-dark: #F7F6F2;        /* type sitting on a filled chip */
   --glow: none;
   --tab-nums: "tnum" 1, "lnum" 1;
-  /* Ambient mood. RoomTemperature sets both from today's P/L; these are the
-     inert defaults for any page that doesn't mount it. */
+  /* Kept so any panel still reading them resolves to something inert — the
+     room-temperature wash was retired with the blueprint skin. */
   --mood-rgb: 110, 106, 96;
   --mood-alpha: 0;
 
-  /* Chart surfaces. Declared as tokens so the canvas and inline-SVG views can
-     read the live theme instead of holding their own hardcoded copies —
-     lib/palette.ts resolves these at runtime. */
-  --chart-grid: rgba(20, 20, 15, 0.10);
-  --chart-hairline: rgba(20, 20, 15, 0.12);
-  /* Frosted nav — the ground colour with alpha, so it can't be `var(--bg)`. */
-  --bg-blur: rgba(242, 238, 228, 0.88);
-  --grid-dot: rgba(20, 20, 15, 0.13);
-  /* The poster's hard offset shadow. Carried as a triplet so each rule keeps
-     its own alpha; at night it goes pure black, which still reads because the
-     cards sit LIGHTER than the ground. */
-  --shadow-rgb: 20, 20, 15;
-  /* The foreground as a triplet, for the few places that need it at an
-     arbitrary alpha rather than one of the fixed surface tokens. */
-  --ink-rgb: 20, 20, 15;
-  --chart-label: #FAF7F0;      /* text ON a filled tile, both themes */
-  --heat-flat: 110, 106, 96;
-  --heat-up: 38, 105, 55;
-  --heat-down: 178, 46, 28;
+  --chart-grid: rgba(17, 22, 28, 0.09);
+  --chart-hairline: rgba(17, 22, 28, 0.12);
+  --bg-blur: rgba(238, 237, 232, 0.90);
+  --grid-dot: rgba(17, 22, 28, 0.10);
+  --shadow-rgb: 17, 22, 28;
+  --ink-rgb: 17, 22, 28;
+  --chart-label: #F7F6F2;
+  --heat-flat: 110, 118, 128;
+  --heat-up: 46, 106, 78;
+  --heat-down: 158, 58, 44;
 }
 
-/* =====================================================================
-   AFTER HOURS — the same app with the lights off.
-
-   Paper by day, amber phosphor by night. This is a full second palette,
-   not a filter: every token is redeclared so nothing has to know which
-   theme it is in. Two rules make it work —
-
-   1. --on-dark INVERTS. It means "text sitting on a filled chip", so on
-      paper it is paper and at night it is the void. Every solid badge,
-      button and stamp follows automatically.
-   2. Semantic colours LIFT. The paper olive (#3D4A2A) and rust vanish on
-      a dark ground, so night uses brighter siblings at the same hue.
-   ===================================================================== */
+/* AFTER THE CLOSE — the same desk under a lamp. A full second palette, not a
+   filter: every token is redeclared so no component knows which room it is
+   in. Two rules make it hold: --on-dark INVERTS (it means "type on a filled
+   chip"), and the semantic colours LIFT to brighter siblings at the same hue,
+   because bottle green and oxblood disappear on a dark ground. */
 :root[data-theme="night"] {
-  --bg: #0B0B09;               /* warm near-black, never pure */
-  --bg-elev: #131311;
-  --bg-card: #121210;
-  --surface-sunk: rgba(232, 226, 210, 0.05);
-  --surface-hover: rgba(232, 163, 61, 0.10);
-  --border: rgba(232, 226, 210, 0.16);
-  --border-lit: rgba(232, 163, 61, 0.55);
-  --rule: rgba(232, 226, 210, 0.26);
-  --hairline: rgba(232, 226, 210, 0.10);
-  --text: #E8E2D4;             /* warm chalk, not white */
-  --muted: #8B857A;
-  --accent: #E8A33D;           /* the phosphor */
-  --accent-2: #7FA653;
-  --accent-dim: rgba(232, 163, 61, 0.14);
-  --bull: #7FA653;
-  --bull-bg: rgba(127, 166, 83, 0.14);
-  --bear: #E0705A;
-  --bear-bg: rgba(224, 112, 90, 0.14);
-  --neutral: #8B857A;
-  --gold: #D6A62F;
-  --gold-bg: rgba(214, 166, 47, 0.15);
-  --on-dark: #0B0B09;
+  --bg: #0F1216;
+  --bg-elev: #1C222A;
+  --bg-card: #151A20;
+  --surface-sunk: rgba(230, 227, 218, 0.05);
+  --surface-hover: rgba(201, 166, 90, 0.10);
+  --border: rgba(230, 227, 218, 0.15);
+  --border-lit: rgba(201, 166, 90, 0.55);
+  --rule: rgba(230, 227, 218, 0.20);
+  --hairline: rgba(230, 227, 218, 0.09);
+  --text: #E6E3DA;           /* warm chalk, never white */
+  --muted: #7F8892;
+  --accent: #C9A65A;         /* brass, lifted */
+  --accent-2: #8FA6C8;       /* navy, lifted */
+  --accent-dim: rgba(201, 166, 90, 0.13);
+  --bull: #6FAF8C;
+  --bull-bg: rgba(111, 175, 140, 0.13);
+  --bear: #D9776A;
+  --bear-bg: rgba(217, 119, 106, 0.13);
+  --neutral: #7F8892;
+  --gold: #D8B24A;
+  --gold-bg: rgba(216, 178, 74, 0.14);
+  --on-dark: #0F1216;
 
-  --chart-grid: rgba(232, 226, 210, 0.10);
-  --chart-hairline: rgba(232, 226, 210, 0.13);
-  --bg-blur: rgba(11, 11, 9, 0.86);
-  --grid-dot: rgba(232, 226, 210, 0.09);
+  --chart-grid: rgba(230, 227, 218, 0.09);
+  --chart-hairline: rgba(230, 227, 218, 0.13);
+  --bg-blur: rgba(15, 18, 22, 0.88);
+  --grid-dot: rgba(230, 227, 218, 0.07);
   --shadow-rgb: 0, 0, 0;
-  --ink-rgb: 232, 226, 210;
-  --heat-flat: 122, 117, 105;
-  --heat-up: 74, 138, 84;
-  --heat-down: 196, 74, 54;
+  --ink-rgb: 230, 227, 218;
+  --heat-flat: 122, 130, 140;
+  --heat-up: 62, 122, 92;
+  --heat-down: 168, 68, 54;
 }
 
 /* The masthead crosshair and corner ticks are drawn in ink; at night they
    need to be drawn in light instead. */
 :root[data-theme="night"] .spec-panel > .ct { border-color: var(--text); }
 
-/* CRT scanlines. Deliberately faint — enough to read as a screen, not enough
-   to fight the type. Sits above the page but below every interactive layer. */
-:root[data-theme="night"] body::after {
-  content: ""; position: fixed; inset: 0; z-index: 900; pointer-events: none;
-  opacity: 0.35;
-  background: repeating-linear-gradient(
-    to bottom, rgba(0, 0, 0, 0) 0 2px, rgba(0, 0, 0, 0.20) 2px 3px);
-}
-@media (prefers-reduced-motion: reduce) {
-  :root[data-theme="night"] body::after { opacity: 0.22; }
-}
 
-/* ===================================================================== */
-/* PULSE — the always-on layer. Ambient, cheap, and deliberately close to
-   the threshold of perception: it should be felt, not noticed.           */
-/* ===================================================================== */
 
-/* Room temperature: a wash of today's P/L colour bled in from the top. */
-.room-wash {
-  position: fixed; inset: 0; z-index: -1; pointer-events: none;
-  background: radial-gradient(
-    1200px 620px at 50% -12%,
-    rgba(var(--mood-rgb), var(--mood-alpha)),
-    transparent 70%);
-  transition: background 2.4s ease;
-}
 
-/* Odometer: each digit is its own rolling column, so you see the mechanism. */
-/* One variable drives the cell height, the glyph box and the travel distance,
-   so they can't drift apart. Slightly over 1em because the display face very
-   nearly fills its em box — at exactly 1em the digits clip. */
-.odo {
-  --odo-h: 1.28em;
-  display: inline-flex; align-items: center;
-  font-variant-numeric: tabular-nums;
-}
-/* Separators are centred on the same box as the digits rather than sitting on
-   a text baseline, so "$", "," and "." line up with the rolling columns. */
-.odo-sep {
-  display: inline-grid; place-items: center;
-  height: var(--odo-h);
-}
-/* The cell is sized by a hidden real digit rather than a `ch` guess. `ch` is
-   the advance of "0", which is NOT the widest glyph in every face, and the
-   fraction that was here made the columns narrower than the digits so they
-   clipped into each other. Let the font decide. */
-.odo-d {
-  display: inline-grid; position: relative;
-  height: var(--odo-h); overflow: hidden; line-height: 1;
-}
-.odo-ghost { visibility: hidden; }
-.odo-strip {
-  display: block; position: absolute; top: 0; left: 0; right: 0;
-  transition: transform 1.05s cubic-bezier(.16, 1, .3, 1);
-  will-change: transform;
-}
-.odo-strip > span {
-  display: grid; place-items: center;
-  height: var(--odo-h); line-height: 1;
-}
-@media (prefers-reduced-motion: reduce) {
-  .odo-strip { transition: none; }
-  .room-wash { transition: none; }
-}
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -205,7 +134,8 @@ body {
   padding-right: env(safe-area-inset-right);
   background: var(--bg);
   color: var(--text);
-  font-family: var(--font-dm), "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: var(--font-dm), "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-variant-numeric: var(--tab-nums);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
@@ -222,23 +152,28 @@ body {
   font-family: var(--font-mono), ui-monospace, "IBM Plex Mono", SFMono-Regular, Menlo, monospace;
 }
 
-/* heavy condensed display heads */
+/* Display heads. Cormorant is a text serif at heart, so it wants size and a
+   little negative tracking rather than the uppercase weight Anton carried —
+   set it big, set it mixed-case, and let it be the only voice on the page
+   that is not mono. */
 .display-head, .page-head h1, .hero-value, .slap-sym, .mfx-head .val {
-  font-family: var(--font-display), var(--font-dm), Impact, "Arial Narrow Bold", sans-serif;
-  font-weight: 400;      /* Anton ships a single very heavy weight */
-  letter-spacing: 0.005em;
-  text-transform: uppercase;
+  font-family: var(--font-display), Georgia, "Times New Roman", serif;
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  text-transform: none;
+  font-variant-numeric: var(--tab-nums);
 }
 
 .display-head {
-  font-size: clamp(30px, 5vw, 52px);
-  line-height: 0.94;
+  font-size: clamp(34px, 5.4vw, 58px);
+  line-height: 1.0;
   color: var(--text);
+  text-wrap: balance;
 }
-.display-head .dh-alt { color: var(--accent-2); }   /* second line, olive */
-.display-head .dh-hot { color: var(--accent); }     /* second line, orange */
+.display-head .dh-alt { color: var(--accent-2); }   /* second line, navy */
+.display-head .dh-hot { color: var(--accent); }     /* second line, brass */
 .display-head + .dh-rule, .dh-rule {
-  width: 46px; height: 3px; background: var(--accent);
+  width: 54px; height: 2px; background: var(--accent);
   margin: 14px 0 10px;
 }
 .dh-sub {
@@ -248,16 +183,15 @@ body {
 }
 .dh-sub .hot { color: var(--accent); }
 
-/* graph-paper backdrop — replaces the old animated neural canvas */
-.blueprint-bg {
+/* The lamp. A single soft fall of light from the top of the page, drawn in the
+   foreground colour at very low alpha so it reads in both rooms without either
+   one needing its own rule. */
+.desk-bg {
   position: fixed; inset: 0; width: 100%; height: 100%;
   z-index: -1; pointer-events: none;
-  background-image:
-    radial-gradient(circle at 1px 1px, var(--grid-dot) 1px, transparent 0);
-  background-size: 24px 24px;
-  opacity: 0.75;
-  -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, #000 35%, transparent 78%);
-  mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, #000 35%, transparent 78%);
+  background:
+    radial-gradient(1100px 520px at 50% -8%,
+      rgba(var(--ink-rgb), 0.055), transparent 72%);
 }
 
 /* spec panel — bordered card with drawn corner ticks and a mono caption */
@@ -694,13 +628,13 @@ a { color: inherit; text-decoration: none; }
 }
 .nav-inner { display: flex; align-items: center; gap: 24px; height: 62px; }
 .brand {
-  font-family: var(--font-display), var(--font-dm), Impact, sans-serif;
-  font-weight: 400; font-size: 20px; letter-spacing: 0.02em; text-transform: uppercase;
-  display: flex; align-items: center; gap: 9px; color: var(--text);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-weight: 600; font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase;
+  display: flex; align-items: center; gap: 10px; color: var(--text);
 }
 .brand::before {
-  content: ""; width: 11px; height: 11px;
-  border: 2px solid var(--accent);
+  content: ""; width: 9px; height: 9px; border-radius: 50%;
+  background: var(--accent);
 }
 .brand span { color: var(--accent-2); }
 .nav-links { display: flex; gap: 4px; margin-left: 4px; }
@@ -814,7 +748,7 @@ a { color: inherit; text-decoration: none; }
 .page { padding: 26px 0 64px; }
 .page-head { margin-bottom: 22px; }
 .page-head h1 { font-size: clamp(28px, 4.4vw, 44px); line-height: 0.96; color: var(--text); }
-.page-head h1 span { font-family: var(--font-dm), sans-serif; text-transform: none; }
+.page-head h1 span { font-family: var(--font-dm), sans-serif; font-weight: 400; }
 .page-head p {
   font-family: var(--font-mono), ui-monospace, monospace;
   color: var(--muted); font-size: 12px; letter-spacing: 0.05em;
@@ -1684,7 +1618,7 @@ select { cursor: pointer; }
 .hm-tile rect { transition: opacity .15s; }
 .hm-tile:hover rect { opacity: 0.82; stroke: var(--text); stroke-width: 1.5; }
 .hm-sym { fill: var(--chart-label); font-weight: 800; letter-spacing: .03em; pointer-events: none; }
-.hm-pct { fill: rgba(250, 247, 240, 0.88); font-weight: 600; pointer-events: none; }
+.hm-pct { fill: rgba(230, 227, 218, 0.88); font-weight: 600; pointer-events: none; }
 
 /* ---------------------------------------------------------------- 404 */
 .nf-panel { max-width: 640px; margin: 24px auto; }
@@ -1743,9 +1677,10 @@ select { cursor: pointer; }
   animation: bell-word 2.9s cubic-bezier(.16, 1, .3, 1) both;
 }
 .bell-word .display {
-  font-family: var(--font-display), sans-serif; font-weight: 400;
-  font-size: clamp(56px, 15vw, 190px); text-transform: uppercase;
-  letter-spacing: .02em; color: var(--text); line-height: .9;
+  font-family: var(--font-display), Georgia, serif; font-weight: 600;
+  font-style: italic;
+  font-size: clamp(56px, 15vw, 190px);
+  letter-spacing: -.02em; color: var(--text); line-height: .9;
 }
 @keyframes bell-word {
   0% { opacity: 0; transform: scale(.84) }
@@ -1794,8 +1729,10 @@ select { cursor: pointer; }
   color: var(--muted);
 }
 .br-v {
-  font-family: var(--font-display), sans-serif; font-weight: 400;
+  font-family: var(--font-display), Georgia, serif; font-weight: 600;
+  font-style: italic;
   font-size: clamp(44px, 8vw, 84px); line-height: 1;
+  letter-spacing: -.015em;
   font-variant-numeric: var(--tab-nums);
 }
 .br-v.up { color: var(--bull); }
@@ -1853,8 +1790,8 @@ select { cursor: pointer; }
   color: var(--muted);
 }
 .ft-head {
-  font-family: var(--font-display), sans-serif; font-weight: 400;
-  font-size: 27px; letter-spacing: .02em; text-transform: uppercase;
+  font-family: var(--font-display), Georgia, serif; font-weight: 600;
+  font-size: 30px; letter-spacing: -.01em;
   margin-top: 3px;
 }
 .ft-lines { margin-top: 14px; }
@@ -1866,8 +1803,8 @@ select { cursor: pointer; }
 /* The stamp lands a beat after the ticket, like it was pressed by hand. */
 .ft-stamp {
   position: absolute; right: -12px; top: 52px;
-  font-family: var(--font-display), sans-serif; font-weight: 400;
-  font-size: 30px; letter-spacing: .06em; text-transform: uppercase;
+  font-family: var(--font-mono), ui-monospace, monospace; font-weight: 600;
+  font-size: 22px; letter-spacing: .14em; text-transform: uppercase;
   padding: 2px 12px; border: 3px solid currentColor;
   color: var(--bull);
   transform: rotate(-13deg) scale(2.4); opacity: 0;
@@ -1894,33 +1831,33 @@ select { cursor: pointer; }
   display: flex; justify-content: space-between; align-items: baseline; gap: 14px;
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 10px; letter-spacing: .16em; text-transform: uppercase;
-  color: rgba(250, 247, 240, 0.5);
-  border-bottom: 1px solid rgba(250, 247, 240, 0.16);
+  color: rgba(230, 227, 218, 0.5);
+  border-bottom: 1px solid rgba(230, 227, 218, 0.16);
   padding-bottom: 11px; margin-bottom: 12px;
 }
 .board-rows { display: flex; flex-direction: column; min-width: 520px; }
 .board-row {
   display: grid; grid-template-columns: auto auto 92px 62px 78px;
   gap: 16px; align-items: center; padding: 7px 0;
-  color: rgba(250, 247, 240, 0.92);
+  color: rgba(230, 227, 218, 0.92);
   font-variant-numeric: var(--tab-nums);
 }
-.board-row + .board-row { border-top: 1px solid rgba(250, 247, 240, 0.08); }
-.board-row:hover { background: rgba(250, 247, 240, 0.05); }
+.board-row + .board-row { border-top: 1px solid rgba(230, 227, 218, 0.08); }
+.board-row:hover { background: rgba(230, 227, 218, 0.05); }
 .board-chg, .board-wt, .board-pl {
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 12px; text-align: right;
 }
-.board-chg.up, .board-pl.up { color: #7FA653; }     /* lifted olive: the board
-   is an inked panel, so the paper-ground olive would disappear against it */
-.board-chg.down, .board-pl.down { color: #E0705A; }
-.board-wt { color: rgba(250, 247, 240, 0.42); }
+.board-chg.up, .board-pl.up { color: #6FAF8C; }     /* lifted green: the board is an
+   inked panel in both rooms, so the bone-ground bottle green would vanish */
+.board-chg.down, .board-pl.down { color: #D9776A; }
+.board-wt { color: rgba(230, 227, 218, 0.42); }
 
 /* the flaps themselves */
 .sf { display: inline-flex; gap: 2px; }
 .sf-cell {
   width: 20px; height: 27px; position: relative; border-radius: 2px;
-  background: #24241F; color: #FAF7F0;
+  background: #1C222A; color: #E6E3DA;
   display: inline-grid; place-items: center;
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 14px; font-weight: 600;
@@ -2031,8 +1968,9 @@ main.page { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
   color: var(--muted); margin-bottom: 4px;
 }
 .pos-value {
-  font-family: var(--font-display), Impact, sans-serif;
-  font-size: clamp(30px, 4.5vw, 44px); line-height: 1;
+  font-family: var(--font-display), Georgia, serif; font-weight: 600;
+  font-size: clamp(32px, 4.7vw, 48px); line-height: 1;
+  letter-spacing: -.012em;
   font-variant-numeric: var(--tab-nums);
 }
 .pos-pl { font-size: 14px; font-weight: 700; margin-top: 7px; }
