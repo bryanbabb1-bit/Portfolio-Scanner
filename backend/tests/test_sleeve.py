@@ -349,3 +349,25 @@ def test_a_failed_benchmark_fetch_says_so_instead_of_faking_it(monkeypatch):
     bench, note = sleeve._benchmark(
         [{"day": "2026-08-03", "equity": 1000.0}, {"day": "2026-08-04", "equity": 1100.0}], 1000.0)
     assert bench == [] and "not being faked" in note
+
+
+def test_changing_the_capital_re_sizes_what_is_not_yet_committed(book, monkeypatch):
+    """A watch and an unfilled order are instructions, not positions. If the
+    sleeve doubles, the blotter must not keep showing the old dollar figure —
+    it would disagree with what the engine would actually do at the trigger."""
+    monkeypatch.setattr(sleeve, "capital", lambda *a, **k: 2000.0)
+    watch = sleeve.from_footprint([_accum_row()], book=book, eq=1000)[0]
+    armed = _armed(book, sym="RUN", entry=10.0, stop=8.2)
+    live = _live(book, sym="HELD", fill=50.0, stop=45.0)
+    before = {"entry": watch["entry"], "stop": watch["stop"]}
+    live_size = live["shares"]
+
+    touched = sleeve.resize_open(book)
+
+    assert set(touched) == {"SY", "RUN"}
+    # Levels are what the setup said; only the size follows the money.
+    assert watch["entry"] == before["entry"] and watch["stop"] == before["stop"]
+    assert watch["risk_usd"] == pytest.approx(100, abs=0.5)     # 5% of 2000
+    assert armed["sleeve_equity"] == 2000.0
+    # A position already opened is NOT re-sized — those shares are real.
+    assert live["shares"] == live_size

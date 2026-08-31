@@ -156,8 +156,39 @@ def set_config(changes: dict) -> dict:
             elif k == "target_r":
                 cfg[k] = float(max(1.0, min(10.0, float(v))))
         book["config"] = cfg
+        # Re-size what has not been committed. A watch and an unfilled order
+        # are instructions, not positions, so leaving them sized against the
+        # OLD sleeve would put a number on screen that is not what would
+        # happen — the ticket re-sizes at the trigger anyway, and a blotter
+        # that disagrees with its own engine is worse than no blotter.
+        resized = resize_open(book, config(book))
         save(book)
+        if resized:
+            print(f"[sleeve] re-sized {resized} against the new capital")
         return config(book)
+
+
+def resize_open(book: dict, cfg: dict | None = None) -> list[str]:
+    """Re-price uncommitted tickets against current sleeve equity.
+
+    Levels are untouched: entry, stop and target are what the setup said. Only
+    the SIZE moves, because size is the one thing that depends on how much
+    money the sleeve has."""
+    cfg = cfg or config(book)
+    eq = equity(book)
+    touched: list[str] = []
+    for t in book["tickets"]:
+        if t.get("status") not in ("armed", "watching"):
+            continue
+        sz = size(float(t["entry"]), float(t["stop"]), eq, t["engine"], cfg)
+        if sz["shares"] <= 0 or sz["shares"] == t.get("shares"):
+            continue
+        t.update(shares=sz["shares"], notional=sz["notional"],
+                 risk_usd=sz["risk_usd"], r_unit=sz["r_unit"],
+                 sleeve_equity=round(eq, 2),
+                 target=round(float(t["entry"]) + float(cfg["target_r"]) * sz["r_unit"], 4))
+        touched.append(t["symbol"])
+    return touched
 
 
 def enabled() -> bool:
