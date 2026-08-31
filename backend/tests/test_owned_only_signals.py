@@ -53,9 +53,22 @@ def test_owned_only_skips_the_whole_market_scanners(monkeypatch, no_side_effects
 
 
 def test_disabling_it_restores_the_market_wide_scan(monkeypatch, no_side_effects):
+    from app.services import sleeve
+    monkeypatch.setattr(sleeve, "enabled", lambda: False)
     touched = _run_scan(monkeypatch, owned_only=False)
     assert touched["discovery"] == 1
     assert touched["runner"] == 1
+
+
+def test_the_sleeve_owns_runners_when_it_is_on(monkeypatch, no_side_effects):
+    """With the trading sleeve enabled the core scan never issues runner
+    warnings — the sleeve issues sized tickets with exits instead, and two
+    alerts for one name would be worse than either alone."""
+    from app.services import sleeve
+    monkeypatch.setattr(sleeve, "enabled", lambda: True)
+    touched = _run_scan(monkeypatch, owned_only=False)
+    assert touched["discovery"] == 1
+    assert touched["runner"] == 0
 
 
 def test_default_is_owned_only(monkeypatch, no_side_effects):

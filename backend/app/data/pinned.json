@@ -92,58 +92,55 @@
     "retired_reason": "position closed"
   },
   {
-    "id": "9d91e232fe5b",
+    "id": "1ba00ea0489d",
     "symbol": null,
     "source": "brief",
-    "text": "Sell $400 of CEG at market (when CEG closes below $228)",
+    "text": "Trim $200 of AAPL at market.",
     "points": [],
-    "status": "open",
+    "status": "done",
     "price_at_pin": null,
-    "created_at": "2026-08-04 07:08:05",
-    "ts": 1785845285.94227
+    "created_at": "2026-08-10 08:45:23",
+    "ts": 1786369523.8175442,
+    "done_at": "2026-08-10 08:45:31"
   },
   {
-    "id": "adb07251c707",
+    "id": "be321a3ad8bc",
     "symbol": null,
     "source": "brief",
-    "text": "Buy $150 of ETN on the pullback (when ETN pulls back near $360 after today's 8.2% jump)",
+    "text": "Buy $200 of ANET at market after AAPL cash settles.",
     "points": [],
-    "status": "open",
+    "status": "done",
     "price_at_pin": null,
-    "created_at": "2026-08-04 07:08:08",
-    "ts": 1785845288.1382334
+    "created_at": "2026-08-10 08:45:25",
+    "ts": 1786369525.3814194,
+    "done_at": "2026-08-10 08:45:29"
   },
   {
-    "id": "da369a53ddc8",
+    "id": "11f9d80fe5a1",
     "symbol": null,
     "source": "brief",
-    "text": "Buy $180 of BRK-B instead of GD (when BRK-B trades below $500)",
+    "text": "Trim another $100 of AAPL at $325. (when AAPL reaches $325)",
     "points": [],
-    "status": "open",
+    "status": "done",
     "price_at_pin": null,
-    "created_at": "2026-08-04 07:08:10",
-    "ts": 1785845290.6385992
+    "created_at": "2026-08-10 08:49:12",
+    "ts": 1786369752.3016999,
+    "done_at": "2026-08-17 08:45:45",
+    "retired_reason": "position closed"
   },
   {
-    "id": "b22e75d7b246",
-    "symbol": null,
-    "source": "brief",
-    "text": "Buy $180 of GD near $383.42 (when the NET proceeds settle and BRK-B is above $500)",
-    "points": [],
-    "status": "open",
-    "price_at_pin": null,
-    "created_at": "2026-08-04 07:08:11",
-    "ts": 1785845291.8113654
-  },
-  {
-    "id": "49202cbd2569",
-    "symbol": null,
-    "source": "brief",
-    "text": "Trim $180 of NET at market (when after NET reports on August 6 and the stock is higher)",
-    "points": [],
-    "status": "open",
-    "price_at_pin": null,
-    "created_at": "2026-08-04 07:08:13",
-    "ts": 1785845293.6499376
+    "id": "281d6fbbe6d4",
+    "symbol": "AVGO",
+    "source": "signal",
+    "text": "Buy more AVGO near $360, quality dip, thesis intact.",
+    "points": [
+      "$389",
+      "$340"
+    ],
+    "status": "done",
+    "price_at_pin": 361.95,
+    "created_at": "2026-08-19 08:56:16",
+    "ts": 1787147776.5099382,
+    "done_at": "2026-08-19 09:01:05"
   }
 ]

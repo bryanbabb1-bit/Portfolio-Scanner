@@ -1,19 +1,25 @@
 {
-  "type": "morning",
-  "date": "2026-08-05",
-  "generated_at": "2026-08-05 07:15:04",
+  "type": "eod",
+  "date": "2026-08-31",
+  "generated_at": "2026-08-31 15:00:30",
   "engine": "claude",
-  "headline": "LLY earnings today, CEG earnings tomorrow",
-  "summary": "Book is green across the board and cash is at zero, so today is about watching two earnings events, not making trades. LLY already jumped on its report — the rest of the book is quietly trending up with nothing at a trigger level.",
+  "headline": "Broad AI-power pullback hits the book; theses intact",
+  "summary": "Every holding fell in a market-wide data-center selloff, dragging the book down 2.37% to $10,938 — but this was noise, not a single business breaking. NVDA is still up 8.9% and CEG up 5.3%; nothing today changes what you own.",
   "watch": [
-    "LLY reports earnings today, already up 5.4% to $1,175.69 — hold, let it play out.",
-    "CEG reports earnings tomorrow — hold into it, no action needed today.",
-    "NVDA at $215.45, still climbing, up 6.1% overall — hold, do nothing.",
-    "AVGO at $416.14, near its recent high — hold, don't chase here.",
-    "GOOGL at $383.72, strong steady move — hold, let the winner run.",
-    "VRT at $270.31, quiet flat day — hold, no trigger hit.",
-    "Cash is $0 — no buying power today, nothing to add even on dips.",
-    "METC, HL, SOPH and others are jumping 5-10% — none are yours, ignore the noise."
+    "RZLV reports tomorrow: tiny position, hold — do nothing.",
+    "AVGO reports in 2 days: hold NVGO through it — no trim before earnings.",
+    "Hold NVDA at $221.28 — winner intact, do nothing.",
+    "VRT at $258.26 and CEG at $274.95 are your best add targets once cash frees up.",
+    "Optional: trim $150 of NVDA near $221 to fund a VRT add if it keeps falling.",
+    "NNE at $18.31 is speculative — keep it small, no adding down."
   ],
-  "recap": []
+  "recap": [
+    "Book fell 2.37% to $10,938 — a broad AI/power-infrastructure down day, not one bad name.",
+    "VRT -4.1% to $258.26 and NNE -4.8% to $18.31 were the hardest hit.",
+    "NVDA -2.9% to $221.28 but still up 8.9% overall; CEG -2.6% to $274.95, still up 5.3%.",
+    "AVGO barely moved (-0.2% to $370.73) with earnings in 2 days.",
+    "RZLV flat at $2.88, sitting at break-even, with earnings tomorrow.",
+    "Cash is $3 — no dry powder to buy this dip right now.",
+    "Today's big movers (TP, STDN, GPRK) are not your names — no action."
+  ]
 }

@@ -52,5 +52,617 @@
     "price": 214.53,
     "ts": 1785927604.3015628,
     "date": "2026-08-05"
+  },
+  {
+    "id": "NET:breakout-triggering:2026-08-07",
+    "symbol": "NET",
+    "side": "buy",
+    "rule": "breakout-triggering",
+    "price": 302.11,
+    "ts": 1786116067.413667,
+    "date": "2026-08-07"
+  },
+  {
+    "id": "NET:breakout-triggering:2026-08-10",
+    "symbol": "NET",
+    "side": "buy",
+    "rule": "breakout-triggering",
+    "price": 292.97,
+    "ts": 1786359611.4292004,
+    "date": "2026-08-10"
+  },
+  {
+    "id": "AVGO:oversold-at-support:2026-08-19",
+    "symbol": "AVGO",
+    "side": "buy",
+    "rule": "oversold-at-support",
+    "price": 360.42,
+    "ts": 1787147523.1932642,
+    "date": "2026-08-19"
+  },
+  {
+    "id": "TGT:breakout-triggering:2026-08-20",
+    "symbol": "TGT",
+    "side": "buy",
+    "rule": "breakout-triggering",
+    "price": 159.0,
+    "ts": 1787223610.1645765,
+    "date": "2026-08-20"
+  },
+  {
+    "id": "TGT:high-conviction-discovery:2026-08-20",
+    "symbol": "TGT",
+    "side": "buy",
+    "rule": "high-conviction-discovery",
+    "price": 159.0,
+    "ts": 1787223610.1645765,
+    "date": "2026-08-20"
+  },
+  {
+    "id": "VOO:high-conviction-discovery:2026-08-20",
+    "symbol": "VOO",
+    "side": "buy",
+    "rule": "high-conviction-discovery",
+    "price": 706.91,
+    "ts": 1787223610.1645765,
+    "date": "2026-08-20"
+  },
+  {
+    "id": "SHEL:high-conviction-discovery:2026-08-20",
+    "symbol": "SHEL",
+    "side": "buy",
+    "rule": "high-conviction-discovery",
+    "price": 92.77,
+    "ts": 1787223610.1645765,
+    "date": "2026-08-20"
+  },
+  {
+    "id": "RSP:high-conviction-discovery:2026-08-20",
+    "symbol": "RSP",
+    "side": "buy",
+    "rule": "high-conviction-discovery",
+    "price": 222.07,
+    "ts": 1787223610.1645765,
+    "date": "2026-08-20"
+  },
+  {
+    "id": "ABBV:high-conviction-discovery:2026-08-20",
+    "symbol": "ABBV",
+    "side": "buy",
+    "rule": "high-conviction-discovery",
+    "price": 265.97,
+    "ts": 1787223610.1645765,
+    "date": "2026-08-20"
+  },
+  {
+    "id": "VXUS:high-conviction-discovery:2026-08-20",
+    "symbol": "VXUS",
+    "side": "buy",
+    "rule": "high-conviction-discovery",
+    "price": 86.97,
+    "ts": 1787223610.1645765,
+    "date": "2026-08-20"
+  },
+  {
+    "id": "SPY:high-conviction-discovery:2026-08-20",
+    "symbol": "SPY",
+    "side": "buy",
+    "rule": "high-conviction-discovery",
+    "price": 769.38,
+    "ts": 1787223610.1645765,
+    "date": "2026-08-20"
+  },
+  {
+    "id": "VTI:high-conviction-discovery:2026-08-20",
+    "symbol": "VTI",
+    "side": "buy",
+    "rule": "high-conviction-discovery",
+    "price": 379.99,
+    "ts": 1787223610.1645765,
+    "date": "2026-08-20"
+  },
+  {
+    "id": "MDLZ:high-conviction-discovery:2026-08-20",
+    "symbol": "MDLZ",
+    "side": "buy",
+    "rule": "high-conviction-discovery",
+    "price": 64.16,
+    "ts": 1787223610.1645765,
+    "date": "2026-08-20"
+  },
+  {
+    "id": "EOG:high-conviction-discovery:2026-08-20",
+    "symbol": "EOG",
+    "side": "buy",
+    "rule": "high-conviction-discovery",
+    "price": 149.48,
+    "ts": 1787223610.1645765,
+    "date": "2026-08-20"
+  },
+  {
+    "id": "EQIX:high-conviction-discovery:2026-08-20",
+    "symbol": "EQIX",
+    "side": "buy",
+    "rule": "high-conviction-discovery",
+    "price": 1077.08,
+    "ts": 1787223610.1645765,
+    "date": "2026-08-20"
+  },
+  {
+    "id": "BLK:high-conviction-discovery:2026-08-20",
+    "symbol": "BLK",
+    "side": "buy",
+    "rule": "high-conviction-discovery",
+    "price": 1158.92,
+    "ts": 1787223610.1645765,
+    "date": "2026-08-20"
+  },
+  {
+    "id": "FCX:breakout-triggering:2026-08-20",
+    "symbol": "FCX",
+    "side": "buy",
+    "rule": "breakout-triggering",
+    "price": 69.09,
+    "ts": 1787223610.1645765,
+    "date": "2026-08-20"
+  },
+  {
+    "id": "FCX:high-conviction-discovery:2026-08-20",
+    "symbol": "FCX",
+    "side": "buy",
+    "rule": "high-conviction-discovery",
+    "price": 69.09,
+    "ts": 1787223610.1645765,
+    "date": "2026-08-20"
+  },
+  {
+    "id": "SKYA:runner-ignition:2026-08-20",
+    "symbol": "SKYA",
+    "side": "buy",
+    "rule": "runner-ignition",
+    "price": 1.3697,
+    "ts": 1787224184.7800345,
+    "date": "2026-08-20"
+  },
+  {
+    "id": "XOS:runner-ignition:2026-08-20",
+    "symbol": "XOS",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 3.7301,
+    "ts": 1787236092.7812781,
+    "date": "2026-08-20"
+  },
+  {
+    "id": "ANDG:runner-ignition:2026-08-20",
+    "symbol": "ANDG",
+    "side": "buy",
+    "rule": "runner-ignition",
+    "price": 48.155,
+    "ts": 1787236904.6473775,
+    "date": "2026-08-20"
+  },
+  {
+    "id": "INDP:runner-ignition:2026-08-20",
+    "symbol": "INDP",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 1.2145,
+    "ts": 1787237359.6077428,
+    "date": "2026-08-20"
+  },
+  {
+    "id": "PCLA:runner-ignition:2026-08-20",
+    "symbol": "PCLA",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 8.4201,
+    "ts": 1787237783.3510902,
+    "date": "2026-08-20"
+  },
+  {
+    "id": "GYGY:runner-ignition:2026-08-20",
+    "symbol": "GYGY",
+    "side": "buy",
+    "rule": "runner-ignition",
+    "price": 2.19,
+    "ts": 1787240483.2741334,
+    "date": "2026-08-20"
+  },
+  {
+    "id": "BRLS:runner-ignition:2026-08-20",
+    "symbol": "BRLS",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 2.09,
+    "ts": 1787243630.8180685,
+    "date": "2026-08-20"
+  },
+  {
+    "id": "MRVI:runner-ignition:2026-08-20",
+    "symbol": "MRVI",
+    "side": "buy",
+    "rule": "runner-ignition",
+    "price": 8.155,
+    "ts": 1787247773.0109766,
+    "date": "2026-08-20"
+  },
+  {
+    "id": "PRLD:runner-ignition:2026-08-20",
+    "symbol": "PRLD",
+    "side": "buy",
+    "rule": "runner-ignition",
+    "price": 6.26,
+    "ts": 1787251905.8067467,
+    "date": "2026-08-20"
+  },
+  {
+    "id": "DE:high-conviction-discovery:2026-08-20",
+    "symbol": "DE",
+    "side": "buy",
+    "rule": "high-conviction-discovery",
+    "price": 624.66,
+    "ts": 1787253470.9530246,
+    "date": "2026-08-20"
+  },
+  {
+    "id": "DE:breakout-triggering:2026-08-20",
+    "symbol": "DE",
+    "side": "buy",
+    "rule": "breakout-triggering",
+    "price": 626.02,
+    "ts": 1787253626.676505,
+    "date": "2026-08-20"
+  },
+  {
+    "id": "PGR:high-conviction-discovery:2026-08-20",
+    "symbol": "PGR",
+    "side": "buy",
+    "rule": "high-conviction-discovery",
+    "price": 220.32,
+    "ts": 1787255993.155195,
+    "date": "2026-08-20"
+  },
+  {
+    "id": "UNP:breakout-triggering:2026-08-20",
+    "symbol": "UNP",
+    "side": "buy",
+    "rule": "breakout-triggering",
+    "price": 303.97,
+    "ts": 1787263052.437977,
+    "date": "2026-08-20"
+  },
+  {
+    "id": "USDE:runner-ignition:2026-08-20",
+    "symbol": "USDE",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 5.07,
+    "ts": 1787265953.2140267,
+    "date": "2026-08-20"
+  },
+  {
+    "id": "RFAI:runner-ignition:2026-08-21",
+    "symbol": "RFAI",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 45.86,
+    "ts": 1787319161.351412,
+    "date": "2026-08-21"
+  },
+  {
+    "id": "HOWL:runner-ignition:2026-08-21",
+    "symbol": "HOWL",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 1.005,
+    "ts": 1787319292.035353,
+    "date": "2026-08-21"
+  },
+  {
+    "id": "TRON:runner-ignition:2026-08-21",
+    "symbol": "TRON",
+    "side": "buy",
+    "rule": "runner-ignition",
+    "price": 2.32,
+    "ts": 1787319832.1106985,
+    "date": "2026-08-21"
+  },
+  {
+    "id": "EMAT:runner-ignition:2026-08-21",
+    "symbol": "EMAT",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 4.3199,
+    "ts": 1787321450.353536,
+    "date": "2026-08-21"
+  },
+  {
+    "id": "ABUS:runner-ignition:2026-08-21",
+    "symbol": "ABUS",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 5.1809,
+    "ts": 1787321732.8085823,
+    "date": "2026-08-21"
+  },
+  {
+    "id": "CANG:runner-ignition:2026-08-21",
+    "symbol": "CANG",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 2.0599,
+    "ts": 1787323050.205829,
+    "date": "2026-08-21"
+  },
+  {
+    "id": "ZJK:runner-ignition:2026-08-21",
+    "symbol": "ZJK",
+    "side": "buy",
+    "rule": "runner-ignition",
+    "price": 2.2101,
+    "ts": 1787324899.7033083,
+    "date": "2026-08-21"
+  },
+  {
+    "id": "AIAI:runner-ignition:2026-08-21",
+    "symbol": "AIAI",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 6.4555,
+    "ts": 1787331999.8479881,
+    "date": "2026-08-21"
+  },
+  {
+    "id": "PSIG:runner-ignition:2026-08-21",
+    "symbol": "PSIG",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 2.85,
+    "ts": 1787335246.8012557,
+    "date": "2026-08-21"
+  },
+  {
+    "id": "DTCX:runner-ignition:2026-08-21",
+    "symbol": "DTCX",
+    "side": "buy",
+    "rule": "runner-ignition",
+    "price": 2.52,
+    "ts": 1787336596.6916497,
+    "date": "2026-08-21"
+  },
+  {
+    "id": "NCTY:runner-ignition:2026-08-21",
+    "symbol": "NCTY",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 5.7,
+    "ts": 1787338836.5736713,
+    "date": "2026-08-21"
+  },
+  {
+    "id": "DE:breakout-triggering:2026-08-24",
+    "symbol": "DE",
+    "side": "buy",
+    "rule": "breakout-triggering",
+    "price": 647.47,
+    "ts": 1787569210.4175036,
+    "date": "2026-08-24"
+  },
+  {
+    "id": "DE:high-conviction-discovery:2026-08-24",
+    "symbol": "DE",
+    "side": "buy",
+    "rule": "high-conviction-discovery",
+    "price": 647.47,
+    "ts": 1787569210.4175036,
+    "date": "2026-08-24"
+  },
+  {
+    "id": "VXUS:high-conviction-discovery:2026-08-24",
+    "symbol": "VXUS",
+    "side": "buy",
+    "rule": "high-conviction-discovery",
+    "price": 87.71,
+    "ts": 1787569210.4175036,
+    "date": "2026-08-24"
+  },
+  {
+    "id": "EOG:high-conviction-discovery:2026-08-24",
+    "symbol": "EOG",
+    "side": "buy",
+    "rule": "high-conviction-discovery",
+    "price": 153.05,
+    "ts": 1787569210.4175036,
+    "date": "2026-08-24"
+  },
+  {
+    "id": "MDLZ:high-conviction-discovery:2026-08-24",
+    "symbol": "MDLZ",
+    "side": "buy",
+    "rule": "high-conviction-discovery",
+    "price": 64.45,
+    "ts": 1787569210.4175036,
+    "date": "2026-08-24"
+  },
+  {
+    "id": "ABBV:high-conviction-discovery:2026-08-24",
+    "symbol": "ABBV",
+    "side": "buy",
+    "rule": "high-conviction-discovery",
+    "price": 264.96,
+    "ts": 1787569210.4175036,
+    "date": "2026-08-24"
+  },
+  {
+    "id": "GAME:runner-ignition:2026-08-24",
+    "symbol": "GAME",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 3.3784,
+    "ts": 1787569210.4175036,
+    "date": "2026-08-24"
+  },
+  {
+    "id": "USDE:runner-ignition:2026-08-24",
+    "symbol": "USDE",
+    "side": "buy",
+    "rule": "runner-ignition",
+    "price": 7.9688,
+    "ts": 1787573120.5708463,
+    "date": "2026-08-24"
+  },
+  {
+    "id": "SHEL:high-conviction-discovery:2026-08-24",
+    "symbol": "SHEL",
+    "side": "buy",
+    "rule": "high-conviction-discovery",
+    "price": 92.93,
+    "ts": 1787578210.5335984,
+    "date": "2026-08-24"
+  },
+  {
+    "id": "PGR:high-conviction-discovery:2026-08-24",
+    "symbol": "PGR",
+    "side": "buy",
+    "rule": "high-conviction-discovery",
+    "price": 222.81,
+    "ts": 1787578390.435506,
+    "date": "2026-08-24"
+  },
+  {
+    "id": "SDOT:runner-ignition:2026-08-24",
+    "symbol": "SDOT",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 22.841,
+    "ts": 1787578685.1850982,
+    "date": "2026-08-24"
+  },
+  {
+    "id": "DAIC:runner-ignition:2026-08-24",
+    "symbol": "DAIC",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 1.75,
+    "ts": 1787578812.0421627,
+    "date": "2026-08-24"
+  },
+  {
+    "id": "plan:1f0ff261b598:2026-08-24",
+    "symbol": "USDE",
+    "side": "sell",
+    "rule": "plan-reeval",
+    "price": 7.05,
+    "ts": 1787578914.3011932,
+    "date": "2026-08-24"
+  },
+  {
+    "id": "BMEA:runner-ignition:2026-08-24",
+    "symbol": "BMEA",
+    "side": "buy",
+    "rule": "runner-ignition",
+    "price": 1.675,
+    "ts": 1787579707.8959007,
+    "date": "2026-08-24"
+  },
+  {
+    "id": "CYPH:runner-ignition:2026-08-24",
+    "symbol": "CYPH",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 1.79,
+    "ts": 1787580005.6351802,
+    "date": "2026-08-24"
+  },
+  {
+    "id": "CANG:runner-ignition:2026-08-24",
+    "symbol": "CANG",
+    "side": "buy",
+    "rule": "runner-ignition",
+    "price": 2.5059,
+    "ts": 1787580136.4785688,
+    "date": "2026-08-24"
+  },
+  {
+    "id": "BTCT:runner-ignition:2026-08-24",
+    "symbol": "BTCT",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 2.16,
+    "ts": 1787580436.4665134,
+    "date": "2026-08-24"
+  },
+  {
+    "id": "NSSC:runner-ignition:2026-08-24",
+    "symbol": "NSSC",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 43.525,
+    "ts": 1787583890.5310009,
+    "date": "2026-08-24"
+  },
+  {
+    "id": "GGR:runner-ignition:2026-08-24",
+    "symbol": "GGR",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 2.85,
+    "ts": 1787584958.9398208,
+    "date": "2026-08-24"
+  },
+  {
+    "id": "SBUX:high-conviction-discovery:2026-08-24",
+    "symbol": "SBUX",
+    "side": "buy",
+    "rule": "high-conviction-discovery",
+    "price": 107.53,
+    "ts": 1787587456.6105425,
+    "date": "2026-08-24"
+  },
+  {
+    "id": "CAPR:runner-ignition:2026-08-24",
+    "symbol": "CAPR",
+    "side": "buy",
+    "rule": "runner-ignition",
+    "price": 7.2154,
+    "ts": 1787589874.0069695,
+    "date": "2026-08-24"
+  },
+  {
+    "id": "TJGC:runner-ignition:2026-08-24",
+    "symbol": "TJGC",
+    "side": "sell",
+    "rule": "runner-ignition",
+    "price": 6.05,
+    "ts": 1787591798.147695,
+    "date": "2026-08-24"
+  },
+  {
+    "id": "AVGO:oversold-at-support:2026-08-25",
+    "symbol": "AVGO",
+    "side": "buy",
+    "rule": "oversold-at-support",
+    "price": 357.16,
+    "ts": 1787666685.6651924,
+    "date": "2026-08-25"
+  },
+  {
+    "id": "plan:1f0ff261b598:2026-08-25",
+    "symbol": "USDE",
+    "side": "sell",
+    "rule": "plan-reeval",
+    "price": 5.78,
+    "ts": 1787666970.988518,
+    "date": "2026-08-25"
+  },
+  {
+    "id": "AVGO:rsi-reclaim:2026-08-28",
+    "symbol": "AVGO",
+    "side": "buy",
+    "rule": "rsi-reclaim",
+    "price": 374.23,
+    "ts": 1787923808.861876,
+    "date": "2026-08-28"
   }
 ]

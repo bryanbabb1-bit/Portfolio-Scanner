@@ -1,26 +1,26 @@
 {
   "debate": {
-    "calls": 9,
-    "input": 18,
-    "output": 8501,
-    "cache_read": 309051,
-    "cache_write": 76737,
-    "cost_usd": 0.7731,
+    "calls": 447,
+    "input": 962,
+    "output": 340498,
+    "cache_read": 15062537,
+    "cache_write": 3881905,
+    "cost_usd": 36.2211,
     "models": {
-      "sonnet": 8,
-      "default": 1
+      "sonnet": 373,
+      "default": 74
     }
   },
   "unattributed": {
-    "calls": 2,
-    "input": 4,
-    "output": 2113,
-    "cache_read": 59910,
-    "cache_write": 19427,
-    "cost_usd": 0.2258,
+    "calls": 495,
+    "input": 15007,
+    "output": 550049,
+    "cache_read": 22906900,
+    "cache_write": 6415995,
+    "cost_usd": 64.5833,
     "models": {
-      "sonnet": 1,
-      "default": 1
+      "sonnet": 429,
+      "default": 66
     }
   }
 }

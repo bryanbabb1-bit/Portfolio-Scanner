@@ -1,118 +1,147 @@
 {
   "portfolio:brief": [
     {
-      "generated_at": "2026-08-04 10:14:26",
-      "summary": "Your repositioning is done and working \u2014 the book is up 2.15% today with five earnings reports landing this week, so this is a holding week, not a trading week.",
+      "generated_at": "2026-08-31 07:19:35",
+      "summary": "Your repositioning is finished and every dollar is invested \u2014 this week is about sitting through RZLV's and AVGO's earnings, not trading.",
       "insights": [
-        "You finished the cleanup: AMZN, TSM, MU, AMD, PANW and GEV are all gone, and the proceeds went into VRT, MRK, CB and NVDA \u2014 no further cuts are needed.",
-        "The book is up 4.2% all-time and 2.15% today, with VRT, AVGO, NET, ANET and CRWD all up 4% or more \u2014 the AI buildout names are carrying you.",
-        "You are fully invested with zero cash, which is exactly right for risk capital, but it means any new buy has to be funded by a sale first.",
-        "Five of your fifteen names report in the next three days \u2014 ANET and MRK today, LLY tomorrow, CEG and NET on August 6 \u2014 so most of this week's movement is out of your hands.",
-        "Only three positions are underwater: LLY at -7.8%, CB at -4.8% and MRK at -3.0%, and two of those you bought less than a week ago and haven't had time to work."
+        "The cleanup is done: nine names closed since August 17, and the book is now 12 focused positions instead of a scattered list.",
+        "You built the two new bets properly \u2014 NNE went from 21 shares on August 18 to 81, and RZLV from zero to 303 shares in four days.",
+        "All-time profit is +3.1% and the book rose 0.35% today; that is early progress, not the double-digit year yet, and it needs time more than trades.",
+        "Cash is $3, so nothing new gets bought unless something gets sold \u2014 that is the single constraint on every idea below.",
+        "Those closed losers left you roughly $85 of booked losses, which quietly cancels the tax on small gains you take this year."
       ],
       "mix": [
-        "You have no formal allocation targets, so I judge the mix against your aggressive, double-digit-growth mandate \u2014 and on that test it fits, but it is concentrated.",
-        "AI Infrastructure 34%, AI 22% and Compute Power 19% mean 75% of your money rides one theme: companies building out AI data centers.",
-        "Energy at 13% is really an AI bet too through CEG powering data centers, so your true AI exposure is closer to 88%.",
-        "Healthcare 7%, Tech 6% and Financials 1% are your only genuine ballast \u2014 that is thin, and it is why my top two ideas sit outside AI entirely."
+        "AI Infrastructure 41%, Compute Power 13% and AI 12% are really one bet \u2014 about two-thirds of your money rides on the AI buildout.",
+        "Energy at 25% looks like balance, but NNE and CEG are AI-power names, so your true AI-linked exposure is closer to 90%.",
+        "Financials 9% is your only genuinely different sleeve, and Cash & Income at 0% means every dollar is working \u2014 correct for your aggressive plan.",
+        "Your top five holdings are 70.8% of the book; that is concentration by design and I am fine with it, but new money should fund a sixth idea, not the top five."
       ],
       "positions": [
-        "NVDA is your anchor at 18% of the book and still climbing \u2014 up 3.2% since you bought and rising again today, no reason to touch it.",
-        "VRT is your second-largest at $1,505 and just announced a data-center partnership with Bitzero \u2014 your PANW swap into it was the right call, let it run.",
-        "NET is your best performer at +22.5% and hit a new high today, but it reports on August 6 and sits at 5% of the book \u2014 that is where I raise cash after the print.",
-        "LLY is your worst position at -7.8% and reports tomorrow; the company raised full-year revenue guidance to $82-85 billion in April, so I want to hear the update before judging it."
+        "NVDA is your anchor at 18.1% and still trending up, ahead 7.8% since you bought it \u2014 no trim, nothing has changed in the business.",
+        "AVGO is your second-biggest name and down 5.2%, reporting Wednesday September 2 with AI chip sales guided to $16 billion and bookings over $30 billion against $10.8 billion shipped.",
+        "RZLV rose 3.4% today into tomorrow's report, having pre-announced about $127 million of first-half revenue versus $6.3 million a year ago and reaffirmed roughly $360 million for 2026.",
+        "NNE is drifting below its usual range, but BlackRock still holds 6.5% and the company signed a commercial framework with Tillman on August 23 \u2014 this one is a multi-year bet, not a weekly one."
       ],
       "actions": [
-        "Hold all 15 positions through this week's earnings \u2014 do nothing today.",
-        "Trim $180 of NET at market on August 7 if higher.",
-        "Then buy $180 of GD near $383.",
-        "Buy $180 of BRK-B below $500 instead if it drops there."
+        "Hold everything through AVGO's Wednesday earnings \u2014 no trades.",
+        "Hold RZLV through Tuesday's earnings; no adds yet.",
+        "Sell all $201 of NBIS at market Thursday.",
+        "Buy $200 of GEV at market once NBIS cash settles."
       ],
       "risks": [
-        "Three-quarters of your money is one AI-datacenter bet, so a single bad earnings print can hit many names at once \u2014 CEG closing below $228 after August 6 is my warning line.",
-        "LLY reports tomorrow already down 7.8%; a cut to its full-year $82-85 billion revenue guidance would be a real business problem, not a price wiggle."
+        "AVGO reports Wednesday and traders are pricing a roughly 9% move either way; a drop that size takes your position to about -14%.",
+        "Almost everything you own rises and falls on AI spending, and NNE and CEG already sliding below their usual range is the early warning sign."
       ],
       "scout": [
-        "HIGH CONVICTION BRK-B at $513.73: still my number one, unchanged \u2014 Abel repurchased an estimated $8.5-$11 billion of stock in Q2 after a 21-month pause, with results due August 8; buy $180 below $500, target $600.",
-        "HIGH CONVICTION GD near $383: you own zero defense, and a record $136.5 billion backlog including a $76.6 billion Navy submarine award pays you no matter what AI does; buy $180, target $470.",
-        "SPECULATIVE UPSIDE TGT near $144: unchanged from my last four briefs \u2014 store sales rose 5.6% and margins are recovering while sentiment stays sour; buy $80 tiny, target $180."
+        "HIGH CONVICTION GEV \u2014 still my number one idea: backlog $176.3 billion, up 37%, orders up 88%, and gas reservations now 116 gigawatts heading to 125 by year-end; buy $200 at market Thursday, upside toward a much larger power franchise.",
+        "HIGH CONVICTION SLB at $57.33 \u2014 the oilfield services leader is the one energy name that is not an AI-power proxy, and it is trending up hard right now; buy $150 when cash frees up.",
+        "HIGH CONVICTION VST near $140 \u2014 unchanged from last time: analysts average far above the price and BMO raised its target to $245 on August 12; buy $100 only after GEV is funded.",
+        "SPECULATIVE UPSIDE BE at market \u2014 fuel cells now power data centers because utilities cannot connect new load fast enough; buy $100 only, double-or-nothing money, and it waits behind GEV and VST."
       ]
     },
     {
-      "generated_at": "2026-08-04 15:44:51",
-      "summary": "Your repositioning is finished and paying \u2014 the book is up 2.43% today and Arista just beat and raised, so this is a holding week, not a trading week.",
+      "generated_at": "2026-08-31 07:20:45",
+      "summary": "The cleanup is done and the book is working \u2014 the one job this week is turning your small NBIS stake into GE Vernova.",
       "insights": [
-        "The book is up 2.43% today and 4.4% since inception, driven by AVGO and NET both jumping 6.6% on the chip and cloud rally.",
-        "Arista reported after the close August 4 with earnings of $1.02 against $0.79 expected and lifted full-year growth guidance to 27.7% \u2014 your smallest position delivered your best news.",
-        "You hold effectively zero spare cash, so every purchase from here must be funded by a sale first; that is why the Cloudflare trim comes before the defense buy.",
-        "You already booked roughly $566 of realized losses this year on Amazon, Micron, TSM and AMD, which quietly absorbs the tax on trimming a winner like Cloudflare.",
-        "Lilly is your only meaningful loser at down 8.6% and reports tomorrow, August 5 \u2014 the one genuine event risk in the book this week."
+        "Since August 17 you closed nine names and rebuilt around power and AI; the book is +3.3% all-time and +0.46% today with nothing broken.",
+        "Your winners are carrying it: MSFT +24.6%, NET +23.2%, CRWD +15.6% and NBIS +12%, while the three names you just added are still seasoning.",
+        "You have $3 of cash, so the book is fully invested \u2014 every new buy from here has to be funded by a sale, and that is the only real constraint.",
+        "Two earnings land this week: RZLV tomorrow and AVGO Wednesday, together about 26% of your money \u2014 expect noise, and treat a drop as a chance, not a warning.",
+        "Your recently booked losses on GOOGL, LWLG and ISRG offset small gains, so selling a tiny winner like NBIS costs you almost nothing in tax."
       ],
       "mix": [
-        "AI Infrastructure 34%, AI 21% and Compute Power 19% are three labels for one bet: 74% of your money rides on the data-center buildout continuing.",
-        "Add Energy at 13%, which is almost entirely Constellation powering those same data centers, and roughly 87% of the book moves on a single theme.",
-        "Healthcare 7%, Tech 6% and Financials 1% are the counterweights, and Financials at 1% is the one real gap \u2014 that is exactly what General Dynamics and Berkshire are for.",
-        "Top five positions are 62.2% with NVDA at 18.1%, which is aggressive but correct for your double-digit growth mandate; no rebalance is needed this week."
+        "AI Infrastructure 41%, Compute Power 13% and AI 12% add to 66% of the book in one connected AI-buildout bet \u2014 aggressive by design, and appropriate for your profile, but it is the whole risk story.",
+        "Energy at 25% is exactly where I want it and it is doing its job \u2014 CEG and NNE are the power side of the same AI trade, funded by real utility contracts.",
+        "Cash at 0% is fine here since this is risk capital, but it means no dry powder for a post-earnings dip unless you free some up first.",
+        "Top five positions are 70.7% of the book \u2014 that concentration is a feature at your risk level, and I would not dilute it, but it is why a single AI headline moves your whole account."
       ],
       "positions": [
-        "NVDA is your anchor at 18.1% of the book, up 4.3% since you bought and rising 2.6% today on the broad chip rally \u2014 leave it completely alone.",
-        "AVGO jumped 6.6% today to $1,489 and is now your number two holding; it is the quiet second engine of the AI buildout and stays untouched.",
-        "ANET is your smallest AI name at $170 but just posted the strongest quarter in the book, beating badly and raising the year \u2014 proof small positions can still teach you something.",
-        "LLY sits down 8.6%, your worst holding, and reports tomorrow against guidance of $82-85 billion revenue; hold through the print rather than selling into it."
+        "NVDA is your anchor at 18% and still the leader \u2014 up 7.8% since you bought it and still trending up; do nothing.",
+        "AVGO is your biggest laggard at -5.1% with earnings Wednesday \u2014 AI chip revenue is guided to $16 billion, over 200% growth, but June's report fell 12.6% because management would not raise the 2027 target.",
+        "NBIS is a $202 stub, up 12%, that owns the same AI-cloud story you already get from NVDA and CEG \u2014 I said hold on August 27; I'm changing to sell because it is the cheapest way to fund a much better idea.",
+        "NNE is 13% of the book and down 3.4% after your August buying \u2014 analysts trimmed targets to $37-$39 in August but stayed bullish, and BlackRock put $73.8 million in; hold and let it season."
       ],
       "actions": [
-        "Hold all 15 positions through this week's earnings \u2014 do nothing today.",
-        "Quick trade: Trim $180 NET at market on August 7 if higher.",
-        "Long game: Then buy $180 GD near $383.",
-        "Long game: Buy $180 BRK-B instead below $500 if it drops there."
+        "Sell all $202 of NBIS at market.",
+        "Buy $200 of GEV near $955.",
+        "Hold RZLV and AVGO through earnings \u2014 do nothing.",
+        "Hold NNE, VRT and MSFT \u2014 no trims."
       ],
       "risks": [
-        "Nearly 90% of your money moves together on the AI data-center trade, so one bad guidance night hits everything at once \u2014 Constellation closing under $228 after August 6 is the first real warning.",
-        "Lilly reports tomorrow and a cut to its $82-85 billion revenue guidance would turn a down 8.6% position into a genuine thesis problem worth re-examining."
+        "AVGO reports Wednesday, September 2; if management again declines to raise its 2027 AI target, expect another double-digit drop \u2014 under $355 that is a buy, not a reason to sell.",
+        "Everything you own rises and falls with AI spending; a broad pullback hits 66% of the book at once, and NNE breaking under its August lows would be the first real warning."
       ],
       "scout": [
-        "HIGH CONVICTION BRK-B: still my number one, unchanged \u2014 Abel repurchased an estimated $8.5-$11 billion of stock in Q2 after a 21-month pause and bought $15 million personally; buy $180 below $500, target $600.",
-        "HIGH CONVICTION GD: you own zero defense, and a record $136.5 billion backlog including a $76.6 billion Navy submarine award pays you regardless of what AI does; buy $180 near $383, target $450.",
-        "SPECULATIVE UPSIDE TGT: unchanged from my last five briefs \u2014 store sales rose 5.6% and margins are recovering while sentiment stays sour; buy $80 tiny near $144, target $200."
+        "HIGH CONVICTION GEV near $955 \u2014 still my number one, unchanged: backlog is $176 billion with orders up 88% and gas contracts now 116 gigawatts heading to 125 by year-end; buy $200, upside toward $1,200.",
+        "HIGH CONVICTION SLB near $57 \u2014 the oilfield services leader gets paid as offshore and international drilling budgets recover, straight down the middle of the energy names you asked for; buy $150 when cash frees up.",
+        "HIGH CONVICTION V near $382 \u2014 a toll booth on every card swipe with fat margins and years of steady growth; this is outside energy and high growth, so it earns the slot only as ballast against your 66% AI bet, $150 later.",
+        "SPECULATIVE UPSIDE BE at market \u2014 fuel cells now power data centers because utilities cannot connect new load fast enough; $100 only, a double-or-nothing bet you can afford to lose."
       ]
     },
     {
-      "generated_at": "2026-08-05 06:12:00",
-      "summary": "Your repositioning is finished and paying \u2014 Arista just beat and raised, and this is a holding week, not a trading week.",
+      "generated_at": "2026-08-31 17:12:16",
+      "summary": "You finished the NBIS sale for a $19 gain, but that cash went into RZLV, so GE Vernova still needs funding.",
       "insights": [
-        "The book is up 1.29% today and 5.8% all-time, with twelve of fifteen positions green \u2014 the repositioning you finished last week is working.",
-        "You have already done the de-risking: you closed AMZN, TSM, MU, AMD, GEV and PANW and rotated into VRT, MRK and CB, so no further cuts are owed.",
-        "Arista raised full-year revenue guidance to about $12.6 billion on August 4 and jumped 12.5% \u2014 your smallest position was your biggest winner today.",
-        "Cash is essentially zero, so every new buy this month has to be funded by a sale \u2014 that is why the plan below sells first and buys second.",
-        "Three more reports land this week: Lilly this morning, Constellation and Cloudflare tomorrow \u2014 sitting still through them is the disciplined move, not the passive one."
+        "The NBIS exit is done and booked at +$19, but the proceeds went into RZLV rather than GE Vernova, so my top idea is still unowned and unfunded.",
+        "Three winners are carrying the book right now \u2014 NET +25.5%, MSFT +24.1% and CRWD +22.2% \u2014 while AVGO at -5.0% and VRT at -3.1% are the drag.",
+        "CRWD jumped 5.8% today to a 52-week high on its earnings rally, which is a real business reason for the move, not just fast money.",
+        "Cash is $3, meaning the book is fully invested and every new purchase from here has to be funded by selling something first.",
+        "You are up 3.2% all-time with a book that swings more than twice as hard as the market, which is the aggressive profile you asked for."
       ],
       "mix": [
-        "No formal allocation targets exist, so judge this against your aggressive, double-digit-growth mandate: AI Infrastructure 34%, AI 21% and Compute Power 18% together are 73% of the book, which is a deliberate concentrated bet on one theme.",
-        "That concentration is a feature given your mandate, but it is the single thing to watch \u2014 Energy 12% and Healthcare 7% are your only real ballast, and Financials at 1% is effectively a placeholder.",
-        "Your top five names are 62% of the money and NVDA alone is 18% \u2014 that is where your returns come from, and I am not asking you to dilute it.",
-        "The one genuine gap: you own zero defense and almost no financials, which is exactly what the sells-then-buys plan below fixes over the next two weeks."
+        "AI Infrastructure 39%, Compute Power 13% and AI 12% add up to 64% in one theme, and Energy's 25% is mostly nuclear and power for data centers.",
+        "So roughly nine of every ten dollars ride on a single bet \u2014 the AI buildout \u2014 which fits your aggressive mandate but leaves nothing to cushion a bad quarter.",
+        "Financials 10% is entirely RZLV, an AI software company sitting in a financials bucket, so your real exposure to banks and payments is zero.",
+        "Cash at 0% is correct for risk money, but it is why this week's plan sells before it buys rather than nibbling."
       ],
       "positions": [
-        "NVDA is your anchor at 18% of the book, up 6.2% since you bought it and still trending higher \u2014 leave it completely alone.",
-        "ANET is your best performer at +27.4% and jumped 12.5% today after beating and raising guidance on August 4 \u2014 a real catalyst, not a random pop, so I am not trimming it.",
-        "LLY is your only meaningful laggard at -2.9%, but it reported this morning and is up 6.3% today after already raising full-year guidance in April \u2014 the thesis is repairing itself.",
-        "MSFT is up 21.3% and looks hot after a long run, but it is the best business you own and I will not sell a great compounder just because it is expensive."
+        "NVDA is your anchor at 18.2% of the book and up 8.7%, still trending up with guidance raised into 2028 \u2014 leave it completely alone.",
+        "AVGO is your second-biggest at $1,893 and down 5.0%, reporting Wednesday after guiding to $16 billion of AI chip revenue this quarter, up over 200%.",
+        "CRWD hit a new 52-week high today after its earnings rally \u2014 that is a genuine catalyst, so I am not trimming it on 'it's extended'.",
+        "NNE rose 1.8% on its August 24 Tillman framework targeting 2 gigawatts by the mid-2030s, but that deal is non-binding \u2014 a promise, not revenue yet."
       ],
       "actions": [
-        "Hold all 15 positions through this week's earnings \u2014 do nothing today.",
-        "Quick trade: Trim $180 of NET on August 7 if higher.",
-        "Long game: Then buy $180 of GD near $383.",
-        "Long game: Buy $180 of BRK-B instead below $500 if it drops there."
+        "Hold everything through Tuesday's RZLV and Wednesday's AVGO earnings.",
+        "Long game: Sell all $390 of NET at market Thursday.",
+        "Long game: Buy $190 of GEV at market once cash settles.",
+        "Long game: Buy $190 of AVGO at $355."
       ],
       "risks": [
-        "Your biggest risk is a single AI-spending scare hitting 73% of the book at once; NVDA closing below $190 would tell you the buyers have stepped back.",
-        "Constellation reports tomorrow and has been drifting below its longer-term trend \u2014 a guidance cut with the stock under $228 is the one thing that would make me re-examine it."
+        "AVGO reports Wednesday and last quarter it beat yet fell 12.6% because it would not raise its 2027 AI target; under $355 confirms that disappointment.",
+        "RZLV is 10% of your book resting on a $360 million revenue promise, so any cut to that guidance Tuesday is the real break to watch."
       ],
       "scout": [
-        "HIGH CONVICTION BRK-B near $513: still my number one, unchanged \u2014 Abel repurchased an estimated $8.5-$11 billion of stock in Q2 after a 21-month pause and sits on $397 billion of cash; buy $180 below $500, target $600.",
-        "HIGH CONVICTION GD near $383: you own zero defense, and a record $136.5 billion backlog including a $76.6 billion Navy submarine award pays you no matter what AI does; buy $180, target $465 where Morgan Stanley now sits.",
-        "SPECULATIVE UPSIDE TGT near $144: unchanged from my last six briefs \u2014 store sales rose 5.6% and margins are recovering while sentiment stays sour; buy $80 tiny, target $200, cut below $125."
+        "HIGH CONVICTION GEV \u2014 still my number one, unchanged: $176.3 billion backlog up 37%, orders up 88%, and Wall Street's average target near $1,239; buy $190 at market Thursday.",
+        "HIGH CONVICTION SLB \u2014 the oilfield services leader gets paid as international drilling budgets recover, the one energy name not tied to AI power; it ran to $60.10, so I keep my $57.33 buy level for $150.",
+        "HIGH CONVICTION V at $379.37 \u2014 a toll booth on every card swipe with fat margins; outside energy and high growth, it earns the slot as the only non-AI idea here, $100 when cash allows.",
+        "SPECULATIVE UPSIDE BE at market \u2014 fuel cells now power data centers because utilities cannot connect new load fast enough; $100 only, double-or-nothing money, waits until GEV is filled."
       ]
+    }
+  ],
+  "stock:AVGO": [
+    {
+      "generated_at": "2026-08-14 11:44:38",
+      "summary": "AVGO's drop looks like a broad market pullback, not company-specific bad news \u2014 Wall Street stays very bullish. Hold; there's no free cash right now to buy this dip.",
+      "insights": [
+        "Down 5.84% today but headlines show no bad AVGO-specific news \u2014 the market itself paused near record highs.",
+        "Still trending up over the past year; today's drop hasn't broken that trend.",
+        "Wall Street rates it a strong buy with a target near $528, about 34% above today's price.",
+        "Today's trading volume is below normal, suggesting this is a quiet dip, not panic selling.",
+        "Down 18% from its 52-week high, which would be a good discount to buy \u2014 if cash were free."
+      ],
+      "mix": [],
+      "positions": [],
+      "actions": [
+        "Hold AVGO \u2014 do nothing today.",
+        "Don't add now \u2014 your $7 cash is already spoken for by other pending orders.",
+        "Watch $368 for support if the pullback keeps going."
+      ],
+      "risks": [
+        "Book already holds 13% in AVGO; adding more would concentrate risk further.",
+        "If the broader market keeps sliding, AVGO could test $368 support next.",
+        "Your queued buys (ISRG, VXUS) already exceed available cash \u2014 free some up before chasing this dip."
+      ],
+      "scout": []
     }
   ]
 }

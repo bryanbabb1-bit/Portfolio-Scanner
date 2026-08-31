@@ -12,7 +12,7 @@
       "exit_price": null,
       "realized": 0.0,
       "stop": 7.352,
-      "high_water": 9.3
+      "high_water": 10.06
     },
     {
       "symbol": "NNE",
@@ -25,7 +25,7 @@
       "exit_price": null,
       "realized": 0.0,
       "stop": 14.784,
-      "high_water": 18.48
+      "high_water": 20.855
     },
     {
       "symbol": "GEV",
@@ -38,7 +38,7 @@
       "exit_price": null,
       "realized": 0.0,
       "stop": 836.8,
-      "high_water": 1046.0
+      "high_water": 1074.335
     },
     {
       "symbol": "PWR",
@@ -51,7 +51,7 @@
       "exit_price": null,
       "realized": 0.0,
       "stop": 557.936,
-      "high_water": 697.42
+      "high_water": 710.62
     },
     {
       "symbol": "VST",
@@ -115,16 +115,103 @@
     {
       "day": "2026-08-05",
       "equity": 982.21
+    },
+    {
+      "day": "2026-08-06",
+      "equity": 976.87
+    },
+    {
+      "day": "2026-08-07",
+      "equity": 982.44
+    },
+    {
+      "day": "2026-08-10",
+      "equity": 990.35
+    },
+    {
+      "day": "2026-08-11",
+      "equity": 983.97
+    },
+    {
+      "day": "2026-08-12",
+      "equity": 1007.51
+    },
+    {
+      "day": "2026-08-13",
+      "equity": 1016.4
+    },
+    {
+      "day": "2026-08-14",
+      "equity": 1028.13
+    },
+    {
+      "day": "2026-08-17",
+      "equity": 1019.09
+    },
+    {
+      "day": "2026-08-18",
+      "equity": 987.36
+    },
+    {
+      "day": "2026-08-19",
+      "equity": 958.72
+    },
+    {
+      "day": "2026-08-20",
+      "equity": 962.73
+    },
+    {
+      "day": "2026-08-21",
+      "equity": 962.08
+    },
+    {
+      "day": "2026-08-24",
+      "equity": 931.36
+    },
+    {
+      "day": "2026-08-25",
+      "equity": 950.31
+    },
+    {
+      "day": "2026-08-26",
+      "equity": 977.83
+    },
+    {
+      "day": "2026-08-27",
+      "equity": 956.66
+    },
+    {
+      "day": "2026-08-28",
+      "equity": 963.09
+    },
+    {
+      "day": "2026-08-31",
+      "equity": 929.19
     }
   ],
-  "last_run": "2026-08-05",
+  "last_run": "2026-08-31",
   "lessons": [
     {
       "date": "2026-08-05",
       "closed": 0,
       "note": "only 0 closed positions \u2014 not enough to change anything. Needs 6. Recording and waiting."
+    },
+    {
+      "date": "2026-08-12",
+      "closed": 0,
+      "note": "only 0 closed positions \u2014 not enough to change anything. Needs 6. Recording and waiting."
+    },
+    {
+      "date": "2026-08-19",
+      "closed": 0,
+      "note": "only 0 closed positions \u2014 not enough to change anything. Needs 6. Recording and waiting."
+    },
+    {
+      "date": "2026-08-26",
+      "closed": 0,
+      "note": "only 0 closed positions \u2014 not enough to change anything. Needs 6. Recording and waiting."
     }
   ],
   "rule_changes": [],
-  "last_review": "2026-08-05"
+  "last_review": "2026-08-26"
 }

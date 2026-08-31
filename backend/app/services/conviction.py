@@ -470,8 +470,16 @@ def scan() -> list[dict]:
         try:
             from . import runner
             # Runner ignition is by definition a whole-market scan for names
-            # you don't own, so owned-only silences it outright.
-            for m in ([] if (low_cash or owned_only) else runner.igniting_movers()):
+            # you don't own, so owned-only silences it outright. When the
+            # trading sleeve is on it owns runners entirely — it issues sized
+            # tickets with exits instead of these warnings — so this block
+            # stands down rather than double-alerting.
+            try:
+                from . import sleeve as _sleeve
+                sleeve_on = _sleeve.enabled()
+            except Exception:
+                sleeve_on = False
+            for m in ([] if (low_cash or owned_only or sleeve_on) else runner.igniting_movers()):
                 sym = m["symbol"]
                 cool_key = f"{sym}:runner-ignition"
                 last = fired.get(cool_key)

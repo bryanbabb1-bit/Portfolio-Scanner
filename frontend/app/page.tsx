@@ -24,6 +24,7 @@ import { NightlyDesk, nightlyCount, useNightly } from "../components/NightlyDesk
 import { PinnedActions } from "../components/PinnedActions";
 import { PortfolioBrief } from "../components/PortfolioBrief";
 import { BigMoves } from "../components/BigMoves";
+import { Blotter } from "../components/Blotter";
 import { CatalystMap } from "../components/CatalystMap";
 import { Accumulation } from "../components/Accumulation";
 import { ProbabilityLattice } from "../components/ProbabilityLattice";
@@ -100,6 +101,8 @@ export default function Dashboard() {
     const q = new URLSearchParams(window.location.search);
     const id = q.get("slap");
     if (id) setFocusSlap(id);
+    // A tapped ticket push lands here too — it lives on the Today tab.
+    if (id && id.startsWith("tk_")) setTab("today");
     const b = q.get("bell");
     if (b === "open" || b === "close") setForceBell(b);
     const t = q.get("tab");
@@ -188,6 +191,10 @@ export default function Dashboard() {
 
       {tab === "today" && (
         <>
+          {/* The blotter first: tickets waiting on a decision. This is the
+              one panel that asks for an action instead of offering a read. */}
+          <Blotter focusId={focusSlap && focusSlap.startsWith("tk_") ? focusSlap : null} />
+
           {/* The whole market, above the book. He asked to be told what is
               happening regardless of whether he can act on it. */}
           <BigMoves />

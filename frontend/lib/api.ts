@@ -976,7 +976,87 @@ export interface OptionsIdea {
   advice?: OptionsAdvice | null;
 }
 
+/** A trading-sleeve ticket: one idea with a lifecycle. */
+export type TicketStatus = "armed" | "live" | "exit" | "closed" | "passed" | "expired";
+export interface Ticket {
+  id: string;
+  symbol: string;
+  engine: "ignition" | "pullback" | "footprint" | "manual";
+  side: "buy";
+  status: TicketStatus;
+  created: string;
+  ts: number;
+  expires: number;
+  entry: number;
+  stop: number;
+  target: number;
+  shares: number;
+  notional: number;
+  risk_usd: number;
+  r_unit: number;
+  sleeve_equity: number;
+  why: string[];
+  headline: string;
+  meta: Record<string, number | string | null>;
+  fill_price: number | null;
+  fill_ts: number | null;
+  high_water: number | null;
+  current_stop: number | null;
+  trail_armed: boolean;
+  exit_signal: { reason: string; price: number; r: number; ts: number } | null;
+  exit_price: number | null;
+  exit_reason: string | null;
+  r_multiple: number | null;
+  pnl_usd: number | null;
+  last_price: number | null;
+  sessions_held: number;
+  r_now?: number;
+  pnl_now?: number;
+}
+export interface SleeveConfig {
+  enabled: boolean;
+  capital_pct: number;
+  capital_usd: number | null;
+  risk_pct: number;
+  max_slots: number;
+  max_tickets_per_day: number;
+  ignition_stop_pct: number;
+  ignition_max_pct: number;
+  ignition_time_stop_sessions: number;
+  trail_pct: number;
+  target_r: number;
+}
+export interface EngineScore {
+  n: number; wins: number; win_rate: number; expectancy_r: number; total_r: number;
+  t_stat: number | null; best_r: number; worst_r: number;
+}
+export interface SleeveState {
+  config: SleeveConfig;
+  capital: number;
+  core_value: number;
+  equity: number;
+  realized: number;
+  deployed: number;
+  slots_used: number;
+  issued_today: number;
+  counts: Record<TicketStatus, number>;
+  tickets: Ticket[];
+  scorecard: Record<string, EngineScore>;
+  equity_history: { day: string; equity: number }[];
+}
+
 export const api = {
+  sleeve: () => get<SleeveState>("/api/sleeve"),
+  sleeveConfig: () => get<SleeveConfig>("/api/sleeve/config"),
+  saveSleeveConfig: (changes: Partial<SleeveConfig>) => put<SleeveConfig>("/api/sleeve/config", changes),
+  sleeveRun: () => post<unknown>("/api/sleeve/run?force=true", {}),
+  ticketFill: (id: string, price: number, shares?: number) =>
+    post<Ticket>(`/api/sleeve/tickets/${id}/fill`, { price, shares }),
+  ticketPass: (id: string) => post<Ticket>(`/api/sleeve/tickets/${id}/pass`, {}),
+  ticketClose: (id: string, price: number, reason = "manual") =>
+    post<Ticket>(`/api/sleeve/tickets/${id}/close`, { price, reason }),
+  ticketManual: (body: { symbol: string; entry: number; stop: number; target?: number; why?: string[]; headline?: string }) =>
+    post<Ticket>("/api/sleeve/tickets", body),
   plan: () => get<GamePlanData>("/api/plan"),
   optionsIdea: (symbol: string, side?: string) =>
     get<OptionsIdea>(`/api/options/${symbol}${side ? `?side=${side}` : ""}`),

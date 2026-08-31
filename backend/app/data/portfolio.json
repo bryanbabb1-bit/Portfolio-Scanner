@@ -1,12 +1,12 @@
 {
   "owner": "You",
   "advisor_persona": "senior financial advisor at Charles Schwab",
-  "cash": 2.5,
+  "cash": 3.0,
   "core_convictions": [
     "NVDA"
   ],
-  "quiet_unowned_low_cash": false,
-  "signals_owned_only": false,
+  "quiet_unowned_low_cash": true,
+  "signals_owned_only": true,
   "risk_profile": "Aggressive risk profile targeting double-digit annual growth, with little or no additional capital being contributed.",
   "themes": {
     "AI": "Companies building or monetizing artificial intelligence models and applications",
@@ -31,20 +31,14 @@
     },
     {
       "symbol": "AVGO",
-      "shares": 4.55986,
-      "cost_basis": 393.19,
+      "shares": 5.11274,
+      "cost_basis": 389.79,
       "theme": null
     },
     {
       "symbol": "NET",
       "shares": 1.27816,
       "cost_basis": 243.03,
-      "theme": null
-    },
-    {
-      "symbol": "GOOGL",
-      "shares": 2.09771,
-      "cost_basis": 364.05,
       "theme": null
     },
     {
@@ -73,50 +67,20 @@
     },
     {
       "symbol": "VRT",
-      "shares": 5.47207,
-      "cost_basis": 267.64,
-      "theme": null
-    },
-    {
-      "symbol": "LLY",
-      "shares": 0.54057,
-      "cost_basis": 1220.93,
-      "theme": null
-    },
-    {
-      "symbol": "MRK",
-      "shares": 0.83532,
-      "cost_basis": 131.69,
-      "theme": null
-    },
-    {
-      "symbol": "NBIS",
-      "shares": 0.97378,
-      "cost_basis": 184.85,
-      "theme": null
-    },
-    {
-      "symbol": "GD",
-      "shares": 0.65062,
-      "cost_basis": 384.25,
-      "theme": null
-    },
-    {
-      "symbol": "BRK.B",
-      "shares": 0.42184,
-      "cost_basis": 521.52,
+      "shares": 5.69709,
+      "cost_basis": 267.07,
       "theme": null
     },
     {
       "symbol": "NNE",
-      "shares": 21.0,
-      "cost_basis": 19.36,
+      "shares": 81.0,
+      "cost_basis": 18.62,
       "theme": null
     },
     {
-      "symbol": "ISRG",
-      "shares": 0.76708,
-      "cost_basis": 391.09,
+      "symbol": "RZLV",
+      "shares": 374.0,
+      "cost_basis": 2.88,
       "theme": null
     }
   ],

@@ -39,6 +39,7 @@ from .routers import (
     scan,
     summary,
     watchpoints,
+    sleeve,
 )
 
 app = FastAPI(
@@ -81,6 +82,7 @@ app.include_router(catalysts.router)
 app.include_router(bigmoves.router)
 app.include_router(accumulation.router)
 app.include_router(preferences.router)
+app.include_router(sleeve.router)
 
 
 @app.exception_handler(Exception)
@@ -171,6 +173,14 @@ def _heartbeat() -> None:
             accumulation.get()
         except Exception as exc:
             print(f"[heartbeat] accumulation failed: {exc!r}")
+        # The trading sleeve: issue ignition tickets, expire stale ones, manage
+        # the live ones. Runs regardless of the core book's owned-only / quiet
+        # flags — the sleeve exists to trade names the book does not own.
+        try:
+            from .services import sleeve as sleeve_service
+            sleeve_service.maybe_run()
+        except Exception as exc:
+            print(f"[heartbeat] sleeve failed: {exc!r}")
         # Whole-market watch. Cheap (a screener call, cached to the heartbeat's
         # own cadence) and it is the thing that pushes when something enormous
         # happens to a name nobody in this book owns.

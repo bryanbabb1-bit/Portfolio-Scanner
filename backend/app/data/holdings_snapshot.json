@@ -8,32 +8,20 @@
     "cost": 408.78
   },
   "AVGO": {
-    "shares": 3.55986,
-    "cost": 401.97
-  },
-  "AAPL": {
-    "shares": 1.95109,
-    "cost": 307.74
+    "shares": 5.11274,
+    "cost": 389.79
   },
   "NET": {
-    "shares": 1.84754,
+    "shares": 1.27816,
     "cost": 243.03
   },
-  "GOOGL": {
-    "shares": 2.09771,
-    "cost": 364.05
-  },
   "ANET": {
-    "shares": 0.89158,
-    "cost": 168.24
+    "shares": 1.89158,
+    "cost": 179.11
   },
   "CRWD": {
     "shares": 1.95702,
     "cost": 189.06
-  },
-  "DLR": {
-    "shares": 2.42594,
-    "cost": 195.8
   },
   "CEG": {
     "shares": 3.25438,
@@ -44,19 +32,15 @@
     "cost": 385.3
   },
   "VRT": {
-    "shares": 5.47207,
-    "cost": 267.64
+    "shares": 5.69709,
+    "cost": 267.07
   },
-  "LLY": {
-    "shares": 0.54057,
-    "cost": 1220.93
+  "NNE": {
+    "shares": 81.0,
+    "cost": 18.62
   },
-  "MRK": {
-    "shares": 0.83532,
-    "cost": 131.69
-  },
-  "CB": {
-    "shares": 0.28856,
-    "cost": 363.88
+  "RZLV": {
+    "shares": 374.0,
+    "cost": 2.88
   }
 }

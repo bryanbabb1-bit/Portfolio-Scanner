@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
+import { SleeveSettings } from "../../components/SleeveSettings";
 import Link from "next/link";
 import { api, Holding, PortfolioConfig, WatchItem } from "../../lib/api";
 import { money } from "../../components/format";
@@ -210,7 +211,8 @@ export default function Settings() {
                 universe is market-wide now, so scanning it for alerts surfaces
                 names with no place in the portfolio. Discovery and the
                 advisor&apos;s scouting still see the whole market — this only
-                gates the signal engine and Runner Radar alerts.
+                gates the core book&apos;s signal engine. Runners belong to the
+                trading sleeve below and are not affected.
               </span>
             </span>
           </label>
@@ -230,6 +232,8 @@ export default function Settings() {
           </label>
         </div>
       </div>
+
+      <SleeveSettings />
 
       {/* --------- holdings --------- */}
       <div className="card" style={{ marginBottom: 20 }}>
