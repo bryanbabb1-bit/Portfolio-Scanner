@@ -76,7 +76,10 @@ def test_no_duplicate_open_ticket_for_a_symbol(book):
 
 
 def test_daily_cap_holds_but_manual_tickets_bypass_it(book):
-    for i, sym in enumerate(("AAA", "BBB", "CCC")):
+    # Slots would bind first at the default of 2, and this test is about the
+    # DAILY cap, so give it room to reach it.
+    book["config"] = {"max_slots": 6}
+    for sym in ("AAA", "BBB", "CCC"):
         assert sleeve.issue(sym, "ignition", 10, 8.2, book=book, eq=1500)
     assert sleeve.issue("DDD", "ignition", 10, 8.2, book=book, eq=1500) is None
     assert sleeve.issue("EEE", "manual", 10, 8.2, book=book, eq=1500)
@@ -371,3 +374,39 @@ def test_changing_the_capital_re_sizes_what_is_not_yet_committed(book, monkeypat
     assert armed["sleeve_equity"] == 2000.0
     # A position already opened is NOT re-sized — those shares are real.
     assert live["shares"] == live_size
+
+
+# ------------------------------------------------------------------- slots
+def test_slots_are_a_capital_limit_not_a_label(book):
+    """A position is sized at up to equity/max_slots, so issuing past the slot
+    count lets the sleeve commit more than it has: two full slots plus a third
+    ticket is a 150% book."""
+    _live(book, sym="AAA")
+    _live(book, sym="BBB")
+    assert sleeve.issue("CCC", "ignition", 10, 8.2, book=book, eq=1500) is None
+    # And a manual ticket cannot buy its way past a full book either.
+    assert sleeve.issue("DDD", "manual", 10, 8.2, book=book, eq=1500) is None
+
+
+def test_an_unfilled_order_holds_its_slot(book):
+    """Armed orders are money already spoken for — a fill is one tap away."""
+    armed = _armed(book, sym="AAA")
+    _live(book, sym="BBB")
+    assert sleeve.issue("CCC", "ignition", 10, 8.2, book=book, eq=1500) is None
+    # Passing on it frees the slot again.
+    armed["status"] = "passed"
+    assert sleeve.issue("CCC", "ignition", 10, 8.2, book=book, eq=1500)
+
+
+def test_watches_do_not_hold_a_slot_but_cannot_arm_into_a_full_book(book, _quiet):
+    """Most watches expire without triggering, so holding a slot for one would
+    keep the sleeve out of trades it should take. The limit is enforced again
+    at the moment the watch would become a real order."""
+    sleeve.from_footprint([_accum_row()], book=book, eq=1500)
+    # A watch does not block a new ticket...
+    assert sleeve.issue("AAA", "ignition", 10, 8.2, book=book, eq=1500)
+    _live(book, sym="BBB")
+    # ...but with both slots committed it will not arm.
+    fired = sleeve.check_triggers(book, {"SY": {"price": 3.30, "source": "live"}}, CFG, eq=1500)
+    assert fired == []
+    assert [t for t in book["tickets"] if t["symbol"] == "SY"][0]["status"] == "watching"

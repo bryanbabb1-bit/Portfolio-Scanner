@@ -293,7 +293,18 @@ def _issued_today(book: dict) -> int:
 
 
 def _slots_used(book: dict) -> int:
+    """Slots holding actual shares."""
     return sum(1 for t in book["tickets"] if t.get("status") in ("live", "exit"))
+
+
+def _committed(book: dict) -> int:
+    """Slots holding shares OR an unfilled order that would take one.
+
+    Watches are excluded on purpose: a conditional watch commits nothing and
+    most of them expire without ever triggering, so counting them would keep
+    the sleeve out of trades it should be taking. The trigger check enforces
+    the limit again at the moment it would become real."""
+    return sum(1 for t in book["tickets"] if t.get("status") in ("armed", "live", "exit"))
 
 
 def _notify(title: str, body: str, sound: str, data: dict) -> None:
@@ -334,6 +345,13 @@ def issue(symbol: str, engine: str, entry: float, stop: float, *,
         if _open_for(book, sym):
             return None
         if engine != "manual" and _issued_today(book) >= int(cfg["max_tickets_per_day"]):
+            return None
+        # Slots are a CAPITAL limit, not a display. A position is sized at up
+        # to equity/max_slots, so issuing past the slot count lets the sleeve
+        # commit more than it has — two full slots plus a third ticket is a
+        # 150% book. Armed orders count against it: they are money already
+        # spoken for, and a fill is one tap away.
+        if _committed(book) >= int(cfg["max_slots"]):
             return None
         eq = equity(book) if eq is None else eq
         sz = size(entry, stop, eq, engine, cfg)
@@ -495,6 +513,8 @@ def check_triggers(book: dict, quotes: dict, cfg: dict | None = None,
             continue
         # Enter at the trigger or the current print, whichever is worse for us —
         # a gap through the level is not a fill at the level.
+        if _committed(book) >= int(cfg["max_slots"]):
+            continue          # no slot free — the watch waits rather than arming
         entry = max(trigger, px)
         planned_dist = float(t["entry"]) - float(t["stop"])
         stop = entry - planned_dist
