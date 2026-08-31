@@ -189,15 +189,15 @@ export default function Dashboard() {
 
       {tab === "today" && (
         <>
-          {/* The blotter first: tickets waiting on a decision. This is the
-              one panel that asks for an action instead of offering a read. */}
+          {/* THE ORDER OF THIS TAB IS THE ARGUMENT. What needs a decision, then
+              what is happening, then what it means, and only then reassurance.
+              It used to open with "nothing to do this week", which is a fine
+              thing to say and a terrible thing to lead with. */}
           <Blotter focusId={focusSlap && focusSlap.startsWith("tk_") ? focusSlap : null} />
 
           {/* The whole market, above the book. He asked to be told what is
               happening regardless of whether he can act on it. */}
           <BigMoves />
-
-          <StayTheCourse />
 
           {alerts.length > 0 && (
             <>
@@ -210,6 +210,11 @@ export default function Dashboard() {
           <PortfolioBrief />
 
           <PinnedActions />
+
+          {/* Reassurance is real and it is not the lead. It sits under the
+              plan, where "nothing to do" is a conclusion rather than a
+              greeting. */}
+          <StayTheCourse />
 
           {/* What could move a holding hard, and which smaller name it would
               move harder. Built after MRNA. */}
@@ -296,6 +301,7 @@ export default function Dashboard() {
           <div style={{ marginTop: 18 }}><RelationshipGraph /></div>
           <div style={{ marginTop: 18 }}><ActionJournal /></div>
           <div className="tab-more">
+            <Link href="/sleeve">The sleeve&apos;s record →</Link>
             <Link href="/loop">Learning Loop →</Link>
             <Link href="/book">The thesis book →</Link>
           </div>

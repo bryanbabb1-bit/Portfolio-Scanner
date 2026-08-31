@@ -55,7 +55,7 @@ function PriceAction({ label, onSubmit, defaultValue, danger }: {
   );
 }
 
-export function Blotter({ focusId }: { focusId?: string | null }) {
+export function Blotter({ focusId, compact }: { focusId?: string | null; compact?: boolean }) {
   const [s, setS] = useState<SleeveState | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const [showClosed, setShowClosed] = useState(false);
@@ -92,9 +92,18 @@ export function Blotter({ focusId }: { focusId?: string | null }) {
   return (
     <>
       <div className="mfx-label" id="blotter">
-        Blotter · trading sleeve · {waiting > 0 ? `${waiting} waiting on you` : "nothing waiting"}
+        Blotter · trading sleeve ·{" "}
+        {waiting > 0
+          ? `${waiting} waiting on you`
+          : watching.length > 0
+            ? `${watching.length} watching for a break`
+            : "nothing waiting"}
       </div>
       <div className="card bl">
+        {/* The sleeve's own page states equity, deployed and realized in its
+            masthead, so the panel drops its header there rather than saying
+            the same four numbers twice on one screen. */}
+        {!compact && (
         <div className="bl-head">
           <div className="bl-stat">
             <span className="bl-k">Sleeve equity</span>
@@ -124,8 +133,9 @@ export function Blotter({ focusId }: { focusId?: string | null }) {
             </span>
           </div>
         </div>
+        )}
 
-        {s.deployed === 0 && s.counts.live === 0 && (
+        {!compact && s.deployed === 0 && s.counts.live === 0 && (
           <p className="bl-note">
             Nothing is deployed yet. Tickets size against {money(s.capital, 0)} from today; fund the
             sleeve by moving that much out of the core when you are ready. It never tops up from the
@@ -248,6 +258,14 @@ function TicketRow({ t, tone, focus, onDone }: {
       )}
       {(tone === "armed" || tone === "watching") && t.why.length > 0 && (
         <ul className="bl-why">{t.why.slice(0, 3).map((w, i) => <li key={i}>{w}</li>)}</ul>
+      )}
+      {/* The trader's read. It arrives after the ticket and can never change
+          a level, so its absence is normal and never blocks a decision. */}
+      {(tone === "armed" || tone === "watching") && t.note && (
+        <p className="bl-note-trader">
+          {t.note}
+          {t.note_risk && <span className="bl-risk"> Risk: {t.note_risk}</span>}
+        </p>
       )}
 
       <div className="bl-c3">

@@ -8,6 +8,10 @@ import { BulletList } from "./BulletList";
 // server-side for an hour, so "Refresh" is instant until the cache expires.
 export function PortfolioBrief() {
   const [note, setNote] = useState<AdvisorNote | null>(null);
+  // The brief runs to thirty-five bullets across seven sections. The two that
+  // are actionable were the sixth block down, so the read is now folded and
+  // the plan is not.
+  const [full, setFull] = useState(false);
   const [loading, setLoading] = useState(false);
   const [deep, setDeep] = useState(false);
   const [err, setErr] = useState<string | null>(null);
@@ -95,24 +99,6 @@ export function PortfolioBrief() {
             <h4>Bottom line</h4>
             <p>{note.summary}</p>
           </div>
-          {note.insights?.length > 0 && (
-            <div className="advisor-sec">
-              <h4>Where you stand</h4>
-              <BulletList items={note.insights} kind="insight" />
-            </div>
-          )}
-          {(note.mix?.length ?? 0) > 0 && (
-            <div className="advisor-sec">
-              <h4>Is your mix still right?</h4>
-              <BulletList items={note.mix!} kind="insight" />
-            </div>
-          )}
-          {(note.positions?.length ?? 0) > 0 && (
-            <div className="advisor-sec">
-              <h4>Your holdings</h4>
-              <BulletList items={note.positions!} kind="insight" />
-            </div>
-          )}
           {/* THE PLAN. The brief generates this itself — there is no separate
               transition feature to contradict it. */}
           {(note.sequence?.length ?? 0) > 0 && (
@@ -156,13 +142,40 @@ export function PortfolioBrief() {
               <BulletList items={note.risks} kind="risk" />
             </div>
           )}
-          {(note.scout?.length ?? 0) > 0 && (
-            <div className="advisor-sec">
-              <h4>Ideas to buy</h4>
-              <p className="mut" style={{ fontSize: 12.5, lineHeight: 1.5 }}>
-                Your conviction &amp; speculative ideas are now in the <b>Do this</b> board above — pin one to act on it.
-              </p>
-            </div>
+          {/* The rest of the read: true, useful, and not a decision. It opens
+              on demand and stays open for the session. */}
+          {((note.insights?.length ?? 0) + (note.mix?.length ?? 0) + (note.positions?.length ?? 0)) > 0 && (
+            <>
+              <button className="btn ghost brief-more" onClick={() => setFull((v) => !v)}
+                      aria-expanded={full}>
+                {full ? "Hide the full read" : "Read the rest"}
+                <span className="mut">
+                  {" "}· {(note.insights?.length ?? 0) + (note.mix?.length ?? 0) + (note.positions?.length ?? 0)} more points
+                </span>
+              </button>
+              {full && (
+                <>
+                  {note.insights?.length > 0 && (
+                    <div className="advisor-sec">
+                      <h4>Where you stand</h4>
+                      <BulletList items={note.insights} kind="insight" />
+                    </div>
+                  )}
+                  {(note.mix?.length ?? 0) > 0 && (
+                    <div className="advisor-sec">
+                      <h4>Is your mix still right?</h4>
+                      <BulletList items={note.mix!} kind="insight" />
+                    </div>
+                  )}
+                  {(note.positions?.length ?? 0) > 0 && (
+                    <div className="advisor-sec">
+                      <h4>Your holdings</h4>
+                      <BulletList items={note.positions!} kind="insight" />
+                    </div>
+                  )}
+                </>
+              )}
+            </>
           )}
           <p className="mut" style={{ fontSize: 11, marginTop: 12 }}>
             {note.persona} · {note.generated_at} · Not personalized investment advice.

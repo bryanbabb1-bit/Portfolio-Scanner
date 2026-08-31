@@ -999,6 +999,10 @@ export interface Ticket {
   sleeve_equity: number;
   why: string[];
   headline: string;
+  /** The trader's colour, written after the ticket was issued. May be empty. */
+  note: string;
+  note_risk: string;
+  note_engine: string;
   meta: Record<string, number | string | null>;
   fill_price: number | null;
   fill_ts: number | null;

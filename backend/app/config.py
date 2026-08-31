@@ -46,6 +46,15 @@ class Settings:
     # --------------------------------------------------------------- risk desk
     # Risk always comes first: these are the desk's standing limits. Sizing is
     # derived from them, not guessed per trade.
+    #
+    # SCOPE, because these numbers used to look like a contradiction: they
+    # govern the CORE book — eleven compounders where 1% per trade and a 25%
+    # position cap are the right conservatism. The trading sleeve does not read
+    # them. It carries its own risk budget in sleeve.DEFAULTS (5% a ticket
+    # across 2 slots), set from the 15-year sizing study in `ab4a387`, which
+    # found concentration to be the only real lever and 1% to be roughly an
+    # eighth of growth-optimal FOR A TRADING STRATEGY. Neither number is wrong;
+    # they are limits on two different books.
     RISK_PER_TRADE_PCT: float = float(os.getenv("RISK_PER_TRADE_PCT", "1.0"))
     DAILY_LOSS_LIMIT_PCT: float = float(os.getenv("DAILY_LOSS_LIMIT_PCT", "2.0"))
     MAX_POSITION_PCT: float = float(os.getenv("MAX_POSITION_PCT", "25.0"))

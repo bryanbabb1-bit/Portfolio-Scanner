@@ -205,6 +205,37 @@ def screen_and_judge(limit: int = SCREEN_JUDGED) -> list[dict]:
     return judged
 
 
+def _sleeve_first(ranked: list[dict]) -> list[dict]:
+    """Put the sleeve's open positions and armed orders at the front.
+
+    Deduped against the ranked holdings so a name that is both a holding and
+    a ticket is debated once, and skipped entirely when a debate for it is
+    already cached — the point is fresh argument, not a full queue."""
+    try:
+        from . import debate as debate_service
+        from . import sleeve
+        book = sleeve.load()
+        open_syms = [t["symbol"] for t in book.get("tickets", [])
+                     if t.get("status") in ("armed", "live", "exit")]
+    except Exception as exc:
+        print(f"[nightly] sleeve queue unavailable: {exc!r}")
+        return ranked
+
+    have = {c["symbol"] for c in ranked}
+    front: list[dict] = []
+    for sym in dict.fromkeys(open_syms):
+        if sym in have:
+            continue
+        try:
+            cached = debate_service.get_cached(sym, max_age=REDEBATE_AFTER_DAYS * 86400)
+        except Exception:
+            cached = None
+        if cached:
+            continue
+        front.append({"symbol": sym, "score": 999.0, "why": ["open sleeve ticket"]})
+    return front + ranked
+
+
 def maybe_run(force: bool = False) -> dict | None:
     """Pre-load the desk overnight. Called from the watchdog heartbeat."""
     et = _et_now()
@@ -239,7 +270,10 @@ def maybe_run(force: bool = False) -> dict | None:
     except Exception:
         signals = []
 
-    ranked = score_candidates(reports, signals)[:MAX_PER_NIGHT]
+    # The sleeve's open tickets go first. They are live decisions with money
+    # and a stop already committed, which is a better use of six CLI calls
+    # than re-litigating a core hold the desk argued about last week.
+    ranked = _sleeve_first(score_candidates(reports, signals))[:MAX_PER_NIGHT]
     if not ranked:
         state["last_run"] = today
         state["last_result"] = {"date": today, "ran": [], "note": "nothing new to argue"}

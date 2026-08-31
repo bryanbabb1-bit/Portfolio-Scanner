@@ -29,7 +29,7 @@ os.environ.setdefault("DATA_MODE", "mock")
 _SERVICE_MODULES = (
     "accumulation", "advisor", "backtest", "budget", "bigmoves", "catalysts", "chat", "cleansheet", "conviction",
     "journal", "learning", "pins", "plan", "preferences", "scorecard", "stance",
-    "sleeve", "summary", "themes", "transition", "watchpoints",
+    "sleeve", "summary", "themes", "trader", "transition", "watchpoints",
 )
 
 

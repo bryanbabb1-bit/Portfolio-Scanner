@@ -325,6 +325,7 @@ def issue(symbol: str, engine: str, entry: float, stop: float, *,
             "risk_usd": sz["risk_usd"], "r_unit": sz["r_unit"],
             "sleeve_equity": round(eq, 2),
             "why": list(why or [])[:4], "headline": headline or "",
+            "note": "", "note_risk": "", "note_engine": "",
             "meta": meta or {},
             "fill_price": None, "fill_ts": None, "high_water": None,
             "current_stop": None, "trail_armed": False,
@@ -905,6 +906,16 @@ def maybe_run(force: bool = False) -> dict | None:
             except Exception:
                 pass
         save(book)
+
+    # Colour on the tickets, AFTER they have been issued and pushed. The
+    # trader's note is a nice-to-have; a trade never waits on a model call,
+    # and a failure here cannot un-issue anything.
+    for t in issued:
+        try:
+            from . import jobs, trader
+            jobs.submit(trader.enrich, t["id"])
+        except Exception as exc:
+            print(f"[sleeve] note for {t['symbol']} not queued: {exc!r}")
 
     if issued or events or expired:
         print(f"[sleeve] issued={[t['symbol'] for t in issued]} "

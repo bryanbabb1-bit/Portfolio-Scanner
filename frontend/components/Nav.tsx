@@ -8,29 +8,26 @@ import { ThemeSwitch } from "./ThemeSwitch";
 type Item = { href: string; label: string };
 type Entry = Item | { label: string; items: Item[] };
 
-// Twelve destinations is too many for one row. "Desk" holds the hedge-fund
-// surfaces (the system reasoning about your book); "Research" holds the
-// scanners (finding things to reason about).
+// Four destinations and a menu. The three surfaces you open daily are the
+// desk (what needs you), the sleeve (what it is trading) and the core (what
+// you own); everything else is research you reach for occasionally, and it
+// was crowding them out of the row.
 const NAV: Entry[] = [
-  { href: "/", label: "Dashboard" },
-  { href: "/book", label: "The Book" },
+  { href: "/", label: "Desk" },
+  { href: "/sleeve", label: "Sleeve" },
+  { href: "/book", label: "Thesis book" },
   {
-    label: "Desk",
+    label: "Research",
     items: [
+      { href: "/runners", label: "Runner Radar" },
+      { href: "/discover", label: "Discovery" },
+      { href: "/breakouts", label: "Breakout Radar" },
+      { href: "/scan", label: "Scan Hub" },
+      { href: "/news", label: "News Wire" },
       { href: "/risk", label: "Risk Desk" },
       { href: "/debate", label: "Agent Debate" },
       { href: "/backtest", label: "Backtest" },
       { href: "/loop", label: "Learning Loop" },
-    ],
-  },
-  {
-    label: "Research",
-    items: [
-      { href: "/scan", label: "Scan Hub" },
-      { href: "/breakouts", label: "Breakout Radar" },
-      { href: "/discover", label: "Discovery" },
-      { href: "/runners", label: "Runner Radar" },
-      { href: "/news", label: "News Wire" },
     ],
   },
   { href: "/settings", label: "Settings" },
