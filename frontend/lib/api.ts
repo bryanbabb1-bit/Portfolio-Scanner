@@ -1053,8 +1053,10 @@ export interface SleeveState {
   tickets: Ticket[];
   scorecard: Record<string, EngineScore>;
   equity_history: { day: string; equity: number }[];
-  /** SPY over the same days, rebased to the sleeve's capital. */
-  benchmark: { day: string; equity: number }[];
+  /** Dollars of profit, both starting at zero: `equity` is what SPY would
+   *  have made on the same capital, `sleeve` is what the sleeve made. A
+   *  deposit moves neither, which is the point. */
+  benchmark: { day: string; equity: number; sleeve: number }[];
   benchmark_note: string;
 }
 

@@ -328,21 +328,52 @@ def test_a_swing_that_stalls_for_twenty_sessions_is_recycled(book):
 
 
 # ------------------------------------------------------------- benchmark
-def test_the_curve_never_reports_a_return_without_the_index(monkeypatch):
-    curve = [{"day": "2026-08-03", "equity": 1000.0}, {"day": "2026-08-04", "equity": 1100.0}]
+def _spy(monkeypatch, days, closes):
+    import pandas as pd
 
     class _MD:
         source = "live"
-        history = None
+        history = pd.DataFrame({"Close": closes}, index=pd.to_datetime(days))
 
-    import pandas as pd
-    idx = pd.to_datetime(["2026-08-03", "2026-08-04"])
-    _MD.history = pd.DataFrame({"Close": [500.0, 505.0]}, index=idx)
     monkeypatch.setattr("app.services.market_data.get_price_data", lambda s: _MD())
 
+
+def test_the_curve_never_reports_a_return_without_the_index(monkeypatch):
+    """Both series are dollars of PROFIT and both start at zero."""
+    curve = [{"day": "2026-08-03", "equity": 1000.0, "capital": 1000.0, "pnl": 0.0},
+             {"day": "2026-08-04", "equity": 1100.0, "capital": 1000.0, "pnl": 100.0}]
+    _spy(monkeypatch, ["2026-08-03", "2026-08-04"], [500.0, 505.0])
+
     bench, note = sleeve._benchmark(curve, 1000.0)
-    assert [b["equity"] for b in bench] == [1000.0, 1010.0]   # rebased to the sleeve
-    assert "SPY +1.0%" in note and "ahead of" in note
+    assert [b["sleeve"] for b in bench] == [0.0, 100.0]      # the sleeve made $100
+    assert [b["equity"] for b in bench] == [0.0, 10.0]       # SPY would have made $10
+    assert "SPY +1.0%" in note and "sleeve +10.0%" in note and "ahead of" in note
+
+
+def test_funding_the_sleeve_is_not_a_return(monkeypatch):
+    """THE REGRESSION THIS FILE EXISTS FOR. Moving the sleeve from $1,640 to
+    $2,000 once read as '+22.0%, ahead of the index by 21.6 points' on a book
+    with no closed trades. A deposit is not a return."""
+    curve = [{"day": "2026-08-31", "equity": 1639.83, "capital": 1639.83, "pnl": 0.0},
+             {"day": "2026-09-01", "equity": 2000.00, "capital": 2000.00, "pnl": 0.0}]
+    _spy(monkeypatch, ["2026-08-31", "2026-09-01"], [600.0, 602.4])
+
+    bench, note = sleeve._benchmark(curve, 2000.0)
+    assert [b["sleeve"] for b in bench] == [0.0, 0.0]
+    assert "22" not in note
+    assert "Flat against SPY" in note or "sleeve +0.0%" in note
+
+
+def test_a_mark_written_before_capital_was_recorded_still_reads_as_flat(monkeypatch):
+    """Old rows carry no capital field. Equity WAS the capital then (no closed
+    trades), so they must read as zero profit rather than as a jump."""
+    curve = [{"day": "2026-08-31", "equity": 1639.83},
+             {"day": "2026-09-01", "equity": 2000.00}]
+    _spy(monkeypatch, ["2026-08-31", "2026-09-01"], [600.0, 606.0])
+
+    bench, note = sleeve._benchmark(curve, 2000.0)
+    assert [b["sleeve"] for b in bench] == [0.0, 0.0]
+    assert "behind" in note                     # SPY made money, the sleeve did not
 
 
 def test_a_failed_benchmark_fetch_says_so_instead_of_faking_it(monkeypatch):
@@ -350,7 +381,8 @@ def test_a_failed_benchmark_fetch_says_so_instead_of_faking_it(monkeypatch):
         raise RuntimeError("no network")
     monkeypatch.setattr("app.services.market_data.get_price_data", _boom)
     bench, note = sleeve._benchmark(
-        [{"day": "2026-08-03", "equity": 1000.0}, {"day": "2026-08-04", "equity": 1100.0}], 1000.0)
+        [{"day": "2026-08-03", "equity": 1000.0, "capital": 1000.0, "pnl": 0.0},
+         {"day": "2026-08-04", "equity": 1100.0, "capital": 1000.0, "pnl": 100.0}], 1000.0)
     assert bench == [] and "not being faked" in note
 
 

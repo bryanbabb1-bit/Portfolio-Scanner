@@ -809,11 +809,19 @@ def state(with_quotes: bool = True) -> dict:
 
 
 def _benchmark(curve: list[dict], cap: float) -> tuple[list[dict], str]:
-    """SPY over the same days, REBASED to the sleeve's starting capital.
+    """SPY over the same days, measured against the sleeve's P/L — not its
+    equity.
 
-    Standing rule in this codebase: never show a return without the index
-    beside it. Rebased rather than raw so the two lines share an axis and the
-    gap between them IS the out- or under-performance."""
+    THE BUG THIS EXISTS TO PREVENT. The first version rebased SPY to the
+    sleeve's starting equity and compared equity levels. Funding the sleeve
+    from $1,640 to $2,000 then read as "+22.0%, ahead of the index by 21.6
+    points" on a book with ZERO closed trades and $3.56 of unrealized gain.
+    A deposit is not a return, and a desk that reports one as the other is
+    lying to the person who has to decide whether the thing works.
+
+    So both series are DOLLARS OF PROFIT and both start at zero: the sleeve's
+    realized-plus-unrealized, and what SPY would have made on the same money
+    over the same days. Adding or removing capital moves neither line."""
     if len(curve) < 2 or cap <= 0:
         return [], "SPY appears once the sleeve has two days of history."
     try:
@@ -827,23 +835,40 @@ def _benchmark(curve: list[dict], cap: float) -> tuple[list[dict], str]:
         print(f"[sleeve] benchmark failed: {exc!r}")
         return [], "SPY unavailable — the comparison is not being faked."
 
-    base = None
+    # A mark written before this fix has no capital recorded; equity was the
+    # capital at that moment (the sleeve had no closed trades), so P/L was 0.
+    def pnl_of(row: dict) -> float:
+        if "pnl" in row:
+            return float(row["pnl"])
+        return float(row["equity"]) - float(row.get("capital", row["equity"]))
+
+    base_spy = None
+    base_pnl = None
     out: list[dict] = []
     for row in curve:
         spy = closes.get(row["day"])
         if spy is None:
             continue
-        if base is None:
-            base = spy
-        out.append({"day": row["day"], "equity": round(cap * spy / base, 2)})
+        if base_spy is None:
+            base_spy, base_pnl = spy, pnl_of(row)
+        # What SPY would have made on the capital actually at work.
+        stake = float(row.get("capital", cap)) or cap
+        out.append({"day": row["day"],
+                    "equity": round(stake * (spy / base_spy - 1), 2),
+                    "sleeve": round(pnl_of(row) - base_pnl, 2)})
     if len(out) < 2:
         return [], "Not enough overlapping SPY days yet."
-    first, last = curve[0]["equity"], curve[-1]["equity"]
-    you = (last / first - 1) * 100 if first else 0.0
-    idx = (out[-1]["equity"] / out[0]["equity"] - 1) * 100
+
+    you_usd = out[-1]["sleeve"]
+    idx_usd = out[-1]["equity"]
+    you = (you_usd / cap) * 100 if cap else 0.0
+    idx = (idx_usd / cap) * 100 if cap else 0.0
+    if abs(you_usd) < 0.005 and abs(idx_usd) < 0.005:
+        return out, "Flat against SPY — nothing has been closed yet."
     verb = "ahead of" if you >= idx else "behind"
-    return out, (f"SPY {idx:+.1f}% over the same days · sleeve {you:+.1f}% · "
-                 f"{verb} the index by {abs(you - idx):.1f} points")
+    return out, (f"SPY {idx:+.1f}% over the same days · sleeve {you:+.1f}% "
+                 f"({you_usd:+,.0f}) · {verb} the index by "
+                 f"{abs(you - idx):.1f} points")
 
 
 # ---------------------------------------------------------------- heartbeat
@@ -953,7 +978,13 @@ def maybe_run(force: bool = False) -> dict | None:
         hist = book.setdefault("equity_history", [])
         if not hist or hist[-1]["day"] != today:
             try:
-                hist.append({"day": today, "equity": equity(book, cap=capital(cfg))})
+                cap_now = capital(cfg)
+                eq_now = equity(book, cap=cap_now)
+                # Capital rides along with every mark so a later deposit can
+                # never be mistaken for a day's profit.
+                hist.append({"day": today, "equity": eq_now,
+                             "capital": round(cap_now, 2),
+                             "pnl": round(eq_now - cap_now, 2)})
             except Exception:
                 pass
         save(book)
