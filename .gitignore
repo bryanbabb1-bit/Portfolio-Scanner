@@ -46,3 +46,9 @@ backend/app/data/bigmoves.json
 backend/app/data/catalysts.json
 backend/app/data/catalyst_partners.json
 backend/app/data/cli_budget.json
+
+# Keepalive's own record. It only writes when something was down, so it is a
+# local incident log, not source.
+ensure-up.log
+backend/server.log.*
+backend/server.err.log.*
