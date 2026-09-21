@@ -18,9 +18,15 @@
 > The code, the database, `portfolio.json`, the sleeve book and all logs are
 > untouched.
 >
-> **Open item when resuming:** the sleeve still shows one live ticket, CHPT at
-> $9.82 with a stop at $8.05. Nothing is watching that stop now. If the real
-> position was sold, close the ticket so the sleeve's R-grading is not wrong.
+> **The sleeve book was wiped** on the same day, at Bryan's request, for a clean
+> start: no tickets, no equity history, no config. Its final state (26 tickets;
+> one closed trade, CHPT +0.17R / +$15.42) is preserved in commit `4ff3760` if
+> it is ever wanted.
+>
+> **Read this before funding it again:** wiping the config cleared the $2,000
+> funding `capital_usd` (correct — the money is out) **and also the 1 slot /
+> 8% risk setting** that came out of the sizing study. Re-fund and re-set those
+> together, or the sleeve will quietly run the 2 slot / 5% defaults instead.
 >
 > **To resume:**
 >
