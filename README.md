@@ -1,5 +1,35 @@
 # Portfolio Scanner 📈
 
+> ## PAUSED - 21 September 2026
+>
+> Bryan pulled his money out of the market, so the desk is not needed and is
+> shut down. Nothing runs: no scan loop, no pushes, no tunnel, no tickets.
+>
+> **What was turned off** (all reversible, nothing deleted):
+>
+> | Thing | How it was stopped |
+> |---|---|
+> | `Portfolio Scanner Keepalive` (task, every 10 min) | Disabled in Task Scheduler |
+> | `Portfolio Scanner Watchdog` (task, at logon) | Disabled in Task Scheduler |
+> | Backend FastAPI `:8000` | Process stopped. This also stops the ~2 min scan loop, the morning/EOD briefs and every push notification, since they run in-process |
+> | Frontend Next `:3000` | Process stopped |
+> | Cloudflare tunnel `watchdog.trueforecasting.app` | `cloudflared` stopped, so the phone app will not load until it is back |
+>
+> The code, the database, `portfolio.json`, the sleeve book and all logs are
+> untouched.
+>
+> **Open item when resuming:** the sleeve still shows one live ticket, CHPT at
+> $9.82 with a stop at $8.05. Nothing is watching that stop now. If the real
+> position was sold, close the ticket so the sleeve's R-grading is not wrong.
+>
+> **To resume:**
+>
+> ```powershell
+> Enable-ScheduledTask -TaskName 'Portfolio Scanner Keepalive'
+> Enable-ScheduledTask -TaskName 'Portfolio Scanner Watchdog'
+> & 'C:\Users\bryan\portfolio-scanner\start-all.ps1'
+> ```
+
 A personal **stock portfolio intelligence hub**. It scans your holdings and
 watchlist for price action, technical signals, analyst ratings & price targets,
 and news — then layers on an AI **"senior Schwab financial advisor"** for
